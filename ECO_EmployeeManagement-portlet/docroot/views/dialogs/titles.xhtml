@@ -1,0 +1,36 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:head />
+
+	<h:body>
+		<h:form id="titlesForm">
+			<p:dialog id="titlesDialog" widgetVar="wTitlesDialog" modal="true"
+				closeOnEscape="true" resizable="false" header="Add New Titles"
+				showEffect="fade">
+				<p:ajax event="close" listener="#{titlesBean.onCloseOrSave}"
+					update=":titlesForm">
+					<p:resetInput target=":titlesForm" />
+				</p:ajax>
+
+				<p:panelGrid columns="3">
+					<h:outputText value="Name" />
+					<p:inputText id="titlesName" value="#{titlesBean.titles.name}"
+						required="true" />
+					<p:message for="titlesName" id="titlesName_msg" />
+				</p:panelGrid>
+				<p:commandButton value="Save" icon="fa fa-save Fs16 White"
+					action="#{titlesBean.save}" oncomplete="PF('wTitlesDialog').hide()"
+					ajax="true" update=":modifyForm:accordion:titlesSelect :growl" />
+				<p:commandButton value="Cancel" onclick="PF('wTitlesDialog').hide()">
+					<p:resetInput target=":titlesForm" />
+				</p:commandButton>
+
+			</p:dialog>
+		</h:form>
+	</h:body>
+</f:view>

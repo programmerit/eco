@@ -1,0 +1,582 @@
+<?xml version="1.0"?>
+
+<f:view encoding="UTF-8" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:head />
+
+	<h:body>
+		<h:form id="modifyForm" rendered="#{empView.switchToModifyMode}">
+			<p:remoteCommand name="refreshAddresses"
+				update=":modifyForm:accordion:addressesPanelGrid" />
+
+			<p:remoteCommand name="refreshUsername"
+				update=":modifyForm:accordion:username" />
+
+			<p:remoteCommand name="refreshPasswordFields"
+				update=":modifyForm:accordion:userPassword1 :modifyForm:accordion:userPassword2" />
+
+			<p:commandButton icon="fa fa-arrow-left Fs16 White"
+				action="#{empView.cancelModification}" immediate="true"
+				update=":empPanelGroup">
+				<p:resetInput target=":modifyForm" />
+			</p:commandButton>
+			<p:accordionPanel id="accordion" multiple="true"
+				style="margin-bottom:20px;" activeIndex="0">
+				<p:tab id="personal_info"
+					title="#{i18n['empForm.personal_information_tab']}">
+					<p:panelGrid columns="2" layout="grid">
+						<h:panelGroup>
+							<p:inputText id="firstName"
+								placeholder="#{i18n['empForm.personal_information_firstName']}"
+								value="#{empView.modifyEmployeeInfoItem.user.firstName}"
+								required="true" alt="FirstName"
+								label="#{i18n['empForm.personal_information_firstName']}"
+								requiredMessage="Firstname is required">
+								<f:validateLength minimum="1" maximum="30" />
+								<p:ajax update="firstName_msg" event="keyup" />
+							</p:inputText>
+
+							<p:message for="firstName" id="firstName_msg" display="icon" />
+							<p:tooltip for="firstName" value="Firstname" showEffect="clip"
+								hideEffect="explode" />
+
+							<p:inputText id="middleName"
+								placeholder="#{i18n['empForm.personal_information_middleName']}"
+								value="#{empView.modifyEmployeeInfoItem.user.middleName}"
+								label="#{i18n['empForm.personal_information_middleName']}">
+								<f:validateLength minimum="0" maximum="30" />
+								<p:ajax update="middleName_msg" event="keyup" />
+							</p:inputText>
+
+							<p:message for="middleName" id="middleName_msg" display="icon" />
+							<p:tooltip for="middleName" value="Middle Name" showEffect="clip"
+								hideEffect="explode" />
+							<p:inputText id="lastName"
+								placeholder="#{i18n['empForm.personal_information_lastName']}"
+								value="#{empView.modifyEmployeeInfoItem.user.lastName}"
+								required="true" requiredMessage="Lastname is required"
+								label="#{i18n['empForm.personal_information_lastName']}">
+								<f:validateLength minimum="1" maximum="30" />
+								<p:ajax update="lastName_msg" event="keyup" />
+							</p:inputText>
+
+							<p:message for="lastName" id="lastName_msg" display="icon" />
+							<p:tooltip for="lastName" value="Last Name" showEffect="clip"
+								hideEffect="explode" />
+							<p:inputText id="emailAddress" type="email"
+								placeholder="#{i18n['empForm.personal_information_email']}"
+								value="#{empView.modifyEmployeeInfoItem.user.emailAddress}"
+								required="true" requiredMessage="Email address is required"
+								label="#{i18n['empForm.personal_information_email']}">
+								<f:attribute name="userId"
+									value="#{empView.modifyEmployeeInfoItem.user.userId}" />
+								<f:validator validatorId="employeeEmailValidator" />
+
+								<p:ajax update="emailAddressMsg" event="keyup" />
+							</p:inputText>
+
+							<p:message for="emailAddress" id="emailAddressMsg" display="icon" />
+							<p:tooltip for="emailAddress" value="Email Address"
+								showEffect="clip" hideEffect="explode" />
+
+							<p:inputText id="companyEmailAddress" type="email"
+								placeholder="#{i18n['empForm.personal_information_companyEmail']}"
+								value="#{empView.modifyEmployeeInfoItem.employee.companyEmailAddress}"
+								label="#{i18n['empForm.personal_information_companyEmail']}">
+							</p:inputText>
+							<p:message for="companyEmailAddress" id="companyEmailAddressMsg"
+								display="icon" />
+							<p:tooltip for="companyEmailAddress" value="Company Email"
+								showEffect="clip" hideEffect="explode" />
+
+							<p:selectOneRadio id="gender"
+								value="#{empView.modifyEmployeeInfoItem.employee.gender}"
+								required="true">
+								<f:selectItem itemLabel="Male" itemValue="Male" />
+								<f:selectItem itemLabel="Female" itemValue="Female" />
+							</p:selectOneRadio>
+
+							<p:message for="gender" display="icon" />
+							<p:tooltip for="gender" value="Gender" showEffect="clip"
+								hideEffect="explode" />
+						</h:panelGroup>
+						<h:panelGroup>
+							<p:inputText id="employeeCode"
+								placeholder="#{i18n['empForm.personal_information_employee_code']}"
+								value="#{empView.modifyEmployeeInfoItem.employee.employeeCode}"
+								label="#{i18n['empForm.personal_information_employee_code']}"
+								required="true" requiredMessage="Employee Code is required" />
+							<p:message for="employeeCode" display="icon" />
+							<p:tooltip for="employeeCode" value="Employee Code"
+								showEffect="clip" hideEffect="explode" />
+
+
+							<p:calendar id="birthday" placeholder="Birthday" navigator="true"
+								value="#{empView.modifyEmployeeInfoItem.employee.birthday}"
+								maxdate="#{empView.maxBirthdayDate}" mask="true"
+								pattern="dd/MM/yyyy" required="true">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:calendar>
+							<p:message for="birthday" display="icon" />
+							<p:tooltip for="birthday" value="Birthday" showEffect="clip"
+								hideEffect="explode" />
+
+							<p:inputText id="placeOfBirth"
+								value="#{empView.modifyEmployeeInfoItem.employee.placeOfBirth}"
+								placeholder="#{i18n['empForm.personal_information_pob']}"
+								label="#{i18n['empForm.personal_information_pob']}" />
+							<p:message for="placeOfBirth" display="icon" />
+							<p:tooltip for="placeOfBirth" value="Place of Birth"
+								showEffect="clip" hideEffect="explode" />
+
+							<p:inputText id="contactNumber"
+								value="#{empView.modifyEmployeeInfoItem.employee.contactNumber}"
+								placeholder="#{i18n['empForm.personal_information_contact_number']}"
+								label="#{i18n['empForm.personal_information_contact_number']}" />
+							<p:message for="contactNumber" display="icon" />
+							<p:tooltip for="contactNumber" value="Contact Number"
+								showEffect="clip" hideEffect="explode" />
+						</h:panelGroup>
+					</p:panelGrid>
+				</p:tab>
+
+				<p:tab id="addresses" title="Address">
+					<h:panelGrid id="addressesPanelGrid">
+						<ui:repeat var="a" id="addressObjects"
+							value="#{empView.modifyEmployeeInfoItem.addresses}"
+							varStatus="status">
+
+							<h:panelGroup id="addressItem" rendered="#{not a.UIDeleted}">
+								<p:commandButton immediate="true"
+									actionListener="#{empView.removeOneAddress(status.index)}"
+									ajax="true" oncomplete="refreshAddresses();"
+									icon="fa fa-remove Fs16 White" styleClass="RedButton" />
+								<p:panelGrid layout="grid" columns="2">
+									<h:panelGrid columns="2">
+										<h:outputText value="Street 1" />
+										<p:inputText value="#{a.address.street1}" />
+
+										<h:outputText value="Street 2" />
+										<p:inputText value="#{a.address.street2}" />
+									</h:panelGrid>
+									<h:panelGrid columns="2">
+										<h:outputText value="District" />
+										<p:inputText value="#{a.address.street3}" />
+
+										<h:outputText value="City" />
+										<p:inputText value="#{a.address.city}" />
+									</h:panelGrid>
+								</p:panelGrid>
+								<p:panelGrid columns="2">
+									<h:outputText value="Country" />
+									<p:selectOneMenu id="countrySelect" value="#{a.country}"
+										converter="countryConverter" effect="fade" filter="true"
+										filterMatchMode="contains" var="c">
+										<p:ajax update="regionSelect"
+											listener="#{empView.onCountryChange(status.index)}" />
+										<f:selectItem itemLabel="Select Country" itemValue="" />
+										<f:selectItems value="#{empView.countries}" var="c"
+											itemLabel="#{c.name}" itemValue="#{c}" />
+										<p:column>
+					               				 #{c.countryId} - #{c.name}
+					            			</p:column>
+									</p:selectOneMenu>
+
+									<h:outputText value="Region" />
+									<p:selectOneMenu id="regionSelect" value="#{a.region}"
+										converter="regionConverter" effect="fade" filter="true"
+										filterMatchMode="contains" var="r">
+
+										<f:selectItem itemLabel="Select Region" itemValue="" />
+										<f:selectItems value="#{a.regions}" var="r"
+											itemLabel="#{r.name}" itemValue="#{r}" />
+
+										<p:column>
+					                			#{r.regionCode} - #{r.name}
+					            			</p:column>
+									</p:selectOneMenu>
+								</p:panelGrid>
+								<hr />
+							</h:panelGroup>
+						</ui:repeat>
+
+						<p:commandButton actionListener="#{empView.addOneAddress}"
+							immediate="true" ajax="true" oncomplete="refreshAddresses();"
+							icon="fa fa-plus Fs16 White" />
+					</h:panelGrid>
+				</p:tab>
+
+				<p:tab id="personalDetails" title="Details">
+					<p:panelGrid columns="2" layout="grid">
+						<h:panelGroup>
+							<p:selectOneMenu id="unitSelect"
+								value="#{empView.modifyEmployeeInfoItem.unit}"
+								converter="unitConverter" effect="fade" filter="true"
+								filterMatchMode="contains" var="u">
+								<p:ajax
+									update="departmentSelect devisionSelect devisionGroupSelect titlesSelect newDepartmentCommandButton newDevisionCommandButton newTitlesCommandButton"
+									listener="#{empView.onUnitChanged}" />
+
+								<f:selectItem itemLabel="Unit" itemValue="" />
+								<f:selectItems value="#{empView.units}" var="u"
+									itemLabel="#{u.name}" itemValue="#{u}" />
+								<p:column>
+					                #{u.unitId} - #{u.name}
+					            </p:column>
+							</p:selectOneMenu>
+							<p:commandLink value="Add" onclick="PF('wUnitDialog').show()" />
+
+							<p:selectOneMenu id="departmentSelect"
+								value="#{empView.modifyEmployeeInfoItem.department}"
+								converter="departmentConverter" effect="fade" filter="true"
+								filterMatchMode="contains" var="d">
+								<p:ajax
+									update="devisionSelect devisionGroupSelect titlesSelect newDevisionCommandButton newTitlesCommandButton"
+									listener="#{empView.onDepartmentChanged}" />
+
+								<f:selectItem itemLabel="Department" itemValue="" />
+								<f:selectItems value="#{empView.departments}" var="d"
+									itemLabel="#{d.name}" itemValue="#{d}" />
+								<p:column>
+					                #{d.departmentId} - #{d.name}
+					            </p:column>
+							</p:selectOneMenu>
+							<p:commandLink value="Add" id="newDepartmentCommandButton"
+								disabled="#{empView.modifyEmployeeInfoItem.unit == null}"
+								onclick="PF('wDepartmentDialog').show()" />
+
+							<p:selectOneMenu id="devisionSelect"
+								value="#{empView.modifyEmployeeInfoItem.devision}"
+								converter="devisionConverter" effect="fade" filter="true"
+								filterMatchMode="contains" var="d">
+								<p:ajax
+									update="devisionGroupSelect titlesSelect newTitlesCommandButton newDevisionGroupCommandButton"
+									listener="#{empView.onDevisionChanged}" />
+
+								<f:selectItem itemLabel="Devision" itemValue="" />
+								<f:selectItems value="#{empView.devisions}" var="d"
+									itemLabel="#{d.name}" itemValue="#{d}" />
+								<p:column>
+					                #{d.devisionId} - #{d.name}
+					            </p:column>
+							</p:selectOneMenu>
+							<p:commandLink id="newDevisionCommandButton"
+								disabled="#{empView.modifyEmployeeInfoItem.department == null}"
+								value="Add" onclick="PF('wDevisionDialog').show()" />
+
+
+							<p:selectOneMenu id="devisionGroupSelect"
+								value="#{empView.modifyEmployeeInfoItem.devisionGroup}"
+								converter="devisionGroupConverter" effect="fade" filter="true"
+								filterMatchMode="contains" var="d">
+								<p:ajax update="titlesSelect newTitlesCommandButton"
+									listener="#{empView.onDevisionGroupChanged}" />
+
+								<f:selectItem itemLabel="Group" itemValue="" />
+								<f:selectItems value="#{empView.devisionGroups}" var="d"
+									itemLabel="#{d.name}" itemValue="#{d}" />
+								<p:column>
+					                #{d.devisionId} - #{d.name}
+					            </p:column>
+							</p:selectOneMenu>
+							<p:commandLink id="newDevisionGroupCommandButton"
+								disabled="#{empView.modifyEmployeeInfoItem.devision == null}"
+								value="Add" onclick="PF('wDevisionGroupDialog').show()" />
+
+							<p:selectOneMenu id="titlesSelect"
+								value="#{empView.modifyEmployeeInfoItem.titles}"
+								converter="titlesConverter" effect="fade" filter="true"
+								filterMatchMode="contains" var="t" required="true"
+								validatorMessage="[Titles] is required">
+
+								<f:selectItem itemLabel="Titles" itemValue="" />
+								<f:selectItems value="#{empView.titlesList}" var="t"
+									itemLabel="#{t.name}" itemValue="#{t}" />
+
+								<p:column>
+					                #{t.titlesId} - #{t.name}
+					            </p:column>
+							</p:selectOneMenu>
+							<p:commandLink value="Add" id="newTitlesCommandButton"
+								disabled="#{empView.modifyEmployeeInfoItem.devision == null and empView.modifyEmployeeInfoItem.department == null}"
+								onclick="PF('wTitlesDialog').show()" />
+
+							<p:message for="titlesSelect" display="icon" />
+							<p:tooltip for="titlesSelect" value="Titles" showEffect="clip"
+								hideEffect="explode" />
+
+							<p:selectOneMenu id="levelSelect"
+								value="#{empView.modifyEmployeeInfoItem.level}"
+								converter="levelConverter" effect="fade" filter="true"
+								filterMatchMode="contains" var="l">
+
+								<f:selectItem itemLabel="Level" itemValue="" />
+								<f:selectItems value="#{empView.levels}" var="l"
+									itemLabel="#{l.name}" itemValue="#{l}" />
+
+								<p:column>
+					                #{l.levelId} - #{l.name}
+					            </p:column>
+							</p:selectOneMenu>
+							<p:commandLink value="Add" onclick="PF('wLevelDialog').show()" />
+
+							<p:message for="levelSelect" display="icon" />
+							<p:tooltip for="levelSelect" value="Job Level" showEffect="clip"
+								hideEffect="explode" />
+						</h:panelGroup>
+
+						<h:panelGroup>
+							<p:calendar id="joinedDate"
+								value="#{empView.modifyEmployeeInfoItem.employee.joinedDate}"
+								mask="true" pattern="dd/MM/yyyy" placeholder="Joined Date"
+								required="true">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:calendar>
+							<p:message for="joinedDate" display="icon" />
+							<p:tooltip for="joinedDate" value="Joined Date" showEffect="clip"
+								hideEffect="explode" />
+							<p:calendar id="laborContractSignedDate" mask="true"
+								value="#{empView.modifyEmployeeInfoItem.employee.laborContractSignedDate}"
+								pattern="dd/MM/yyyy" placeholder="Labor Contract Signed Date">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:calendar>
+							<p:message for="laborContractSignedDate" display="icon" />
+							<p:tooltip for="laborContractSignedDate"
+								value="Labor Contract Signed Date" showEffect="clip"
+								hideEffect="explode" />
+
+							<p:calendar id="laborContractExpiredDate" mask="true"
+								value="#{empView.modifyEmployeeInfoItem.employee.laborContractExpiredDate}"
+								pattern="dd/MM/yyyy" placeholder="Labor Contract Expired Date">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:calendar>
+							<p:message for="laborContractExpiredDate" display="icon" />
+							<p:tooltip for="laborContractExpiredDate"
+								value="Labor Contract Expired Date" showEffect="clip"
+								hideEffect="explode" />
+
+							<p:selectOneMenu id="laborContractType"
+								value="#{empView.modifyEmployeeInfoItem.employee.laborContractType}"
+								converter="laborContractTypeConverter" effect="fade">
+								<f:selectItem itemLabel="Contract Type" itemValue="" />
+								<f:selectItems value="#{empView.laborContractTypes}" var="l"
+									itemLabel="#{i18n[empView.modifyEmployeeInfoItem.getLocalizedLaborContractType(l)]}"
+									itemValue="#{l}" />
+								<p:column>
+					                #{l}
+					            </p:column>
+							</p:selectOneMenu>
+							<p:message for="laborContractType" display="icon" />
+							<p:tooltip for="laborContractType" value="Labor Contract Type"
+								showEffect="clip" hideEffect="explode" />
+
+							<p:inputText id="education"
+								value="#{empView.modifyEmployeeInfoItem.employee.education}"
+								placeholder="Education" />
+							<p:message for="education" display="icon" />
+							<p:tooltip for="education" value="Education" showEffect="clip"
+								hideEffect="explode" />
+
+							<p:inputText id="educationSpecialize"
+								value="#{empView.modifyEmployeeInfoItem.employee.educationSpecialize}"
+								placeholder="Education Specialize" />
+							<p:message for="educationSpecialize" display="icon" />
+							<p:tooltip for="educationSpecialize" value="Education Specialize"
+								showEffect="clip" hideEffect="explode" />
+
+							<p:selectOneMenu id="universitySelect"
+								value="#{empView.modifyEmployeeInfoItem.university}"
+								converter="universityConverter" effect="fade" filter="true"
+								filterMatchMode="contains" var="u">
+
+								<f:selectItem itemLabel="University" itemValue="" />
+								<f:selectItems value="#{empView.universities}" var="u"
+									itemLabel="#{u.name}" itemValue="#{u}" />
+								<p:column>
+					                #{u.universityId} - #{u.name}
+					            </p:column>
+							</p:selectOneMenu>
+							<p:message for="universitySelect" display="icon" />
+							<p:tooltip for="universitySelect" value="University"
+								showEffect="clip" hideEffect="explode" />
+						</h:panelGroup>
+					</p:panelGrid>
+				</p:tab>
+				<p:tab id="other_information" title="Other Information">
+					<p:panelGrid columns="2" layout="grid">
+						<h:panelGroup>
+							<p:inputText id="identityCardNo"
+								value="#{empView.modifyEmployeeInfoItem.employee.identityCardNo}"
+								placeholder="Identity Card No">
+							</p:inputText>
+							<p:message for="identityCardNo" display="icon" />
+							<p:tooltip for="identityCardNo" value="Identity Card No"
+								showEffect="clip" hideEffect="explode" />
+
+							<p:calendar id="issuedDate" mask="false"
+								value="#{empView.modifyEmployeeInfoItem.employee.issuedDate}"
+								pattern="dd/MM/yyyy" placeholder="Issued Date">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:calendar>
+							<p:message for="issuedDate" display="icon" />
+							<p:tooltip for="issuedDate" value="Issued Date" showEffect="clip"
+								hideEffect="explode" />
+
+							<p:inputText id="issuedPlace"
+								value="#{empView.modifyEmployeeInfoItem.employee.issuedPlace}"
+								placeholder="Issued Place" />
+							<p:message for="issuedPlace" display="icon" />
+							<p:tooltip for="issuedPlace" value="Issued Place"
+								showEffect="clip" hideEffect="explode" />
+
+							<p:inputText id="personalTaxCode"
+								value="#{empView.modifyEmployeeInfoItem.employee.personalTaxCode}"
+								placeholder="Personal Tax Code" />
+							<p:message for="personalTaxCode" display="icon" />
+							<p:tooltip for="personalTaxCode" value="Personal Tax Code"
+								showEffect="clip" hideEffect="explode" />
+						</h:panelGroup>
+						<h:panelGroup>
+							<p:spinner id="numberOfDependents" min="0" max="5"
+								value="#{empView.modifyEmployeeInfoItem.employee.numberOfDependents}"
+								placeholder="No of Dependents">
+								<p:ajax listener="#{empView.onNumberOfDependentsChanged}"
+									render=":modifyForm:accordion:other_information:dependentNames" />
+							</p:spinner>
+							<p:message for="numberOfDependents" display="icon" />
+							<p:tooltip for="numberOfDependents" value="Number of Dependents"
+								showEffect="clip" hideEffect="explode" />
+
+							<ui:repeat var="name" id="dependentNames"
+								value="#{empView.modifyEmployeeInfoItem.dependentNames}"
+								varStatus="status"
+								rendered="#{empView.modifyEmployeeInfoItem.employee.numberOfDependents > 0}">
+								<p:inputText value="#{name}" />
+								<br />
+							</ui:repeat>
+							<p:message for="dependentNames" display="icon"
+								rendered="#{empView.modifyEmployeeInfoItem.employee.numberOfDependents > 0}" />
+
+							<p:inputText id="socialInsuranceNo"
+								value="#{empView.modifyEmployeeInfoItem.employee.socialInsuranceNo}"
+								placeholder="Social Insurance No" />
+							<p:message for="socialInsuranceNo" display="icon" />
+							<p:tooltip for="socialInsuranceNo" value="Social Insurance No"
+								showEffect="clip" hideEffect="explode" />
+
+							<p:inputText id="healthInsuranceNo"
+								value="#{empView.modifyEmployeeInfoItem.employee.healthInsuranceNo}"
+								placeholder="Health Insurance No" />
+							<p:message for="healthInsuranceNo" display="icon" />
+							<p:tooltip for="healthInsuranceNo" value="Health Insurance No"
+								showEffect="clip" hideEffect="explode" />
+
+							<p:inputText id="bankAccountNo"
+								value="#{empView.modifyEmployeeInfoItem.employee.bankAccountNo}"
+								placeholder="Bank Account No" />
+							<p:message for="bankAccountNo" display="icon" />
+							<p:tooltip for="bankAccountNo" value="Bank Account No"
+								showEffect="clip" hideEffect="explode" />
+
+							<p:inputText id="bankBranchName"
+								value="#{empView.modifyEmployeeInfoItem.employee.bankBranchName}"
+								placeholder="Bank Branch Name" />
+							<p:message for="bankBranchName" display="icon" />
+							<p:tooltip for="bankBranchName" value="Bank Branch Name"
+								showEffect="clip" hideEffect="explode" />
+						</h:panelGroup>
+					</p:panelGrid>
+				</p:tab>
+
+				<p:tab id="benefit" title="Benefits"
+					rendered="#{employeePermission.checkPermission(empView.modifyEmployeeInfoItem.employee.employeeId, 'VIEW_BENEFIT')}">
+					<h:panelGrid columns="2">
+						<h:outputText value="Base Wage Rates:" />
+						<p:inputText
+							value="#{empView.modifyEmployeeInfoItem.employee.baseWageRates}"
+							required="true" label="Base Wage Rates" />
+						<h:outputText value="Capacity Salary:" />
+						<p:inputText
+							value="#{empView.modifyEmployeeInfoItem.employee.capacitySalary}"
+							required="true" label="Capacity Salary" />
+
+						<h:outputText value="Total Salary:" />
+						<p:inputText
+							value="#{empView.modifyEmployeeInfoItem.employee.totalSalary}"
+							required="true" label="Total Salary" />
+
+						<h:outputText value="Bonus:" />
+						<p:inputText
+							value="#{empView.modifyEmployeeInfoItem.employee.bonus}"
+							required="true" label="Bonus" />
+
+					</h:panelGrid>
+				</p:tab>
+
+				<p:tab id="emp_user" title="User Information"
+					rendered="#{empView.showUserTab}">
+					<h:panelGrid columns="3">
+						<h:outputText value="Username" />
+						<p:inputText id="username"
+							value="#{empView.modifyEmployeeInfoItem.userName}"
+							required="true" placeholder="Username">
+							<f:validateLength minimum="5" maximum="20" />
+							<f:validator validatorId="userNameValidator" />
+							<p:ajax update="emp_userName_msg" event="keyup" />
+						</p:inputText>
+						<h:panelGroup>
+							<p:commandLink action="#{empView.onGenerateUserName}"
+								value="Generate" oncomplete="refreshUsername();" ajax="true">
+							</p:commandLink>
+							<p:message for="username" id="emp_userName_msg" display="icon" />
+						</h:panelGroup>
+						<h:outputText value="Auto Password ?" />
+						<p:selectBooleanCheckbox id="autoPasswordCheckbox"
+							value="#{empView.autoPassword}">
+							<p:ajax event="change" oncomplete="refreshPasswordFields();" />
+						</p:selectBooleanCheckbox>
+						<p:message for="autoPasswordCheckbox" display="icon" />
+
+						<h:outputText value="Password" />
+						<p:password id="userPassword1" disabled="#{empView.autoPassword}"
+							feedback="true" inline="true" match="userPassword2"
+							value="#{empView.modifyEmployeeInfoItem.userPassword1}"
+							required="true" placeholder="Password" />
+						<p:message for="userPassword1" id="userPassword1_msg"
+							display="icon" />
+
+						<h:outputText value="Re-enter Password" />
+						<p:password id="userPassword2" disabled="#{empView.autoPassword}"
+							value="#{empView.modifyEmployeeInfoItem.userPassword2}"
+							required="true" placeholder="Re-enter Password" />
+						<p:message for="userPassword2" id="userPassword2_msg"
+							display="icon" />
+
+					</h:panelGrid>
+				</p:tab>
+			</p:accordionPanel>
+			<p:commandButton value="Save" actionListener="#{empView.save}"
+				styleClass="GreenButton RaisedButton" icon="fa fa-save Fs16 White"
+				update=":empPanelGroup :growl" oncomplete="refreshEmployees();"
+				ajax="true" />
+
+			<p:commandButton value="Resign"
+				actionListener="#{empView.onResignationEmployee}"
+				styleClass="RedButton RaisedButton" update=":empPanelGroup :growl"
+				oncomplete="refreshEmployees();" ajax="true"
+				disabled="#{empView.isResigned(empView.modifyEmployeeInfoItem.employee.employeeId)}" />
+
+			<p:commandButton value="Cancel" id="cancelBtn"
+				icon="fa  fa-arrow-left Fs16 White" widgetVar="wCancelBtn"
+				action="#{empView.cancelModification}" immediate="true"
+				update=":empPanelGroup">
+			</p:commandButton>
+		</h:form>
+	</h:body>
+</f:view>
+

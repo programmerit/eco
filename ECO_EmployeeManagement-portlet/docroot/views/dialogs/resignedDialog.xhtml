@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
+	<h:head />
+
+	<h:body>
+		<h:form id="resignationForm">
+			<p:dialog widgetVar="wResignationDialog" header="Resignation Form"
+				modal="true">
+				<p:outputPanel id="resignationOutputPanel">
+					<p:panelGrid columns="2">
+						<h:outputText value="Fullname" />
+						<h:outputText id="rFullName"
+							value="#{resignationBean.employeeIndexedItem.fullName}" />
+
+						<h:outputText value="Resigned Date" />
+						<p:calendar pattern="dd/MM/yyyy"
+							value="#{resignationBean.resignationHistory.resignedDate}" />
+
+						<h:outputText value="Resigned Reason" />
+						<p:selectOneMenu
+							value="#{resignationBean.resignationHistory.resignedType}"
+							converter="resignationTypeConverter" effect="fade">
+							<f:selectItem itemLabel="Resigned Type" itemValue="" />
+							<f:selectItems value="#{resignationBean.resignationTypes}"
+								var="r"
+								itemLabel="#{i18n[resignationBean.getLocalizedLaborContractType(r)]}"
+								itemValue="#{r}" />
+							<p:column>
+					                #{r}
+					            </p:column>
+						</p:selectOneMenu>
+
+						<h:outputText value="Comments" />
+						<p:inputTextarea
+							value="#{resignationBean.resignationHistory.comment}"
+							placeholder="Input Comments Here" />
+
+					</p:panelGrid>
+				</p:outputPanel>
+				<p:commandButton value="Resigned" styleClass="RedButton"
+					action="#{resignationBean.save}"
+					update=":employeesForm:employees :growl"
+					oncomplete="PF('wResignationDialog').hide()" />
+				<p:commandButton value="Cancel"
+					onclick="PF('wResignationDialog').hide()">
+					<p:resetInput target="resignationForm" />
+				</p:commandButton>
+			</p:dialog>
+		</h:form>
+	</h:body>
+</f:view>

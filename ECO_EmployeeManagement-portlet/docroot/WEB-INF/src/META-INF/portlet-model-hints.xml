@@ -1,0 +1,247 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="vn.com.ecopharma.emp.model.Certificate">
+		<field name="certificateId" type="long" />
+		<field name="className" type="String" />
+		<field name="classPK" type="long" />
+		<field name="education" type="String" />
+		<field name="certificateType" type="String" />
+		<field name="name" type="String" />
+		<field name="specialize" type="String" />
+		<field name="coursePlace" type="long" />
+		<field name="graduatedYear" type="Date" />
+		<field name="grade" type="String" />
+		<field name="courseType" type="String" />
+		<field name="expiredDate" type="Date" />
+		<field name="issuedPlace" type="String" />
+		<field name="note" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.emp.model.Department">
+		<field name="departmentId" type="long" />
+		<field name="name" type="String" />
+		<field name="devisionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.emp.model.Devision">
+		<field name="devisionId" type="long" />
+		<field name="name" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.emp.model.District">
+		<field name="districtId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="regionCode" type="String" />
+		<field name="name" type="String" />
+	</model>
+	<model name="vn.com.ecopharma.emp.model.Emp">
+		<field name="empId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="empCode" type="String" />
+		<field name="contactNumber" type="String" />
+		<field name="birthday" type="Date" />
+		<field name="ethnic" type="String" />
+		<field name="nationality" type="String" />
+		<field name="religion" type="String" />
+		<field name="joinedDate" type="Date" />
+		<field name="titlesId" type="long" />
+		<field name="levelId" type="long" />
+		<field name="promotedDate" type="Date" />
+		<field name="laborContractSignedDate" type="Date" />
+		<field name="laborContractExpiredDate" type="Date" />
+		<field name="laborContractType" type="String" />
+		<field name="gender" type="String" />
+		<field name="placeOfBirth" type="String" />
+		<field name="education" type="String" />
+		<field name="educationSpecialize" type="String" />
+		<field name="universityId" type="long" />
+		<field name="maritalStatus" type="String" />
+		<field name="identityCardNo" type="String" />
+		<field name="issuedDate" type="Date" />
+		<field name="issuedPlace" type="String" />
+		<field name="passport" type="String" />
+		<field name="addressId" type="long" />
+		<field name="companyEmail" type="String" />
+		<field name="personalTaxCode" type="String" />
+		<field name="numberOfDependents" type="int" />
+		<field name="dependentNames" type="String" />
+		<field name="socialInsuranceNo" type="String" />
+		<field name="healthInsuranceNo" type="String" />
+		<field name="healthInsurancePlace" type="String" />
+		<field name="bankAccountNo" type="String" />
+		<field name="bankName" type="String" />
+		<field name="bankBranchName" type="String" />
+		<field name="baseWageRates" type="double" />
+		<field name="positionWageRates" type="double" />
+		<field name="capacitySalary" type="double" />
+		<field name="totalSalary" type="double" />
+		<field name="bonus" type="double" />
+		<field name="resignedDate" type="Date" />
+		<field name="empUserId" type="long" />
+		<field name="deleted" type="boolean" />
+		<field name="companyEmailAddress" type="String" />
+		<field name="workingPlaceId" type="long" />
+		<field name="status" type="String" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.emp.model.EmployeeTitlesHistory">
+		<field name="employeeTitlesHistoryId" type="long" />
+		<field name="employeeId" type="long" />
+		<field name="titlesId" type="long" />
+		<field name="setDate" type="Date" />
+		<field name="note" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.emp.model.Level">
+		<field name="levelId" type="long" />
+		<field name="name" type="String" />
+		<field name="level" type="int" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.emp.model.Location">
+		<field name="locationId" type="long" />
+		<field name="name" type="String" />
+		<field name="addressId" type="long" />
+		<field name="type" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.emp.model.PromotedHistory">
+		<field name="promotedHistoryId" type="long" />
+		<field name="employeeId" type="long" />
+		<field name="oldTitlesId" type="long" />
+		<field name="newTitlesId" type="long" />
+		<field name="promotedDate" type="Date" />
+		<field name="comment" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="deleted" type="boolean" />
+	</model>
+	<model name="vn.com.ecopharma.emp.model.ResignationHistory">
+		<field name="resignationHistoryId" type="long" />
+		<field name="employeeId" type="long" />
+		<field name="resignedDate" type="Date" />
+		<field name="resignedType" type="String" />
+		<field name="comment" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="deleted" type="boolean" />
+	</model>
+	<model name="vn.com.ecopharma.emp.model.ResourceConfig">
+		<field name="resourceConfigId" type="long" />
+		<field name="key" type="String" />
+		<field name="value" type="String">
+			<hint name="max-length">2000</hint>
+		</field>
+		<field name="type" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.emp.model.Titles">
+		<field name="titlesId" type="long" />
+		<field name="name" type="String" />
+		<field name="unitGroupId" type="long" />
+		<field name="unitId" type="long" />
+		<field name="departmentId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.emp.model.Unit">
+		<field name="unitId" type="long" />
+		<field name="name" type="String" />
+		<field name="departmentId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.emp.model.UnitGroup">
+		<field name="unitGroupId" type="long" />
+		<field name="name" type="String" />
+		<field name="unitId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.emp.model.University">
+		<field name="universityId" type="long" />
+		<field name="name" type="String" />
+		<field name="code" type="String" />
+		<field name="tel_fax" type="String">
+			<hint name="max-length">250</hint>
+		</field>
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.emp.model.WorkingLocation">
+		<field name="workingLocationId" type="long" />
+		<field name="name" type="String" />
+		<field name="locationId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+</model-hints>

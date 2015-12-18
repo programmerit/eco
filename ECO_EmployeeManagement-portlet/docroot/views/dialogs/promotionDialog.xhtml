@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
+	<h:head />
+
+	<h:body>
+		<h:form id="promotionForm">
+			<p:dialog widgetVar="wPromotionDialog" header="Promotion Form"
+				modal="true">
+				<p:outputPanel id="promotionOutputPanel">
+					<p:panelGrid columns="2">
+						<h:outputText value="Fullname" />
+						<h:outputText id="pFullName"
+							value="#{promotionBean.employeeIndexedItem.fullName}" />
+
+						<h:outputText value="Current Titles" />
+						<h:outputText id="pTitles" value="#{promotionBean.oldTitles.name}" />
+
+						<h:outputText value="Promoted Titles" />
+						<p:selectOneMenu id="titlesSelect"
+							value="#{promotionBean.promotedTitles}"
+							converter="titlesConverter" effect="fade" filter="true"
+							filterMatchMode="contains" var="t" required="true">
+
+							<f:selectItem itemLabel="Titles" itemValue="" />
+							<f:selectItems value="#{promotionBean.titlesList}" var="t"
+								itemLabel="#{t.name}" itemValue="#{t}" />
+
+							<p:column>
+					                #{t.titlesId} - #{t.name}
+					            </p:column>
+						</p:selectOneMenu>
+
+						<h:outputText value="Promoted Date" />
+						<p:calendar pattern="dd/MM/yyyy"
+							value="#{promotionBean.promotedHistory.promotedDate}"
+							required="true" />
+
+						<h:outputText value="Comments" />
+						<p:inputTextarea value="#{promotionBean.promotedHistory.comment}"
+							placeholder="Input Comments Here" />
+
+					</p:panelGrid>
+				</p:outputPanel>
+				<p:commandButton value="Promote!" styleClass="RedButton"
+					actionListener="#{promotionBean.onSave}" update=":growl"
+					oncomplete="refreshEmployees(); PF('wPromotionDialog').hide()" />
+				<p:commandButton value="Cancel"
+					onclick="PF('wPromotionDialog').hide()">
+					<p:resetInput target="promotionForm" />
+				</p:commandButton>
+			</p:dialog>
+		</h:form>
+	</h:body>
+</f:view>

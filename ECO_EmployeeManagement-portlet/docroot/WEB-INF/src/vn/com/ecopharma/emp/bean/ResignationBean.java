@@ -1,0 +1,96 @@
+package vn.com.ecopharma.emp.bean;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import vn.com.ecopharma.emp.dto.EmpIndexedItem;
+import vn.com.ecopharma.emp.enumeration.ResignationType;
+import vn.com.ecopharma.emp.model.ResignationHistory;
+import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
+import vn.com.ecopharma.emp.service.ResignationHistoryLocalServiceUtil;
+import vn.com.ecopharma.emp.util.EmployeeUtils;
+
+import com.liferay.faces.portal.context.LiferayFacesContext;
+import com.liferay.portal.service.ServiceContext;
+
+/**
+ * @author TaoTran
+ *
+ */
+@ManagedBean
+@ViewScoped
+public class ResignationBean implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private ResignationHistory resignationHistory;
+
+	private long employeeId;
+
+	@PostConstruct
+	public void init() {
+		resignationHistory = ResignationHistoryLocalServiceUtil
+				.createPrePersisted();
+	}
+
+	public void save() {
+		final ServiceContext serviceContext = LiferayFacesContext.getInstance()
+				.getServiceContext();
+		EmpIndexedItem employeeIndexedItem = getEmployeeIndexedItem();
+		resignationHistory.setEmployeeId(employeeIndexedItem.getEmployeeId());
+		final ResignationHistory result = ResignationHistoryLocalServiceUtil
+				.addResignationHistory(resignationHistory, serviceContext);
+		if (result != null) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Resignation Info", "Employee "
+							+ employeeIndexedItem.getFullName()
+							+ " has been resigned sucessfully");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+	}
+
+	public ResignationHistory getResignationHistory() {
+		return resignationHistory;
+	}
+
+	public EmpIndexedItem getEmployeeIndexedItem() {
+		return employeeId != 0 ? new EmpIndexedItem(
+				EmpLocalServiceUtil.getIndexedEmp(employeeId,
+						EmployeeUtils.getCurrentSearchContext())) : null;
+	}
+
+	public void setResignationHistory(ResignationHistory resignationHistory) {
+		this.resignationHistory = resignationHistory;
+	}
+
+	public List<String> getResignationTypes() {
+		final List<String> result = new ArrayList<String>();
+		for (ResignationType resignationType : ResignationType.values()) {
+			result.add(resignationType.toString());
+		}
+		return result;
+	}
+
+	public String getLocalizedLaborContractType(String r) {
+		return ResignationType.valueOf(r).getLocalizedString();
+	}
+
+	public long getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(long employeeId) {
+		this.employeeId = employeeId;
+	}
+
+}

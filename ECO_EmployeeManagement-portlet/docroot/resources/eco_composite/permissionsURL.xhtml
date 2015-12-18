@@ -1,0 +1,11 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:portal="http://liferay.com/faces/portal"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+	<portal:permissionsURL modelResource="vn.com.ecopharma.emp.model.Emp"
+		modelResourceDescription="vn.com.ecopharma.emp.model.Emp"
+		resourcePrimKey="100321" var="permissionsURL" />
+	<pre>#{permissionsURL}</pre>
+
+</ui:composition>

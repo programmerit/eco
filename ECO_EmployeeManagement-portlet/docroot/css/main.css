@@ -1,0 +1,135 @@
+.portlet-msg-error {
+	font-style: italic;
+	font-weight: bold;
+	margin: 1px 0px 0px 0px;
+	padding: 1px 5px 1px 24px;
+}
+
+.portlet-msg-info {
+	font-style: italic;
+	margin: 1px 0px 0px 0px;
+	padding: 1px 5px 1px 24px;
+}
+
+/* .pe-fluidgrid-item.para {
+	width: 500px;
+}
+
+.pe-fluidgrid-item.image {
+	width: 300px;
+} */
+span.currentStatus {
+	/* right: 20px; */
+	display: block;
+	position: absolute;
+	margin: 0;
+	font-size: 11px;
+	line-height: 20px;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, .2);
+	padding: 0 6px;
+	float: right !important;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: .25em;
+}
+
+.status-green {
+	color: #fff;
+	background: green;
+}
+
+.status-red {
+	color: #fff;
+	background: maroon;
+}
+
+.status-grey {
+	color: #fff;
+	background: grey;
+}
+
+.status-yellow {
+	color: #fff;
+	background: #f4b04f;
+}
+
+.calendarClass>input {
+	width: 70px !important;
+}
+
+/* select.ui-selectcheckboxmenu-items {
+	margin: 0 0 0 0!important;
+} */
+.aui ul {
+	margin: 0 0 0 0 !important;
+}
+
+.aui label {
+	margin-bottom: 0 !important;
+}
+
+.aui .pf-rio-portlet .ui-selectcheckboxmenu .ui-selectcheckboxmenu-label
+	{
+	padding: 14px 26px 9px 10px !important;
+	margin-bottom: 0px !important;
+}
+
+/* Select One */
+.aui .pf-rio-portlet .ui-inputfield {
+	border-bottom: solid 1px #b0bec5 !important;
+}
+
+.aui .pf-rio-portlet .ui-inputfield.ui-state-focus {
+	border-bottom: solid 1px #03A9F4 !important;
+}
+
+.aui .pf-rio-portlet .ui-inputfield .ui-inputtext .ui-widget .ui-state-default .ui-corner-all .ui-state-focus .focus .ui-state-hover
+	{
+	border-bottom: solid 1px #03A9F4 !important;
+}
+
+/*  fa awesome icon button */
+.aui .pf-rio-portlet .ui-button-text-icon-left .ui-icon.fa {
+	margin-left: 7px !important;
+}
+
+/* .aui .pf-rio-portlet .ui-inputfield .ui-corner-all {
+	-webkit-box-shadow: none !important;
+} */
+.aui .pf-rio-portlet .ui-selectonemenu .ui-selectonemenu-label {
+	border-bottom: 0px !important;
+}
+
+.ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-filter-container .ui-inputfield,
+	.ui-selectonemenu-panel .ui-selectonemenu-filter-container .ui-inputfield
+	{
+	padding: 9px 10px !important;
+	border: solid 0px #C6D6DF !important;
+	border-bottom: solid 1px #B0BEC5 !important;
+	background-color: #F5F5F4 !important;
+	-webkit-box-shadow: none !important;
+}
+
+.aui .pf-rio-portlet .ui-selectonemenu {
+	width: inherit !important;
+}
+/* - Spinner */
+/* .aui .pf-rio-portlet .ui-spinner .ui-spinner-down {
+	margin-bottom: 8px!important;	
+} */
+.aui .pf-rio-portlet .ui-spinner .ui-spinner-down {
+	margin: 0 0 8px !important;
+}
+
+.aui .pf-rio-portlet .ui-spinner .ui-spinner-down {
+	margin: 0 0 8px !important;
+}
+
+.aui .pf-rio-portlet .searchForm .ui-panelgrid tbody tr td {
+	border: solid 0px #c6d6df !important;
+}
+
+.black-font-color {
+	color: black;
+}

@@ -1,0 +1,219 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:head />
+
+	<h:body>
+		<!-- <p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="false" draggable="false"
+			closable="false" resizable="false" showHeader="false"
+			styleClass="eco-ajax-loading">
+			<p:graphicImage name="/images/ajax-loader1.gif" />
+		</p:dialog> -->
+		<h:form id="importExportForm">
+			<p:remoteCommand name="updateDownloadOutput"
+				update=":importExportForm:downloadExportOutputPanel" />
+
+			<p:remoteCommand name="updateOnFinishedImport"
+				update=":importExportForm:failGroup :importExportForm:importCommandButton" />
+			<p:commandLink value="Back"
+				actionListener="#{empView.cancelModification}"
+				update=":empPanelGroup" />
+
+
+			<p:tabView>
+				<p:tab id="exportTab" title="Export">
+					<br />
+					<p:panelGrid>
+						<h:outputLabel value="Choose Preset: " for="presetTypeSelect" />
+						<p:selectOneButton id="presetTypeSelect"
+							value="#{employeeImportExportBean.presetType}" required="true">
+							<f:selectItem itemLabel="Excel 1997-2003(XLS)" itemValue="xls" />
+							<f:selectItem itemLabel="Excel 2007 and higher(XLSX)"
+								itemValue="xlsx" />
+							<f:selectItem itemLabel="PDF" itemValue="pdf" itemDisabled="true" />
+						</p:selectOneButton>
+						<br />
+						<br />
+						<h:outputLabel value="Export Range: " for="exportRangeRadio" />
+						<h:panelGroup>
+							<p:selectOneRadio id="exportRangeRadio"
+								value="#{employeeImportExportBean.exportRange}">
+								<f:selectItem itemLabel="All Employee" itemValue="all" />
+								<f:selectItem itemLabel="All Filter Range"
+									itemValue="allFilterRange" />
+								<f:selectItem itemLabel="Current Filter Page"
+									itemValue="currentPage" />
+							</p:selectOneRadio>
+						</h:panelGroup>
+						<br />
+						<br />
+						<h:outputLabel value="Columns To Export: " for="exportColumns" />
+						<h:panelGroup>
+							<p:selectOneRadio id="exportColumns"
+								value="#{employeeImportExportBean.exportColumn}" disabled="true">
+								<f:selectItem itemLabel="All" itemValue="all" />
+								<f:selectItem itemLabel="Available on Table" itemValue="avail" />
+								<f:selectItem itemLabel="Custom" itemValue="custom" />
+							</p:selectOneRadio>
+
+							<p:autoComplete id="columns" multiple="true" scrollHeight="300"
+								value="#{employeeIndexedBean.columnTemplates}"
+								completeMethod="#{employeeIndexedBean.completeColumns}"
+								var="column" itemValue="#{column}"
+								itemLabel="#{i18n[employeeIndexedBean.getHeaderi18nKey(column)]}"
+								autoHighlight="true" placeholder="Type to select column..."
+								styleClass="column-setting">
+							</p:autoComplete>
+
+						</h:panelGroup>
+					</p:panelGrid>
+					<br />
+					<p:commandButton value="Generate Export File"
+						actionListener="#{employeeImportExportBean.exportEmployees}"
+						update=":importExportForm:exportDownloadLink"
+						oncomplete="updateDownloadOutput(); PF('wDownloadExportDialog').show();">
+					</p:commandButton>
+				</p:tab>
+				<p:tab id="importEmployeeTab" title="Import Employee">
+					<h:panelGroup>
+						<h:outputLabel value="Sheet Name/Index" />
+						<p:inputText value="#{employeeImportExportBean.sheetNameOrIndex}"
+							placeholder="1 or 'SheetName'" />
+					</h:panelGroup>
+
+					<p:fileUpload
+						fileUploadListener="#{employeeImportExportBean.handleFileImport}"
+						mode="advanced" dragDropSupport="true" update="messages"
+						sizeLimit="10000000" allowTypes="/(\.|\/)(xls|xlsx)$/"
+						oncomplete="PF('wImportConfirmation').show()" />
+
+					<p:growl id="messages" showDetail="true" />
+				</p:tab>
+
+				<p:tab id="universityTab" title="Import University">
+
+					<h:panelGroup>
+						<h:outputLabel value="Sheet Name/Index" />
+						<p:inputText
+							value="#{universityImportExportBean.sheetNameOrIndex}"
+							placeholder="1 or 'SheetName'" />
+					</h:panelGroup>
+
+					<p:fileUpload
+						fileUploadListener="#{universityImportExportBean.handleFileImport}"
+						mode="advanced" dragDropSupport="true" update="messages2"
+						sizeLimit="10000000" allowTypes="/(\.|\/)(xls|xlsx)$/" />
+
+					<p:growl id="messages2" showDetail="true" />
+				</p:tab>
+			</p:tabView>
+			<br />
+
+			<p:commandLink value="Cancel"
+				actionListener="#{empView.cancelModification}"
+				update=":empPanelGroup" />
+
+			<p:dialog id="progressDialog" widgetVar="wExportProgressDialog"
+				modal="true" closeOnEscape="true" resizable="false"
+				showHeader="false" showEffect="fade">
+				<p:graphicImage name="/images/ajax-loader1.gif" />
+				<h:outputText value="Generating export file..." />
+			</p:dialog>
+
+			<p:dialog id="downloadExportDialog" widgetVar="wDownloadExportDialog"
+				modal="true" closeOnEscape="true" resizable="false"
+				showHeader="false" showEffect="fade">
+				<p:outputPanel id="downloadExportOutputPanel">
+					<h:outputText
+						value="#{employeeImportExportBean.exportedFail ? 'Export Failed' : 'Completed!'}" />
+					<br />
+					<h:outputLink id="exportDownloadLink"
+						rendered="#{not employeeImportExportBean.exportedFail}"
+						onclick="PF('wDownloadExportDialog').hide()"
+						value="#{employeeImportExportBean.fileURL}">Download File</h:outputLink>
+				</p:outputPanel>
+			</p:dialog>
+
+			<p:dialog id="importConfirmation" widgetVar="wImportConfirmation"
+				modal="true" closeOnEscape="true" resizable="false"
+				header="Import Confirmation">
+				<p:outputPanel id="importConfirmationOutputPanel" autoUpdate="true">
+					<h:outputText
+						value="Total: #{employeeImportExportBean.totalListSize}" />
+					<br />
+					<h:outputText value="Possibly duplicate:" />
+					<p:commandLink
+						value="#{employeeImportExportBean.duplicationListSize}"
+						onclick="PF('wDuplicatedImportList').show()"
+						update=":importExportForm:duplicatedImportListOutputPanel" />
+					<br />
+					<h:panelGroup id="failGroup"
+						rendered="#{employeeImportExportBean.failedListSize > 0}">
+						<h:outputText value="Fail to import: " />
+						<p:commandLink value="#{employeeImportExportBean.failedListSize}"
+							onclick="PF('wFailedImportList').show()" />
+					</h:panelGroup>
+				</p:outputPanel>
+				<p:commandButton value="Import" id="importCommandButton"
+					styleClass="RedButton RaisedButton"
+					disabled="#{employeeImportExportBean.finishedImport}" ajax="true"
+					update="@this"
+					actionListener="#{employeeImportExportBean.executeImport}" />
+				<p:commandButton value="Cancel"
+					onclick="PF('wImportConfirmation').hide()" />
+			</p:dialog>
+
+			<p:dialog id="failedImportList" widgetVar="wFailedImportList"
+				modal="true" closeOnEscape="true" resizable="false"
+				header="Failed Import List">
+				<p:outputPanel id="failedImportListOutputPanel" autoUpdate="true">
+					<p:dataList value="#{employeeImportExportBean.failedImportList}"
+						var="i">
+						<f:facet name="header">
+				            Basic
+				        </f:facet>
+				       Test
+				    </p:dataList>
+				</p:outputPanel>
+			</p:dialog>
+
+			<p:dialog widgetVar="wDuplicatedImportList" modal="true"
+				closeOnEscape="true" resizable="true"
+				header="Duplicated Import List">
+				<p:outputPanel id="duplicatedImportListOutputPanel">
+					<p:dataList paginator="true" paginatorAlwaysVisible="true"
+						rowsPerPageTemplate="5, 10, 15" rows="5"
+						value="#{employeeImportExportBean.possiblyDuplicationList}"
+						var="i" itemStyleClass="import-data-list-item">
+				       #{i.fullname}, #{i.username}
+				    </p:dataList>
+				</p:outputPanel>
+			</p:dialog>
+
+		</h:form>
+
+
+	</h:body>
+	<style type="text/css">
+.column-setting select.ui-helper-hidden {
+	display: none;
+}
+
+.column-setting .ui-autocomplete-multiple-container.ui-inputfield {
+	width: 100%;
+}
+
+.import-data-list-item {
+	list-style: none !important;
+}
+</style>
+</f:view>

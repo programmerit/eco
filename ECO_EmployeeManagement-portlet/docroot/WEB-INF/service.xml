@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<service-builder package-path="vn.com.ecopharma.emp">
+	<author>tvt</author>
+	<namespace>eco_em_portlet</namespace>
+
+	<entity name="University" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="universityId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+		<column name="name" type="String"></column>
+		<column name="code" type="String"></column>
+		<column name="tel_fax" type="String"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<finder name="Name" return-type="University">
+			<finder-column name="name"></finder-column>
+		</finder>
+		<finder name="Code" return-type="University">
+			<finder-column name="code"></finder-column>
+		</finder>
+	</entity>
+	<entity name="Titles" local-service="true">
+
+		<column name="titlesId" type="long" primary="true"></column>
+		<column name="name" type="String"></column>
+
+
+		<!-- PK fields -->
+
+		<!-- Group instance -->
+		<column name="unitGroupId" type="long"></column>
+		<column name="unitId" type="long"></column>
+		<column name="departmentId" type="long"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<finder name="NameAndUnit" return-type="Titles">
+			<finder-column name="name"></finder-column>
+			<finder-column name="unitId"></finder-column>
+		</finder>
+
+		<finder name="Name" return-type="Titles">
+			<finder-column name="name"></finder-column>
+		</finder>
+		<finder name="Unit" return-type="Collection">
+			<finder-column name="unitId"></finder-column>
+		</finder>
+		<finder name="UnitGroup" return-type="Collection">
+			<finder-column name="unitGroupId"></finder-column>
+		</finder>
+		<finder name="NameAndUnitGroup" return-type="Titles">
+			<finder-column name="name"></finder-column>
+			<finder-column name="unitGroupId"></finder-column>
+		</finder>
+		<finder name="NameAndDepartment" return-type="Titles">
+			<finder-column name="name"></finder-column>
+			<finder-column name="departmentId"></finder-column>
+		</finder>
+		<finder name="NameUnitGroupUnitDepartment" return-type="Titles">
+			<finder-column name="name"></finder-column>
+			<finder-column name="unitGroupId"></finder-column>
+			<finder-column name="unitId"></finder-column>
+			<finder-column name="departmentId"></finder-column>
+		</finder>
+		<finder name="Department" return-type="Collection">
+			<finder-column name="departmentId"></finder-column>
+		</finder>
+		<finder name="findByNameAndRelatedFields" return-type="Titles">
+			<finder-column name="name"></finder-column>
+			<finder-column name="unitGroupId"></finder-column>
+			<finder-column name="unitId"></finder-column>
+			<finder-column name="departmentId"></finder-column>
+		</finder>
+	</entity>
+	<entity name="Level" local-service="true">
+		<column name="levelId" primary="true" type="long"></column>
+		<column name="name" type="String"></column>
+		<column name="level" type="int" convert-null="false"></column>
+
+		<!-- PK fields -->
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<finder name="Name" return-type="Level">
+			<finder-column name="name"></finder-column>
+		</finder>
+	</entity>
+	<entity name="EmployeeTitlesHistory" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="employeeTitlesHistoryId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+		<column name="employeeId" type="long"></column>
+		<column name="titlesId" type="long"></column>
+		<column name="setDate" type="Date"></column>
+		<column name="note" type="String"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+	</entity>
+	<entity name="Location" local-service="true">
+
+
+		<!-- PK fields -->
+
+		<column name="locationId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+		<column name="name" type="String"></column>
+		<column name="addressId" type="long"></column>
+		<column name="type" type="String"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<finder name="Type" return-type="Collection">
+			<finder-column name="type"></finder-column>
+		</finder>
+	</entity>
+	<entity local-service="true" name="Devision">
+		<column name="devisionId" primary="true" type="long"></column>
+		<column name="name" type="String"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<finder name="Name" return-type="Devision">
+			<finder-column name="name"></finder-column>
+		</finder>
+	</entity>
+	<entity local-service="true" name="Department">
+		<column name="departmentId" primary="true" type="long"></column>
+		<column name="name" type="String"></column>
+		<column name="devisionId" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<finder name="NameAndDevision" return-type="Department">
+			<finder-column name="name"></finder-column>
+			<finder-column name="devisionId"></finder-column>
+		</finder>
+		<finder name="Devision" return-type="Collection">
+			<finder-column name="devisionId"></finder-column>
+		</finder>
+	</entity>
+	<entity name="Unit" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="unitId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+		<column name="name" type="String"></column>
+		<column name="departmentId" type="long"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<finder name="NameAndDepartment" return-type="Unit">
+			<finder-column name="name"></finder-column>
+			<finder-column name="departmentId"></finder-column>
+		</finder>
+		<finder name="Department" return-type="Collection">
+			<finder-column name="departmentId"></finder-column>
+		</finder>
+		<finder name="Name" return-type="Unit">
+			<finder-column name="name"></finder-column>
+		</finder>
+	</entity>
+	<entity local-service="true" name="UnitGroup">
+		<column name="unitGroupId" primary="true" type="long"></column>
+		<column name="name" type="String"></column>
+		<column name="unitId" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<finder name="Unit" return-type="Collection">
+			<finder-column name="unitId"></finder-column>
+		</finder>
+		<finder name="NameAndUnit" return-type="UnitGroup">
+			<finder-column name="name"></finder-column>
+			<finder-column name="unitId"></finder-column>
+		</finder>
+	</entity>
+	<entity name="WorkingLocation" local-service="true">
+
+
+		<!-- PK fields -->
+
+		<column name="workingLocationId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+		<column name="name" type="String"></column>
+		<column name="locationId" type="long"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+	</entity>
+	<entity name="ResignationHistory" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="resignationHistoryId" type="long" primary="true">
+		</column>
+
+		<!-- Group instance -->
+		<column name="employeeId" type="long"></column>
+		<column name="resignedDate" type="Date"></column>
+		<column name="resignedType" type="String"></column>
+		<column name="comment" type="String"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="deleted" type="boolean"></column>
+        <finder name="Employee" return-type="Collection">
+            <finder-column name="employeeId"></finder-column>
+        </finder>
+	</entity>
+	<entity name="PromotedHistory" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="promotedHistoryId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+		<column name="employeeId" type="long"></column>
+		<column name="oldTitlesId" type="long"></column>
+		<column name="newTitlesId" type="long"></column>
+		<column name="promotedDate" type="Date"></column>
+		<column name="comment" type="String"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="deleted" type="boolean"></column>
+		<finder name="Employee" return-type="Collection">
+			<finder-column name="employeeId"></finder-column>
+		</finder>
+		<finder name="OldTitlesId" return-type="Collection">
+			<finder-column name="oldTitlesId"></finder-column>
+		</finder>
+		<finder name="NewTitlesId" return-type="Collection">
+			<finder-column name="newTitlesId"></finder-column>
+		</finder>
+	</entity>
+	<entity name="ResourceConfig" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="resourceConfigId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+		<column name="key" type="String"></column>
+		<column name="value" type="String"></column>
+		<column name="type" type="String"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<finder name="Key" return-type="ResourceConfig">
+			<finder-column name="key"></finder-column>
+		</finder>
+		<finder name="KeyAndType" return-type="ResourceConfig">
+			<finder-column name="key"></finder-column>
+			<finder-column name="type"></finder-column>
+		</finder>
+		<finder name="Type" return-type="Collection">
+			<finder-column name="type"></finder-column>
+		</finder>
+	</entity>
+	<entity name="District" local-service="true">
+
+		<!-- PK fields -->
+
+		<!-- Group instance -->
+
+		<!-- Audit fields -->
+
+
+		<!-- PK fields -->
+
+		<column name="districtId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="regionCode" type="String"></column>
+		<column name="name" type="String"></column>
+		<finder name="RegionCode" return-type="Collection">
+			<finder-column name="regionCode"></finder-column>
+		</finder>
+		<finder name="RegionCodeAndName" return-type="District">
+			<finder-column name="regionCode"></finder-column>
+			<finder-column name="name"></finder-column>
+		</finder>
+	</entity>
+	<entity name="Emp" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="empId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="empCode" type="String"></column>
+		<column name="contactNumber" type="String"></column>
+		<column name="birthday" type="Date"></column>
+		<column name="ethnic" type="String"></column>
+		<column name="nationality" type="String"></column>
+		<column name="religion" type="String"></column>
+		<column name="joinedDate" type="Date"></column>
+		<column name="titlesId" type="long"></column>
+		<column name="levelId" type="long"></column>
+		<column name="promotedDate" type="Date"></column>
+		<column name="laborContractSignedDate" type="Date"></column>
+		<column name="laborContractExpiredDate" type="Date"></column>
+		<column name="laborContractType" type="String"></column>
+		<column name="gender" type="String"></column>
+		<column name="placeOfBirth" type="String"></column>
+		<column name="education" type="String"></column>
+		<column name="educationSpecialize" type="String"></column>
+		<column name="universityId" type="long"></column>
+		<column name="maritalStatus" type="String"></column>
+		<column name="identityCardNo" type="String"></column>
+		<column name="issuedDate" type="Date"></column>
+		<column name="issuedPlace" type="String"></column>
+		<column name="passport" type="String"></column>
+		<column name="addressId" type="long"></column>
+		<column name="companyEmail" type="String"></column>
+		<column name="personalTaxCode" type="String"></column>
+		<column name="numberOfDependents" type="int"></column>
+		<column name="dependentNames" type="String"></column>
+		<column name="socialInsuranceNo" type="String"></column>
+		<column name="healthInsuranceNo" type="String"></column>
+		<column name="healthInsurancePlace" type="String"></column>
+		<column name="bankAccountNo" type="String"></column>
+		<column name="bankName" type="String"></column>
+		<column name="bankBranchName" type="String"></column>
+		<column name="baseWageRates" type="double"></column>
+		<column name="positionWageRates" type="double"></column>
+		<column name="capacitySalary" type="double"></column>
+		<column name="totalSalary" type="double"></column>
+		<column name="bonus" type="double"></column>
+		<column name="resignedDate" type="Date"></column>
+		<column name="empUserId" type="long"></column>
+		<column name="deleted" type="boolean"></column>
+		<column name="companyEmailAddress" type="String"></column>
+		<column name="workingPlaceId" type="long"></column>
+		<column name="status" type="String"></column>
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<finder name="EmpCode" return-type="Emp">
+			<finder-column name="empCode"></finder-column>
+		</finder>
+		<finder name="User" return-type="Emp">
+			<finder-column name="empUserId"></finder-column>
+		</finder>
+	</entity>
+	<entity name="Certificate" local-service="true">
+		<column name="certificateId" primary="true" type="long"></column>
+        <column name="className" type="String"></column>
+        <column name="classPK" type="long"></column>
+        <column name="education" type="String"></column>
+		<column name="certificateType" type="String"></column>
+		<column name="name" type="String"></column>
+		<column name="specialize" type="String"></column>
+		<column name="coursePlace" type="long"></column>
+		<column name="graduatedYear" type="Date"></column>
+		<column name="grade" type="String"></column>
+		<column name="courseType" type="String"></column>
+		<column name="expiredDate" type="Date"></column>
+		<column name="issuedPlace" type="String"></column>
+		<column name="note" type="String"></column>
+
+
+		<!-- PK fields -->
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+        <finder name="CertificateType" return-type="Collection">
+            <finder-column name="certificateType"></finder-column>
+        </finder>
+        <finder name="ClassNameAndClassPK" return-type="Collection">
+            <finder-column name="className"></finder-column>
+            <finder-column name="classPK"></finder-column>
+        </finder>
+        <finder name="ClassNameClassPKAndCertificateType" return-type="Collection">
+            <finder-column name="className"></finder-column>
+            <finder-column name="classPK"></finder-column>
+            <finder-column name="certificateType"></finder-column>
+        </finder>
+	</entity>
+
+</service-builder>

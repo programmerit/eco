@@ -1,0 +1,750 @@
+package vn.com.ecopharma.emp.util;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import vn.com.ecopharma.emp.dto.AddressObjectItem;
+import vn.com.ecopharma.emp.dto.EmployeeIndexedItem;
+import vn.com.ecopharma.emp.enumeration.EmployeeExportType;
+import vn.com.ecopharma.emp.model.Department;
+import vn.com.ecopharma.emp.model.Devision;
+import vn.com.ecopharma.emp.model.DevisionGroup;
+import vn.com.ecopharma.emp.model.Employee;
+import vn.com.ecopharma.emp.model.Titles;
+import vn.com.ecopharma.emp.model.Unit;
+import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
+import vn.com.ecopharma.emp.service.DevisionGroupLocalServiceUtil;
+import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
+import vn.com.ecopharma.emp.service.EmployeeLocalServiceUtil;
+import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
+import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
+import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
+import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
+
+import com.liferay.faces.portal.context.LiferayFacesContext;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Address;
+import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.AddressLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
+
+/**
+ * @author TaoTran
+ *
+ */
+public class EmployeeUtils {
+
+	private static final String ZIP_CODE = "70000";
+
+	/**
+	 * @param documents
+	 * @return
+	 */
+	public static List<EmployeeIndexedItem> getEmployeeIndexedItemsFromIndexedDocuments(
+			List<Document> documents) {
+
+		final List<EmployeeIndexedItem> results = new ArrayList<EmployeeIndexedItem>(
+				documents.size());
+		for (final Document document : documents) {
+			results.add(new EmployeeIndexedItem(document));
+		}
+		return results;
+	}
+
+	/**
+	 * @param clazzName
+	 * @param primaryKey
+	 * @param companyId
+	 * @return
+	 */
+	public static List<AddressObjectItem> getAddressObjectItemsFromClassNameAndPK(
+			String clazzName, long primaryKey, long companyId) {
+		try {
+			final List<AddressObjectItem> results = new ArrayList<AddressObjectItem>();
+
+			for (Address address : AddressLocalServiceUtil.getAddresses(
+					companyId, clazzName, primaryKey)) {
+				results.add(new AddressObjectItem(address));
+			}
+			return results;
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * @param items
+	 * @return
+	 */
+	/**
+	 * @param items
+	 * @return
+	 */
+	public static Map<Address, Boolean> transferAddressObjectListToAddressMap(
+			List<AddressObjectItem> items) {
+		final Map<Address, Boolean> resultMap = new HashMap<Address, Boolean>(
+				items.size());
+		for (AddressObjectItem item : items) {
+
+			final Address address = item.getAddress();
+			long countryId = item.getCountry() != null ? item.getCountry()
+					.getCountryId() : address.getCountryId();
+			long regionId = item.getRegion() != null ? item.getRegion()
+					.getRegionId() : address.getRegionId();
+			address.setCountryId(countryId);
+			address.setRegionId(regionId);
+			address.setZip(ZIP_CODE);
+			resultMap.put(address, item.isUIDeleted());
+		}
+		return resultMap;
+	}
+
+	/**
+	 * @return
+	 */
+	public static SearchContext getCurrentSearchContext() {
+		final LiferayFacesContext liferayFacesContext = LiferayFacesContext
+				.getInstance();
+
+		final PortletRequest req = (PortletRequest) liferayFacesContext
+				.getExternalContext().getRequest();
+
+		final HttpServletRequest httpServletRequest = PortalUtil
+				.getOriginalServletRequest(PortalUtil
+						.getHttpServletRequest(req));
+		final SearchContext searchContext = SearchContextFactory
+				.getInstance(httpServletRequest);
+		return searchContext;
+	}
+
+	public static String getFullnameFromUser(User user) {
+		return user.getFirstName() + " " + user.getMiddleName() + " "
+				+ user.getLastName();
+	}
+
+	/**
+	 * @param fullname
+	 * @return
+	 */
+	public static String getFirstNameFromFullname(String fullname) {
+		return StringUtils.trimToNull(fullname) == null ? StringUtils.EMPTY
+				: fullname.split(" ")[0];
+	}
+
+	/**
+	 * @param fullname
+	 * @return
+	 */
+	public static String getMiddleNameFromFullname(String fullname) {
+		if (StringUtils.trimToNull(fullname) == null)
+			return StringUtils.EMPTY;
+
+		String[] fullnameArr = fullname.split(" ");
+		int length = fullnameArr.length;
+		// check if employee just have first and last name only
+		if (length == 2) {
+			return StringUtils.EMPTY;
+		}
+		String middleName = StringUtils.EMPTY;
+		for (int i = 1; i < length - 1; i++) {
+			middleName += fullnameArr[i] + " ";
+		}
+		return middleName;
+	}
+
+	/**
+	 * @param fullname
+	 * @return
+	 */
+	public static String getLastNameFromFullname(String fullname) {
+		if (StringUtils.trimToNull(fullname) == null)
+			return StringUtils.EMPTY;
+		String[] fullnameArr = fullname.split(" ");
+		return fullnameArr[fullnameArr.length - 1];
+	}
+
+	/**
+	 * @param fullname
+	 * @return
+	 */
+	public static String generateUsername(String fullname) {
+		if (StringUtils.trimToNull(fullname) == null)
+			return StringUtils.EMPTY;
+
+		fullname = VNCharacterUtils.removeAccent(fullname).toLowerCase();
+		StringBuilder resultBuilder = new StringBuilder();
+		char firstChar = getFirstNameFromFullname(fullname).toCharArray()[0];
+
+		String[] middleNameArr = getMiddleNameFromFullname(fullname).split(" ");
+		char[] middleNameChars;
+		if (middleNameArr.length > 0 && middleNameArr[0] != StringUtils.EMPTY) {
+			middleNameChars = new char[middleNameArr.length];
+			for (int i = 0; i < middleNameChars.length; i++) {
+				middleNameChars[i] = middleNameArr[i].charAt(0);
+			}
+		} else {
+			middleNameChars = null;
+		}
+
+		resultBuilder.append(firstChar);
+		if (middleNameChars != null) {
+			resultBuilder.append(middleNameChars);
+		}
+		resultBuilder.append(getLastNameFromFullname(fullname));
+		return resultBuilder.toString();
+	}
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	public static Employee getEmployeeById(long id) {
+		try {
+			return EmployeeLocalServiceUtil.getEmployee(id);
+		} catch (PortalException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * @param row
+	 * @param cellStyle
+	 */
+	private static void setEntireRowStyle(Row row, CellStyle cellStyle) {
+		for (int i = 0; i <= 41; i++) {
+			if (row.getCell(i) != null)
+				row.getCell(i).setCellStyle(cellStyle);
+			else {
+				row.getCell(i).setCellValue(StringUtils.EMPTY);
+				row.getCell(i).setCellStyle(cellStyle);
+			}
+		}
+	}
+
+	/**
+	 * @param wb
+	 * @param ws
+	 */
+	public static void createExportHeaderRow(Workbook wb, Sheet ws) {
+		Row row = null;
+		row = ws.createRow(1);
+		row.createCell(16).setCellValue("THĂ”NG TIN NHĂ‚N Sá»°");
+		CellStyle titleCellStyle = wb.createCellStyle();
+		Font headerFont = wb.createFont();
+		headerFont.setBoldweight((short) 0x2bc);
+		titleCellStyle.setFont(headerFont);
+		row.getCell(16).setCellStyle(titleCellStyle);
+
+		row = ws.createRow(3);
+		row.createCell(0).setCellValue("STT");
+		row.createCell(1).setCellValue("MĂ£ NV");
+		row.createCell(2).setCellValue("Há» vĂ  TĂªn ");
+		row.createCell(3).setCellValue("Chá»©c danh");
+		row.createCell(4).setCellValue("Cáº¥p báº­c");
+		row.createCell(5).setCellValue("NgĂ y bá»• nhiá»‡m");
+		row.createCell(6).setCellValue("NhĂ³m");
+		row.createCell(7).setCellValue("Bá»™ pháº­n");
+		row.createCell(8).setCellValue("PhĂ²ng");
+		row.createCell(9).setCellValue("Khá»‘i");
+		row.createCell(10).setCellValue("NgĂ y vĂ o");
+		row.createCell(11).setCellValue("NgĂ y kĂ½ HÄ");
+		row.createCell(12).setCellValue("NgĂ y káº¿t thĂºc HÄ");
+		row.createCell(13).setCellValue("Loáº¡i HÄLÄ");
+		row.createCell(14).setCellValue("NgĂ y thĂ¡ng nÄƒm sinh");
+		row.createCell(15).setCellValue("Giá»›i tĂ­nh");
+		row.createCell(16).setCellValue("NÆ¡i Sinh");
+		row.createCell(17).setCellValue("TrĂ¬nh Ä‘á»™ há»c váº¥n");
+		row.createCell(18).setCellValue("ChuyĂªn mĂ´n");
+		row.createCell(19).setCellValue("TrÆ°á»ng");
+		row.createCell(20).setCellValue("TĂ¬nh tráº¡ng hĂ´n nhĂ¢n");
+		row.createCell(21).setCellValue("Sá»‘ CMND");
+		row.createCell(22).setCellValue("NgĂ y cáº¥p");
+		row.createCell(23).setCellValue("NÆ¡i Cáº¥p");
+		row.createCell(24).setCellValue("Äá»‹a chá»‰ ThÆ°á»ng trĂº");
+		row.createCell(25).setCellValue("Äá»‹a Chá»‰ Táº¡m TrĂº");
+		row.createCell(26).setCellValue("Sá»‘ ÄT LiĂªn láº¡c");
+		row.createCell(27).setCellValue("Email cĂ¡ nhĂ¢n");
+		row.createCell(28).setCellValue("Email CĂ´ng ty");
+		row.createCell(29).setCellValue("MĂ£ sá»‘ Thuáº¿");
+		row.createCell(30).setCellValue("Sá»‘ ngÆ°á»i phá»¥ thuá»™c");
+		row.createCell(31).setCellValue("TĂªn NgÆ°á»i phá»¥ thuá»™c");
+		row.createCell(32).setCellValue("Sá»‘ sá»• BHXH");
+		row.createCell(33).setCellValue("Sá»‘ Tháº» BHYT");
+		row.createCell(34).setCellValue("Sá»‘ TĂ i khoáº£n NH");
+		row.createCell(35).setCellValue("TĂªn Chi nhĂ¡nh NgĂ¢n HĂ ng");
+		row.createCell(36).setCellValue("LÆ°Æ¡ng cÄƒn báº£n");
+		row.createCell(37).setCellValue("LÆ°Æ¡ng vá»‹ trĂ­");
+		row.createCell(38).setCellValue("LÆ°Æ¡ng nÄƒng lá»±c");
+		row.createCell(39).setCellValue("Tá»•ng lÆ°Æ¡ng");
+		row.createCell(40).setCellValue("ThÆ°á»Ÿng thĂ nh tĂ­ch");
+		row.createCell(41).setCellValue("NgĂ y nghá»‰ viá»‡c");
+
+		CellStyle cellStyle = wb.createCellStyle();
+		cellStyle.setBorderTop((short) 0x1);// BorderStyle.THIN
+		cellStyle.setBorderRight((short) 0x1);
+		cellStyle.setBorderLeft((short) 0x1);
+		cellStyle.setAlignment((short) 0x2); // ALIGN_CENTER
+
+		Font font = wb.createFont();
+		font.setBoldweight((short) 0x2bc);
+
+		cellStyle.setFont(font);
+		setEntireRowStyle(row, cellStyle);
+
+		row = ws.createRow(4);
+		for (int i = 0; i <= 41; i++) {
+			int k = i + 1;
+			row.createCell(i).setCellValue(k);
+		}
+
+		CellStyle cellStyle1 = wb.createCellStyle();
+		cellStyle1.setBorderTop((short) 0x7);
+		cellStyle1.setBorderBottom((short) 0x7);
+		cellStyle1.setBorderRight((short) 0x1);
+		cellStyle1.setBorderLeft((short) 0x1);
+		cellStyle1.setAlignment((short) 2);
+
+		setEntireRowStyle(row, cellStyle1);
+	}
+
+	/**
+	 * @param wb
+	 *            workbook
+	 * @param ws
+	 *            worksheet
+	 * @param rowNum
+	 * @param recordNo
+	 * @param employee
+	 * @return
+	 */
+	public static Row createRow(Workbook wb, Sheet ws, int rowNum,
+			int recordNo, Employee employee) {
+		// final String SRC_DATETIME_FORMATTER = "yyyy-MM-dd hh:mm:ss.S";
+		final String DEST_DATETIME_FORMATTER = "dd/MM/yyyy";
+
+		// final SimpleDateFormat src_sdf = new SimpleDateFormat(
+		// SRC_DATETIME_FORMATTER);
+		final SimpleDateFormat dest_sdf = new SimpleDateFormat(
+				DEST_DATETIME_FORMATTER);
+
+		try {
+			final Row row = ws.createRow(rowNum);
+			final User employeeUser = UserLocalServiceUtil.getUser(employee
+					.getEmployeeUserId());
+			final Titles titles = employee.getTitlesId() != 0 ? TitlesLocalServiceUtil
+					.getTitles(employee.getTitlesId()) : null;
+			final Devision devision = titles != null ? DevisionLocalServiceUtil
+					.getDevision(titles.getDevisionId()) : null;
+			final List<Address> addresses = AddressLocalServiceUtil
+					.getAddresses(employee.getCompanyId(),
+							Employee.class.getName(), employee.getEmployeeId());
+
+			String tempAddress = StringUtils.EMPTY;
+			String presentAddress = StringUtils.EMPTY;
+			if (!addresses.isEmpty()) {
+				if (addresses.size() == 1) {
+					final Address presentAddressObj = addresses.get(0);
+					presentAddress = getAddressStringFromAddressObj(presentAddressObj);
+				} else if (addresses.size() == 2) {
+					final Address tempAddressObj = addresses.get(1);
+					tempAddress = getAddressStringFromAddressObj(tempAddressObj);
+				}
+
+			}
+
+			row.createCell(0).setCellValue(recordNo);
+
+			row.createCell(1).setCellValue(employee.getEmployeeCode());
+
+			row.createCell(2).setCellValue(employeeUser.getFullName());
+			row.createCell(3).setCellValue(
+					titles != null ? titles.getName() : StringUtils.EMPTY);
+			row.createCell(4).setCellValue(
+					employee.getLevelId() != 0 ? LevelLocalServiceUtil
+							.getLevel(employee.getLevelId()).getName()
+							: StringUtils.EMPTY);
+			row.createCell(5).setCellValue(employee.getPromotedDate());
+
+			row.createCell(6).setCellValue("NhĂ³m");
+
+			row.createCell(7).setCellValue(
+					devision != null ? devision.getName() : StringUtils.EMPTY);
+
+			row.createCell(8).setCellValue("PhĂ²ng");
+
+			row.createCell(9).setCellValue("Khá»‘i");
+
+			row.createCell(10).setCellValue(
+					employee.getJoinedDate() != null ? dest_sdf.format(employee
+							.getJoinedDate()) : StringUtils.EMPTY);
+
+			row.createCell(11).setCellValue(
+					employee.getLaborContractSignedDate() != null ? dest_sdf
+							.format(employee.getLaborContractSignedDate())
+							: StringUtils.EMPTY);
+			row.createCell(12).setCellValue(
+					employee.getLaborContractExpiredDate() != null ? dest_sdf
+							.format(employee.getLaborContractExpiredDate())
+							: StringUtils.EMPTY);
+			row.createCell(13).setCellValue(employee.getLaborContractType());
+			row.createCell(14).setCellValue(
+					employee.getBirthday() != null ? dest_sdf.format(employee
+							.getBirthday()) : StringUtils.EMPTY);
+			row.createCell(15).setCellValue(employee.getGender());
+			row.createCell(16).setCellValue(employee.getPlaceOfBirth());
+			row.createCell(17).setCellValue(employee.getEducation());
+			row.createCell(18).setCellValue(employee.getEducationSpecialize());
+			row.createCell(19)
+					.setCellValue(
+							employee.getUniversityId() != 0 ? UniversityLocalServiceUtil
+									.getUniversity(employee.getUniversityId())
+									.getName() : StringUtils.EMPTY);
+			row.createCell(20).setCellValue(employee.getMaritalStatus());
+			row.createCell(21).setCellValue(employee.getIdentityCardNo());
+			row.createCell(22).setCellValue(
+					employee.getIssuedDate() != null ? dest_sdf.format(employee
+							.getIssuedDate()) : StringUtils.EMPTY);
+			row.createCell(23).setCellValue(employee.getIssuedPlace());
+			row.createCell(24).setCellValue(presentAddress);
+			row.createCell(25).setCellValue(tempAddress);
+			row.createCell(26).setCellValue(employee.getContactNumber());
+			row.createCell(27).setCellValue(employeeUser.getEmailAddress());
+			row.createCell(28).setCellValue(employee.getCompanyEmailAddress());
+			row.createCell(29).setCellValue(employee.getPersonalTaxCode());
+			row.createCell(30).setCellValue(employee.getNumberOfDependents());
+			row.createCell(31).setCellValue(StringUtils.EMPTY);
+			row.createCell(32).setCellValue(employee.getHealthInsuranceNo());
+			row.createCell(33).setCellValue(employee.getSocialInsuranceNo());
+			row.createCell(34).setCellValue(employee.getBankAccountNo());
+			row.createCell(35).setCellValue(employee.getBankBranchName());
+			row.createCell(36).setCellValue(employee.getBaseWageRates());
+			row.createCell(37).setCellValue(employee.getPositionWageRates());
+			row.createCell(38).setCellValue(employee.getCapacitySalary());
+			row.createCell(39).setCellValue(employee.getTotalSalary());
+			row.createCell(40).setCellValue(employee.getBonus());
+			row.createCell(41).setCellValue(
+					employee.getResignedDate() != null ? dest_sdf
+							.format(employee.getResignedDate())
+							: StringUtils.EMPTY);
+
+			CellStyle cellStyle = wb.createCellStyle();
+			cellStyle.setBorderTop((short) 0x7);
+			cellStyle.setBorderBottom((short) 0x7);
+			cellStyle.setBorderRight((short) 0x1);
+			cellStyle.setBorderLeft((short) 0x1);
+			setEntireRowStyle(row, cellStyle);
+
+			return row;
+		} catch (PortalException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static Row createRow(Workbook wb, Sheet ws, int rowNum,
+			int recordNo, EmployeeIndexedItem employee) {
+
+		final String DEST_DATETIME_FORMATTER = "dd/MM/yyyy";
+		final SimpleDateFormat dest_sdf = new SimpleDateFormat(
+				DEST_DATETIME_FORMATTER);
+		final ServiceContext serviceContext = LiferayFacesContext.getInstance()
+				.getServiceContext();
+		try {
+			final Titles titles = employee.getTitlesId() != 0 ? TitlesLocalServiceUtil
+					.getTitles(employee.getTitlesId()) : null;
+
+			final DevisionGroup devisionGroup = titles != null
+					&& titles.getDevisionGroupId() != 0 ? DevisionGroupLocalServiceUtil
+					.getDevisionGroup(titles.getDevisionGroupId()) : null;
+
+			final Devision devision = titles != null ? DevisionLocalServiceUtil
+					.getDevision(titles.getDevisionId()) : null;
+
+			final Department department = titles != null
+					&& titles.getDepartmentId() != 0 ? DepartmentLocalServiceUtil
+					.getDepartment(titles.getDepartmentId()) : null;
+
+			final Unit unit = department != null ? UnitLocalServiceUtil
+					.getUnit(department.getUnitId()) : null;
+
+			final Row row = ws.createRow(rowNum);
+			final User employeeUser = UserLocalServiceUtil.getUser(employee
+					.getEmployeeUserId());
+			final List<Address> addresses = AddressLocalServiceUtil
+					.getAddresses(serviceContext.getCompanyId(),
+							Employee.class.getName(), employee.getEmployeeId());
+
+			String tempAddress = StringUtils.EMPTY;
+			String presentAddress = StringUtils.EMPTY;
+			if (!addresses.isEmpty()) {
+				if (addresses.size() == 1) {
+					final Address presentAddressObj = addresses.get(0);
+					presentAddress = getAddressStringFromAddressObj(presentAddressObj);
+				} else if (addresses.size() == 2) {
+					final Address tempAddressObj = addresses.get(1);
+					tempAddress = getAddressStringFromAddressObj(tempAddressObj);
+				}
+
+			}
+
+			row.createCell(0).setCellValue(recordNo);
+
+			row.createCell(1).setCellValue(employee.getEmployeeCode());
+
+			row.createCell(2).setCellValue(employeeUser.getFullName());
+			row.createCell(3).setCellValue(
+					titles != null ? titles.getName() : StringUtils.EMPTY);
+			row.createCell(4).setCellValue(
+					employee.getLevelId() != 0 ? LevelLocalServiceUtil
+							.getLevel(employee.getLevelId()).getName()
+							: StringUtils.EMPTY);
+			row.createCell(5).setCellValue(
+					employee.getPromotedDate() != null ? employee
+							.getPromotedDate().toString() : StringUtils.EMPTY);
+
+			row.createCell(6).setCellValue(
+					devisionGroup != null ? devisionGroup.getName()
+							: StringUtils.EMPTY);
+
+			row.createCell(7).setCellValue(
+					devision != null ? devision.getName() : StringUtils.EMPTY);
+
+			row.createCell(8).setCellValue(
+					department != null ? department.getName()
+							: StringUtils.EMPTY);
+
+			row.createCell(9).setCellValue(
+					unit != null ? unit.getName() : StringUtils.EMPTY);
+
+			row.createCell(10).setCellValue(
+					employee.getJoinedDate() != null ? dest_sdf.format(employee
+							.getJoinedDate()) : StringUtils.EMPTY);
+
+			row.createCell(11).setCellValue(
+					employee.getLaborContractSignedDate() != null ? dest_sdf
+							.format(employee.getLaborContractSignedDate())
+							: StringUtils.EMPTY);
+			row.createCell(12).setCellValue(
+					employee.getLaborContractExpiredDate() != null ? dest_sdf
+							.format(employee.getLaborContractExpiredDate())
+							: StringUtils.EMPTY);
+			row.createCell(13).setCellValue(employee.getLaborContractType());
+			row.createCell(14).setCellValue(
+					employee.getBirthday() != null ? dest_sdf.format(employee
+							.getBirthday()) : StringUtils.EMPTY);
+			row.createCell(15).setCellValue(employee.getGender());
+			row.createCell(16).setCellValue(StringUtils.EMPTY);
+			row.createCell(17).setCellValue(employee.getEducation());
+			row.createCell(18).setCellValue(employee.getEducationSpecialize());
+			row.createCell(19)
+					.setCellValue(
+							employee.getUniversityId() != 0 ? UniversityLocalServiceUtil
+									.getUniversity(employee.getUniversityId())
+									.getName() : StringUtils.EMPTY);
+			row.createCell(20).setCellValue(employee.getMaritalStatus());
+			row.createCell(21).setCellValue(employee.getIdentityCardNo());
+			row.createCell(22).setCellValue(
+					employee.getIssuedDate() != null ? dest_sdf.format(employee
+							.getIssuedDate()) : StringUtils.EMPTY);
+			row.createCell(23).setCellValue(employee.getIssuedPlace());
+			row.createCell(24).setCellValue(presentAddress);
+			row.createCell(25).setCellValue(tempAddress);
+			row.createCell(26).setCellValue(employee.getContactNumber());
+			row.createCell(27).setCellValue(employeeUser.getEmailAddress());
+			row.createCell(28).setCellValue(employee.getCompanyEmailAddress());
+			row.createCell(29).setCellValue(employee.getPersonalTaxCode());
+			row.createCell(30).setCellValue(employee.getNumberOfDependents());
+			row.createCell(31).setCellValue(StringUtils.EMPTY); // Dependent
+																// names
+			row.createCell(32).setCellValue(employee.getHealthInsuranceNo());
+			row.createCell(33).setCellValue(employee.getSocialInsuranceNo());
+			row.createCell(34).setCellValue(employee.getBankAccountNo());
+			row.createCell(35).setCellValue(employee.getBankBranchName());
+			row.createCell(36).setCellValue(employee.getBaseWageRates());
+			row.createCell(37).setCellValue(employee.getPositionWageRates());
+			row.createCell(38).setCellValue(employee.getCapacitySalary());
+			row.createCell(39).setCellValue(employee.getTotalSalary());
+			row.createCell(40).setCellValue(employee.getBonus());
+			row.createCell(41).setCellValue(
+					employee.getResignedDate() != null ? dest_sdf
+							.format(employee.getResignedDate())
+							: StringUtils.EMPTY);
+
+			CellStyle cellStyle = wb.createCellStyle();
+			cellStyle.setBorderTop((short) 0x7);
+			cellStyle.setBorderBottom((short) 0x7);
+			cellStyle.setBorderRight((short) 0x1);
+			cellStyle.setBorderLeft((short) 0x1);
+			setEntireRowStyle(row, cellStyle);
+			return row;
+		} catch (PortalException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static String generateAndGetExportExcelFileURL(long folderId,
+			String exportFilename, EmployeeExportType type, List<?> employees,
+			ServiceContext serviceContext) {
+
+		String fileExt = StringUtils.EMPTY;
+		Workbook wb = null;
+		Sheet ws = null;
+		try {
+			switch (type) {
+			case XLS:
+				fileExt = ".xls";
+				wb = new HSSFWorkbook();
+				break;
+			case XLSX:
+				fileExt = ".xlsx";
+				wb = new XSSFWorkbook();
+				break;
+			default:
+				break;
+			}
+			ws = wb.createSheet("Sheet1");
+
+			EmployeeUtils.createExportHeaderRow(wb, ws);
+			int rowNum = 5;
+			if (employees.get(0) instanceof Employee) {
+				for (Employee employee : (List<Employee>) employees) {
+					EmployeeUtils.createRow(wb, ws, rowNum, rowNum - 4,
+							employee);
+					rowNum++;
+				}
+			} else {
+				for (EmployeeIndexedItem employee : (List<EmployeeIndexedItem>) employees) {
+					EmployeeUtils.createRow(wb, ws, rowNum, rowNum - 4,
+							employee);
+					rowNum++;
+				}
+			}
+
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			wb.write(outputStream);
+
+			final File tmpfile = FileUtil.createTempFile(outputStream
+					.toByteArray());
+			final File newFile = new File(tmpfile.getParent(), exportFilename
+					+ fileExt);
+			Files.move(tmpfile.toPath(), newFile.toPath());
+
+			final PortletRequest pRequest = (PortletRequest) LiferayFacesContext
+					.getCurrentInstance().getExternalContext().getRequest();
+
+			final DLFileEntry dlFileEntry = DLUtils.uploadFile(pRequest,
+					newFile, exportFilename, "", "", folderId, serviceContext);
+			newFile.delete();
+
+			final FileEntry fe = DLUtils.getUploadFileEntry(dlFileEntry);
+
+			final String exportFileURL = DLUtil
+					.getPreviewURL(fe, fe.getFileVersion(),
+							(ThemeDisplay) pRequest
+									.getAttribute(WebKeys.THEME_DISPLAY), "",
+							false, true);
+			return exportFileURL;
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (PortalException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return StringUtils.EMPTY;
+
+	}
+
+	public static void deleteAllEmployeeAndEmployeeUser() {
+		for (Employee employee : EmployeeLocalServiceUtil.findAll()) {
+			try {
+				UserLocalServiceUtil.deleteUser(employee.getEmployeeUserId());
+
+				EmployeeLocalServiceUtil.deleteEmployee(employee
+						.getEmployeeId());
+			} catch (PortalException e) {
+				e.printStackTrace();
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static List<Long> getIdsFromBasedModelList(List<BaseModel<?>> list) {
+		final List<Long> ids = new ArrayList<Long>();
+		for (BaseModel<?> obj : list) {
+			// ids.add((long) obj.getPrimaryKeyObj());
+			ids.add(new Long(obj.getPrimaryKeyObj().toString()));
+		}
+		return ids;
+	}
+
+	public static boolean isFemaleAutoDetection(String fullName) {
+		return fullName.contains("Thá»‹") || fullName.contains("Lan")
+				|| fullName.contains("Tháº£o") || fullName.contains("PhÆ°Æ¡ng")
+				|| fullName.contains("PhÆ°á»£ng") || fullName.contains("Phá»¥ng")
+				|| fullName.contains("Tuyá»n") || fullName.contains("Nguyá»‡t")
+				|| fullName.contains("TrĂ¢m") || fullName.contains("Trinh")
+				|| fullName.contains("TrĂºc") || fullName.contains("ThĂºy")
+				|| fullName.contains("Tuyáº¿t") || fullName.contains("Háº¡nh")
+				|| fullName.contains("Thá»§y") || fullName.contains("HÆ°Æ¡ng")
+				|| fullName.contains("Hiá»n") || fullName.contains("HoĂ i")
+				|| fullName.contains("Hoa") || fullName.contains("ThÆ°Æ¡ng")
+				|| fullName.contains("Yáº¿n") || fullName.contains("Há»“ng")
+				|| fullName.contains("HÆ°Æ¡ng") || fullName.contains("Huá»‡")
+				|| fullName.contains("Loan") || fullName.contains("Thanh")
+				|| fullName.contains("Linh") || fullName.contains("Thi")
+				|| fullName.contains("Diá»‡u") || fullName.contains("TrĂ ")
+				|| fullName.contains("CĂºc") || fullName.contains("Trang")
+				|| fullName.contains("Lá»‡") || fullName.contains("Liá»…u")
+				|| fullName.contains("Ly") || fullName.contains("Chi")
+				|| fullName.contains("Nhi");
+	}
+
+	private static String getAddressStringFromAddressObj(Address address) {
+		return address.getStreet1() + ", " + address.getStreet3() + ", "
+				+ address.getRegion().getName();
+	}
+}
