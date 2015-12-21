@@ -19,7 +19,6 @@ import org.primefaces.model.SortOrder;
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
 import vn.com.ecopharma.hrm.tt.dm.TimeTrackingReportLazyDataModel;
 import vn.com.ecopharma.hrm.tt.dto.EmpTimeTrackingIndexedItem;
-import vn.com.ecopharma.hrm.tt.dto.TimeTrackingReport;
 import vn.com.ecopharma.hrm.tt.enumeration.ValueFilterType;
 import vn.com.ecopharma.hrm.tt.utils.BeanUtils;
 import vn.com.ecopharma.hrm.tt.utils.TTUtils;
@@ -38,8 +37,6 @@ public class TimeTrackingReportBean implements Serializable {
 	private static final String SHORT_DATE_FORMAT = "dd/MM";
 
 	private static final String DAY_FORMAT = "EE";
-
-	private List<TimeTrackingReport> timeTrackingReports;
 
 	private LazyDataModel<EmpTimeTrackingIndexedItem> lazyDataModel;
 
@@ -164,15 +161,6 @@ public class TimeTrackingReportBean implements Serializable {
 
 	public int getDatesSize() {
 		return getDatesOfMonthStrings().size();
-	}
-
-	public List<TimeTrackingReport> getTimeTrackingReports() {
-		return timeTrackingReports;
-	}
-
-	public void setTimeTrackingReports(
-			List<TimeTrackingReport> timeTrackingReports) {
-		this.timeTrackingReports = timeTrackingReports;
 	}
 
 	public LazyDataModel<EmpTimeTrackingIndexedItem> getLazyDataModel() {

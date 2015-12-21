@@ -114,6 +114,7 @@ public class TimeTrackingReportLazyDataModel extends
 						.setGrandTotalMinInTime(getGrandMinIn(minInMap));
 				empTimeTrackingIndexedItem
 						.setGrandTotalMaxOutTime(getGrandMaxOut(maxOutMap));
+
 				if (isEmptyIn) {
 					if (!hasEmptyIn(timeTrackingIndexItems)) {
 						empTimeTrackingIndexedItems
@@ -144,20 +145,20 @@ public class TimeTrackingReportLazyDataModel extends
 		return new ArrayList<>();
 	}
 
-	private boolean hasEmptyIn(
+	private static boolean hasEmptyIn(
 			List<TimeTrackingIndexItem> timeTrackingIndexItems) {
 		for (TimeTrackingIndexItem item : timeTrackingIndexItems) {
-			if (item.getEmptyIn().equalsIgnoreCase("true")) {
+			if ("true".equalsIgnoreCase(item.getEmptyIn())) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private boolean hasEmptyOut(
+	private static boolean hasEmptyOut(
 			List<TimeTrackingIndexItem> timeTrackingIndexItems) {
 		for (TimeTrackingIndexItem item : timeTrackingIndexItems) {
-			if (item.getEmptyOut().equalsIgnoreCase("true")) {
+			if ("true".equalsIgnoreCase(item.getEmptyOut())) {
 				return true;
 			}
 		}
