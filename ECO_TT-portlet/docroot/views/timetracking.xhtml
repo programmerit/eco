@@ -1,0 +1,282 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:head />
+	<h:body>
+
+		<h:form id="searchForm">
+			<h:outputText value="Filter:" styleClass="label" />
+			<p:panelGrid columns="5" layout="grid" styleClass="filter-grid"
+				style="margin-bottom: 7px!important; color: black!important;">
+				<h:panelGroup>
+					<p:inputText id="filter_globalString"
+						value="#{timeTrackingFilterBean.globalString}"
+						placeholder="Everything" style="width: 150px;">
+						<p:ajax event="keyup" oncomplete="PF('wTimeTrackings').filter();;" />
+					</p:inputText>
+					<p:tooltip for="filter_globalString" value="Filter Everything"
+						showEffect="clip" hideEffect="explode" />
+					<br />
+
+					<p:inputText id="filter_fullName"
+						value="#{timeTrackingFilterBean.fullName}" placeholder="FullName"
+						style="width: 150px;">
+						<p:ajax event="keyup" oncomplete="PF('wTimeTrackings').filter();;" />
+					</p:inputText>
+					<p:tooltip for="filter_fullName" value="Filter [Fullname]"
+						showEffect="clip" hideEffect="explode" />
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<p:inputText id="filter_empCode"
+						value="#{timeTrackingFilterBean.employeeCode}"
+						placeholder="Employee Code" style="width: 150px">
+						<p:ajax event="keyup" oncomplete="PF('wTimeTrackings').filter();;" />
+					</p:inputText>
+					<p:tooltip for="filter_empCode" value="Filter [Employee Code]"
+						showEffect="clip" hideEffect="explode" />
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<p:selectOneMenu id="devisionSelect"
+						value="#{timeTrackingFilterBean.devision}"
+						converter="devisionConverter" effect="fade" filter="true"
+						filterMatchMode="contains" var="d">
+						<p:ajax listener="#{timeTrackingFilterBean.onDevisionChanged}"
+							update="departmentSelect unitSelect"
+							oncomplete="PF('wTimeTrackings').filter();;" />
+
+						<f:selectItem itemLabel="ALL DEVISION" itemValue="" />
+						<f:selectItems value="#{timeTrackingFilterBean.devisions}" var="d"
+							itemLabel="#{d.name}" itemValue="#{d}" />
+						<p:column>
+					                #{d.name}
+					            </p:column>
+					</p:selectOneMenu>
+					<p:tooltip for="devisionSelect" value="Filter [Devision]"
+						showEffect="clip" hideEffect="explode" />
+					<br />
+
+					<p:selectOneMenu id="departmentSelect"
+						value="#{timeTrackingFilterBean.department}"
+						converter="departmentConverter" effect="fade" filter="true"
+						filterMatchMode="contains" var="d">
+						<p:ajax listener="#{timeTrackingFilterBean.onDepartmentChanged}"
+							update="unitSelect unitGroupSelect titlesSelect"
+							oncomplete="PF('wTimeTrackings').filter();;" />
+
+						<f:selectItem itemLabel="ALL DEPARTMENT" itemValue="" />
+						<f:selectItems value="#{timeTrackingFilterBean.departments}"
+							var="d" itemLabel="#{d.name}" itemValue="#{d}" />
+						<p:column>
+					                #{d.name}
+					            </p:column>
+					</p:selectOneMenu>
+					<p:tooltip for="departmentSelect" value="Filter [Department]"
+						showEffect="clip" hideEffect="explode" />
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<h:panelGrid columns="2" border="0">
+						<p:selectOneMenu id="unitSelect"
+							value="#{timeTrackingFilterBean.unit}" converter="unitConverter"
+							effect="fade" filter="true" filterMatchMode="contains" var="u">
+							<p:ajax listener="#{timeTrackingFilterBean.onUnitChanged}"
+								update="unitGroupSelect titlesSelect"
+								oncomplete="PF('wTimeTrackings').filter();;" />
+
+							<f:selectItem itemLabel="ALL UNIT" itemValue="" />
+							<f:selectItems value="#{timeTrackingFilterBean.units}" var="u"
+								itemLabel="#{u.name}" itemValue="#{u}" />
+							<p:column>
+					                #{u.name}
+					            </p:column>
+						</p:selectOneMenu>
+						<p:tooltip for="unitSelect" value="Filter [Unit]"
+							showEffect="clip" hideEffect="explode" />
+
+						<p:selectOneMenu id="unitGroupSelect"
+							value="#{timeTrackingFilterBean.unitGroup}"
+							converter="unitGroupConverter" effect="fade" filter="true"
+							filterMatchMode="contains" var="d">
+							<p:ajax listener="#{timeTrackingFilterBean.onUnitGroupChanged}"
+								update="titlesSelect"
+								oncomplete="PF('wTimeTrackings').filter();;" />
+
+							<f:selectItem itemLabel="ALL GROUP" itemValue="" />
+							<f:selectItems value="#{timeTrackingFilterBean.unitGroups}"
+								var="g" itemLabel="#{g.name}" itemValue="#{g}" />
+
+							<p:column>
+					                #{g.name}
+					            </p:column>
+						</p:selectOneMenu>
+						<p:tooltip for="unitGroupSelect" value="Filter [UnitGroup]"
+							showEffect="clip" hideEffect="explode" />
+
+
+						<p:selectOneMenu id="titlesSelect"
+							value="#{timeTrackingFilterBean.titles}"
+							converter="titlesConverter" effect="fade" filter="true"
+							filterMatchMode="contains" var="t">
+							<p:ajax oncomplete="PF('wTimeTrackings').filter();;" />
+
+							<f:selectItem itemLabel="ALL TITLES" itemValue="" />
+							<f:selectItems value="#{timeTrackingFilterBean.titlesList}"
+								var="t" itemLabel="#{t.name}" itemValue="#{t}" />
+
+							<p:column>
+					                #{t.name}
+					            </p:column>
+						</p:selectOneMenu>
+						<p:tooltip for="titlesSelect" value="Filter [Titles]"
+							showEffect="clip" hideEffect="explode" />
+					</h:panelGrid>
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<h:panelGroup>
+						<p:calendar id="calendarFilteredDateFrom" mask="false"
+							widgetVar="wCalendarFilteredDateFrom"
+							value="#{timeTrackingFilterBean.filteredDateFrom}"
+							pattern="dd/MM/yyyy" styleClass="calendarClass"
+							placeholder="From" navigator="true"
+							maxdate="#{timeTrackingFilterBean.maxFilterableDay}">
+							<p:ajax event="dateSelect"
+								oncomplete="PF('wTimeTrackings').filter();;" />
+						</p:calendar>
+						<p:tooltip for="calendarFilteredDateFrom"
+							value="Filter [Joined Date] From" showEffect="clip"
+							hideEffect="explode" />
+						<p:commandLink value="x"
+							actionListener="#{timeTrackingFilterBean.resetFilteredDateFrom}"
+							oncomplete="PF('wTimeTrackings').filter();" ajax="true"
+							update=":searchForm:calendarFilteredDateFrom" />
+					</h:panelGroup>
+					<br />
+					<h:panelGroup>
+						<p:calendar id="calendarFilteredDateTo" mask="false"
+							widgetVar="wCalendarFilteredDateTo" navigator="true"
+							value="#{timeTrackingFilterBean.filteredDateTo}"
+							pattern="dd/MM/yyyy" styleClass="calendarClass" placeholder="To"
+							maxdate="#{timeTrackingFilterBean.maxFilterableDay}">
+							<p:ajax event="dateSelect"
+								oncomplete="PF('wTimeTrackings').filter();;" />
+						</p:calendar>
+						<p:tooltip for="calendarFilteredDateTo" value="Filter [Date] To"
+							showEffect="clip" hideEffect="explode" />
+						<p:commandLink value="x"
+							actionListener="#{timeTrackingFilterBean.resetFilteredDateTo}"
+							oncomplete="PF('wTimeTrackings').filter();;" ajax="true"
+							update=":searchForm:calendarFilteredDateTo" />
+					</h:panelGroup>
+				</h:panelGroup>
+			</p:panelGrid>
+		</h:form>
+
+
+		<h:form id="timeTrackingForm">
+			<p:autoComplete id="columns" multiple="true" scrollHeight="300"
+				value="#{timeTrackingBean.columnTemplates}"
+				completeMethod="#{timeTrackingBean.completeColumns}" var="column"
+				itemValue="#{column}"
+				itemLabel="#{i18n[timeTrackingBean.getHeaderi18nKey(column)]}"
+				autoHighlight="true" placeholder="Type to select column..."
+				styleClass="column-setting">
+				<p:ajax event="itemSelect" update="timeTrackings" process="@parent"
+					oncomplete="PF('wTimeTrackings').clearFilters()"
+					listener="#{timeTrackingBean.updateColumns}" />
+				<p:ajax event="itemUnselect" update="timeTrackings"
+					process="@parent" oncomplete="PF('wTimeTrackings').clearFilters()"
+					listener="#{timeTrackingBean.updateColumns}" />
+				<p:column>
+					#{i18n[timeTrackingBean.getHeaderi18nKey(column)]}
+				</p:column>
+			</p:autoComplete>
+
+			<p:dataTable id="timeTrackings" var="t" reflow="true"
+				widgetVar="wTimeTrackings" lazy="true"
+				value="#{timeTrackingBean.lazyDataModel}"
+				paginatorAlwaysVisible="true" paginator="true" rows="50"
+				paginatorPosition="bottom"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,25,50" rowKey="#{t.id}"
+				emptyMessage="No time tracking found" scrollable="true"
+				scrollRows="7" styleClass="timeTrackingTbl" editable="true">
+
+				<p:ajax event="rowEdit" listener="#{timeTrackingBean.onRowEdit}" />
+				<p:ajax event="rowEditCancel"
+					listener="#{timeTrackingBean.onRowEditCancel}" />
+
+				<p:columns var="column" value="#{timeTrackingBean.columns}"
+					columnIndexVar="colIndex">
+					<f:facet name="header">
+						<h:outputText
+							value="#{i18n[timeTrackingBean.getHeaderi18nKey(column.header)]}" />
+					</f:facet>
+
+					<p:cellEditor rendered="#{column.editable}">
+						<f:facet name="output">
+							<h:outputText value="#{t[column.property]}" />
+						</f:facet>
+						<f:facet name="input">
+							<pe:timePicker mode="popup" value="#{t[column.actualProperty]}"
+								style="width: 50px;" styleClass="tt-timepicker" />
+						</f:facet>
+					</p:cellEditor>
+
+					<h:outputText rendered="#{not column.editable}"
+						value="#{t[column.property]}" />
+				</p:columns>
+
+				<p:column style="width:32px">
+					<p:rowEditor />
+				</p:column>
+
+				<f:facet name="footer">
+            	Data between 2010-2014
+        	</f:facet>
+			</p:dataTable>
+		</h:form>
+
+	</h:body>
+	<style type="text/css">
+.ui-timepicker .ui-corner-all, .ui-corner-bottom, .ui-corner-right,
+	.ui-corner-br {
+	background-color: aliceblue;
+}
+
+.ui-timepicker-title {
+	color: black;
+}
+
+.timeTrackingTbl .ui-datatable .ui-datatable-data tr {
+	height: 100px;
+}
+
+.column-setting select.ui-helper-hidden {
+	display: none;
+}
+
+.column-setting .ui-autocomplete-multiple-container.ui-inputfield {
+	width: 100%;
+}
+
+/* change color of editable row */
+.ui-datatable .ui-datatable-data tr.ui-row-editing td.ui-editable-column
+	{
+	color: orange;
+}
+
+/* borderless for filter part */
+.ui-panelgrid tbody tr td {
+	border: none !important;
+}
+</style>
+</f:view>

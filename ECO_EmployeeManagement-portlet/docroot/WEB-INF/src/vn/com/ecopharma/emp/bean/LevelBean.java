@@ -14,6 +14,7 @@ import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 @ManagedBean
 public class LevelBean extends AbstractOrganizationBean {
@@ -27,7 +28,7 @@ public class LevelBean extends AbstractOrganizationBean {
 			level = LevelLocalServiceUtil.createLevel(CounterLocalServiceUtil
 					.increment());
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(LevelBean.class).info(e);
 		}
 	}
 
@@ -40,7 +41,7 @@ public class LevelBean extends AbstractOrganizationBean {
 							+ " has been created");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(LevelBean.class).info(e);
 		}
 	}
 

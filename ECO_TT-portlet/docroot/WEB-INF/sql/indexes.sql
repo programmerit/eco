@@ -1,0 +1,1 @@
+create index IX_80A88EEC on eco_ttp_TimeTracking (empId);
