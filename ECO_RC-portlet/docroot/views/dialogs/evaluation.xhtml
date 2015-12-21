@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head />
+	<h:body>
+		<h:form id="evaluationForm">
+
+			<p:remoteCommand name="refreshKeyValuePanel"
+				update=":evaluationForm:evaluationContentGroup" />
+
+			<p:dialog widgetVar="wEvaluationDialog" header="Evaluation"
+				modal="true" resizable="false">
+				<p:outputPanel id="evaluationOutputPanel" autoUpdate="true"
+					style="width:280px">
+					<h:panelGroup id="evaluationContentGroup">
+						<ui:repeat id="evaluationItems" var="e"
+							value="#{evaluationBean.evaluationItems}" varStatus="status">
+							<h:outputText value="#{e.evaluationCriteria.type}"
+								style="font-weight: bold;" />
+							<br />
+							<ui:repeat id="evaluationKeyValues" var="i"
+								value="#{e.evaluationKeyValueItems}" varStatus="status1">
+
+								<h:panelGrid id="ratingKeyValuePanel" columns="1" width="100%">
+									<h:outputText value="#{i.key}" style="font-size: 14px" />
+									<h:panelGroup id="ratingPanel">
+										<p:rating stars="#{i.maxValue}" value="#{i.value}"
+											cancel="false">
+											<p:ajax event="rate" oncomplete="refreshKeyValuePanel();" />
+										</p:rating>
+										<h:outputText id="currentRatingValue"
+											styleClass="currentStatus status-green"
+											style="display: inherit!important;"
+											value="#{i.value}/#{i.maxValue}" />
+										<c:if test="#{status.index == e.evaluationKeyValueItems}">
+											<p:commandLink value="Add" />
+										</c:if>
+									</h:panelGroup>
+								</h:panelGrid>
+							</ui:repeat>
+							<br />
+						</ui:repeat>
+						<h:outputText value="No Evaluation Criteria Available"
+							rendered="#{evaluationBean.evaluationItems.size() eq 0}" />
+					</h:panelGroup>
+				</p:outputPanel>
+				<br />
+				<br />
+				<p:commandButton value="OFFER" styleClass="RedButton RaisedButton"
+					ajax="true" actionListener="#{evaluationBean.onOffer}"
+					oncomplete="refreshCandidateTable(); PF('wEvaluationDialog').hide();"
+					rendered="#{evaluationBean.evaluationItems.size() gt 0}" />
+
+				<h:outputText value="|"
+					rendered="#{evaluationBean.evaluationItems.size() gt 0}"
+					style="color: grey;margin-left:3px; margin-right:3px" />
+				<p:commandButton value="Offer W/O Rating"
+					styleClass="GreenButton RaisedButton" ajax="true"
+					actionListener="#{evaluationBean.onOfferWORating}"
+					oncomplete="refreshCandidateTable();PF('wEvaluationDialog').hide();" />
+
+
+				<h:outputText value="|" style="color: grey;margin-left:3px;" />
+				<p:commandLink value="Cancel"
+					actionListener="#{evaluationBean.onCancel}"
+					oncomplete="PF('wEvaluationDialog').hide()"
+					style="margin-left:3px;">
+				</p:commandLink>
+			</p:dialog>
+		</h:form>
+	</h:body>
+</f:view>

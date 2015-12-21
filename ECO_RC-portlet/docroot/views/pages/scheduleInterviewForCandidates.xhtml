@@ -1,0 +1,242 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:head />
+	<h:body>
+		<h:form id="interviewScheduleForCandidatesForm">
+
+			<h:outputText value="For All:" styleClass="label" />
+			<p:panelGrid columns="1" style="width: 100%;">
+				<p:panelGrid columns="3" layout="grid"
+					style="margin-bottom: 7px!important;">
+					<h:panelGroup>
+						<p:selectBooleanCheckbox
+							value="#{scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.setInterviewForAll}">
+							<p:ajax event="change"
+								update="interviewSelectForAll applyForAllButton applyForSelectedButton addNewInterviewLink" />
+						</p:selectBooleanCheckbox>
+						<p:selectOneMenu id="interviewSelectForAll"
+							converter="interviewConverter"
+							disabled="#{not scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.setInterviewForAll}"
+							value="#{scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.selectedInterview}">
+							<f:selectItem itemLabel="Select..." itemValue="" />
+							<f:selectItems itemDisabled="false"
+								value="#{scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.interviews}"
+								var="interview" itemLabel="#{interview.name} "
+								itemValue="#{interview}" />
+						</p:selectOneMenu>
+						<p:commandLink id="addNewInterviewLink" value="+"
+							onclick="PF('wInterviewDialog').show()"
+							disabled="#{not scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.setInterviewForAll}" />
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<p:selectBooleanCheckbox
+							value="#{scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.setInterviewDateForAll}">
+							<p:ajax event="change"
+								update="dateForAll applyForAllButton applyForSelectedButton" />
+						</p:selectBooleanCheckbox>
+						<p:calendar id="dateForAll"
+							disabled="#{not scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.setInterviewDateForAll}"
+							value="#{scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.date}"
+							pattern="dd/MM/yyyy" />
+						<br />
+						<p:selectBooleanCheckbox
+							value="#{scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.setInterviewTimeForAll}">
+							<p:ajax event="change"
+								update="timeFromForAll timeToForAll applyForAllButton applyForSelectedButton timeStep" />
+						</p:selectBooleanCheckbox>
+						<pe:timePicker id="timeFromForAll" mode="popup"
+							disabled="#{not scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.setInterviewTimeForAll}"
+							value="#{scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.timeFrom}"
+							style="width: 50px;" /> - <pe:timePicker id="timeToForAll"
+							mode="popup"
+							disabled="#{not scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.setInterviewTimeForAll}"
+							value="#{scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.timeTo}"
+							style="width: 50px;" /> Step 
+						<p:inputText id="timeStep"
+							disabled="#{not scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.setInterviewTimeForAll}"
+							value="#{scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.step}"
+							style="width: 30px;" />mins
+					</h:panelGroup>
+
+					<h:panelGroup style="display:inline-flex;">
+						<p:selectBooleanCheckbox
+							value="#{scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.setInterviewersForAll}">
+							<p:ajax event="change"
+								update="interviewersForAll applyForAllButton applyForSelectedButton" />
+						</p:selectBooleanCheckbox>
+						<p:autoComplete id="interviewersForAll" multiple="true"
+							styleClass="interview-schedule" scrollHeight="300"
+							disabled="#{not scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.setInterviewersForAll}"
+							minQueryLength="2"
+							value="#{scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.interviewers}"
+							completeMethod="#{scheduleInterviewForCandidatesBean.completeInterviewers}"
+							var="interviewer" itemLabel="#{interviewer.fullName}"
+							itemValue="#{interviewer}" converter="interviewerConverter"
+							autoHighlight="true" forceSelection="true"
+							placeholder="Type 2 words...">
+						</p:autoComplete>
+					</h:panelGroup>
+				</p:panelGrid>
+				<h:panelGroup style="float: right;">
+					<p:commandButton id="applyForAllButton" value="Apply For All"
+						actionListener="#{scheduleInterviewForCandidatesBean.onApplyForAll}"
+						update="interviewSchedules"
+						disabled="#{not scheduleInterviewForCandidatesBean.hasAtLeastOneForAll}" />
+
+					<p:commandButton id="applyForSelectedButton"
+						value="Apply For Selected"
+						actionListener="#{scheduleInterviewForCandidatesBean.onApplyForSelected}"
+						update="interviewSchedules"
+						disabled="#{(not scheduleInterviewForCandidatesBean.hasAtLeastOneForAll) or cheduleInterviewForCandidatesBean.selectedInterviewScheduleItems.size()==0}" />
+
+					<p:commandButton value="Clear" />
+				</h:panelGroup>
+			</p:panelGrid>
+
+			<h:outputText
+				value="SELECT and press 'Delete' key to delete candidates"
+				style="font-style: italic; font-size: 12px;" />
+			<p:outputPanel id="interviewSchedulesOutputPanel">
+				<p:dataTable id="interviewSchedules"
+					selection="#{scheduleInterviewForCandidatesBean.selectedInterviewScheduleItems}"
+					selectionMode="multiple"
+					rowKey="#{s.candidateIndexItem.candidateId}"
+					value="#{scheduleInterviewForCandidatesBean.interviewScheduleItems}"
+					var="s" widgetVar="wInterviewSchedules" editable="true">
+					<f:facet name="header">
+							Click to edit schedule
+						</f:facet>
+					<p:ajax event="rowEdit"
+						listener="#{scheduleInterviewForCandidatesBean.onRowEdit}" />
+					<p:ajax event="rowEditCancel"
+						listener="#{scheduleInterviewForCandidatesBean.onRowCancel}" />
+					<p:ajax event="rowSelect"
+						update=":interviewScheduleForCandidatesForm:applyForSelectedButton" />
+
+					<p:column headerText="Candidate Name">
+						<h:outputText value="#{s.candidateIndexItem.fullName}" />
+					</p:column>
+
+					<p:column headerText="Vacancy">
+						<h:outputText value="#{s.candidateIndexItem.vacancy}" />
+					</p:column>
+
+					<p:column headerText="Prev Rounds">
+						<h:outputText value="#{s.prevInterviewsFormattedString}" />
+					</p:column>
+
+					<p:column headerText="Round">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText
+									value="#{s.selectedInterview == null ? 'Not specified' : s.selectedInterview.name}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu id="interviewSelect"
+									converter="interviewConverter" value="#{s.selectedInterview}">
+									<f:selectItem itemLabel="Select..." itemValue="" />
+									<f:selectItems itemDisabled="false" value="#{s.interviews}"
+										var="interview" itemLabel="#{interview.name} "
+										itemValue="#{interview}" />
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Date">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{s.interviewSchedule.interviewDate}">
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar value="#{s.interviewSchedule.interviewDate}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Time">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText
+									value="#{s.timeFromFormatted} - #{s.timeToFormatted}" />
+							</f:facet>
+							<f:facet name="input">
+								<pe:timePicker mode="popup" value="#{s.timeFrom}"
+									style="width: 50px;" /> - <pe:timePicker mode="popup"
+									value="#{s.timeTo}" style="width: 50px;" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Interviewers">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{s.selectedInterviewersString}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:autoComplete id="interviewers" multiple="true"
+									minQueryLength="2" value="#{s.interviewers}"
+									completeMethod="#{scheduleInterviewForCandidatesBean.completeInterviewers}"
+									var="interviewer" itemLabel="#{interviewer.fullName}"
+									itemValue="#{interviewer}" converter="interviewerConverter"
+									autoHighlight="true" forceSelection="true"
+									placeholder="Type 2 words...">
+								</p:autoComplete>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column style="width:32px">
+						<p:rowEditor />
+					</p:column>
+				</p:dataTable>
+			</p:outputPanel>
+			<p:commandButton id="saveAll" value="Save All"
+				action="#{scheduleInterviewForCandidatesBean.onSavingAll}" />
+
+			<p:commandButton id="cancel" value="Cancel"
+				onclick="window.location.hash = '#vCandidate';"
+				update=":CandidatePanelGroup" />
+		</h:form>
+
+		<h:form id="interviewForm">
+			<p:dialog id="interviewDialog" widgetVar="wInterviewDialog"
+				header="Interview" modal="true">
+				<p:ajax event="close" listener="#{interviewBean.onCloseOrSave}"
+					update=":interviewForm">
+					<p:resetInput target=":interviewForm" />
+				</p:ajax>
+				<p:panelGrid columns="3">
+					<h:outputLabel for="interviewName" value="Name" />
+					<p:inputText id="interviewName"
+						value="#{interviewBean.interview.name}" required="true" />
+					<p:message for="interviewName" id="interviewName_msg" />
+				</p:panelGrid>
+				<p:commandButton value="Save" icon="fa fa-save Fs16 White"
+					actionListener="#{interviewBean.save}"
+					oncomplete="PF('wInterviewDialog').hide()" ajax="true"
+					update=":interviewScheduleForCandidatesForm:interviewSelectForAll" />
+				<p:commandButton value="Cancel"
+					onclick="PF('wInterviewDialog').hide()">
+					<p:resetInput target=":interviewForm" />
+				</p:commandButton>
+			</p:dialog>
+		</h:form>
+	</h:body>
+	<style type="text/css">
+select.ui-helper-hidden {
+	display: none;
+}
+</style>
+</f:view>

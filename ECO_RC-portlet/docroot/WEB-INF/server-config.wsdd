@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<globalConfiguration>
+		<parameter name="adminPassword" value="admin" />
+		<parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl" />
+		<parameter name="sendXsiTypes" value="true" />
+		<parameter name="sendMultiRefs" value="true" />
+		<parameter name="sendXMLDeclaration" value="true" />
+		<parameter name="axis.sendMinimizedElements" value="true" />
+		<requestFlow>
+			<handler type="java:org.apache.axis.handlers.JWSHandler">
+				<parameter name="scope" value="session" />
+			</handler>
+			<handler type="java:org.apache.axis.handlers.JWSHandler">
+				<parameter name="scope" value="request" />
+				<parameter name="extension" value=".jwr" />
+			</handler>
+		</requestFlow>
+	</globalConfiguration>
+	<handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder" />
+	<handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper" />
+	<handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler" />
+	<transport name="http">
+		<requestFlow>
+			<handler type="URLMapper" />
+			<handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler" />
+		</requestFlow>
+	</transport>
+	<transport name="local">
+		<responseFlow>
+			<handler type="LocalResponder" />
+		</responseFlow>
+	</transport>
+	<service name="Plugin_eco_rcp_CandidateActionHistoryService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.hrm.rc.service.http.CandidateActionHistoryServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="CandidateActionHistoryServiceSoap" />
+		<parameter name="wsdlServiceElement" value="CandidateActionHistoryServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_rcp_CandidateActionHistoryService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.rc.hrm.ecopharma.com.vn" />
+	</service>
+	<service name="Plugin_eco_rcp_CandidateService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.hrm.rc.service.http.CandidateServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="CandidateServiceSoap" />
+		<parameter name="wsdlServiceElement" value="CandidateServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_rcp_CandidateService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.rc.hrm.ecopharma.com.vn" />
+	</service>
+	<service name="Plugin_eco_rcp_CertificateService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.hrm.rc.service.http.CertificateServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="CertificateServiceSoap" />
+		<parameter name="wsdlServiceElement" value="CertificateServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_rcp_CertificateService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.rc.hrm.ecopharma.com.vn" />
+	</service>
+	<service name="Plugin_eco_rcp_DocumentService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.hrm.rc.service.http.DocumentServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="DocumentServiceSoap" />
+		<parameter name="wsdlServiceElement" value="DocumentServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_rcp_DocumentService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.rc.hrm.ecopharma.com.vn" />
+	</service>
+	<service name="Plugin_eco_rcp_EmployeeInterviewScheduleService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.hrm.rc.service.http.EmployeeInterviewScheduleServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="EmployeeInterviewScheduleServiceSoap" />
+		<parameter name="wsdlServiceElement" value="EmployeeInterviewScheduleServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_rcp_EmployeeInterviewScheduleService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.rc.hrm.ecopharma.com.vn" />
+	</service>
+	<service name="Plugin_eco_rcp_ExperienceService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.hrm.rc.service.http.ExperienceServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="ExperienceServiceSoap" />
+		<parameter name="wsdlServiceElement" value="ExperienceServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_rcp_ExperienceService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.rc.hrm.ecopharma.com.vn" />
+	</service>
+	<service name="Plugin_eco_rcp_InterviewScheduleService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.hrm.rc.service.http.InterviewScheduleServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="InterviewScheduleServiceSoap" />
+		<parameter name="wsdlServiceElement" value="InterviewScheduleServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_rcp_InterviewScheduleService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.rc.hrm.ecopharma.com.vn" />
+	</service>
+	<service name="Plugin_eco_rcp_InterviewService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.hrm.rc.service.http.InterviewServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="InterviewServiceSoap" />
+		<parameter name="wsdlServiceElement" value="InterviewServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_rcp_InterviewService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.rc.hrm.ecopharma.com.vn" />
+	</service>
+	<service name="Plugin_eco_rcp_VacancyCandidateService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.hrm.rc.service.http.VacancyCandidateServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="VacancyCandidateServiceSoap" />
+		<parameter name="wsdlServiceElement" value="VacancyCandidateServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_rcp_VacancyCandidateService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.rc.hrm.ecopharma.com.vn" />
+	</service>
+	<service name="Plugin_eco_rcp_VacancyService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.hrm.rc.service.http.VacancyServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="VacancyServiceSoap" />
+		<parameter name="wsdlServiceElement" value="VacancyServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_rcp_VacancyService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.rc.hrm.ecopharma.com.vn" />
+	</service>
+</deployment>

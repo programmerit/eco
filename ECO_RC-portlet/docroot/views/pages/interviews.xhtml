@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head />
+	<h:body>
+		<h:form id="interviewsSearchForm">
+
+			<p:commandLink value="Filter:" styleClass="label"
+				update="filterPanel" />
+			<p:panelGrid columns="4" layout="grid" id="filterPanel"
+				style="margin-bottom: 7px!important;">
+				<h:panelGroup>
+					<p:inputText id="filter_globalString"
+						value="#{interviewManagementFilterBean.global}"
+						placeholder="Everything">
+						<p:ajax event="keyup"
+							oncomplete="PF('wInterviewSchedules').filter();" />
+					</p:inputText>
+					<p:tooltip for="filter_globalString" value="Filter Everything"
+						showEffect="clip" hideEffect="explode" />
+
+					<p:selectOneMenu id="filter_iStatusSelect"
+						value="#{interviewManagementFilterBean.status}">
+						<p:ajax event="change"
+							oncomplete="PF('wInterviewSchedules').filter()" />
+						<f:selectItem itemLabel="ALL" itemValue="ALL_STATUS" />
+						<f:selectItems value="#{interviewManagementFilterBean.allStatus}"
+							var="status" itemValue="#{status}" itemLabel="#{status}" />
+					</p:selectOneMenu>
+					<p:tooltip for="filter_iStatusSelect" value="Filter [Status]"
+						showEffect="clip" hideEffect="explode" />
+
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<p:inputText id="filter_cName"
+						value="#{interviewManagementFilterBean.candidate}"
+						placeholder="Candidate Name">
+						<p:ajax event="keyup"
+							oncomplete="PF('wInterviewSchedules').filter();" />
+					</p:inputText>
+					<p:tooltip for="filter_cName" value="Filter [Candidate's Name]"
+						showEffect="clip" hideEffect="explode" />
+
+					<p:inputText id="filter_vName"
+						value="#{interviewManagementFilterBean.vacancy}"
+						placeholder="Vacancy Name">
+						<p:ajax event="keyup"
+							oncomplete="PF('wInterviewSchedules').filter();" />
+					</p:inputText>
+					<p:tooltip for="filter_vName" value="Filter [Vacancy's Name]"
+						showEffect="clip" hideEffect="explode" />
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<p:calendar id="filter_interviewDateFrom" mask="false"
+						widgetVar="wInterviewDateFrom"
+						value="#{interviewManagementFilterBean.interviewDateFrom}"
+						pattern="dd/MM/yyyy" styleClass="calendarClass" placeholder="From">
+						<p:ajax event="dateSelect"
+							oncomplete="PF('wInterviewSchedules').filter();" />
+					</p:calendar>
+					<p:tooltip for="filter_interviewDateFrom"
+						value="Filter Interview Date] From" showEffect="clip"
+						hideEffect="explode" />
+					<p:commandButton icon="fa fa-remove Fs16 Black"
+						styleClass="GrayButton"
+						actionListener="#{interviewManagementFilterBean.resetInterviewDateFrom}"
+						oncomplete="PF('wInterviewSchedules').filter();" ajax="true"
+						update=":interviewsSearchForm:filter_interviewDateFrom" />
+
+					<br />
+
+					<p:calendar id="filter_interviewDateTo" mask="false"
+						widgetVar="wInterviewDateTo"
+						value="#{interviewManagementFilterBean.interviewDateTo}"
+						pattern="dd/MM/yyyy" styleClass="calendarClass" placeholder="To">
+						<p:ajax event="dateSelect"
+							oncomplete="PF('wInterviewSchedules').filter();" />
+					</p:calendar>
+					<p:tooltip for="filter_interviewDateTo"
+						value="Filter [Interview Date] To" showEffect="clip"
+						hideEffect="explode" />
+					<p:commandButton icon="fa fa-remove Fs16 Black"
+						styleClass="GrayButton"
+						actionListener="#{interviewManagementFilterBean.resetInterviewDateTo}"
+						oncomplete="PF('wInterviewSchedules').filter();" ajax="true"
+						update=":interviewsSearchForm:filter_interviewDateTo" />
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<p:autoComplete id="interviewers" multiple="true"
+						styleClass="interview-schedule" minQueryLength="2"
+						value="#{interviewManagementFilterBean.interviewers}"
+						completeMethod="#{interviewManagementFilterBean.completeInterviewers}"
+						var="interviewer" itemLabel="#{interviewer.displayName}"
+						itemValue="#{interviewer}" converter="interviewerConverter"
+						autoHighlight="true" forceSelection="true"
+						placeholder="Type to show hints...">
+						<p:ajax event="itemSelect"
+							oncomplete="PF('wInterviewSchedules').filter();" />
+						<p:ajax event="itemUnselect"
+							oncomplete="PF('wInterviewSchedules').filter();" />
+					</p:autoComplete>
+
+				</h:panelGroup>
+
+			</p:panelGrid>
+		</h:form>
+		<h:form id="interviewsForm">
+			<p:commandLink value="Remove Indexes"
+				actionListener="#{interviewManagementBean.removeIndexes}"
+				ajax="true" /> | 
+			<p:commandLink value="Re-index All"
+				actionListener="#{interviewManagementBean.indexAll}" ajax="true" />
+			<p:dataTable id="interviewSchedules" var="i"
+				widgetVar="wInterviewSchedules"
+				value="#{interviewManagementBean.lazyDataModel}"
+				paginatorAlwaysVisible="false" paginator="true" rows="10"
+				paginatorPosition="bottom"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,25,50" lazy="true" selectionMode="multiple"
+				selection="#{interviewManagementBean.selectedItems}"
+				rowKey="#{i.id}" emptyMessage="No interview found">
+
+				<p:column headerText="Candidate Name"
+					sortBy="#{interviewManagementFilterBean.candidate}">
+					<h:outputText value="#{i.candidateName}" />
+				</p:column>
+
+				<p:column headerText="Position"
+					sortBy="#{interviewManagementFilterBean.vacancy}">
+					<h:outputText value="#{i.vacancy}" />
+				</p:column>
+
+				<p:column headerText="Interview Round">
+					<h:outputText value="#{i.interviewName}" />
+				</p:column>
+
+				<p:column headerText="Date"
+					sortBy="#{interviewManagementFilterBean.interviewDate}">
+					<h:outputText value="#{i.interviewDate}">
+						<f:convertDateTime pattern="EEE dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Time">
+					<h:outputText value="#{i.interviewTime}" />
+				</p:column>
+
+				<p:column headerText="Interviewers">
+					<h:outputText value="#{i.interviewersFormattedString}" />
+				</p:column>
+
+				<p:column headerText="Status"
+					sortBy="#{interviewManagementFilterBean.status}">
+					<h:outputText value="#{i.status}" />
+				</p:column>
+			</p:dataTable>
+
+		</h:form>
+	</h:body>
+</f:view>

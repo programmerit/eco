@@ -1,0 +1,478 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="vn.com.ecopharma.hrm.rc.model.impl.CandidateModelImpl">
+		<attributes>
+			<id name="candidateId" />
+			<basic name="candidateCode" />
+			<basic name="fullName" />
+			<basic name="emailAddress" />
+			<basic name="contactNumber" />
+			<basic name="dateOfBirth">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="identityCardNo" />
+			<basic name="applicationDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="status" />
+			<basic name="locationId" />
+			<basic name="deleted" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="description" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.rc.model.impl.CandidateActionHistoryModelImpl">
+		<attributes>
+			<id name="candidateActionHistoryId" />
+			<basic name="candidateId" />
+			<basic name="action" />
+			<basic name="actionType" />
+			<basic name="executedBy" />
+			<basic name="date">
+				<column name="DATE_" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="description" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.rc.model.impl.CandidateEvaluationModelImpl">
+		<attributes>
+			<id name="candidateEvaluationId" />
+			<basic name="evaluationCriteriaId" />
+			<basic name="evaluationCriteriaKeyValueId" />
+			<basic name="ratingPoint" />
+			<basic name="note" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="candidateId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.rc.model.impl.CertificateModelImpl">
+		<attributes>
+			<id name="certificateId" />
+			<basic name="className" />
+			<basic name="classPK" />
+			<basic name="name" />
+			<basic name="certificateType" />
+			<basic name="universityId" />
+			<basic name="graduationYear" />
+			<basic name="grade" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="courseTimeFrom">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="courseTimeTo">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.rc.model.impl.DocumentModelImpl">
+		<attributes>
+			<id name="documentId" />
+			<basic name="className" />
+			<basic name="classPK" />
+			<basic name="type">
+				<column name="TYPE_" />
+			</basic>
+			<basic name="fileEntryId" />
+			<basic name="deleted" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.rc.model.impl.EmployeeInterviewScheduleModelImpl">
+		<attributes>
+			<id name="employeeInterviewScheduleId" />
+			<basic name="employeeId" />
+			<basic name="interviewScheduleId" />
+			<basic name="note" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.rc.model.impl.EvaluationCriteriaModelImpl">
+		<attributes>
+			<id name="evaluationCriteriaId" />
+			<basic name="type">
+				<column name="TYPE_" />
+			</basic>
+			<basic name="name" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.rc.model.impl.EvaluationCriteriaKeyValueModelImpl">
+		<attributes>
+			<id name="evaluationCriteriaKeyValueId" />
+			<basic name="evaluationCriteriaId" />
+			<basic name="key">
+				<column name="KEY_" />
+			</basic>
+			<basic name="value" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.rc.model.impl.ExperienceModelImpl">
+		<attributes>
+			<id name="experienceId" />
+			<basic name="className" />
+			<basic name="classPK" />
+			<basic name="companyName" />
+			<basic name="workingPlace" />
+			<basic name="yearsExperience" />
+			<basic name="tel" />
+			<basic name="workingFrom">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="workingTo">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="initialTitles" />
+			<basic name="finalTitles" />
+			<basic name="initialSalary" />
+			<basic name="finalSalary" />
+			<basic name="field" />
+			<basic name="manager" />
+			<basic name="responsibility" />
+			<basic name="resignedReason" />
+			<basic name="description" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.rc.model.impl.InterviewModelImpl">
+		<attributes>
+			<id name="interviewId" />
+			<basic name="name" />
+			<basic name="titlesId" />
+			<basic name="deleted" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.rc.model.impl.InterviewScheduleModelImpl">
+		<attributes>
+			<id name="interviewScheduleId" />
+			<basic name="vacancyCandidateId" />
+			<basic name="interviewId" />
+			<basic name="locationId" />
+			<basic name="interviewDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="interviewTime" />
+			<basic name="status" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.rc.model.impl.SkillModelImpl">
+		<attributes>
+			<id name="skillId" />
+			<basic name="candidateId" />
+			<basic name="grade" />
+			<basic name="type">
+				<column name="TYPE_" />
+			</basic>
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.rc.model.impl.VacancyModelImpl">
+		<attributes>
+			<id name="vacancyId" />
+			<basic name="name" />
+			<basic name="numberOfPosition" />
+			<basic name="titlesId" />
+			<basic name="status" />
+			<basic name="postedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="expiredDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="deleted" />
+			<basic name="description" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="code">
+				<column name="CODE_" />
+			</basic>
+			<basic name="certificateType" />
+			<basic name="experiences" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.rc.model.impl.VacancyCandidateModelImpl">
+		<attributes>
+			<id name="vacancyCandidateId" />
+			<basic name="vacancyId" />
+			<basic name="candidateId" />
+			<basic name="status" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="type">
+				<column name="TYPE_" />
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.hrm.rc.model.impl.VacancyEvaluationCriteriaModelImpl">
+		<attributes>
+			<id name="vacancyEvaluationCriteriaId" />
+			<basic name="vacancyId" />
+			<basic name="evaluationCriteriaId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="vn.com.ecopharma.hrm.rc.model.impl.CandidateImpl" name="Candidate">
+		<table name="eco_rcp_Candidate" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.rc.model.impl.CandidateActionHistoryImpl" name="CandidateActionHistory">
+		<table name="eco_rcp_CandidateActionHistory" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.rc.model.impl.CandidateEvaluationImpl" name="CandidateEvaluation">
+		<table name="eco_rcp_CandidateEvaluation" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.rc.model.impl.CertificateImpl" name="Certificate">
+		<table name="eco_rcp_Certificate" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.rc.model.impl.DocumentImpl" name="Document">
+		<table name="eco_rcp_Document" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.rc.model.impl.EmployeeInterviewScheduleImpl" name="EmployeeInterviewSchedule">
+		<table name="eco_rcp_EmployeeInterviewSchedule" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.rc.model.impl.EvaluationCriteriaImpl" name="EvaluationCriteria">
+		<table name="eco_rcp_EvaluationCriteria" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.rc.model.impl.EvaluationCriteriaKeyValueImpl" name="EvaluationCriteriaKeyValue">
+		<table name="eco_rcp_EvaluationCriteriaKeyValue" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.rc.model.impl.ExperienceImpl" name="Experience">
+		<table name="eco_rcp_Experience" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.rc.model.impl.InterviewImpl" name="Interview">
+		<table name="eco_rcp_Interview" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.rc.model.impl.InterviewScheduleImpl" name="InterviewSchedule">
+		<table name="eco_rcp_InterviewSchedule" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.rc.model.impl.SkillImpl" name="Skill">
+		<table name="eco_rcp_Skill" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.rc.model.impl.VacancyImpl" name="Vacancy">
+		<table name="eco_rcp_Vacancy" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.rc.model.impl.VacancyCandidateImpl" name="VacancyCandidate">
+		<table name="eco_rcp_VacancyCandidate" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.hrm.rc.model.impl.VacancyEvaluationCriteriaImpl" name="VacancyEvaluationCriteria">
+		<table name="eco_rcp_VacancyEvaluationCriteria" />
+		<attributes />
+	</entity>
+</entity-mappings>

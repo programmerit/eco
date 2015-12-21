@@ -1,0 +1,498 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:head />
+	<h:body>
+		<h:form id="candidateSearchForm"
+			rendered="#{candidateViewBean.currentMode==1}">
+
+			<p:commandLink value="Filter:" styleClass="label"
+				actionListener="#{candidateViewBean.showHideFilterPanel}"
+				update="filterPanel" />
+			<p:panelGrid columns="4" layout="grid" id="filterPanel"
+				style="margin-bottom: 7px!important;">
+				<h:panelGroup>
+					<p:inputText id="filter_globalString"
+						value="#{candidateFilterBean.global}" placeholder="Everything">
+						<p:ajax event="keyup" oncomplete="PF('wCandidates').filter();" />
+					</p:inputText>
+					<p:tooltip for="filter_globalString" value="Filter Everything"
+						showEffect="clip" hideEffect="explode" />
+					<br />
+					<p:selectOneMenu id="filter_cStatusSelect"
+						value="#{candidateFilterBean.status}">
+						<p:ajax event="change" oncomplete="PF('wCandidates').filter()" />
+						<f:selectItem itemLabel="ALL" itemValue="ALL_STATUS" />
+						<f:selectItems value="#{candidateFilterBean.allStatus}"
+							var="status" itemValue="#{status}"
+							itemLabel="#{i18n[candidateViewBean.getLocalizedStatus(status)]}" />
+					</p:selectOneMenu>
+					<p:tooltip for="filter_cStatusSelect" value="Filter [Status]"
+						showEffect="clip" hideEffect="explode" />
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<p:inputText id="filter_cName"
+						value="#{candidateFilterBean.fullName}" placeholder="Name">
+						<p:ajax event="keyup" oncomplete="PF('wCandidates').filter();" />
+					</p:inputText>
+					<p:tooltip for="filter_cName" value="Filter [Candidate's Name]"
+						showEffect="clip" hideEffect="explode" />
+
+					<p:inputText id="filter_cEmail"
+						value="#{candidateFilterBean.emailAddress}" placeholder="Email">
+						<p:ajax event="keyup" oncomplete="PF('wCandidates').filter();" />
+					</p:inputText>
+					<p:tooltip for="filter_cEmail" value="Filter [Email]"
+						showEffect="clip" hideEffect="explode" />
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<p:inputText id="filter_cContactNumber"
+						value="#{candidateFilterBean.contactNumber}"
+						placeholder="Contact No.">
+						<p:ajax event="keyup" oncomplete="PF('wCandidates').filter();" />
+					</p:inputText>
+					<p:tooltip for="filter_cContactNumber"
+						value="Filter [Contact Number]" showEffect="clip"
+						hideEffect="explode" />
+					<br />
+
+					<p:autoComplete id="filter_cVacancy"
+						completeMethod="#{candidateFilterBean.onCompleteVacancies}"
+						converter="vacancyIndexItemConverter" autoHighlight="true"
+						value="#{candidateFilterBean.vacancyItems}" minQueryLength="2"
+						multiple="true" var="v" itemLabel="#{v.name}" itemValue="#{v}">
+						<p:ajax event="itemSelect"
+							oncomplete="PF('wCandidates').filter();" />
+						<p:ajax event="itemUnselect"
+							oncomplete="PF('wCandidates').filter();" />
+					</p:autoComplete>
+					<p:tooltip for="filter_cVacancy" value="Filter [Vacancy]"
+						showEffect="clip" hideEffect="explode" />
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<p:calendar id="filter_applyDateFrom" mask="false"
+						widgetVar="wApplyDateFrom"
+						value="#{candidateFilterBean.applyDateFrom}" pattern="dd/MM/yyyy"
+						styleClass="calendarClass" placeholder="From">
+						<p:ajax event="dateSelect"
+							oncomplete="PF('wCandidates').filter();" />
+					</p:calendar>
+					<p:tooltip for="filter_applyDateFrom"
+						value="Filter [Apply Date] From" showEffect="clip"
+						hideEffect="explode" />
+					<p:commandLink value="x"
+						actionListener="#{candidateFilterBean.resetApplyDateFrom}"
+						oncomplete="PF('wCandidates').filter();" ajax="true"
+						update=":candidateSearchForm:filter_applyDateFrom" />
+
+					<br />
+
+					<p:calendar id="filter_applyDateTo" mask="false"
+						widgetVar="wApplyDateTo"
+						value="#{candidateFilterBean.applyDateTo}" pattern="dd/MM/yyyy"
+						styleClass="calendarClass" placeholder="To">
+						<p:ajax event="dateSelect"
+							oncomplete="PF('wCandidates').filter();" />
+					</p:calendar>
+					<p:tooltip for="filter_applyDateTo" value="Filter [Apply Date] To"
+						showEffect="clip" hideEffect="explode" />
+					<p:commandLink value="x"
+						actionListener="#{candidateFilterBean.resetApplyDateTo}"
+						oncomplete="PF('wCandidates').filter();" ajax="true"
+						update=":candidateSearchForm:filter_applyDateTo" />
+				</h:panelGroup>
+			</p:panelGrid>
+		</h:form>
+		<h:form id="candidateMainForm"
+			rendered="#{candidateViewBean.currentMode==1}">
+			<p:remoteCommand name="updateCandidatesAndGrowl"
+				update=":candidateMainForm:candidates :notificationForm:growl" />
+
+			<p:remoteCommand name="updateCandidatePanelGroup"
+				update=":CandidatePanelGroup" />
+			<p:contextMenu id="candidateContextMenu" for="candidates">
+				<p:submenu label="Status">
+					<p:menuitem
+						value="#{i18n[candidateViewBean.getLocalizedStatus('SHORTLIST')]}"
+						rendered="#{candidateBean.isExistedInSameAvailableStatuses('SHORTLIST')}"
+						actionListener="#{candidateBean.onChangeMultipleItemStatus('SHORTLIST')}"
+						oncomplete="updateCandidatesAndGrowl();" />
+
+					<p:menuitem
+						value="#{i18n[candidateViewBean.getLocalizedStatus('HIRE')]}"
+						disabled="#{candidateBean.selectedItems.size() > 1}"
+						rendered="#{candidateBean.isExistedInSameAvailableStatuses('HIRE')}"
+						action="#{candidateBean.onChangeMultipleItemStatus('HIRE')}" />
+
+					<p:menuitem
+						value="#{i18n[candidateViewBean.getLocalizedStatus('REJECT')]}"
+						rendered="#{candidateBean.isExistedInSameAvailableStatuses('REJECT')}"
+						action="#{candidateBean.onChangeMultipleItemStatus('REJECT')}" />
+
+					<p:menuitem
+						value="#{i18n[candidateViewBean.getLocalizedStatus('MARK_INTERVIEW_FAIL')]}"
+						rendered="#{candidateBean.isExistedInSameAvailableStatuses('MARK_INTERVIEW_FAIL')}"
+						action="#{candidateBean.onChangeMultipleItemStatus('MARK_INTERVIEW_FAIL')}"
+						oncomplete="updateCandidatesAndGrowl();" />
+
+					<p:menuitem
+						value="#{i18n[candidateViewBean.getLocalizedStatus('MARK_INTERVIEW_PASS')]}"
+						rendered="#{candidateBean.isExistedInSameAvailableStatuses('MARK_INTERVIEW_PASS')}"
+						action="#{candidateBean.onChangeMultipleItemStatus('MARK_INTERVIEW_PASS')}"
+						oncomplete="updateCandidatesAndGrowl();" />
+
+					<p:menuitem
+						value="#{i18n[candidateViewBean.getLocalizedStatus('INTERVIEW_SCHEDULED')]}"
+						rendered="#{candidateBean.isExistedInSameAvailableStatuses('INTERVIEW_SCHEDULED')}"
+						onclick="window.location.hash = '#scheduleInterview';" />
+
+					<p:menuitem
+						value="#{i18n[candidateViewBean.getLocalizedStatus('JOB_OFFERED')]}"
+						rendered="#{candidateBean.isExistedInSameAvailableStatuses('JOB_OFFERED')}"
+						action="#{candidateBean.onChangeMultipleItemStatus('JOB_OFFERED')}" />
+
+					<p:menuitem
+						value="#{i18n[candidateViewBean.getLocalizedStatus('DECLINE_OFFERED')]}"
+						rendered="#{candidateBean.isExistedInSameAvailableStatuses('DECLINE_OFFERED')}"
+						action="#{candidateBean.onChangeMultipleItemStatus('DECLINE_OFFERED')}"
+						oncomplete="updateCandidatesAndGrowl();" />
+					<p:menuitem value="No Actions Available" disabled="true"
+						rendered="#{candidateBean.noneAvailableStatus}" />
+				</p:submenu>
+			</p:contextMenu>
+
+
+			<p:remoteCommand name="refreshCandidateTable"
+				update=":candidateMainForm:candidates" />
+
+			<p:remoteCommand name="refreshContextMenu"
+				update=":candidateMainForm:candidateContextMenu" />
+
+
+			<h:panelGroup rendered="#{modelPermission.checkPermission('ADD')}">
+				<p:commandLink id="backButton" value="Back"
+					rendered="#{candidateViewBean.currentMode != 1}"
+					actionListener="#{candidateViewBean.switchMode(1)}"
+					update=":CandidatePanelGroup" immediate="true" />
+
+				<p:commandLink id="addCandidate" value="Add New Candidate"
+					action="#{candidateBean.addCandidate}"
+					update=":CandidatePanelGroup"
+					rendered="#{modelPermission.checkPermission('ADD')}" /> |
+
+					<p:commandLink value="Remove Indexes"
+					actionListener="#{candidateBean.removeIndexes}" ajax="true" /> |
+					
+					<p:commandLink value="Index All Candidates"
+					actionListener="#{candidateBean.indexAll}" ajax="true" /> | 
+							
+					<p:commandLink value="Import/Export Settings"
+					onclick="PF('wPresetSettingDialog').show()" />
+
+			</h:panelGroup>
+			<p:dataTable id="candidates" var="candidate" widgetVar="wCandidates"
+				reflow="true" value="#{candidateBean.lazyDataModel}"
+				paginatorAlwaysVisible="false" paginator="true" rows="10"
+				paginatorPosition="bottom"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,25,50" lazy="true" selectionMode="multiple"
+				selection="#{candidateBean.selectedItems}"
+				rowKey="#{candidate.candidateId}" emptyMessage="No candidates found">
+				<!-- Notice [async] -->
+				<p:ajax event="rowDblselect"
+					listener="#{candidateBean.onRowDblSelect}" />
+
+				<p:ajax event="contextMenu"
+					listener="#{candidateBean.onContextShow}" />
+
+				<p:ajax event="rowSelect" oncomplete="refreshContextMenu();"
+					async="true" onsuccess="PF('statusDialog').hide()" />
+
+				<p:ajax event="rowToggle" listener="#{candidateBean.onRowToggle}" />
+
+				<f:facet name="header">
+					<div class="testClass">
+						<div class="emp-title" style="font-size: 25px;">ECO
+							Candidate List</div>
+						<div class="emp-toggle" style="float: right; margin-top: -27px;">
+							<p:commandButton type="button" id="toggler"
+								icon="fa fa-calendar Fs16 White" />
+						</div>
+					</div>
+					<p:columnToggler trigger="toggler" datasource="candidates" />
+				</f:facet>
+
+				<p:column style="width:16px" exportable="false" toggleable="false">
+					<p:rowToggler />
+				</p:column>
+
+				<p:column headerText="NAME" sortBy="#{candidateFilterBean.fullName}">
+					<h:outputText value="#{candidate.fullName}" />
+				</p:column>
+
+				<p:column headerText="EMAIL"
+					sortBy="#{candidateFilterBean.emailAddress}">
+					<h:outputText value="#{candidate.emailAddress}" />
+				</p:column>
+
+				<p:column headerText="CONTACT NUMBER"
+					sortBy="#{candidateFilterBean.contactNumber}">
+					<h:outputText value="#{candidate.contactNumber}" />
+				</p:column>
+
+				<p:column headerText="VACANCY"
+					sortBy="#{candidateFilterBean.vacancy}">
+					<h:outputText value="#{candidate.vacancy}" />
+				</p:column>
+
+				<p:column headerText="APPLY DATE"
+					sortBy="#{candidateFilterBean.applyDate}">
+					<h:outputText value="#{candidate.formattedApplicationDate}" />
+				</p:column>
+
+				<p:column headerText="PROFILE MATCHING" width="110">
+					<p:rating value="#{candidate.evaluationPoint}" readonly="true"
+						cancel="false" styleClass="candidate-rating" />
+				</p:column>
+
+				<p:column headerText="STATUS" sortBy="#{candidateFilterBean.status}">
+					<h:outputText id="candidateStatus"
+						styleClass="currentStatus #{candidateViewBean.currentStatusCSS(candidate.status)}"
+						value="#{i18n[candidate.localizedStatus]}" />
+					<p:selectOneMenu id="candidateStatusSelect"
+						style="margin-top:20px;"
+						value="#{candidateViewBean.selectedStatus}">
+						<!-- eliminate oncomplete update if current status is JOB_OFFERED, b/c changing to HIRE status will make AJAX cannot complete on updating candidates table -->
+						<p:ajax update=":CandidatePanelGroup candidateStatusSelect"
+							listener="#{candidateViewBean.onStatusChange(candidate)}"
+							oncomplete="#{candidate.status != 'JOB_OFFERED' ? 'updateCandidatesAndGrowl();' : ''}">
+						</p:ajax>
+						<f:selectItem itemLabel="---" itemValue="" />
+						<f:selectItems
+							value="#{candidateViewBean.getAvailableStatuses(candidate.status)}"
+							var="status" itemValue="#{status}"
+							itemLabel="#{i18n[candidateViewBean.getLocalizedStatus(status)]}" />
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="Action" width="84">
+					<p:commandButton id="editBtn" icon="fa fa-edit Fs16 White"
+						onclick="window.location.hash = '#vCandidate/candidateId=#{candidate.candidateId}';"
+						rendered="#{candidatePermission.checkPermission(candidate.candidateId, 'UPDATE')}">
+					</p:commandButton>
+
+					<p:commandButton id="deleteBtn" styleClass="RedButton"
+						onclick="PF('wDeleteConfirmDialog').show()"
+						icon="fa fa-remove Fs16 White"
+						rendered="#{candidatePermission.checkPermission(candidate.candidateId, 'DELETE')}">
+						<f:setPropertyActionListener
+							target="#{candidateBean.deletedCandidateId}"
+							value="#{candidate.candidateId}" />
+					</p:commandButton>
+				</p:column>
+				<p:rowExpansion>
+					<h:outputText value="Desired Positions  "
+						style="font-weight: bold; font-style: italic;" />
+					<h:outputText value="#{candidate.desiredPositions}" />
+					<br />
+					<br />
+
+					<h:outputText value="Working Experience"
+						style="font-weight: bold; font-style: italic;" />
+					<br />
+					<h:panelGroup rendered="#{candidate.experiences.size() > 0}">
+						<ui:repeat var="e" value="#{candidate.experiences}">
+							<p:panelGrid columns="3">
+								<h:outputText value="#{e.workingPlace}" />
+								<h:outputText
+									value="#{e.yearsExperience}#{e.yearsExperience > 1 ? 'yrs' : 'yr'}" />
+								<h:outputText value="#{e.description}" />
+							</p:panelGrid>
+						</ui:repeat>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{candidate.experiences.size() == 0}">
+							N/A
+						</h:panelGroup>
+					<br />
+
+					<h:outputText value="Certificate"
+						style="font-weight: bold; font-style: italic;" />
+					<br />
+					<h:panelGroup rendered="#{candidate.certificates.size() > 0}">
+						<ui:repeat var="c" value="#{candidate.certificates}">
+							<p:panelGrid columns="3">
+								<h:outputText value="#{c.name}" />
+								<h:outputText
+									value="#{i18n[candidateBean.getTypeLocalizedString(c.certificateType)]}" />
+								<h:outputText
+									value="#{candidateBean.getUniversityName(c.universityId)}" />
+							</p:panelGrid>
+						</ui:repeat>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{candidate.certificates.size() == 0}">
+							N/A
+						</h:panelGroup>
+
+					<ui:repeat var="e" value="#{candidate.evaluationItems}"
+						varStatus="status">
+						<h:outputText value="#{e.evaluationCriteria.type}"
+							style="font-weight: bold;" />
+						<br />
+						<ui:repeat var="i" value="#{e.evaluationKeyValueItems}"
+							varStatus="status1">
+
+							<h:panelGrid columns="1" width="100%">
+								<h:outputText value="#{i.key}" style="font-size: 14px" />
+								<h:panelGroup id="ratingPanel">
+									<p:rating stars="#{i.maxValue}" value="#{i.value}"
+										cancel="false">
+									</p:rating>
+								</h:panelGroup>
+							</h:panelGrid>
+						</ui:repeat>
+						<br />
+					</ui:repeat>
+					<h:panelGroup>
+						<p:commandLink value="View Detail" style="float:right"
+							onclick="window.location.hash = '#vCandidate/candidateId=#{candidate.candidateId}';"
+							rendered="#{candidatePermission.checkPermission(candidate.candidateId, 'UPDATE')}" />
+					</h:panelGroup>
+				</p:rowExpansion>
+			</p:dataTable>
+
+			<!-- DELETE CONFIRMATION DIALOG -->
+			<p:confirmDialog id="deleteConfirmDialog"
+				widgetVar="wDeleteConfirmDialog" message="Delete this Candidate?"
+				header="Delete Confirmation" severity="alert" closeOnEscape="true"
+				showEffect="fade">
+				<p:commandButton id="confirmDelete" value="Yes"
+					styleClass="RedButton"
+					oncomplete="PF('wDeleteConfirmDialog').hide(); refreshCandidateTable();"
+					actionListener="#{candidateBean.markDeleteCandidate}" />
+				<p:commandButton id="discardDelete" value="No"
+					onclick="PF('wDeleteConfirmDialog').hide()" />
+			</p:confirmDialog>
+		</h:form>
+
+		<h:form id="rejectConfirmForm">
+			<p:dialog widgetVar="wRejectConfirmDialog"
+				header="Reject Confirmation" closeOnEscape="true" showEffect="fade">
+
+				<p:outputPanel id="rejectDeclineOutputPanel" autoUpdate="true">
+					<p:panelGrid columns="2">
+						<h:outputText value="Candidate " />
+						<ui:repeat var="c" value="#{candidateBean.selectedItems}"
+							varStatus="status">
+								#{c.fullName}#{status.index lt candidateBean.selectedItems.size() - 1 ? "," : ""} 			
+							</ui:repeat>
+
+						<h:outputText value="Reason" />
+						<p:inputTextarea placeholder="Reject/Decline Reason"
+							value="#{candidateBean.rejectReason}" />
+					</p:panelGrid>
+				</p:outputPanel>
+				<h:panelGroup style="float: right">
+					<p:commandButton id="confirmReject" value="Yes"
+						styleClass="RedButton"
+						oncomplete="PF('wRejectConfirmDialog').hide(); updateCandidatesAndGrowl();"
+						actionListener="#{candidateBean.onRejectConfirm}" />
+					<p:commandButton id="discardReject" value="No"
+						onclick="PF('wRejectConfirmDialog').hide()" />
+				</h:panelGroup>
+			</p:dialog>
+		</h:form>
+
+		<h:form id="interviewScheduleForm">
+			<p:dialog id="interviewScheduleDialog"
+				widgetVar="wInterviewScheduleDialog" header="Schedule Interview"
+				modal="true">
+				<p:ajax event="close" oncomplete="refreshCandidateTable()" />
+				<p:outputPanel id="interviewScheduleOutputPanel">
+					<p:panelGrid columns="2" layout="grid">
+						<h:panelGroup>
+							<p:panelGrid columns="2">
+								<h:outputText value="Interview" />
+								<h:panelGroup>
+									<p:selectOneMenu id="interviewSelect"
+										converter="interviewConverter"
+										value="#{interviewScheduleBean.interviewScheduleItem.selectedInterview}">
+										<f:selectItem itemLabel="Select..." itemValue="" />
+										<f:selectItems itemDisabled="false"
+											value="#{interviewScheduleBean.interviewScheduleItem.interviews}"
+											var="interview" itemLabel="#{interview.name} "
+											itemValue="#{interview}" />
+									</p:selectOneMenu>
+									<p:commandButton id="iAddNewButton"
+										icon="fa fa-plus Fs16 White"
+										onclick="PF('wInterviewDialog').show()" />
+									<p:message for="interviewSelect" id="interviewSelect_msg"
+										display="icon" />
+								</h:panelGroup>
+								<h:outputText value="Date" />
+								<h:panelGroup>
+									<p:calendar id="interviewDate"
+										value="#{interviewScheduleBean.interviewScheduleItem.interviewSchedule.interviewDate}"
+										mindate="#{interviewScheduleBean.minDate}"
+										pattern="dd/MM/yyyy" />
+									<p:message for="interviewDate" id="interviewDate_msg"
+										display="icon" />
+								</h:panelGroup>
+
+								<h:outputText value="Time" />
+								<h:panelGroup>
+									<p:inputText id="timeFrom"
+										value="#{interviewScheduleBean.interviewScheduleItem.timeFrom}"
+										style="width: 50px;" />
+										-
+										<p:inputText id="timeTo"
+										value="#{interviewScheduleBean.interviewScheduleItem.timeTo}"
+										style="width: 50px;" />
+								</h:panelGroup>
+							</p:panelGrid>
+
+						</h:panelGroup>
+						<h:panelGroup>
+							<h:outputText value="Interviewers" />
+							<p:autoComplete id="interviewers" multiple="true"
+								minQueryLength="2"
+								value="#{interviewScheduleBean.interviewScheduleItem.interviewers}"
+								completeMethod="#{interviewScheduleBean.completeInterviewers}"
+								var="interviewer" itemLabel="#{interviewer.displayName}"
+								itemValue="#{interviewer}" converter="interviewerConverter"
+								autoHighlight="true" forceSelection="true"
+								placeholder="Type to show hints...">
+							</p:autoComplete>
+							<p:message for="interviewers" id="interviewers_msg"
+								display="icon" />
+						</h:panelGroup>
+					</p:panelGrid>
+					<p:commandButton id="interviewScheduleSave" value="Save"
+						actionListener="#{interviewScheduleBean.saveInterviewSchedule}"
+						oncomplete="refreshCandidateTable();" />
+					<p:commandButton value="Cancel"
+						onclick="PF('wInterviewScheduleDialog').hide()" />
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+
+		<ui:include src="/views/dialogs/evaluation.xhtml" />
+
+		<ui:include src="/views/dialogs/import_export.xhtml" />
+	</h:body>
+
+	<style type="text/css">
+.ui-autocomplete-multiple-container {
+	width: 100%;
+}
+</style>
+
+</f:view>

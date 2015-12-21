@@ -1,0 +1,229 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="vn.com.ecopharma.hrm.rc.model.Candidate">
+		<field name="candidateId" type="long" />
+		<field name="candidateCode" type="String" />
+		<field name="fullName" type="String" />
+		<field name="emailAddress" type="String" />
+		<field name="contactNumber" type="String" />
+		<field name="dateOfBirth" type="Date" />
+		<field name="identityCardNo" type="String" />
+		<field name="applicationDate" type="Date" />
+		<field name="status" type="String" />
+		<field name="locationId" type="long" />
+		<field name="deleted" type="boolean" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="description" type="String" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.rc.model.CandidateActionHistory">
+		<field name="candidateActionHistoryId" type="long" />
+		<field name="candidateId" type="long" />
+		<field name="action" type="String" />
+		<field name="actionType" type="String" />
+		<field name="executedBy" type="long" />
+		<field name="date" type="Date" />
+		<field name="description" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.rc.model.CandidateEvaluation">
+		<field name="candidateEvaluationId" type="long" />
+		<field name="evaluationCriteriaId" type="long" />
+		<field name="evaluationCriteriaKeyValueId" type="long" />
+		<field name="ratingPoint" type="int" />
+		<field name="note" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="candidateId" type="long" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.rc.model.Certificate">
+		<field name="certificateId" type="long" />
+		<field name="className" type="String" />
+		<field name="classPK" type="long" />
+		<field name="name" type="String" />
+		<field name="certificateType" type="String" />
+		<field name="universityId" type="long" />
+		<field name="graduationYear" type="int" />
+		<field name="grade" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="courseTimeFrom" type="Date" />
+		<field name="courseTimeTo" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.rc.model.Document">
+		<field name="documentId" type="long" />
+		<field name="className" type="String" />
+		<field name="classPK" type="long" />
+		<field name="type" type="String" />
+		<field name="fileEntryId" type="long" />
+		<field name="deleted" type="boolean" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.rc.model.EmployeeInterviewSchedule">
+		<field name="employeeInterviewScheduleId" type="long" />
+		<field name="employeeId" type="long" />
+		<field name="interviewScheduleId" type="long" />
+		<field name="note" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.rc.model.EvaluationCriteria">
+		<field name="evaluationCriteriaId" type="long" />
+		<field name="type" type="String" />
+		<field name="name" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue">
+		<field name="evaluationCriteriaKeyValueId" type="long" />
+		<field name="evaluationCriteriaId" type="long" />
+		<field name="key" type="String" />
+		<field name="value" type="int" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.rc.model.Experience">
+		<field name="experienceId" type="long" />
+		<field name="className" type="String" />
+		<field name="classPK" type="long" />
+		<field name="companyName" type="String" />
+		<field name="workingPlace" type="String" />
+		<field name="yearsExperience" type="double" />
+		<field name="tel" type="String" />
+		<field name="workingFrom" type="Date" />
+		<field name="workingTo" type="Date" />
+		<field name="initialTitles" type="String" />
+		<field name="finalTitles" type="String" />
+		<field name="initialSalary" type="double" />
+		<field name="finalSalary" type="double" />
+		<field name="field" type="String" />
+		<field name="manager" type="String" />
+		<field name="responsibility" type="String" />
+		<field name="resignedReason" type="String" />
+		<field name="description" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.rc.model.Interview">
+		<field name="interviewId" type="long" />
+		<field name="name" type="String" />
+		<field name="titlesId" type="long" />
+		<field name="deleted" type="boolean" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.rc.model.InterviewSchedule">
+		<field name="interviewScheduleId" type="long" />
+		<field name="vacancyCandidateId" type="long" />
+		<field name="interviewId" type="long" />
+		<field name="locationId" type="long" />
+		<field name="interviewDate" type="Date" />
+		<field name="interviewTime" type="String" />
+		<field name="status" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.rc.model.Skill">
+		<field name="skillId" type="long" />
+		<field name="candidateId" type="long" />
+		<field name="grade" type="String" />
+		<field name="type" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.rc.model.Vacancy">
+		<field name="vacancyId" type="long" />
+		<field name="name" type="String" />
+		<field name="numberOfPosition" type="int" />
+		<field name="titlesId" type="long" />
+		<field name="status" type="String" />
+		<field name="postedDate" type="Date" />
+		<field name="expiredDate" type="Date" />
+		<field name="deleted" type="boolean" />
+		<field name="description" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="code" type="String" />
+		<field name="certificateType" type="String" />
+		<field name="experiences" type="double" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.rc.model.VacancyCandidate">
+		<field name="vacancyCandidateId" type="long" />
+		<field name="vacancyId" type="long" />
+		<field name="candidateId" type="long" />
+		<field name="status" type="int" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="type" type="String" />
+	</model>
+	<model name="vn.com.ecopharma.hrm.rc.model.VacancyEvaluationCriteria">
+		<field name="vacancyEvaluationCriteriaId" type="long" />
+		<field name="vacancyId" type="long" />
+		<field name="evaluationCriteriaId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+</model-hints>

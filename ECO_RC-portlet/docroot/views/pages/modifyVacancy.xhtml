@@ -1,0 +1,154 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head />
+	<h:body>
+		<h:form id="modifyVacancy"
+			rendered="#{vacancyViewBean.currentMode==2 || vacancyViewBean.currentMode==3}">
+
+			<p:remoteCommand name="refreshDocuments"
+				update=":modifyVacancy:accordion:documents" />
+
+			<p:outputPanel id="vacancyOutputPanel">
+				<p:messages id="msgs" />
+				<p:accordionPanel id="accordion" multiple="true"
+					style="margin-bottom:20px;" activeIndex="0">
+					<p:tab id="vacancyBasicInfoTab" title="Basic Information">
+						<p:panelGrid columns="2" layout="grid">
+							<h:panelGroup>
+								<p:panelGrid columns="2">
+
+									<h:outputText value="Name: " />
+									<p:inputText id="vName" placeholder="Name" required="true"
+										value="#{vacancyBean.vacancyItem.vacancy.name}" />
+
+									<h:outputText value="Position: " />
+									<p:selectOneMenu id="vTitlesSelect" converter="titlesConverter"
+										required="true" value="#{vacancyBean.vacancyItem.titles}">
+										<f:selectItem itemLabel="Select Titles" itemValue="" />
+										<f:selectItems value="#{vacancyBean.titlesList}" var="t"
+											itemLabel="#{t.name}" itemValue="#{t}" />
+										<p:column>
+					    	#{t.titlesId} - #{t.name}
+					    </p:column>
+									</p:selectOneMenu>
+
+									<h:outputText value="Number Of Position: " />
+									<p:inputText id="vNumberOfPosition" required="true"
+										value="#{vacancyBean.vacancyItem.vacancy.numberOfPosition}" />
+
+									<h:outputText value="Required Education: " />
+									<p:selectOneMenu id="certificateTypeSelect"
+										value="#{vacancyBean.vacancyItem.vacancy.certificateType}">
+										<f:selectItem itemLabel="Certificate Type" itemValue="" />
+										<f:selectItems value="#{vacancyBean.certificateTypes}" var="t"
+											itemLabel="#{i18n[vacancyBean.getTypeLocalizedString(t)]}"
+											itemValue="#{t}" />
+									</p:selectOneMenu>
+
+									<h:outputText value="Required Experiences: " />
+									<p:inputText id="experiences"
+										value="#{vacancyBean.vacancyItem.vacancy.experiences}" />
+
+									<h:outputText value="Description: " />
+									<p:inputTextarea id="vDescription" placeholder="Description..."
+										value="#{vacancyBean.vacancyItem.vacancy.description}" />
+								</p:panelGrid>
+							</h:panelGroup>
+
+							<h:panelGroup>
+
+
+								<p:panelGrid columns="2">
+									<h:outputText value="Upload Documents" />
+									<h:panelGroup>
+										<p:fileUpload
+											fileUploadListener="#{vacancyBean.handleFileUpload}"
+											oncomplete="refreshDocuments();" mode="advanced"
+											dragDropSupport="true" multiple="true"
+											update=":modifyVacancy:msgs :modifyVacancy:accordion:noDocsPlaceHolder"
+											sizeLimit="10000000" fileLimit="3"
+											allowTypes="/(\.|\/)(doc|docx|pdf)$/" />
+									</h:panelGroup>
+
+									<h:outputText value="Current Documents" />
+									<h:panelGroup id="documents">
+										<ui:repeat var="doc" id="vacancyDocuments"
+											rendered="#{vacancyBean.vacancyItem.documentItems.size() > 0}"
+											value="#{vacancyBean.vacancyItem.documentItems}">
+											<p:commandLink value="#{doc.fileName}"
+												actionListener="#{vacancyBean.onPreviewFile(doc.fileEntryId)}"
+												oncomplete="PF('wPreviewDialog').show();" />
+											<p:commandLink value="[Remove]"
+												onclick="PF('wDeleteConfirmDialog').show()"
+												styleClass="currentStatus status-red"
+												style="margin-left: 30px">
+												<f:setPropertyActionListener
+													target="#{vacancyBean.deletedDocument}" value="#{doc}" />
+											</p:commandLink>
+											<br />
+										</ui:repeat>
+										<h:outputText value="No documents exist"
+											id="noDocsPlaceHolder"
+											rendered="#{vacancyBean.vacancyItem.documentItems.size() == 0}" />
+									</h:panelGroup>
+
+									<h:outputText value="Posted Date: " />
+									<p:calendar id="vPostedDate" mask="false"
+										widgetVar="wPostedDate"
+										value="#{vacancyBean.vacancyItem.vacancy.postedDate}"
+										pattern="dd/MM/yyyy" styleClass="calendarClass">
+									</p:calendar>
+
+									<h:outputText value="Expired Date: " />
+									<p:calendar id="vExpiredDate" mask="false"
+										widgetVar="wExpiredDate"
+										value="#{vacancyBean.vacancyItem.vacancy.expiredDate}"
+										pattern="dd/MM/yyyy" styleClass="calendarClass">
+									</p:calendar>
+
+									<h:outputText value="Status: " />
+									<p:selectOneMenu id="vStatusSelect"
+										value="#{vacancyBean.vacancyItem.vacancy.status}">
+										<f:selectItem itemLabel="Status" itemValue="" />
+										<f:selectItems value="#{vacancyBean.vacancyStatuses}"
+											var="status" itemValue="#{status}" itemLabel="#{status}" />
+									</p:selectOneMenu>
+								</p:panelGrid>
+							</h:panelGroup>
+						</p:panelGrid>
+					</p:tab>
+					<p:tab id="evaluationInfoTab" title="Evaluation Information"
+						rendered="false">
+
+					</p:tab>
+				</p:accordionPanel>
+				<p:commandButton id="vSave" value="Save"
+					action="#{vacancyBean.onSave}"
+					update=":VacancyPanelGroup vacancyOutputPanel :vacancyMainForm:vacancies" /> |
+				<p:commandLink id="vCancel" style="margin-left: 3px;"
+					actionListener="#{vacancyBean.onCancel}" immediate="true"
+					update=":VacancyPanelGroup" value="Cancel" />
+			</p:outputPanel>
+
+			<!-- DELETE CONFIRMATION DIALOG -->
+			<p:confirmDialog id="deleteConfirmDialog"
+				widgetVar="wDeleteConfirmDialog" message="Delete this File?"
+				header="Delete Confirmation" severity="alert" closeOnEscape="true"
+				showEffect="fade">
+				<p:commandButton id="confirmDelete" value="Yes"
+					styleClass="RedButton"
+					oncomplete="refreshDocuments(); PF('wDeleteConfirmDialog').hide()"
+					actionListener="#{vacancyBean.deleteFileEntry}"
+					update=":modifyVacancy:accordion:noDocsPlaceHolder" />
+				<p:commandButton id="discardDelete" value="No"
+					onclick="PF('wDeleteConfirmDialog').hide()" />
+			</p:confirmDialog>
+		</h:form>
+
+
+	</h:body>
+</f:view>

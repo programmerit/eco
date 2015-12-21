@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="vn.com.ecopharma.hrm.rc.service.CandidateLocalService" class="vn.com.ecopharma.hrm.rc.service.impl.CandidateLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.CandidateService" class="vn.com.ecopharma.hrm.rc.service.impl.CandidateServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.persistence.CandidatePersistence" class="vn.com.ecopharma.hrm.rc.service.persistence.CandidatePersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.CandidateActionHistoryLocalService" class="vn.com.ecopharma.hrm.rc.service.impl.CandidateActionHistoryLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.CandidateActionHistoryService" class="vn.com.ecopharma.hrm.rc.service.impl.CandidateActionHistoryServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.persistence.CandidateActionHistoryPersistence" class="vn.com.ecopharma.hrm.rc.service.persistence.CandidateActionHistoryPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.CandidateEvaluationLocalService" class="vn.com.ecopharma.hrm.rc.service.impl.CandidateEvaluationLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.CandidateEvaluationService" class="vn.com.ecopharma.hrm.rc.service.impl.CandidateEvaluationServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.persistence.CandidateEvaluationPersistence" class="vn.com.ecopharma.hrm.rc.service.persistence.CandidateEvaluationPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.CertificateLocalService" class="vn.com.ecopharma.hrm.rc.service.impl.CertificateLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.CertificateService" class="vn.com.ecopharma.hrm.rc.service.impl.CertificateServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.persistence.CertificatePersistence" class="vn.com.ecopharma.hrm.rc.service.persistence.CertificatePersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.DocumentLocalService" class="vn.com.ecopharma.hrm.rc.service.impl.DocumentLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.DocumentService" class="vn.com.ecopharma.hrm.rc.service.impl.DocumentServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.persistence.DocumentPersistence" class="vn.com.ecopharma.hrm.rc.service.persistence.DocumentPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.EmployeeInterviewScheduleLocalService" class="vn.com.ecopharma.hrm.rc.service.impl.EmployeeInterviewScheduleLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.EmployeeInterviewScheduleService" class="vn.com.ecopharma.hrm.rc.service.impl.EmployeeInterviewScheduleServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.persistence.EmployeeInterviewSchedulePersistence" class="vn.com.ecopharma.hrm.rc.service.persistence.EmployeeInterviewSchedulePersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.EvaluationCriteriaLocalService" class="vn.com.ecopharma.hrm.rc.service.impl.EvaluationCriteriaLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.EvaluationCriteriaService" class="vn.com.ecopharma.hrm.rc.service.impl.EvaluationCriteriaServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.persistence.EvaluationCriteriaPersistence" class="vn.com.ecopharma.hrm.rc.service.persistence.EvaluationCriteriaPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.EvaluationCriteriaKeyValueLocalService" class="vn.com.ecopharma.hrm.rc.service.impl.EvaluationCriteriaKeyValueLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.EvaluationCriteriaKeyValueService" class="vn.com.ecopharma.hrm.rc.service.impl.EvaluationCriteriaKeyValueServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.persistence.EvaluationCriteriaKeyValuePersistence" class="vn.com.ecopharma.hrm.rc.service.persistence.EvaluationCriteriaKeyValuePersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.ExperienceLocalService" class="vn.com.ecopharma.hrm.rc.service.impl.ExperienceLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.ExperienceService" class="vn.com.ecopharma.hrm.rc.service.impl.ExperienceServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.persistence.ExperiencePersistence" class="vn.com.ecopharma.hrm.rc.service.persistence.ExperiencePersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.InterviewLocalService" class="vn.com.ecopharma.hrm.rc.service.impl.InterviewLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.InterviewService" class="vn.com.ecopharma.hrm.rc.service.impl.InterviewServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.persistence.InterviewPersistence" class="vn.com.ecopharma.hrm.rc.service.persistence.InterviewPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.InterviewScheduleLocalService" class="vn.com.ecopharma.hrm.rc.service.impl.InterviewScheduleLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.InterviewScheduleService" class="vn.com.ecopharma.hrm.rc.service.impl.InterviewScheduleServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.persistence.InterviewSchedulePersistence" class="vn.com.ecopharma.hrm.rc.service.persistence.InterviewSchedulePersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.SkillService" class="vn.com.ecopharma.hrm.rc.service.impl.SkillServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.persistence.SkillPersistence" class="vn.com.ecopharma.hrm.rc.service.persistence.SkillPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.VacancyLocalService" class="vn.com.ecopharma.hrm.rc.service.impl.VacancyLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.VacancyService" class="vn.com.ecopharma.hrm.rc.service.impl.VacancyServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.persistence.VacancyPersistence" class="vn.com.ecopharma.hrm.rc.service.persistence.VacancyPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.VacancyCandidateLocalService" class="vn.com.ecopharma.hrm.rc.service.impl.VacancyCandidateLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.VacancyCandidateService" class="vn.com.ecopharma.hrm.rc.service.impl.VacancyCandidateServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.persistence.VacancyCandidatePersistence" class="vn.com.ecopharma.hrm.rc.service.persistence.VacancyCandidatePersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.VacancyEvaluationCriteriaLocalService" class="vn.com.ecopharma.hrm.rc.service.impl.VacancyEvaluationCriteriaLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.VacancyEvaluationCriteriaService" class="vn.com.ecopharma.hrm.rc.service.impl.VacancyEvaluationCriteriaServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.rc.service.persistence.VacancyEvaluationCriteriaPersistence" class="vn.com.ecopharma.hrm.rc.service.persistence.VacancyEvaluationCriteriaPersistenceImpl" parent="basePersistence" />
+</beans>

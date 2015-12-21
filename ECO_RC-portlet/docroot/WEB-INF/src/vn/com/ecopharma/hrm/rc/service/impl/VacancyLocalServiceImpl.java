@@ -1,0 +1,408 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package vn.com.ecopharma.hrm.rc.service.impl;
+
+import java.util.Date;
+import java.util.List;
+
+import vn.com.ecopharma.hrm.rc.NoSuchVacancyException;
+import vn.com.ecopharma.hrm.rc.constant.ECO_RCUtils;
+import vn.com.ecopharma.hrm.rc.constant.VacancyField;
+import vn.com.ecopharma.hrm.rc.enumeration.VacancyCandidateType;
+import vn.com.ecopharma.hrm.rc.enumeration.VacancyStatus;
+import vn.com.ecopharma.hrm.rc.model.Vacancy;
+import vn.com.ecopharma.hrm.rc.model.VacancyCandidate;
+import vn.com.ecopharma.hrm.rc.service.DocumentLocalServiceUtil;
+import vn.com.ecopharma.hrm.rc.service.base.VacancyLocalServiceBaseImpl;
+
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.ParseException;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.service.ServiceContext;
+
+/**
+ * The implementation of the vacancy local service.
+ *
+ * <p>
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link vn.com.ecopharma.hrm.rc.service.VacancyLocalService} interface.
+ *
+ * <p>
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
+ * </p>
+ *
+ * @author tvt
+ * @see vn.com.ecopharma.hrm.rc.service.base.VacancyLocalServiceBaseImpl
+ * @see vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil
+ */
+public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
+	/*
+	 * NOTE FOR DEVELOPERS:
+	 * 
+	 * Never reference this interface directly. Always use {@link
+	 * vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil} to access the
+	 * vacancy local service.
+	 */
+
+	public List<Vacancy> findAll() {
+		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	public List<Vacancy> findAll(int start, int end) {
+		return findAll(start, end, null);
+	}
+
+	public List<Vacancy> findAll(int start, int end,
+			OrderByComparator orderByComparator) {
+		try {
+			return vacancyPersistence.findAll(start, end, orderByComparator);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public List<Vacancy> findAllUnDeleted() {
+		try {
+			return vacancyPersistence.findByUnDeleted(false);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/* Finder methods */
+	public Vacancy findByName(String name) {
+		try {
+			return vacancyPersistence.findByName(name);
+		} catch (NoSuchVacancyException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public int countAllUnDeletedIndexedVacancyDocuments(
+			SearchContext searchContext, List<Query> filterQueries,
+			long companyId, Sort sort) {
+		return searchAllUnDeletedVacanciesIndexedDocument(searchContext,
+				filterQueries, companyId, sort, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS).size();
+	}
+
+	public List<Document> searchAllUnDeletedVacanciesIndexedDocument(
+			SearchContext searchContext, List<Query> filterQueries,
+			long companyId, Sort sort, int start, int end) {
+
+		final BooleanQuery fullQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		final BooleanQuery allVacancyEntriesBooleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		final BooleanQuery noneDeletedVacancyBooleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+
+		allVacancyEntriesBooleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME,
+				Vacancy.class.getName());
+		noneDeletedVacancyBooleanQuery.addExactTerm(VacancyField.IS_DELETED,
+				"false");
+
+		try {
+			// add filter queries
+			fullQuery.add(allVacancyEntriesBooleanQuery,
+					BooleanClauseOccur.MUST);
+			if (filterQueries != null && filterQueries.size() > 0) {
+				for (Query query : filterQueries) {
+					fullQuery.add(query, BooleanClauseOccur.MUST);
+				}
+			}
+
+			// always filter for none-delete item
+			fullQuery.add(noneDeletedVacancyBooleanQuery,
+					BooleanClauseOccur.MUST);
+
+			sort = sort != null ? sort : new Sort(VacancyField.VACANCY_ID,
+					false);
+
+			return SearchEngineUtil.search(
+					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
+					fullQuery, sort, start, end).toList();
+		} catch (SearchException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public int countAllUnDeletedAndPublishedIndexedVacancyDocuments(
+			SearchContext searchContext, List<Query> filterQueries,
+			long companyId, Sort sort) {
+		return searchAllUnDeletedAndPublishedVacanciesIndexedDocument(
+				searchContext, filterQueries, companyId, sort,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
+	}
+
+	public List<Document> searchAllUnDeletedAndPublishedVacanciesIndexedDocument(
+			SearchContext searchContext, List<Query> filterQueries,
+			long companyId, Sort sort, int start, int end) {
+		BooleanQuery publishedStatusBooleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		publishedStatusBooleanQuery.addExactTerm(VacancyField.STATUS,
+				VacancyStatus.PUBLISHED.toString());
+		filterQueries.add(publishedStatusBooleanQuery);
+		return searchAllUnDeletedVacanciesIndexedDocument(searchContext,
+				filterQueries, companyId, sort, start, end);
+	}
+
+	public Vacancy createPrePersistedVacancy() {
+		try {
+			final long id = counterLocalService.increment();
+			return vacancyPersistence.create(id);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public Vacancy createPrePersistedVacancy(String vacancyCode, String name,
+			int numberOfPosition, long titlesId, String description,
+			Date postedDate, Date expiredDate, String status) {
+		final Vacancy vacancy = createPrePersistedVacancy();
+		vacancy.setCode(vacancyCode);
+		vacancy.setName(name);
+		vacancy.setNumberOfPosition(numberOfPosition);
+		vacancy.setTitlesId(titlesId);
+		vacancy.setDescription(description);
+		vacancy.setPostedDate(postedDate);
+		vacancy.setExpiredDate(expiredDate);
+		vacancy.setStatus(status);
+		return vacancy;
+	}
+
+	public Vacancy addVacancy(Vacancy vacancy, long locationId,
+			List<Long> fileEntryIds, ServiceContext serviceContext) {
+		try {
+			vacancy.setUserId(serviceContext.getUserId());
+			vacancy.setGroupId(serviceContext.getScopeGroupId());
+			vacancy.setCompanyId(serviceContext.getCompanyId());
+			vacancy.setCreateDate(new Date(System.currentTimeMillis()));
+			vacancy.setModifiedDate(new Date(System.currentTimeMillis()));
+			Vacancy result = vacancyPersistence.update(vacancy);
+			// add permission
+			resourceLocalService.addResources(vacancy.getCompanyId(),
+					vacancy.getGroupId(), vacancy.getUserId(),
+					Vacancy.class.getName(), vacancy.getVacancyId(), false,
+					true, true);
+
+			// add documents for candidate
+			for (long fileEntryId : fileEntryIds) {
+				DocumentLocalServiceUtil.addDocument(Vacancy.class.getName(),
+						vacancy.getVacancyId(), fileEntryId, serviceContext);
+			}
+
+			// index new employee
+			Indexer indexer = IndexerRegistryUtil
+					.nullSafeGetIndexer(Vacancy.class);
+			indexer.reindex(Vacancy.class.getName(), result.getVacancyId());
+
+			return result;
+		} catch (SystemException e) {
+			e.printStackTrace();
+		} catch (PortalException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public Vacancy updateVacancy(Vacancy vacancy, List<Long> fileEntryIds,
+			ServiceContext serviceContext) {
+		try {
+			for (Long fileEntryId : fileEntryIds) {
+				if (DocumentLocalServiceUtil
+						.findByClassAndClassPKAndFileEntryId(
+								Vacancy.class.getName(),
+								vacancy.getVacancyId(), fileEntryId) == null) {
+					DocumentLocalServiceUtil.addDocument(
+							Vacancy.class.getName(), vacancy.getVacancyId(),
+							fileEntryId, serviceContext);
+				}
+			}
+
+			vacancy.setModifiedDate(new Date(System.currentTimeMillis()));
+
+			vacancy = vacancyPersistence.update(vacancy);
+
+			Indexer indexer = IndexerRegistryUtil.getIndexer(Vacancy.class
+					.getName());
+			indexer.reindex(vacancy);
+
+			return vacancy;
+		} catch (SearchException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public Vacancy getVacancyByCandidateId(long candidateId) {
+		try {
+			final List<VacancyCandidate> vacancyCandidates = vacancyCandidateLocalService
+					.findByCandidateAndType(candidateId,
+							VacancyCandidateType.MAIN.toString());
+			return vacancyCandidates != null && !vacancyCandidates.isEmpty() ? fetchVacancy(vacancyCandidates
+					.get(0).getVacancyId()) : null;
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public Document getIndexVacancyDocument(long id, SearchContext searchContext) {
+		searchContext.setPortletIds(new String[] { ECO_RCUtils.PORTLET_ID });
+		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
+		BooleanQuery booleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME,
+				Vacancy.class.getName());
+		booleanQuery.addExactTerm(VacancyField.VACANCY_ID, id);
+
+		try {
+			fullQuery.add(booleanQuery, BooleanClauseOccur.MUST);
+			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
+			return !hits.toList().isEmpty() ? hits.toList().get(0) : null;
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (SearchException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	public Document getIndexVacancyDocument(String id,
+			SearchContext searchContext) {
+		return getIndexVacancyDocument(Long.valueOf(id), searchContext);
+	}
+
+	public Document getUndeletedIndexVacancyDocument(long id,
+			SearchContext searchContext) {
+		searchContext.setPortletIds(new String[] { ECO_RCUtils.PORTLET_ID });
+		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
+		BooleanQuery booleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		BooleanQuery noneDeletedVacancyBooleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME,
+				Vacancy.class.getName());
+		booleanQuery.addExactTerm(VacancyField.VACANCY_ID, id);
+
+		noneDeletedVacancyBooleanQuery.addExactTerm(VacancyField.IS_DELETED,
+				"false");
+		try {
+			fullQuery.add(booleanQuery, BooleanClauseOccur.MUST);
+			fullQuery.add(noneDeletedVacancyBooleanQuery,
+					BooleanClauseOccur.MUST);
+			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
+			return !hits.toList().isEmpty() ? hits.toList().get(0) : null;
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (SearchException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	public Vacancy markDeleted(long id) {
+		try {
+			return markDeleted(vacancyPersistence.fetchByPrimaryKey(id));
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public Vacancy markDeleted(Vacancy vacancy) {
+		try {
+			vacancy.setDeleted(true);
+			vacancy = vacancyPersistence.update(vacancy);
+			final Indexer indexer = IndexerRegistryUtil
+					.getIndexer(Vacancy.class.getName());
+			indexer.reindex(vacancy);
+			return vacancy;
+		} catch (SystemException e) {
+			e.printStackTrace();
+		} catch (SearchException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public void indexAllVacancies() {
+		final Indexer indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(Vacancy.class);
+		final List<Vacancy> items = findAll();
+		for (Vacancy vacancy : items) {
+			// index vacancy
+			try {
+				indexer.reindex(vacancy);
+			} catch (SearchException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void removeAllVacanciesIndexes(SearchContext searchContext,
+			long companyId) {
+		final BooleanQuery booleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		booleanQuery.addExactTerm(Field.ENTRY_CLASS_NAME,
+				Vacancy.class.getName());
+		try {
+			final Hits hits = SearchEngineUtil.search(
+					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
+					booleanQuery, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			final List<Document> docs = hits.toList();
+			for (Document doc : docs) {
+				SearchEngineUtil.deleteDocument(
+						SearchEngineUtil.getDefaultSearchEngineId(), companyId,
+						doc.getUID());
+
+			}
+		} catch (SearchException e) {
+			e.printStackTrace();
+		}
+	}
+}

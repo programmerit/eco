@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:head />
+
+	<h:body>
+		<h:form id="importExportForm">
+			<p:dialog id="presetSettingDialog" widgetVar="wPresetSettingDialog"
+				modal="true" closeOnEscape="true" resizable="false"
+				header="Configure Export Preset">
+				<p:tabView>
+					<p:tab id="exportTab" title="Export">
+						<br />
+						<p:panelGrid>
+							<h:outputLabel for="" value="Export Filename: " />
+							<h:outputText value="#{importExportBean.fileName}"
+								id="exportFilename" />
+
+							<h:outputLabel value="Choose Preset: " styleClass="label" />
+							<p:selectOneButton id="presetTypeSelect"
+								value="#{importExportBean.presetType}" required="true">
+								<f:selectItem itemLabel="Excel 1997-2003(XLS)" itemValue="xls" />
+								<f:selectItem itemLabel="Excel 2007 and higher(XLSX)"
+									itemValue="xlsx" />
+								<f:selectItem itemLabel="PDF" itemValue="pdf"
+									itemDisabled="true" />
+							</p:selectOneButton>
+							<br />
+							<br />
+							<h:outputLabel value="Export Range: " styleClass="label" />
+							<h:panelGroup>
+								<p:selectOneRadio id="exportRangeRadio"
+									value="#{importExportBean.exportRange}">
+									<f:selectItem itemLabel="All" itemValue="all" />
+									<f:selectItem itemLabel="All Filter Range"
+										itemValue="allFilterRange" />
+									<f:selectItem itemLabel="Current Filter Page"
+										itemValue="currentPage" />
+								</p:selectOneRadio>
+							</h:panelGroup>
+							<br /> 
+							<br />
+							<h:outputLabel value="Columns To Export: " styleClass="label" />
+							<h:panelGroup>
+								<p:selectOneRadio id="exportColumns"
+									value="#{importExportBean.exportColumn}" disabled="true">
+									<f:selectItem itemLabel="All" itemValue="all" />
+									<f:selectItem itemLabel="Available on Table" itemValue="avail" />
+									<f:selectItem itemLabel="Custom" itemValue="custom" />
+								</p:selectOneRadio>
+							</h:panelGroup>
+						</p:panelGrid>
+					</p:tab>
+					<p:tab id="importTab" title="Import">
+						<p:fileUpload
+							fileUploadListener="#{importExportBean.handleFileImport}"
+							mode="advanced" dragDropSupport="true" update="messages"
+							sizeLimit="10000000" allowTypes="/(\.|\/)(xls|xlsx)$/" />
+
+						<p:growl id="messages" showDetail="true" />
+					</p:tab>
+				</p:tabView>
+				<br />
+				<p:commandButton value="Generate Export File"
+					actionListener="#{importExportBean.handleFileExport}" 
+					update=":importExportForm:exportDownloadLink"
+					onclick="PF('wProgressDialog').show()"
+					oncomplete="PF('wProgressDialog').hide(); PF('wDownloadExportDialog').show();">
+				</p:commandButton>
+
+				<p:commandButton value="Cancel"
+					onclick="PF('wPresetSettingDialog').hide()" />
+
+			</p:dialog>
+
+
+			<p:dialog id="downloadExportDialog" widgetVar="wDownloadExportDialog"
+				modal="true" closeOnEscape="true" resizable="false"
+				showHeader="false" showEffect="fade">
+				<h:outputText value="Completed!" /> 
+				<br />
+				<h:outputLink id="exportDownloadLink"
+					onclick="PF('wDownloadExportDialog').hide()"
+					value="#{importExportBean.fileURL}">Download File</h:outputLink>
+			</p:dialog>
+
+			<p:dialog id="progressDialog" widgetVar="wProgressDialog"
+				modal="true" closeOnEscape="true" resizable="false"
+				showHeader="false" showEffect="fade">
+				<h:outputText value="Export file is being generated..." />
+			</p:dialog>
+
+		</h:form>
+	</h:body>
+</f:view>

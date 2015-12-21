@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head />
+	<h:body>
+		<h:form id="previewForm">
+			<p:dialog id="previewDialog" widgetVar="wPreviewDialog"
+				header="Preview" modal="true" width="600" height="435px"
+				resizable="false">
+				<p:outputPanel id="previewOutputPanel" autoUpdate="true">
+					<p:panelGrid columns="2">
+						<h:panelGroup
+							style="float:left;overflow-y: auto;height: 415px; width: 140px;">
+							<ui:repeat var="t" value="#{previewBean.thumbnailImageLinks}"
+								varStatus="status">
+								<p:commandLink
+									actionListener="#{previewBean.onChangePreviewImage(status.index)}"
+									update=":previewForm:previewFileContainer">
+
+									<p:graphicImage value="#{t}" width="84" height="105">
+										<p:ajax event="mouseover"
+											listener="#{previewBean.onChangePreviewImage(status.index)}"
+											update=":previewForm:previewFileContainer" />
+									</p:graphicImage>
+								</p:commandLink>
+
+								<br />
+								<hr />
+							</ui:repeat>
+						</h:panelGroup>
+						<p:panelGrid columns="1" style="width:359px"
+							id="previewFileContainer">
+							<h:panelGroup>
+								<div class="test" style="float: right;">
+									<p:commandLink value="Prev"
+										actionListener="#{previewBean.onPrev}"
+										update=":previewForm:previewFileContainer" />
+									<p:commandLink value="+"
+										actionListener="#{previewBean.onEnLargeViewMode}"
+										update=":previewForm:previewFileContainer" />
+									<p:commandLink value="Next"
+										actionListener="#{previewBean.onNext}"
+										update=":previewForm:previewFileContainer" />
+								</div>
+							</h:panelGroup>
+
+							<h:panelGroup>
+								<h:outputText
+									value="#{previewBean.currentPage} of #{previewBean.previewFileCount}"
+									styleClass="lfr-preview-file-info" />
+								<p:graphicImage id="previewFileMedium"
+									value="#{previewBean.previewFileURL}" />
+							</h:panelGroup>
+
+						</p:panelGrid>
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+
+			<p:dialog id="largePreviewDialog" widgetVar="wLargePreviewDialog"
+				closeOnEscape="true" showHeader="true" modal="true" width="1000"
+				draggable="true" height="480">
+				<p:ajax event="close" listener="#{previewBean.onCloseLargePreview}" />
+				<p:outputPanel id="largePreviewOutputPanel" autoUpdate="true">
+					<p:panelGrid columns="3">
+						<p:commandLink value="Prev" actionListener="#{previewBean.onPrev}"
+							update="largePreviewOutputPanel" />
+						<p:graphicImage id="previewFileLarge" height="450"
+							value="#{previewBean.previewFileURL}" />
+						<p:commandLink value="Next" actionListener="#{previewBean.onPrev}"
+							update="largePreviewOutputPanel" />
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+
+			<p:dialog id="noPreviewDialog" widgetVar="wNoPreviewDialog"
+				closeOnEscape="true" header="No Preview Warning" showHeader="true"
+				modal="true" draggable="true">
+				<p:outputPanel id="noPreviewOutputPanel" autoUpdate="true">
+					<h:panelGroup>
+						<h:outputText value="No preview available" />
+						<br />
+						<p:link href="#{previewBean.docURL}" value="Download instead" />
+					</h:panelGroup>
+				</p:outputPanel>
+			</p:dialog>
+
+
+
+		</h:form>
+	</h:body>
+</f:view>

@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+
+<f:view encoding="UTF-8" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:head>
+		<h:outputScript library="js" name="jquery.ba-bbq.min.js" />
+	</h:head>
+	<h:body onload="window.location.hash = '#vCandidate';">
+
+		<!-- tricky load primefaces extensions js to avoid include child pages/components can not use <pe> -->
+		<pe:blockUI />
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="false" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/images/ajax-loader1.gif" />
+		</p:dialog>
+
+		<h:panelGroup id="RCPanelGroup">
+
+			<p:growl id="notification" />
+			<h:form id="navigationForm">
+
+				<p:remoteCommand name="updateNav"
+					actionListener="#{RCViewBean.updateNav()}" update=":RCPanelGroup" />
+
+				<p:commandLink id="candiatePageLink" value="Candidate"
+					disabled="#{RCViewBean.currentPage==1}"
+					onclick="window.location.hash = '#vCandidate';" /> 
+					| 
+				<p:commandLink id="vacancyPageLink" value="Vacancy"
+					disabled="#{RCViewBean.currentPage==2}"
+					onclick="window.location.hash = '#vVacancy';" />
+					| 
+				<p:commandLink id="reportPageLink" value="Report"
+					disabled="#{RCViewBean.currentPage==3}"
+					onclick="window.location.hash = '#vReport';" />
+					| 
+				<p:commandLink id="interviewPageLink" value="Interview"
+					onclick="window.location.hash = '#vInterview';"
+					disabled="#{RCViewBean.currentPage==4}" />
+					| 
+				<p:link id="candidateGuestLink" value="Guest Link"
+					outcome="candidateGuest" />
+			</h:form>
+
+			<!-- GLOBAL preview dialog -->
+			<ui:include src="/views/dialogs/previewDialog.xhtml" />
+
+			<ui:include id="include" src="#{RCViewBean.currentNav}" />
+
+
+		</h:panelGroup>
+		<script>
+			originUrl = location.href;
+			if (originUrl.indexOf("candidateId") > -1) {
+				urlLength = originUrl.length;
+				start = originUrl.indexOf("=");
+				candidateId = originUrl.substring(start + 1, urlLength);
+				//alert('#vCandidate/candidateId=' + candidateId);
+				window.location.hash = '#vCandidate/candidateId=' + candidateId;
+			}
+
+			$(window).bind('hashchange', function(e) {
+				var url = $.param.fragment();
+				updateNav([ {
+					name : 'currentNav',
+					value : url
+				} ]);
+			});
+			$(window).trigger('hashchange');
+		</script>
+	</h:body>
+
+</f:view>

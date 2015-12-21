@@ -1,0 +1,293 @@
+package vn.com.ecopharma.hrm.rc.dto;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import vn.com.ecopharma.emp.model.Department;
+import vn.com.ecopharma.emp.model.Devision;
+import vn.com.ecopharma.emp.model.DevisionGroup;
+import vn.com.ecopharma.emp.model.Employee;
+import vn.com.ecopharma.emp.model.Level;
+import vn.com.ecopharma.emp.model.Titles;
+import vn.com.ecopharma.emp.model.Unit;
+import vn.com.ecopharma.emp.model.University;
+import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
+import vn.com.ecopharma.emp.service.DevisionGroupLocalServiceUtil;
+import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
+import vn.com.ecopharma.emp.service.EmployeeLocalServiceUtil;
+import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
+import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
+import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
+import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
+import vn.com.ecopharma.hrm.rc.util.EmployeeUtils;
+
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.faces.portal.context.LiferayFacesContext;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
+
+/**
+ * @author TaoTran
+ *
+ */
+public class EmployeeInfoItem implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private Employee employee;
+	private User user;
+	private University university;
+	private Titles titles;
+	private Level level;
+
+	public Unit unit;
+	public Department department;
+
+	private Devision devision;
+	private DevisionGroup devisionGroup;
+	/* Fields for creating employee's user */
+	private String userName;
+	private String userPassword1;
+	private String userPassword2;
+
+	private List<AddressObjectItem> addresses;
+
+	private List<String> dependentNames;
+
+	public EmployeeInfoItem(Employee employee) {
+		this.employee = employee;
+		LiferayFacesContext liferayFacesContext = LiferayFacesContext
+				.getInstance();
+		final ServiceContext serviceContext = liferayFacesContext
+				.getServiceContext();
+
+		this.dependentNames = new ArrayList<String>();
+		dependentNames.add("Tran Van A");
+		dependentNames.add("Tran Van B");
+		addresses = EmployeeUtils.getAddressObjectItemsFromClassNameAndPK(
+				Employee.class.getName(), employee.getEmployeeId(),
+				serviceContext.getCompanyId());
+		try {
+			titles = TitlesLocalServiceUtil.getTitles(employee.getTitlesId());
+			devisionGroup = titles != null && titles.getDevisionGroupId() != 0 ? DevisionGroupLocalServiceUtil
+					.getDevisionGroup(titles.getDevisionGroupId()) : null;
+			devision = titles != null ? DevisionLocalServiceUtil
+					.getDevision(titles.getDevisionId()) : null;
+			department = devision != null ? DepartmentLocalServiceUtil
+					.getDepartment(devision.getDepartmentId()) : null;
+			unit = department != null ? UnitLocalServiceUtil.getUnit(department
+					.getUnitId()) : null;
+		} catch (PortalException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public EmployeeInfoItem(long employeeId) {
+		this(EmployeeUtils.getEmployeeById(employeeId));
+	}
+
+	public EmployeeInfoItem(String employeeIdString) {
+		this(Long.valueOf(employeeIdString));
+	}
+
+	public EmployeeInfoItem() {
+		this.user = createNewUser();
+		this.employee = createNewEmployee();
+	}
+
+	private Employee createNewEmployee() {
+		try {
+			this.employee = EmployeeLocalServiceUtil
+					.createEmployee(CounterLocalServiceUtil.increment());
+			// set default "Male" for employee
+			employee.setGender("Male");
+			employee.setLaborContractType("UNLIMITED_TIME".toString());
+			this.addresses = new ArrayList<AddressObjectItem>();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return employee;
+	}
+
+	private User createNewUser() {
+		try {
+			return UserLocalServiceUtil.createUser(CounterLocalServiceUtil
+					.increment());
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public User getUser() {
+		try {
+			if (user == null) {
+				return user = employee.getEmployeeUserId() != 0 ? UserLocalServiceUtil
+						.getUser(employee.getEmployeeUserId()) : null;
+			}
+			return user;
+		} catch (PortalException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
+
+	public University getUniversity() {
+		try {
+			if (university == null) {
+				return university = employee.getUniversityId() != 0 ? UniversityLocalServiceUtil
+						.getUniversity(employee.getUniversityId()) : null;
+			}
+			return university;
+		} catch (PortalException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return university;
+	}
+
+	public Titles getTitles() {
+		try {
+			if (titles == null) {
+				return titles = employee.getTitlesId() != 0 ? TitlesLocalServiceUtil
+						.getTitles(employee.getTitlesId()) : null;
+			}
+			return titles;
+		} catch (PortalException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return titles;
+	}
+
+	public Level getLevel() {
+		try {
+			if (level == null) {
+				return level = employee.getLevelId() != 0 ? LevelLocalServiceUtil
+						.getLevel(employee.getLevelId()) : null;
+			}
+			return level;
+		} catch (PortalException e) {
+			e.printStackTrace();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return level;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setTitles(Titles titles) {
+		this.titles = titles;
+	}
+
+	public void setLevel(Level level) {
+		this.level = level;
+	}
+
+	public void setUniversity(University university) {
+		this.university = university;
+	}
+
+	public long getTitlesId() {
+		return titles != null ? titles.getTitlesId() : 0;
+	}
+
+	public long getLevelId() {
+		return level != null ? level.getLevelId() : 0;
+	}
+
+	public long getUniversityId() {
+		return university != null ? university.getUniversityId() : 0;
+	}
+
+	public List<AddressObjectItem> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<AddressObjectItem> addresses) {
+		this.addresses = addresses;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserPassword1() {
+		return userPassword1;
+	}
+
+	public void setUserPassword1(String userPassword1) {
+		this.userPassword1 = userPassword1;
+	}
+
+	public String getUserPassword2() {
+		return userPassword2;
+	}
+
+	public void setUserPassword2(String userPassword2) {
+		this.userPassword2 = userPassword2;
+	}
+
+	public List<String> getDependentNames() {
+		return dependentNames;
+	}
+
+	public void setDependentNames(List<String> dependentNames) {
+		this.dependentNames = dependentNames;
+	}
+
+	public Unit getUnit() {
+		return unit;
+	}
+
+	public void setUnit(Unit unit) {
+		this.unit = unit;
+	}
+
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+	public Devision getDevision() {
+		return devision;
+	}
+
+	public void setDevision(Devision devision) {
+		this.devision = devision;
+	}
+
+	public DevisionGroup getDevisionGroup() {
+		return devisionGroup;
+	}
+
+	public void setDevisionGroup(DevisionGroup devisionGroup) {
+		this.devisionGroup = devisionGroup;
+	}
+}

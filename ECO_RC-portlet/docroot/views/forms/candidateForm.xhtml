@@ -1,0 +1,163 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head />
+	<h:body>
+	Test 123
+		<h:form id="modifyCandidate" enctype="multipart/form-data">
+			<p:hotkey bind="esc"
+				oncomplete="PF('wCancelModificationConfirmDialog').show()" />
+			<p:outputPanel id="candidateOutputPanel">
+				<p:messages id="msgs" />
+				<p:remoteCommand name="refreshDocuments"
+					update=":modifyCandidate:accordion:documents" />
+
+				<p:remoteCommand name="refreshExperiences"
+					update=":modifyCandidate:accordion:candidateExperiencesGrid" />
+				<p:accordionPanel id="accordion" multiple="true"
+					style="margin-bottom:20px;" activeIndex="0">
+					<p:tab id="candidateBasicInfoTab" title="Basic Information">
+						<p:panelGrid layout="grid" columns="2">
+							<p:panelGrid columns="2" columnClasses="label, value">
+
+								<h:outputText value="Full name: " />
+								<p:inputText id="cFirstName" placeholder="FullName"
+									required="true"
+									value="#{candidateBean.candidateItem.candidate.fullName}" />
+
+								<h:outputText value="Email: " />
+								<p:inputText id="cEmail" placeholder="Email" required="true"
+									value="#{candidateBean.candidateItem.candidate.emailAddress}" />
+
+								<h:outputText value="Contact Number: " />
+								<p:inputText id="cContactNumber" placeholder="Contact Number"
+									required="true"
+									value="#{candidateBean.candidateItem.candidate.contactNumber}" />
+
+								<h:outputText value="Vacancy: " />
+								<p:selectOneMenu id="cVacancySelect"
+									converter="vacancyConverter" filter="true"
+									value="#{candidateBean.candidateItem.vacancy}" required="true">
+									<p:ajax event="change" />
+									<f:selectItem itemLabel="Select Vacancy" itemValue="" />
+									<f:selectItems value="#{candidateBean.vacancies}" var="v"
+										itemLabel="#{v.name} #{v.status == 'UNPUBLISHED' ? '  [UNPUBLISHED]' : ''} "
+										itemValue="#{v}"
+										itemDisabled="#{v.status == 'UNPUBLISHED' || v.status == 'NEW'}" />
+									<p:column>
+					    	#{v.vacancyId} - #{v.name}
+					    </p:column>
+								</p:selectOneMenu>
+
+								<h:outputText value="Application Date: " />
+								<p:calendar id="cApplicationDate"
+									value="#{candidateBean.candidateItem.candidate.applicationDate}"
+									pattern="dd/MM/yyyy" />
+
+							</p:panelGrid>
+
+							<p:panelGrid columns="2" columnClasses="label, value">
+								<h:outputText value="Upload Documents" />
+								<h:panelGroup>
+									<p:fileUpload
+										fileUploadListener="#{candidateBean.handleFileUpload}"
+										mode="advanced" dragDropSupport="false" multiple="true"
+										oncomplete="refreshDocuments();"
+										update="messages candidateDocs noDocsPlaceHolder"
+										sizeLimit="10000000" fileLimit="3"
+										allowTypes="/(\.|\/)(doc|docx|pdf|jpeg|png)$/" />
+
+									<p:growl id="messages" showDetail="true" />
+								</h:panelGroup>
+
+								<h:outputText value="Current Documents" />
+								<h:panelGroup id="documents">
+									<ui:repeat var="doc" id="candidateDocs"
+										rendered="#{candidateBean.candidateItem.documentItems.size() > 0}"
+										value="#{candidateBean.candidateItem.documentItems}">
+										<p:commandLink value="#{doc.fileName}"
+											actionListener="#{candidateBean.onPreviewFile(doc.fileEntryId)}"
+											oncomplete="PF('wPreviewDialog').show();" />
+										<p:commandLink value="[Remove]"
+											onclick="PF('wDeleteConfirmDialog').show()"
+											styleClass="currentStatus status-red"
+											style="margin-left: 30px">
+											<f:setPropertyActionListener
+												target="#{candidateBean.deletedDocument}" value="#{doc}" />
+										</p:commandLink>
+										<br />
+									</ui:repeat>
+									<h:outputText value="No documents exist" id="noDocsPlaceHolder"
+										rendered="#{candidateBean.candidateItem.documentItems.size() == 0}" />
+								</h:panelGroup>
+
+							</p:panelGrid>
+
+						</p:panelGrid>
+					</p:tab>
+					<p:tab id="candidateDetailsInformation" title="Details Information">
+						<p:panelGrid id="candidateExperiencesGrid">
+							<ui:repeat var="e"
+								value="#{candidateBean.candidateItem.experiences}"
+								varStatus="status">
+								<h:panelGroup id="experienceItem" rendered="#{not e.UIDeleted}">
+									<p:panelGrid columns="2" columnClasses="label, value">
+										<h:outputText value="Working Place/Company" />
+										<p:inputText value="#{e.experience.workingPlace}" />
+
+										<h:outputText value="Years of Experience" />
+										<p:inputText value="#{e.experience.yearsExperience}" />
+
+										<h:outputText value="Description" />
+										<p:inputTextarea value="#{e.experience.description}" />
+									</p:panelGrid>
+									<hr />
+								</h:panelGroup>
+							</ui:repeat>
+						</p:panelGrid>
+						<p:commandLink actionListener="#{candidateBean.addOneExperience}"
+							immediate="true" ajax="true" oncomplete="refreshExperiences();"
+							value="Add" />
+					</p:tab>
+				</p:accordionPanel>
+
+				<p:commandButton id="cSave" value="Save"
+					action="#{candidateBean.onSave}"
+					update="candidateOutputPanel">
+				<p:commandButton id="cCancel"
+					actionListener="#{candidateBean.onCancel}" immediate="true" value="Cancel" />
+			</p:outputPanel>
+			
+			
+
+			<!-- DELETE CONFIRMATION DIALOG -->
+			<p:confirmDialog id="deleteConfirmDialog"
+				widgetVar="wDeleteConfirmDialog" message="Delete this File?"
+				header="Delete Confirmation" severity="alert" closeOnEscape="true"
+				showEffect="fade">
+				<p:commandButton id="confirmDelete" value="Yes"
+					styleClass="RedButton"
+					oncomplete="refreshDocuments(); PF('wDeleteConfirmDialog').hide()"
+					actionListener="#{candidateBean.deleteFileEntry}"
+					update="accordion:candidateDocs accordion:noDocsPlaceHolder" />
+				<p:commandButton id="discardDelete" value="No"
+					onclick="PF('wDeleteConfirmDialog').hide()" />
+			</p:confirmDialog>
+
+			<!-- DELETE CONFIRMATION DIALOG -->
+			<p:confirmDialog id="cancelModificationConfirmDialog"
+				widgetVar="wCancelModificationConfirmDialog"
+				message="Cancel Modification?" header="Cancel Confirmation"
+				severity="alert" closeOnEscape="true" showEffect="fade">
+				<p:commandButton id="confirmCancel" value="Yes"
+					actionListener="#{candidateBean.onCancel}" immediate="true"/>
+				<p:commandButton id="discardCancel" value="No"
+					onclick="PF('wCancelModificationConfirmDialog').hide()" />
+			</p:confirmDialog>
+
+		</h:form>
+	</h:body>
+</f:view>

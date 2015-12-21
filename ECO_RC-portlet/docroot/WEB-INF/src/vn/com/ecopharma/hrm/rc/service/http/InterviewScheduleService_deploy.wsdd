@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="Plugin_eco_rcp_InterviewScheduleService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.hrm.rc.service.http.InterviewScheduleServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="InterviewScheduleServiceSoap" />
+		<parameter name="wsdlServiceElement" value="InterviewScheduleServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_rcp_InterviewScheduleService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.rc.hrm.ecopharma.com.vn" />
+	</service>
+</deployment>
