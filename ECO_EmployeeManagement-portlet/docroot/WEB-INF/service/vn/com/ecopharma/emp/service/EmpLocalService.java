@@ -295,6 +295,7 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		boolean sendEmail, long empUserId,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addresses,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.List<vn.com.ecopharma.emp.model.EmpBankInfo> bankInfos,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -320,32 +321,32 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		java.util.Date promotedDate, java.util.Date joinedDate,
 		java.util.Date laborContractSignedDate,
 		java.util.Date laborContractExpiredDate,
-		java.lang.String laborContractType, java.util.Date dob,
-		java.lang.String gender, java.lang.String placeOfBirth,
-		java.lang.String education, java.lang.String educationSpecialize,
-		long universityId, java.lang.String maritalStatus,
-		java.lang.String identityCardNo, java.util.Date issuedDate,
-		java.lang.String issuedPlace, java.lang.String contactNumber,
-		java.lang.String companyEmailAddress, java.lang.String taxCode,
-		int numberOfDependents, java.lang.String dependentNames,
-		java.lang.String insurranceCode, java.lang.String healthInsuranceNo,
-		java.lang.String bankNo, java.lang.String bankBranchName);
+		java.lang.String laborContractType, int laborContractSignedTime,
+		java.util.Date dob, java.lang.String gender,
+		java.lang.String placeOfBirth, java.lang.String education,
+		java.lang.String educationSpecialize, long universityId,
+		java.lang.String maritalStatus, java.lang.String identityCardNo,
+		java.util.Date issuedDate, java.lang.String issuedPlace,
+		java.lang.String contactNumber, java.lang.String companyEmailAddress,
+		java.lang.String taxCode, int numberOfDependents,
+		java.lang.String dependentNames, java.lang.String insurranceCode,
+		java.lang.String healthInsuranceNo);
 
 	public vn.com.ecopharma.emp.model.Emp updateExistedEmployee(
 		vn.com.ecopharma.emp.model.Emp employee, java.lang.String employeeCode,
 		long titlesId, long levelId, java.util.Date promotedDate,
 		java.util.Date joinedDate, java.util.Date laborContractSignedDate,
 		java.util.Date laborContractExpiredDate,
-		java.lang.String laborContractType, java.util.Date dob,
-		java.lang.String gender, java.lang.String placeOfBirth,
-		java.lang.String education, java.lang.String educationSpecialize,
-		long universityId, java.lang.String maritalStatus,
-		java.lang.String identityCardNo, java.util.Date issuedDate,
-		java.lang.String issuedPlace, java.lang.String contactNumber,
-		java.lang.String companyEmailAddress, java.lang.String taxCode,
-		int numberOfDependents, java.lang.String dependentNames,
-		java.lang.String insurranceCode, java.lang.String healthInsuranceNo,
-		java.lang.String bankNo, java.lang.String bankBranchName);
+		java.lang.String laborContractType, int laborContractSignedTime,
+		java.util.Date dob, java.lang.String gender,
+		java.lang.String placeOfBirth, java.lang.String education,
+		java.lang.String educationSpecialize, long universityId,
+		java.lang.String maritalStatus, java.lang.String identityCardNo,
+		java.util.Date issuedDate, java.lang.String issuedPlace,
+		java.lang.String contactNumber, java.lang.String companyEmailAddress,
+		java.lang.String taxCode, int numberOfDependents,
+		java.lang.String dependentNames, java.lang.String insurranceCode,
+		java.lang.String healthInsuranceNo);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.search.Document> searchAllEmpDocs(
@@ -377,4 +378,6 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		long companyId);
 
 	public void completelyRemoveAllEmp(long companyId);
+
+	public void completelyRemoveAllEmpFromDB(long companyId);
 }

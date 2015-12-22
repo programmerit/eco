@@ -306,19 +306,20 @@ public interface ResignationHistoryModel extends BaseModel<ResignationHistory>,
 	public Object clone();
 
 	@Override
-	public int compareTo(ResignationHistory resignationHistory);
+	public int compareTo(
+		vn.com.ecopharma.emp.model.ResignationHistory resignationHistory);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<ResignationHistory> toCacheModel();
+	public CacheModel<vn.com.ecopharma.emp.model.ResignationHistory> toCacheModel();
 
 	@Override
-	public ResignationHistory toEscapedModel();
+	public vn.com.ecopharma.emp.model.ResignationHistory toEscapedModel();
 
 	@Override
-	public ResignationHistory toUnescapedModel();
+	public vn.com.ecopharma.emp.model.ResignationHistory toUnescapedModel();
 
 	@Override
 	public String toString();

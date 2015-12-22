@@ -24,7 +24,6 @@ import com.liferay.portal.service.RegionServiceUtil;
 public class AddressObjectItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	// private static final String DEFAULT_COUNTRY = "vietnam";
 	private Region selectedRegion;
 	private Region region;
 	private List<Region> regions;
@@ -36,27 +35,16 @@ public class AddressObjectItem implements Serializable {
 
 	public AddressObjectItem() {
 		this.region = null;
-		this.country = null; // getDefaultCountry();
+		this.country = null;
 		this.UIDeleted = false;
-		// this.regions = getRegionByCountryId(country != null ? country
-		// .getCountryId() : 0L);
-		this.regions = new ArrayList<Region>();
+		this.regions = new ArrayList<>();
 		this.address = createNewAddress();
 	}
 
 	public AddressObjectItem(Address address, boolean isImportAction) {
 		this.address = address;
 		this.region = address.getRegion();
-		this.district = getDistrictByStreet3(address, isImportAction); // TODO
-																		// baddd!
-																		// use
-																		// address3
-																		// to
-																		// store
-																		// district
-																		// info.
-																		// Eg.:VN-65_Binh
-																		// Chanh
+		this.district = getDistrictByStreet3(address, isImportAction); 
 		this.country = address.getCountry();
 		this.UIDeleted = false;
 		this.regions = getRegionByCountryId(country.getCountryId());

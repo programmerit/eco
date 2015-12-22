@@ -572,8 +572,6 @@ public class EmployeeUtils {
 			row.createCell(31).setCellValue(employee.getDependentNames());
 			row.createCell(32).setCellValue(employee.getHealthInsuranceNo());
 			row.createCell(33).setCellValue(employee.getSocialInsuranceNo());
-			row.createCell(34).setCellValue(employee.getBankAccountNo());
-			row.createCell(35).setCellValue(employee.getBankBranchName());
 			row.createCell(36).setCellValue(employee.getBaseWageRates());
 			row.createCell(37).setCellValue(employee.getPositionWageRates());
 			row.createCell(38).setCellValue(employee.getCapacitySalary());

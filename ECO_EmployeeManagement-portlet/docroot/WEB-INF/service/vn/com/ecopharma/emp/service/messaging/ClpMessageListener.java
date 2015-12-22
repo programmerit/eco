@@ -26,6 +26,8 @@ import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionServiceUtil;
 import vn.com.ecopharma.emp.service.DistrictLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DistrictServiceUtil;
+import vn.com.ecopharma.emp.service.EmpBankInfoLocalServiceUtil;
+import vn.com.ecopharma.emp.service.EmpBankInfoServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpServiceUtil;
 import vn.com.ecopharma.emp.service.EmployeeTitlesHistoryLocalServiceUtil;
@@ -81,6 +83,9 @@ public class ClpMessageListener extends BaseMessageListener {
 			EmpLocalServiceUtil.clearService();
 
 			EmpServiceUtil.clearService();
+			EmpBankInfoLocalServiceUtil.clearService();
+
+			EmpBankInfoServiceUtil.clearService();
 			EmployeeTitlesHistoryLocalServiceUtil.clearService();
 
 			EmployeeTitlesHistoryServiceUtil.clearService();

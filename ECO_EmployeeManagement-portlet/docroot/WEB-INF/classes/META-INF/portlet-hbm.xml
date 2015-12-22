@@ -7,6 +7,7 @@
 	<import class="vn.com.ecopharma.emp.model.Devision" />
 	<import class="vn.com.ecopharma.emp.model.District" />
 	<import class="vn.com.ecopharma.emp.model.Emp" />
+	<import class="vn.com.ecopharma.emp.model.EmpBankInfo" />
 	<import class="vn.com.ecopharma.emp.model.EmployeeTitlesHistory" />
 	<import class="vn.com.ecopharma.emp.model.Level" />
 	<import class="vn.com.ecopharma.emp.model.Location" />
@@ -102,6 +103,7 @@
 		<property name="promotedDate" type="org.hibernate.type.TimestampType" />
 		<property name="laborContractSignedDate" type="org.hibernate.type.TimestampType" />
 		<property name="laborContractExpiredDate" type="org.hibernate.type.TimestampType" />
+		<property name="laborContractSignedTime" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="laborContractType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="gender" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="placeOfBirth" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -121,9 +123,6 @@
 		<property name="socialInsuranceNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="healthInsuranceNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="healthInsurancePlace" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="bankAccountNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="bankName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="bankBranchName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="baseWageRates" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="positionWageRates" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="capacitySalary" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
@@ -135,6 +134,22 @@
 		<property name="companyEmailAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="workingPlaceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="vn.com.ecopharma.emp.model.impl.EmpBankInfoImpl" table="eco_em_portlet_EmpBankInfo">
+		<cache usage="read-write" />
+		<id name="empBankInfoId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="empId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="bankAccountNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="bankName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="branchName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />

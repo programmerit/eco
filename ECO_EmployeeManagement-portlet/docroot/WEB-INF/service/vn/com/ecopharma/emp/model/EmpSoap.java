@@ -45,6 +45,7 @@ public class EmpSoap implements Serializable {
 		soapModel.setPromotedDate(model.getPromotedDate());
 		soapModel.setLaborContractSignedDate(model.getLaborContractSignedDate());
 		soapModel.setLaborContractExpiredDate(model.getLaborContractExpiredDate());
+		soapModel.setLaborContractSignedTime(model.getLaborContractSignedTime());
 		soapModel.setLaborContractType(model.getLaborContractType());
 		soapModel.setGender(model.getGender());
 		soapModel.setPlaceOfBirth(model.getPlaceOfBirth());
@@ -64,9 +65,6 @@ public class EmpSoap implements Serializable {
 		soapModel.setSocialInsuranceNo(model.getSocialInsuranceNo());
 		soapModel.setHealthInsuranceNo(model.getHealthInsuranceNo());
 		soapModel.setHealthInsurancePlace(model.getHealthInsurancePlace());
-		soapModel.setBankAccountNo(model.getBankAccountNo());
-		soapModel.setBankName(model.getBankName());
-		soapModel.setBankBranchName(model.getBankBranchName());
 		soapModel.setBaseWageRates(model.getBaseWageRates());
 		soapModel.setPositionWageRates(model.getPositionWageRates());
 		soapModel.setCapacitySalary(model.getCapacitySalary());
@@ -247,6 +245,14 @@ public class EmpSoap implements Serializable {
 		_laborContractExpiredDate = laborContractExpiredDate;
 	}
 
+	public int getLaborContractSignedTime() {
+		return _laborContractSignedTime;
+	}
+
+	public void setLaborContractSignedTime(int laborContractSignedTime) {
+		_laborContractSignedTime = laborContractSignedTime;
+	}
+
 	public String getLaborContractType() {
 		return _laborContractType;
 	}
@@ -399,30 +405,6 @@ public class EmpSoap implements Serializable {
 		_healthInsurancePlace = healthInsurancePlace;
 	}
 
-	public String getBankAccountNo() {
-		return _bankAccountNo;
-	}
-
-	public void setBankAccountNo(String bankAccountNo) {
-		_bankAccountNo = bankAccountNo;
-	}
-
-	public String getBankName() {
-		return _bankName;
-	}
-
-	public void setBankName(String bankName) {
-		_bankName = bankName;
-	}
-
-	public String getBankBranchName() {
-		return _bankBranchName;
-	}
-
-	public void setBankBranchName(String bankBranchName) {
-		_bankBranchName = bankBranchName;
-	}
-
 	public double getBaseWageRates() {
 		return _baseWageRates;
 	}
@@ -569,6 +551,7 @@ public class EmpSoap implements Serializable {
 	private Date _promotedDate;
 	private Date _laborContractSignedDate;
 	private Date _laborContractExpiredDate;
+	private int _laborContractSignedTime;
 	private String _laborContractType;
 	private String _gender;
 	private String _placeOfBirth;
@@ -588,9 +571,6 @@ public class EmpSoap implements Serializable {
 	private String _socialInsuranceNo;
 	private String _healthInsuranceNo;
 	private String _healthInsurancePlace;
-	private String _bankAccountNo;
-	private String _bankName;
-	private String _bankBranchName;
 	private double _baseWageRates;
 	private double _positionWageRates;
 	private double _capacitySalary;

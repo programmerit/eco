@@ -167,8 +167,6 @@ public class EmpIndexer extends BaseIndexer {
 		document.addText(EmpField.HEALTH_INSURANCE_NO,
 				emp.getHealthInsuranceNo());
 
-		document.addText(EmpField.BANK_ACCOUNT_NO, emp.getBankAccountNo());
-		document.addText(EmpField.BANK_BRANCH_NAME, emp.getBankBranchName());
 		document.addNumber(EmpField.BASE_WAGE_RATES, emp.getBaseWageRates());
 		document.addNumber(EmpField.POSITION_WAGE_RATES,
 				emp.getPositionWageRates());

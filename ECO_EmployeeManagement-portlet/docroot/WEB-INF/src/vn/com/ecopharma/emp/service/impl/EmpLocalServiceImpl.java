@@ -26,6 +26,7 @@ import vn.com.ecopharma.emp.constant.EMInfo;
 import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.model.Emp;
+import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.model.PromotedHistory;
 import vn.com.ecopharma.emp.model.ResignationHistory;
 import vn.com.ecopharma.emp.service.base.EmpLocalServiceBaseImpl;
@@ -215,11 +216,13 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			String firstName, String middleName, String lastName, int prefixId,
 			int suffixId, boolean male, int birthdayMonth, int birthdayDay,
 			int birthdayYear, long[] groupIds, long[] organizationIds,
-			long[] roleIds, long[] userGroupIds,
+			long[] roleIds,
+			long[] userGroupIds,
 			boolean sendEmail, // End user part
 			long empUserId, Map<Address, Boolean> addresses,
-			Map<String, Boolean> dependentNameMap, ServiceContext serviceContext)
-			throws SystemException, PortalException {
+			Map<String, Boolean> dependentNameMap, List<EmpBankInfo> bankInfos,
+			ServiceContext serviceContext) throws SystemException,
+			PortalException {
 		// Add User Part
 		final User user = UserLocalServiceUtil.addUser(
 				serviceContext.getUserId(), serviceContext.getCompanyId(),
@@ -270,6 +273,12 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		// set back to employee
 		e.setNumberOfDependents(dependentNamesCount);
 		e.setDependentNames(namesBuilder.toString());
+
+		// Add employee's banking info
+		for (EmpBankInfo empBankInfo : bankInfos) {
+			empBankInfo.setEmpId(e.getEmpId());
+			empBankInfoLocalService.addEmpBankInfo(empBankInfo, serviceContext);
+		}
 
 		// persist to DB
 		Emp result = super.addEmp(e);
@@ -437,27 +446,28 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 
 	public Emp createEmployee(String employeeCode, long titlesId, long levelId,
 			Date promotedDate, Date joinedDate, Date laborContractSignedDate,
-			Date laborContractExpiredDate, String laborContractType, Date dob,
-			String gender, String placeOfBirth, String education,
-			String educationSpecialize, long universityId,
-			String maritalStatus, String identityCardNo, Date issuedDate,
-			String issuedPlace, String contactNumber,
+			Date laborContractExpiredDate, String laborContractType,
+			int laborContractSignedTime, Date dob, String gender,
+			String placeOfBirth, String education, String educationSpecialize,
+			long universityId, String maritalStatus, String identityCardNo,
+			Date issuedDate, String issuedPlace, String contactNumber,
 			String companyEmailAddress, String taxCode, int numberOfDependents,
 			String dependentNames, String insurranceCode,
-			String healthInsuranceNo, String bankNo, String bankBranchName) {
+			String healthInsuranceNo) {
 		try {
 			final long employeeId = CounterLocalServiceUtil.increment();
 			final Emp employee = createEmp(employeeId);
 			return setInfoToEmp(employee, employeeCode, titlesId, levelId,
 					promotedDate, joinedDate, laborContractSignedDate,
-					laborContractExpiredDate, laborContractType, dob, gender,
-					placeOfBirth, education, educationSpecialize, universityId,
+					laborContractExpiredDate, laborContractType,
+					laborContractSignedTime, dob, gender, placeOfBirth,
+					education, educationSpecialize, universityId,
 					maritalStatus, identityCardNo, issuedDate, issuedPlace,
 					contactNumber, companyEmailAddress, taxCode,
 					numberOfDependents, dependentNames, insurranceCode,
-					healthInsuranceNo, bankNo, bankBranchName);
+					healthInsuranceNo);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		}
 		return null;
 
@@ -466,33 +476,35 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	public Emp updateExistedEmployee(Emp employee, String employeeCode,
 			long titlesId, long levelId, Date promotedDate, Date joinedDate,
 			Date laborContractSignedDate, Date laborContractExpiredDate,
-			String laborContractType, Date dob, String gender,
-			String placeOfBirth, String education, String educationSpecialize,
-			long universityId, String maritalStatus, String identityCardNo,
-			Date issuedDate, String issuedPlace, String contactNumber,
+			String laborContractType, int laborContractSignedTime, Date dob,
+			String gender, String placeOfBirth, String education,
+			String educationSpecialize, long universityId,
+			String maritalStatus, String identityCardNo, Date issuedDate,
+			String issuedPlace, String contactNumber,
 			String companyEmailAddress, String taxCode, int numberOfDependents,
 			String dependentNames, String insurranceCode,
-			String healthInsuranceNo, String bankNo, String bankBranchName) {
+			String healthInsuranceNo) {
 		return setInfoToEmp(employee, employeeCode, titlesId, levelId,
 				promotedDate, joinedDate, laborContractSignedDate,
-				laborContractExpiredDate, laborContractType, dob, gender,
-				placeOfBirth, education, educationSpecialize, universityId,
-				maritalStatus, identityCardNo, issuedDate, issuedPlace,
-				contactNumber, companyEmailAddress, taxCode,
-				numberOfDependents, dependentNames, insurranceCode,
-				healthInsuranceNo, bankNo, bankBranchName);
+				laborContractExpiredDate, laborContractType,
+				laborContractSignedTime, dob, gender, placeOfBirth, education,
+				educationSpecialize, universityId, maritalStatus,
+				identityCardNo, issuedDate, issuedPlace, contactNumber,
+				companyEmailAddress, taxCode, numberOfDependents,
+				dependentNames, insurranceCode, healthInsuranceNo);
 	}
 
 	private Emp setInfoToEmp(Emp employee, String employeeCode, long titlesId,
 			long levelId, Date promotedDate, Date joinedDate,
 			Date laborContractSignedDate, Date laborContractExpiredDate,
-			String laborContractType, Date dob, String gender,
-			String placeOfBirth, String education, String educationSpecialize,
-			long universityId, String maritalStatus, String identityCardNo,
-			Date issuedDate, String issuedPlace, String contactNumber,
+			String laborContractType, int laborContractSignedTime, Date dob,
+			String gender, String placeOfBirth, String education,
+			String educationSpecialize, long universityId,
+			String maritalStatus, String identityCardNo, Date issuedDate,
+			String issuedPlace, String contactNumber,
 			String companyEmailAddress, String taxCode, int numberOfDependents,
 			String dependentNames, String insurranceCode,
-			String healthInsuranceNo, String bankNo, String bankBranchName) {
+			String healthInsuranceNo) {
 		employee.setEmpCode(employeeCode);
 		employee.setContactNumber(contactNumber);
 		employee.setTitlesId(titlesId);
@@ -502,6 +514,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		employee.setLaborContractSignedDate(laborContractSignedDate);
 		employee.setLaborContractExpiredDate(laborContractExpiredDate);
 		employee.setLaborContractType(laborContractType);
+		employee.setLaborContractSignedTime(laborContractSignedTime);
 		employee.setBirthday(dob);
 		employee.setGender(gender);
 		employee.setPlaceOfBirth(placeOfBirth);
@@ -517,8 +530,6 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		employee.setDependentNames(dependentNames);
 		employee.setSocialInsuranceNo(insurranceCode);
 		employee.setHealthInsuranceNo(healthInsuranceNo);
-		employee.setBankAccountNo(bankNo);
-		employee.setBankBranchName(bankBranchName);
 		return employee;
 	}
 
@@ -674,6 +685,50 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 					Indexer indexer = IndexerRegistryUtil
 							.nullSafeGetIndexer(Emp.class.getName());
 					indexer.delete(employee);
+
+					// delete promoted info of employee
+					for (PromotedHistory p : promotedHistoryLocalService
+							.findByEmployee(employee.getEmpId())) {
+						promotedHistoryLocalService.deletePromotedHistory(p
+								.getPromotedHistoryId());
+					}
+
+					// delete resignation info of employee
+					for (ResignationHistory r : resignationHistoryLocalService
+							.findByEmployee(employee.getEmpId())) {
+						resignationHistoryLocalService
+								.deleteResignationHistory(r
+										.getResignationHistoryId());
+					}
+
+					LogFactoryUtil.getLog(EmpLocalServiceImpl.class).debug(
+							"On Deleting Employee: " + employee.getEmpId());
+					empLocalService.deleteEmp(employee.getEmpId());
+
+				}
+			}
+		} catch (SystemException e) {
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+		} catch (PortalException e) {
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+		}
+	}
+	
+	public void completelyRemoveAllEmpFromDB(long companyId) {
+		List<Emp> allEmps = findAll();
+		try {
+			for (Emp employee : allEmps) {
+				// delete user first
+				long userId = employee.getEmpUserId();
+				final User user = userLocalService.deleteUser(userId);
+				if (user != null) {
+					final List<Address> employeeAddresses = AddressLocalServiceUtil
+							.getAddresses(companyId, Emp.class.getName(),
+									employee.getEmpId());
+					for (Address address : employeeAddresses) {
+						AddressLocalServiceUtil.deleteAddress(address
+								.getAddressId());
+					}
 
 					// delete promoted info of employee
 					for (PromotedHistory p : promotedHistoryLocalService

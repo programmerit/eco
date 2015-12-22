@@ -241,19 +241,19 @@ public interface DevisionModel extends BaseModel<Devision>, GroupedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(Devision devision);
+	public int compareTo(vn.com.ecopharma.emp.model.Devision devision);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<Devision> toCacheModel();
+	public CacheModel<vn.com.ecopharma.emp.model.Devision> toCacheModel();
 
 	@Override
-	public Devision toEscapedModel();
+	public vn.com.ecopharma.emp.model.Devision toEscapedModel();
 
 	@Override
-	public Devision toUnescapedModel();
+	public vn.com.ecopharma.emp.model.Devision toUnescapedModel();
 
 	@Override
 	public String toString();

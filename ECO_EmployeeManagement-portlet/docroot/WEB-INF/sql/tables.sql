@@ -83,6 +83,7 @@ create table eco_em_portlet_Emp (
 	promotedDate DATE null,
 	laborContractSignedDate DATE null,
 	laborContractExpiredDate DATE null,
+	laborContractSignedTime INTEGER,
 	laborContractType VARCHAR(75) null,
 	gender VARCHAR(75) null,
 	placeOfBirth VARCHAR(75) null,
@@ -102,9 +103,6 @@ create table eco_em_portlet_Emp (
 	socialInsuranceNo VARCHAR(75) null,
 	healthInsuranceNo VARCHAR(75) null,
 	healthInsurancePlace VARCHAR(75) null,
-	bankAccountNo VARCHAR(75) null,
-	bankName VARCHAR(75) null,
-	bankBranchName VARCHAR(75) null,
 	baseWageRates DOUBLE,
 	positionWageRates DOUBLE,
 	capacitySalary DOUBLE,
@@ -116,6 +114,20 @@ create table eco_em_portlet_Emp (
 	companyEmailAddress VARCHAR(75) null,
 	workingPlaceId LONG,
 	status VARCHAR(75) null,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null
+);
+
+create table eco_em_portlet_EmpBankInfo (
+	empBankInfoId LONG not null primary key,
+	empId LONG,
+	bankAccountNo VARCHAR(75) null,
+	bankName VARCHAR(75) null,
+	branchName VARCHAR(75) null,
+	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,

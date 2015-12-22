@@ -319,19 +319,20 @@ public interface PromotedHistoryModel extends BaseModel<PromotedHistory>,
 	public Object clone();
 
 	@Override
-	public int compareTo(PromotedHistory promotedHistory);
+	public int compareTo(
+		vn.com.ecopharma.emp.model.PromotedHistory promotedHistory);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<PromotedHistory> toCacheModel();
+	public CacheModel<vn.com.ecopharma.emp.model.PromotedHistory> toCacheModel();
 
 	@Override
-	public PromotedHistory toEscapedModel();
+	public vn.com.ecopharma.emp.model.PromotedHistory toEscapedModel();
 
 	@Override
-	public PromotedHistory toUnescapedModel();
+	public vn.com.ecopharma.emp.model.PromotedHistory toUnescapedModel();
 
 	@Override
 	public String toString();

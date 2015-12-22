@@ -876,6 +876,7 @@ public class EmpPersistenceImpl extends BasePersistenceImpl<Emp>
 		empImpl.setPromotedDate(emp.getPromotedDate());
 		empImpl.setLaborContractSignedDate(emp.getLaborContractSignedDate());
 		empImpl.setLaborContractExpiredDate(emp.getLaborContractExpiredDate());
+		empImpl.setLaborContractSignedTime(emp.getLaborContractSignedTime());
 		empImpl.setLaborContractType(emp.getLaborContractType());
 		empImpl.setGender(emp.getGender());
 		empImpl.setPlaceOfBirth(emp.getPlaceOfBirth());
@@ -895,9 +896,6 @@ public class EmpPersistenceImpl extends BasePersistenceImpl<Emp>
 		empImpl.setSocialInsuranceNo(emp.getSocialInsuranceNo());
 		empImpl.setHealthInsuranceNo(emp.getHealthInsuranceNo());
 		empImpl.setHealthInsurancePlace(emp.getHealthInsurancePlace());
-		empImpl.setBankAccountNo(emp.getBankAccountNo());
-		empImpl.setBankName(emp.getBankName());
-		empImpl.setBankBranchName(emp.getBankBranchName());
 		empImpl.setBaseWageRates(emp.getBaseWageRates());
 		empImpl.setPositionWageRates(emp.getPositionWageRates());
 		empImpl.setCapacitySalary(emp.getCapacitySalary());

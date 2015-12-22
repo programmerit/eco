@@ -272,19 +272,20 @@ public interface ResourceConfigModel extends BaseModel<ResourceConfig>,
 	public Object clone();
 
 	@Override
-	public int compareTo(ResourceConfig resourceConfig);
+	public int compareTo(
+		vn.com.ecopharma.emp.model.ResourceConfig resourceConfig);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<ResourceConfig> toCacheModel();
+	public CacheModel<vn.com.ecopharma.emp.model.ResourceConfig> toCacheModel();
 
 	@Override
-	public ResourceConfig toEscapedModel();
+	public vn.com.ecopharma.emp.model.ResourceConfig toEscapedModel();
 
 	@Override
-	public ResourceConfig toUnescapedModel();
+	public vn.com.ecopharma.emp.model.ResourceConfig toUnescapedModel();
 
 	@Override
 	public String toString();

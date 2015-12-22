@@ -253,19 +253,20 @@ public interface EmployeeTitlesHistoryModel extends BaseModel<EmployeeTitlesHist
 	public Object clone();
 
 	@Override
-	public int compareTo(EmployeeTitlesHistory employeeTitlesHistory);
+	public int compareTo(
+		vn.com.ecopharma.emp.model.EmployeeTitlesHistory employeeTitlesHistory);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<EmployeeTitlesHistory> toCacheModel();
+	public CacheModel<vn.com.ecopharma.emp.model.EmployeeTitlesHistory> toCacheModel();
 
 	@Override
-	public EmployeeTitlesHistory toEscapedModel();
+	public vn.com.ecopharma.emp.model.EmployeeTitlesHistory toEscapedModel();
 
 	@Override
-	public EmployeeTitlesHistory toUnescapedModel();
+	public vn.com.ecopharma.emp.model.EmployeeTitlesHistory toUnescapedModel();
 
 	@Override
 	public String toString();

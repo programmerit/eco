@@ -165,7 +165,7 @@ public class EmpLocalServiceClp implements EmpLocalService {
 				"java.util.Locale", "java.lang.String", "java.lang.String",
 				"java.lang.String", "int", "int", "boolean", "int", "int", "int",
 				"long[][]", "long[][]", "long[][]", "long[][]", "boolean",
-				"long", "java.util.Map", "java.util.Map",
+				"long", "java.util.Map", "java.util.Map", "java.util.List",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
@@ -191,13 +191,12 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		_methodParameterTypes31 = new String[] {
 				"java.lang.String", "long", "long", "java.util.Date",
 				"java.util.Date", "java.util.Date", "java.util.Date",
-				"java.lang.String", "java.util.Date", "java.lang.String",
+				"java.lang.String", "int", "java.util.Date", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"long", "java.lang.String", "java.lang.String", "java.util.Date",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "int", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String"
+				"java.lang.String", "java.lang.String"
 			};
 
 		_methodName32 = "updateExistedEmployee";
@@ -205,13 +204,13 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		_methodParameterTypes32 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp", "java.lang.String", "long",
 				"long", "java.util.Date", "java.util.Date", "java.util.Date",
-				"java.util.Date", "java.lang.String", "java.util.Date",
+				"java.util.Date", "java.lang.String", "int", "java.util.Date",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "long", "java.lang.String",
 				"java.lang.String", "java.util.Date", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"int", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String"
+				"java.lang.String"
 			};
 
 		_methodName33 = "searchAllEmpDocs";
@@ -259,6 +258,10 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		_methodName41 = "completelyRemoveAllEmp";
 
 		_methodParameterTypes41 = new String[] { "long" };
+
+		_methodName42 = "completelyRemoveAllEmpFromDB";
+
+		_methodParameterTypes42 = new String[] { "long" };
 	}
 
 	@Override
@@ -1076,6 +1079,7 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		boolean sendEmail, long empUserId,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addresses,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.List<vn.com.ecopharma.emp.model.EmpBankInfo> bankInfos,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -1138,6 +1142,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 					ClpSerializer.translateInput(addresses),
 						
 					ClpSerializer.translateInput(dependentNameMap),
+						
+					ClpSerializer.translateInput(bankInfos),
 						
 					ClpSerializer.translateInput(serviceContext)
 					});
@@ -1263,16 +1269,16 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		java.util.Date promotedDate, java.util.Date joinedDate,
 		java.util.Date laborContractSignedDate,
 		java.util.Date laborContractExpiredDate,
-		java.lang.String laborContractType, java.util.Date dob,
-		java.lang.String gender, java.lang.String placeOfBirth,
-		java.lang.String education, java.lang.String educationSpecialize,
-		long universityId, java.lang.String maritalStatus,
-		java.lang.String identityCardNo, java.util.Date issuedDate,
-		java.lang.String issuedPlace, java.lang.String contactNumber,
-		java.lang.String companyEmailAddress, java.lang.String taxCode,
-		int numberOfDependents, java.lang.String dependentNames,
-		java.lang.String insurranceCode, java.lang.String healthInsuranceNo,
-		java.lang.String bankNo, java.lang.String bankBranchName) {
+		java.lang.String laborContractType, int laborContractSignedTime,
+		java.util.Date dob, java.lang.String gender,
+		java.lang.String placeOfBirth, java.lang.String education,
+		java.lang.String educationSpecialize, long universityId,
+		java.lang.String maritalStatus, java.lang.String identityCardNo,
+		java.util.Date issuedDate, java.lang.String issuedPlace,
+		java.lang.String contactNumber, java.lang.String companyEmailAddress,
+		java.lang.String taxCode, int numberOfDependents,
+		java.lang.String dependentNames, java.lang.String insurranceCode,
+		java.lang.String healthInsuranceNo) {
 		Object returnObj = null;
 
 		try {
@@ -1294,6 +1300,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 					ClpSerializer.translateInput(laborContractExpiredDate),
 						
 					ClpSerializer.translateInput(laborContractType),
+						
+					laborContractSignedTime,
 						
 					ClpSerializer.translateInput(dob),
 						
@@ -1327,11 +1335,7 @@ public class EmpLocalServiceClp implements EmpLocalService {
 						
 					ClpSerializer.translateInput(insurranceCode),
 						
-					ClpSerializer.translateInput(healthInsuranceNo),
-						
-					ClpSerializer.translateInput(bankNo),
-						
-					ClpSerializer.translateInput(bankBranchName)
+					ClpSerializer.translateInput(healthInsuranceNo)
 					});
 		}
 		catch (Throwable t) {
@@ -1355,16 +1359,16 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		long titlesId, long levelId, java.util.Date promotedDate,
 		java.util.Date joinedDate, java.util.Date laborContractSignedDate,
 		java.util.Date laborContractExpiredDate,
-		java.lang.String laborContractType, java.util.Date dob,
-		java.lang.String gender, java.lang.String placeOfBirth,
-		java.lang.String education, java.lang.String educationSpecialize,
-		long universityId, java.lang.String maritalStatus,
-		java.lang.String identityCardNo, java.util.Date issuedDate,
-		java.lang.String issuedPlace, java.lang.String contactNumber,
-		java.lang.String companyEmailAddress, java.lang.String taxCode,
-		int numberOfDependents, java.lang.String dependentNames,
-		java.lang.String insurranceCode, java.lang.String healthInsuranceNo,
-		java.lang.String bankNo, java.lang.String bankBranchName) {
+		java.lang.String laborContractType, int laborContractSignedTime,
+		java.util.Date dob, java.lang.String gender,
+		java.lang.String placeOfBirth, java.lang.String education,
+		java.lang.String educationSpecialize, long universityId,
+		java.lang.String maritalStatus, java.lang.String identityCardNo,
+		java.util.Date issuedDate, java.lang.String issuedPlace,
+		java.lang.String contactNumber, java.lang.String companyEmailAddress,
+		java.lang.String taxCode, int numberOfDependents,
+		java.lang.String dependentNames, java.lang.String insurranceCode,
+		java.lang.String healthInsuranceNo) {
 		Object returnObj = null;
 
 		try {
@@ -1389,6 +1393,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 						
 					ClpSerializer.translateInput(laborContractType),
 						
+					laborContractSignedTime,
+						
 					ClpSerializer.translateInput(dob),
 						
 					ClpSerializer.translateInput(gender),
@@ -1421,11 +1427,7 @@ public class EmpLocalServiceClp implements EmpLocalService {
 						
 					ClpSerializer.translateInput(insurranceCode),
 						
-					ClpSerializer.translateInput(healthInsuranceNo),
-						
-					ClpSerializer.translateInput(bankNo),
-						
-					ClpSerializer.translateInput(bankBranchName)
+					ClpSerializer.translateInput(healthInsuranceNo)
 					});
 		}
 		catch (Throwable t) {
@@ -1667,6 +1669,25 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		}
 	}
 
+	@Override
+	public void completelyRemoveAllEmpFromDB(long companyId) {
+		try {
+			_invokableLocalService.invokeMethod(_methodName42,
+				_methodParameterTypes42, new Object[] { companyId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -1750,4 +1771,6 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	private String[] _methodParameterTypes40;
 	private String _methodName41;
 	private String[] _methodParameterTypes41;
+	private String _methodName42;
+	private String[] _methodParameterTypes42;
 }

@@ -63,6 +63,7 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 		attributes.put("promotedDate", getPromotedDate());
 		attributes.put("laborContractSignedDate", getLaborContractSignedDate());
 		attributes.put("laborContractExpiredDate", getLaborContractExpiredDate());
+		attributes.put("laborContractSignedTime", getLaborContractSignedTime());
 		attributes.put("laborContractType", getLaborContractType());
 		attributes.put("gender", getGender());
 		attributes.put("placeOfBirth", getPlaceOfBirth());
@@ -82,9 +83,6 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 		attributes.put("socialInsuranceNo", getSocialInsuranceNo());
 		attributes.put("healthInsuranceNo", getHealthInsuranceNo());
 		attributes.put("healthInsurancePlace", getHealthInsurancePlace());
-		attributes.put("bankAccountNo", getBankAccountNo());
-		attributes.put("bankName", getBankName());
-		attributes.put("bankBranchName", getBankBranchName());
 		attributes.put("baseWageRates", getBaseWageRates());
 		attributes.put("positionWageRates", getPositionWageRates());
 		attributes.put("capacitySalary", getCapacitySalary());
@@ -191,6 +189,13 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 
 		if (laborContractExpiredDate != null) {
 			setLaborContractExpiredDate(laborContractExpiredDate);
+		}
+
+		Integer laborContractSignedTime = (Integer)attributes.get(
+				"laborContractSignedTime");
+
+		if (laborContractSignedTime != null) {
+			setLaborContractSignedTime(laborContractSignedTime);
 		}
 
 		String laborContractType = (String)attributes.get("laborContractType");
@@ -308,24 +313,6 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 
 		if (healthInsurancePlace != null) {
 			setHealthInsurancePlace(healthInsurancePlace);
-		}
-
-		String bankAccountNo = (String)attributes.get("bankAccountNo");
-
-		if (bankAccountNo != null) {
-			setBankAccountNo(bankAccountNo);
-		}
-
-		String bankName = (String)attributes.get("bankName");
-
-		if (bankName != null) {
-			setBankName(bankName);
-		}
-
-		String bankBranchName = (String)attributes.get("bankBranchName");
-
-		if (bankBranchName != null) {
-			setBankBranchName(bankBranchName);
 		}
 
 		Double baseWageRates = (Double)attributes.get("baseWageRates");
@@ -729,6 +716,26 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 	}
 
 	/**
+	* Returns the labor contract signed time of this emp.
+	*
+	* @return the labor contract signed time of this emp
+	*/
+	@Override
+	public int getLaborContractSignedTime() {
+		return _emp.getLaborContractSignedTime();
+	}
+
+	/**
+	* Sets the labor contract signed time of this emp.
+	*
+	* @param laborContractSignedTime the labor contract signed time of this emp
+	*/
+	@Override
+	public void setLaborContractSignedTime(int laborContractSignedTime) {
+		_emp.setLaborContractSignedTime(laborContractSignedTime);
+	}
+
+	/**
 	* Returns the labor contract type of this emp.
 	*
 	* @return the labor contract type of this emp
@@ -1106,66 +1113,6 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 	@Override
 	public void setHealthInsurancePlace(java.lang.String healthInsurancePlace) {
 		_emp.setHealthInsurancePlace(healthInsurancePlace);
-	}
-
-	/**
-	* Returns the bank account no of this emp.
-	*
-	* @return the bank account no of this emp
-	*/
-	@Override
-	public java.lang.String getBankAccountNo() {
-		return _emp.getBankAccountNo();
-	}
-
-	/**
-	* Sets the bank account no of this emp.
-	*
-	* @param bankAccountNo the bank account no of this emp
-	*/
-	@Override
-	public void setBankAccountNo(java.lang.String bankAccountNo) {
-		_emp.setBankAccountNo(bankAccountNo);
-	}
-
-	/**
-	* Returns the bank name of this emp.
-	*
-	* @return the bank name of this emp
-	*/
-	@Override
-	public java.lang.String getBankName() {
-		return _emp.getBankName();
-	}
-
-	/**
-	* Sets the bank name of this emp.
-	*
-	* @param bankName the bank name of this emp
-	*/
-	@Override
-	public void setBankName(java.lang.String bankName) {
-		_emp.setBankName(bankName);
-	}
-
-	/**
-	* Returns the bank branch name of this emp.
-	*
-	* @return the bank branch name of this emp
-	*/
-	@Override
-	public java.lang.String getBankBranchName() {
-		return _emp.getBankBranchName();
-	}
-
-	/**
-	* Sets the bank branch name of this emp.
-	*
-	* @param bankBranchName the bank branch name of this emp
-	*/
-	@Override
-	public void setBankBranchName(java.lang.String bankBranchName) {
-		_emp.setBankBranchName(bankBranchName);
 	}
 
 	/**

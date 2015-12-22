@@ -249,6 +249,11 @@ public class EmployeeIndexedBean implements Serializable {
 				.getInstance().getCompanyId());
 	}
 
+	public void onCompletelyRemoveAllEmployeesFromDB() {
+		EmpLocalServiceUtil.completelyRemoveAllEmpFromDB(LiferayFacesContext
+				.getInstance().getCompanyId());
+	}
+
 	public void onCompletelyRemoveAllOrganizations() {
 		TitlesLocalServiceUtil.completelyRemoveAll();
 

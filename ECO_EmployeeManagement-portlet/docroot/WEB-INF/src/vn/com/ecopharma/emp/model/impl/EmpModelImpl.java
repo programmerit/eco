@@ -79,6 +79,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 			{ "promotedDate", Types.TIMESTAMP },
 			{ "laborContractSignedDate", Types.TIMESTAMP },
 			{ "laborContractExpiredDate", Types.TIMESTAMP },
+			{ "laborContractSignedTime", Types.INTEGER },
 			{ "laborContractType", Types.VARCHAR },
 			{ "gender", Types.VARCHAR },
 			{ "placeOfBirth", Types.VARCHAR },
@@ -98,9 +99,6 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 			{ "socialInsuranceNo", Types.VARCHAR },
 			{ "healthInsuranceNo", Types.VARCHAR },
 			{ "healthInsurancePlace", Types.VARCHAR },
-			{ "bankAccountNo", Types.VARCHAR },
-			{ "bankName", Types.VARCHAR },
-			{ "bankBranchName", Types.VARCHAR },
 			{ "baseWageRates", Types.DOUBLE },
 			{ "positionWageRates", Types.DOUBLE },
 			{ "capacitySalary", Types.DOUBLE },
@@ -118,7 +116,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_Emp (empId LONG not null primary key,groupId LONG,empCode VARCHAR(75) null,contactNumber VARCHAR(75) null,birthday DATE null,ethnic VARCHAR(75) null,nationality VARCHAR(75) null,religion VARCHAR(75) null,joinedDate DATE null,titlesId LONG,levelId LONG,promotedDate DATE null,laborContractSignedDate DATE null,laborContractExpiredDate DATE null,laborContractType VARCHAR(75) null,gender VARCHAR(75) null,placeOfBirth VARCHAR(75) null,education VARCHAR(75) null,educationSpecialize VARCHAR(75) null,universityId LONG,maritalStatus VARCHAR(75) null,identityCardNo VARCHAR(75) null,issuedDate DATE null,issuedPlace VARCHAR(75) null,passport VARCHAR(75) null,addressId LONG,companyEmail VARCHAR(75) null,personalTaxCode VARCHAR(75) null,numberOfDependents INTEGER,dependentNames VARCHAR(75) null,socialInsuranceNo VARCHAR(75) null,healthInsuranceNo VARCHAR(75) null,healthInsurancePlace VARCHAR(75) null,bankAccountNo VARCHAR(75) null,bankName VARCHAR(75) null,bankBranchName VARCHAR(75) null,baseWageRates DOUBLE,positionWageRates DOUBLE,capacitySalary DOUBLE,totalSalary DOUBLE,bonus DOUBLE,resignedDate DATE null,empUserId LONG,deleted BOOLEAN,companyEmailAddress VARCHAR(75) null,workingPlaceId LONG,status VARCHAR(75) null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_Emp (empId LONG not null primary key,groupId LONG,empCode VARCHAR(75) null,contactNumber VARCHAR(75) null,birthday DATE null,ethnic VARCHAR(75) null,nationality VARCHAR(75) null,religion VARCHAR(75) null,joinedDate DATE null,titlesId LONG,levelId LONG,promotedDate DATE null,laborContractSignedDate DATE null,laborContractExpiredDate DATE null,laborContractSignedTime INTEGER,laborContractType VARCHAR(75) null,gender VARCHAR(75) null,placeOfBirth VARCHAR(75) null,education VARCHAR(75) null,educationSpecialize VARCHAR(75) null,universityId LONG,maritalStatus VARCHAR(75) null,identityCardNo VARCHAR(75) null,issuedDate DATE null,issuedPlace VARCHAR(75) null,passport VARCHAR(75) null,addressId LONG,companyEmail VARCHAR(75) null,personalTaxCode VARCHAR(75) null,numberOfDependents INTEGER,dependentNames VARCHAR(75) null,socialInsuranceNo VARCHAR(75) null,healthInsuranceNo VARCHAR(75) null,healthInsurancePlace VARCHAR(75) null,baseWageRates DOUBLE,positionWageRates DOUBLE,capacitySalary DOUBLE,totalSalary DOUBLE,bonus DOUBLE,resignedDate DATE null,empUserId LONG,deleted BOOLEAN,companyEmailAddress VARCHAR(75) null,workingPlaceId LONG,status VARCHAR(75) null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table eco_em_portlet_Emp";
 	public static final String ORDER_BY_JPQL = " ORDER BY emp.empId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_em_portlet_Emp.empId ASC";
@@ -165,6 +163,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		model.setPromotedDate(soapModel.getPromotedDate());
 		model.setLaborContractSignedDate(soapModel.getLaborContractSignedDate());
 		model.setLaborContractExpiredDate(soapModel.getLaborContractExpiredDate());
+		model.setLaborContractSignedTime(soapModel.getLaborContractSignedTime());
 		model.setLaborContractType(soapModel.getLaborContractType());
 		model.setGender(soapModel.getGender());
 		model.setPlaceOfBirth(soapModel.getPlaceOfBirth());
@@ -184,9 +183,6 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		model.setSocialInsuranceNo(soapModel.getSocialInsuranceNo());
 		model.setHealthInsuranceNo(soapModel.getHealthInsuranceNo());
 		model.setHealthInsurancePlace(soapModel.getHealthInsurancePlace());
-		model.setBankAccountNo(soapModel.getBankAccountNo());
-		model.setBankName(soapModel.getBankName());
-		model.setBankBranchName(soapModel.getBankBranchName());
 		model.setBaseWageRates(soapModel.getBaseWageRates());
 		model.setPositionWageRates(soapModel.getPositionWageRates());
 		model.setCapacitySalary(soapModel.getCapacitySalary());
@@ -281,6 +277,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		attributes.put("promotedDate", getPromotedDate());
 		attributes.put("laborContractSignedDate", getLaborContractSignedDate());
 		attributes.put("laborContractExpiredDate", getLaborContractExpiredDate());
+		attributes.put("laborContractSignedTime", getLaborContractSignedTime());
 		attributes.put("laborContractType", getLaborContractType());
 		attributes.put("gender", getGender());
 		attributes.put("placeOfBirth", getPlaceOfBirth());
@@ -300,9 +297,6 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		attributes.put("socialInsuranceNo", getSocialInsuranceNo());
 		attributes.put("healthInsuranceNo", getHealthInsuranceNo());
 		attributes.put("healthInsurancePlace", getHealthInsurancePlace());
-		attributes.put("bankAccountNo", getBankAccountNo());
-		attributes.put("bankName", getBankName());
-		attributes.put("bankBranchName", getBankBranchName());
 		attributes.put("baseWageRates", getBaseWageRates());
 		attributes.put("positionWageRates", getPositionWageRates());
 		attributes.put("capacitySalary", getCapacitySalary());
@@ -409,6 +403,13 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 
 		if (laborContractExpiredDate != null) {
 			setLaborContractExpiredDate(laborContractExpiredDate);
+		}
+
+		Integer laborContractSignedTime = (Integer)attributes.get(
+				"laborContractSignedTime");
+
+		if (laborContractSignedTime != null) {
+			setLaborContractSignedTime(laborContractSignedTime);
 		}
 
 		String laborContractType = (String)attributes.get("laborContractType");
@@ -526,24 +527,6 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 
 		if (healthInsurancePlace != null) {
 			setHealthInsurancePlace(healthInsurancePlace);
-		}
-
-		String bankAccountNo = (String)attributes.get("bankAccountNo");
-
-		if (bankAccountNo != null) {
-			setBankAccountNo(bankAccountNo);
-		}
-
-		String bankName = (String)attributes.get("bankName");
-
-		if (bankName != null) {
-			setBankName(bankName);
-		}
-
-		String bankBranchName = (String)attributes.get("bankBranchName");
-
-		if (bankBranchName != null) {
-			setBankBranchName(bankBranchName);
 		}
 
 		Double baseWageRates = (Double)attributes.get("baseWageRates");
@@ -835,6 +818,17 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 
 	@JSON
 	@Override
+	public int getLaborContractSignedTime() {
+		return _laborContractSignedTime;
+	}
+
+	@Override
+	public void setLaborContractSignedTime(int laborContractSignedTime) {
+		_laborContractSignedTime = laborContractSignedTime;
+	}
+
+	@JSON
+	@Override
 	public String getLaborContractType() {
 		if (_laborContractType == null) {
 			return StringPool.BLANK;
@@ -1119,54 +1113,6 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 
 	@JSON
 	@Override
-	public String getBankAccountNo() {
-		if (_bankAccountNo == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _bankAccountNo;
-		}
-	}
-
-	@Override
-	public void setBankAccountNo(String bankAccountNo) {
-		_bankAccountNo = bankAccountNo;
-	}
-
-	@JSON
-	@Override
-	public String getBankName() {
-		if (_bankName == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _bankName;
-		}
-	}
-
-	@Override
-	public void setBankName(String bankName) {
-		_bankName = bankName;
-	}
-
-	@JSON
-	@Override
-	public String getBankBranchName() {
-		if (_bankBranchName == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _bankBranchName;
-		}
-	}
-
-	@Override
-	public void setBankBranchName(String bankBranchName) {
-		_bankBranchName = bankBranchName;
-	}
-
-	@JSON
-	@Override
 	public double getBaseWageRates() {
 		return _baseWageRates;
 	}
@@ -1438,6 +1384,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		empImpl.setPromotedDate(getPromotedDate());
 		empImpl.setLaborContractSignedDate(getLaborContractSignedDate());
 		empImpl.setLaborContractExpiredDate(getLaborContractExpiredDate());
+		empImpl.setLaborContractSignedTime(getLaborContractSignedTime());
 		empImpl.setLaborContractType(getLaborContractType());
 		empImpl.setGender(getGender());
 		empImpl.setPlaceOfBirth(getPlaceOfBirth());
@@ -1457,9 +1404,6 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		empImpl.setSocialInsuranceNo(getSocialInsuranceNo());
 		empImpl.setHealthInsuranceNo(getHealthInsuranceNo());
 		empImpl.setHealthInsurancePlace(getHealthInsurancePlace());
-		empImpl.setBankAccountNo(getBankAccountNo());
-		empImpl.setBankName(getBankName());
-		empImpl.setBankBranchName(getBankBranchName());
 		empImpl.setBaseWageRates(getBaseWageRates());
 		empImpl.setPositionWageRates(getPositionWageRates());
 		empImpl.setCapacitySalary(getCapacitySalary());
@@ -1634,6 +1578,8 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 			empCacheModel.laborContractExpiredDate = Long.MIN_VALUE;
 		}
 
+		empCacheModel.laborContractSignedTime = getLaborContractSignedTime();
+
 		empCacheModel.laborContractType = getLaborContractType();
 
 		String laborContractType = empCacheModel.laborContractType;
@@ -1771,30 +1717,6 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 			empCacheModel.healthInsurancePlace = null;
 		}
 
-		empCacheModel.bankAccountNo = getBankAccountNo();
-
-		String bankAccountNo = empCacheModel.bankAccountNo;
-
-		if ((bankAccountNo != null) && (bankAccountNo.length() == 0)) {
-			empCacheModel.bankAccountNo = null;
-		}
-
-		empCacheModel.bankName = getBankName();
-
-		String bankName = empCacheModel.bankName;
-
-		if ((bankName != null) && (bankName.length() == 0)) {
-			empCacheModel.bankName = null;
-		}
-
-		empCacheModel.bankBranchName = getBankBranchName();
-
-		String bankBranchName = empCacheModel.bankBranchName;
-
-		if ((bankBranchName != null) && (bankBranchName.length() == 0)) {
-			empCacheModel.bankBranchName = null;
-		}
-
 		empCacheModel.baseWageRates = getBaseWageRates();
 
 		empCacheModel.positionWageRates = getPositionWageRates();
@@ -1872,7 +1794,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(105);
+		StringBundler sb = new StringBundler(101);
 
 		sb.append("{empId=");
 		sb.append(getEmpId());
@@ -1902,6 +1824,8 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		sb.append(getLaborContractSignedDate());
 		sb.append(", laborContractExpiredDate=");
 		sb.append(getLaborContractExpiredDate());
+		sb.append(", laborContractSignedTime=");
+		sb.append(getLaborContractSignedTime());
 		sb.append(", laborContractType=");
 		sb.append(getLaborContractType());
 		sb.append(", gender=");
@@ -1940,12 +1864,6 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		sb.append(getHealthInsuranceNo());
 		sb.append(", healthInsurancePlace=");
 		sb.append(getHealthInsurancePlace());
-		sb.append(", bankAccountNo=");
-		sb.append(getBankAccountNo());
-		sb.append(", bankName=");
-		sb.append(getBankName());
-		sb.append(", bankBranchName=");
-		sb.append(getBankBranchName());
 		sb.append(", baseWageRates=");
 		sb.append(getBaseWageRates());
 		sb.append(", positionWageRates=");
@@ -1985,7 +1903,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(160);
+		StringBundler sb = new StringBundler(154);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.Emp");
@@ -2046,6 +1964,10 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		sb.append(
 			"<column><column-name>laborContractExpiredDate</column-name><column-value><![CDATA[");
 		sb.append(getLaborContractExpiredDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>laborContractSignedTime</column-name><column-value><![CDATA[");
+		sb.append(getLaborContractSignedTime());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>laborContractType</column-name><column-value><![CDATA[");
@@ -2122,18 +2044,6 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		sb.append(
 			"<column><column-name>healthInsurancePlace</column-name><column-value><![CDATA[");
 		sb.append(getHealthInsurancePlace());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>bankAccountNo</column-name><column-value><![CDATA[");
-		sb.append(getBankAccountNo());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>bankName</column-name><column-value><![CDATA[");
-		sb.append(getBankName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>bankBranchName</column-name><column-value><![CDATA[");
-		sb.append(getBankBranchName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>baseWageRates</column-name><column-value><![CDATA[");
@@ -2222,6 +2132,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 	private Date _promotedDate;
 	private Date _laborContractSignedDate;
 	private Date _laborContractExpiredDate;
+	private int _laborContractSignedTime;
 	private String _laborContractType;
 	private String _gender;
 	private String _placeOfBirth;
@@ -2241,9 +2152,6 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 	private String _socialInsuranceNo;
 	private String _healthInsuranceNo;
 	private String _healthInsurancePlace;
-	private String _bankAccountNo;
-	private String _bankName;
-	private String _bankBranchName;
 	private double _baseWageRates;
 	private double _positionWageRates;
 	private double _capacitySalary;

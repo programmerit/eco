@@ -405,6 +405,7 @@
 		<column name="promotedDate" type="Date"></column>
 		<column name="laborContractSignedDate" type="Date"></column>
 		<column name="laborContractExpiredDate" type="Date"></column>
+        <column name="laborContractSignedTime" type="int"></column>
 		<column name="laborContractType" type="String"></column>
 		<column name="gender" type="String"></column>
 		<column name="placeOfBirth" type="String"></column>
@@ -424,9 +425,6 @@
 		<column name="socialInsuranceNo" type="String"></column>
 		<column name="healthInsuranceNo" type="String"></column>
 		<column name="healthInsurancePlace" type="String"></column>
-		<column name="bankAccountNo" type="String"></column>
-		<column name="bankName" type="String"></column>
-		<column name="bankBranchName" type="String"></column>
 		<column name="baseWageRates" type="double"></column>
 		<column name="positionWageRates" type="double"></column>
 		<column name="capacitySalary" type="double"></column>
@@ -493,6 +491,28 @@
             <finder-column name="classPK"></finder-column>
             <finder-column name="certificateType"></finder-column>
         </finder>
+	</entity>
+	<entity name="EmpBankInfo" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="empBankInfoId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+        <column name="empId" type="long"></column>
+        <column name="bankAccountNo" type="String"></column>
+        <column name="bankName" type="String"></column>
+        <column name="branchName" type="String"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
 	</entity>
 
 </service-builder>

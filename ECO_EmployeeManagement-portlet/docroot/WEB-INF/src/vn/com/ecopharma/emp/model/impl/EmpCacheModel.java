@@ -37,7 +37,7 @@ import java.util.Date;
 public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(105);
+		StringBundler sb = new StringBundler(101);
 
 		sb.append("{empId=");
 		sb.append(empId);
@@ -67,6 +67,8 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		sb.append(laborContractSignedDate);
 		sb.append(", laborContractExpiredDate=");
 		sb.append(laborContractExpiredDate);
+		sb.append(", laborContractSignedTime=");
+		sb.append(laborContractSignedTime);
 		sb.append(", laborContractType=");
 		sb.append(laborContractType);
 		sb.append(", gender=");
@@ -105,12 +107,6 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		sb.append(healthInsuranceNo);
 		sb.append(", healthInsurancePlace=");
 		sb.append(healthInsurancePlace);
-		sb.append(", bankAccountNo=");
-		sb.append(bankAccountNo);
-		sb.append(", bankName=");
-		sb.append(bankName);
-		sb.append(", bankBranchName=");
-		sb.append(bankBranchName);
 		sb.append(", baseWageRates=");
 		sb.append(baseWageRates);
 		sb.append(", positionWageRates=");
@@ -228,6 +224,8 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 			empImpl.setLaborContractExpiredDate(new Date(
 					laborContractExpiredDate));
 		}
+
+		empImpl.setLaborContractSignedTime(laborContractSignedTime);
 
 		if (laborContractType == null) {
 			empImpl.setLaborContractType(StringPool.BLANK);
@@ -347,27 +345,6 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 			empImpl.setHealthInsurancePlace(healthInsurancePlace);
 		}
 
-		if (bankAccountNo == null) {
-			empImpl.setBankAccountNo(StringPool.BLANK);
-		}
-		else {
-			empImpl.setBankAccountNo(bankAccountNo);
-		}
-
-		if (bankName == null) {
-			empImpl.setBankName(StringPool.BLANK);
-		}
-		else {
-			empImpl.setBankName(bankName);
-		}
-
-		if (bankBranchName == null) {
-			empImpl.setBankBranchName(StringPool.BLANK);
-		}
-		else {
-			empImpl.setBankBranchName(bankBranchName);
-		}
-
 		empImpl.setBaseWageRates(baseWageRates);
 		empImpl.setPositionWageRates(positionWageRates);
 		empImpl.setCapacitySalary(capacitySalary);
@@ -445,6 +422,7 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		promotedDate = objectInput.readLong();
 		laborContractSignedDate = objectInput.readLong();
 		laborContractExpiredDate = objectInput.readLong();
+		laborContractSignedTime = objectInput.readInt();
 		laborContractType = objectInput.readUTF();
 		gender = objectInput.readUTF();
 		placeOfBirth = objectInput.readUTF();
@@ -464,9 +442,6 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		socialInsuranceNo = objectInput.readUTF();
 		healthInsuranceNo = objectInput.readUTF();
 		healthInsurancePlace = objectInput.readUTF();
-		bankAccountNo = objectInput.readUTF();
-		bankName = objectInput.readUTF();
-		bankBranchName = objectInput.readUTF();
 		baseWageRates = objectInput.readDouble();
 		positionWageRates = objectInput.readDouble();
 		capacitySalary = objectInput.readDouble();
@@ -534,6 +509,7 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		objectOutput.writeLong(promotedDate);
 		objectOutput.writeLong(laborContractSignedDate);
 		objectOutput.writeLong(laborContractExpiredDate);
+		objectOutput.writeInt(laborContractSignedTime);
 
 		if (laborContractType == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -648,27 +624,6 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 			objectOutput.writeUTF(healthInsurancePlace);
 		}
 
-		if (bankAccountNo == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(bankAccountNo);
-		}
-
-		if (bankName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(bankName);
-		}
-
-		if (bankBranchName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(bankBranchName);
-		}
-
 		objectOutput.writeDouble(baseWageRates);
 		objectOutput.writeDouble(positionWageRates);
 		objectOutput.writeDouble(capacitySalary);
@@ -722,6 +677,7 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 	public long promotedDate;
 	public long laborContractSignedDate;
 	public long laborContractExpiredDate;
+	public int laborContractSignedTime;
 	public String laborContractType;
 	public String gender;
 	public String placeOfBirth;
@@ -741,9 +697,6 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 	public String socialInsuranceNo;
 	public String healthInsuranceNo;
 	public String healthInsurancePlace;
-	public String bankAccountNo;
-	public String bankName;
-	public String bankBranchName;
 	public double baseWageRates;
 	public double positionWageRates;
 	public double capacitySalary;

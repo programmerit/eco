@@ -28,6 +28,7 @@ import vn.com.ecopharma.emp.service.persistence.CertificatePersistence;
 import vn.com.ecopharma.emp.service.persistence.DepartmentPersistence;
 import vn.com.ecopharma.emp.service.persistence.DevisionPersistence;
 import vn.com.ecopharma.emp.service.persistence.DistrictPersistence;
+import vn.com.ecopharma.emp.service.persistence.EmpBankInfoPersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpPersistence;
 import vn.com.ecopharma.emp.service.persistence.EmployeeTitlesHistoryPersistence;
 import vn.com.ecopharma.emp.service.persistence.LevelPersistence;
@@ -343,6 +344,63 @@ public abstract class DepartmentServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setEmpPersistence(EmpPersistence empPersistence) {
 		this.empPersistence = empPersistence;
+	}
+
+	/**
+	 * Returns the emp bank info local service.
+	 *
+	 * @return the emp bank info local service
+	 */
+	public vn.com.ecopharma.emp.service.EmpBankInfoLocalService getEmpBankInfoLocalService() {
+		return empBankInfoLocalService;
+	}
+
+	/**
+	 * Sets the emp bank info local service.
+	 *
+	 * @param empBankInfoLocalService the emp bank info local service
+	 */
+	public void setEmpBankInfoLocalService(
+		vn.com.ecopharma.emp.service.EmpBankInfoLocalService empBankInfoLocalService) {
+		this.empBankInfoLocalService = empBankInfoLocalService;
+	}
+
+	/**
+	 * Returns the emp bank info remote service.
+	 *
+	 * @return the emp bank info remote service
+	 */
+	public vn.com.ecopharma.emp.service.EmpBankInfoService getEmpBankInfoService() {
+		return empBankInfoService;
+	}
+
+	/**
+	 * Sets the emp bank info remote service.
+	 *
+	 * @param empBankInfoService the emp bank info remote service
+	 */
+	public void setEmpBankInfoService(
+		vn.com.ecopharma.emp.service.EmpBankInfoService empBankInfoService) {
+		this.empBankInfoService = empBankInfoService;
+	}
+
+	/**
+	 * Returns the emp bank info persistence.
+	 *
+	 * @return the emp bank info persistence
+	 */
+	public EmpBankInfoPersistence getEmpBankInfoPersistence() {
+		return empBankInfoPersistence;
+	}
+
+	/**
+	 * Sets the emp bank info persistence.
+	 *
+	 * @param empBankInfoPersistence the emp bank info persistence
+	 */
+	public void setEmpBankInfoPersistence(
+		EmpBankInfoPersistence empBankInfoPersistence) {
+		this.empBankInfoPersistence = empBankInfoPersistence;
 	}
 
 	/**
@@ -1169,6 +1227,12 @@ public abstract class DepartmentServiceBaseImpl extends BaseServiceImpl
 	protected vn.com.ecopharma.emp.service.EmpService empService;
 	@BeanReference(type = EmpPersistence.class)
 	protected EmpPersistence empPersistence;
+	@BeanReference(type = vn.com.ecopharma.emp.service.EmpBankInfoLocalService.class)
+	protected vn.com.ecopharma.emp.service.EmpBankInfoLocalService empBankInfoLocalService;
+	@BeanReference(type = vn.com.ecopharma.emp.service.EmpBankInfoService.class)
+	protected vn.com.ecopharma.emp.service.EmpBankInfoService empBankInfoService;
+	@BeanReference(type = EmpBankInfoPersistence.class)
+	protected EmpBankInfoPersistence empBankInfoPersistence;
 	@BeanReference(type = vn.com.ecopharma.emp.service.EmployeeTitlesHistoryLocalService.class)
 	protected vn.com.ecopharma.emp.service.EmployeeTitlesHistoryLocalService employeeTitlesHistoryLocalService;
 	@BeanReference(type = vn.com.ecopharma.emp.service.EmployeeTitlesHistoryService.class)

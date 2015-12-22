@@ -70,6 +70,7 @@
 		<field name="promotedDate" type="Date" />
 		<field name="laborContractSignedDate" type="Date" />
 		<field name="laborContractExpiredDate" type="Date" />
+		<field name="laborContractSignedTime" type="int" />
 		<field name="laborContractType" type="String" />
 		<field name="gender" type="String" />
 		<field name="placeOfBirth" type="String" />
@@ -89,9 +90,6 @@
 		<field name="socialInsuranceNo" type="String" />
 		<field name="healthInsuranceNo" type="String" />
 		<field name="healthInsurancePlace" type="String" />
-		<field name="bankAccountNo" type="String" />
-		<field name="bankName" type="String" />
-		<field name="bankBranchName" type="String" />
 		<field name="baseWageRates" type="double" />
 		<field name="positionWageRates" type="double" />
 		<field name="capacitySalary" type="double" />
@@ -103,6 +101,19 @@
 		<field name="companyEmailAddress" type="String" />
 		<field name="workingPlaceId" type="long" />
 		<field name="status" type="String" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.emp.model.EmpBankInfo">
+		<field name="empBankInfoId" type="long" />
+		<field name="empId" type="long" />
+		<field name="bankAccountNo" type="String" />
+		<field name="bankName" type="String" />
+		<field name="branchName" type="String" />
+		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />

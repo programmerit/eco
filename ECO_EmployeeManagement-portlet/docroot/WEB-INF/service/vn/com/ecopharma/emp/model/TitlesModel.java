@@ -253,19 +253,19 @@ public interface TitlesModel extends BaseModel<Titles> {
 	public Object clone();
 
 	@Override
-	public int compareTo(Titles titles);
+	public int compareTo(vn.com.ecopharma.emp.model.Titles titles);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<Titles> toCacheModel();
+	public CacheModel<vn.com.ecopharma.emp.model.Titles> toCacheModel();
 
 	@Override
-	public Titles toEscapedModel();
+	public vn.com.ecopharma.emp.model.Titles toEscapedModel();
 
 	@Override
-	public Titles toUnescapedModel();
+	public vn.com.ecopharma.emp.model.Titles toUnescapedModel();
 
 	@Override
 	public String toString();

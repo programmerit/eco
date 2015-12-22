@@ -131,6 +131,7 @@
 			<basic name="laborContractExpiredDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="laborContractSignedTime" />
 			<basic name="laborContractType" />
 			<basic name="gender" />
 			<basic name="placeOfBirth" />
@@ -152,9 +153,6 @@
 			<basic name="socialInsuranceNo" />
 			<basic name="healthInsuranceNo" />
 			<basic name="healthInsurancePlace" />
-			<basic name="bankAccountNo" />
-			<basic name="bankName" />
-			<basic name="bankBranchName" />
 			<basic name="baseWageRates" />
 			<basic name="positionWageRates" />
 			<basic name="capacitySalary" />
@@ -178,6 +176,29 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<transient name="empUserUuid" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.emp.model.impl.EmpBankInfoModelImpl">
+		<attributes>
+			<id name="empBankInfoId" />
+			<basic name="empId" />
+			<basic name="bankAccountNo" />
+			<basic name="bankName" />
+			<basic name="branchName" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -461,6 +482,10 @@
 	</entity>
 	<entity class="vn.com.ecopharma.emp.model.impl.EmpImpl" name="Emp">
 		<table name="eco_em_portlet_Emp" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.emp.model.impl.EmpBankInfoImpl" name="EmpBankInfo">
+		<table name="eco_em_portlet_EmpBankInfo" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.emp.model.impl.EmployeeTitlesHistoryImpl" name="EmployeeTitlesHistory">

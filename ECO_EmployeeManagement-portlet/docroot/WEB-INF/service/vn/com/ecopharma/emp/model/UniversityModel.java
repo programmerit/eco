@@ -241,19 +241,19 @@ public interface UniversityModel extends BaseModel<University> {
 	public Object clone();
 
 	@Override
-	public int compareTo(University university);
+	public int compareTo(vn.com.ecopharma.emp.model.University university);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<University> toCacheModel();
+	public CacheModel<vn.com.ecopharma.emp.model.University> toCacheModel();
 
 	@Override
-	public University toEscapedModel();
+	public vn.com.ecopharma.emp.model.University toEscapedModel();
 
 	@Override
-	public University toUnescapedModel();
+	public vn.com.ecopharma.emp.model.University toUnescapedModel();
 
 	@Override
 	public String toString();

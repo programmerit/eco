@@ -265,6 +265,20 @@ public interface EmpModel extends BaseModel<Emp>, GroupedModel {
 	public void setLaborContractExpiredDate(Date laborContractExpiredDate);
 
 	/**
+	 * Returns the labor contract signed time of this emp.
+	 *
+	 * @return the labor contract signed time of this emp
+	 */
+	public int getLaborContractSignedTime();
+
+	/**
+	 * Sets the labor contract signed time of this emp.
+	 *
+	 * @param laborContractSignedTime the labor contract signed time of this emp
+	 */
+	public void setLaborContractSignedTime(int laborContractSignedTime);
+
+	/**
 	 * Returns the labor contract type of this emp.
 	 *
 	 * @return the labor contract type of this emp
@@ -544,51 +558,6 @@ public interface EmpModel extends BaseModel<Emp>, GroupedModel {
 	 * @param healthInsurancePlace the health insurance place of this emp
 	 */
 	public void setHealthInsurancePlace(String healthInsurancePlace);
-
-	/**
-	 * Returns the bank account no of this emp.
-	 *
-	 * @return the bank account no of this emp
-	 */
-	@AutoEscape
-	public String getBankAccountNo();
-
-	/**
-	 * Sets the bank account no of this emp.
-	 *
-	 * @param bankAccountNo the bank account no of this emp
-	 */
-	public void setBankAccountNo(String bankAccountNo);
-
-	/**
-	 * Returns the bank name of this emp.
-	 *
-	 * @return the bank name of this emp
-	 */
-	@AutoEscape
-	public String getBankName();
-
-	/**
-	 * Sets the bank name of this emp.
-	 *
-	 * @param bankName the bank name of this emp
-	 */
-	public void setBankName(String bankName);
-
-	/**
-	 * Returns the bank branch name of this emp.
-	 *
-	 * @return the bank branch name of this emp
-	 */
-	@AutoEscape
-	public String getBankBranchName();
-
-	/**
-	 * Sets the bank branch name of this emp.
-	 *
-	 * @param bankBranchName the bank branch name of this emp
-	 */
-	public void setBankBranchName(String bankBranchName);
 
 	/**
 	 * Returns the base wage rates of this emp.
@@ -903,19 +872,19 @@ public interface EmpModel extends BaseModel<Emp>, GroupedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(Emp emp);
+	public int compareTo(vn.com.ecopharma.emp.model.Emp emp);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<Emp> toCacheModel();
+	public CacheModel<vn.com.ecopharma.emp.model.Emp> toCacheModel();
 
 	@Override
-	public Emp toEscapedModel();
+	public vn.com.ecopharma.emp.model.Emp toEscapedModel();
 
 	@Override
-	public Emp toUnescapedModel();
+	public vn.com.ecopharma.emp.model.Emp toUnescapedModel();
 
 	@Override
 	public String toString();

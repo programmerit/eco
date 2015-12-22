@@ -88,6 +88,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		attributes.put("promotedDate", getPromotedDate());
 		attributes.put("laborContractSignedDate", getLaborContractSignedDate());
 		attributes.put("laborContractExpiredDate", getLaborContractExpiredDate());
+		attributes.put("laborContractSignedTime", getLaborContractSignedTime());
 		attributes.put("laborContractType", getLaborContractType());
 		attributes.put("gender", getGender());
 		attributes.put("placeOfBirth", getPlaceOfBirth());
@@ -107,9 +108,6 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		attributes.put("socialInsuranceNo", getSocialInsuranceNo());
 		attributes.put("healthInsuranceNo", getHealthInsuranceNo());
 		attributes.put("healthInsurancePlace", getHealthInsurancePlace());
-		attributes.put("bankAccountNo", getBankAccountNo());
-		attributes.put("bankName", getBankName());
-		attributes.put("bankBranchName", getBankBranchName());
 		attributes.put("baseWageRates", getBaseWageRates());
 		attributes.put("positionWageRates", getPositionWageRates());
 		attributes.put("capacitySalary", getCapacitySalary());
@@ -216,6 +214,13 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 
 		if (laborContractExpiredDate != null) {
 			setLaborContractExpiredDate(laborContractExpiredDate);
+		}
+
+		Integer laborContractSignedTime = (Integer)attributes.get(
+				"laborContractSignedTime");
+
+		if (laborContractSignedTime != null) {
+			setLaborContractSignedTime(laborContractSignedTime);
 		}
 
 		String laborContractType = (String)attributes.get("laborContractType");
@@ -333,24 +338,6 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 
 		if (healthInsurancePlace != null) {
 			setHealthInsurancePlace(healthInsurancePlace);
-		}
-
-		String bankAccountNo = (String)attributes.get("bankAccountNo");
-
-		if (bankAccountNo != null) {
-			setBankAccountNo(bankAccountNo);
-		}
-
-		String bankName = (String)attributes.get("bankName");
-
-		if (bankName != null) {
-			setBankName(bankName);
-		}
-
-		String bankBranchName = (String)attributes.get("bankBranchName");
-
-		if (bankBranchName != null) {
-			setBankBranchName(bankBranchName);
 		}
 
 		Double baseWageRates = (Double)attributes.get("baseWageRates");
@@ -768,6 +755,30 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 						Date.class);
 
 				method.invoke(_empRemoteModel, laborContractExpiredDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public int getLaborContractSignedTime() {
+		return _laborContractSignedTime;
+	}
+
+	@Override
+	public void setLaborContractSignedTime(int laborContractSignedTime) {
+		_laborContractSignedTime = laborContractSignedTime;
+
+		if (_empRemoteModel != null) {
+			try {
+				Class<?> clazz = _empRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setLaborContractSignedTime",
+						int.class);
+
+				method.invoke(_empRemoteModel, laborContractSignedTime);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -1214,76 +1225,6 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 						String.class);
 
 				method.invoke(_empRemoteModel, healthInsurancePlace);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public String getBankAccountNo() {
-		return _bankAccountNo;
-	}
-
-	@Override
-	public void setBankAccountNo(String bankAccountNo) {
-		_bankAccountNo = bankAccountNo;
-
-		if (_empRemoteModel != null) {
-			try {
-				Class<?> clazz = _empRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setBankAccountNo", String.class);
-
-				method.invoke(_empRemoteModel, bankAccountNo);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public String getBankName() {
-		return _bankName;
-	}
-
-	@Override
-	public void setBankName(String bankName) {
-		_bankName = bankName;
-
-		if (_empRemoteModel != null) {
-			try {
-				Class<?> clazz = _empRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setBankName", String.class);
-
-				method.invoke(_empRemoteModel, bankName);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public String getBankBranchName() {
-		return _bankBranchName;
-	}
-
-	@Override
-	public void setBankBranchName(String bankBranchName) {
-		_bankBranchName = bankBranchName;
-
-		if (_empRemoteModel != null) {
-			try {
-				Class<?> clazz = _empRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setBankBranchName",
-						String.class);
-
-				method.invoke(_empRemoteModel, bankBranchName);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -1770,6 +1711,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		clone.setPromotedDate(getPromotedDate());
 		clone.setLaborContractSignedDate(getLaborContractSignedDate());
 		clone.setLaborContractExpiredDate(getLaborContractExpiredDate());
+		clone.setLaborContractSignedTime(getLaborContractSignedTime());
 		clone.setLaborContractType(getLaborContractType());
 		clone.setGender(getGender());
 		clone.setPlaceOfBirth(getPlaceOfBirth());
@@ -1789,9 +1731,6 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		clone.setSocialInsuranceNo(getSocialInsuranceNo());
 		clone.setHealthInsuranceNo(getHealthInsuranceNo());
 		clone.setHealthInsurancePlace(getHealthInsurancePlace());
-		clone.setBankAccountNo(getBankAccountNo());
-		clone.setBankName(getBankName());
-		clone.setBankBranchName(getBankBranchName());
 		clone.setBaseWageRates(getBaseWageRates());
 		clone.setPositionWageRates(getPositionWageRates());
 		clone.setCapacitySalary(getCapacitySalary());
@@ -1860,7 +1799,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(105);
+		StringBundler sb = new StringBundler(101);
 
 		sb.append("{empId=");
 		sb.append(getEmpId());
@@ -1890,6 +1829,8 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		sb.append(getLaborContractSignedDate());
 		sb.append(", laborContractExpiredDate=");
 		sb.append(getLaborContractExpiredDate());
+		sb.append(", laborContractSignedTime=");
+		sb.append(getLaborContractSignedTime());
 		sb.append(", laborContractType=");
 		sb.append(getLaborContractType());
 		sb.append(", gender=");
@@ -1928,12 +1869,6 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		sb.append(getHealthInsuranceNo());
 		sb.append(", healthInsurancePlace=");
 		sb.append(getHealthInsurancePlace());
-		sb.append(", bankAccountNo=");
-		sb.append(getBankAccountNo());
-		sb.append(", bankName=");
-		sb.append(getBankName());
-		sb.append(", bankBranchName=");
-		sb.append(getBankBranchName());
 		sb.append(", baseWageRates=");
 		sb.append(getBaseWageRates());
 		sb.append(", positionWageRates=");
@@ -1973,7 +1908,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(160);
+		StringBundler sb = new StringBundler(154);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.Emp");
@@ -2034,6 +1969,10 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		sb.append(
 			"<column><column-name>laborContractExpiredDate</column-name><column-value><![CDATA[");
 		sb.append(getLaborContractExpiredDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>laborContractSignedTime</column-name><column-value><![CDATA[");
+		sb.append(getLaborContractSignedTime());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>laborContractType</column-name><column-value><![CDATA[");
@@ -2110,18 +2049,6 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		sb.append(
 			"<column><column-name>healthInsurancePlace</column-name><column-value><![CDATA[");
 		sb.append(getHealthInsurancePlace());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>bankAccountNo</column-name><column-value><![CDATA[");
-		sb.append(getBankAccountNo());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>bankName</column-name><column-value><![CDATA[");
-		sb.append(getBankName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>bankBranchName</column-name><column-value><![CDATA[");
-		sb.append(getBankBranchName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>baseWageRates</column-name><column-value><![CDATA[");
@@ -2207,6 +2134,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 	private Date _promotedDate;
 	private Date _laborContractSignedDate;
 	private Date _laborContractExpiredDate;
+	private int _laborContractSignedTime;
 	private String _laborContractType;
 	private String _gender;
 	private String _placeOfBirth;
@@ -2226,9 +2154,6 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 	private String _socialInsuranceNo;
 	private String _healthInsuranceNo;
 	private String _healthInsurancePlace;
-	private String _bankAccountNo;
-	private String _bankName;
-	private String _bankBranchName;
 	private double _baseWageRates;
 	private double _positionWageRates;
 	private double _capacitySalary;

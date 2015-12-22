@@ -26,6 +26,7 @@ import vn.com.ecopharma.emp.enumeration.LocationType;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Emp;
+import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.model.Level;
 import vn.com.ecopharma.emp.model.Location;
 import vn.com.ecopharma.emp.model.Titles;
@@ -72,6 +73,8 @@ public class EmployeeBean implements Serializable {
 
 	private static final String MALE = "male";
 
+	private String testString = "Filter Panel";
+
 	private EmpInfoItem modifyEmployeeInfoItem;
 	private EmpInfoItem selectedEmployeeInfoItem;
 
@@ -101,6 +104,7 @@ public class EmployeeBean implements Serializable {
 		try {
 			currentNav = "/views/employees.xhtml";
 			countries = CountryServiceUtil.getCountries(true);
+
 		} catch (SystemException e) {
 			EmployeeUtils.writeDebugLog(EmployeeBean.class, e);
 		}
@@ -248,7 +252,7 @@ public class EmployeeBean implements Serializable {
 								EmployeeUtils
 										.transferDependentNameObjectListToDependentNameMap(modifyEmployeeInfoItem
 												.getDependentNames()),
-								serviceContext);
+								new ArrayList<EmpBankInfo>(), serviceContext);
 
 				// EmpLocalServiceUtil
 
@@ -601,4 +605,13 @@ public class EmployeeBean implements Serializable {
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
 	}
+
+	public String getTestString() {
+		return testString;
+	}
+
+	public void setTestString(String testString) {
+		this.testString = testString;
+	}
+
 }

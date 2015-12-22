@@ -16,11 +16,13 @@ import vn.com.ecopharma.emp.enumeration.LaborContractType;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Emp;
+import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.model.Titles;
 import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
+import vn.com.ecopharma.emp.service.EmpBankInfoLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
@@ -73,6 +75,8 @@ public class ImportExportEmployeeDTO implements Serializable {
 	private Date laborContractExpiredDate;
 
 	private String laborContractType;
+	private int laborContractSignedTime;
+
 	private Date dob;
 
 	private String gender;
@@ -98,8 +102,17 @@ public class ImportExportEmployeeDTO implements Serializable {
 
 	private String insurranceCode;
 	private String healthInsurranceCode;
-	private String bankNo;
-	private String bankBranchName;
+	private String bankNo1;
+	private String bankName1;
+	private String bankBranchName1;
+
+	private String bankNo2;
+	private String bankName2;
+	private String bankBranchName2;
+
+	private String bankNo3;
+	private String bankName3;
+	private String bankBranchName3;
 
 	private Region presentRegion;
 
@@ -138,6 +151,8 @@ public class ImportExportEmployeeDTO implements Serializable {
 		middleName = EmployeeUtils.getMiddleNameFromFullname(fullname);
 		lastName = EmployeeUtils.getLastNameFromFullname(fullname);
 
+		LOGGER.info("============ " + fullname + " =============");
+		
 		String devisionName = getCellValueAsString(r.getCell(9));
 		LOGGER.info("============ Checking devision =============");
 		if (StringUtils.trimToNull(devisionName) != null) {
@@ -160,8 +175,8 @@ public class ImportExportEmployeeDTO implements Serializable {
 				// create new one
 				LOGGER.info("============ Creating department =============");
 				this.department = DepartmentLocalServiceUtil.addDepartment(
-					departmentName, devisionId, serviceContext);
-			}	
+						departmentName, devisionId, serviceContext);
+			}
 			departmentId = this.department.getDepartmentId();
 		}
 
@@ -223,32 +238,34 @@ public class ImportExportEmployeeDTO implements Serializable {
 				: null;
 		laborContractSignedDate = r.getCell(11) != null ? r.getCell(11)
 				.getDateCellValue() : null;
-		laborContractExpiredDate = r.getCell(12) != null ? r.getCell(12)
+		laborContractExpiredDate = isNotNullCell(r.getCell(12)) ? r.getCell(12)
 				.getDateCellValue() : null;
 		laborContractType = getCellValueAsString(r.getCell(13)) != StringUtils.EMPTY ? LaborContractType
 				.convertFromVNeseToLaborContractType(
 						StringUtils.trim(r.getCell(13).getStringCellValue()))
 				.toString() : LaborContractType.NONE.toString();
-		dob = getConvertedDateStringCell(r.getCell(14));
-		gender = getCellValueAsString(r.getCell(15)).equalsIgnoreCase(
+		laborContractSignedTime = getLaborContractSignedTime(r.getCell(14));
+
+		dob = getConvertedDateStringCell(r.getCell(15));
+		gender = getCellValueAsString(r.getCell(16)).equalsIgnoreCase(
 				MALE_VNESE) ? MALE : FEMALE;
 
-		pob = getCellValueAsString(r.getCell(16));
-		education = getCellValueAsString(r.getCell(17));
-		educationSpecialize = getCellValueAsString(r.getCell(18));
-		universityId = r.getCell(19) != null
+		pob = getCellValueAsString(r.getCell(17));
+		education = getCellValueAsString(r.getCell(18));
+		educationSpecialize = getCellValueAsString(r.getCell(19));
+		universityId = r.getCell(20) != null
 				&& StringUtils.trimToNull(r.getCell(19).getStringCellValue()) != null
 				&& UniversityLocalServiceUtil.findByName(r.getCell(19)
 						.getStringCellValue()) != null ? UniversityLocalServiceUtil
 				.findByName(r.getCell(19).getStringCellValue())
 				.getUniversityId() : 0;
-		marritalStatus = getCellValueAsString(r.getCell(20));
-		identityCardNo = getCellValueAsString(r.getCell(21));
-		issuedDate = r.getCell(22).getDateCellValue();
-		issuedPlace = getCellValueAsString(r.getCell(23));
+		marritalStatus = getCellValueAsString(r.getCell(21));
+		identityCardNo = getCellValueAsString(r.getCell(22));
+		issuedDate = r.getCell(23).getDateCellValue();
+		issuedPlace = getCellValueAsString(r.getCell(24));
 
-		presentAddress = getCellValueAsString(r.getCell(24));
-		temporaryAddress = getCellValueAsString(r.getCell(25));
+		presentAddress = getCellValueAsString(r.getCell(25));
+		temporaryAddress = getCellValueAsString(r.getCell(26));
 
 		final List<Region> allVNRegions = getAllVNRegions();
 		presentRegion = getRegionFromListByName(allVNRegions,
@@ -256,41 +273,64 @@ public class ImportExportEmployeeDTO implements Serializable {
 		tempRegion = getRegionFromListByName(allVNRegions,
 				getCityFromTemporaryAddress());
 
-		contactNumber = getCellValueAsString(r.getCell(26));
-		String srcEmailAddress = getCellValueAsString(r.getCell(27));
+		contactNumber = getCellValueAsString(r.getCell(27));
+		String srcEmailAddress = getCellValueAsString(r.getCell(28));
 		emailAddress = srcEmailAddress;
-		companyEmailAddress = getCellValueAsString(r.getCell(28));
-		taxCode = getCellValueAsString(r.getCell(29));
-		numberOfDependents = getConvertedIntegerCell(r.getCell(30));
-		dependentNames = getCellValueAsString(r.getCell(31));
-		insurranceCode = getCellValueAsString(r.getCell(32));
-		healthInsurranceCode = getCellValueAsString(r.getCell(33));
+		companyEmailAddress = getCellValueAsString(r.getCell(29));
+		taxCode = getCellValueAsString(r.getCell(30));
+		numberOfDependents = getConvertedIntegerCell(r.getCell(31));
+		dependentNames = getCellValueAsString(r.getCell(32));
+		insurranceCode = getCellValueAsString(r.getCell(33));
+		healthInsurranceCode = getCellValueAsString(r.getCell(34));
 
-		bankNo = getCellValueAsString(r.getCell(34));
-		bankBranchName = getCellValueAsString(r.getCell(35));
+		bankNo1 = getCellValueAsString(r.getCell(35));
+		bankName1 = getCellValueAsString(r.getCell(36));
+		bankBranchName1 = getCellValueAsString(r.getCell(37));
+
+		bankNo2 = getCellValueAsString(r.getCell(38));
+		bankName2 = getCellValueAsString(r.getCell(39));
+		bankBranchName2 = getCellValueAsString(r.getCell(40));
+
+		bankNo3 = getCellValueAsString(r.getCell(41));
+		bankName3 = getCellValueAsString(r.getCell(42));
+		bankBranchName3 = getCellValueAsString(r.getCell(43));
+	}
+
+	private int getLaborContractSignedTime(Cell cell) {
+		if (cell == null)
+			return 0;
+		final String s = cell.getStringCellValue();
+		return Integer.parseInt(s.split(" ")[1]);
 	}
 
 	public Emp createPrePersistedEmployee() {
 		return EmpLocalServiceUtil.createEmployee(employeeCode, titlesId,
 				levelId, promotedDate, joinedDate, laborContractSignedDate,
-				laborContractExpiredDate, laborContractType, dob, gender, pob,
-				education, educationSpecialize, universityId, marritalStatus,
+				laborContractExpiredDate, laborContractType,
+				laborContractSignedTime, dob, gender, pob, education,
+				educationSpecialize, universityId, marritalStatus,
 				identityCardNo, issuedDate, issuedPlace, contactNumber,
 				companyEmailAddress, taxCode, numberOfDependents,
-				dependentNames, insurranceCode, healthInsurranceCode, bankNo,
-				bankBranchName);
+				dependentNames, insurranceCode, healthInsurranceCode);
 	}
 
 	public Emp updateExistedEmployee(Emp emp) {
 		return EmpLocalServiceUtil.updateExistedEmployee(emp, employeeCode,
 				titlesId, levelId, promotedDate, joinedDate,
 				laborContractSignedDate, laborContractExpiredDate,
-				laborContractType, dob, gender, pob, education,
-				educationSpecialize, universityId, marritalStatus,
+				laborContractType, laborContractSignedTime, dob, gender, pob,
+				education, educationSpecialize, universityId, marritalStatus,
 				identityCardNo, issuedDate, issuedPlace, contactNumber,
 				companyEmailAddress, taxCode, numberOfDependents,
-				dependentNames, insurranceCode, healthInsurranceCode, bankNo,
-				bankBranchName);
+				dependentNames, insurranceCode, healthInsurranceCode);
+	}
+	
+	private boolean isNotNullCell(Cell cell) {
+		if (cell == null)
+			return false;
+		Cell cell1 = cell;
+		cell1.setCellType(1);
+		return StringUtils.trimToNull(cell1.getStringCellValue()) != null;
 	}
 
 	/**
@@ -752,20 +792,84 @@ public class ImportExportEmployeeDTO implements Serializable {
 		this.insurranceCode = insurranceCode;
 	}
 
-	public String getBankNo() {
-		return bankNo;
+	public int getLaborContractSignedTime() {
+		return laborContractSignedTime;
 	}
 
-	public void setBankNo(String bankNo) {
-		this.bankNo = bankNo;
+	public void setLaborContractSignedTime(int laborContractSignedTime) {
+		this.laborContractSignedTime = laborContractSignedTime;
 	}
 
-	public String getBankBranchName() {
-		return bankBranchName;
+	public String getBankNo1() {
+		return bankNo1;
 	}
 
-	public void setBankBranchName(String bankBranchName) {
-		this.bankBranchName = bankBranchName;
+	public void setBankNo1(String bankNo1) {
+		this.bankNo1 = bankNo1;
+	}
+
+	public String getBankName1() {
+		return bankName1;
+	}
+
+	public void setBankName1(String bankName1) {
+		this.bankName1 = bankName1;
+	}
+
+	public String getBankBranchName1() {
+		return bankBranchName1;
+	}
+
+	public void setBankBranchName1(String bankBranchName1) {
+		this.bankBranchName1 = bankBranchName1;
+	}
+
+	public String getBankNo2() {
+		return bankNo2;
+	}
+
+	public void setBankNo2(String bankNo2) {
+		this.bankNo2 = bankNo2;
+	}
+
+	public String getBankName2() {
+		return bankName2;
+	}
+
+	public void setBankName2(String bankName2) {
+		this.bankName2 = bankName2;
+	}
+
+	public String getBankBranchName2() {
+		return bankBranchName2;
+	}
+
+	public void setBankBranchName2(String bankBranchName2) {
+		this.bankBranchName2 = bankBranchName2;
+	}
+
+	public String getBankNo3() {
+		return bankNo3;
+	}
+
+	public void setBankNo3(String bankNo3) {
+		this.bankNo3 = bankNo3;
+	}
+
+	public String getBankName3() {
+		return bankName3;
+	}
+
+	public void setBankName3(String bankName3) {
+		this.bankName3 = bankName3;
+	}
+
+	public String getBankBranchName3() {
+		return bankBranchName3;
+	}
+
+	public void setBankBranchName3(String bankBranchName3) {
+		this.bankBranchName3 = bankBranchName3;
 	}
 
 	public ServiceContext getServiceContext() {
@@ -898,6 +1002,29 @@ public class ImportExportEmployeeDTO implements Serializable {
 		}
 
 		return addresses;
+	}
+
+	public List<EmpBankInfo> getEmpBankInfos() {
+		final List<EmpBankInfo> empBankInfos = new ArrayList<>();
+
+		if (!StringUtils.EMPTY.equalsIgnoreCase(bankNo1)) {
+			empBankInfos.add(EmpBankInfoLocalServiceUtil
+					.createPrePersistedEntity(0L, bankNo1, bankName1,
+							bankBranchName1));
+		}
+
+		if (!StringUtils.EMPTY.equalsIgnoreCase(bankNo2)) {
+			empBankInfos.add(EmpBankInfoLocalServiceUtil
+					.createPrePersistedEntity(0L, bankNo2, bankName2,
+							bankBranchName2));
+		}
+
+		if (!StringUtils.EMPTY.equalsIgnoreCase(bankNo3)) {
+			empBankInfos.add(EmpBankInfoLocalServiceUtil
+					.createPrePersistedEntity(0L, bankNo3, bankName3,
+							bankBranchName3));
+		}
+		return empBankInfos;
 	}
 
 	public String getImportFailedException() {

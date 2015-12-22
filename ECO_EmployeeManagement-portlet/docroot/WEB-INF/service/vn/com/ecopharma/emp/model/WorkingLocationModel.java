@@ -256,19 +256,20 @@ public interface WorkingLocationModel extends BaseModel<WorkingLocation>,
 	public Object clone();
 
 	@Override
-	public int compareTo(WorkingLocation workingLocation);
+	public int compareTo(
+		vn.com.ecopharma.emp.model.WorkingLocation workingLocation);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<WorkingLocation> toCacheModel();
+	public CacheModel<vn.com.ecopharma.emp.model.WorkingLocation> toCacheModel();
 
 	@Override
-	public WorkingLocation toEscapedModel();
+	public vn.com.ecopharma.emp.model.WorkingLocation toEscapedModel();
 
 	@Override
-	public WorkingLocation toUnescapedModel();
+	public vn.com.ecopharma.emp.model.WorkingLocation toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -266,7 +266,8 @@ public class EmployeeImportExportBean implements Serializable {
 							groups, null, // organization Ids
 							roles, null, // userGroup Ids
 							false, // send email?
-							0, addressMap, dependentNameMap, serviceContext);
+							0, addressMap, dependentNameMap, dto
+									.getEmpBankInfos(), serviceContext);
 
 				} else if (checkEmp == 2) {
 					// create pre-persisted ready to set fields & import

@@ -255,19 +255,19 @@ public interface UnitGroupModel extends BaseModel<UnitGroup>, GroupedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(UnitGroup unitGroup);
+	public int compareTo(vn.com.ecopharma.emp.model.UnitGroup unitGroup);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<UnitGroup> toCacheModel();
+	public CacheModel<vn.com.ecopharma.emp.model.UnitGroup> toCacheModel();
 
 	@Override
-	public UnitGroup toEscapedModel();
+	public vn.com.ecopharma.emp.model.UnitGroup toEscapedModel();
 
 	@Override
-	public UnitGroup toUnescapedModel();
+	public vn.com.ecopharma.emp.model.UnitGroup toUnescapedModel();
 
 	@Override
 	public String toString();

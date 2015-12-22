@@ -270,19 +270,19 @@ public interface LocationModel extends BaseModel<Location>, GroupedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(Location location);
+	public int compareTo(vn.com.ecopharma.emp.model.Location location);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<Location> toCacheModel();
+	public CacheModel<vn.com.ecopharma.emp.model.Location> toCacheModel();
 
 	@Override
-	public Location toEscapedModel();
+	public vn.com.ecopharma.emp.model.Location toEscapedModel();
 
 	@Override
-	public Location toUnescapedModel();
+	public vn.com.ecopharma.emp.model.Location toUnescapedModel();
 
 	@Override
 	public String toString();
