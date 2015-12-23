@@ -263,6 +263,9 @@ public interface EmpBankInfoLocalService extends BaseLocalService,
 
 	public java.util.List<vn.com.ecopharma.emp.model.EmpBankInfo> findAll();
 
+	public java.util.List<vn.com.ecopharma.emp.model.EmpBankInfo> findByEmp(
+		long empId);
+
 	public vn.com.ecopharma.emp.model.EmpBankInfo createPrePersistedEntity(
 		long empId, java.lang.String bankAccountNo, java.lang.String bankName,
 		java.lang.String branchName);

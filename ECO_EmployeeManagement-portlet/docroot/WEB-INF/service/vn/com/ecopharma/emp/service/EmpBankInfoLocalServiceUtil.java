@@ -290,6 +290,11 @@ public class EmpBankInfoLocalServiceUtil {
 		return getService().findAll();
 	}
 
+	public static java.util.List<vn.com.ecopharma.emp.model.EmpBankInfo> findByEmp(
+		long empId) {
+		return getService().findByEmp(empId);
+	}
+
 	public static vn.com.ecopharma.emp.model.EmpBankInfo createPrePersistedEntity(
 		long empId, java.lang.String bankAccountNo, java.lang.String bankName,
 		java.lang.String branchName) {

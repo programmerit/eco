@@ -316,6 +316,12 @@ public class TitlesLocalServiceWrapper implements TitlesLocalService,
 	}
 
 	@Override
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitAndNullUnitGroup(
+		long unitId) {
+		return _titlesLocalService.findByUnitAndNullUnitGroup(unitId);
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.Titles findByNameAndUnit(
 		java.lang.String name, long unitId) {
 		return _titlesLocalService.findByNameAndUnit(name, unitId);

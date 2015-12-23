@@ -269,6 +269,9 @@ public interface TitlesLocalService extends BaseLocalService,
 	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnit(
 		long unitId);
 
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitAndNullUnitGroup(
+		long unitId);
+
 	public vn.com.ecopharma.emp.model.Titles findByNameAndUnit(
 		java.lang.String name, long unitId);
 

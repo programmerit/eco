@@ -2,6 +2,7 @@ package vn.com.ecopharma.emp.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import vn.com.ecopharma.emp.enumeration.CertificateType;
@@ -65,8 +66,10 @@ public class EmpInfoItem implements Serializable {
 
 	private List<DependentName> dependentNames;
 
+	private List<BankInfoObject> bankInfos;
+
 	public EmpInfoItem(Emp employee) {
-		
+
 		this.employee = employee;
 		LiferayFacesContext liferayFacesContext = LiferayFacesContext
 				.getInstance();
@@ -88,6 +91,8 @@ public class EmpInfoItem implements Serializable {
 				.findByClassNameClassPKAndType(Emp.class.getName(),
 						employee.getEmpId(),
 						CertificateType.VOCATIONAL.toString());
+		bankInfos = EmployeeUtils
+				.getBankInfoObjectsFromEmp(employee.getEmpId());
 
 		try {
 			titles = TitlesLocalServiceUtil.getTitles(employee.getTitlesId());
@@ -135,6 +140,9 @@ public class EmpInfoItem implements Serializable {
 			this.dependentNames = new ArrayList<>();
 			this.majorCertificates = new ArrayList<>();
 			this.vocationalCertificates = new ArrayList<>();
+			this.bankInfos = new ArrayList<>(
+					Arrays.asList(new BankInfoObject()));
+
 		} catch (SystemException e) {
 			EmployeeUtils.writeDebugLog(EmpInfoItem.class, e);
 		}
@@ -331,6 +339,14 @@ public class EmpInfoItem implements Serializable {
 			return null;
 		}
 		return majorCertificates.get(0);
+	}
+
+	public List<BankInfoObject> getBankInfos() {
+		return bankInfos;
+	}
+
+	public void setBankInfos(List<BankInfoObject> bankInfos) {
+		this.bankInfos = bankInfos;
 	}
 
 	public String getLocalizedLaborContractType(String laborContractType) {

@@ -112,6 +112,15 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 		return new ArrayList<>();
 	}
 
+	public List<Titles> findByUnitAndNullUnitGroup(long unitId) {
+		try {
+			return titlesPersistence.findByUnitAndUnitGroup(unitId, 0);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<>();
+	}
+
 	@Override
 	public Titles findByNameAndUnit(String name, long unitId) {
 		try {
@@ -180,19 +189,22 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 			Unit unit, UnitGroup unitGroup) {
 		List<Titles> titlesList = null;
 		try {
-			if (department != null) {
-				if (unitGroup != null) {
-					titlesList = titlesPersistence.findByUnitGroup(unitGroup
-							.getUnitGroupId());
-
-				} else if (unit != null) {
-					titlesList = titlesPersistence.findByUnit(unit.getUnitId());
-				} else {
-					titlesList = titlesPersistence.findByDepartment(department
-							.getDepartmentId());
-				}
-			}
-			return titlesList;
+//			if (department != null) {
+//				if (unitGroup != null) {
+//					titlesList = titlesPersistence.findByUnitGroup(unitGroup
+//							.getUnitGroupId());
+//
+//				} else if (unit != null) {
+//					titlesList = titlesPersistence.findByUnit(unit.getUnitId());
+//				} else {
+//					titlesList = titlesPersistence.findByDepartment(department
+//							.getDepartmentId());
+//				}
+//			}
+			long departmentId = department != null ? department.getDepartmentId() : 0L;
+			long unitId = unit != null ? unit.getUnitId() : 0L;
+			long unitGroupId = unitGroup != null ? unitGroup.getUnitGroupId() : 0L;
+			return titlesPersistence.findByUnitGroupUnitDepartment(unitGroupId, unitId, departmentId);
 		} catch (SystemException e) {
 			LogFactoryUtil.getLog(TitlesLocalServiceImpl.class).info(e);
 		}

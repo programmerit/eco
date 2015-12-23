@@ -295,7 +295,7 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		boolean sendEmail, long empUserId,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addresses,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
-		java.util.List<vn.com.ecopharma.emp.model.EmpBankInfo> bankInfos,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -313,6 +313,7 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		com.liferay.portal.model.User user, long oldTitlesId,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
 		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext);
 

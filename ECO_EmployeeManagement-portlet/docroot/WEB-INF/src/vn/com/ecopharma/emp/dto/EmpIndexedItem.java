@@ -9,13 +9,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
-import vn.com.ecopharma.emp.model.Emp;
-import vn.com.ecopharma.emp.util.EmployeeUtils;
 
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.model.ResourcePermission;
-import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 
 public class EmpIndexedItem implements Serializable {
 
@@ -28,20 +24,6 @@ public class EmpIndexedItem implements Serializable {
 
 	public EmpIndexedItem(Document employeeDocument) {
 		this.employeeDocument = employeeDocument;
-
-		// ResourcePermissionLocalServiceUtil.getAvailableResourcePermissionActionIds(EmployeeUtils.getCompanyId(),
-		// Emp.class.getName(), 4, getEmployeeId(), roleId, actionIds)
-		try {
-			for (ResourcePermission resourcePermission : ResourcePermissionLocalServiceUtil
-					.getResourcePermissions(EmployeeUtils.getCompanyId(),
-							Emp.class.getName(), 4,
-							String.valueOf(getEmployeeId()))) {
-				System.out.println(resourcePermission.getName());
-				System.out.println(resourcePermission.getActionIds());
-			}
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public Document getEmployeeDocument() {
@@ -64,7 +46,7 @@ public class EmpIndexedItem implements Serializable {
 							EmpField.JOINED_DATE).getValue()))
 					: StringUtils.EMPTY;
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpIndexedItem.class).info(e);
 		}
 		return StringUtils.EMPTY;
 	}
@@ -78,7 +60,7 @@ public class EmpIndexedItem implements Serializable {
 			return sdf.parse(employeeDocument.getField(EmpField.JOINED_DATE)
 					.getValue());
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpIndexedItem.class).info(e);
 		}
 		return null;
 	}
@@ -113,7 +95,7 @@ public class EmpIndexedItem implements Serializable {
 					.parse(employeeDocument.getField(EmpField.BIRTHDAY)
 							.getValue()) : null;
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpIndexedItem.class).info(e);
 		}
 		return null;
 	}
@@ -186,7 +168,7 @@ public class EmpIndexedItem implements Serializable {
 					.parse(employeeDocument.getField(EmpField.PROMOTED_DATE)
 							.getValue()) : null;
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpIndexedItem.class).info(e);
 		}
 		return null;
 	}
@@ -207,7 +189,7 @@ public class EmpIndexedItem implements Serializable {
 				return sdf.parse(employeeDocument.getField(
 						EmpField.LABOR_CONTRACT_SIGNED_DATE).getValue());
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpIndexedItem.class).info(e);
 		}
 		return null;
 	}
@@ -228,7 +210,7 @@ public class EmpIndexedItem implements Serializable {
 				return sdf.parse(employeeDocument.getField(
 						EmpField.LABOR_CONTRACT_EXPIRED_DATE).getValue());
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpIndexedItem.class).info(e);
 		}
 		return null;
 	}
@@ -242,31 +224,31 @@ public class EmpIndexedItem implements Serializable {
 	}
 
 	public String getLaborContractType() {
-		return checkNullFieldAndReturnEMPTY(EmpField.LABOR_CONTRACT_TYPE);
+		return checkNullFieldAndReturnEmpty(EmpField.LABOR_CONTRACT_TYPE);
 	}
 
 	public String getGender() {
-		return checkNullFieldAndReturnEMPTY(EmpField.GENDER);
+		return checkNullFieldAndReturnEmpty(EmpField.GENDER);
 	}
 
 	public String getPlaceOfBirth() {
-		return checkNullFieldAndReturnEMPTY(EmpField.PLACE_OF_BIRTH);
+		return checkNullFieldAndReturnEmpty(EmpField.PLACE_OF_BIRTH);
 	}
 
 	public String getEducation() {
-		return checkNullFieldAndReturnEMPTY(EmpField.EDUCATION);
+		return checkNullFieldAndReturnEmpty(EmpField.EDUCATION);
 	}
 
 	public String getEducationSpecialize() {
-		return checkNullFieldAndReturnEMPTY(EmpField.EDUCATION_SPECIALIZE);
+		return checkNullFieldAndReturnEmpty(EmpField.EDUCATION_SPECIALIZE);
 	}
 
 	public String getMaritalStatus() {
-		return checkNullFieldAndReturnEMPTY(EmpField.MARITAL_STATUS);
+		return checkNullFieldAndReturnEmpty(EmpField.MARITAL_STATUS);
 	}
 
 	public String getIdentityCardNo() {
-		return checkNullFieldAndReturnEMPTY(EmpField.IDENTITY_CARD_NO);
+		return checkNullFieldAndReturnEmpty(EmpField.IDENTITY_CARD_NO);
 	}
 
 	public Date getIssuedDate() {
@@ -277,21 +259,21 @@ public class EmpIndexedItem implements Serializable {
 					.parse(employeeDocument.getField(EmpField.ISSUED_DATE)
 							.getValue()) : null;
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpIndexedItem.class).info(e);
 		}
 		return null;
 	}
 
 	public String getIssuedPlace() {
-		return checkNullFieldAndReturnEMPTY(EmpField.ISSUED_PLACE);
+		return checkNullFieldAndReturnEmpty(EmpField.ISSUED_PLACE);
 	}
 
 	public String getCompanyEmail() {
-		return checkNullFieldAndReturnEMPTY(EmpField.COMPANY_EMAIL_ADDRESS);
+		return checkNullFieldAndReturnEmpty(EmpField.COMPANY_EMAIL_ADDRESS);
 	}
 
 	public String getPersonalTaxCode() {
-		return checkNullFieldAndReturnEMPTY(EmpField.TAX_CODE);
+		return checkNullFieldAndReturnEmpty(EmpField.TAX_CODE);
 	}
 
 	public int getNumberOfDependents() {
@@ -300,23 +282,23 @@ public class EmpIndexedItem implements Serializable {
 	}
 
 	public String getDependentNames() {
-		return checkNullFieldAndReturnEMPTY(EmpField.DEPENDENT_NAMES);
+		return checkNullFieldAndReturnEmpty(EmpField.DEPENDENT_NAMES);
 	}
 
 	public String getSocialInsuranceNo() {
-		return checkNullFieldAndReturnEMPTY(EmpField.SOCIAL_INSURANCE_NO);
+		return checkNullFieldAndReturnEmpty(EmpField.SOCIAL_INSURANCE_NO);
 	}
 
 	public String getHealthInsuranceNo() {
-		return checkNullFieldAndReturnEMPTY(EmpField.HEALTH_INSURANCE_NO);
+		return checkNullFieldAndReturnEmpty(EmpField.HEALTH_INSURANCE_NO);
 	}
 
 	public String getBankAccountNo() {
-		return checkNullFieldAndReturnEMPTY(EmpField.BANK_ACCOUNT_NO);
+		return checkNullFieldAndReturnEmpty(EmpField.BANK_ACCOUNT_NO);
 	}
 
 	public String getBankBranchName() {
-		return checkNullFieldAndReturnEMPTY(EmpField.BANK_BRANCH_NAME);
+		return checkNullFieldAndReturnEmpty(EmpField.BANK_BRANCH_NAME);
 	}
 
 	public double getBaseWageRates() {
@@ -352,7 +334,7 @@ public class EmpIndexedItem implements Serializable {
 					.parse(employeeDocument.getField(EmpField.RESIGNED_DATE)
 							.getValue()) : null;
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpIndexedItem.class).info(e);
 		}
 		return null;
 	}
@@ -372,10 +354,10 @@ public class EmpIndexedItem implements Serializable {
 	}
 
 	public String getCompanyEmailAddress() {
-		return checkNullFieldAndReturnEMPTY(EmpField.COMPANY_EMAIL_ADDRESS);
+		return checkNullFieldAndReturnEmpty(EmpField.COMPANY_EMAIL_ADDRESS);
 	}
 
-	private String checkNullFieldAndReturnEMPTY(String EmpField) {
+	private String checkNullFieldAndReturnEmpty(String EmpField) {
 		return employeeDocument.getField(EmpField) != null ? employeeDocument
 				.getField(EmpField).getValue() : StringUtils.EMPTY;
 	}

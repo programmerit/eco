@@ -1080,6 +1080,586 @@ public class TitlesUtil {
 	}
 
 	/**
+	* Returns all the titleses where unitId = &#63; and unitGroupId = &#63;.
+	*
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @return the matching titleses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitAndUnitGroup(
+		long unitId, long unitGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByUnitAndUnitGroup(unitId, unitGroupId);
+	}
+
+	/**
+	* Returns a range of all the titleses where unitId = &#63; and unitGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.TitlesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @param start the lower bound of the range of titleses
+	* @param end the upper bound of the range of titleses (not inclusive)
+	* @return the range of matching titleses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitAndUnitGroup(
+		long unitId, long unitGroupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByUnitAndUnitGroup(unitId, unitGroupId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the titleses where unitId = &#63; and unitGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.TitlesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @param start the lower bound of the range of titleses
+	* @param end the upper bound of the range of titleses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching titleses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitAndUnitGroup(
+		long unitId, long unitGroupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByUnitAndUnitGroup(unitId, unitGroupId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first titles in the ordered set where unitId = &#63; and unitGroupId = &#63;.
+	*
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching titles
+	* @throws vn.com.ecopharma.emp.NoSuchTitlesException if a matching titles could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.Titles findByUnitAndUnitGroup_First(
+		long unitId, long unitGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.emp.NoSuchTitlesException {
+		return getPersistence()
+				   .findByUnitAndUnitGroup_First(unitId, unitGroupId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first titles in the ordered set where unitId = &#63; and unitGroupId = &#63;.
+	*
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching titles, or <code>null</code> if a matching titles could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.Titles fetchByUnitAndUnitGroup_First(
+		long unitId, long unitGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByUnitAndUnitGroup_First(unitId, unitGroupId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last titles in the ordered set where unitId = &#63; and unitGroupId = &#63;.
+	*
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching titles
+	* @throws vn.com.ecopharma.emp.NoSuchTitlesException if a matching titles could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.Titles findByUnitAndUnitGroup_Last(
+		long unitId, long unitGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.emp.NoSuchTitlesException {
+		return getPersistence()
+				   .findByUnitAndUnitGroup_Last(unitId, unitGroupId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last titles in the ordered set where unitId = &#63; and unitGroupId = &#63;.
+	*
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching titles, or <code>null</code> if a matching titles could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.Titles fetchByUnitAndUnitGroup_Last(
+		long unitId, long unitGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByUnitAndUnitGroup_Last(unitId, unitGroupId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the titleses before and after the current titles in the ordered set where unitId = &#63; and unitGroupId = &#63;.
+	*
+	* @param titlesId the primary key of the current titles
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next titles
+	* @throws vn.com.ecopharma.emp.NoSuchTitlesException if a titles with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.Titles[] findByUnitAndUnitGroup_PrevAndNext(
+		long titlesId, long unitId, long unitGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.emp.NoSuchTitlesException {
+		return getPersistence()
+				   .findByUnitAndUnitGroup_PrevAndNext(titlesId, unitId,
+			unitGroupId, orderByComparator);
+	}
+
+	/**
+	* Removes all the titleses where unitId = &#63; and unitGroupId = &#63; from the database.
+	*
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByUnitAndUnitGroup(long unitId, long unitGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByUnitAndUnitGroup(unitId, unitGroupId);
+	}
+
+	/**
+	* Returns the number of titleses where unitId = &#63; and unitGroupId = &#63;.
+	*
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @return the number of matching titleses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUnitAndUnitGroup(long unitId, long unitGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUnitAndUnitGroup(unitId, unitGroupId);
+	}
+
+	/**
+	* Returns all the titleses where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63;.
+	*
+	* @param departmentId the department ID
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @return the matching titleses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartmentUnitAndUnitGroup(
+		long departmentId, long unitId, long unitGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByDepartmentUnitAndUnitGroup(departmentId, unitId,
+			unitGroupId);
+	}
+
+	/**
+	* Returns a range of all the titleses where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.TitlesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param departmentId the department ID
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @param start the lower bound of the range of titleses
+	* @param end the upper bound of the range of titleses (not inclusive)
+	* @return the range of matching titleses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartmentUnitAndUnitGroup(
+		long departmentId, long unitId, long unitGroupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByDepartmentUnitAndUnitGroup(departmentId, unitId,
+			unitGroupId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the titleses where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.TitlesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param departmentId the department ID
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @param start the lower bound of the range of titleses
+	* @param end the upper bound of the range of titleses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching titleses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartmentUnitAndUnitGroup(
+		long departmentId, long unitId, long unitGroupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByDepartmentUnitAndUnitGroup(departmentId, unitId,
+			unitGroupId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first titles in the ordered set where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63;.
+	*
+	* @param departmentId the department ID
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching titles
+	* @throws vn.com.ecopharma.emp.NoSuchTitlesException if a matching titles could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.Titles findByDepartmentUnitAndUnitGroup_First(
+		long departmentId, long unitId, long unitGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.emp.NoSuchTitlesException {
+		return getPersistence()
+				   .findByDepartmentUnitAndUnitGroup_First(departmentId,
+			unitId, unitGroupId, orderByComparator);
+	}
+
+	/**
+	* Returns the first titles in the ordered set where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63;.
+	*
+	* @param departmentId the department ID
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching titles, or <code>null</code> if a matching titles could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.Titles fetchByDepartmentUnitAndUnitGroup_First(
+		long departmentId, long unitId, long unitGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByDepartmentUnitAndUnitGroup_First(departmentId,
+			unitId, unitGroupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last titles in the ordered set where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63;.
+	*
+	* @param departmentId the department ID
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching titles
+	* @throws vn.com.ecopharma.emp.NoSuchTitlesException if a matching titles could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.Titles findByDepartmentUnitAndUnitGroup_Last(
+		long departmentId, long unitId, long unitGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.emp.NoSuchTitlesException {
+		return getPersistence()
+				   .findByDepartmentUnitAndUnitGroup_Last(departmentId, unitId,
+			unitGroupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last titles in the ordered set where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63;.
+	*
+	* @param departmentId the department ID
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching titles, or <code>null</code> if a matching titles could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.Titles fetchByDepartmentUnitAndUnitGroup_Last(
+		long departmentId, long unitId, long unitGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByDepartmentUnitAndUnitGroup_Last(departmentId,
+			unitId, unitGroupId, orderByComparator);
+	}
+
+	/**
+	* Returns the titleses before and after the current titles in the ordered set where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63;.
+	*
+	* @param titlesId the primary key of the current titles
+	* @param departmentId the department ID
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next titles
+	* @throws vn.com.ecopharma.emp.NoSuchTitlesException if a titles with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.Titles[] findByDepartmentUnitAndUnitGroup_PrevAndNext(
+		long titlesId, long departmentId, long unitId, long unitGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.emp.NoSuchTitlesException {
+		return getPersistence()
+				   .findByDepartmentUnitAndUnitGroup_PrevAndNext(titlesId,
+			departmentId, unitId, unitGroupId, orderByComparator);
+	}
+
+	/**
+	* Removes all the titleses where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63; from the database.
+	*
+	* @param departmentId the department ID
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByDepartmentUnitAndUnitGroup(long departmentId,
+		long unitId, long unitGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence()
+			.removeByDepartmentUnitAndUnitGroup(departmentId, unitId,
+			unitGroupId);
+	}
+
+	/**
+	* Returns the number of titleses where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63;.
+	*
+	* @param departmentId the department ID
+	* @param unitId the unit ID
+	* @param unitGroupId the unit group ID
+	* @return the number of matching titleses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByDepartmentUnitAndUnitGroup(long departmentId,
+		long unitId, long unitGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countByDepartmentUnitAndUnitGroup(departmentId, unitId,
+			unitGroupId);
+	}
+
+	/**
+	* Returns all the titleses where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63;.
+	*
+	* @param unitGroupId the unit group ID
+	* @param unitId the unit ID
+	* @param departmentId the department ID
+	* @return the matching titleses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitGroupUnitDepartment(
+		long unitGroupId, long unitId, long departmentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByUnitGroupUnitDepartment(unitGroupId, unitId,
+			departmentId);
+	}
+
+	/**
+	* Returns a range of all the titleses where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.TitlesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param unitGroupId the unit group ID
+	* @param unitId the unit ID
+	* @param departmentId the department ID
+	* @param start the lower bound of the range of titleses
+	* @param end the upper bound of the range of titleses (not inclusive)
+	* @return the range of matching titleses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitGroupUnitDepartment(
+		long unitGroupId, long unitId, long departmentId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByUnitGroupUnitDepartment(unitGroupId, unitId,
+			departmentId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the titleses where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.TitlesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param unitGroupId the unit group ID
+	* @param unitId the unit ID
+	* @param departmentId the department ID
+	* @param start the lower bound of the range of titleses
+	* @param end the upper bound of the range of titleses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching titleses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitGroupUnitDepartment(
+		long unitGroupId, long unitId, long departmentId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByUnitGroupUnitDepartment(unitGroupId, unitId,
+			departmentId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first titles in the ordered set where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63;.
+	*
+	* @param unitGroupId the unit group ID
+	* @param unitId the unit ID
+	* @param departmentId the department ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching titles
+	* @throws vn.com.ecopharma.emp.NoSuchTitlesException if a matching titles could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.Titles findByUnitGroupUnitDepartment_First(
+		long unitGroupId, long unitId, long departmentId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.emp.NoSuchTitlesException {
+		return getPersistence()
+				   .findByUnitGroupUnitDepartment_First(unitGroupId, unitId,
+			departmentId, orderByComparator);
+	}
+
+	/**
+	* Returns the first titles in the ordered set where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63;.
+	*
+	* @param unitGroupId the unit group ID
+	* @param unitId the unit ID
+	* @param departmentId the department ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching titles, or <code>null</code> if a matching titles could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.Titles fetchByUnitGroupUnitDepartment_First(
+		long unitGroupId, long unitId, long departmentId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByUnitGroupUnitDepartment_First(unitGroupId, unitId,
+			departmentId, orderByComparator);
+	}
+
+	/**
+	* Returns the last titles in the ordered set where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63;.
+	*
+	* @param unitGroupId the unit group ID
+	* @param unitId the unit ID
+	* @param departmentId the department ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching titles
+	* @throws vn.com.ecopharma.emp.NoSuchTitlesException if a matching titles could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.Titles findByUnitGroupUnitDepartment_Last(
+		long unitGroupId, long unitId, long departmentId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.emp.NoSuchTitlesException {
+		return getPersistence()
+				   .findByUnitGroupUnitDepartment_Last(unitGroupId, unitId,
+			departmentId, orderByComparator);
+	}
+
+	/**
+	* Returns the last titles in the ordered set where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63;.
+	*
+	* @param unitGroupId the unit group ID
+	* @param unitId the unit ID
+	* @param departmentId the department ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching titles, or <code>null</code> if a matching titles could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.Titles fetchByUnitGroupUnitDepartment_Last(
+		long unitGroupId, long unitId, long departmentId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByUnitGroupUnitDepartment_Last(unitGroupId, unitId,
+			departmentId, orderByComparator);
+	}
+
+	/**
+	* Returns the titleses before and after the current titles in the ordered set where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63;.
+	*
+	* @param titlesId the primary key of the current titles
+	* @param unitGroupId the unit group ID
+	* @param unitId the unit ID
+	* @param departmentId the department ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next titles
+	* @throws vn.com.ecopharma.emp.NoSuchTitlesException if a titles with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.Titles[] findByUnitGroupUnitDepartment_PrevAndNext(
+		long titlesId, long unitGroupId, long unitId, long departmentId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.emp.NoSuchTitlesException {
+		return getPersistence()
+				   .findByUnitGroupUnitDepartment_PrevAndNext(titlesId,
+			unitGroupId, unitId, departmentId, orderByComparator);
+	}
+
+	/**
+	* Removes all the titleses where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63; from the database.
+	*
+	* @param unitGroupId the unit group ID
+	* @param unitId the unit ID
+	* @param departmentId the department ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByUnitGroupUnitDepartment(long unitGroupId,
+		long unitId, long departmentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence()
+			.removeByUnitGroupUnitDepartment(unitGroupId, unitId, departmentId);
+	}
+
+	/**
+	* Returns the number of titleses where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63;.
+	*
+	* @param unitGroupId the unit group ID
+	* @param unitId the unit ID
+	* @param departmentId the department ID
+	* @return the number of matching titleses
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUnitGroupUnitDepartment(long unitGroupId,
+		long unitId, long departmentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countByUnitGroupUnitDepartment(unitGroupId, unitId,
+			departmentId);
+	}
+
+	/**
 	* Caches the titles in the entity cache if it is enabled.
 	*
 	* @param titles the titles

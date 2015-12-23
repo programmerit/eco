@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -50,6 +51,8 @@ public class ImportExportEmployeeDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final String DATE_STRING_CELL_FORMAT = "dd/MM/yyyy";
+
+	private static final String CONTRACT_EXPIRED_DATE_FORMAT = "M/d/yyyy";
 	private static final int STRING_CELL_TYPE = 1;
 
 	private static final String BLANK_UNIT = "(blank)";
@@ -152,7 +155,7 @@ public class ImportExportEmployeeDTO implements Serializable {
 		lastName = EmployeeUtils.getLastNameFromFullname(fullname);
 
 		LOGGER.info("============ " + fullname + " =============");
-		
+
 		String devisionName = getCellValueAsString(r.getCell(9));
 		LOGGER.info("============ Checking devision =============");
 		if (StringUtils.trimToNull(devisionName) != null) {
@@ -254,6 +257,7 @@ public class ImportExportEmployeeDTO implements Serializable {
 		education = getCellValueAsString(r.getCell(18));
 		educationSpecialize = getCellValueAsString(r.getCell(19));
 		universityId = r.getCell(20) != null
+				&& r.getCell(20).getCellType() == 1
 				&& StringUtils.trimToNull(r.getCell(19).getStringCellValue()) != null
 				&& UniversityLocalServiceUtil.findByName(r.getCell(19)
 						.getStringCellValue()) != null ? UniversityLocalServiceUtil
@@ -300,7 +304,8 @@ public class ImportExportEmployeeDTO implements Serializable {
 		if (cell == null)
 			return 0;
 		final String s = cell.getStringCellValue();
-		return Integer.parseInt(s.split(" ")[1]);
+		return StringUtils.trimToNull(s) != null ? Integer.parseInt(s
+				.split(" ")[1]) : 0;
 	}
 
 	public Emp createPrePersistedEmployee() {
@@ -324,13 +329,26 @@ public class ImportExportEmployeeDTO implements Serializable {
 				companyEmailAddress, taxCode, numberOfDependents,
 				dependentNames, insurranceCode, healthInsurranceCode);
 	}
-	
-	private boolean isNotNullCell(Cell cell) {
-		if (cell == null)
+
+	private Date getContractExpiredDate(Cell cell) {
+		cell.setCellType(1);
+		String dateString = cell.getStringCellValue();
+		try {
+			return new SimpleDateFormat(CONTRACT_EXPIRED_DATE_FORMAT)
+					.parse(dateString);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private static boolean isNotNullCell(Cell cell) {
+		if (cell == null || cell.getCellType() == 1)
 			return false;
-		Cell cell1 = cell;
-		cell1.setCellType(1);
-		return StringUtils.trimToNull(cell1.getStringCellValue()) != null;
+		// Cell cell1 = cell;
+		// cell1.setCellType(1);
+		// return StringUtils.trimToNull(cell1.getStringCellValue()) != null;
+		return true;
 	}
 
 	/**
@@ -354,6 +372,9 @@ public class ImportExportEmployeeDTO implements Serializable {
 		try {
 			existedUser = UserLocalServiceUtil.fetchUserByScreenName(
 					serviceContext.getCompanyId(), username);
+			LogFactoryUtil.getLog(ImportExportEmployeeDTO.class).info(
+					existedUser != null ? "screen name: "
+							+ existedUser.getScreenName() : "user null");
 			final Emp emp = existedUser != null ? EmpLocalServiceUtil
 					.findByUser(existedUser.getUserId()) : null;
 
@@ -367,6 +388,15 @@ public class ImportExportEmployeeDTO implements Serializable {
 								// EMPLOYEE, EMPLOYEE USER
 				}
 			} else {
+				if (existedUser != null)
+					LogFactoryUtil.getLog(ImportExportEmployeeDTO.class).info(
+							"user birthday: "
+									+ existedUser.getBirthday()
+									+ "\n checking emp birthday: "
+									+ birthday
+									+ "\n comparision result: "
+									+ existedUser.getBirthday()
+											.equals(birthday));
 				if (existedUser != null
 						&& existedUser.getBirthday().equals(birthday))
 					return 2;
@@ -537,12 +567,6 @@ public class ImportExportEmployeeDTO implements Serializable {
 	private static String getCellValueAsString(Cell cell) {
 		if (cell == null)
 			return StringUtils.EMPTY;
-
-		if (cell.getCellType() == STRING_CELL_TYPE) {
-			final String value = cell.getStringCellValue();
-			return StringUtils.trimToNull(value) != null ? value
-					: StringUtils.EMPTY;
-		}
 		cell.setCellType(STRING_CELL_TYPE);
 		return cell.getStringCellValue();
 	}
@@ -1025,6 +1049,11 @@ public class ImportExportEmployeeDTO implements Serializable {
 							bankBranchName3));
 		}
 		return empBankInfos;
+	}
+
+	public Map<EmpBankInfo, Boolean> getBankInfoMap() {
+		return EmployeeUtils
+				.transferEmpBankInfoListToBankInfoMap(getEmpBankInfos());
 	}
 
 	public String getImportFailedException() {

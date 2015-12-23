@@ -306,6 +306,12 @@ public class EmpBankInfoLocalServiceWrapper implements EmpBankInfoLocalService,
 	}
 
 	@Override
+	public java.util.List<vn.com.ecopharma.emp.model.EmpBankInfo> findByEmp(
+		long empId) {
+		return _empBankInfoLocalService.findByEmp(empId);
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.EmpBankInfo createPrePersistedEntity(
 		long empId, java.lang.String bankAccountNo, java.lang.String bankName,
 		java.lang.String branchName) {

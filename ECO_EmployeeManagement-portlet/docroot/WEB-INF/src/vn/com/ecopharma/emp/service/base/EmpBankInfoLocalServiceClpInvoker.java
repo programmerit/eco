@@ -128,16 +128,20 @@ public class EmpBankInfoLocalServiceClpInvoker {
 
 		_methodParameterTypes138 = new String[] {  };
 
-		_methodName139 = "createPrePersistedEntity";
+		_methodName139 = "findByEmp";
 
-		_methodParameterTypes139 = new String[] {
+		_methodParameterTypes139 = new String[] { "long" };
+
+		_methodName140 = "createPrePersistedEntity";
+
+		_methodParameterTypes140 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String"
 			};
 
-		_methodName140 = "addEmpBankInfo";
+		_methodName141 = "addEmpBankInfo";
 
-		_methodParameterTypes140 = new String[] {
+		_methodParameterTypes141 = new String[] {
 				"vn.com.ecopharma.emp.model.EmpBankInfo",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -264,13 +268,18 @@ public class EmpBankInfoLocalServiceClpInvoker {
 
 		if (_methodName139.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
+			return EmpBankInfoLocalServiceUtil.findByEmp(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName140.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
 			return EmpBankInfoLocalServiceUtil.createPrePersistedEntity(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3]);
 		}
 
-		if (_methodName140.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
+		if (_methodName141.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
 			return EmpBankInfoLocalServiceUtil.addEmpBankInfo((vn.com.ecopharma.emp.model.EmpBankInfo)arguments[0],
 				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
@@ -324,4 +333,6 @@ public class EmpBankInfoLocalServiceClpInvoker {
 	private String[] _methodParameterTypes139;
 	private String _methodName140;
 	private String[] _methodParameterTypes140;
+	private String _methodName141;
+	private String[] _methodParameterTypes141;
 }

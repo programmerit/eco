@@ -15,6 +15,10 @@
 			<p:remoteCommand name="refreshAddresses"
 				update=":modifyForm:accordion:addressesPanelGrid" />
 
+			<p:remoteCommand name="refreshBankInfos"
+				update=":bankInfoForm:bankInfosOutputPanel" />
+
+
 			<p:remoteCommand name="refreshDependentNames"
 				update=":modifyForm:accordion:dependentNamesPanelGrid" />
 
@@ -558,6 +562,34 @@
 							<p:tooltip for="healthInsurancePlace"
 								value="Health Insurance Place" showEffect="clip"
 								hideEffect="explode" />
+
+							<h:outputText value="Bank No" />
+							<p:inputText id="bankNo"
+								value="#{empView.modifyEmployeeInfoItem.bankInfos[0].bankNo}" />
+							<p:message for="bankNo" display="icon" />
+							<p:tooltip for="bankNo" value="Bank No" showEffect="clip"
+								hideEffect="explode" />
+
+							<h:outputText value="Bank Name" />
+							<p:inputText id="bankName"
+								value="#{empView.modifyEmployeeInfoItem.bankInfos[0].bankName}" />
+							<p:message for="bankName" display="icon" />
+							<p:tooltip for="bankName" value="Bank Name" showEffect="clip"
+								hideEffect="explode" />
+
+							<h:outputText value="Branch" />
+							<p:inputText id="bankBranch"
+								value="#{empView.modifyEmployeeInfoItem.bankInfos[0].bankBranchName}" />
+							<p:message for="bankBranch" display="icon" />
+							<p:tooltip for="bankBranch" value="Bank Branch" showEffect="clip"
+								hideEffect="explode" />
+
+							<h:outputText />
+							<p:commandLink value="View all bank info..."
+								onclick="PF('wBankInfoDialog').show()" />
+							<h:outputText />
+							<h:outputText />
+
 						</h:panelGrid>
 					</p:panelGrid>
 				</p:tab>
@@ -588,7 +620,6 @@
 				<p:tab id="emp_user" title="User Information"
 					rendered="#{empView.showUserTab}">
 					<h:panelGrid columns="3">
-
 						<h:outputText value="Username" />
 						<p:inputText id="username"
 							value="#{empView.modifyEmployeeInfoItem.userName}"
@@ -701,6 +732,52 @@
 				update=":modifyForm:accordion:levelSelect :growl" /> |  
 			<p:commandLink value="Cancel" onclick="PF('wLevelDialog').hide()" />
 		</p:dialog>
+
+		<h:form id="bankInfoForm">
+			<p:dialog widgetVar="wBankInfoDialog"
+				header="Bank Information Dialog" showHeader="false" modal="true"
+				height="500" draggable="true">
+				<p:outputPanel autoUpdate="true" id="bankInfosOutputPanel">
+					<h:panelGrid id="bankInfosPanelGrid">
+						<ui:repeat var="b" id="bankInfos"
+							value="#{empView.modifyEmployeeInfoItem.bankInfos}"
+							varStatus="status">
+							<h:panelGroup id="bankInfoItem">
+								<p:selectBooleanCheckbox value="#{b.UIDeleted}" />
+								<h:outputText value="Delete" />
+
+								<p:selectBooleanCheckbox value="#{b.UIDeleted}"
+									style="margin-left: 10px" />
+								<h:outputText value="Main" />
+
+								<p:panelGrid columns="2">
+									<h:outputText value="Bank No" />
+									<p:inputText id="bankNo" value="#{b.empBankInfo.bankAccountNo}" />
+
+									<h:outputText value="Bank Name" />
+									<p:inputText id="bankName" value="#{b.empBankInfo.bankName}" />
+
+									<h:outputText value="Branch" />
+									<p:inputText id="bankBranch" value="#{b.empBankInfo.branchName}" />
+
+								</p:panelGrid>
+							</h:panelGroup>
+						</ui:repeat>
+
+					</h:panelGrid>
+				</p:outputPanel>
+				<p:commandButton value="Save" styleClass="GreenButton RaisedButton"
+					actionListener="#{empView.onSaveBankInfoChanges}"
+					update=":modifyForm" oncomplete="PF('wBankInfoDialog').hide()" /> |
+					
+				<p:commandLink actionListener="#{empView.addOneBankInfo}"
+					value="Add Bank Info" immediate="true" ajax="true"
+					oncomplete="refreshBankInfos();" /> |
+					
+				<p:commandLink value="Cancel" onclick="PF('wBankInfoDialog').hide()"
+					style="margin-left: 3px" />
+			</p:dialog>
+		</h:form>
 	</h:body>
 	<style type="text/css">
 .personal-information-grid.ui-panelgrid>*>tr, .personal-information-grid.ui-panelgrid .ui-panelgrid-cell

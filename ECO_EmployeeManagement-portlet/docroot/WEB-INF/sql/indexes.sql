@@ -20,6 +20,8 @@ create index IX_765F22D6 on eco_em_portlet_District (regionCode, name);
 create index IX_D6092545 on eco_em_portlet_Emp (empCode);
 create index IX_9C3E31DE on eco_em_portlet_Emp (empUserId);
 
+create index IX_90AA9689 on eco_em_portlet_EmpBankInfo (empId);
+
 create index IX_88F3517B on eco_em_portlet_Level (name);
 
 create index IX_E1D2C12C on eco_em_portlet_Location (type_);
@@ -37,6 +39,7 @@ create index IX_A98F64D1 on eco_em_portlet_ResourceConfig (type_);
 create index IX_F9B34D5B on eco_em_portlet_SubUnit (name);
 
 create index IX_72E37C70 on eco_em_portlet_Titles (departmentId);
+create index IX_4BFB1B83 on eco_em_portlet_Titles (departmentId, unitId, unitGroupId);
 create index IX_D0104CF2 on eco_em_portlet_Titles (devisionGroupId);
 create index IX_F0E46187 on eco_em_portlet_Titles (devisionId);
 create index IX_2509906E on eco_em_portlet_Titles (name);
@@ -50,7 +53,9 @@ create index IX_4833F7CC on eco_em_portlet_Titles (name, unitGroupId, unitId, de
 create index IX_680F03E1 on eco_em_portlet_Titles (name, unitId);
 create index IX_C6687CC0 on eco_em_portlet_Titles (subUnitId);
 create index IX_70586CF7 on eco_em_portlet_Titles (unitGroupId);
+create index IX_59DF60AB on eco_em_portlet_Titles (unitGroupId, unitId, departmentId);
 create index IX_89CF9262 on eco_em_portlet_Titles (unitId);
+create index IX_7FF6DD64 on eco_em_portlet_Titles (unitId, unitGroupId);
 
 create index IX_F6B93659 on eco_em_portlet_Unit (departmentId);
 create index IX_5F684357 on eco_em_portlet_Unit (name);

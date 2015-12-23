@@ -212,22 +212,23 @@ public class EmployeeFilterView implements Serializable {
 	}
 
 	public List<Titles> getTitlesList() {
-		if (devision != null) {
-			if (department != null) {
-				return TitlesLocalServiceUtil.findByDepartment(department
-						.getDepartmentId());
-			}
-
-			if (unit != null) {
-				return TitlesLocalServiceUtil.findByUnit(unit.getUnitId());
-			}
-
-			if (unitGroup != null) {
-				return TitlesLocalServiceUtil.findByUnitGroup(unitGroup
-						.getUnitGroupId());
-			}
-		}
-		return new ArrayList<>();
+		// if (devision != null) {
+		// if (department != null) {
+		// return TitlesLocalServiceUtil.findByDepartment(department
+		// .getDepartmentId());
+		// }
+		//
+		// if (unit != null) {
+		// return TitlesLocalServiceUtil.findByUnit(unit.getUnitId());
+		// }
+		//
+		// if (unitGroup != null) {
+		// return TitlesLocalServiceUtil.findByUnitGroup(unitGroup
+		// .getUnitGroupId());
+		// }
+		// }
+		return TitlesLocalServiceUtil.findByNameAndRelatedEntities(department,
+				unit, unitGroup);
 	}
 
 	public Titles getTitles() {

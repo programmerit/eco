@@ -3282,6 +3282,1696 @@ public class TitlesPersistenceImpl extends BasePersistenceImpl<Titles>
 		"titles.unitId = ? AND ";
 	private static final String _FINDER_COLUMN_FINDBYNAMEANDRELATEDFIELDS_DEPARTMENTID_2 =
 		"titles.departmentId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UNITANDUNITGROUP =
+		new FinderPath(TitlesModelImpl.ENTITY_CACHE_ENABLED,
+			TitlesModelImpl.FINDER_CACHE_ENABLED, TitlesImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUnitAndUnitGroup",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UNITANDUNITGROUP =
+		new FinderPath(TitlesModelImpl.ENTITY_CACHE_ENABLED,
+			TitlesModelImpl.FINDER_CACHE_ENABLED, TitlesImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByUnitAndUnitGroup",
+			new String[] { Long.class.getName(), Long.class.getName() },
+			TitlesModelImpl.UNITID_COLUMN_BITMASK |
+			TitlesModelImpl.UNITGROUPID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_UNITANDUNITGROUP = new FinderPath(TitlesModelImpl.ENTITY_CACHE_ENABLED,
+			TitlesModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUnitAndUnitGroup",
+			new String[] { Long.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns all the titleses where unitId = &#63; and unitGroupId = &#63;.
+	 *
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @return the matching titleses
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Titles> findByUnitAndUnitGroup(long unitId, long unitGroupId)
+		throws SystemException {
+		return findByUnitAndUnitGroup(unitId, unitGroupId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the titleses where unitId = &#63; and unitGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.TitlesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @param start the lower bound of the range of titleses
+	 * @param end the upper bound of the range of titleses (not inclusive)
+	 * @return the range of matching titleses
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Titles> findByUnitAndUnitGroup(long unitId, long unitGroupId,
+		int start, int end) throws SystemException {
+		return findByUnitAndUnitGroup(unitId, unitGroupId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the titleses where unitId = &#63; and unitGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.TitlesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @param start the lower bound of the range of titleses
+	 * @param end the upper bound of the range of titleses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching titleses
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Titles> findByUnitAndUnitGroup(long unitId, long unitGroupId,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UNITANDUNITGROUP;
+			finderArgs = new Object[] { unitId, unitGroupId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UNITANDUNITGROUP;
+			finderArgs = new Object[] {
+					unitId, unitGroupId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<Titles> list = (List<Titles>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Titles titles : list) {
+				if ((unitId != titles.getUnitId()) ||
+						(unitGroupId != titles.getUnitGroupId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_TITLES_WHERE);
+
+			query.append(_FINDER_COLUMN_UNITANDUNITGROUP_UNITID_2);
+
+			query.append(_FINDER_COLUMN_UNITANDUNITGROUP_UNITGROUPID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(TitlesModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(unitId);
+
+				qPos.add(unitGroupId);
+
+				if (!pagination) {
+					list = (List<Titles>)QueryUtil.list(q, getDialect(), start,
+							end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Titles>(list);
+				}
+				else {
+					list = (List<Titles>)QueryUtil.list(q, getDialect(), start,
+							end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first titles in the ordered set where unitId = &#63; and unitGroupId = &#63;.
+	 *
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching titles
+	 * @throws vn.com.ecopharma.emp.NoSuchTitlesException if a matching titles could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Titles findByUnitAndUnitGroup_First(long unitId, long unitGroupId,
+		OrderByComparator orderByComparator)
+		throws NoSuchTitlesException, SystemException {
+		Titles titles = fetchByUnitAndUnitGroup_First(unitId, unitGroupId,
+				orderByComparator);
+
+		if (titles != null) {
+			return titles;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("unitId=");
+		msg.append(unitId);
+
+		msg.append(", unitGroupId=");
+		msg.append(unitGroupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTitlesException(msg.toString());
+	}
+
+	/**
+	 * Returns the first titles in the ordered set where unitId = &#63; and unitGroupId = &#63;.
+	 *
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching titles, or <code>null</code> if a matching titles could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Titles fetchByUnitAndUnitGroup_First(long unitId, long unitGroupId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Titles> list = findByUnitAndUnitGroup(unitId, unitGroupId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last titles in the ordered set where unitId = &#63; and unitGroupId = &#63;.
+	 *
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching titles
+	 * @throws vn.com.ecopharma.emp.NoSuchTitlesException if a matching titles could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Titles findByUnitAndUnitGroup_Last(long unitId, long unitGroupId,
+		OrderByComparator orderByComparator)
+		throws NoSuchTitlesException, SystemException {
+		Titles titles = fetchByUnitAndUnitGroup_Last(unitId, unitGroupId,
+				orderByComparator);
+
+		if (titles != null) {
+			return titles;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("unitId=");
+		msg.append(unitId);
+
+		msg.append(", unitGroupId=");
+		msg.append(unitGroupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTitlesException(msg.toString());
+	}
+
+	/**
+	 * Returns the last titles in the ordered set where unitId = &#63; and unitGroupId = &#63;.
+	 *
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching titles, or <code>null</code> if a matching titles could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Titles fetchByUnitAndUnitGroup_Last(long unitId, long unitGroupId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByUnitAndUnitGroup(unitId, unitGroupId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Titles> list = findByUnitAndUnitGroup(unitId, unitGroupId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the titleses before and after the current titles in the ordered set where unitId = &#63; and unitGroupId = &#63;.
+	 *
+	 * @param titlesId the primary key of the current titles
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next titles
+	 * @throws vn.com.ecopharma.emp.NoSuchTitlesException if a titles with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Titles[] findByUnitAndUnitGroup_PrevAndNext(long titlesId,
+		long unitId, long unitGroupId, OrderByComparator orderByComparator)
+		throws NoSuchTitlesException, SystemException {
+		Titles titles = findByPrimaryKey(titlesId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Titles[] array = new TitlesImpl[3];
+
+			array[0] = getByUnitAndUnitGroup_PrevAndNext(session, titles,
+					unitId, unitGroupId, orderByComparator, true);
+
+			array[1] = titles;
+
+			array[2] = getByUnitAndUnitGroup_PrevAndNext(session, titles,
+					unitId, unitGroupId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Titles getByUnitAndUnitGroup_PrevAndNext(Session session,
+		Titles titles, long unitId, long unitGroupId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_TITLES_WHERE);
+
+		query.append(_FINDER_COLUMN_UNITANDUNITGROUP_UNITID_2);
+
+		query.append(_FINDER_COLUMN_UNITANDUNITGROUP_UNITGROUPID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(TitlesModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(unitId);
+
+		qPos.add(unitGroupId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(titles);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Titles> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the titleses where unitId = &#63; and unitGroupId = &#63; from the database.
+	 *
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByUnitAndUnitGroup(long unitId, long unitGroupId)
+		throws SystemException {
+		for (Titles titles : findByUnitAndUnitGroup(unitId, unitGroupId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(titles);
+		}
+	}
+
+	/**
+	 * Returns the number of titleses where unitId = &#63; and unitGroupId = &#63;.
+	 *
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @return the number of matching titleses
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByUnitAndUnitGroup(long unitId, long unitGroupId)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_UNITANDUNITGROUP;
+
+		Object[] finderArgs = new Object[] { unitId, unitGroupId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_TITLES_WHERE);
+
+			query.append(_FINDER_COLUMN_UNITANDUNITGROUP_UNITID_2);
+
+			query.append(_FINDER_COLUMN_UNITANDUNITGROUP_UNITGROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(unitId);
+
+				qPos.add(unitGroupId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_UNITANDUNITGROUP_UNITID_2 = "titles.unitId = ? AND ";
+	private static final String _FINDER_COLUMN_UNITANDUNITGROUP_UNITGROUPID_2 = "titles.unitGroupId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_DEPARTMENTUNITANDUNITGROUP =
+		new FinderPath(TitlesModelImpl.ENTITY_CACHE_ENABLED,
+			TitlesModelImpl.FINDER_CACHE_ENABLED, TitlesImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByDepartmentUnitAndUnitGroup",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_DEPARTMENTUNITANDUNITGROUP =
+		new FinderPath(TitlesModelImpl.ENTITY_CACHE_ENABLED,
+			TitlesModelImpl.FINDER_CACHE_ENABLED, TitlesImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByDepartmentUnitAndUnitGroup",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			TitlesModelImpl.DEPARTMENTID_COLUMN_BITMASK |
+			TitlesModelImpl.UNITID_COLUMN_BITMASK |
+			TitlesModelImpl.UNITGROUPID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_DEPARTMENTUNITANDUNITGROUP =
+		new FinderPath(TitlesModelImpl.ENTITY_CACHE_ENABLED,
+			TitlesModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByDepartmentUnitAndUnitGroup",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
+
+	/**
+	 * Returns all the titleses where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63;.
+	 *
+	 * @param departmentId the department ID
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @return the matching titleses
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Titles> findByDepartmentUnitAndUnitGroup(long departmentId,
+		long unitId, long unitGroupId) throws SystemException {
+		return findByDepartmentUnitAndUnitGroup(departmentId, unitId,
+			unitGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the titleses where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.TitlesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param departmentId the department ID
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @param start the lower bound of the range of titleses
+	 * @param end the upper bound of the range of titleses (not inclusive)
+	 * @return the range of matching titleses
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Titles> findByDepartmentUnitAndUnitGroup(long departmentId,
+		long unitId, long unitGroupId, int start, int end)
+		throws SystemException {
+		return findByDepartmentUnitAndUnitGroup(departmentId, unitId,
+			unitGroupId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the titleses where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.TitlesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param departmentId the department ID
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @param start the lower bound of the range of titleses
+	 * @param end the upper bound of the range of titleses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching titleses
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Titles> findByDepartmentUnitAndUnitGroup(long departmentId,
+		long unitId, long unitGroupId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_DEPARTMENTUNITANDUNITGROUP;
+			finderArgs = new Object[] { departmentId, unitId, unitGroupId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_DEPARTMENTUNITANDUNITGROUP;
+			finderArgs = new Object[] {
+					departmentId, unitId, unitGroupId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<Titles> list = (List<Titles>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Titles titles : list) {
+				if ((departmentId != titles.getDepartmentId()) ||
+						(unitId != titles.getUnitId()) ||
+						(unitGroupId != titles.getUnitGroupId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_TITLES_WHERE);
+
+			query.append(_FINDER_COLUMN_DEPARTMENTUNITANDUNITGROUP_DEPARTMENTID_2);
+
+			query.append(_FINDER_COLUMN_DEPARTMENTUNITANDUNITGROUP_UNITID_2);
+
+			query.append(_FINDER_COLUMN_DEPARTMENTUNITANDUNITGROUP_UNITGROUPID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(TitlesModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(departmentId);
+
+				qPos.add(unitId);
+
+				qPos.add(unitGroupId);
+
+				if (!pagination) {
+					list = (List<Titles>)QueryUtil.list(q, getDialect(), start,
+							end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Titles>(list);
+				}
+				else {
+					list = (List<Titles>)QueryUtil.list(q, getDialect(), start,
+							end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first titles in the ordered set where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63;.
+	 *
+	 * @param departmentId the department ID
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching titles
+	 * @throws vn.com.ecopharma.emp.NoSuchTitlesException if a matching titles could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Titles findByDepartmentUnitAndUnitGroup_First(long departmentId,
+		long unitId, long unitGroupId, OrderByComparator orderByComparator)
+		throws NoSuchTitlesException, SystemException {
+		Titles titles = fetchByDepartmentUnitAndUnitGroup_First(departmentId,
+				unitId, unitGroupId, orderByComparator);
+
+		if (titles != null) {
+			return titles;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("departmentId=");
+		msg.append(departmentId);
+
+		msg.append(", unitId=");
+		msg.append(unitId);
+
+		msg.append(", unitGroupId=");
+		msg.append(unitGroupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTitlesException(msg.toString());
+	}
+
+	/**
+	 * Returns the first titles in the ordered set where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63;.
+	 *
+	 * @param departmentId the department ID
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching titles, or <code>null</code> if a matching titles could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Titles fetchByDepartmentUnitAndUnitGroup_First(long departmentId,
+		long unitId, long unitGroupId, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<Titles> list = findByDepartmentUnitAndUnitGroup(departmentId,
+				unitId, unitGroupId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last titles in the ordered set where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63;.
+	 *
+	 * @param departmentId the department ID
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching titles
+	 * @throws vn.com.ecopharma.emp.NoSuchTitlesException if a matching titles could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Titles findByDepartmentUnitAndUnitGroup_Last(long departmentId,
+		long unitId, long unitGroupId, OrderByComparator orderByComparator)
+		throws NoSuchTitlesException, SystemException {
+		Titles titles = fetchByDepartmentUnitAndUnitGroup_Last(departmentId,
+				unitId, unitGroupId, orderByComparator);
+
+		if (titles != null) {
+			return titles;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("departmentId=");
+		msg.append(departmentId);
+
+		msg.append(", unitId=");
+		msg.append(unitId);
+
+		msg.append(", unitGroupId=");
+		msg.append(unitGroupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTitlesException(msg.toString());
+	}
+
+	/**
+	 * Returns the last titles in the ordered set where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63;.
+	 *
+	 * @param departmentId the department ID
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching titles, or <code>null</code> if a matching titles could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Titles fetchByDepartmentUnitAndUnitGroup_Last(long departmentId,
+		long unitId, long unitGroupId, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByDepartmentUnitAndUnitGroup(departmentId, unitId,
+				unitGroupId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Titles> list = findByDepartmentUnitAndUnitGroup(departmentId,
+				unitId, unitGroupId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the titleses before and after the current titles in the ordered set where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63;.
+	 *
+	 * @param titlesId the primary key of the current titles
+	 * @param departmentId the department ID
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next titles
+	 * @throws vn.com.ecopharma.emp.NoSuchTitlesException if a titles with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Titles[] findByDepartmentUnitAndUnitGroup_PrevAndNext(
+		long titlesId, long departmentId, long unitId, long unitGroupId,
+		OrderByComparator orderByComparator)
+		throws NoSuchTitlesException, SystemException {
+		Titles titles = findByPrimaryKey(titlesId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Titles[] array = new TitlesImpl[3];
+
+			array[0] = getByDepartmentUnitAndUnitGroup_PrevAndNext(session,
+					titles, departmentId, unitId, unitGroupId,
+					orderByComparator, true);
+
+			array[1] = titles;
+
+			array[2] = getByDepartmentUnitAndUnitGroup_PrevAndNext(session,
+					titles, departmentId, unitId, unitGroupId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Titles getByDepartmentUnitAndUnitGroup_PrevAndNext(
+		Session session, Titles titles, long departmentId, long unitId,
+		long unitGroupId, OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_TITLES_WHERE);
+
+		query.append(_FINDER_COLUMN_DEPARTMENTUNITANDUNITGROUP_DEPARTMENTID_2);
+
+		query.append(_FINDER_COLUMN_DEPARTMENTUNITANDUNITGROUP_UNITID_2);
+
+		query.append(_FINDER_COLUMN_DEPARTMENTUNITANDUNITGROUP_UNITGROUPID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(TitlesModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(departmentId);
+
+		qPos.add(unitId);
+
+		qPos.add(unitGroupId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(titles);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Titles> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the titleses where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63; from the database.
+	 *
+	 * @param departmentId the department ID
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByDepartmentUnitAndUnitGroup(long departmentId,
+		long unitId, long unitGroupId) throws SystemException {
+		for (Titles titles : findByDepartmentUnitAndUnitGroup(departmentId,
+				unitId, unitGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(titles);
+		}
+	}
+
+	/**
+	 * Returns the number of titleses where departmentId = &#63; and unitId = &#63; and unitGroupId = &#63;.
+	 *
+	 * @param departmentId the department ID
+	 * @param unitId the unit ID
+	 * @param unitGroupId the unit group ID
+	 * @return the number of matching titleses
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByDepartmentUnitAndUnitGroup(long departmentId,
+		long unitId, long unitGroupId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_DEPARTMENTUNITANDUNITGROUP;
+
+		Object[] finderArgs = new Object[] { departmentId, unitId, unitGroupId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_TITLES_WHERE);
+
+			query.append(_FINDER_COLUMN_DEPARTMENTUNITANDUNITGROUP_DEPARTMENTID_2);
+
+			query.append(_FINDER_COLUMN_DEPARTMENTUNITANDUNITGROUP_UNITID_2);
+
+			query.append(_FINDER_COLUMN_DEPARTMENTUNITANDUNITGROUP_UNITGROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(departmentId);
+
+				qPos.add(unitId);
+
+				qPos.add(unitGroupId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_DEPARTMENTUNITANDUNITGROUP_DEPARTMENTID_2 =
+		"titles.departmentId = ? AND ";
+	private static final String _FINDER_COLUMN_DEPARTMENTUNITANDUNITGROUP_UNITID_2 =
+		"titles.unitId = ? AND ";
+	private static final String _FINDER_COLUMN_DEPARTMENTUNITANDUNITGROUP_UNITGROUPID_2 =
+		"titles.unitGroupId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UNITGROUPUNITDEPARTMENT =
+		new FinderPath(TitlesModelImpl.ENTITY_CACHE_ENABLED,
+			TitlesModelImpl.FINDER_CACHE_ENABLED, TitlesImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByUnitGroupUnitDepartment",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UNITGROUPUNITDEPARTMENT =
+		new FinderPath(TitlesModelImpl.ENTITY_CACHE_ENABLED,
+			TitlesModelImpl.FINDER_CACHE_ENABLED, TitlesImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByUnitGroupUnitDepartment",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			TitlesModelImpl.UNITGROUPID_COLUMN_BITMASK |
+			TitlesModelImpl.UNITID_COLUMN_BITMASK |
+			TitlesModelImpl.DEPARTMENTID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_UNITGROUPUNITDEPARTMENT = new FinderPath(TitlesModelImpl.ENTITY_CACHE_ENABLED,
+			TitlesModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUnitGroupUnitDepartment",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
+
+	/**
+	 * Returns all the titleses where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63;.
+	 *
+	 * @param unitGroupId the unit group ID
+	 * @param unitId the unit ID
+	 * @param departmentId the department ID
+	 * @return the matching titleses
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Titles> findByUnitGroupUnitDepartment(long unitGroupId,
+		long unitId, long departmentId) throws SystemException {
+		return findByUnitGroupUnitDepartment(unitGroupId, unitId, departmentId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the titleses where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.TitlesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param unitGroupId the unit group ID
+	 * @param unitId the unit ID
+	 * @param departmentId the department ID
+	 * @param start the lower bound of the range of titleses
+	 * @param end the upper bound of the range of titleses (not inclusive)
+	 * @return the range of matching titleses
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Titles> findByUnitGroupUnitDepartment(long unitGroupId,
+		long unitId, long departmentId, int start, int end)
+		throws SystemException {
+		return findByUnitGroupUnitDepartment(unitGroupId, unitId, departmentId,
+			start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the titleses where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.TitlesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param unitGroupId the unit group ID
+	 * @param unitId the unit ID
+	 * @param departmentId the department ID
+	 * @param start the lower bound of the range of titleses
+	 * @param end the upper bound of the range of titleses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching titleses
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Titles> findByUnitGroupUnitDepartment(long unitGroupId,
+		long unitId, long departmentId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UNITGROUPUNITDEPARTMENT;
+			finderArgs = new Object[] { unitGroupId, unitId, departmentId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UNITGROUPUNITDEPARTMENT;
+			finderArgs = new Object[] {
+					unitGroupId, unitId, departmentId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<Titles> list = (List<Titles>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Titles titles : list) {
+				if ((unitGroupId != titles.getUnitGroupId()) ||
+						(unitId != titles.getUnitId()) ||
+						(departmentId != titles.getDepartmentId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_TITLES_WHERE);
+
+			query.append(_FINDER_COLUMN_UNITGROUPUNITDEPARTMENT_UNITGROUPID_2);
+
+			query.append(_FINDER_COLUMN_UNITGROUPUNITDEPARTMENT_UNITID_2);
+
+			query.append(_FINDER_COLUMN_UNITGROUPUNITDEPARTMENT_DEPARTMENTID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(TitlesModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(unitGroupId);
+
+				qPos.add(unitId);
+
+				qPos.add(departmentId);
+
+				if (!pagination) {
+					list = (List<Titles>)QueryUtil.list(q, getDialect(), start,
+							end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Titles>(list);
+				}
+				else {
+					list = (List<Titles>)QueryUtil.list(q, getDialect(), start,
+							end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first titles in the ordered set where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63;.
+	 *
+	 * @param unitGroupId the unit group ID
+	 * @param unitId the unit ID
+	 * @param departmentId the department ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching titles
+	 * @throws vn.com.ecopharma.emp.NoSuchTitlesException if a matching titles could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Titles findByUnitGroupUnitDepartment_First(long unitGroupId,
+		long unitId, long departmentId, OrderByComparator orderByComparator)
+		throws NoSuchTitlesException, SystemException {
+		Titles titles = fetchByUnitGroupUnitDepartment_First(unitGroupId,
+				unitId, departmentId, orderByComparator);
+
+		if (titles != null) {
+			return titles;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("unitGroupId=");
+		msg.append(unitGroupId);
+
+		msg.append(", unitId=");
+		msg.append(unitId);
+
+		msg.append(", departmentId=");
+		msg.append(departmentId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTitlesException(msg.toString());
+	}
+
+	/**
+	 * Returns the first titles in the ordered set where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63;.
+	 *
+	 * @param unitGroupId the unit group ID
+	 * @param unitId the unit ID
+	 * @param departmentId the department ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching titles, or <code>null</code> if a matching titles could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Titles fetchByUnitGroupUnitDepartment_First(long unitGroupId,
+		long unitId, long departmentId, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<Titles> list = findByUnitGroupUnitDepartment(unitGroupId, unitId,
+				departmentId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last titles in the ordered set where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63;.
+	 *
+	 * @param unitGroupId the unit group ID
+	 * @param unitId the unit ID
+	 * @param departmentId the department ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching titles
+	 * @throws vn.com.ecopharma.emp.NoSuchTitlesException if a matching titles could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Titles findByUnitGroupUnitDepartment_Last(long unitGroupId,
+		long unitId, long departmentId, OrderByComparator orderByComparator)
+		throws NoSuchTitlesException, SystemException {
+		Titles titles = fetchByUnitGroupUnitDepartment_Last(unitGroupId,
+				unitId, departmentId, orderByComparator);
+
+		if (titles != null) {
+			return titles;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("unitGroupId=");
+		msg.append(unitGroupId);
+
+		msg.append(", unitId=");
+		msg.append(unitId);
+
+		msg.append(", departmentId=");
+		msg.append(departmentId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTitlesException(msg.toString());
+	}
+
+	/**
+	 * Returns the last titles in the ordered set where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63;.
+	 *
+	 * @param unitGroupId the unit group ID
+	 * @param unitId the unit ID
+	 * @param departmentId the department ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching titles, or <code>null</code> if a matching titles could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Titles fetchByUnitGroupUnitDepartment_Last(long unitGroupId,
+		long unitId, long departmentId, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByUnitGroupUnitDepartment(unitGroupId, unitId,
+				departmentId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Titles> list = findByUnitGroupUnitDepartment(unitGroupId, unitId,
+				departmentId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the titleses before and after the current titles in the ordered set where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63;.
+	 *
+	 * @param titlesId the primary key of the current titles
+	 * @param unitGroupId the unit group ID
+	 * @param unitId the unit ID
+	 * @param departmentId the department ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next titles
+	 * @throws vn.com.ecopharma.emp.NoSuchTitlesException if a titles with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Titles[] findByUnitGroupUnitDepartment_PrevAndNext(long titlesId,
+		long unitGroupId, long unitId, long departmentId,
+		OrderByComparator orderByComparator)
+		throws NoSuchTitlesException, SystemException {
+		Titles titles = findByPrimaryKey(titlesId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Titles[] array = new TitlesImpl[3];
+
+			array[0] = getByUnitGroupUnitDepartment_PrevAndNext(session,
+					titles, unitGroupId, unitId, departmentId,
+					orderByComparator, true);
+
+			array[1] = titles;
+
+			array[2] = getByUnitGroupUnitDepartment_PrevAndNext(session,
+					titles, unitGroupId, unitId, departmentId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Titles getByUnitGroupUnitDepartment_PrevAndNext(Session session,
+		Titles titles, long unitGroupId, long unitId, long departmentId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_TITLES_WHERE);
+
+		query.append(_FINDER_COLUMN_UNITGROUPUNITDEPARTMENT_UNITGROUPID_2);
+
+		query.append(_FINDER_COLUMN_UNITGROUPUNITDEPARTMENT_UNITID_2);
+
+		query.append(_FINDER_COLUMN_UNITGROUPUNITDEPARTMENT_DEPARTMENTID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(TitlesModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(unitGroupId);
+
+		qPos.add(unitId);
+
+		qPos.add(departmentId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(titles);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Titles> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the titleses where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63; from the database.
+	 *
+	 * @param unitGroupId the unit group ID
+	 * @param unitId the unit ID
+	 * @param departmentId the department ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByUnitGroupUnitDepartment(long unitGroupId, long unitId,
+		long departmentId) throws SystemException {
+		for (Titles titles : findByUnitGroupUnitDepartment(unitGroupId, unitId,
+				departmentId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(titles);
+		}
+	}
+
+	/**
+	 * Returns the number of titleses where unitGroupId = &#63; and unitId = &#63; and departmentId = &#63;.
+	 *
+	 * @param unitGroupId the unit group ID
+	 * @param unitId the unit ID
+	 * @param departmentId the department ID
+	 * @return the number of matching titleses
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByUnitGroupUnitDepartment(long unitGroupId, long unitId,
+		long departmentId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_UNITGROUPUNITDEPARTMENT;
+
+		Object[] finderArgs = new Object[] { unitGroupId, unitId, departmentId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_TITLES_WHERE);
+
+			query.append(_FINDER_COLUMN_UNITGROUPUNITDEPARTMENT_UNITGROUPID_2);
+
+			query.append(_FINDER_COLUMN_UNITGROUPUNITDEPARTMENT_UNITID_2);
+
+			query.append(_FINDER_COLUMN_UNITGROUPUNITDEPARTMENT_DEPARTMENTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(unitGroupId);
+
+				qPos.add(unitId);
+
+				qPos.add(departmentId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_UNITGROUPUNITDEPARTMENT_UNITGROUPID_2 =
+		"titles.unitGroupId = ? AND ";
+	private static final String _FINDER_COLUMN_UNITGROUPUNITDEPARTMENT_UNITID_2 = "titles.unitId = ? AND ";
+	private static final String _FINDER_COLUMN_UNITGROUPUNITDEPARTMENT_DEPARTMENTID_2 =
+		"titles.departmentId = ?";
 
 	public TitlesPersistenceImpl() {
 		setModelClass(Titles.class);
@@ -3830,6 +5520,79 @@ public class TitlesPersistenceImpl extends BasePersistenceImpl<Titles>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_DEPARTMENT,
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_DEPARTMENT,
+					args);
+			}
+
+			if ((titlesModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UNITANDUNITGROUP.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						titlesModelImpl.getOriginalUnitId(),
+						titlesModelImpl.getOriginalUnitGroupId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UNITANDUNITGROUP,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UNITANDUNITGROUP,
+					args);
+
+				args = new Object[] {
+						titlesModelImpl.getUnitId(),
+						titlesModelImpl.getUnitGroupId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UNITANDUNITGROUP,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UNITANDUNITGROUP,
+					args);
+			}
+
+			if ((titlesModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_DEPARTMENTUNITANDUNITGROUP.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						titlesModelImpl.getOriginalDepartmentId(),
+						titlesModelImpl.getOriginalUnitId(),
+						titlesModelImpl.getOriginalUnitGroupId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_DEPARTMENTUNITANDUNITGROUP,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_DEPARTMENTUNITANDUNITGROUP,
+					args);
+
+				args = new Object[] {
+						titlesModelImpl.getDepartmentId(),
+						titlesModelImpl.getUnitId(),
+						titlesModelImpl.getUnitGroupId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_DEPARTMENTUNITANDUNITGROUP,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_DEPARTMENTUNITANDUNITGROUP,
+					args);
+			}
+
+			if ((titlesModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UNITGROUPUNITDEPARTMENT.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						titlesModelImpl.getOriginalUnitGroupId(),
+						titlesModelImpl.getOriginalUnitId(),
+						titlesModelImpl.getOriginalDepartmentId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UNITGROUPUNITDEPARTMENT,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UNITGROUPUNITDEPARTMENT,
+					args);
+
+				args = new Object[] {
+						titlesModelImpl.getUnitGroupId(),
+						titlesModelImpl.getUnitId(),
+						titlesModelImpl.getDepartmentId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UNITGROUPUNITDEPARTMENT,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UNITGROUPUNITDEPARTMENT,
 					args);
 			}
 		}

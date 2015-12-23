@@ -19,6 +19,7 @@ import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.faces.util.logging.Logger;
 import com.liferay.faces.util.logging.LoggerFactory;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
@@ -74,7 +75,7 @@ public class EmployeeIndexLazyDataModel extends LazyDataModel<EmpIndexedItem> {
 		String devision = StringUtils.EMPTY;
 		String department = StringUtils.EMPTY;
 		String unit = StringUtils.EMPTY;
-		final List<String> genders = new ArrayList<String>();
+		final List<String> genders = new ArrayList<>();
 		if (filters != null) {
 			globalFilter = filters.get(GLOBAL_FILTER) != null ? (String) filters
 					.get(GLOBAL_FILTER) : StringUtils.EMPTY;
@@ -143,7 +144,7 @@ public class EmployeeIndexLazyDataModel extends LazyDataModel<EmpIndexedItem> {
 		searchContext.setPortletIds(new String[] { EMInfo.PORTLET_ID });
 		String[] fields = allEmpFields.toArray(new String[allEmpFields.size()]);
 
-		final List<Query> queries = new ArrayList<Query>();
+		queries = new ArrayList<>();
 
 		final BooleanQuery globalFilterBooleanQuery = BooleanQueryFactoryUtil
 				.create(searchContext);
@@ -267,9 +268,9 @@ public class EmployeeIndexLazyDataModel extends LazyDataModel<EmpIndexedItem> {
 			}
 
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmployeeIndexLazyDataModel.class).info(e);
 		} catch (java.text.ParseException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmployeeIndexLazyDataModel.class).info(e);
 		}
 		final List<Document> docs = EmpLocalServiceUtil
 				.searchAllUnDeletedEmpIndexedDocument(searchContext, queries,
@@ -278,8 +279,6 @@ public class EmployeeIndexLazyDataModel extends LazyDataModel<EmpIndexedItem> {
 
 		final List<EmpIndexedItem> emps = EmployeeUtils
 				.getEmployeeIndexedItemsFromIndexedDocuments(docs);
-
-		this.queries = queries;
 
 		int totalRowCount = EmpLocalServiceUtil
 				.countAllUnDeletedIndexedEmpDocuments(searchContext, queries,

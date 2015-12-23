@@ -165,7 +165,7 @@ public class EmpLocalServiceClp implements EmpLocalService {
 				"java.util.Locale", "java.lang.String", "java.lang.String",
 				"java.lang.String", "int", "int", "boolean", "int", "int", "int",
 				"long[][]", "long[][]", "long[][]", "long[][]", "boolean",
-				"long", "java.util.Map", "java.util.Map", "java.util.List",
+				"long", "java.util.Map", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
@@ -182,7 +182,7 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		_methodParameterTypes30 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp",
 				"com.liferay.portal.model.User", "long", "java.util.Map",
-				"java.util.Map", "boolean",
+				"java.util.Map", "java.util.Map", "boolean",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
@@ -1079,7 +1079,7 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		boolean sendEmail, long empUserId,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addresses,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
-		java.util.List<vn.com.ecopharma.emp.model.EmpBankInfo> bankInfos,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -1143,7 +1143,7 @@ public class EmpLocalServiceClp implements EmpLocalService {
 						
 					ClpSerializer.translateInput(dependentNameMap),
 						
-					ClpSerializer.translateInput(bankInfos),
+					ClpSerializer.translateInput(bankInfoMap),
 						
 					ClpSerializer.translateInput(serviceContext)
 					});
@@ -1225,6 +1225,7 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		com.liferay.portal.model.User user, long oldTitlesId,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
 		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
@@ -1242,6 +1243,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 					ClpSerializer.translateInput(addressesMap),
 						
 					ClpSerializer.translateInput(dependentNameMap),
+						
+					ClpSerializer.translateInput(bankInfoMap),
 						
 					isImportAction,
 						

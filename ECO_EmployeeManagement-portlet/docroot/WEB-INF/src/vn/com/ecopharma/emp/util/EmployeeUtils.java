@@ -25,6 +25,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import vn.com.ecopharma.emp.dto.AddressObjectItem;
+import vn.com.ecopharma.emp.dto.BankInfoObject;
 import vn.com.ecopharma.emp.dto.DependentName;
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
 import vn.com.ecopharma.emp.enumeration.EmployeeExportType;
@@ -33,11 +34,13 @@ import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.District;
 import vn.com.ecopharma.emp.model.Emp;
+import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.model.Titles;
 import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
+import vn.com.ecopharma.emp.service.EmpBankInfoLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmployeeLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
@@ -159,6 +162,39 @@ public class EmployeeUtils {
 		for (DependentName item : items) {
 			resultMap.put(item.getName(), item.isUIDeleted());
 		}
+		return resultMap;
+	}
+
+	public static List<BankInfoObject> getBankInfoObjectsFromEmp(long empId) {
+		final List<BankInfoObject> result = new ArrayList<>();
+		final List<EmpBankInfo> empBankInfos = EmpBankInfoLocalServiceUtil
+				.findByEmp(empId);
+		if (empBankInfos.isEmpty())
+			result.add(new BankInfoObject());
+
+		for (EmpBankInfo item : empBankInfos) {
+			result.add(new BankInfoObject(item));
+		}
+		return result;
+	}
+
+	public static Map<EmpBankInfo, Boolean> transferBankInfoObjectListToBankInfoMap(
+			List<BankInfoObject> items) {
+		final Map<EmpBankInfo, Boolean> resultMap = new HashMap<>();
+		for (BankInfoObject obj : items) {
+			resultMap.put(obj.getEmpBankInfo(), obj.isUIDeleted());
+		}
+
+		return resultMap;
+	}
+
+	public static Map<EmpBankInfo, Boolean> transferEmpBankInfoListToBankInfoMap(
+			List<EmpBankInfo> items) {
+		final Map<EmpBankInfo, Boolean> resultMap = new HashMap<>();
+		for (EmpBankInfo obj : items) {
+			resultMap.put(obj, false);
+		}
+
 		return resultMap;
 	}
 
@@ -837,7 +873,7 @@ public class EmployeeUtils {
 				writeDebugLog(EmployeeUtils.class, e);
 			}
 		}
-	}	
+	}
 
 	public static List<Long> getIdsFromBasedModelList(List<BaseModel<?>> list) {
 		final List<Long> ids = new ArrayList<>();
@@ -868,7 +904,7 @@ public class EmployeeUtils {
 
 	public static String regenerateUsername(String currentUsername,
 			int increment) {
-																					
+
 		try {
 			if (increment > 1) {
 				currentUsername = currentUsername.substring(0, // NOSONAR

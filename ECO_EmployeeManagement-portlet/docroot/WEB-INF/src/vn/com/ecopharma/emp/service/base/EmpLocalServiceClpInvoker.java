@@ -165,7 +165,7 @@ public class EmpLocalServiceClpInvoker {
 				"java.util.Locale", "java.lang.String", "java.lang.String",
 				"java.lang.String", "int", "int", "boolean", "int", "int", "int",
 				"long[][]", "long[][]", "long[][]", "long[][]", "boolean",
-				"long", "java.util.Map", "java.util.Map", "java.util.List",
+				"long", "java.util.Map", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
@@ -182,7 +182,7 @@ public class EmpLocalServiceClpInvoker {
 		_methodParameterTypes147 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp",
 				"com.liferay.portal.model.User", "long", "java.util.Map",
-				"java.util.Map", "boolean",
+				"java.util.Map", "java.util.Map", "boolean",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
@@ -445,7 +445,7 @@ public class EmpLocalServiceClpInvoker {
 				((Long)arguments[24]).longValue(),
 				(java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean>)arguments[25],
 				(java.util.Map<java.lang.String, java.lang.Boolean>)arguments[26],
-				(java.util.List<vn.com.ecopharma.emp.model.EmpBankInfo>)arguments[27],
+				(java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean>)arguments[27],
 				(com.liferay.portal.service.ServiceContext)arguments[28]);
 		}
 
@@ -465,8 +465,9 @@ public class EmpLocalServiceClpInvoker {
 				((Long)arguments[2]).longValue(),
 				(java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean>)arguments[3],
 				(java.util.Map<java.lang.String, java.lang.Boolean>)arguments[4],
-				((Boolean)arguments[5]).booleanValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[6]);
+				(java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean>)arguments[5],
+				((Boolean)arguments[6]).booleanValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[7]);
 		}
 
 		if (_methodName148.equals(name) &&

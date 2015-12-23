@@ -55,6 +55,7 @@ public class EmpBankInfoLocalServiceImpl extends
 	 * emp bank info local service.
 	 */
 
+	@Override
 	public List<EmpBankInfo> findAll(int start, int end,
 			OrderByComparator orderByComparator) {
 		try {
@@ -66,14 +67,26 @@ public class EmpBankInfoLocalServiceImpl extends
 		return new ArrayList<>();
 	}
 
+	@Override
 	public List<EmpBankInfo> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
+	@Override
 	public List<EmpBankInfo> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
+	
+	public List<EmpBankInfo> findByEmp(long empId) {
+		try {
+			return empBankInfoPersistence.findByEmp(empId);
+		} catch (SystemException e) {
+			LogFactoryUtil.getLog(EmpBankInfoLocalServiceImpl.class).info(e);
+		}
+		return new ArrayList<>();
+	}
 
+	@Override
 	public EmpBankInfo createPrePersistedEntity(long empId,
 			String bankAccountNo, String bankName, String branchName) {
 		try {
@@ -92,6 +105,7 @@ public class EmpBankInfoLocalServiceImpl extends
 		return null;
 	}
 
+	@Override
 	public EmpBankInfo addEmpBankInfo(EmpBankInfo empBankInfo,
 			ServiceContext serviceContext) {
 		empBankInfo.setCreateDate(new Date());
@@ -106,4 +120,5 @@ public class EmpBankInfoLocalServiceImpl extends
 		}
 		return null;
 	}
+	
 }

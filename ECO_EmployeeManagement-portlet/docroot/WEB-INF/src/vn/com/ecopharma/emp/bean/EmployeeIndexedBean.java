@@ -154,15 +154,9 @@ public class EmployeeIndexedBean implements Serializable {
 				sortField = sortField_;
 				sortOder = sortOrder_;
 				filterMap = filters;
-				// first = EmployeeIndexedBean.this.first > first ?
-				// EmployeeIndexedBean.this.first
-				// : first;
 				empIndexedItems = super.load(first, pageSize, sortField_,
 						sortOrder_, filters);
 				queries = this.getQueries();
-				// EmployeeIndexedBean.this.first =
-				// EmployeeIndexedBean.this.first < first ? first
-				// : EmployeeIndexedBean.this.first;
 				return empIndexedItems;
 			}
 		};

@@ -17,6 +17,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 import vn.com.ecopharma.emp.dto.AddressObjectItem;
+import vn.com.ecopharma.emp.dto.BankInfoObject;
 import vn.com.ecopharma.emp.dto.DependentName;
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
 import vn.com.ecopharma.emp.dto.EmpInfoItem;
@@ -141,6 +142,15 @@ public class EmployeeBean implements Serializable {
 		modifyEmployeeInfoItem.getAddresses().get(index).setUIDeleted(true);
 	}
 
+	public void addOneBankInfo() {
+		if (modifyEmployeeInfoItem.getBankInfos().size() < 3)
+			modifyEmployeeInfoItem.getBankInfos().add(new BankInfoObject());
+	}
+
+	public void removeOneBankInfo(int index) {
+		modifyEmployeeInfoItem.getBankInfos().get(index).setUIDeleted(true);
+	}
+
 	/**
 	 * @param employeeInfoItem
 	 */
@@ -252,7 +262,10 @@ public class EmployeeBean implements Serializable {
 								EmployeeUtils
 										.transferDependentNameObjectListToDependentNameMap(modifyEmployeeInfoItem
 												.getDependentNames()),
-								new ArrayList<EmpBankInfo>(), serviceContext);
+								EmployeeUtils
+										.transferBankInfoObjectListToBankInfoMap(modifyEmployeeInfoItem
+												.getBankInfos()),
+								serviceContext);
 
 				// EmpLocalServiceUtil
 
@@ -292,6 +305,9 @@ public class EmployeeBean implements Serializable {
 								EmployeeUtils
 										.transferDependentNameObjectListToDependentNameMap(modifyEmployeeInfoItem
 												.getDependentNames()),
+								EmployeeUtils
+										.transferBankInfoObjectListToBankInfoMap(modifyEmployeeInfoItem
+												.getBankInfos()),
 								Boolean.FALSE, serviceContext);
 				msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 						"Update employee successfully", "Employee "

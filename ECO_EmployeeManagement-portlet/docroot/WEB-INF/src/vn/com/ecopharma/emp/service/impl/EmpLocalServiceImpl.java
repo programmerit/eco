@@ -84,38 +84,43 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	 * service.
 	 */
 
+	@Override
 	public List<Emp> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
+	@Override
 	public List<Emp> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
+	@Override
 	public List<Emp> findAll(int start, int end,
 			OrderByComparator orderByComparator) {
 		try {
 			return empPersistence.findAll(start, end, orderByComparator);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		}
 		return new ArrayList<>();
 	}
 
+	@Override
 	public Emp findByEmpCode(String empCode) {
 		try {
 			return empPersistence.fetchByEmpCode(empCode);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		}
 		return null;
 	}
 
+	@Override
 	public Emp findByUser(long empUserId) {
 		try {
 			return empPersistence.fetchByUser(empUserId);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		}
 		return null;
 	}
@@ -126,17 +131,19 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	 * @see vn.com.ecopharma.emp.service.EmpLocalService#
 	 * isOnAddingNewWithSameEmployeeCode(long, java.lang.String)
 	 */
+	@Override
 	public boolean isOnAddingNewWithSameEmployeeCode(long prePersistedEmpId,
 			String empCode) {
 		try {
 			return empPersistence.fetchByEmpCode(empCode) != null
 					&& fetchEmp(prePersistedEmpId) == null;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		}
 		return false;
 	}
 
+	@Override
 	public int countAllUnDeletedIndexedEmpDocuments(
 			SearchContext searchContext, List<Query> filterQueries,
 			long companyId, Sort sort) {
@@ -145,6 +152,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 				QueryUtil.ALL_POS).size();
 	}
 
+	@Override
 	public List<Document> searchAllUnDeletedEmpIndexedDocument(
 			SearchContext searchContext, List<Query> filterQueries,
 			long companyId, Sort sort, int start, int end) {
@@ -163,7 +171,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		try {
 			// add filter queries
 			fullQuery.add(allEmpEntriesBooleanQuery, BooleanClauseOccur.MUST);
-			if (filterQueries != null && filterQueries.size() > 0) {
+			if (filterQueries != null && !filterQueries.isEmpty()) {
 				for (Query query : filterQueries) {
 					fullQuery.add(query, BooleanClauseOccur.MUST);
 				}
@@ -172,7 +180,6 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			// always filter for none-delete item
 			fullQuery.add(noneDeletedEmpsBooleanQuery, BooleanClauseOccur.MUST);
 
-			System.out.println(fullQuery);
 			final List<Document> documents = SearchEngineUtil.search(
 					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
 					fullQuery, sort, start, end).toList();
@@ -182,13 +189,14 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			return documents;
 
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
+	@Override
 	public Emp addEmp(ServiceContext serviceContext) {
 		try {
 			Emp emp = empPersistence.create(counterLocalService.increment());
@@ -203,9 +211,9 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			indexer.reindex(Emp.class.getName(), emp.getEmpId());
 			return emp;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		}
 		return null;
 	}
@@ -220,9 +228,9 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			long[] userGroupIds,
 			boolean sendEmail, // End user part
 			long empUserId, Map<Address, Boolean> addresses,
-			Map<String, Boolean> dependentNameMap, List<EmpBankInfo> bankInfos,
-			ServiceContext serviceContext) throws SystemException,
-			PortalException {
+			Map<String, Boolean> dependentNameMap,
+			Map<EmpBankInfo, Boolean> bankInfoMap, ServiceContext serviceContext)
+			throws SystemException, PortalException {
 		// Add User Part
 		final User user = UserLocalServiceUtil.addUser(
 				serviceContext.getUserId(), serviceContext.getCompanyId(),
@@ -242,10 +250,6 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		e.setModifiedDate(new Date(System.currentTimeMillis()));
 
 		e.setStatus(EmployeeStatus.NEWLY_ADDED.toString());
-		// Add to Emp_Titles History
-		// employeeTitlesHistoryLocalService.addEmpTitlesHistory(e.getEmpId(),
-		// e.getTitlesId(), "FIRST PROMOTED", e.getPromotedDate(),
-		// serviceContext);
 
 		// Add employee's addresses
 		for (Map.Entry<Address, Boolean> address : addresses.entrySet()) {
@@ -275,9 +279,16 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		e.setDependentNames(namesBuilder.toString());
 
 		// Add employee's banking info
-		for (EmpBankInfo empBankInfo : bankInfos) {
-			empBankInfo.setEmpId(e.getEmpId());
-			empBankInfoLocalService.addEmpBankInfo(empBankInfo, serviceContext);
+		for (Map.Entry<EmpBankInfo, Boolean> entry : bankInfoMap.entrySet()) {
+			final EmpBankInfo empBankInfo = entry.getKey();
+			if (!entry.getValue()
+					&& StringUtils.trimToNull(empBankInfo.getBankAccountNo()) != null
+					&& StringUtils.trimToNull(empBankInfo.getBankName()) != null) {
+				empBankInfo.setEmpId(e.getEmpId());
+				empBankInfoLocalService.addEmpBankInfo(empBankInfo,
+						serviceContext);
+			}
+
 		}
 
 		// persist to DB
@@ -294,6 +305,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		return result;
 	}
 
+	@Override
 	public Emp addEmp(Emp e, User user, Map<Address, Boolean> addresses,
 			Map<String, Boolean> dependentNameMap, ServiceContext serviceContext)
 			throws SystemException, PortalException {
@@ -307,10 +319,6 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		e.setModifiedDate(new Date(System.currentTimeMillis()));
 
 		e.setStatus(EmployeeStatus.NEWLY_ADDED.toString());
-		// Add to Emp_Titles History
-		// employeeTitlesHistoryLocalService.addEmpTitlesHistory(e.getEmpId(),
-		// e.getTitlesId(), "FIRST PROMOTED", e.getPromotedDate(),
-		// serviceContext);
 
 		// Add employee's addresses
 		for (Map.Entry<Address, Boolean> address : addresses.entrySet()) {
@@ -355,7 +363,8 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 
 	public Emp update(Emp employee, User user, long oldTitlesId,
 			Map<Address, Boolean> addressesMap,
-			Map<String, Boolean> dependentNameMap, boolean isImportAction,
+			Map<String, Boolean> dependentNameMap,
+			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isImportAction,
 			ServiceContext serviceContext) {
 		try {
 			boolean isPositionChanged = false;
@@ -397,7 +406,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 						address.setCompanyId(serviceContext.getCompanyId());
 						address.setUserId(serviceContext.getUserId());
 						address.setClassName(Emp.class.getName());
-						address.setClassPK(employee.getEmpId());
+						address.setClassPK(employee.getEmpId()); // NOSONAR
 						AddressLocalServiceUtil.updateAddress(address);
 					}
 				} else {
@@ -410,19 +419,53 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			final StringBuilder namesBuilder = new StringBuilder();
 			int dependentNamesCount = 0;
 			for (Map.Entry<String, Boolean> entry : dependentNameMap.entrySet()) {
-				if (!entry.getValue()) {
-					if (StringUtils.trimToNull(entry.getKey()) != null) {
-						namesBuilder.append(entry.getKey());
-						namesBuilder.append(";");
-						dependentNamesCount++;
-					}
+				if (!entry.getValue()
+						&& StringUtils.trimToNull(entry.getKey()) != null) {
+					namesBuilder.append(entry.getKey());
+					namesBuilder.append(";");
+					dependentNamesCount++;
 				}
 			}
+
+			// Add employee's banking info
+			for (Map.Entry<EmpBankInfo, Boolean> entry : bankInfoMap.entrySet()) {
+				final EmpBankInfo empBankInfo = entry.getKey();
+				if (!entry.getValue()) {
+					if (empBankInfoLocalService.getEmpBankInfo(empBankInfo
+							.getEmpBankInfoId()) == null) {
+						if (StringUtils.trimToNull(empBankInfo
+								.getBankAccountNo()) != null
+								&& StringUtils.trimToNull(empBankInfo
+										.getBankName()) != null) {
+							empBankInfo.setEmpId(employee.getEmpId());
+							empBankInfoLocalService.addEmpBankInfo(empBankInfo,
+									serviceContext);
+						}
+					} else {
+						if (StringUtils.trimToNull(empBankInfo
+								.getBankAccountNo()) == null
+								|| StringUtils.trimToNull(empBankInfo
+										.getBankName()) == null) {
+							empBankInfoLocalService
+									.deleteEmpBankInfo(empBankInfo
+											.getEmpBankInfoId());
+						}
+					}
+				} else {
+					if (empBankInfoLocalService.getEmpBankInfo(empBankInfo
+							.getEmpBankInfoId()) != null) {
+						empBankInfoLocalService.deleteEmpBankInfo(empBankInfo
+								.getEmpBankInfoId());
+					}
+				}
+
+			}
+
 			// set back to employee
-			employee.setNumberOfDependents(dependentNamesCount);
+			employee.setNumberOfDependents(dependentNamesCount); // NOSONAR
 			employee.setDependentNames(namesBuilder.toString());
 
-			employee = empPersistence.update(employee);
+			employee = empPersistence.update(employee);// NOSONAR
 			if (employee != null) {
 				resourceLocalService.updateResources(employee.getCompanyId(),
 						employee.getGroupId(), Emp.class.getName(),
@@ -437,13 +480,14 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			}
 			return employee;
 		} catch (PortalException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		}
 		return null;
 	}
 
+	@Override
 	public Emp createEmployee(String employeeCode, long titlesId, long levelId,
 			Date promotedDate, Date joinedDate, Date laborContractSignedDate,
 			Date laborContractExpiredDate, String laborContractType,
@@ -473,6 +517,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 
 	}
 
+	@Override
 	public Emp updateExistedEmployee(Emp employee, String employeeCode,
 			long titlesId, long levelId, Date promotedDate, Date joinedDate,
 			Date laborContractSignedDate, Date laborContractExpiredDate,
@@ -494,7 +539,10 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 				dependentNames, insurranceCode, healthInsuranceNo);
 	}
 
-	private Emp setInfoToEmp(Emp employee, String employeeCode, long titlesId,
+	private Emp setInfoToEmp(
+			Emp employee,
+			String employeeCode,
+			long titlesId, // NOSONAR
 			long levelId, Date promotedDate, Date joinedDate,
 			Date laborContractSignedDate, Date laborContractExpiredDate,
 			String laborContractType, int laborContractSignedTime, Date dob,
@@ -533,6 +581,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		return employee;
 	}
 
+	@Override
 	public List<Document> searchAllEmpDocs(SearchContext searchContext,
 			List<Query> queries, long companyId) {
 		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
@@ -549,18 +598,20 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 					fullQuery, new Sort("empId", false), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS).toList();
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		}
-		return new ArrayList<Document>();
+		return new ArrayList<>();
 	}
 
+	@Override
 	public Document getIndexedEmp(String employeeIdString,
 			SearchContext searchContext) {
 		return getIndexedEmp(Long.valueOf(employeeIdString), searchContext);
 	}
 
+	@Override
 	public Document getIndexedEmp(long employeeId, SearchContext searchContext) {
 		searchContext.setPortletIds(new String[] { EMInfo.PORTLET_ID });
 		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
@@ -575,19 +626,20 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
 			return !hits.toList().isEmpty() ? hits.toList().get(0) : null;
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		}
 
 		return null;
 	}
 
+	@Override
 	public Emp markDeletedEmp(Emp employee) {
 		try {
 			employee.setDeleted(true);
 
-			employee = empPersistence.update(employee);
+			employee = empPersistence.update(employee); // NOSONAR
 
 			// re-index modified employee
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Emp.class
@@ -595,19 +647,20 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			indexer.reindex(employee);
 			return employee;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		}
 		return null;
 
 	}
 
+	@Override
 	public Emp markDeletedEmp(long employeeId) {
 		try {
 			return markDeletedEmp(empPersistence.fetchByPrimaryKey(employeeId));
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		}
 		return null;
 	}
@@ -615,7 +668,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	/*
 	 * =================== OTHER FUNCTIONALITIES ===================
 	 */
-
+	@Override
 	public void indexAllEmps() {
 		final Indexer indexer = IndexerRegistryUtil
 				.nullSafeGetIndexer(Emp.class.getName());
@@ -625,12 +678,13 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			try {
 				indexer.reindex(employee);
 			} catch (SearchException e) {
-				e.printStackTrace();
+				LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 			}
 		}
 
 	}
 
+	@Override
 	public void indexSomeEmps() {
 		final Indexer indexer = IndexerRegistryUtil
 				.nullSafeGetIndexer(Emp.class.getName());
@@ -640,12 +694,13 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			try {
 				indexer.reindex(employee);
 			} catch (SearchException e) {
-				e.printStackTrace();
+				LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 			}
 		}
 
 	}
 
+	@Override
 	public void removeAllEmpIndexes(SearchContext searchContext, long companyId) {
 		final BooleanQuery booleanQuery = BooleanQueryFactoryUtil
 				.create(searchContext);
@@ -662,10 +717,11 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 
 			}
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		}
 	}
 
+	@Override
 	public void completelyRemoveAllEmp(long companyId) {
 		List<Emp> allEmps = findAll();
 		try {
@@ -713,7 +769,8 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
 		}
 	}
-	
+
+	@Override
 	public void completelyRemoveAllEmpFromDB(long companyId) {
 		List<Emp> allEmps = findAll();
 		try {

@@ -129,16 +129,20 @@ public class EmpBankInfoLocalServiceClp implements EmpBankInfoLocalService {
 
 		_methodParameterTypes21 = new String[] {  };
 
-		_methodName22 = "createPrePersistedEntity";
+		_methodName22 = "findByEmp";
 
-		_methodParameterTypes22 = new String[] {
+		_methodParameterTypes22 = new String[] { "long" };
+
+		_methodName23 = "createPrePersistedEntity";
+
+		_methodParameterTypes23 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String"
 			};
 
-		_methodName23 = "addEmpBankInfo";
+		_methodName24 = "addEmpBankInfo";
 
-		_methodParameterTypes23 = new String[] {
+		_methodParameterTypes24 = new String[] {
 				"vn.com.ecopharma.emp.model.EmpBankInfo",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -774,14 +778,38 @@ public class EmpBankInfoLocalServiceClp implements EmpBankInfoLocalService {
 	}
 
 	@Override
+	public java.util.List<vn.com.ecopharma.emp.model.EmpBankInfo> findByEmp(
+		long empId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22, new Object[] { empId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<vn.com.ecopharma.emp.model.EmpBankInfo>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.EmpBankInfo createPrePersistedEntity(
 		long empId, java.lang.String bankAccountNo, java.lang.String bankName,
 		java.lang.String branchName) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] {
 						empId,
 						
@@ -814,8 +842,8 @@ public class EmpBankInfoLocalServiceClp implements EmpBankInfoLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23,
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] {
 						ClpSerializer.translateInput(empBankInfo),
 						
@@ -884,4 +912,6 @@ public class EmpBankInfoLocalServiceClp implements EmpBankInfoLocalService {
 	private String[] _methodParameterTypes22;
 	private String _methodName23;
 	private String[] _methodParameterTypes23;
+	private String _methodName24;
+	private String[] _methodParameterTypes24;
 }

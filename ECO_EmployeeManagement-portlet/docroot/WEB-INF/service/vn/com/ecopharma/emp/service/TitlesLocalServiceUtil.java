@@ -302,6 +302,11 @@ public class TitlesLocalServiceUtil {
 		return getService().findByUnit(unitId);
 	}
 
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitAndNullUnitGroup(
+		long unitId) {
+		return getService().findByUnitAndNullUnitGroup(unitId);
+	}
+
 	public static vn.com.ecopharma.emp.model.Titles findByNameAndUnit(
 		java.lang.String name, long unitId) {
 		return getService().findByNameAndUnit(name, unitId);

@@ -2,48 +2,32 @@ package vn.com.ecopharma.emp.dto;
 
 import java.io.Serializable;
 
-public class BankInfoObject implements Serializable{
-	
+import org.apache.commons.lang.StringUtils;
+
+import vn.com.ecopharma.emp.model.EmpBankInfo;
+import vn.com.ecopharma.emp.service.EmpBankInfoLocalServiceUtil;
+
+public class BankInfoObject implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String bankNo;
-	private String bankName;
-	private String bankBranchName;
-	
-	private boolean UIDeleted = false;
 
-	public BankInfoObject(String bankNo, String bankName,
-			String bankBranchName, boolean uIDeleted) {
-		this.bankNo = bankNo;
-		this.bankName = bankName;
-		this.bankBranchName = bankBranchName;
-		this.UIDeleted = uIDeleted;
+	private EmpBankInfo empBankInfo;
+
+	private boolean UIDeleted = false; // NOSONAR
+
+	public BankInfoObject() {
+		this.empBankInfo = EmpBankInfoLocalServiceUtil
+				.createPrePersistedEntity(0L, StringUtils.EMPTY,
+						StringUtils.EMPTY, StringUtils.EMPTY);
+		this.UIDeleted = false;
 	}
 
-	public String getBankNo() {
-		return bankNo;
-	}
-
-	public void setBankNo(String bankNo) {
-		this.bankNo = bankNo;
-	}
-
-	public String getBankName() {
-		return bankName;
-	}
-
-	public void setBankName(String bankName) {
-		this.bankName = bankName;
-	}
-
-	public String getBankBranchName() {
-		return bankBranchName;
-	}
-
-	public void setBankBranchName(String bankBranchName) {
-		this.bankBranchName = bankBranchName;
+	public BankInfoObject(EmpBankInfo bankInfo) {
+		this.empBankInfo = bankInfo;
+		this.UIDeleted = false;
 	}
 
 	public boolean isUIDeleted() {
@@ -53,4 +37,14 @@ public class BankInfoObject implements Serializable{
 	public void setUIDeleted(boolean uIDeleted) {
 		UIDeleted = uIDeleted;
 	}
+
+	public EmpBankInfo getEmpBankInfo() {
+		return empBankInfo;
+	}
+
+	public void setEmpBankInfo(EmpBankInfo empBankInfo) {
+		this.empBankInfo = empBankInfo;
+	}
+	
+	
 }

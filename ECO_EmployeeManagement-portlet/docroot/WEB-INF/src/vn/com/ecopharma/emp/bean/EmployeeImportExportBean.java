@@ -236,10 +236,11 @@ public class EmployeeImportExportBean implements Serializable {
 			User user = dto.getExistedUser();
 			try {
 				if (checkEmp == 0 || checkEmp == 1 || checkEmp == -1) {
-					generatedUserScreenName = checkEmp == 1 || checkEmp == 0 ? EmployeeUtils
+					generatedUserScreenName = checkEmp == 1 || checkEmp == -1 ? EmployeeUtils
 							.regenerateUsername(generatedUserScreenName, 1)
 							: generatedUserScreenName;
-
+					LogFactoryUtil.getLog(EmployeeImportExportBean.class).info(
+							"CHECK RESULT: " + checkEmp);
 					// create pre-persisted ready to set fields & import
 					employee = dto.createPrePersistedEmployee();
 					LogFactoryUtil.getLog(EmployeeImportExportBean.class).info(
@@ -267,7 +268,7 @@ public class EmployeeImportExportBean implements Serializable {
 							roles, null, // userGroup Ids
 							false, // send email?
 							0, addressMap, dependentNameMap, dto
-									.getEmpBankInfos(), serviceContext);
+									.getBankInfoMap(), serviceContext);
 
 				} else if (checkEmp == 2) {
 					// create pre-persisted ready to set fields & import
@@ -296,7 +297,8 @@ public class EmployeeImportExportBean implements Serializable {
 					Emp emp = dto.updateExistedEmployee(employee);
 					EmpLocalServiceUtil.update(emp, user,
 							employee.getTitlesId(), addressMap,
-							dependentNameMap, Boolean.TRUE, serviceContext);
+							dependentNameMap, dto.getBankInfoMap(),
+							Boolean.TRUE, serviceContext);
 				}
 			} catch (Exception e) {
 				dto.setImportFailedException(e.getMessage());

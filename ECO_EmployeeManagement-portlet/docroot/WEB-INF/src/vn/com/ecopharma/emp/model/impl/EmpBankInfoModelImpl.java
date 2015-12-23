@@ -91,7 +91,11 @@ public class EmpBankInfoModelImpl extends BaseModelImpl<EmpBankInfo>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.vn.com.ecopharma.emp.model.EmpBankInfo"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.vn.com.ecopharma.emp.model.EmpBankInfo"),
+			true);
+	public static long EMPID_COLUMN_BITMASK = 1L;
+	public static long EMPBANKINFOID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -284,7 +288,19 @@ public class EmpBankInfoModelImpl extends BaseModelImpl<EmpBankInfo>
 
 	@Override
 	public void setEmpId(long empId) {
+		_columnBitmask |= EMPID_COLUMN_BITMASK;
+
+		if (!_setOriginalEmpId) {
+			_setOriginalEmpId = true;
+
+			_originalEmpId = _empId;
+		}
+
 		_empId = empId;
+	}
+
+	public long getOriginalEmpId() {
+		return _originalEmpId;
 	}
 
 	@JSON
@@ -416,6 +432,10 @@ public class EmpBankInfoModelImpl extends BaseModelImpl<EmpBankInfo>
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
@@ -504,6 +524,13 @@ public class EmpBankInfoModelImpl extends BaseModelImpl<EmpBankInfo>
 
 	@Override
 	public void resetOriginalValues() {
+		EmpBankInfoModelImpl empBankInfoModelImpl = this;
+
+		empBankInfoModelImpl._originalEmpId = empBankInfoModelImpl._empId;
+
+		empBankInfoModelImpl._setOriginalEmpId = false;
+
+		empBankInfoModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -668,6 +695,8 @@ public class EmpBankInfoModelImpl extends BaseModelImpl<EmpBankInfo>
 		};
 	private long _empBankInfoId;
 	private long _empId;
+	private long _originalEmpId;
+	private boolean _setOriginalEmpId;
 	private String _bankAccountNo;
 	private String _bankName;
 	private String _branchName;
@@ -678,5 +707,6 @@ public class EmpBankInfoModelImpl extends BaseModelImpl<EmpBankInfo>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _columnBitmask;
 	private EmpBankInfo _escapedModel;
 }
