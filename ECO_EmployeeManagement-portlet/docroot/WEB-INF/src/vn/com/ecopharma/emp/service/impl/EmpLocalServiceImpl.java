@@ -431,15 +431,14 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			for (Map.Entry<EmpBankInfo, Boolean> entry : bankInfoMap.entrySet()) {
 				final EmpBankInfo empBankInfo = entry.getKey();
 				if (!entry.getValue()) {
-					if (empBankInfoLocalService.getEmpBankInfo(empBankInfo
+					if (empBankInfoLocalService.fetchEmpBankInfo(empBankInfo
 							.getEmpBankInfoId()) == null) {
 						if (StringUtils.trimToNull(empBankInfo
 								.getBankAccountNo()) != null
-								&& StringUtils.trimToNull(empBankInfo
+								|| StringUtils.trimToNull(empBankInfo
 										.getBankName()) != null) {
 							empBankInfo.setEmpId(employee.getEmpId());
-							empBankInfoLocalService.addEmpBankInfo(empBankInfo,
-									serviceContext);
+							empBankInfoLocalService.addEmpBankInfo(empBankInfo);
 						}
 					} else {
 						if (StringUtils.trimToNull(empBankInfo
@@ -449,10 +448,13 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 							empBankInfoLocalService
 									.deleteEmpBankInfo(empBankInfo
 											.getEmpBankInfoId());
+						} else {
+							empBankInfoLocalService
+									.updateEmpBankInfo(empBankInfo);
 						}
 					}
 				} else {
-					if (empBankInfoLocalService.getEmpBankInfo(empBankInfo
+					if (empBankInfoLocalService.fetchEmpBankInfo(empBankInfo
 							.getEmpBankInfoId()) != null) {
 						empBankInfoLocalService.deleteEmpBankInfo(empBankInfo
 								.getEmpBankInfoId());

@@ -565,21 +565,21 @@
 
 							<h:outputText value="Bank No" />
 							<p:inputText id="bankNo"
-								value="#{empView.modifyEmployeeInfoItem.bankInfos[0].bankNo}" />
+								value="#{empView.modifyEmployeeInfoItem.bankInfos[0].empBankInfo.bankAccountNo}" />
 							<p:message for="bankNo" display="icon" />
 							<p:tooltip for="bankNo" value="Bank No" showEffect="clip"
 								hideEffect="explode" />
 
 							<h:outputText value="Bank Name" />
 							<p:inputText id="bankName"
-								value="#{empView.modifyEmployeeInfoItem.bankInfos[0].bankName}" />
+								value="#{empView.modifyEmployeeInfoItem.bankInfos[0].empBankInfo.bankName}" />
 							<p:message for="bankName" display="icon" />
 							<p:tooltip for="bankName" value="Bank Name" showEffect="clip"
 								hideEffect="explode" />
 
 							<h:outputText value="Branch" />
 							<p:inputText id="bankBranch"
-								value="#{empView.modifyEmployeeInfoItem.bankInfos[0].bankBranchName}" />
+								value="#{empView.modifyEmployeeInfoItem.bankInfos[0].empBankInfo.branchName}" />
 							<p:message for="bankBranch" display="icon" />
 							<p:tooltip for="bankBranch" value="Bank Branch" showEffect="clip"
 								hideEffect="explode" />
@@ -746,8 +746,7 @@
 								<p:selectBooleanCheckbox value="#{b.UIDeleted}" />
 								<h:outputText value="Delete" />
 
-								<p:selectBooleanCheckbox value="#{b.UIDeleted}"
-									style="margin-left: 10px" />
+								<p:selectBooleanCheckbox style="margin-left: 10px" />
 								<h:outputText value="Main" />
 
 								<p:panelGrid columns="2">
@@ -758,7 +757,8 @@
 									<p:inputText id="bankName" value="#{b.empBankInfo.bankName}" />
 
 									<h:outputText value="Branch" />
-									<p:inputText id="bankBranch" value="#{b.empBankInfo.branchName}" />
+									<p:inputText id="bankBranch"
+										value="#{b.empBankInfo.branchName}" />
 
 								</p:panelGrid>
 							</h:panelGroup>
