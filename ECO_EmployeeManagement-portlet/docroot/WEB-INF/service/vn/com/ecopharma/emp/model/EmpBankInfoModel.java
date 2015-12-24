@@ -285,19 +285,19 @@ public interface EmpBankInfoModel extends BaseModel<EmpBankInfo>, GroupedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(vn.com.ecopharma.emp.model.EmpBankInfo empBankInfo);
+	public int compareTo(EmpBankInfo empBankInfo);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<vn.com.ecopharma.emp.model.EmpBankInfo> toCacheModel();
+	public CacheModel<EmpBankInfo> toCacheModel();
 
 	@Override
-	public vn.com.ecopharma.emp.model.EmpBankInfo toEscapedModel();
+	public EmpBankInfo toEscapedModel();
 
 	@Override
-	public vn.com.ecopharma.emp.model.EmpBankInfo toUnescapedModel();
+	public EmpBankInfo toUnescapedModel();
 
 	@Override
 	public String toString();

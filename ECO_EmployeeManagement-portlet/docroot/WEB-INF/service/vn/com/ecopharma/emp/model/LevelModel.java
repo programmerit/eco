@@ -225,19 +225,19 @@ public interface LevelModel extends BaseModel<Level> {
 	public Object clone();
 
 	@Override
-	public int compareTo(vn.com.ecopharma.emp.model.Level level);
+	public int compareTo(Level level);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<vn.com.ecopharma.emp.model.Level> toCacheModel();
+	public CacheModel<Level> toCacheModel();
 
 	@Override
-	public vn.com.ecopharma.emp.model.Level toEscapedModel();
+	public Level toEscapedModel();
 
 	@Override
-	public vn.com.ecopharma.emp.model.Level toUnescapedModel();
+	public Level toUnescapedModel();
 
 	@Override
 	public String toString();

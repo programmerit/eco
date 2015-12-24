@@ -11,8 +11,8 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
@@ -48,7 +48,7 @@ public class EmployeeEmailValidator implements Validator {
 			try {
 				if (UserLocalServiceUtil.fetchUserByEmailAddress(
 						serviceContext.getCompanyId(), value.toString()) != null
-						&& !UserLocalServiceUtil.getUser(userId)
+						&& !UserLocalServiceUtil.fetchUser(userId)
 								.getEmailAddress()
 								.equalsIgnoreCase(value.toString())) {
 					msg = new FacesMessage("Invalid Email format.",
@@ -56,10 +56,8 @@ public class EmployeeEmailValidator implements Validator {
 					msg.setSeverity(FacesMessage.SEVERITY_WARN);
 					throw new ValidatorException(msg);
 				}
-			} catch (PortalException e) {
-				e.printStackTrace();
 			} catch (SystemException e) {
-				e.printStackTrace();
+				LogFactoryUtil.getLog(EmployeeEmailValidator.class).info(e);
 			}
 
 	}

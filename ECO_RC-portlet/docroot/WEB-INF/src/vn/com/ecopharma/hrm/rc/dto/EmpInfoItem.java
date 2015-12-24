@@ -111,8 +111,8 @@ public class EmpInfoItem implements Serializable {
 			employee.setGender(MALE);
 			employee.setLaborContractType(LaborContractType.INDEFINITE_TERMS
 					.toString());
-			this.addresses = new ArrayList<AddressObjectItem>();
-			this.dependentNames = new ArrayList<DependentName>();
+			this.addresses = new ArrayList<>();
+			this.dependentNames = new ArrayList<>();
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}

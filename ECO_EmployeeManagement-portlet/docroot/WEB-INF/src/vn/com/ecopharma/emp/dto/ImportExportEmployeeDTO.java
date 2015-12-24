@@ -52,7 +52,6 @@ public class ImportExportEmployeeDTO implements Serializable {
 
 	private static final String DATE_STRING_CELL_FORMAT = "dd/MM/yyyy";
 
-	private static final String CONTRACT_EXPIRED_DATE_FORMAT = "M/d/yyyy";
 	private static final int STRING_CELL_TYPE = 1;
 
 	private static final String BLANK_UNIT = "(blank)";
@@ -330,24 +329,9 @@ public class ImportExportEmployeeDTO implements Serializable {
 				dependentNames, insurranceCode, healthInsurranceCode);
 	}
 
-	private Date getContractExpiredDate(Cell cell) {
-		cell.setCellType(1);
-		String dateString = cell.getStringCellValue();
-		try {
-			return new SimpleDateFormat(CONTRACT_EXPIRED_DATE_FORMAT)
-					.parse(dateString);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 	private static boolean isNotNullCell(Cell cell) {
 		if (cell == null || cell.getCellType() == 1)
 			return false;
-		// Cell cell1 = cell;
-		// cell1.setCellType(1);
-		// return StringUtils.trimToNull(cell1.getStringCellValue()) != null;
 		return true;
 	}
 

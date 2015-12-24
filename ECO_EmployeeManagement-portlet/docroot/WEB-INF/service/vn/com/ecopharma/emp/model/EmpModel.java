@@ -872,19 +872,19 @@ public interface EmpModel extends BaseModel<Emp>, GroupedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(vn.com.ecopharma.emp.model.Emp emp);
+	public int compareTo(Emp emp);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<vn.com.ecopharma.emp.model.Emp> toCacheModel();
+	public CacheModel<Emp> toCacheModel();
 
 	@Override
-	public vn.com.ecopharma.emp.model.Emp toEscapedModel();
+	public Emp toEscapedModel();
 
 	@Override
-	public vn.com.ecopharma.emp.model.Emp toUnescapedModel();
+	public Emp toUnescapedModel();
 
 	@Override
 	public String toString();

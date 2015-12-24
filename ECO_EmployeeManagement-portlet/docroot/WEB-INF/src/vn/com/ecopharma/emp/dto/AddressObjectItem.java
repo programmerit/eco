@@ -11,10 +11,12 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.model.Region;
 import com.liferay.portal.service.AddressLocalServiceUtil;
+import com.liferay.portal.service.CountryServiceUtil;
 import com.liferay.portal.service.RegionServiceUtil;
 
 /**
@@ -32,19 +34,20 @@ public class AddressObjectItem implements Serializable {
 	private Country country;
 	private boolean UIDeleted;
 	private Address address;
+	private static final String DEFAULT_COUNTRY_NAME = "vietnam";
 
 	public AddressObjectItem() {
 		this.region = null;
-		this.country = null;
+		this.country = getDefaultCountry();
 		this.UIDeleted = false;
-		this.regions = new ArrayList<>();
+		this.regions = getRegionByCountryId(country.getCountryId());
 		this.address = createNewAddress();
 	}
 
 	public AddressObjectItem(Address address, boolean isImportAction) {
 		this.address = address;
 		this.region = address.getRegion();
-		this.district = getDistrictByStreet3(address, isImportAction); 
+		this.district = getDistrictByStreet3(address, isImportAction);
 		this.country = address.getCountry();
 		this.UIDeleted = false;
 		this.regions = getRegionByCountryId(country.getCountryId());
@@ -63,16 +66,16 @@ public class AddressObjectItem implements Serializable {
 		this.address = createNewAddress(countryId, regionId, district, street);
 	}
 
-	// private Country getDefaultCountry() {
-	// try {
-	// return CountryServiceUtil.getCountryByName(DEFAULT_COUNTRY);
-	// } catch (PortalException e) {
-	// e.printStackTrace();
-	// } catch (SystemException e) {
-	// e.printStackTrace();
-	// }
-	// return null;
-	// }
+	private Country getDefaultCountry() {
+		try {
+			return CountryServiceUtil.getCountryByName(DEFAULT_COUNTRY_NAME);
+		} catch (PortalException e) {
+			LogFactoryUtil.getLog(AddressObjectItem.class).info(e);
+		} catch (SystemException e) {
+			LogFactoryUtil.getLog(AddressObjectItem.class).info(e);
+		}
+		return null;
+	}
 
 	public Address getAddress() {
 		return address;
@@ -127,7 +130,7 @@ public class AddressObjectItem implements Serializable {
 			final long generatedId = CounterLocalServiceUtil.increment();
 			return AddressLocalServiceUtil.createAddress(generatedId);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(AddressObjectItem.class).info(e);
 		}
 		return null;
 	}
@@ -152,9 +155,9 @@ public class AddressObjectItem implements Serializable {
 				address.setStreet3(region.getRegionCode() + "_" + district);
 				return address;
 			} catch (PortalException e) {
-				e.printStackTrace();
+				LogFactoryUtil.getLog(AddressObjectItem.class).info(e);
 			} catch (SystemException e) {
-				e.printStackTrace();
+				LogFactoryUtil.getLog(AddressObjectItem.class).info(e);
 			}
 		}
 		return null;
@@ -172,7 +175,7 @@ public class AddressObjectItem implements Serializable {
 	 *            VN-65_Bình Tân
 	 * @return
 	 */
-	private District getDistrictByStreet3(Address address,
+	private static District getDistrictByStreet3(Address address,
 			boolean isImportAction) {
 		final String[] districtArr = address.getStreet3().split("_");
 		return DistrictLocalServiceUtil.findByRegionCodeAndName(districtArr[0],
@@ -183,9 +186,9 @@ public class AddressObjectItem implements Serializable {
 		try {
 			return RegionServiceUtil.getRegions(country.getCountryId());
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(AddressObjectItem.class).info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	private List<District> getDistrictsByRegionCode(String regionCode) {

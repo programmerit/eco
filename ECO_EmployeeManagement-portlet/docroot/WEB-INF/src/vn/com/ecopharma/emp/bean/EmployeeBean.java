@@ -27,7 +27,6 @@ import vn.com.ecopharma.emp.enumeration.LocationType;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Emp;
-import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.model.Level;
 import vn.com.ecopharma.emp.model.Location;
 import vn.com.ecopharma.emp.model.Titles;
@@ -284,19 +283,19 @@ public class EmployeeBean implements Serializable {
 
 				isSuccessfulModified = true;
 			} else {
-				Emp emp = modifyEmployeeInfoItem.getEmp();
-				long oldTitlesId = emp.getTitlesId();
-				emp.setTitlesId(EmployeeUtils
+				Emp employee = modifyEmployeeInfoItem.getEmp();
+				long oldTitlesId = employee.getTitlesId();
+				employee.setTitlesId(EmployeeUtils
 						.getBaseModelPrimaryKey(modifyEmployeeInfoItem
 								.getTitles()));
-				emp.setLevelId(EmployeeUtils
+				employee.setLevelId(EmployeeUtils
 						.getBaseModelPrimaryKey(modifyEmployeeInfoItem
 								.getLevel()));
-				emp.setUniversityId(EmployeeUtils
+				employee.setUniversityId(EmployeeUtils
 						.getBaseModelPrimaryKey(modifyEmployeeInfoItem
 								.getUniversity()));
 				EmpLocalServiceUtil
-						.update(emp,
+						.update(employee,
 								modifyEmployeeInfoItem.getUser(),
 								oldTitlesId,
 								EmployeeUtils
@@ -309,6 +308,7 @@ public class EmployeeBean implements Serializable {
 										.transferBankInfoObjectListToBankInfoMap(modifyEmployeeInfoItem
 												.getBankInfos()),
 								Boolean.FALSE, serviceContext);
+
 				msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 						"Update employee successfully", "Employee "
 								+ modifyEmployeeInfoItem.getUser()
@@ -433,6 +433,22 @@ public class EmployeeBean implements Serializable {
 		modifyEmployeeInfoItem.setUserName(username);
 	}
 
+	public void onGenerateEmail() {
+		String username = generateUsername();
+		String emailAddress = EmployeeUtils.generateEmailByUsername(username);
+		modifyEmployeeInfoItem.getUser().setEmailAddress(emailAddress);
+	}
+
+	public void onLastNameBlur() {
+		if (showUserTab) {
+			String username = generateUsername();
+			String emailAddress = EmployeeUtils
+					.generateEmailByUsername(username);
+			modifyEmployeeInfoItem.setUserName(username);
+			modifyEmployeeInfoItem.getUser().setEmailAddress(emailAddress);
+		}
+	}
+
 	private String generateUsername() {
 		final String defaultUsername = "user" + System.currentTimeMillis();
 		if (modifyEmployeeInfoItem != null
@@ -448,6 +464,19 @@ public class EmployeeBean implements Serializable {
 
 		}
 		return defaultUsername;
+	}
+
+	public List<Titles> getTitlesList() {
+		return TitlesLocalServiceUtil.findByNameAndRelatedEntities(
+				modifyEmployeeInfoItem.getDepartment(),
+				modifyEmployeeInfoItem.getUnit(),
+				modifyEmployeeInfoItem.getUnitGroup());
+	}
+
+	public List<UnitGroup> getUnitGroups() {
+		return modifyEmployeeInfoItem.getUnit() != null ? UnitGroupLocalServiceUtil
+				.findByUnit(modifyEmployeeInfoItem.getUnit().getUnitId())
+				: null;
 	}
 
 	public List<Unit> getUnits() {
@@ -471,19 +500,6 @@ public class EmployeeBean implements Serializable {
 
 	public List<Devision> getDevisions() {
 		return DevisionLocalServiceUtil.findAll();
-	}
-
-	public List<UnitGroup> getUnitGroups() {
-		return modifyEmployeeInfoItem.getUnit() != null ? UnitGroupLocalServiceUtil
-				.findByUnit(modifyEmployeeInfoItem.getUnit().getUnitId())
-				: null;
-	}
-
-	public List<Titles> getTitlesList() {
-		return TitlesLocalServiceUtil.findByNameAndRelatedEntities(
-				modifyEmployeeInfoItem.getDepartment(),
-				modifyEmployeeInfoItem.getUnit(),
-				modifyEmployeeInfoItem.getUnitGroup());
 	}
 
 	public List<String> getLaborContractTypes() {

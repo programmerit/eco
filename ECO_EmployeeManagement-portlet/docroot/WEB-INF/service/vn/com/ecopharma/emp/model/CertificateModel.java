@@ -417,19 +417,19 @@ public interface CertificateModel extends BaseModel<Certificate>, GroupedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(vn.com.ecopharma.emp.model.Certificate certificate);
+	public int compareTo(Certificate certificate);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<vn.com.ecopharma.emp.model.Certificate> toCacheModel();
+	public CacheModel<Certificate> toCacheModel();
 
 	@Override
-	public vn.com.ecopharma.emp.model.Certificate toEscapedModel();
+	public Certificate toEscapedModel();
 
 	@Override
-	public vn.com.ecopharma.emp.model.Certificate toUnescapedModel();
+	public Certificate toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -351,6 +351,55 @@ public class EmpLocalServiceUtil {
 			addresses, dependentNameMap, bankInfoMap, serviceContext);
 	}
 
+	public static vn.com.ecopharma.emp.model.Emp updateEmp(
+		vn.com.ecopharma.emp.model.Emp employee,
+		com.liferay.portal.model.User user, java.lang.String password1,
+		java.lang.String password2, boolean autoScreenName,
+		java.lang.String screenName, java.lang.String emailAddress,
+		long facebookId, java.lang.String openId, java.util.Locale locale,
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, int prefixId, int suffixId, boolean male,
+		int birthdayMonth, int birthdayDay, int birthdayYear, long[] groupIds,
+		long[] organizationIds, long[] roleIds, long[] userGroupIds,
+		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
+		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		boolean isImportAction,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateEmp(employee, user, password1, password2,
+			autoScreenName, screenName, emailAddress, facebookId, openId,
+			locale, firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, groupIds,
+			organizationIds, roleIds, userGroupIds, addressesMap,
+			dependentNameMap, bankInfoMap, isImportAction, serviceContext);
+	}
+
+	public static vn.com.ecopharma.emp.model.Emp updateEmp(
+		vn.com.ecopharma.emp.model.Emp employee,
+		com.liferay.portal.model.User user, java.lang.String password1,
+		java.lang.String password2, boolean autoScreenName,
+		java.lang.String emailAddress, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName, int prefixId,
+		int suffixId, boolean male, int birthdayMonth, int birthdayDay,
+		int birthdayYear,
+		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
+		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		boolean isImportAction,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateEmp(employee, user, password1, password2,
+			autoScreenName, emailAddress, firstName, middleName, lastName,
+			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
+			addressesMap, dependentNameMap, bankInfoMap, isImportAction,
+			serviceContext);
+	}
+
 	public static vn.com.ecopharma.emp.model.Emp addEmp(
 		vn.com.ecopharma.emp.model.Emp e, com.liferay.portal.model.User user,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addresses,

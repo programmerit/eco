@@ -256,19 +256,19 @@ public interface DistrictModel extends BaseModel<District>, GroupedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(vn.com.ecopharma.emp.model.District district);
+	public int compareTo(District district);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<vn.com.ecopharma.emp.model.District> toCacheModel();
+	public CacheModel<District> toCacheModel();
 
 	@Override
-	public vn.com.ecopharma.emp.model.District toEscapedModel();
+	public District toEscapedModel();
 
 	@Override
-	public vn.com.ecopharma.emp.model.District toUnescapedModel();
+	public District toUnescapedModel();
 
 	@Override
 	public String toString();

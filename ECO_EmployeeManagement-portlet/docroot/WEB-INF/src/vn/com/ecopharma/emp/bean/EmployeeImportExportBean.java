@@ -236,9 +236,10 @@ public class EmployeeImportExportBean implements Serializable {
 			User user = dto.getExistedUser();
 			try {
 				if (checkEmp == 0 || checkEmp == 1 || checkEmp == -1) {
-					generatedUserScreenName = checkEmp == 1 || checkEmp == -1 ? EmployeeUtils
-							.regenerateUsername(generatedUserScreenName, 1)
-							: generatedUserScreenName;
+					// generatedUserScreenName = checkEmp == 1 || checkEmp == -1
+					// ? EmployeeUtils
+					// .regenerateUsername(generatedUserScreenName, 1)
+					// : generatedUserScreenName;
 					LogFactoryUtil.getLog(EmployeeImportExportBean.class).info(
 							"CHECK RESULT: " + checkEmp);
 					// create pre-persisted ready to set fields & import

@@ -255,19 +255,19 @@ public interface DepartmentModel extends BaseModel<Department>, GroupedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(vn.com.ecopharma.emp.model.Department department);
+	public int compareTo(Department department);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<vn.com.ecopharma.emp.model.Department> toCacheModel();
+	public CacheModel<Department> toCacheModel();
 
 	@Override
-	public vn.com.ecopharma.emp.model.Department toEscapedModel();
+	public Department toEscapedModel();
 
 	@Override
-	public vn.com.ecopharma.emp.model.Department toUnescapedModel();
+	public Department toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -38,7 +38,7 @@
 					title="#{i18n['empForm.personal_information_tab']}">
 					<p:panelGrid columns="3" layout="grid"
 						styleClass="personal-information-grid">
-						<h:panelGrid columns="4" styleClass="personal-information-grid">
+						<h:panelGrid columns="3" styleClass="personal-information-grid">
 							<h:outputText value="Firstname" />
 							<p:inputText id="firstName"
 								placeholder="#{i18n['empForm.personal_information_firstName']}"
@@ -49,10 +49,7 @@
 								<f:validateLength minimum="1" maximum="30" />
 								<p:ajax update="firstName_msg" event="keyup" />
 							</p:inputText>
-
 							<p:message for="firstName" id="firstName_msg" display="icon" />
-							<p:tooltip for="firstName" value="Firstname" showEffect="clip"
-								hideEffect="explode" />
 
 							<h:outputText value="Middle Name" />
 							<p:inputText id="middleName"
@@ -62,10 +59,7 @@
 								<f:validateLength minimum="0" maximum="30" />
 								<p:ajax update="middleName_msg" event="keyup" />
 							</p:inputText>
-
 							<p:message for="middleName" id="middleName_msg" display="icon" />
-							<p:tooltip for="middleName" value="Middle Name" showEffect="clip"
-								hideEffect="explode" />
 
 							<h:outputText value="LastName" />
 							<p:inputText id="lastName"
@@ -75,20 +69,18 @@
 								label="#{i18n['empForm.personal_information_lastName']}">
 								<f:validateLength minimum="1" maximum="30" />
 								<p:ajax update="lastName_msg" event="keyup" />
+								<p:ajax event="blur" update="emailAddress username"
+									listener="#{empView.onLastNameBlur}" />
 							</p:inputText>
-
 							<p:message for="lastName" id="lastName_msg" display="icon" />
-							<p:tooltip for="lastName" value="Last Name" showEffect="clip"
-								hideEffect="explode" />
 
 							<h:outputText value="Date of Birth" />
 							<p:calendar id="birthday" placeholder="Birthday" navigator="true"
 								value="#{empView.modifyEmployeeInfoItem.emp.birthday}"
 								maxdate="#{empView.maxBirthdayDate}" mask="true"
-								pattern="dd/MM/yyyy" required="true" />
+								pattern="dd/MM/yyyy" required="true"
+								validatorMessage="Date of Birth required" />
 							<p:message for="birthday" display="icon" />
-							<p:tooltip for="birthday" value="Birthday" showEffect="clip"
-								hideEffect="explode" />
 
 							<h:outputText value="Place of Birth" />
 							<p:inputText id="placeOfBirth"
@@ -96,8 +88,6 @@
 								placeholder="#{i18n['empForm.personal_information_pob']}"
 								label="#{i18n['empForm.personal_information_pob']}" />
 							<p:message for="placeOfBirth" display="icon" />
-							<p:tooltip for="placeOfBirth" value="Place of Birth"
-								showEffect="clip" hideEffect="explode" />
 
 							<h:outputText value="Identity Card No" />
 							<p:inputText id="identityCardNo"
@@ -105,9 +95,6 @@
 								placeholder="Identity Card No">
 							</p:inputText>
 							<p:message for="identityCardNo" display="icon" />
-							<p:tooltip for="identityCardNo" value="Identity Card No"
-								showEffect="clip" hideEffect="explode" />
-
 
 							<h:outputText value="Email" />
 							<p:inputText id="emailAddress" type="email"
@@ -118,13 +105,18 @@
 								<f:attribute name="userId"
 									value="#{empView.modifyEmployeeInfoItem.user.userId}" />
 								<f:validator validatorId="employeeEmailValidator" />
-
 								<p:ajax update="emailAddressMsg" event="keyup" />
 							</p:inputText>
 
-							<p:message for="emailAddress" id="emailAddressMsg" display="icon" />
-							<p:tooltip for="emailAddress" value="Email Address"
-								showEffect="clip" hideEffect="explode" />
+							<h:panelGroup>
+								<p:commandLink actionListener="#{empView.onGenerateEmail}"
+									rendered="#{empView.showUserTab}" value="Generate"
+									immediate="true" update=":modifyForm:accordion:emailAddress">
+									<p:resetInput target=":modifyForm:accordion:emailAddress" />
+								</p:commandLink>
+								<p:message for="emailAddress" id="emailAddressMsg"
+									display="icon" />
+							</h:panelGroup>
 
 							<h:outputText value="Contact Number" />
 							<p:inputText id="contactNumber"
@@ -132,8 +124,6 @@
 								placeholder="#{i18n['empForm.personal_information_contact_number']}"
 								label="#{i18n['empForm.personal_information_contact_number']}" />
 							<p:message for="contactNumber" display="icon" />
-							<p:tooltip for="contactNumber" value="Contact Number"
-								showEffect="clip" hideEffect="explode" />
 
 						</h:panelGrid>
 
@@ -215,10 +205,9 @@
 							varStatus="status">
 
 							<h:panelGroup id="addressItem" rendered="#{not a.UIDeleted}">
-								<p:commandButton immediate="true"
+								<p:commandLink immediate="true" value="X"
 									actionListener="#{empView.removeOneAddress(status.index)}"
-									ajax="true" oncomplete="refreshAddresses();"
-									icon="fa fa-remove Fs16 White" styleClass="RedButton" />
+									ajax="true" oncomplete="refreshAddresses();" />
 								<h:panelGrid columns="2">
 									<h:panelGrid columns="2">
 										<h:outputText value="Street 1" />
@@ -277,7 +266,7 @@
 
 						<p:commandLink actionListener="#{empView.addOneAddress}"
 							value="Add Address" immediate="true" ajax="true"
-							oncomplete="refreshAddresses();" />
+							process="@this,addressesPanelGrid" update="addressesPanelGrid" />
 					</h:panelGrid>
 				</p:tab>
 				<p:tab id="educationTab" title="Education">
@@ -312,7 +301,7 @@
 								converter="departmentConverter" effect="fade" filter="true"
 								filterMatchMode="contains" var="d">
 								<p:ajax
-									update="unitSelect unitGroupSelect newUnitCommandButton newTitlesCommandButton"
+									update="unitSelect unitGroupSelect titlesSelect newUnitCommandButton newTitlesCommandButton"
 									listener="#{empView.onDepartmentChanged}" />
 
 								<f:selectItem itemLabel="Department" itemValue="" />
@@ -564,21 +553,21 @@
 								hideEffect="explode" />
 
 							<h:outputText value="Bank No" />
-							<p:inputText id="bankNo"
+							<p:inputText id="bankNo" placeholder="Bank No"
 								value="#{empView.modifyEmployeeInfoItem.bankInfos[0].empBankInfo.bankAccountNo}" />
 							<p:message for="bankNo" display="icon" />
 							<p:tooltip for="bankNo" value="Bank No" showEffect="clip"
 								hideEffect="explode" />
 
 							<h:outputText value="Bank Name" />
-							<p:inputText id="bankName"
+							<p:inputText id="bankName" placeholder="Bank Name"
 								value="#{empView.modifyEmployeeInfoItem.bankInfos[0].empBankInfo.bankName}" />
 							<p:message for="bankName" display="icon" />
 							<p:tooltip for="bankName" value="Bank Name" showEffect="clip"
 								hideEffect="explode" />
 
 							<h:outputText value="Branch" />
-							<p:inputText id="bankBranch"
+							<p:inputText id="bankBranch" placeholder="Bank Branch"
 								value="#{empView.modifyEmployeeInfoItem.bankInfos[0].empBankInfo.branchName}" />
 							<p:message for="bankBranch" display="icon" />
 							<p:tooltip for="bankBranch" value="Bank Branch" showEffect="clip"

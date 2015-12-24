@@ -82,6 +82,8 @@ public class EmployeeUtils {
 
 	private static final String DEST_DATETIME_FORMATTER = "dd/MM/yyyy";
 
+	private static final String EMAIL_SUFFIX = "@ecopharma.com.vn";
+
 	private EmployeeUtils() {
 
 	}
@@ -240,8 +242,9 @@ public class EmployeeUtils {
 	}
 
 	public static String getFullnameFromUser(User user) {
-		return user.getFirstName() + " " + user.getMiddleName() + " "
-				+ user.getLastName();
+		return StringUtils.trimToEmpty(user.getFirstName()) + " "
+				+ StringUtils.trimToEmpty(user.getMiddleName()) + " "
+				+ StringUtils.trimToEmpty(user.getLastName());
 	}
 
 	/**
@@ -350,7 +353,7 @@ public class EmployeeUtils {
 		resultString = resultString.replaceAll("đ", "d");
 		LogFactoryUtil.getLog(EmployeeUtils.class).info(
 				"USERNAME AFTER STRIPPING ACCENTS: " + fullname);
-		return resultString;
+		return regenerateUsername(resultString, 1);
 	}
 
 	/**
@@ -902,20 +905,26 @@ public class EmployeeUtils {
 		return Long.valueOf(String.valueOf(model.getPrimaryKeyObj()));
 	}
 
+	public static String generateEmailByUsername(String username) {
+		return username + EMAIL_SUFFIX;
+	}
+
 	public static String regenerateUsername(String currentUsername,
 			int increment) {
 
 		try {
+			if (UserLocalServiceUtil.fetchUserByScreenName(getServiceContext()
+					.getCompanyId(), currentUsername) == null) {
+				return currentUsername;
+			}
+
 			if (increment > 1) {
 				currentUsername = currentUsername.substring(0, // NOSONAR
 						currentUsername.length() - 1) + increment;
 			} else {
 				currentUsername = currentUsername + increment; // NOSONAR
 			}
-			if (UserLocalServiceUtil.fetchUserByScreenName(getServiceContext()
-					.getCompanyId(), currentUsername) == null) {
-				return currentUsername;
-			}
+
 			increment += 1; // NOSONAR
 			return regenerateUsername(currentUsername, increment);
 		} catch (SystemException e) {

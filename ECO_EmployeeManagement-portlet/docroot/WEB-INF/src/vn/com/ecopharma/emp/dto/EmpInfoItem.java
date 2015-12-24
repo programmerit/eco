@@ -95,6 +95,7 @@ public class EmpInfoItem implements Serializable {
 				.getBankInfoObjectsFromEmp(employee.getEmpId());
 
 		try {
+			user = UserLocalServiceUtil.fetchUser(employee.getEmpUserId());
 			titles = TitlesLocalServiceUtil.getTitles(employee.getTitlesId());
 			unitGroup = titles != null && titles.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
 					.getUnitGroup(titles.getUnitGroupId()) : null;
@@ -164,17 +165,6 @@ public class EmpInfoItem implements Serializable {
 	}
 
 	public User getUser() {
-		try {
-			if (user == null) {
-				return employee.getEmpUserId() != 0 ? UserLocalServiceUtil
-						.getUser(employee.getEmpUserId()) : null;
-			}
-			return user;
-		} catch (PortalException e) {
-			EmployeeUtils.writeDebugLog(EmpInfoItem.class, e);
-		} catch (SystemException e) {
-			EmployeeUtils.writeDebugLog(EmpInfoItem.class, e);
-		}
 		return user;
 	}
 

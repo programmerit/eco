@@ -53,8 +53,10 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 /**
@@ -303,6 +305,322 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Emp.class);
 		indexer.reindex(Emp.class.getName(), result.getEmpId());
 		return result;
+	}
+
+	public Emp updateEmp(Emp employee, User user, String password1,
+			String password2, boolean autoScreenName, String screenName,
+			String emailAddress, long facebookId, String openId, Locale locale,
+			String firstName, String middleName, String lastName, int prefixId,
+			int suffixId, boolean male, int birthdayMonth, int birthdayDay,
+			int birthdayYear, long[] groupIds, long[] organizationIds,
+			long[] roleIds, long[] userGroupIds,
+			Map<Address, Boolean> addressesMap,
+			Map<String, Boolean> dependentNameMap,
+			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isImportAction,
+			ServiceContext serviceContext) throws SystemException,
+			PortalException {
+
+		String smsSn = StringUtils.EMPTY;
+		String aimSn = StringUtils.EMPTY;
+		String facebookSn = StringUtils.EMPTY;
+		String icqSn = StringUtils.EMPTY;
+		String jabberSn = StringUtils.EMPTY;
+		String msnSn = StringUtils.EMPTY;
+		String mySpaceSn = StringUtils.EMPTY;
+		String skypeSn = StringUtils.EMPTY;
+		String twitterSn = StringUtils.EMPTY;
+		String ymSn = StringUtils.EMPTY;
+		String jobTitle = titlesLocalService.getTitles(employee.getTitlesId())
+				.getName();
+		final List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil
+				.getUserGroupRoles(user.getUserId(), user.getGroupId());
+
+		// Update User Part
+		user = UserLocalServiceUtil.updateUser(user.getUserId(),
+				user.getPassword(), password1, password2, false,
+				StringUtils.EMPTY, StringUtils.EMPTY, screenName, emailAddress,
+				facebookId, openId, locale.getLanguage(), user.getTimeZoneId(),
+				user.getGreeting(), user.getComments(), firstName, middleName,
+				lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
+				birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn,
+				mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds,
+				organizationIds, roleIds, userGroupRoles, userGroupIds,
+				serviceContext);
+
+		try {
+			employee.setModifiedDate(new Date(System.currentTimeMillis()));
+
+			// Insert log (history) in case Employee is promoted to new position
+
+			// check where update on Importing or not
+			if (isImportAction) {
+				final List<Address> addresses = AddressLocalServiceUtil
+						.getAddresses(serviceContext.getCompanyId(),
+								Emp.class.getName(), employee.getEmpId());
+				// to ensure that the address will not be DUPLICATE while update
+				// -> remove all
+				for (Address address : addresses) {
+					AddressLocalServiceUtil.deleteAddress(address
+							.getAddressId());
+				}
+			}
+
+			// update/add addresses
+			for (Map.Entry<Address, Boolean> entry : addressesMap.entrySet()) {
+				boolean isUIDeleted = entry.getValue();
+				Address address = entry.getKey();
+				if (!isUIDeleted) {
+					if (AddressLocalServiceUtil.fetchAddress(address
+							.getAddressId()) != null) {
+						AddressLocalServiceUtil.updateAddress(address);
+					} else {
+						// create new Address
+						address.setCompanyId(serviceContext.getCompanyId());
+						address.setUserId(serviceContext.getUserId());
+						address.setClassName(Emp.class.getName());
+						address.setClassPK(employee.getEmpId()); // NOSONAR
+						AddressLocalServiceUtil.updateAddress(address);
+					}
+				} else {
+					AddressLocalServiceUtil.deleteAddress(address
+							.getAddressId());
+				}
+			}
+
+			// Add employee's dependences
+			final StringBuilder namesBuilder = new StringBuilder();
+			int dependentNamesCount = 0;
+			for (Map.Entry<String, Boolean> entry : dependentNameMap.entrySet()) {
+				if (!entry.getValue()
+						&& StringUtils.trimToNull(entry.getKey()) != null) {
+					namesBuilder.append(entry.getKey());
+					namesBuilder.append(";");
+					dependentNamesCount++;
+				}
+			}
+
+			// Add employee's banking info
+			for (Map.Entry<EmpBankInfo, Boolean> entry : bankInfoMap.entrySet()) {
+				final EmpBankInfo empBankInfo = entry.getKey();
+				if (!entry.getValue()) {
+					if (empBankInfoLocalService.fetchEmpBankInfo(empBankInfo
+							.getEmpBankInfoId()) == null) {
+						if (StringUtils.trimToNull(empBankInfo
+								.getBankAccountNo()) != null
+								|| StringUtils.trimToNull(empBankInfo
+										.getBankName()) != null) {
+							empBankInfo.setEmpId(employee.getEmpId());
+							empBankInfoLocalService.addEmpBankInfo(empBankInfo);
+						}
+					} else {
+						if (StringUtils.trimToNull(empBankInfo
+								.getBankAccountNo()) == null
+								|| StringUtils.trimToNull(empBankInfo
+										.getBankName()) == null) {
+							empBankInfoLocalService
+									.deleteEmpBankInfo(empBankInfo
+											.getEmpBankInfoId());
+						} else {
+							empBankInfoLocalService
+									.updateEmpBankInfo(empBankInfo);
+						}
+					}
+				} else {
+					if (empBankInfoLocalService.fetchEmpBankInfo(empBankInfo
+							.getEmpBankInfoId()) != null) {
+						empBankInfoLocalService.deleteEmpBankInfo(empBankInfo
+								.getEmpBankInfoId());
+					}
+				}
+
+			}
+
+			// set back to employee
+			employee.setNumberOfDependents(dependentNamesCount); // NOSONAR
+			employee.setDependentNames(namesBuilder.toString());
+
+			employee = empPersistence.update(employee);// NOSONAR
+			if (employee != null) {
+				resourceLocalService.updateResources(employee.getCompanyId(),
+						employee.getGroupId(), Emp.class.getName(),
+						employee.getEmpId(),
+						serviceContext.getGroupPermissions(),
+						serviceContext.getGuestPermissions());
+
+				// re-index modified employee
+				Indexer indexer = IndexerRegistryUtil
+						.nullSafeGetIndexer(Emp.class);
+				indexer.reindex(employee);
+			}
+			return employee;
+		} catch (PortalException e) {
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+		} catch (SystemException e) {
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+		}
+		return null;
+
+	}
+
+	public Emp updateEmp(Emp employee, User user, String password1,
+			String password2, boolean autoScreenName, String emailAddress,
+			String firstName, String middleName, String lastName, int prefixId,
+			int suffixId, boolean male, int birthdayMonth, int birthdayDay,
+			int birthdayYear, Map<Address, Boolean> addressesMap,
+			Map<String, Boolean> dependentNameMap,
+			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isImportAction,
+			ServiceContext serviceContext) throws SystemException,
+			PortalException {
+
+		String smsSn = StringUtils.EMPTY;
+		String aimSn = StringUtils.EMPTY;
+		String facebookSn = StringUtils.EMPTY;
+		String icqSn = StringUtils.EMPTY;
+		String jabberSn = StringUtils.EMPTY;
+		String msnSn = StringUtils.EMPTY;
+		String mySpaceSn = StringUtils.EMPTY;
+		String skypeSn = StringUtils.EMPTY;
+		String twitterSn = StringUtils.EMPTY;
+		String ymSn = StringUtils.EMPTY;
+		String jobTitle = titlesLocalService.getTitles(employee.getTitlesId())
+				.getName();
+		Locale locale = user.getLocale();
+		long[] groupIds = user.getGroupIds();
+		long[] organizationIds = user.getOrganizationIds();
+		long[] roleIds = user.getRoleIds();
+		long[] userGroupIds = user.getUserGroupIds();
+		String screenName = user.getScreenName();
+		long facebookId = user.getFacebookId();
+		String openId = user.getOpenId();
+
+		final List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil
+				.getUserGroupRoles(user.getUserId(), user.getGroupId());
+
+		// Update User Part
+		user = UserLocalServiceUtil.updateUser(user.getUserId(),
+				user.getPassword(), password1, password2, false,
+				StringUtils.EMPTY, StringUtils.EMPTY, screenName, emailAddress,
+				facebookId, openId, locale.getLanguage(), user.getTimeZoneId(),
+				user.getGreeting(), user.getComments(), firstName, middleName,
+				lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
+				birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn,
+				mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds,
+				organizationIds, roleIds, userGroupRoles, userGroupIds,
+				serviceContext);
+
+		try {
+			employee.setModifiedDate(new Date(System.currentTimeMillis()));
+
+			// Insert log (history) in case Employee is promoted to new position
+
+			// check where update on Importing or not
+			if (isImportAction) {
+				final List<Address> addresses = AddressLocalServiceUtil
+						.getAddresses(serviceContext.getCompanyId(),
+								Emp.class.getName(), employee.getEmpId());
+				// to ensure that the address will not be DUPLICATE while update
+				// -> remove all
+				for (Address address : addresses) {
+					AddressLocalServiceUtil.deleteAddress(address
+							.getAddressId());
+				}
+			}
+
+			// update/add addresses
+			for (Map.Entry<Address, Boolean> entry : addressesMap.entrySet()) {
+				boolean isUIDeleted = entry.getValue();
+				Address address = entry.getKey();
+				if (!isUIDeleted) {
+					if (AddressLocalServiceUtil.fetchAddress(address
+							.getAddressId()) != null) {
+						AddressLocalServiceUtil.updateAddress(address);
+					} else {
+						// create new Address
+						address.setCompanyId(serviceContext.getCompanyId());
+						address.setUserId(serviceContext.getUserId());
+						address.setClassName(Emp.class.getName());
+						address.setClassPK(employee.getEmpId()); // NOSONAR
+						AddressLocalServiceUtil.updateAddress(address);
+					}
+				} else {
+					AddressLocalServiceUtil.deleteAddress(address
+							.getAddressId());
+				}
+			}
+
+			// Add employee's dependences
+			final StringBuilder namesBuilder = new StringBuilder();
+			int dependentNamesCount = 0;
+			for (Map.Entry<String, Boolean> entry : dependentNameMap.entrySet()) {
+				if (!entry.getValue()
+						&& StringUtils.trimToNull(entry.getKey()) != null) {
+					namesBuilder.append(entry.getKey());
+					namesBuilder.append(";");
+					dependentNamesCount++;
+				}
+			}
+
+			// Add employee's banking info
+			for (Map.Entry<EmpBankInfo, Boolean> entry : bankInfoMap.entrySet()) {
+				final EmpBankInfo empBankInfo = entry.getKey();
+				if (!entry.getValue()) {
+					if (empBankInfoLocalService.fetchEmpBankInfo(empBankInfo
+							.getEmpBankInfoId()) == null) {
+						if (StringUtils.trimToNull(empBankInfo
+								.getBankAccountNo()) != null
+								|| StringUtils.trimToNull(empBankInfo
+										.getBankName()) != null) {
+							empBankInfo.setEmpId(employee.getEmpId());
+							empBankInfoLocalService.addEmpBankInfo(empBankInfo);
+						}
+					} else {
+						if (StringUtils.trimToNull(empBankInfo
+								.getBankAccountNo()) == null
+								|| StringUtils.trimToNull(empBankInfo
+										.getBankName()) == null) {
+							empBankInfoLocalService
+									.deleteEmpBankInfo(empBankInfo
+											.getEmpBankInfoId());
+						} else {
+							empBankInfoLocalService
+									.updateEmpBankInfo(empBankInfo);
+						}
+					}
+				} else {
+					if (empBankInfoLocalService.fetchEmpBankInfo(empBankInfo
+							.getEmpBankInfoId()) != null) {
+						empBankInfoLocalService.deleteEmpBankInfo(empBankInfo
+								.getEmpBankInfoId());
+					}
+				}
+
+			}
+
+			// set back to employee
+			employee.setNumberOfDependents(dependentNamesCount); // NOSONAR
+			employee.setDependentNames(namesBuilder.toString());
+
+			employee = empPersistence.update(employee);// NOSONAR
+			if (employee != null) {
+				resourceLocalService.updateResources(employee.getCompanyId(),
+						employee.getGroupId(), Emp.class.getName(),
+						employee.getEmpId(),
+						serviceContext.getGroupPermissions(),
+						serviceContext.getGuestPermissions());
+
+				// re-index modified employee
+				Indexer indexer = IndexerRegistryUtil
+						.nullSafeGetIndexer(Emp.class);
+				indexer.reindex(employee);
+			}
+			return employee;
+		} catch (PortalException e) {
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+		} catch (SystemException e) {
+			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+		}
+		return null;
+
 	}
 
 	@Override
