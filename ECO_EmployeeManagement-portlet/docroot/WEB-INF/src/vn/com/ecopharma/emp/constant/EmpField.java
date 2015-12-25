@@ -6,6 +6,10 @@ import java.util.List;
 
 public class EmpField {
 
+	private EmpField() {
+
+	}
+
 	public static final String EMP_ID = "empId";
 
 	public static final String EMP_CODE = "empCode";

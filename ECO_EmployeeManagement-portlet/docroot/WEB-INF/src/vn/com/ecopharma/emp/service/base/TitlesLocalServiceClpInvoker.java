@@ -171,19 +171,27 @@ public class TitlesLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.UnitGroup"
 			};
 
-		_methodName148 = "findByName";
+		_methodName148 = "findFilterTitlesByRelatedEntities";
 
-		_methodParameterTypes148 = new String[] { "java.lang.String" };
+		_methodParameterTypes148 = new String[] {
+				"vn.com.ecopharma.emp.model.Department",
+				"vn.com.ecopharma.emp.model.Unit",
+				"vn.com.ecopharma.emp.model.UnitGroup"
+			};
 
-		_methodName149 = "findByNameAndRelatedFields";
+		_methodName150 = "findByName";
 
-		_methodParameterTypes149 = new String[] {
+		_methodParameterTypes150 = new String[] { "java.lang.String" };
+
+		_methodName151 = "findByNameAndRelatedFields";
+
+		_methodParameterTypes151 = new String[] {
 				"java.lang.String", "long", "long", "long"
 			};
 
-		_methodName150 = "completelyRemoveAll";
+		_methodName152 = "completelyRemoveAll";
 
-		_methodParameterTypes150 = new String[] {  };
+		_methodParameterTypes152 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -361,19 +369,26 @@ public class TitlesLocalServiceClpInvoker {
 
 		if (_methodName148.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes148, parameterTypes)) {
+			return TitlesLocalServiceUtil.findFilterTitlesByRelatedEntities((vn.com.ecopharma.emp.model.Department)arguments[0],
+				(vn.com.ecopharma.emp.model.Unit)arguments[1],
+				(vn.com.ecopharma.emp.model.UnitGroup)arguments[2]);
+		}
+
+		if (_methodName150.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
 			return TitlesLocalServiceUtil.findByName((java.lang.String)arguments[0]);
 		}
 
-		if (_methodName149.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes149, parameterTypes)) {
+		if (_methodName151.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
 			return TitlesLocalServiceUtil.findByNameAndRelatedFields((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
 				((Long)arguments[3]).longValue());
 		}
 
-		if (_methodName150.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
+		if (_methodName152.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
 			TitlesLocalServiceUtil.completelyRemoveAll();
 
 			return null;
@@ -444,8 +459,10 @@ public class TitlesLocalServiceClpInvoker {
 	private String[] _methodParameterTypes147;
 	private String _methodName148;
 	private String[] _methodParameterTypes148;
-	private String _methodName149;
-	private String[] _methodParameterTypes149;
 	private String _methodName150;
 	private String[] _methodParameterTypes150;
+	private String _methodName151;
+	private String[] _methodParameterTypes151;
+	private String _methodName152;
+	private String[] _methodParameterTypes152;
 }

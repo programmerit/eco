@@ -292,6 +292,11 @@ public interface TitlesLocalService extends BaseLocalService,
 		vn.com.ecopharma.emp.model.Unit unit,
 		vn.com.ecopharma.emp.model.UnitGroup unitGroup);
 
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findFilterTitlesByRelatedEntities(
+		vn.com.ecopharma.emp.model.Department department,
+		vn.com.ecopharma.emp.model.Unit unit,
+		vn.com.ecopharma.emp.model.UnitGroup unitGroup);
+
 	public vn.com.ecopharma.emp.model.Titles findByName(java.lang.String name);
 
 	public vn.com.ecopharma.emp.model.Titles findByNameAndRelatedFields(

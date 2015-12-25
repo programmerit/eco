@@ -1,11 +1,12 @@
 package vn.com.ecopharma.emp.bean;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -15,10 +16,12 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.SortOrder;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -29,7 +32,6 @@ import vn.com.ecopharma.emp.enumeration.EmployeeExportType;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
-import vn.com.ecopharma.emp.util.DLUtils;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
@@ -46,8 +48,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 
 @ManagedBean
 @ViewScoped
@@ -55,8 +55,8 @@ public class EmployeeImportExportBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final String DEFAULT_EXPORT_FILE_NAME = "employeeExport";
 	private static final String DEFAULT_PWD = "123";
-	private static final String DATE_FORMAT = "yyyyMMdd";
 	private static final String MALE = "male";
 	private static final int START_ROW_NUM = 5;
 	private static final int START_CELL_NUM = 2;
@@ -72,11 +72,7 @@ public class EmployeeImportExportBean implements Serializable {
 	private String exportRange = "all";
 	private String exportColumn = "all";
 
-	private StreamedContent file;
-
 	private String sheetNameOrIndex = "1";
-
-	private String fileURL = "#";
 
 	private boolean isExportedFail;
 
@@ -87,6 +83,8 @@ public class EmployeeImportExportBean implements Serializable {
 	private List<ImportExportEmployeeDTO> possiblyDuplicationList;
 
 	private List<ImportExportEmployeeDTO> failedImportList;
+
+	private transient List<?> exportList;
 
 	private boolean isFinishedImport;
 
@@ -102,76 +100,71 @@ public class EmployeeImportExportBean implements Serializable {
 		failedImportList = new ArrayList<>();
 	}
 
-	public void exportEmployees() {
-		ServiceContext serviceContext = LiferayFacesContext.getInstance()
-				.getServiceContext();
+	public void generateExportList() {
+		final EmployeeIndexedBean employeeIndexedBean = BeanUtils
+				.getEmployeeIndexedBean();
+		final SortOrder sortOrder = employeeIndexedBean.getSortOder();
+		final String sortField = employeeIndexedBean.getSortField();
+		final SearchContext searchContext = EmployeeUtils
+				.getCurrentSearchContext();
+		Sort searchSort;
+		if (sortField != null) {
+			searchSort = new Sort(sortField,
+					sortOrder.equals(SortOrder.ASCENDING) ? false : true);
+		} else {
+			searchSort = new Sort(EmpField.EMP_ID, false);
+		}
 
-		final EmployeeIndexedBean employeeIndexedBean = (EmployeeIndexedBean) BeanUtils
-				.getBackingBeanByName("employeeIndexedBean");
+		if ("all".equalsIgnoreCase(exportRange)) {
+			exportList = EmployeeUtils
+					.getEmployeeIndexedItemsFromIndexedDocuments(EmpLocalServiceUtil
+							.searchAllUnDeletedEmpIndexedDocument(
+									searchContext, new ArrayList<Query>(),
+									searchContext.getCompanyId(), searchSort,
+									QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+		} else if ("allFilterRange".equalsIgnoreCase(exportRange)) {
+			exportList = EmployeeUtils
+					.getEmployeeIndexedItemsFromIndexedDocuments(EmpLocalServiceUtil
+							.searchAllUnDeletedEmpIndexedDocument(
+									searchContext,
+									employeeIndexedBean.getQueries(),
+									searchContext.getCompanyId(), searchSort,
+									QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+		} else if ("currentPage".equalsIgnoreCase(exportRange)) {
+			exportList = employeeIndexedBean.getEmpIndexedItems();
+		}
+	}
+
+	public StreamedContent getGeneratedDownloadFile() {
+		final EmployeeExportType exportType = EmployeeExportType
+				.valueOf(presetType.toUpperCase());
+		Workbook wb = EmployeeUtils.generateAndGetExportExcelWorkbook(
+				exportType, exportList);
+
 		try {
-			DLFolder folder = DLFolderLocalServiceUtil.fetchFolder(
-					serviceContext.getScopeGroupId(), 0, "temp");
-			if (folder == null) {
-				folder = DLUtils.createFolder("temp", "", 0,
-						serviceContext.getScopeGroupId(),
-						serviceContext.getCompanyId(),
-						serviceContext.getUserId(),
-						new Date(System.currentTimeMillis()),
-						new Date(System.currentTimeMillis()));
-			}
-			List<?> exportList = new ArrayList<>();
-			final SortOrder sortOrder = employeeIndexedBean.getSortOder();
-			final String sortField = employeeIndexedBean.getSortField();
-			final SearchContext searchContext = EmployeeUtils
-					.getCurrentSearchContext();
-			Sort searchSort = null;
-			if (sortField != null) {
-				searchSort = new Sort(sortField,
-						sortOrder.equals(SortOrder.ASCENDING) ? false : true);
-			} else {
-				searchSort = new Sort(EmpField.EMP_ID, false);
-			}
+			final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			wb.write(outputStream);
 
-			if ("all".equalsIgnoreCase(exportRange)) {
-				exportList = EmployeeUtils
-						.getEmployeeIndexedItemsFromIndexedDocuments(EmpLocalServiceUtil
-								.searchAllUnDeletedEmpIndexedDocument(
-										searchContext, new ArrayList<Query>(),
-										searchContext.getCompanyId(),
-										searchSort, QueryUtil.ALL_POS,
-										QueryUtil.ALL_POS));
-			} else if ("allFilterRange".equalsIgnoreCase(exportRange)) {
-				exportList = EmployeeUtils
-						.getEmployeeIndexedItemsFromIndexedDocuments(EmpLocalServiceUtil
-								.searchAllUnDeletedEmpIndexedDocument(
-										searchContext,
-										employeeIndexedBean.getQueries(),
-										searchContext.getCompanyId(),
-										searchSort, QueryUtil.ALL_POS,
-										QueryUtil.ALL_POS));
-			} else if ("currentPage".equalsIgnoreCase(exportRange)) {
-				exportList = employeeIndexedBean.getEmpIndexedItems();
-			}
+			final PipedInputStream pipedInputStream = new PipedInputStream();
 
-			final SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+			final PipedOutputStream pipedOutputStream = new PipedOutputStream(
+					pipedInputStream);
 
-			String exportFilenameSuffix = sdf.format(new Date(System
-					.currentTimeMillis()));
-			String filename = this.filename != null
-					&& !this.filename.equals(StringUtils.EMPTY) ? this.filename
-					+ exportFilenameSuffix : "employeeExport"
-					+ exportFilenameSuffix;
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					EmployeeUtils.writeOutputStreamToPipedOutputStream(
+							outputStream, pipedOutputStream);
+				}
+			}).start();
 
-			fileURL = EmployeeUtils.generateAndGetExportExcelFileURL(
-					folder.getFolderId(),
-					filename + System.currentTimeMillis(),
-					EmployeeExportType.valueOf(presetType.toUpperCase()),
-					exportList, serviceContext);
-
-		} catch (Exception e) {
+			return new DefaultStreamedContent(pipedInputStream,
+					exportType.getMimeType(), DEFAULT_EXPORT_FILE_NAME
+							+ exportType.getExension());
+		} catch (IOException e) {
 			LogFactoryUtil.getLog(EmployeeImportExportBean.class).info(e);
 		}
-		isExportedFail = "#".equals(fileURL);
+		return null;
 	}
 
 	/**
@@ -308,22 +301,6 @@ public class EmployeeImportExportBean implements Serializable {
 			}
 			isFinishedImport = true;
 		}
-	}
-
-	public StreamedContent getFile() {
-		return file;
-	}
-
-	public void setFile(StreamedContent file) {
-		this.file = file;
-	}
-
-	public String getFileURL() {
-		return fileURL;
-	}
-
-	public void setFileURL(String fileURL) {
-		this.fileURL = fileURL;
 	}
 
 	public String getPresetType() {

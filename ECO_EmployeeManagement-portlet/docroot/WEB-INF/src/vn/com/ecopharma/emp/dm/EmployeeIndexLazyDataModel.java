@@ -158,16 +158,6 @@ public class EmployeeIndexLazyDataModel extends LazyDataModel<EmpIndexedItem> {
 		final BooleanQuery genderFilterBooleanQuery = BooleanQueryFactoryUtil
 				.create(searchContext);
 
-		final BooleanQuery devisionFilterBooleanQuery = BooleanQueryFactoryUtil
-				.create(searchContext);
-		final BooleanQuery departmentFilterBooleanQuery = BooleanQueryFactoryUtil
-				.create(searchContext);
-
-		final BooleanQuery unitFilterBooleanQuery = BooleanQueryFactoryUtil
-				.create(searchContext);
-		final BooleanQuery unitGroupFilterBooleanQuery = BooleanQueryFactoryUtil
-				.create(searchContext);
-
 		Sort searchSort = null;
 		try {
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
@@ -222,26 +212,34 @@ public class EmployeeIndexLazyDataModel extends LazyDataModel<EmpIndexedItem> {
 			}
 
 			if (StringUtils.trimToNull(devision) != null) {
-				devisionFilterBooleanQuery.addExactTerm(EmpField.DEVISION,
-						devision);
-				queries.add(devisionFilterBooleanQuery);
+				TermQuery devisionTermQuery = TermQueryFactoryUtil.create(
+						searchContext, EmpField.DEVISION,
+						StringUtils.trimToEmpty(devision));
+				queries.add(devisionTermQuery);
 			}
 
 			if (StringUtils.trimToNull(department) != null) {
-				departmentFilterBooleanQuery.addExactTerm(EmpField.DEPARTMENT,
-						department);
-				queries.add(departmentFilterBooleanQuery);
+				// department = String.format(department, "'%s'");//"'" +
+				// department + "'";
+				department = department.replaceAll("-", "/-");
+				TermQuery departmentTermQuery = TermQueryFactoryUtil.create(
+						searchContext, EmpField.DEPARTMENT,
+						StringUtils.trimToEmpty(department));
+				queries.add(departmentTermQuery);
 			}
 
 			if (StringUtils.trimToNull(unit) != null) {
-				unitFilterBooleanQuery.addRequiredTerm(EmpField.UNIT, unit);
-				queries.add(unitFilterBooleanQuery);
+				TermQuery unitTermQuery = TermQueryFactoryUtil.create(
+						searchContext, EmpField.UNIT,
+						StringUtils.trimToEmpty(unit));
+				queries.add(unitTermQuery);
 			}
 
 			if (StringUtils.trimToNull(unitGroup) != null) {
-				unitGroupFilterBooleanQuery.addExactTerm(EmpField.UNIT_GROUP,
-						unitGroup);
-				queries.add(unitGroupFilterBooleanQuery);
+				TermQuery unitGroupTermQuery = TermQueryFactoryUtil.create(
+						searchContext, EmpField.UNIT_GROUP,
+						StringUtils.trimToEmpty(unitGroup));
+				queries.add(unitGroupTermQuery);
 			}
 
 			if (StringUtils.trimToNull(titles) != null) {

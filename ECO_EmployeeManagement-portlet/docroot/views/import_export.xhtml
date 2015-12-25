@@ -10,18 +10,8 @@
 	<h:head />
 
 	<h:body>
-		<!-- <p:ajaxStatus onstart="PF('statusDialog').show()"
-			onsuccess="PF('statusDialog').hide()" />
 
-		<p:dialog widgetVar="statusDialog" modal="false" draggable="false"
-			closable="false" resizable="false" showHeader="false"
-			styleClass="eco-ajax-loading">
-			<p:graphicImage name="/images/ajax-loader1.gif" />
-		</p:dialog> -->
 		<h:form id="importExportForm">
-			<p:remoteCommand name="updateDownloadOutput"
-				update=":importExportForm:downloadExportOutputPanel" />
-
 			<p:remoteCommand name="updateOnFinishedImport"
 				update=":importExportForm:failGroup :importExportForm:importCommandButton" />
 			<p:commandLink value="Back"
@@ -75,14 +65,16 @@
 							</p:autoComplete>
 
 						</h:panelGroup>
+
+
 					</p:panelGrid>
 					<br />
 					<p:commandButton value="Generate Export File"
-						actionListener="#{employeeImportExportBean.exportEmployees}"
-						update=":importExportForm:exportDownloadLink"
-						oncomplete="updateDownloadOutput(); PF('wDownloadExportDialog').show();">
+						actionListener="#{employeeImportExportBean.generateExportList}"
+						oncomplete="PF('wDownloadExportDialog').show();">
 					</p:commandButton>
 				</p:tab>
+
 				<p:tab id="importEmployeeTab" title="Import Employee">
 					<h:panelGroup>
 						<h:outputLabel value="Sheet Name/Index" />
@@ -129,19 +121,19 @@
 				<h:outputText value="Generating export file..." />
 			</p:dialog>
 
-			<p:dialog id="downloadExportDialog" widgetVar="wDownloadExportDialog"
-				modal="true" closeOnEscape="true" resizable="false"
-				showHeader="false" showEffect="fade">
-				<p:outputPanel id="downloadExportOutputPanel">
-					<h:outputText
-						value="#{employeeImportExportBean.exportedFail ? 'Export Failed' : 'Completed!'}" />
-					<br />
-					<h:outputLink id="exportDownloadLink"
-						rendered="#{not employeeImportExportBean.exportedFail}"
-						onclick="PF('wDownloadExportDialog').hide()"
-						value="#{employeeImportExportBean.fileURL}">Download File</h:outputLink>
-				</p:outputPanel>
-			</p:dialog>
+			<h:form>
+				<p:dialog id="downloadExportDialog"
+					widgetVar="wDownloadExportDialog" modal="true" closeOnEscape="true"
+					resizable="false" showHeader="false" showEffect="fade">
+					<p:outputPanel id="downloadExportOutputPanel" autoUpdate="true">
+						<p:commandButton value="Download" ajax="false"
+							icon="ui-icon-arrowthick-1-s" styleClass="BlueTextButton">
+							<p:fileDownload
+								value="#{employeeImportExportBean.generatedDownloadFile}" />
+						</p:commandButton>
+					</p:outputPanel>
+				</p:dialog>
+			</h:form>
 
 			<p:dialog id="importConfirmation" widgetVar="wImportConfirmation"
 				modal="true" closeOnEscape="true" resizable="false"
@@ -200,8 +192,6 @@
 			</p:dialog>
 
 		</h:form>
-
-
 	</h:body>
 	<style type="text/css">
 .column-setting select.ui-helper-hidden {
@@ -216,4 +206,6 @@
 	list-style: none !important;
 }
 </style>
+
+
 </f:view>

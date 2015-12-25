@@ -116,7 +116,7 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 		try {
 			return titlesPersistence.findByUnitAndUnitGroup(unitId, 0);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(TitlesLocalServiceImpl.class).info(e);
 		}
 		return new ArrayList<>();
 	}
@@ -187,29 +187,61 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 	@Override
 	public List<Titles> findByNameAndRelatedEntities(Department department,
 			Unit unit, UnitGroup unitGroup) {
-		List<Titles> titlesList = null;
+		final List<Titles> titlesList = new ArrayList<>();
 		try {
-//			if (department != null) {
-//				if (unitGroup != null) {
-//					titlesList = titlesPersistence.findByUnitGroup(unitGroup
-//							.getUnitGroupId());
-//
-//				} else if (unit != null) {
-//					titlesList = titlesPersistence.findByUnit(unit.getUnitId());
-//				} else {
-//					titlesList = titlesPersistence.findByDepartment(department
-//							.getDepartmentId());
-//				}
-//			}
-			long departmentId = department != null ? department.getDepartmentId() : 0L;
+			long departmentId = department != null ? department
+					.getDepartmentId() : 0L;
 			long unitId = unit != null ? unit.getUnitId() : 0L;
-			long unitGroupId = unitGroup != null ? unitGroup.getUnitGroupId() : 0L;
-			return titlesPersistence.findByUnitGroupUnitDepartment(unitGroupId, unitId, departmentId);
+			long unitGroupId = unitGroup != null ? unitGroup.getUnitGroupId()
+					: 0L;
+			return titlesPersistence.findByUnitGroupUnitDepartment(unitGroupId,
+					unitId, departmentId);
 		} catch (SystemException e) {
 			LogFactoryUtil.getLog(TitlesLocalServiceImpl.class).info(e);
 		}
 
 		return titlesList;
+	}
+
+	public List<Titles> findFilterTitlesByRelatedEntities(
+			Department department, Unit unit, UnitGroup unitGroup) {
+		List<Titles> titlesList = new ArrayList<>();
+		try {
+			if (department != null) {
+				long departmentId = department.getDepartmentId();
+				if (unit != null) {
+					long unitId = unit.getUnitId();
+					if (unitGroup != null) { // NOSONAR
+						long unitGroupId = unitGroup.getUnitGroupId();
+						return titlesPersistence.findByUnitGroupUnitDepartment(
+								unitGroupId, unitId, departmentId);
+					} else {
+						return eliminateSameNameTitles(titlesPersistence
+								.findByUnit(unitId));
+					}
+				} else {
+					return eliminateSameNameTitles(titlesPersistence
+							.findByDepartment(department.getDepartmentId()));
+				}
+			}
+
+		} catch (SystemException e) {
+			LogFactoryUtil.getLog(TitlesLocalServiceImpl.class).info(e);
+		}
+
+		return titlesList;
+	}
+
+	private static List<Titles> eliminateSameNameTitles(List<Titles> titlesList) {
+		final List<String> names = new ArrayList<>();
+		final List<Titles> result = new ArrayList<>();
+		for (Titles titles : titlesList) {
+			if (!names.contains(titles.getName())) {
+				names.add(titles.getName());
+				result.add(titles);
+			}
+		}
+		return result;
 	}
 
 	@Override

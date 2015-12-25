@@ -340,6 +340,15 @@ public class TitlesLocalServiceUtil {
 				   .findByNameAndRelatedEntities(department, unit, unitGroup);
 	}
 
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findFilterTitlesByRelatedEntities(
+		vn.com.ecopharma.emp.model.Department department,
+		vn.com.ecopharma.emp.model.Unit unit,
+		vn.com.ecopharma.emp.model.UnitGroup unitGroup) {
+		return getService()
+				   .findFilterTitlesByRelatedEntities(department, unit,
+			unitGroup);
+	}
+
 	public static vn.com.ecopharma.emp.model.Titles findByName(
 		java.lang.String name) {
 		return getService().findByName(name);

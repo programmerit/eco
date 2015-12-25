@@ -3,6 +3,8 @@ package vn.com.ecopharma.emp.util;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PipedOutputStream;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
@@ -861,7 +863,41 @@ public class EmployeeUtils {
 			writeDebugLog(EmployeeUtils.class, e);
 		}
 		return StringUtils.EMPTY;
+	}
 
+	@SuppressWarnings("unchecked")
+	public static Workbook generateAndGetExportExcelWorkbook(
+			EmployeeExportType type, List<?> employees) {
+		Workbook wb = null;
+		Sheet ws;
+		switch (type) {
+		case XLS:
+			wb = new HSSFWorkbook();
+			break;
+		case XLSX:
+			wb = new XSSFWorkbook();
+			break;
+		default:
+			break;
+		}
+		ws = wb.createSheet("Sheet1");
+
+		EmployeeUtils.createExportHeaderRow(wb, ws);
+		int rowNum = 5;
+		if (employees.get(0) instanceof Emp) {
+
+			for (Emp employee : (List<Emp>) employees) {
+				EmployeeUtils.createRow(wb, ws, rowNum, rowNum - 4, employee);
+				rowNum++;
+			}
+		} else {
+			for (EmpIndexedItem eii : (List<EmpIndexedItem>) employees) {
+				EmployeeUtils.createRow(wb, ws, rowNum, rowNum - 4, eii);
+				rowNum++;
+			}
+		}
+
+		return wb;
 	}
 
 	public static void deleteAllEmployeeAndEmployeeUser() {
@@ -931,6 +967,29 @@ public class EmployeeUtils {
 			writeDebugLog(EmployeeUtils.class, e);
 		}
 		return currentUsername;
+	}
+
+	public static void writeOutputStreamToPipedOutputStream(
+			ByteArrayOutputStream originOut, PipedOutputStream pipedOutputStream) {
+		try {
+			originOut.writeTo(pipedOutputStream);
+			originOut.flush();
+		} catch (IOException e) {
+			LogFactoryUtil.getLog(EmployeeUtils.class).info(e);
+		} finally {
+			closeOutputStream(originOut);
+			closeOutputStream(pipedOutputStream);
+		}
+	}
+
+	private static void closeOutputStream(OutputStream outputStream) {
+		if (outputStream != null) {
+			try {
+				outputStream.close();
+			} catch (IOException e) {
+				LogFactoryUtil.getLog(EmployeeUtils.class).info(e);
+			}
+		}
 	}
 
 	public static String exceptionStacktraceToString(Exception e) {
