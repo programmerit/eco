@@ -14,6 +14,7 @@ import vn.com.ecopharma.emp.util.BeanUtils;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 @ManagedBean
 public class DepartmentBean extends AbstractOrganizationBean {
@@ -28,7 +29,7 @@ public class DepartmentBean extends AbstractOrganizationBean {
 			department = DepartmentLocalServiceUtil
 					.createDepartment(CounterLocalServiceUtil.increment());
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(DepartmentBean.class).info(e);
 		}
 	}
 
@@ -43,6 +44,8 @@ public class DepartmentBean extends AbstractOrganizationBean {
 					department, LiferayFacesContext.getInstance()
 							.getServiceContext());
 			if (result != null) {
+				employeeViewBean.getModifyEmployeeInfoItem().setDepartment(
+						result);
 				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 						"Create Department successfully", "Department "
 								+ result.getName() + " has been created");

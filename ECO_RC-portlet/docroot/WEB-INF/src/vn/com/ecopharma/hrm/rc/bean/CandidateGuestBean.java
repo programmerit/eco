@@ -25,7 +25,7 @@ import vn.com.ecopharma.hrm.rc.dto.CertificateObjectItem;
 import vn.com.ecopharma.hrm.rc.dto.DocumentItem;
 import vn.com.ecopharma.hrm.rc.dto.ExperienceObjectItem;
 import vn.com.ecopharma.hrm.rc.dto.VacancyIndexItem;
-import vn.com.ecopharma.hrm.rc.enumeration.CertificateType;
+import vn.com.ecopharma.hrm.rc.enumeration.CandidateCertificateType;
 import vn.com.ecopharma.hrm.rc.model.Candidate;
 import vn.com.ecopharma.hrm.rc.model.Certificate;
 import vn.com.ecopharma.hrm.rc.model.Experience;
@@ -240,11 +240,11 @@ public class CandidateGuestBean implements Serializable {
 	}
 
 	public List<String> getCertificateTypes() {
-		return CertificateType.getAll();
+		return CandidateCertificateType.getAll();
 	}
 
 	public String getTypeLocalizedString(String type) {
-		return CertificateType.valueOf(type).getLocalizedString();
+		return CandidateCertificateType.valueOf(type).getLocalizedString();
 	}
 
 	public List<University> getUniversities() {

@@ -15,7 +15,6 @@ import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.service.EmpBankInfoLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
-import vn.com.ecopharma.emp.service.ResourceConfigLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.constant.EmpField;
 import vn.com.ecopharma.hrm.rc.dto.AddressObjectItem;
 import vn.com.ecopharma.hrm.rc.dto.BankInfoObject;
@@ -26,6 +25,7 @@ import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.AddressLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
 /**
@@ -48,15 +49,21 @@ public class EmployeeUtils {
 
 	private static final String ZIP_CODE = "70000";
 
+	private static final String EMAIL_SUFFIX = "@ecopharma.com.vn";
+
 	/**
 	 * @param documents
 	 * @return
 	 */
+
+	private EmployeeUtils() {
+
+	}
+
 	public static List<EmpIndexedItem> getEmployeeIndexedItemsFromIndexedDocuments(
 			List<Document> documents) {
 
-		final List<EmpIndexedItem> results = new ArrayList<EmpIndexedItem>(
-				documents.size());
+		final List<EmpIndexedItem> results = new ArrayList<>(documents.size());
 		for (final Document document : documents) {
 			results.add(new EmpIndexedItem(document));
 		}
@@ -71,18 +78,17 @@ public class EmployeeUtils {
 	 */
 	public static List<AddressObjectItem> getAddressObjectItemsFromClassNameAndPK(
 			String clazzName, long primaryKey, long companyId) {
+		final List<AddressObjectItem> results = new ArrayList<>();
 		try {
-			final List<AddressObjectItem> results = new ArrayList<AddressObjectItem>();
-
 			for (Address address : AddressLocalServiceUtil.getAddresses(
 					companyId, clazzName, primaryKey)) {
 				results.add(new AddressObjectItem(address, false));
 			}
 			return results;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmployeeUtils.class).info(e);
 		}
-		return null;
+		return results;
 	}
 
 	/**
@@ -95,8 +101,7 @@ public class EmployeeUtils {
 	 */
 	public static Map<Address, Boolean> transferAddressObjectListToAddressMap(
 			List<AddressObjectItem> items) {
-		final Map<Address, Boolean> resultMap = new HashMap<Address, Boolean>(
-				items.size());
+		final Map<Address, Boolean> resultMap = new HashMap<>(items.size());
 		for (AddressObjectItem item : items) {
 			final District district = item.getDistrict();
 			final Address address = item.getAddress();
@@ -121,7 +126,7 @@ public class EmployeeUtils {
 	 */
 	public static Map<String, Boolean> transferDependentNameObjectListToDependentNameMap(
 			List<DependentName> items) {
-		final Map<String, Boolean> resultMap = new HashMap<String, Boolean>();
+		final Map<String, Boolean> resultMap = new HashMap<>();
 
 		for (DependentName item : items) {
 			resultMap.put(item.getName(), item.isUIDeleted());
@@ -143,7 +148,7 @@ public class EmployeeUtils {
 	 * @return
 	 */
 	public static List<DependentName> getDependentNamesFromString(String s) {
-		final List<DependentName> result = new ArrayList<DependentName>();
+		final List<DependentName> result = new ArrayList<>();
 		if (org.apache.commons.lang.StringUtils.trimToNull(s) == null) {
 			return result;
 		}
@@ -200,9 +205,7 @@ public class EmployeeUtils {
 		final HttpServletRequest httpServletRequest = PortalUtil
 				.getOriginalServletRequest(PortalUtil
 						.getHttpServletRequest(req));
-		final SearchContext searchContext = SearchContextFactory
-				.getInstance(httpServletRequest);
-		return searchContext;
+		return SearchContextFactory.getInstance(httpServletRequest);
 	}
 
 	public static String getFullnameFromUser(User user) {
@@ -255,42 +258,12 @@ public class EmployeeUtils {
 	 * @param fullname
 	 * @return
 	 */
-	public static String generateUsername1(String fullname) {
-		if (StringUtils.trimToNull(fullname) == null)
-			return StringUtils.EMPTY;
-
-		fullname = VNCharacterUtils.removeAccent(fullname).toLowerCase();
-		StringBuilder resultBuilder = new StringBuilder();
-		char firstChar = getFirstNameFromFullname(fullname).toCharArray()[0];
-
-		String[] middleNameArr = getMiddleNameFromFullname(fullname).split(" ");
-		char[] middleNameChars;
-		if (middleNameArr.length > 0 && middleNameArr[0] != StringUtils.EMPTY) {
-			middleNameChars = new char[middleNameArr.length];
-			for (int i = 0; i < middleNameChars.length; i++) {
-				middleNameChars[i] = middleNameArr[i].charAt(0);
-			}
-		} else {
-			middleNameChars = null;
-		}
-
-		resultBuilder.append(firstChar);
-		if (middleNameChars != null) {
-			resultBuilder.append(middleNameChars);
-		}
-		resultBuilder.append(getLastNameFromFullname(fullname));
-		return resultBuilder.toString();
-	}
-
-	/**
-	 * @param fullname
-	 * @return
-	 */
 	public static String generateUsername(String fullname) {
 		if (StringUtils.trimToNull(fullname) == null)
 			return StringUtils.EMPTY;
-		fullname = StringUtils.stripAccents(fullname);
-		System.out.println("FULL NAME AFTER STRIPPING ACCENTS: " + fullname);
+		fullname = StringUtils.stripAccents(fullname); // NOSONAR
+		LogFactoryUtil.getLog(EmployeeUtils.class).info(
+				"FULL NAME AFTER STRIPPING ACCENTS: " + fullname);
 
 		StringBuilder resultBuilder = new StringBuilder();
 		char firstChar = getFirstNameFromFullname(fullname).toCharArray()[0];
@@ -312,11 +285,39 @@ public class EmployeeUtils {
 		}
 		resultBuilder.append(getLastNameFromFullname(fullname));
 		String resultString = resultBuilder.toString().toLowerCase();
-		resultString = resultString.replaceAll(ResourceConfigLocalServiceUtil
-				.findByKeyAndType("special_char_d", "GENERATE_USER_CHARS")
-				.getValue(), "d");
-		System.out.println("USERNAME AFTER STRIPPING ACCENTS: " + fullname);
-		return resultString;
+		resultString = resultString.replaceAll("đ", "d");
+		LogFactoryUtil.getLog(EmployeeUtils.class).info(
+				"USERNAME AFTER STRIPPING ACCENTS: " + fullname);
+		return regenerateUsername(resultString, 1);
+	}
+
+	public static String generateEmailByUsername(String username) {
+		return username + EMAIL_SUFFIX;
+	}
+
+	public static String regenerateUsername(String currentUsername,
+			int increment) {
+
+		try {
+			if (UserLocalServiceUtil.fetchUserByScreenName(LiferayFacesContext
+					.getInstance().getServiceContext().getCompanyId(),
+					currentUsername) == null) {
+				return currentUsername;
+			}
+
+			if (increment > 1) {
+				currentUsername = currentUsername.substring(0, // NOSONAR
+						currentUsername.length() - 1) + increment;
+			} else {
+				currentUsername = currentUsername + increment; // NOSONAR
+			}
+
+			increment += 1; // NOSONAR
+			return regenerateUsername(currentUsername, increment);
+		} catch (SystemException e) {
+			LogFactoryUtil.getLog(EmployeeUtils.class).info(e);
+		}
+		return currentUsername;
 	}
 
 	/**
@@ -327,9 +328,9 @@ public class EmployeeUtils {
 		try {
 			return EmpLocalServiceUtil.getEmp(id);
 		} catch (PortalException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmployeeUtils.class).info(e);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmployeeUtils.class).info(e);
 		}
 		return null;
 	}
@@ -341,14 +342,14 @@ public class EmployeeUtils {
 	 * @return
 	 */
 	public static List<EmpIndexedItem> searchEmpByName(String query) {
-		final List<EmpIndexedItem> filteredItems = new ArrayList<EmpIndexedItem>();
+		final List<EmpIndexedItem> filteredItems = new ArrayList<>();
 		final SearchContext searchContext = RCUtils.getCurrentSearchContext();
 		try {
 			final BooleanQuery fullNameFilterBooleanQuery = BooleanQueryFactoryUtil
 					.create(searchContext);
 			fullNameFilterBooleanQuery.addTerm(EmpField.FULL_NAME, query, true,
 					BooleanClauseOccur.MUST);
-			final List<Query> queries = new ArrayList<Query>();
+			final List<Query> queries = new ArrayList<>();
 
 			queries.add(fullNameFilterBooleanQuery);
 			Sort sort = new Sort();
@@ -362,9 +363,9 @@ public class EmployeeUtils {
 			}
 			return filteredItems;
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmployeeUtils.class).info(e);
 		}
-		return null;
+		return filteredItems;
 	}
 
 }

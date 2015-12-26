@@ -5,7 +5,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import vn.com.ecopharma.hrm.rc.enumeration.CertificateType;
+import vn.com.ecopharma.hrm.rc.enumeration.CandidateCertificateType;
 
 @FacesConverter(value = "certificateTypeConverter")
 public class CertificateTypeConverter implements Converter {
@@ -13,7 +13,7 @@ public class CertificateTypeConverter implements Converter {
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,
 			String value) {
-		return CertificateType.valueOf(value).toString();
+		return CandidateCertificateType.valueOf(value).toString();
 	}
 
 	@Override

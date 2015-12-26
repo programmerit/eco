@@ -33,8 +33,10 @@
 				style="margin-bottom:20px;" activeIndex="0">
 				<p:tab id="personal_info"
 					title="#{i18n['empForm.personal_information_tab']}">
-					<p:panelGrid columns="2" layout="grid">
-						<h:panelGroup>
+					<p:panelGrid columns="3" layout="grid"
+						styleClass="personal-information-grid">
+						<h:panelGrid columns="3" styleClass="personal-information-grid">
+							<h:outputText value="Firstname" />
 							<p:inputText id="firstName"
 								placeholder="#{i18n['empForm.personal_information_firstName']}"
 								value="#{employeeBean.modifyEmployeeInfoItem.user.firstName}"
@@ -43,10 +45,7 @@
 								<f:validateLength minimum="1" maximum="30" />
 								<p:ajax update="firstName_msg" event="keyup" />
 							</p:inputText>
-
 							<p:message for="firstName" id="firstName_msg" display="icon" />
-							<p:tooltip for="firstName" value="Firstname" showEffect="clip"
-								hideEffect="explode" />
 
 							<p:inputText id="middleName"
 								placeholder="#{i18n['empForm.personal_information_middleName']}"
@@ -56,10 +55,9 @@
 								<f:validateLength minimum="0" maximum="30" />
 								<p:ajax update="middleName_msg" event="keyup" />
 							</p:inputText>
-
 							<p:message for="middleName" id="middleName_msg" display="icon" />
-							<p:tooltip for="middleName" value="Middle Name" showEffect="clip"
-								hideEffect="explode" />
+
+							<h:outputText value="LastName" />
 							<p:inputText id="lastName"
 								placeholder="#{i18n['empForm.personal_information_lastName']}"
 								value="#{employeeBean.modifyEmployeeInfoItem.user.lastName}"
@@ -67,91 +65,135 @@
 								label="#{i18n['empForm.personal_information_lastName']}">
 								<f:validateLength minimum="1" maximum="30" />
 								<p:ajax update="lastName_msg" event="keyup" />
+								<p:ajax event="blur" update="emailAddress username"
+									listener="#{employeeBean.onLastNameBlur}" />
 							</p:inputText>
-
 							<p:message for="lastName" id="lastName_msg" display="icon" />
-							<p:tooltip for="lastName" value="Last Name" showEffect="clip"
-								hideEffect="explode" />
-							<p:inputText id="emailAddress" type="email"
-								placeholder="#{i18n['empForm.personal_information_email']}"
-								value="#{employeeBean.modifyEmployeeInfoItem.user.emailAddress}"
-								required="true"
-								label="#{i18n['empForm.personal_information_email']}">
-								<f:attribute name="userId"
-									value="#{employeeBean.modifyEmployeeInfoItem.user.userId}" />
-								<f:validator validatorId="employeeEmailValidator" />
 
-								<p:ajax update="emailAddressMsg" event="keyup" />
-							</p:inputText>
-
-							<p:message for="emailAddress" id="emailAddressMsg" display="icon" />
-							<p:tooltip for="emailAddress" value="Email Address"
-								showEffect="clip" hideEffect="explode" />
-
-							<p:inputText id="companyEmailAddress" type="email"
-								placeholder="#{i18n['empForm.personal_information_companyEmail']}"
-								value="#{employeeBean.modifyEmployeeInfoItem.emp.companyEmailAddress}"
-								label="#{i18n['empForm.personal_information_companyEmail']}">
-							</p:inputText>
-							<p:message for="companyEmailAddress" id="companyEmailAddressMsg"
-								display="icon" />
-							<p:tooltip for="companyEmailAddress" value="Company Email"
-								showEffect="clip" hideEffect="explode" />
-
-							<p:selectOneRadio id="gender"
-								value="#{employeeBean.modifyEmployeeInfoItem.emp.gender}"
-								required="true">
-								<f:selectItem itemLabel="Male" itemValue="Male" />
-								<f:selectItem itemLabel="Female" itemValue="Female" />
-							</p:selectOneRadio>
-
-							<p:message for="gender" display="icon" />
-							<p:tooltip for="gender" value="Gender" showEffect="clip"
-								hideEffect="explode" />
-						</h:panelGroup>
-						<h:panelGroup>
-							<p:inputText id="empCode"
-								placeholder="#{i18n['empForm.personal_information_employee_code']}"
-								value="#{employeeBean.modifyEmployeeInfoItem.emp.empCode}"
-								label="#{i18n['empForm.personal_information_employee_code']}"
-								required="true">
-								<f:validateLength minimum="2" maximum="6" />
-								<p:ajax update="employeeCodeMsg" event="keyup" />
-							</p:inputText>
-							<p:message id="employeeCodeMsg" for="empCode" display="icon" />
-							<p:tooltip for="empCode" value="Employee Code" showEffect="clip"
-								hideEffect="explode" />
-
-
+							<h:outputText value="Date of Birth" />
 							<p:calendar id="birthday" placeholder="Birthday" navigator="true"
 								value="#{employeeBean.modifyEmployeeInfoItem.emp.birthday}"
 								maxdate="#{employeeBean.maxBirthdayDate}" mask="true"
-								pattern="dd/MM/yyyy" required="true">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</p:calendar>
+								pattern="dd/MM/yyyy" required="true"
+								validatorMessage="Date of Birth required" />
 							<p:message for="birthday" display="icon" />
-							<p:tooltip for="birthday" value="Birthday" showEffect="clip"
-								hideEffect="explode" />
 
+							<h:outputText value="Place of Birth" />
 							<p:inputText id="placeOfBirth"
 								value="#{employeeBean.modifyEmployeeInfoItem.emp.placeOfBirth}"
 								placeholder="#{i18n['empForm.personal_information_pob']}"
 								label="#{i18n['empForm.personal_information_pob']}" />
 							<p:message for="placeOfBirth" display="icon" />
-							<p:tooltip for="placeOfBirth" value="Place of Birth"
-								showEffect="clip" hideEffect="explode" />
 
+							<h:outputText value="Identity Card No" />
+							<p:inputText id="identityCardNo"
+								value="#{employeeBean.modifyEmployeeInfoItem.emp.identityCardNo}"
+								placeholder="Identity Card No">
+							</p:inputText>
+							<p:message for="identityCardNo" display="icon" />
+
+							<h:outputText value="Email" />
+							<p:inputText id="emailAddress" type="email"
+								placeholder="#{i18n['empForm.personal_information_email']}"
+								value="#{employeeBean.modifyEmployeeInfoItem.user.emailAddress}"
+								required="true" requiredMessage="Email address is required"
+								label="#{i18n['empForm.personal_information_email']}">
+								<f:attribute name="userId"
+									value="#{employeeBean.modifyEmployeeInfoItem.user.userId}" />
+								<f:validator validatorId="employeeEmailValidator" />
+								<p:ajax update="emailAddressMsg" event="keyup" />
+							</p:inputText>
+
+							<h:panelGroup>
+								<p:commandLink actionListener="#{employeeBean.onGenerateEmail}"
+									rendered="#{employeeBean.showUserTab}" value="Generate"
+									immediate="true" update=":modifyForm:accordion:emailAddress">
+									<p:resetInput target=":modifyForm:accordion:emailAddress" />
+								</p:commandLink>
+								<p:message for="emailAddress" id="emailAddressMsg"
+									display="icon" />
+							</h:panelGroup>
+
+							<h:outputText value="Contact Number" />
 							<p:inputText id="contactNumber"
 								value="#{employeeBean.modifyEmployeeInfoItem.emp.contactNumber}"
 								placeholder="#{i18n['empForm.personal_information_contact_number']}"
 								label="#{i18n['empForm.personal_information_contact_number']}" />
 							<p:message for="contactNumber" display="icon" />
-							<p:tooltip for="contactNumber" value="Contact Number"
-								showEffect="clip" hideEffect="explode" />
-						</h:panelGroup>
+
+						</h:panelGrid>
+
+						<h:panelGrid>
+							<h:panelGrid columns="4">
+								<h:outputText value="Gender" />
+								<p:selectOneRadio id="gender"
+									value="#{employeeBean.modifyEmployeeInfoItem.emp.gender}"
+									required="true">
+									<f:selectItem itemLabel="Male" itemValue="Male" />
+									<f:selectItem itemLabel="Female" itemValue="Female" />
+								</p:selectOneRadio>
+
+								<p:message for="gender" display="icon" />
+								<p:tooltip for="gender" value="Gender" showEffect="clip"
+									hideEffect="explode" />
+
+								<h:outputText value="Employee Code" />
+								<p:inputText id="empCode"
+									placeholder="#{i18n['empForm.personal_information_employee_code']}"
+									value="#{employeeBean.modifyEmployeeInfoItem.emp.empCode}"
+									label="#{i18n['empForm.personal_information_employee_code']}"
+									required="true" requiredMessage="Employee Code is required"
+									style="width: 90px">
+									<f:attribute name="empId"
+										value="#{employeeBean.modifyEmployeeInfoItem.emp.empId}" />
+									<f:validator validatorId="empCodeValidator" />
+									<p:ajax update="empCodeMsg" event="keyup" />
+								</p:inputText>
+								<p:message id="empCodeMsg" for="empCode" display="icon" />
+								<p:tooltip for="empCode" value="Employee Code" showEffect="clip"
+									hideEffect="explode" />
+
+								<h:outputText value="Company Email" />
+								<p:inputText id="companyEmailAddress" type="email"
+									placeholder="#{i18n['empForm.personal_information_companyEmail']}"
+									value="#{employeeBean.modifyEmployeeInfoItem.emp.companyEmailAddress}"
+									label="#{i18n['empForm.personal_information_companyEmail']}">
+									<f:validator validatorId="emailValidator" />
+									<p:ajax event="keyup" update="companyEmailAddressMsg" />
+								</p:inputText>
+								<p:message for="companyEmailAddress" id="companyEmailAddressMsg"
+									display="icon" />
+								<p:tooltip for="companyEmailAddress" value="Company Email"
+									showEffect="clip" hideEffect="explode" />
+							</h:panelGrid>
+						</h:panelGrid>
+
+						<h:panelGrid columns="3">
+							<h:panelGroup>
+								<h:outputText value="Ethnic " />
+								<br />
+								<p:inputText
+									value="#{employeeBean.modifyEmployeeInfoItem.emp.ethnic}"
+									style="width: 70px;" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText value="Religion " />
+								<br />
+								<p:inputText
+									value="#{employeeBean.modifyEmployeeInfoItem.emp.religion}"
+									style="width: 70px;" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText value="Nationality " />
+								<br />
+								<p:inputText
+									value="#{employeeBean.modifyEmployeeInfoItem.emp.nationality}"
+									style="width: 70px;" />
+							</h:panelGroup>
+						</h:panelGrid>
+
 					</p:panelGrid>
 				</p:tab>
-
 				<p:tab id="addresses" title="Address">
 					<h:panelGrid id="addressesPanelGrid">
 						<ui:repeat var="a" id="addressObjects"
@@ -159,10 +201,9 @@
 							varStatus="status">
 
 							<h:panelGroup id="addressItem" rendered="#{not a.UIDeleted}">
-								<p:commandButton immediate="true"
+								<p:commandLink immediate="true" value="X"
 									actionListener="#{employeeBean.removeOneAddress(status.index)}"
-									ajax="true" oncomplete="refreshAddresses();"
-									icon="fa fa-remove Fs16 White" styleClass="RedButton" />
+									ajax="true" oncomplete="refreshAddresses();" />
 								<h:panelGrid columns="2">
 									<h:panelGrid columns="2">
 										<h:outputText value="Street 1" />
@@ -221,8 +262,11 @@
 
 						<p:commandLink actionListener="#{employeeBean.addOneAddress}"
 							value="Add Address" immediate="true" ajax="true"
-							oncomplete="refreshAddresses();" />
+							process="@this,addressesPanelGrid" update="addressesPanelGrid" />
 					</h:panelGrid>
+				</p:tab>
+				<p:tab id="educationTab" title="Education">
+
 				</p:tab>
 
 				<p:tab id="personalDetails" title="Details">
@@ -253,7 +297,7 @@
 								converter="departmentConverter" effect="fade" filter="true"
 								filterMatchMode="contains" var="d">
 								<p:ajax
-									update="unitSelect unitGroupSelect newUnitCommandButton newTitlesCommandButton"
+									update="unitSelect unitGroupSelect titlesSelect newUnitCommandButton newTitlesCommandButton"
 									listener="#{employeeBean.onDepartmentChanged}" />
 
 								<f:selectItem itemLabel="Department" itemValue="" />
@@ -431,21 +475,10 @@
 				<p:tab id="other_information" title="Other Information">
 					<p:panelGrid columns="2" layout="grid">
 						<h:panelGrid columns="4">
-							<h:outputText value="Identity Card No" />
-							<p:inputText id="identityCardNo"
-								value="#{employeeBean.modifyEmployeeInfoItem.emp.identityCardNo}"
-								placeholder="Identity Card No">
-							</p:inputText>
-							<p:message for="identityCardNo" display="icon" />
-							<p:tooltip for="identityCardNo" value="Identity Card No"
-								showEffect="clip" hideEffect="explode" />
-
 							<h:outputText value="Issued Date" />
 							<p:calendar id="issuedDate" mask="false"
 								value="#{employeeBean.modifyEmployeeInfoItem.emp.issuedDate}"
-								pattern="dd/MM/yyyy" placeholder="Issued Date">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</p:calendar>
+								pattern="dd/MM/yyyy" placeholder="Issued Date" />
 							<p:message for="issuedDate" display="icon" />
 							<p:tooltip for="issuedDate" value="Issued Date" showEffect="clip"
 								hideEffect="explode" />
@@ -520,29 +553,33 @@
 								value="Health Insurance Place" showEffect="clip"
 								hideEffect="explode" />
 
-							<h:outputText value="Bank Account No" />
-							<p:inputText id="bankAccountNo"
-								value="#{employeeBean.modifyEmployeeInfoItem.emp.bankAccountNo}"
-								placeholder="Bank Account No" />
-							<p:message for="bankAccountNo" display="icon" />
-							<p:tooltip for="bankAccountNo" value="Bank Account No"
-								showEffect="clip" hideEffect="explode" />
+							<h:outputText value="Bank No" />
+							<p:inputText id="bankNo" placeholder="Bank No"
+								value="#{employeeBean.modifyEmployeeInfoItem.bankInfos[0].empBankInfo.bankAccountNo}" />
+							<p:message for="bankNo" display="icon" />
+							<p:tooltip for="bankNo" value="Bank No" showEffect="clip"
+								hideEffect="explode" />
 
 							<h:outputText value="Bank Name" />
-							<p:inputText id="bankName"
-								value="#{employeeBean.modifyEmployeeInfoItem.emp.bankName}"
-								placeholder="Bank Name" />
+							<p:inputText id="bankName" placeholder="Bank Name"
+								value="#{employeeBean.modifyEmployeeInfoItem.bankInfos[0].empBankInfo.bankName}" />
 							<p:message for="bankName" display="icon" />
 							<p:tooltip for="bankName" value="Bank Name" showEffect="clip"
 								hideEffect="explode" />
 
-							<h:outputText value="Bank Branch Name" />
-							<p:inputText id="bankBranchName"
-								value="#{employeeBean.modifyEmployeeInfoItem.emp.bankBranchName}"
-								placeholder="Bank Branch Name" />
-							<p:message for="bankBranchName" display="icon" />
-							<p:tooltip for="bankBranchName" value="Bank Branch Name"
-								showEffect="clip" hideEffect="explode" />
+							<h:outputText value="Branch" />
+							<p:inputText id="bankBranch" placeholder="Bank Branch"
+								value="#{employeeBean.modifyEmployeeInfoItem.bankInfos[0].empBankInfo.branchName}" />
+							<p:message for="bankBranch" display="icon" />
+							<p:tooltip for="bankBranch" value="Bank Branch" showEffect="clip"
+								hideEffect="explode" />
+
+							<h:outputText />
+							<p:commandLink value="View all bank info..."
+								onclick="PF('wBankInfoDialog').show()" />
+							<h:outputText />
+							<h:outputText />
+
 						</h:panelGrid>
 					</p:panelGrid>
 				</p:tab>
@@ -624,5 +661,115 @@
 			</p:commandButton>
 		</h:form>
 
+		<p:dialog id="modifyCertificateDialog" header="Modify Certificate">
+			<p:outputPanel autoUpdate="true">
+				<h:outputText value="Type" />
+
+			</p:outputPanel>
+		</p:dialog>
+
+
+		<eco:organizationDialog wVar="wDevisionDialog" title="New Devision"
+			entityName="#{devisionBean.devision.name}"
+			onSave="#{devisionBean.onSave}"
+			update=":modifyForm:accordion:devisionSelect :growl">
+			<p:panelGrid columns="2">
+				<h:outputText value="Working Location"
+					styleClass="organizationLabel" />
+				<p:selectOneMenu id="workingLocationSelect"
+					value="#{employeeBean.location}" converter="locationConverter"
+					effect="fade" filter="true" filterMatchMode="contains" var="w">
+					<f:selectItem itemLabel="Working Location" itemValue="" />
+					<f:selectItems value="#{employeeBean.locations}" var="w"
+						itemLabel="#{w.name}" itemValue="#{w}" />
+					<p:column>
+					                #{w.name}
+					            </p:column>
+				</p:selectOneMenu>
+			</p:panelGrid>
+		</eco:organizationDialog>
+
+		<eco:organizationDialog wVar="wDepartmentDialog"
+			title="New Department" entityName="#{departmentBean.department.name}"
+			onSave="#{departmentBean.onSave}"
+			update=":modifyForm:accordion:departmentSelect :growl" />
+
+		<eco:organizationDialog wVar="wUnitDialog" title="New Unit"
+			entityName="#{unitBean.unit.name}" onSave="#{unitBean.onSave}"
+			update=":modifyForm:accordion:unitSelect :growl" />
+
+		<eco:organizationDialog wVar="wUnitGroupDialog" title="New Group"
+			entityName="#{unitGroupBean.unitGroup.name}"
+			onSave="#{unitGroupBean.onSave}"
+			update=":modifyForm:accordion:unitGroupSelect :growl" />
+
+		<eco:organizationDialog wVar="wTitlesDialog" title="Titles Dialog"
+			entityName="#{titlesBean.titles.name}" onSave="#{titlesBean.onSave}"
+			update=":modifyForm:accordion:titlesSelect :growl" />
+
+		<p:dialog widgetVar="wLevelDialog" header="Level Dialog" modal="true"
+			closeOnEscape="true">
+			<h:panelGrid columns="2">
+				<h:outputText value="Description" />
+				<p:inputText value="#{levelBean.level.name}" />
+			</h:panelGrid>
+			<p:commandButton value="Save" actionListener="#{levelBean.onSave}"
+				oncomplete="PF('wLevelDialog').hide()" ajax="true"
+				update=":modifyForm:accordion:levelSelect :growl" /> |  
+			<p:commandLink value="Cancel" onclick="PF('wLevelDialog').hide()" />
+		</p:dialog>
+
+		<h:form id="bankInfoForm">
+			<p:dialog widgetVar="wBankInfoDialog"
+				header="Bank Information Dialog" showHeader="false" modal="true"
+				height="500" draggable="true">
+				<p:outputPanel autoUpdate="true" id="bankInfosOutputPanel">
+					<h:panelGrid id="bankInfosPanelGrid">
+						<ui:repeat var="b" id="bankInfos"
+							value="#{employeeBean.modifyEmployeeInfoItem.bankInfos}"
+							varStatus="status">
+							<h:panelGroup id="bankInfoItem">
+								<p:selectBooleanCheckbox value="#{b.UIDeleted}" />
+								<h:outputText value="Delete" />
+
+								<p:selectBooleanCheckbox style="margin-left: 10px" />
+								<h:outputText value="Main" />
+
+								<p:panelGrid columns="2">
+									<h:outputText value="Bank No" />
+									<p:inputText id="bankNo" value="#{b.empBankInfo.bankAccountNo}" />
+
+									<h:outputText value="Bank Name" />
+									<p:inputText id="bankName" value="#{b.empBankInfo.bankName}" />
+
+									<h:outputText value="Branch" />
+									<p:inputText id="bankBranch"
+										value="#{b.empBankInfo.branchName}" />
+
+								</p:panelGrid>
+							</h:panelGroup>
+						</ui:repeat>
+
+					</h:panelGrid>
+				</p:outputPanel>
+				<p:commandButton value="Save" styleClass="GreenButton RaisedButton"
+					actionListener="#{employeeBean.onSaveBankInfoChanges}"
+					update=":modifyForm" oncomplete="PF('wBankInfoDialog').hide()" /> |
+					
+				<p:commandLink actionListener="#{employeeBean.addOneBankInfo}"
+					value="Add Bank Info" immediate="true" ajax="true"
+					oncomplete="refreshBankInfos();" /> |
+					
+				<p:commandLink value="Cancel" onclick="PF('wBankInfoDialog').hide()"
+					style="margin-left: 3px" />
+			</p:dialog>
+		</h:form>
 	</h:body>
+	<style type="text/css">
+.personal-information-grid.ui-panelgrid>*>tr, .personal-information-grid.ui-panelgrid .ui-panelgrid-cell
+	{
+	border: none;
+}
+</style>
 </f:view>
+

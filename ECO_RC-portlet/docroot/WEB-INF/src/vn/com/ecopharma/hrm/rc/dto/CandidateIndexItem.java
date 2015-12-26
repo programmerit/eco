@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import vn.com.ecopharma.hrm.rc.constant.CandidateField;
 import vn.com.ecopharma.hrm.rc.dto.EvaluationItem.EvaluationKeyValueItem;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
-import vn.com.ecopharma.hrm.rc.enumeration.CertificateType;
+import vn.com.ecopharma.hrm.rc.enumeration.CandidateCertificateType;
 import vn.com.ecopharma.hrm.rc.enumeration.VacancyCandidateType;
 import vn.com.ecopharma.hrm.rc.model.CandidateEvaluation;
 import vn.com.ecopharma.hrm.rc.model.Certificate;
@@ -141,7 +141,7 @@ public class CandidateIndexItem implements Serializable {
 				Vacancy vacancy = VacancyLocalServiceUtil
 						.fetchVacancy(getVacancyId());
 				double requiredYearsExperience = vacancy.getExperiences();
-				CertificateType requiredCertificateType = CertificateType
+				CandidateCertificateType requiredCertificateType = CandidateCertificateType
 						.valueOf(vacancy.getCertificateType());
 				return EvaluationUtils
 						.calculateFinalEvaluationPointOfCandidate(

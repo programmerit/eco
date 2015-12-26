@@ -2,7 +2,7 @@ package vn.com.ecopharma.hrm.rc.util;
 
 import java.util.List;
 
-import vn.com.ecopharma.hrm.rc.enumeration.CertificateType;
+import vn.com.ecopharma.hrm.rc.enumeration.CandidateCertificateType;
 import vn.com.ecopharma.hrm.rc.model.Candidate;
 import vn.com.ecopharma.hrm.rc.model.Certificate;
 import vn.com.ecopharma.hrm.rc.model.Experience;
@@ -27,15 +27,15 @@ public class EvaluationUtils {
 	}
 
 	public static double calculateCandidateCertificatePoint(long candidateId,
-			CertificateType requiredCertificate) {
+			CandidateCertificateType requiredCertificate) {
 		final List<Certificate> certificates = CertificateLocalServiceUtil
 				.findByClassNameAndClassPK(Candidate.class.getName(),
 						candidateId);
 		double result = 0.0;
 		for (Certificate certificate : certificates) {
-			double currentCertificatePoint = CertificateType
+			double currentCertificatePoint = CandidateCertificateType
 					.getCertificateEvaluationPoint(requiredCertificate,
-							CertificateType.valueOf(certificate
+							CandidateCertificateType.valueOf(certificate
 									.getCertificateType()));
 			result = currentCertificatePoint > result ? currentCertificatePoint
 					: result;
@@ -59,7 +59,7 @@ public class EvaluationUtils {
 
 	public static int calculateFinalEvaluationPointOfCandidate(
 			long candidateId, double requiredYearsExperience,
-			CertificateType requiredCertificate) {
+			CandidateCertificateType requiredCertificate) {
 		double certificatePoint = calculateCandidateCertificatePoint(
 				candidateId, requiredCertificate);
 		double experiencePoint = calculateCandidateExperiencesPoint(

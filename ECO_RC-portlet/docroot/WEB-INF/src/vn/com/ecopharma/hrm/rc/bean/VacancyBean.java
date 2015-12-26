@@ -24,7 +24,7 @@ import vn.com.ecopharma.hrm.rc.dm.VacancyLazyDM;
 import vn.com.ecopharma.hrm.rc.dto.DocumentItem;
 import vn.com.ecopharma.hrm.rc.dto.VacancyIndexItem;
 import vn.com.ecopharma.hrm.rc.dto.VacancyItem;
-import vn.com.ecopharma.hrm.rc.enumeration.CertificateType;
+import vn.com.ecopharma.hrm.rc.enumeration.CandidateCertificateType;
 import vn.com.ecopharma.hrm.rc.enumeration.VacancyStatus;
 import vn.com.ecopharma.hrm.rc.model.Vacancy;
 import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
@@ -292,11 +292,11 @@ public class VacancyBean extends PersistableBean {
 	}
 
 	public List<String> getCertificateTypes() {
-		return CertificateType.getAll();
+		return CandidateCertificateType.getAll();
 	}
 
 	public String getTypeLocalizedString(String type) {
-		return CertificateType.valueOf(type).getLocalizedString();
+		return CandidateCertificateType.valueOf(type).getLocalizedString();
 	}
 
 }

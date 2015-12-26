@@ -10,7 +10,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
@@ -32,6 +31,7 @@ import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.dto.AddressObjectItem;
+import vn.com.ecopharma.hrm.rc.dto.BankInfoObject;
 import vn.com.ecopharma.hrm.rc.dto.CandidateIndexItem;
 import vn.com.ecopharma.hrm.rc.dto.CandidateItem;
 import vn.com.ecopharma.hrm.rc.dto.DependentName;
@@ -51,6 +51,7 @@ import vn.com.ecopharma.hrm.rc.util.EmployeeUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.service.CountryServiceUtil;
@@ -85,18 +86,18 @@ public class EmployeeBean implements Serializable {
 			modifyEmployeeInfoItem = transferCandidateInfo(candidateItem
 					.getCandidate());
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmployeeBean.class).info(e);
 		}
 	}
 
 	public EmpInfoItem transferCandidateInfo(
 			CandidateIndexItem candidateIndexItem) {
 		try {
-			Candidate candidate = CandidateLocalServiceUtil
+			Candidate c = CandidateLocalServiceUtil
 					.fetchCandidate(candidateIndexItem.getCandidateId());
-			modifyEmployeeInfoItem = transferCandidateInfo(candidate);
+			modifyEmployeeInfoItem = transferCandidateInfo(c);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmployeeBean.class).info(e);
 		}
 		return modifyEmployeeInfoItem;
 	}
@@ -141,6 +142,23 @@ public class EmployeeBean implements Serializable {
 				.fetchTitles(vacancy.getTitlesId()) : null);
 		getCountriesList();
 		return employeeInfoItem;
+	}
+
+	public void addOneAddress() {
+		modifyEmployeeInfoItem.getAddresses().add(new AddressObjectItem());
+	}
+
+	public void removeOneAddress(int index) {
+		modifyEmployeeInfoItem.getAddresses().get(index).setUIDeleted(true);
+	}
+
+	public void addOneBankInfo() {
+		if (modifyEmployeeInfoItem.getBankInfos().size() < 3)
+			modifyEmployeeInfoItem.getBankInfos().add(new BankInfoObject());
+	}
+
+	public void removeOneBankInfo(int index) {
+		modifyEmployeeInfoItem.getBankInfos().get(index).setUIDeleted(true);
 	}
 
 	/**
@@ -234,20 +252,33 @@ public class EmployeeBean implements Serializable {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmployeeBean.class).info(e);
 		}
 	}
 
-	public void addOneAddress(ActionEvent event) {
-		modifyEmployeeInfoItem.getAddresses().add(new AddressObjectItem());
+	/**
+	 * @param event
+	 */
+	public void onGenerateUserName() {
+		String username = generateUsername();
+		modifyEmployeeInfoItem.setUserName(username);
 	}
 
-	public void removeOneAddress(int index) {
-		modifyEmployeeInfoItem.getAddresses().get(index).setUIDeleted(true);
+	public void onGenerateEmail() {
+		String username = generateUsername();
+		String emailAddress = EmployeeUtils.generateEmailByUsername(username);
+		modifyEmployeeInfoItem.getUser().setEmailAddress(emailAddress);
+	}
+
+	public void onLastNameBlur() {
+		String username = generateUsername();
+		String emailAddress = EmployeeUtils.generateEmailByUsername(username);
+		modifyEmployeeInfoItem.setUserName(username);
+		modifyEmployeeInfoItem.getUser().setEmailAddress(emailAddress);
 	}
 
 	// Dependent Names action part
-	public void onAddDependence(ActionEvent e) {
+	public void onAddDependence() {
 		modifyEmployeeInfoItem.getDependentNames().add(
 				new DependentName("", false));
 	}
@@ -267,7 +298,7 @@ public class EmployeeBean implements Serializable {
 									.getAddresses().get(index).getCountry()
 									.getCountryId()));
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmployeeBean.class).info(e);
 		}
 	}
 
@@ -309,16 +340,15 @@ public class EmployeeBean implements Serializable {
 
 	public List<Unit> getUnits() {
 		final Department empDepartment = modifyEmployeeInfoItem.getDepartment();
-		final List<Unit> units = empDepartment != null ? UnitLocalServiceUtil
+		return empDepartment != null ? UnitLocalServiceUtil
 				.findByDepartment(empDepartment.getDepartmentId())
 				: new ArrayList<Unit>();
-		return units;
 	}
 
 	public List<Department> getDepartments() {
 		List<Department> departments = modifyEmployeeInfoItem.getDevision() != null ? DepartmentLocalServiceUtil
-				.findByDevision((modifyEmployeeInfoItem.getDevision()
-						.getDevisionId())) : new ArrayList<Department>();
+				.findByDevision(modifyEmployeeInfoItem.getDevision()
+						.getDevisionId()) : new ArrayList<Department>();
 		if (departments.isEmpty()
 				|| !departments
 						.contains(modifyEmployeeInfoItem.getDepartment())) {
@@ -353,7 +383,7 @@ public class EmployeeBean implements Serializable {
 	}
 
 	public List<String> getLaborContractTypes() {
-		final List<String> results = new ArrayList<String>();
+		final List<String> results = new ArrayList<>();
 		for (LaborContractType laborContractType : LaborContractType.values()) {
 			results.add(laborContractType.toString());
 		}
@@ -364,7 +394,7 @@ public class EmployeeBean implements Serializable {
 		try {
 			countries = CountryServiceUtil.getCountries(true);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmployeeBean.class).info(e);
 		}
 	}
 
@@ -388,5 +418,22 @@ public class EmployeeBean implements Serializable {
 
 	public void setAutoPassword(boolean autoPassword) {
 		this.autoPassword = autoPassword;
+	}
+
+	private String generateUsername() {
+		final String defaultUsername = "user" + System.currentTimeMillis();
+		if (modifyEmployeeInfoItem != null
+				&& modifyEmployeeInfoItem.getUser().getFirstName() != null
+				&& modifyEmployeeInfoItem.getUser().getMiddleName() != null
+				&& modifyEmployeeInfoItem.getUser().getLastName() != null) {
+			final String generatedUsername = EmployeeUtils
+					.generateUsername(EmployeeUtils
+							.getFullnameFromUser(modifyEmployeeInfoItem
+									.getUser()));
+			return StringUtils.trimToNull(generatedUsername) != null ? generatedUsername
+					: defaultUsername;
+
+		}
+		return defaultUsername;
 	}
 }
