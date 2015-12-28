@@ -295,6 +295,15 @@ public class EmpLocalServiceUtil {
 		return getService().findByUser(empUserId);
 	}
 
+	public static java.util.List<vn.com.ecopharma.emp.model.Emp> findByTitles(
+		long titlesId) {
+		return getService().findByTitles(titlesId);
+	}
+
+	public static java.util.List<vn.com.ecopharma.emp.model.Emp> findResignedEmp() {
+		return getService().findResignedEmp();
+	}
+
 	public static boolean isOnAddingNewWithSameEmployeeCode(
 		long prePersistedEmpId, java.lang.String empCode) {
 		return getService()

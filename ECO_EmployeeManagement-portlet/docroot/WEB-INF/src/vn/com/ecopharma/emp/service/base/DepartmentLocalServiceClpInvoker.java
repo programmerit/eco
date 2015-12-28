@@ -128,31 +128,35 @@ public class DepartmentLocalServiceClpInvoker {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName139 = "findByNameAndDevision";
+		_methodName139 = "createPrePersistedDepartment";
 
-		_methodParameterTypes139 = new String[] { "java.lang.String", "long" };
+		_methodParameterTypes139 = new String[] {  };
 
-		_methodName140 = "findByDevision";
+		_methodName140 = "findByNameAndDevision";
 
-		_methodParameterTypes140 = new String[] { "long" };
+		_methodParameterTypes140 = new String[] { "java.lang.String", "long" };
 
-		_methodName141 = "addDepartment";
+		_methodName141 = "findByDevision";
 
-		_methodParameterTypes141 = new String[] {
-				"java.lang.String", "long",
-				"com.liferay.portal.service.ServiceContext"
-			};
+		_methodParameterTypes141 = new String[] { "long" };
 
 		_methodName142 = "addDepartment";
 
 		_methodParameterTypes142 = new String[] {
+				"java.lang.String", "long",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName143 = "addDepartment";
+
+		_methodParameterTypes143 = new String[] {
 				"vn.com.ecopharma.emp.model.Department",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName143 = "completelyRemoveAll";
+		_methodName144 = "completelyRemoveAll";
 
-		_methodParameterTypes143 = new String[] {  };
+		_methodParameterTypes144 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -276,30 +280,35 @@ public class DepartmentLocalServiceClpInvoker {
 
 		if (_methodName139.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
-			return DepartmentLocalServiceUtil.findByNameAndDevision((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue());
+			return DepartmentLocalServiceUtil.createPrePersistedDepartment();
 		}
 
 		if (_methodName140.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
-			return DepartmentLocalServiceUtil.findByDevision(((Long)arguments[0]).longValue());
+			return DepartmentLocalServiceUtil.findByNameAndDevision((java.lang.String)arguments[0],
+				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName141.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
+			return DepartmentLocalServiceUtil.findByDevision(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName142.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
 			return DepartmentLocalServiceUtil.addDepartment((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
 		}
 
-		if (_methodName142.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
+		if (_methodName143.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
 			return DepartmentLocalServiceUtil.addDepartment((vn.com.ecopharma.emp.model.Department)arguments[0],
 				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
 
-		if (_methodName143.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
+		if (_methodName144.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
 			DepartmentLocalServiceUtil.completelyRemoveAll();
 
 			return null;
@@ -360,4 +369,6 @@ public class DepartmentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes142;
 	private String _methodName143;
 	private String[] _methodParameterTypes143;
+	private String _methodName144;
+	private String[] _methodParameterTypes144;
 }

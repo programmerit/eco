@@ -33,6 +33,7 @@ import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
+import vn.com.ecopharma.emp.util.ImportExportUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -138,7 +139,7 @@ public class EmployeeImportExportBean implements Serializable {
 	public StreamedContent getGeneratedDownloadFile() {
 		final EmployeeExportType exportType = EmployeeExportType
 				.valueOf(presetType.toUpperCase());
-		Workbook wb = EmployeeUtils.generateAndGetExportExcelWorkbook(
+		Workbook wb = ImportExportUtils.generateAndGetExportExcelWorkbook(
 				exportType, exportList);
 
 		try {

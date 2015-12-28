@@ -4,8 +4,12 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
+
 import vn.com.ecopharma.emp.constant.ResignationHistoryField;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 
 public class ResignationHistoryIndexedItem implements Serializable {
@@ -14,10 +18,29 @@ public class ResignationHistoryIndexedItem implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(ResignationHistoryIndexedItem.class);
+
+	private Date resignedDate;
+	private String comment;
+	private String resignedType;
+
 	private Document document;
 
 	public ResignationHistoryIndexedItem(Document document) {
 		this.document = document;
+		this.resignedType = document
+				.getField(ResignationHistoryField.RESIGNED_TYPE) != null ? document
+				.getField(ResignationHistoryField.RESIGNED_TYPE).getValue()
+				: StringUtils.EMPTY;
+		this.comment = document.getField(ResignationHistoryField.COMMENT) != null ? document
+				.getField(ResignationHistoryField.COMMENT).getValue() : "N/A";
+		try {
+			this.resignedDate = document
+					.getDate(ResignationHistoryField.RESIGNED_DATE);
+		} catch (ParseException e) {
+			LOGGER.info(e);
+		}
 	}
 
 	public long getResignationHistoryId() {
@@ -39,27 +62,32 @@ public class ResignationHistoryIndexedItem implements Serializable {
 	}
 
 	public Date getResignedDate() {
-		try {
-			return document.getDate(ResignationHistoryField.RESIGNED_DATE);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return resignedDate;
 	}
 
-	public String getResignedReason() {
-		return document.getField(ResignationHistoryField.RESIGNED_TYPE)
-				.getValue();
+	public String getResignedType() {
+		return resignedType;
 	}
 
 	public String getComment() {
-		return document.getField(ResignationHistoryField.COMMENT) != null ? document
-				.getField(ResignationHistoryField.COMMENT).getValue() : "N/A";
+		return comment;
+	}
+
+	public void setResignedType(String resignedType) {
+		this.resignedType = resignedType;
+	}
+
+	public void setResignedDate(Date resignedDate) {
+		this.resignedDate = resignedDate;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	public boolean isDeleted() {
-		return document.getField(ResignationHistoryField.IS_DELETED).getValue()
-				.equalsIgnoreCase("true");
+		return "true".equalsIgnoreCase(document.getField(
+				ResignationHistoryField.IS_DELETED).getValue());
 	}
 
 }

@@ -360,7 +360,7 @@
 								converter="titlesConverter" effect="fade" filter="true"
 								filterMatchMode="contains" var="t" required="true"
 								validatorMessage="[Titles] is required">
-
+								<p:ajax listener="#{empView.onTitlesChanged}" />
 								<f:selectItem itemLabel="Titles" itemValue="" />
 								<f:selectItems value="#{empView.titlesList}" var="t"
 									itemLabel="#{t.name}" itemValue="#{t}" />
@@ -369,9 +369,17 @@
 					                #{t.name}
 					            </p:column>
 							</p:selectOneMenu>
-							<p:commandLink value="Add" id="newTitlesCommandButton"
-								disabled="#{empView.modifyEmployeeInfoItem.unit == null and empView.modifyEmployeeInfoItem.department == null}"
-								onclick="PF('wTitlesDialog').show()" />
+							<h:panelGroup>
+								<p:commandLink value="Add" id="newTitlesCommandButton"
+									disabled="#{empView.modifyEmployeeInfoItem.unit == null and empView.modifyEmployeeInfoItem.department == null}"
+									onclick="PF('wTitlesDialog').show();" /> | 
+								
+								<p:commandLink value="Edit" id="editTitlesCommandButton"
+									actionListener="#{empView.onEditTitles}"
+									oncomplete="PF('wTitlesDialog').show();"
+									disabled="#{empView.modifyEmployeeInfoItem.titles == null}"
+									style="margin-left: 2px" />
+							</h:panelGroup>
 
 							<h:outputText value="Level" />
 							<p:selectOneMenu id="levelSelect"

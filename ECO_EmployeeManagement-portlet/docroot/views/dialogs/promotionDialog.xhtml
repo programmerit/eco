@@ -14,7 +14,7 @@
 		<h:form id="promotionForm">
 			<p:dialog widgetVar="wPromotionDialog" header="Promotion Form"
 				modal="true">
-				<p:outputPanel id="promotionOutputPanel">
+				<p:outputPanel id="promotionOutputPanel" autoUpdate="true">
 					<p:panelGrid columns="2">
 						<h:outputText value="Fullname" />
 						<h:outputText id="pFullName"
@@ -24,19 +24,85 @@
 						<h:outputText id="pTitles" value="#{promotionBean.oldTitles.name}" />
 
 						<h:outputText value="Promoted Titles" />
-						<p:selectOneMenu id="titlesSelect"
-							value="#{promotionBean.promotedTitles}"
-							converter="titlesConverter" effect="fade" filter="true"
-							filterMatchMode="contains" var="t" required="true">
+						<h:panelGrid columns="2">
 
-							<f:selectItem itemLabel="Titles" itemValue="" />
-							<f:selectItems value="#{promotionBean.titlesList}" var="t"
-								itemLabel="#{t.name}" itemValue="#{t}" />
+							<h:outputText value="Devision" />
+							<p:selectOneMenu id="devisionSelect"
+								value="#{promotionBean.devision}" converter="devisionConverter"
+								effect="fade" filter="true" filterMatchMode="contains" var="d">
+								<p:ajax
+									update="departmentSelect unitSelect unitGroupSelect titlesSelect"
+									listener="#{promotionBean.onDevisionChanged}" />
 
-							<p:column>
-					                #{t.titlesId} - #{t.name}
+								<f:selectItem itemLabel="Devision" itemValue="" />
+								<f:selectItems value="#{promotionBean.devisions}" var="d"
+									itemLabel="#{d.name}" itemValue="#{d}" />
+								<p:column>
+					                #{d.name}
 					            </p:column>
-						</p:selectOneMenu>
+							</p:selectOneMenu>
+
+							<h:outputText value="Department" />
+							<p:selectOneMenu id="departmentSelect"
+								value="#{promotionBean.department}"
+								converter="departmentConverter" effect="fade" filter="true"
+								filterMatchMode="contains" var="d">
+								<p:ajax update="unitSelect unitGroupSelect titlesSelect"
+									listener="#{promotionBean.onDepartmentChanged}" />
+
+								<f:selectItem itemLabel="Department" itemValue="" />
+								<f:selectItems value="#{promotionBean.departments}" var="d"
+									itemLabel="#{d.name}" itemValue="#{d}" />
+								<p:column>
+					                #{d.name}
+					            </p:column>
+							</p:selectOneMenu>
+
+							<h:outputText value="Unit" />
+							<p:selectOneMenu id="unitSelect" value="#{promotionBean.unit}"
+								converter="unitConverter" effect="fade" filter="true"
+								filterMatchMode="contains" var="u">
+								<p:ajax update="unitGroupSelect titlesSelect"
+									listener="#{promotionBean.onUnitChanged}" />
+
+								<f:selectItem itemLabel="Unit" itemValue="" />
+								<f:selectItems value="#{promotionBean.units}" var="u"
+									itemLabel="#{u.name}" itemValue="#{u}" />
+								<p:column>
+					                #{u.name}
+					            </p:column>
+							</p:selectOneMenu>
+
+							<h:outputText value="Group" />
+							<p:selectOneMenu id="unitGroupSelect"
+								value="#{promotionBean.unitGroup}"
+								converter="unitGroupConverter" effect="fade" filter="true"
+								filterMatchMode="contains" var="g">
+								<p:ajax update="titlesSelect"
+									listener="#{promotionBean.onUnitGroupChanged}" />
+
+								<f:selectItem itemLabel="Group" itemValue="" />
+								<f:selectItems value="#{promotionBean.unitGroups}" var="g"
+									itemLabel="#{g.name}" itemValue="#{g}" />
+								<p:column>
+					                #{g.name}
+					            </p:column>
+							</p:selectOneMenu>
+
+							<h:outputText value="Titles" />
+							<p:selectOneMenu id="titlesSelect"
+								value="#{promotionBean.titles}" converter="titlesConverter"
+								effect="fade" filter="true" filterMatchMode="contains" var="t"
+								required="true" validatorMessage="[Titles] is required">
+
+								<f:selectItem itemLabel="Titles" itemValue="" />
+								<f:selectItems value="#{promotionBean.titlesList}" var="t"
+									itemLabel="#{t.name}" itemValue="#{t}" />
+								<p:column>
+					                #{t.name}
+					            </p:column>
+							</p:selectOneMenu>
+						</h:panelGrid>
 
 						<h:outputText value="Promoted Date" />
 						<p:calendar pattern="dd/MM/yyyy"
@@ -53,6 +119,7 @@
 					actionListener="#{promotionBean.onSave}" update=":growl"
 					oncomplete="refreshEmployees(); PF('wPromotionDialog').hide()" />
 				<p:commandButton value="Cancel"
+					actionListener="#{promotionBean.onCancelEdit}"
 					onclick="PF('wPromotionDialog').hide()">
 					<p:resetInput target="promotionForm" />
 				</p:commandButton>

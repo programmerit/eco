@@ -309,6 +309,17 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 	}
 
 	@Override
+	public java.util.List<vn.com.ecopharma.emp.model.Emp> findByTitles(
+		long titlesId) {
+		return _empLocalService.findByTitles(titlesId);
+	}
+
+	@Override
+	public java.util.List<vn.com.ecopharma.emp.model.Emp> findResignedEmp() {
+		return _empLocalService.findResignedEmp();
+	}
+
+	@Override
 	public boolean isOnAddingNewWithSameEmployeeCode(long prePersistedEmpId,
 		java.lang.String empCode) {
 		return _empLocalService.isOnAddingNewWithSameEmployeeCode(prePersistedEmpId,

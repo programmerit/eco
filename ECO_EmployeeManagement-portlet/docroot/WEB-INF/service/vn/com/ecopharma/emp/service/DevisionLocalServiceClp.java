@@ -128,26 +128,30 @@ public class DevisionLocalServiceClp implements DevisionLocalService {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName22 = "addDevision";
+		_methodName22 = "createPrePersistedDevision";
 
-		_methodParameterTypes22 = new String[] {
-				"java.lang.String", "com.liferay.portal.service.ServiceContext"
-			};
+		_methodParameterTypes22 = new String[] {  };
 
 		_methodName23 = "addDevision";
 
 		_methodParameterTypes23 = new String[] {
+				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName24 = "addDevision";
+
+		_methodParameterTypes24 = new String[] {
 				"vn.com.ecopharma.emp.model.Devision",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName24 = "findByName";
+		_methodName25 = "findByName";
 
-		_methodParameterTypes24 = new String[] { "java.lang.String" };
+		_methodParameterTypes25 = new String[] { "java.lang.String" };
 
-		_methodName25 = "completelyDeleteAll";
+		_methodName26 = "completelyDeleteAll";
 
-		_methodParameterTypes25 = new String[] {  };
+		_methodParameterTypes26 = new String[] {  };
 	}
 
 	@Override
@@ -776,14 +780,37 @@ public class DevisionLocalServiceClp implements DevisionLocalService {
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.Devision createPrePersistedDevision() {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.Devision)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.Devision addDevision(
 		java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] {
 						ClpSerializer.translateInput(name),
 						
@@ -812,8 +839,8 @@ public class DevisionLocalServiceClp implements DevisionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23,
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] {
 						ClpSerializer.translateInput(devision),
 						
@@ -840,8 +867,8 @@ public class DevisionLocalServiceClp implements DevisionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] { ClpSerializer.translateInput(name) });
 		}
 		catch (Throwable t) {
@@ -862,8 +889,8 @@ public class DevisionLocalServiceClp implements DevisionLocalService {
 	@Override
 	public void completelyDeleteAll() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName25,
-				_methodParameterTypes25, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName26,
+				_methodParameterTypes26, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -929,4 +956,6 @@ public class DevisionLocalServiceClp implements DevisionLocalService {
 	private String[] _methodParameterTypes24;
 	private String _methodName25;
 	private String[] _methodParameterTypes25;
+	private String _methodName26;
+	private String[] _methodParameterTypes26;
 }

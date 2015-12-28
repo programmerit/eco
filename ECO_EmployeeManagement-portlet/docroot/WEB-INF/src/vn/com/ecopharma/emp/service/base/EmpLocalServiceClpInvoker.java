@@ -130,35 +130,43 @@ public class EmpLocalServiceClpInvoker {
 
 		_methodParameterTypes140 = new String[] { "long" };
 
-		_methodName141 = "isOnAddingNewWithSameEmployeeCode";
+		_methodName141 = "findByTitles";
 
-		_methodParameterTypes141 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes141 = new String[] { "long" };
 
-		_methodName142 = "countAllUnDeletedIndexedEmpDocuments";
+		_methodName142 = "findResignedEmp";
 
-		_methodParameterTypes142 = new String[] {
+		_methodParameterTypes142 = new String[] {  };
+
+		_methodName143 = "isOnAddingNewWithSameEmployeeCode";
+
+		_methodParameterTypes143 = new String[] { "long", "java.lang.String" };
+
+		_methodName144 = "countAllUnDeletedIndexedEmpDocuments";
+
+		_methodParameterTypes144 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort"
 			};
 
-		_methodName143 = "searchAllUnDeletedEmpIndexedDocument";
+		_methodName145 = "searchAllUnDeletedEmpIndexedDocument";
 
-		_methodParameterTypes143 = new String[] {
+		_methodParameterTypes145 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName144 = "addEmp";
+		_methodName146 = "addEmp";
 
-		_methodParameterTypes144 = new String[] {
+		_methodParameterTypes146 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName145 = "addEmp";
+		_methodName147 = "addEmp";
 
-		_methodParameterTypes145 = new String[] {
+		_methodParameterTypes147 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp", "boolean", "java.lang.String",
 				"java.lang.String", "boolean", "java.lang.String",
 				"java.lang.String", "long", "java.lang.String",
@@ -169,9 +177,9 @@ public class EmpLocalServiceClpInvoker {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName146 = "updateEmp";
+		_methodName148 = "updateEmp";
 
-		_methodParameterTypes146 = new String[] {
+		_methodParameterTypes148 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp",
 				"com.liferay.portal.model.User", "java.lang.String",
 				"java.lang.String", "boolean", "java.lang.String",
@@ -183,9 +191,9 @@ public class EmpLocalServiceClpInvoker {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName147 = "updateEmp";
+		_methodName149 = "updateEmp";
 
-		_methodParameterTypes147 = new String[] {
+		_methodParameterTypes149 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp",
 				"com.liferay.portal.model.User", "java.lang.String",
 				"java.lang.String", "boolean", "java.lang.String",
@@ -195,26 +203,26 @@ public class EmpLocalServiceClpInvoker {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName148 = "addEmp";
+		_methodName150 = "addEmp";
 
-		_methodParameterTypes148 = new String[] {
+		_methodParameterTypes150 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp",
 				"com.liferay.portal.model.User", "java.util.Map",
 				"java.util.Map", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName149 = "update";
+		_methodName151 = "update";
 
-		_methodParameterTypes149 = new String[] {
+		_methodParameterTypes151 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp",
 				"com.liferay.portal.model.User", "long", "java.util.Map",
 				"java.util.Map", "java.util.Map", "boolean",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName150 = "createEmployee";
+		_methodName152 = "createEmployee";
 
-		_methodParameterTypes150 = new String[] {
+		_methodParameterTypes152 = new String[] {
 				"java.lang.String", "long", "long", "java.util.Date",
 				"java.util.Date", "java.util.Date", "java.util.Date",
 				"java.lang.String", "int", "java.util.Date", "java.lang.String",
@@ -225,9 +233,9 @@ public class EmpLocalServiceClpInvoker {
 				"java.lang.String", "java.lang.String"
 			};
 
-		_methodName151 = "updateExistedEmployee";
+		_methodName153 = "updateExistedEmployee";
 
-		_methodParameterTypes151 = new String[] {
+		_methodParameterTypes153 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp", "java.lang.String", "long",
 				"long", "java.util.Date", "java.util.Date", "java.util.Date",
 				"java.util.Date", "java.lang.String", "int", "java.util.Date",
@@ -239,55 +247,55 @@ public class EmpLocalServiceClpInvoker {
 				"java.lang.String"
 			};
 
-		_methodName153 = "searchAllEmpDocs";
+		_methodName155 = "searchAllEmpDocs";
 
-		_methodParameterTypes153 = new String[] {
+		_methodParameterTypes155 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long"
 			};
 
-		_methodName154 = "getIndexedEmp";
+		_methodName156 = "getIndexedEmp";
 
-		_methodParameterTypes154 = new String[] {
+		_methodParameterTypes156 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName155 = "getIndexedEmp";
+		_methodName157 = "getIndexedEmp";
 
-		_methodParameterTypes155 = new String[] {
+		_methodParameterTypes157 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName156 = "markDeletedEmp";
+		_methodName158 = "markDeletedEmp";
 
-		_methodParameterTypes156 = new String[] { "vn.com.ecopharma.emp.model.Emp" };
+		_methodParameterTypes158 = new String[] { "vn.com.ecopharma.emp.model.Emp" };
 
-		_methodName157 = "markDeletedEmp";
+		_methodName159 = "markDeletedEmp";
 
-		_methodParameterTypes157 = new String[] { "long" };
+		_methodParameterTypes159 = new String[] { "long" };
 
-		_methodName158 = "indexAllEmps";
+		_methodName160 = "indexAllEmps";
 
-		_methodParameterTypes158 = new String[] {  };
+		_methodParameterTypes160 = new String[] {  };
 
-		_methodName159 = "indexSomeEmps";
+		_methodName161 = "indexSomeEmps";
 
-		_methodParameterTypes159 = new String[] {  };
+		_methodParameterTypes161 = new String[] {  };
 
-		_methodName160 = "removeAllEmpIndexes";
+		_methodName162 = "removeAllEmpIndexes";
 
-		_methodParameterTypes160 = new String[] {
+		_methodParameterTypes162 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 
-		_methodName161 = "completelyRemoveAllEmp";
+		_methodName163 = "completelyRemoveAllEmp";
 
-		_methodParameterTypes161 = new String[] { "long" };
+		_methodParameterTypes163 = new String[] { "long" };
 
-		_methodName162 = "completelyRemoveAllEmpFromDB";
+		_methodName164 = "completelyRemoveAllEmpFromDB";
 
-		_methodParameterTypes162 = new String[] { "long" };
+		_methodParameterTypes164 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -421,20 +429,30 @@ public class EmpLocalServiceClpInvoker {
 
 		if (_methodName141.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
-			return EmpLocalServiceUtil.isOnAddingNewWithSameEmployeeCode(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1]);
+			return EmpLocalServiceUtil.findByTitles(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName142.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
+			return EmpLocalServiceUtil.findResignedEmp();
+		}
+
+		if (_methodName143.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
+			return EmpLocalServiceUtil.isOnAddingNewWithSameEmployeeCode(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
+		}
+
+		if (_methodName144.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
 			return EmpLocalServiceUtil.countAllUnDeletedIndexedEmpDocuments((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
 				((Long)arguments[2]).longValue(),
 				(com.liferay.portal.kernel.search.Sort)arguments[3]);
 		}
 
-		if (_methodName143.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
+		if (_methodName145.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
 			return EmpLocalServiceUtil.searchAllUnDeletedEmpIndexedDocument((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -443,13 +461,13 @@ public class EmpLocalServiceClpInvoker {
 				((Integer)arguments[5]).intValue());
 		}
 
-		if (_methodName144.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
+		if (_methodName146.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
 			return EmpLocalServiceUtil.addEmp((com.liferay.portal.service.ServiceContext)arguments[0]);
 		}
 
-		if (_methodName145.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
+		if (_methodName147.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
 			return EmpLocalServiceUtil.addEmp((vn.com.ecopharma.emp.model.Emp)arguments[0],
 				((Boolean)arguments[1]).booleanValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -475,8 +493,8 @@ public class EmpLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[28]);
 		}
 
-		if (_methodName146.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
+		if (_methodName148.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes148, parameterTypes)) {
 			return EmpLocalServiceUtil.updateEmp((vn.com.ecopharma.emp.model.Emp)arguments[0],
 				(com.liferay.portal.model.User)arguments[1],
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -502,8 +520,8 @@ public class EmpLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[27]);
 		}
 
-		if (_methodName147.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
+		if (_methodName149.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes149, parameterTypes)) {
 			return EmpLocalServiceUtil.updateEmp((vn.com.ecopharma.emp.model.Emp)arguments[0],
 				(com.liferay.portal.model.User)arguments[1],
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -523,8 +541,8 @@ public class EmpLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[19]);
 		}
 
-		if (_methodName148.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes148, parameterTypes)) {
+		if (_methodName150.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
 			return EmpLocalServiceUtil.addEmp((vn.com.ecopharma.emp.model.Emp)arguments[0],
 				(com.liferay.portal.model.User)arguments[1],
 				(java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean>)arguments[2],
@@ -532,8 +550,8 @@ public class EmpLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[4]);
 		}
 
-		if (_methodName149.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes149, parameterTypes)) {
+		if (_methodName151.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
 			return EmpLocalServiceUtil.update((vn.com.ecopharma.emp.model.Emp)arguments[0],
 				(com.liferay.portal.model.User)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -544,8 +562,8 @@ public class EmpLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[7]);
 		}
 
-		if (_methodName150.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
+		if (_methodName152.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
 			return EmpLocalServiceUtil.createEmployee((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(), (java.util.Date)arguments[3],
@@ -568,8 +586,8 @@ public class EmpLocalServiceClpInvoker {
 				(java.lang.String)arguments[24], (java.lang.String)arguments[25]);
 		}
 
-		if (_methodName151.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
+		if (_methodName153.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
 			return EmpLocalServiceUtil.updateExistedEmployee((vn.com.ecopharma.emp.model.Emp)arguments[0],
 				(java.lang.String)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -593,66 +611,66 @@ public class EmpLocalServiceClpInvoker {
 				(java.lang.String)arguments[25], (java.lang.String)arguments[26]);
 		}
 
-		if (_methodName153.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
+		if (_methodName155.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
 			return EmpLocalServiceUtil.searchAllEmpDocs((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
 				((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName154.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
+		if (_methodName156.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
 			return EmpLocalServiceUtil.getIndexedEmp((java.lang.String)arguments[0],
 				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
 		}
 
-		if (_methodName155.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
+		if (_methodName157.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
 			return EmpLocalServiceUtil.getIndexedEmp(((Long)arguments[0]).longValue(),
 				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
 		}
 
-		if (_methodName156.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
-			return EmpLocalServiceUtil.markDeletedEmp((vn.com.ecopharma.emp.model.Emp)arguments[0]);
-		}
-
-		if (_methodName157.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
-			return EmpLocalServiceUtil.markDeletedEmp(((Long)arguments[0]).longValue());
-		}
-
 		if (_methodName158.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
-			EmpLocalServiceUtil.indexAllEmps();
-
-			return null;
+			return EmpLocalServiceUtil.markDeletedEmp((vn.com.ecopharma.emp.model.Emp)arguments[0]);
 		}
 
 		if (_methodName159.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
-			EmpLocalServiceUtil.indexSomeEmps();
-
-			return null;
+			return EmpLocalServiceUtil.markDeletedEmp(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName160.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
-			EmpLocalServiceUtil.removeAllEmpIndexes((com.liferay.portal.kernel.search.SearchContext)arguments[0],
-				((Long)arguments[1]).longValue());
+			EmpLocalServiceUtil.indexAllEmps();
 
 			return null;
 		}
 
 		if (_methodName161.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
-			EmpLocalServiceUtil.completelyRemoveAllEmp(((Long)arguments[0]).longValue());
+			EmpLocalServiceUtil.indexSomeEmps();
 
 			return null;
 		}
 
 		if (_methodName162.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+			EmpLocalServiceUtil.removeAllEmpIndexes((com.liferay.portal.kernel.search.SearchContext)arguments[0],
+				((Long)arguments[1]).longValue());
+
+			return null;
+		}
+
+		if (_methodName163.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+			EmpLocalServiceUtil.completelyRemoveAllEmp(((Long)arguments[0]).longValue());
+
+			return null;
+		}
+
+		if (_methodName164.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes164, parameterTypes)) {
 			EmpLocalServiceUtil.completelyRemoveAllEmpFromDB(((Long)arguments[0]).longValue());
 
 			return null;
@@ -729,10 +747,10 @@ public class EmpLocalServiceClpInvoker {
 	private String[] _methodParameterTypes150;
 	private String _methodName151;
 	private String[] _methodParameterTypes151;
+	private String _methodName152;
+	private String[] _methodParameterTypes152;
 	private String _methodName153;
 	private String[] _methodParameterTypes153;
-	private String _methodName154;
-	private String[] _methodParameterTypes154;
 	private String _methodName155;
 	private String[] _methodParameterTypes155;
 	private String _methodName156;
@@ -749,4 +767,8 @@ public class EmpLocalServiceClpInvoker {
 	private String[] _methodParameterTypes161;
 	private String _methodName162;
 	private String[] _methodParameterTypes162;
+	private String _methodName163;
+	private String[] _methodParameterTypes163;
+	private String _methodName164;
+	private String[] _methodParameterTypes164;
 }

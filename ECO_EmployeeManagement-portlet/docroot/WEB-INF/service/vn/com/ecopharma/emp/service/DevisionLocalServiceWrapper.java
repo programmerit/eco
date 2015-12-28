@@ -301,6 +301,11 @@ public class DevisionLocalServiceWrapper implements DevisionLocalService,
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.Devision createPrePersistedDevision() {
+		return _devisionLocalService.createPrePersistedDevision();
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.Devision addDevision(
 		java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext) {

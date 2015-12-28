@@ -259,6 +259,8 @@ public interface DevisionLocalService extends BaseLocalService,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
+	public vn.com.ecopharma.emp.model.Devision createPrePersistedDevision();
+
 	public vn.com.ecopharma.emp.model.Devision addDevision(
 		java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext);

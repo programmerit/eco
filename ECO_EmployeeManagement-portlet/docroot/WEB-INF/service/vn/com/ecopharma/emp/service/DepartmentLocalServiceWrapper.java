@@ -306,6 +306,11 @@ public class DepartmentLocalServiceWrapper implements DepartmentLocalService,
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.Department createPrePersistedDepartment() {
+		return _departmentLocalService.createPrePersistedDepartment();
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.Department findByNameAndDevision(
 		java.lang.String name, long devisionId) {
 		return _departmentLocalService.findByNameAndDevision(name, devisionId);

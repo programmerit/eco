@@ -25,6 +25,7 @@ import vn.com.ecopharma.emp.service.base.DevisionLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
@@ -55,6 +56,8 @@ public class DevisionLocalServiceImpl extends DevisionLocalServiceBaseImpl {
 	 * vn.com.ecopharma.emp.service.DevisionLocalServiceUtil} to access the
 	 * devision local service.
 	 */
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(DevisionLocalServiceImpl.class);
 
 	@Override
 	public List<Devision> findAll() {
@@ -72,9 +75,18 @@ public class DevisionLocalServiceImpl extends DevisionLocalServiceBaseImpl {
 		try {
 			return devisionPersistence.findAll(start, end, orderByComparator);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(DevisionLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return new ArrayList<>();
+	}
+
+	public Devision createPrePersistedDevision() {
+		try {
+			return super.createDevision(counterLocalService.increment());
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
 	}
 
 	@Override
@@ -97,9 +109,9 @@ public class DevisionLocalServiceImpl extends DevisionLocalServiceBaseImpl {
 					true, true);
 			return devision;
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(DevisionLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		} catch (PortalException e) {
-			LogFactoryUtil.getLog(DevisionLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -121,9 +133,9 @@ public class DevisionLocalServiceImpl extends DevisionLocalServiceBaseImpl {
 					true, true);
 			return devision;
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(DevisionLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		} catch (PortalException e) {
-			LogFactoryUtil.getLog(DevisionLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -133,9 +145,9 @@ public class DevisionLocalServiceImpl extends DevisionLocalServiceBaseImpl {
 		try {
 			return devisionPersistence.findByName(name);
 		} catch (NoSuchDevisionException e) {
-			LogFactoryUtil.getLog(DevisionLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(DevisionLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -145,9 +157,9 @@ public class DevisionLocalServiceImpl extends DevisionLocalServiceBaseImpl {
 			try {
 				devisionPersistence.remove(devision.getDevisionId());
 			} catch (NoSuchDevisionException e) {
-				LogFactoryUtil.getLog(DevisionLocalServiceImpl.class).info(e);
+				LOGGER.info(e);
 			} catch (SystemException e) {
-				LogFactoryUtil.getLog(DevisionLocalServiceImpl.class).info(e);
+				LOGGER.info(e);
 			}
 		}
 	}

@@ -300,6 +300,10 @@ public class UnitGroupLocalServiceUtil {
 		return getService().findByNameAndUnit(name, unitId);
 	}
 
+	public static vn.com.ecopharma.emp.model.UnitGroup createPrePersistedUnitGroup() {
+		return getService().createPrePersistedUnitGroup();
+	}
+
 	public static vn.com.ecopharma.emp.model.UnitGroup addUnitGroup(
 		java.lang.String name, long unitId,
 		com.liferay.portal.service.ServiceContext serviceContext) {

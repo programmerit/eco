@@ -18,15 +18,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import vn.com.ecopharma.emp.NoSuchDepartmentException;
 import vn.com.ecopharma.emp.NoSuchUnitException;
-import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.service.base.UnitLocalServiceBaseImpl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
@@ -57,6 +56,10 @@ public class UnitLocalServiceImpl extends UnitLocalServiceBaseImpl {
 	 * vn.com.ecopharma.emp.service.UnitLocalServiceUtil} to access the unit
 	 * local service.
 	 */
+
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(UnitLocalServiceImpl.class);
+
 	@Override
 	public List<Unit> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -73,7 +76,7 @@ public class UnitLocalServiceImpl extends UnitLocalServiceBaseImpl {
 		try {
 			return unitPersistence.findAll(start, end, orderByComparator);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(UnitLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return new ArrayList<>();
 	}
@@ -83,7 +86,7 @@ public class UnitLocalServiceImpl extends UnitLocalServiceBaseImpl {
 		try {
 			return unitPersistence.fetchByNameAndDepartment(name, departmentId);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(UnitLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -93,9 +96,18 @@ public class UnitLocalServiceImpl extends UnitLocalServiceBaseImpl {
 		try {
 			return unitPersistence.findByDepartment(departmentId);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(UnitLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return new ArrayList<>();
+	}
+
+	public Unit createPrePersistedUnit() {
+		try {
+			return super.createUnit(counterLocalService.increment());
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
 	}
 
 	/*
@@ -120,7 +132,7 @@ public class UnitLocalServiceImpl extends UnitLocalServiceBaseImpl {
 
 			return unitPersistence.update(unit);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(UnitLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -145,9 +157,9 @@ public class UnitLocalServiceImpl extends UnitLocalServiceBaseImpl {
 					Unit.class.getName(), unit.getUnitId(), false, true, true);
 			return unit;
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(UnitLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		} catch (PortalException e) {
-			LogFactoryUtil.getLog(UnitLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -168,9 +180,9 @@ public class UnitLocalServiceImpl extends UnitLocalServiceBaseImpl {
 					Unit.class.getName(), unit.getUnitId(), false, true, true);
 			return unit;
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(UnitLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		} catch (PortalException e) {
-			LogFactoryUtil.getLog(UnitLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -180,9 +192,9 @@ public class UnitLocalServiceImpl extends UnitLocalServiceBaseImpl {
 			try {
 				unitPersistence.remove(unit.getUnitId());
 			} catch (NoSuchUnitException e) {
-				LogFactoryUtil.getLog(UnitLocalServiceImpl.class).info(e);
+				LOGGER.info(e);
 			} catch (SystemException e) {
-				LogFactoryUtil.getLog(UnitLocalServiceImpl.class).info(e);
+				LOGGER.info(e);
 			}
 		}
 	}

@@ -308,6 +308,14 @@ public class ResignationHistoryLocalServiceUtil {
 				   .addResignationHistory(resignationHistory, serviceContext);
 	}
 
+	public static vn.com.ecopharma.emp.model.ResignationHistory updateResignationHistory(
+		long resignationHistoryId, java.util.Date resignedDate,
+		java.lang.String resignedType, java.lang.String comment) {
+		return getService()
+				   .updateResignationHistory(resignationHistoryId,
+			resignedDate, resignedType, comment);
+	}
+
 	public static vn.com.ecopharma.emp.model.ResignationHistory markDeleted(
 		vn.com.ecopharma.emp.model.ResignationHistory resignationHistory) {
 		return getService().markDeleted(resignationHistory);
@@ -351,6 +359,11 @@ public class ResignationHistoryLocalServiceUtil {
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		long companyId) {
 		getService().removeAllIndexes(searchContext, companyId);
+	}
+
+	public static void addMissingResignedEmployee(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		getService().addMissingResignedEmployee(serviceContext);
 	}
 
 	public static void clearService() {

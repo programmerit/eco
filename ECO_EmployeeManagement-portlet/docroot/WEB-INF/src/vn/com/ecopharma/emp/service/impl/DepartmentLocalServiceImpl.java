@@ -25,6 +25,7 @@ import vn.com.ecopharma.emp.service.base.DepartmentLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
@@ -56,6 +57,9 @@ public class DepartmentLocalServiceImpl extends DepartmentLocalServiceBaseImpl {
 	 * department local service.
 	 */
 
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(DepartmentLocalServiceImpl.class);
+
 	@Override
 	public List<Department> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -72,9 +76,18 @@ public class DepartmentLocalServiceImpl extends DepartmentLocalServiceBaseImpl {
 		try {
 			return departmentPersistence.findAll(start, end, orderByComparator);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(DepartmentLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return new ArrayList<>();
+	}
+
+	public Department createPrePersistedDepartment() {
+		try {
+			return super.createDepartment(counterLocalService.increment());
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
 	}
 
 	@Override
@@ -83,7 +96,7 @@ public class DepartmentLocalServiceImpl extends DepartmentLocalServiceBaseImpl {
 			return departmentPersistence.fetchByNameAndDevision(name,
 					devisionId);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(DepartmentLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -93,7 +106,7 @@ public class DepartmentLocalServiceImpl extends DepartmentLocalServiceBaseImpl {
 		try {
 			return departmentPersistence.findByDevision(devisionId);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(DepartmentLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return new ArrayList<>();
 	}
@@ -121,9 +134,9 @@ public class DepartmentLocalServiceImpl extends DepartmentLocalServiceBaseImpl {
 					false, true, true);
 			return department;
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(DepartmentLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		} catch (PortalException e) {
-			LogFactoryUtil.getLog(DepartmentLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -147,9 +160,9 @@ public class DepartmentLocalServiceImpl extends DepartmentLocalServiceBaseImpl {
 					false, true, true);
 			return department;
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(DepartmentLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		} catch (PortalException e) {
-			LogFactoryUtil.getLog(DepartmentLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -159,9 +172,9 @@ public class DepartmentLocalServiceImpl extends DepartmentLocalServiceBaseImpl {
 			try {
 				departmentPersistence.remove(department.getDepartmentId());
 			} catch (NoSuchDepartmentException e) {
-				LogFactoryUtil.getLog(DepartmentLocalServiceImpl.class).info(e);
+				LOGGER.info(e);
 			} catch (SystemException e) {
-				LogFactoryUtil.getLog(DepartmentLocalServiceImpl.class).info(e);
+				LOGGER.info(e);
 			}
 		}
 	}

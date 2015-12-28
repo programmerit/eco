@@ -1,13 +1,17 @@
 package vn.com.ecopharma.emp.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.LazyDataModel;
+
+import com.liferay.faces.portal.context.LiferayFacesContext;
 
 import vn.com.ecopharma.emp.dm.ResignationHistoryIndexLazyDataModel;
 import vn.com.ecopharma.emp.dto.ResignationHistoryIndexedItem;
@@ -32,6 +36,25 @@ public class ResignationHistoryBean implements Serializable {
 		lazyDataModel = new ResignationHistoryIndexLazyDataModel();
 	}
 
+	public void onRowEdit(RowEditEvent event) {
+		ResignationHistoryIndexedItem item = (ResignationHistoryIndexedItem) event
+				.getObject();
+
+		ResignationHistoryLocalServiceUtil.updateResignationHistory(
+				item.getResignationHistoryId(), item.getResignedDate(),
+				item.getResignedType(), item.getComment());
+	}
+
+	public void onRowEditCancel(RowEditEvent event) {
+
+	}
+
+	public void addMissingResignedEmployee() {
+		ResignationHistoryLocalServiceUtil
+				.addMissingResignedEmployee(LiferayFacesContext.getInstance()
+						.getServiceContext());
+	}
+
 	public void onRemoveAllIndex(ActionEvent event) {
 		ResignationHistoryLocalServiceUtil.removeAllIndexes(EmployeeUtils
 				.getCurrentSearchContext(), EmployeeUtils
@@ -40,6 +63,14 @@ public class ResignationHistoryBean implements Serializable {
 
 	public void onIndexAll(ActionEvent event) {
 		ResignationHistoryLocalServiceUtil.indexAll();
+	}
+
+	public List<String> getResignationTypes() {
+		return EmployeeUtils.getResignationTypes();
+	}
+
+	public String getLocalizedResignationType(String r) {
+		return EmployeeUtils.getLocalizedResignationType(r);
 	}
 
 	public LazyDataModel<ResignationHistoryIndexedItem> getLazyDataModel() {

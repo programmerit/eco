@@ -290,6 +290,10 @@ public class DevisionLocalServiceUtil {
 		return getService().findAll(start, end, orderByComparator);
 	}
 
+	public static vn.com.ecopharma.emp.model.Devision createPrePersistedDevision() {
+		return getService().createPrePersistedDevision();
+	}
+
 	public static vn.com.ecopharma.emp.model.Devision addDevision(
 		java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext) {

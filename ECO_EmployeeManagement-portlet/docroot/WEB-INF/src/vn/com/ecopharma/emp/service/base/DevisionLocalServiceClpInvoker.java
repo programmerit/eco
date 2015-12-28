@@ -128,26 +128,30 @@ public class DevisionLocalServiceClpInvoker {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName139 = "addDevision";
+		_methodName139 = "createPrePersistedDevision";
 
-		_methodParameterTypes139 = new String[] {
-				"java.lang.String", "com.liferay.portal.service.ServiceContext"
-			};
+		_methodParameterTypes139 = new String[] {  };
 
 		_methodName140 = "addDevision";
 
 		_methodParameterTypes140 = new String[] {
+				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName141 = "addDevision";
+
+		_methodParameterTypes141 = new String[] {
 				"vn.com.ecopharma.emp.model.Devision",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName141 = "findByName";
+		_methodName142 = "findByName";
 
-		_methodParameterTypes141 = new String[] { "java.lang.String" };
+		_methodParameterTypes142 = new String[] { "java.lang.String" };
 
-		_methodName142 = "completelyDeleteAll";
+		_methodName143 = "completelyDeleteAll";
 
-		_methodParameterTypes142 = new String[] {  };
+		_methodParameterTypes143 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -271,23 +275,28 @@ public class DevisionLocalServiceClpInvoker {
 
 		if (_methodName139.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
-			return DevisionLocalServiceUtil.addDevision((java.lang.String)arguments[0],
-				(com.liferay.portal.service.ServiceContext)arguments[1]);
+			return DevisionLocalServiceUtil.createPrePersistedDevision();
 		}
 
 		if (_methodName140.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
-			return DevisionLocalServiceUtil.addDevision((vn.com.ecopharma.emp.model.Devision)arguments[0],
+			return DevisionLocalServiceUtil.addDevision((java.lang.String)arguments[0],
 				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
 
 		if (_methodName141.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
-			return DevisionLocalServiceUtil.findByName((java.lang.String)arguments[0]);
+			return DevisionLocalServiceUtil.addDevision((vn.com.ecopharma.emp.model.Devision)arguments[0],
+				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
 
 		if (_methodName142.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
+			return DevisionLocalServiceUtil.findByName((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName143.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
 			DevisionLocalServiceUtil.completelyDeleteAll();
 
 			return null;
@@ -346,4 +355,6 @@ public class DevisionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes141;
 	private String _methodName142;
 	private String[] _methodParameterTypes142;
+	private String _methodName143;
+	private String[] _methodParameterTypes143;
 }

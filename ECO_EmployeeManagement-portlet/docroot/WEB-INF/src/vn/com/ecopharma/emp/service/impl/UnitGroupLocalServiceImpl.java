@@ -24,6 +24,7 @@ import vn.com.ecopharma.emp.service.base.UnitGroupLocalServiceBaseImpl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
@@ -54,6 +55,8 @@ public class UnitGroupLocalServiceImpl extends UnitGroupLocalServiceBaseImpl {
 	 * vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil} to access the
 	 * unit group local service.
 	 */
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(UnitGroupLocalServiceImpl.class);
 
 	@Override
 	public List<UnitGroup> findAll() {
@@ -71,7 +74,7 @@ public class UnitGroupLocalServiceImpl extends UnitGroupLocalServiceBaseImpl {
 		try {
 			return unitGroupPersistence.findAll(start, end, orderByComparator);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(UnitGroupLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return new ArrayList<>();
 	}
@@ -81,7 +84,7 @@ public class UnitGroupLocalServiceImpl extends UnitGroupLocalServiceBaseImpl {
 		try {
 			return unitGroupPersistence.findByUnit(unitId);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(UnitGroupLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return new ArrayList<>();
 	}
@@ -91,7 +94,16 @@ public class UnitGroupLocalServiceImpl extends UnitGroupLocalServiceBaseImpl {
 		try {
 			return unitGroupPersistence.fetchByNameAndUnit(name, unitId);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(UnitGroupLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
+	public UnitGroup createPrePersistedUnitGroup() {
+		try {
+			return super.createUnitGroup(counterLocalService.increment());
+		} catch (SystemException e) {
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -112,7 +124,7 @@ public class UnitGroupLocalServiceImpl extends UnitGroupLocalServiceBaseImpl {
 			unitGroup.setCompanyId(serviceContext.getCompanyId());
 			return super.addUnitGroup(unitGroup);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(UnitGroupLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -128,7 +140,7 @@ public class UnitGroupLocalServiceImpl extends UnitGroupLocalServiceBaseImpl {
 			unitGroup.setCompanyId(serviceContext.getCompanyId());
 			return super.addUnitGroup(unitGroup);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(UnitGroupLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -138,9 +150,9 @@ public class UnitGroupLocalServiceImpl extends UnitGroupLocalServiceBaseImpl {
 			try {
 				unitGroupPersistence.remove(unitGroup.getUnitId());
 			} catch (NoSuchUnitGroupException e) {
-				LogFactoryUtil.getLog(UnitGroupLocalServiceImpl.class).info(e);
+				LOGGER.info(e);
 			} catch (SystemException e) {
-				LogFactoryUtil.getLog(UnitGroupLocalServiceImpl.class).info(e);
+				LOGGER.info(e);
 			}
 		}
 	}

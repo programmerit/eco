@@ -263,6 +263,11 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 
 	public vn.com.ecopharma.emp.model.Emp findByUser(long empUserId);
 
+	public java.util.List<vn.com.ecopharma.emp.model.Emp> findByTitles(
+		long titlesId);
+
+	public java.util.List<vn.com.ecopharma.emp.model.Emp> findResignedEmp();
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isOnAddingNewWithSameEmployeeCode(long prePersistedEmpId,
 		java.lang.String empCode);

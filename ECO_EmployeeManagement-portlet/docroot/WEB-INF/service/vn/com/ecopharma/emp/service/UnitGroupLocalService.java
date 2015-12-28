@@ -267,6 +267,8 @@ public interface UnitGroupLocalService extends BaseLocalService,
 	public vn.com.ecopharma.emp.model.UnitGroup findByNameAndUnit(
 		java.lang.String name, long unitId);
 
+	public vn.com.ecopharma.emp.model.UnitGroup createPrePersistedUnitGroup();
+
 	public vn.com.ecopharma.emp.model.UnitGroup addUnitGroup(
 		java.lang.String name, long unitId,
 		com.liferay.portal.service.ServiceContext serviceContext);

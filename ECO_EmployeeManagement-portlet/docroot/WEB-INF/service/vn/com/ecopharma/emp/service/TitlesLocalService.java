@@ -302,5 +302,11 @@ public interface TitlesLocalService extends BaseLocalService,
 	public vn.com.ecopharma.emp.model.Titles findByNameAndRelatedFields(
 		java.lang.String name, long unitGroupId, long unitId, long departmentId);
 
+	public vn.com.ecopharma.emp.model.Titles createPrePersistedTitles();
+
+	public vn.com.ecopharma.emp.model.Titles updateTitles(
+		vn.com.ecopharma.emp.model.Titles titles, long unitGroupId,
+		long unitId, long departmentId);
+
 	public void completelyRemoveAll();
 }

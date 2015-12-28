@@ -22,7 +22,10 @@
 				<p:commandLink value="Index All"
 					actionListener="#{resignationHistoryBean.onIndexAll}" /> | 
 				<p:commandLink value="Remove All Index"
-					actionListener="#{resignationHistoryBean.onRemoveAllIndex}" />
+					actionListener="#{resignationHistoryBean.onRemoveAllIndex}" /> |	
+				<p:commandLink value="Add Missing Resigned Emp"
+					actionListener="#{resignationHistoryBean.addMissingResignedEmployee}" />
+
 
 				<p:dataTable id="resignationHistories" var="r"
 					widgetVar="resignationHistoryTable"
@@ -31,9 +34,13 @@
 					paginatorPosition="bottom"
 					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="10,25,50" lazy="true" selectionMode="single"
-					selection="#{resignationHistoryBean.selectedItem}" 
-					rowKey="#{r.resignationHistoryId}" emptyMessage="No records found">
-
+					selection="#{resignationHistoryBean.selectedItem}"
+					rowKey="#{r.resignationHistoryId}" emptyMessage="No records found"
+					editable="true">
+					<p:ajax event="rowEdit"
+						listener="#{resignationHistoryBean.onRowEdit}" />
+					<p:ajax event="rowEditCancel"
+						listener="#{resignationHistoryBean.onRowEditCancel}" />
 
 					<f:facet name="header">
 						<div class="testClass">
@@ -48,10 +55,6 @@
 							datasource="resignationHistories" />
 					</f:facet>
 
-					<p:column style="width:16px" exportable="false" toggleable="false">
-						<p:rowToggler />
-					</p:column>
-
 					<p:column headerText="Id">
 						<h:outputText value="#{r.resignationHistoryId}" />
 					</p:column>
@@ -65,24 +68,54 @@
 					</p:column>
 
 					<p:column headerText="Resigned Date">
-						<h:outputText value="#{r.resignedDate}" />
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{r.resignedDate}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar value="#{r.resignedDate}" pattern="dd/MM/yyyy" />
+							</f:facet>
+						</p:cellEditor>
 					</p:column>
 
 					<p:column headerText="Reason">
-						<h:outputText value="#{r.resignedReason}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</h:outputText>
+
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{r.resignedType}" />
+							</f:facet>
+
+							<f:facet name="input">
+								<p:selectOneMenu value="#{r.resignedType}"
+									converter="resignationTypeConverter" effect="fade">
+									<f:selectItem itemLabel="Resigned Type" itemValue="" />
+									<f:selectItems
+										value="#{resignationHistoryBean.resignationTypes}" var="r"
+										itemLabel="#{i18n[resignationHistoryBean.getLocalizedResignationType(r)]}"
+										itemValue="#{r}" />
+									<p:column>
+					                #{r}
+					            </p:column>
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
 					</p:column>
 
 					<p:column headerText="Comment">
-						<h:outputText value="#{r.comment}" />
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{r.comment}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputTextarea value="#{r.comment}" />
+							</f:facet>
+						</p:cellEditor>
 					</p:column>
 
+					<p:column style="width:32px">
+						<p:rowEditor />
+					</p:column>
 
-
-					<p:rowExpansion>
-						INFORMATION HERE!!!	
-					</p:rowExpansion>
 				</p:dataTable>
 			</h:form>
 		</h:panelGroup>

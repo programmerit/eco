@@ -462,6 +462,12 @@
 		<finder name="User" return-type="Emp">
 			<finder-column name="empUserId"></finder-column>
 		</finder>
+        <finder name="Titles" return-type="Collection">
+            <finder-column name="titlesId"></finder-column>
+        </finder>
+        <finder name="Status" return-type="Collection">
+            <finder-column name="status"></finder-column>
+        </finder>
 	</entity>
 	<entity name="Certificate" local-service="true">
 		<column name="certificateId" primary="true" type="long"></column>

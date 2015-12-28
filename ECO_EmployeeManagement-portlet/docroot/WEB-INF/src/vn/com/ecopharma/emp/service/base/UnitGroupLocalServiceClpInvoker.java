@@ -136,23 +136,27 @@ public class UnitGroupLocalServiceClpInvoker {
 
 		_methodParameterTypes140 = new String[] { "java.lang.String", "long" };
 
-		_methodName141 = "addUnitGroup";
+		_methodName141 = "createPrePersistedUnitGroup";
 
-		_methodParameterTypes141 = new String[] {
-				"java.lang.String", "long",
-				"com.liferay.portal.service.ServiceContext"
-			};
+		_methodParameterTypes141 = new String[] {  };
 
 		_methodName142 = "addUnitGroup";
 
 		_methodParameterTypes142 = new String[] {
+				"java.lang.String", "long",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName143 = "addUnitGroup";
+
+		_methodParameterTypes143 = new String[] {
 				"vn.com.ecopharma.emp.model.UnitGroup",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName143 = "completelyRemoveAll";
+		_methodName144 = "completelyRemoveAll";
 
-		_methodParameterTypes143 = new String[] {  };
+		_methodParameterTypes144 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -287,19 +291,24 @@ public class UnitGroupLocalServiceClpInvoker {
 
 		if (_methodName141.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
+			return UnitGroupLocalServiceUtil.createPrePersistedUnitGroup();
+		}
+
+		if (_methodName142.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
 			return UnitGroupLocalServiceUtil.addUnitGroup((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
 		}
 
-		if (_methodName142.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
+		if (_methodName143.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
 			return UnitGroupLocalServiceUtil.addUnitGroup((vn.com.ecopharma.emp.model.UnitGroup)arguments[0],
 				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
 
-		if (_methodName143.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
+		if (_methodName144.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
 			UnitGroupLocalServiceUtil.completelyRemoveAll();
 
 			return null;
@@ -360,4 +369,6 @@ public class UnitGroupLocalServiceClpInvoker {
 	private String[] _methodParameterTypes142;
 	private String _methodName143;
 	private String[] _methodParameterTypes143;
+	private String _methodName144;
+	private String[] _methodParameterTypes144;
 }

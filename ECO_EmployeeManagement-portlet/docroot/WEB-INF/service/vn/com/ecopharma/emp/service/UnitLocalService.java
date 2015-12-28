@@ -264,6 +264,8 @@ public interface UnitLocalService extends BaseLocalService, InvokableLocalServic
 	public java.util.List<vn.com.ecopharma.emp.model.Unit> findByDepartment(
 		long departmentId);
 
+	public vn.com.ecopharma.emp.model.Unit createPrePersistedUnit();
+
 	@java.lang.Deprecated
 	public vn.com.ecopharma.emp.model.Unit addUnit(java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext);

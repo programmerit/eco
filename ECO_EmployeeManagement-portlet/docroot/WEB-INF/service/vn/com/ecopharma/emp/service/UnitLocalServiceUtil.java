@@ -296,6 +296,10 @@ public class UnitLocalServiceUtil {
 		return getService().findByDepartment(departmentId);
 	}
 
+	public static vn.com.ecopharma.emp.model.Unit createPrePersistedUnit() {
+		return getService().createPrePersistedUnit();
+	}
+
 	public static vn.com.ecopharma.emp.model.Unit addUnit(
 		java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext) {

@@ -361,6 +361,17 @@ public class TitlesLocalServiceUtil {
 			departmentId);
 	}
 
+	public static vn.com.ecopharma.emp.model.Titles createPrePersistedTitles() {
+		return getService().createPrePersistedTitles();
+	}
+
+	public static vn.com.ecopharma.emp.model.Titles updateTitles(
+		vn.com.ecopharma.emp.model.Titles titles, long unitGroupId,
+		long unitId, long departmentId) {
+		return getService()
+				   .updateTitles(titles, unitGroupId, unitId, departmentId);
+	}
+
 	public static void completelyRemoveAll() {
 		getService().completelyRemoveAll();
 	}

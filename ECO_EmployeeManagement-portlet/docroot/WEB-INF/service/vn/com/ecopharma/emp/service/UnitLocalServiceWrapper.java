@@ -310,6 +310,11 @@ public class UnitLocalServiceWrapper implements UnitLocalService,
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.Unit createPrePersistedUnit() {
+		return _unitLocalService.createPrePersistedUnit();
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.Unit addUnit(java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return _unitLocalService.addUnit(name, serviceContext);

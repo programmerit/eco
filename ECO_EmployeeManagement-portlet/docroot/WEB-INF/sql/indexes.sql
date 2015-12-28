@@ -19,6 +19,8 @@ create index IX_765F22D6 on eco_em_portlet_District (regionCode, name);
 
 create index IX_D6092545 on eco_em_portlet_Emp (empCode);
 create index IX_9C3E31DE on eco_em_portlet_Emp (empUserId);
+create index IX_D6D1DE66 on eco_em_portlet_Emp (status);
+create index IX_F272A48A on eco_em_portlet_Emp (titlesId);
 
 create index IX_90AA9689 on eco_em_portlet_EmpBankInfo (empId);
 

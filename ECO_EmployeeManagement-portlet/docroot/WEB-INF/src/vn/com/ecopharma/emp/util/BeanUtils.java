@@ -5,12 +5,15 @@ import javax.faces.context.FacesContext;
 
 import vn.com.ecopharma.emp.bean.EmployeeBean;
 import vn.com.ecopharma.emp.bean.EmployeeIndexedBean;
+import vn.com.ecopharma.emp.bean.TitlesBean;
 
 public class BeanUtils {
 
 	private static final String EMPLOYEE_BEAN = "empView";
 
 	private static final String EMPLOYEE_INDEXED_BEAN = "employeeIndexedBean";
+
+	private static final String TITLES_BEAN = "titlesBean";
 
 	private BeanUtils() {
 	}
@@ -31,6 +34,10 @@ public class BeanUtils {
 
 	public static EmployeeIndexedBean getEmployeeIndexedBean() {
 		return (EmployeeIndexedBean) getBackingBeanByName(EMPLOYEE_INDEXED_BEAN);
+	}
+
+	public static TitlesBean getTitlesBean() {
+		return (TitlesBean) getBackingBeanByName(TITLES_BEAN);
 	}
 
 }

@@ -26,11 +26,13 @@
 				<p:ajax event="close" update="@form">
 					<p:resetInput target="@form" />
 				</p:ajax>
-				<composite:insertChildren />
-				<p:panelGrid columns="2" columnClasses="organizationLabel, value">
-					<h:outputText value="Name" styleClass="organizationLabel" />
-					<p:inputText value="#{cc.attrs.entityName}" required="true" />
-				</p:panelGrid>
+				<p:outputPanel autoUpdate="true">
+					<composite:insertChildren />
+					<p:panelGrid columns="2" columnClasses="organizationLabel, value">
+						<h:outputText value="Name" styleClass="organizationLabel" />
+						<p:inputText value="#{cc.attrs.entityName}" required="true" />
+					</p:panelGrid>
+				</p:outputPanel>
 				<br />
 				<p:commandLink value="Save" actionListener="#{cc.attrs.onSave}"
 					oncomplete="PF('#{cc.attrs.wVar}').hide()" ajax="true"

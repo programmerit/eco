@@ -548,6 +548,1018 @@ public class EmpPersistenceImpl extends BasePersistenceImpl<Emp>
 	}
 
 	private static final String _FINDER_COLUMN_USER_EMPUSERID_2 = "emp.empUserId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_TITLES = new FinderPath(EmpModelImpl.ENTITY_CACHE_ENABLED,
+			EmpModelImpl.FINDER_CACHE_ENABLED, EmpImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTitles",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TITLES =
+		new FinderPath(EmpModelImpl.ENTITY_CACHE_ENABLED,
+			EmpModelImpl.FINDER_CACHE_ENABLED, EmpImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTitles",
+			new String[] { Long.class.getName() },
+			EmpModelImpl.TITLESID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_TITLES = new FinderPath(EmpModelImpl.ENTITY_CACHE_ENABLED,
+			EmpModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTitles",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the emps where titlesId = &#63;.
+	 *
+	 * @param titlesId the titles ID
+	 * @return the matching emps
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Emp> findByTitles(long titlesId) throws SystemException {
+		return findByTitles(titlesId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the emps where titlesId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.EmpModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param titlesId the titles ID
+	 * @param start the lower bound of the range of emps
+	 * @param end the upper bound of the range of emps (not inclusive)
+	 * @return the range of matching emps
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Emp> findByTitles(long titlesId, int start, int end)
+		throws SystemException {
+		return findByTitles(titlesId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the emps where titlesId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.EmpModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param titlesId the titles ID
+	 * @param start the lower bound of the range of emps
+	 * @param end the upper bound of the range of emps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching emps
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Emp> findByTitles(long titlesId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TITLES;
+			finderArgs = new Object[] { titlesId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_TITLES;
+			finderArgs = new Object[] { titlesId, start, end, orderByComparator };
+		}
+
+		List<Emp> list = (List<Emp>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Emp emp : list) {
+				if ((titlesId != emp.getTitlesId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_EMP_WHERE);
+
+			query.append(_FINDER_COLUMN_TITLES_TITLESID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(EmpModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(titlesId);
+
+				if (!pagination) {
+					list = (List<Emp>)QueryUtil.list(q, getDialect(), start,
+							end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Emp>(list);
+				}
+				else {
+					list = (List<Emp>)QueryUtil.list(q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first emp in the ordered set where titlesId = &#63;.
+	 *
+	 * @param titlesId the titles ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching emp
+	 * @throws vn.com.ecopharma.emp.NoSuchEmpException if a matching emp could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Emp findByTitles_First(long titlesId,
+		OrderByComparator orderByComparator)
+		throws NoSuchEmpException, SystemException {
+		Emp emp = fetchByTitles_First(titlesId, orderByComparator);
+
+		if (emp != null) {
+			return emp;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("titlesId=");
+		msg.append(titlesId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEmpException(msg.toString());
+	}
+
+	/**
+	 * Returns the first emp in the ordered set where titlesId = &#63;.
+	 *
+	 * @param titlesId the titles ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching emp, or <code>null</code> if a matching emp could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Emp fetchByTitles_First(long titlesId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Emp> list = findByTitles(titlesId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last emp in the ordered set where titlesId = &#63;.
+	 *
+	 * @param titlesId the titles ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching emp
+	 * @throws vn.com.ecopharma.emp.NoSuchEmpException if a matching emp could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Emp findByTitles_Last(long titlesId,
+		OrderByComparator orderByComparator)
+		throws NoSuchEmpException, SystemException {
+		Emp emp = fetchByTitles_Last(titlesId, orderByComparator);
+
+		if (emp != null) {
+			return emp;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("titlesId=");
+		msg.append(titlesId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEmpException(msg.toString());
+	}
+
+	/**
+	 * Returns the last emp in the ordered set where titlesId = &#63;.
+	 *
+	 * @param titlesId the titles ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching emp, or <code>null</code> if a matching emp could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Emp fetchByTitles_Last(long titlesId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByTitles(titlesId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Emp> list = findByTitles(titlesId, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the emps before and after the current emp in the ordered set where titlesId = &#63;.
+	 *
+	 * @param empId the primary key of the current emp
+	 * @param titlesId the titles ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next emp
+	 * @throws vn.com.ecopharma.emp.NoSuchEmpException if a emp with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Emp[] findByTitles_PrevAndNext(long empId, long titlesId,
+		OrderByComparator orderByComparator)
+		throws NoSuchEmpException, SystemException {
+		Emp emp = findByPrimaryKey(empId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Emp[] array = new EmpImpl[3];
+
+			array[0] = getByTitles_PrevAndNext(session, emp, titlesId,
+					orderByComparator, true);
+
+			array[1] = emp;
+
+			array[2] = getByTitles_PrevAndNext(session, emp, titlesId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Emp getByTitles_PrevAndNext(Session session, Emp emp,
+		long titlesId, OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_EMP_WHERE);
+
+		query.append(_FINDER_COLUMN_TITLES_TITLESID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(EmpModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(titlesId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(emp);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Emp> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the emps where titlesId = &#63; from the database.
+	 *
+	 * @param titlesId the titles ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByTitles(long titlesId) throws SystemException {
+		for (Emp emp : findByTitles(titlesId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(emp);
+		}
+	}
+
+	/**
+	 * Returns the number of emps where titlesId = &#63;.
+	 *
+	 * @param titlesId the titles ID
+	 * @return the number of matching emps
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByTitles(long titlesId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_TITLES;
+
+		Object[] finderArgs = new Object[] { titlesId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_EMP_WHERE);
+
+			query.append(_FINDER_COLUMN_TITLES_TITLESID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(titlesId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_TITLES_TITLESID_2 = "emp.titlesId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_STATUS = new FinderPath(EmpModelImpl.ENTITY_CACHE_ENABLED,
+			EmpModelImpl.FINDER_CACHE_ENABLED, EmpImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStatus",
+			new String[] {
+				String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS =
+		new FinderPath(EmpModelImpl.ENTITY_CACHE_ENABLED,
+			EmpModelImpl.FINDER_CACHE_ENABLED, EmpImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStatus",
+			new String[] { String.class.getName() },
+			EmpModelImpl.STATUS_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_STATUS = new FinderPath(EmpModelImpl.ENTITY_CACHE_ENABLED,
+			EmpModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStatus",
+			new String[] { String.class.getName() });
+
+	/**
+	 * Returns all the emps where status = &#63;.
+	 *
+	 * @param status the status
+	 * @return the matching emps
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Emp> findByStatus(String status) throws SystemException {
+		return findByStatus(status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the emps where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.EmpModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of emps
+	 * @param end the upper bound of the range of emps (not inclusive)
+	 * @return the range of matching emps
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Emp> findByStatus(String status, int start, int end)
+		throws SystemException {
+		return findByStatus(status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the emps where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.EmpModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of emps
+	 * @param end the upper bound of the range of emps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching emps
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Emp> findByStatus(String status, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS;
+			finderArgs = new Object[] { status };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_STATUS;
+			finderArgs = new Object[] { status, start, end, orderByComparator };
+		}
+
+		List<Emp> list = (List<Emp>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Emp emp : list) {
+				if (!Validator.equals(status, emp.getStatus())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_EMP_WHERE);
+
+			boolean bindStatus = false;
+
+			if (status == null) {
+				query.append(_FINDER_COLUMN_STATUS_STATUS_1);
+			}
+			else if (status.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_STATUS_STATUS_3);
+			}
+			else {
+				bindStatus = true;
+
+				query.append(_FINDER_COLUMN_STATUS_STATUS_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(EmpModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindStatus) {
+					qPos.add(status);
+				}
+
+				if (!pagination) {
+					list = (List<Emp>)QueryUtil.list(q, getDialect(), start,
+							end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Emp>(list);
+				}
+				else {
+					list = (List<Emp>)QueryUtil.list(q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first emp in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching emp
+	 * @throws vn.com.ecopharma.emp.NoSuchEmpException if a matching emp could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Emp findByStatus_First(String status,
+		OrderByComparator orderByComparator)
+		throws NoSuchEmpException, SystemException {
+		Emp emp = fetchByStatus_First(status, orderByComparator);
+
+		if (emp != null) {
+			return emp;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEmpException(msg.toString());
+	}
+
+	/**
+	 * Returns the first emp in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching emp, or <code>null</code> if a matching emp could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Emp fetchByStatus_First(String status,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Emp> list = findByStatus(status, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last emp in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching emp
+	 * @throws vn.com.ecopharma.emp.NoSuchEmpException if a matching emp could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Emp findByStatus_Last(String status,
+		OrderByComparator orderByComparator)
+		throws NoSuchEmpException, SystemException {
+		Emp emp = fetchByStatus_Last(status, orderByComparator);
+
+		if (emp != null) {
+			return emp;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEmpException(msg.toString());
+	}
+
+	/**
+	 * Returns the last emp in the ordered set where status = &#63;.
+	 *
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching emp, or <code>null</code> if a matching emp could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Emp fetchByStatus_Last(String status,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByStatus(status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Emp> list = findByStatus(status, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the emps before and after the current emp in the ordered set where status = &#63;.
+	 *
+	 * @param empId the primary key of the current emp
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next emp
+	 * @throws vn.com.ecopharma.emp.NoSuchEmpException if a emp with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Emp[] findByStatus_PrevAndNext(long empId, String status,
+		OrderByComparator orderByComparator)
+		throws NoSuchEmpException, SystemException {
+		Emp emp = findByPrimaryKey(empId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Emp[] array = new EmpImpl[3];
+
+			array[0] = getByStatus_PrevAndNext(session, emp, status,
+					orderByComparator, true);
+
+			array[1] = emp;
+
+			array[2] = getByStatus_PrevAndNext(session, emp, status,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Emp getByStatus_PrevAndNext(Session session, Emp emp,
+		String status, OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_EMP_WHERE);
+
+		boolean bindStatus = false;
+
+		if (status == null) {
+			query.append(_FINDER_COLUMN_STATUS_STATUS_1);
+		}
+		else if (status.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_STATUS_STATUS_3);
+		}
+		else {
+			bindStatus = true;
+
+			query.append(_FINDER_COLUMN_STATUS_STATUS_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(EmpModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindStatus) {
+			qPos.add(status);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(emp);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Emp> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the emps where status = &#63; from the database.
+	 *
+	 * @param status the status
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByStatus(String status) throws SystemException {
+		for (Emp emp : findByStatus(status, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(emp);
+		}
+	}
+
+	/**
+	 * Returns the number of emps where status = &#63;.
+	 *
+	 * @param status the status
+	 * @return the number of matching emps
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByStatus(String status) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_STATUS;
+
+		Object[] finderArgs = new Object[] { status };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_EMP_WHERE);
+
+			boolean bindStatus = false;
+
+			if (status == null) {
+				query.append(_FINDER_COLUMN_STATUS_STATUS_1);
+			}
+			else if (status.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_STATUS_STATUS_3);
+			}
+			else {
+				bindStatus = true;
+
+				query.append(_FINDER_COLUMN_STATUS_STATUS_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindStatus) {
+					qPos.add(status);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_STATUS_STATUS_1 = "emp.status IS NULL";
+	private static final String _FINDER_COLUMN_STATUS_STATUS_2 = "emp.status = ?";
+	private static final String _FINDER_COLUMN_STATUS_STATUS_3 = "(emp.status IS NULL OR emp.status = '')";
 
 	public EmpPersistenceImpl() {
 		setModelClass(Emp.class);
@@ -816,6 +1828,8 @@ public class EmpPersistenceImpl extends BasePersistenceImpl<Emp>
 
 		boolean isNew = emp.isNew();
 
+		EmpModelImpl empModelImpl = (EmpModelImpl)emp;
+
 		Session session = null;
 
 		try {
@@ -841,6 +1855,38 @@ public class EmpPersistenceImpl extends BasePersistenceImpl<Emp>
 
 		if (isNew || !EmpModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		}
+
+		else {
+			if ((empModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TITLES.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { empModelImpl.getOriginalTitlesId() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TITLES, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TITLES,
+					args);
+
+				args = new Object[] { empModelImpl.getTitlesId() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TITLES, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TITLES,
+					args);
+			}
+
+			if ((empModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { empModelImpl.getOriginalStatus() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS,
+					args);
+
+				args = new Object[] { empModelImpl.getStatus() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS,
+					args);
+			}
 		}
 
 		EntityCacheUtil.putResult(EmpModelImpl.ENTITY_CACHE_ENABLED,

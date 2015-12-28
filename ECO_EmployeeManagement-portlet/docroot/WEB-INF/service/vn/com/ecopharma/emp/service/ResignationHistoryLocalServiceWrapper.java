@@ -331,6 +331,14 @@ public class ResignationHistoryLocalServiceWrapper
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.ResignationHistory updateResignationHistory(
+		long resignationHistoryId, java.util.Date resignedDate,
+		java.lang.String resignedType, java.lang.String comment) {
+		return _resignationHistoryLocalService.updateResignationHistory(resignationHistoryId,
+			resignedDate, resignedType, comment);
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.ResignationHistory markDeleted(
 		vn.com.ecopharma.emp.model.ResignationHistory resignationHistory) {
 		return _resignationHistoryLocalService.markDeleted(resignationHistory);
@@ -381,6 +389,12 @@ public class ResignationHistoryLocalServiceWrapper
 		long companyId) {
 		_resignationHistoryLocalService.removeAllIndexes(searchContext,
 			companyId);
+	}
+
+	@Override
+	public void addMissingResignedEmployee(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		_resignationHistoryLocalService.addMissingResignedEmployee(serviceContext);
 	}
 
 	/**

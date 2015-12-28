@@ -382,6 +382,19 @@ public class TitlesLocalServiceWrapper implements TitlesLocalService,
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.Titles createPrePersistedTitles() {
+		return _titlesLocalService.createPrePersistedTitles();
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.Titles updateTitles(
+		vn.com.ecopharma.emp.model.Titles titles, long unitGroupId,
+		long unitId, long departmentId) {
+		return _titlesLocalService.updateTitles(titles, unitGroupId, unitId,
+			departmentId);
+	}
+
+	@Override
 	public void completelyRemoveAll() {
 		_titlesLocalService.completelyRemoveAll();
 	}

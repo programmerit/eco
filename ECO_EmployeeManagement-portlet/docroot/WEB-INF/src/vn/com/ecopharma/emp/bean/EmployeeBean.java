@@ -360,6 +360,14 @@ public class EmployeeBean implements Serializable {
 		modifyEmployeeInfoItem.setTitles(null);
 	}
 
+	public void onTitlesChanges() {
+
+	}
+
+	public void onEditTitles() {
+		BeanUtils.getTitlesBean().setTitles(modifyEmployeeInfoItem.getTitles());
+	}
+
 	public void onStatusChange(long employeeId) {
 		final EmployeeStatus status = EmployeeStatus.valueOf(selectedStatus);
 

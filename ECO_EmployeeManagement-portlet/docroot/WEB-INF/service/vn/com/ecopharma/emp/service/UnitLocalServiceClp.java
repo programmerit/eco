@@ -130,29 +130,33 @@ public class UnitLocalServiceClp implements UnitLocalService {
 
 		_methodParameterTypes23 = new String[] { "long" };
 
-		_methodName24 = "addUnit";
+		_methodName24 = "createPrePersistedUnit";
 
-		_methodParameterTypes24 = new String[] {
-				"java.lang.String", "com.liferay.portal.service.ServiceContext"
-			};
+		_methodParameterTypes24 = new String[] {  };
 
 		_methodName25 = "addUnit";
 
 		_methodParameterTypes25 = new String[] {
-				"java.lang.String", "long",
-				"com.liferay.portal.service.ServiceContext"
+				"java.lang.String", "com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName26 = "addUnit";
 
 		_methodParameterTypes26 = new String[] {
+				"java.lang.String", "long",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName27 = "addUnit";
+
+		_methodParameterTypes27 = new String[] {
 				"vn.com.ecopharma.emp.model.Unit",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName27 = "completelyRemoveAll";
+		_methodName28 = "completelyRemoveAll";
 
-		_methodParameterTypes27 = new String[] {  };
+		_methodParameterTypes28 = new String[] {  };
 	}
 
 	@Override
@@ -833,13 +837,36 @@ public class UnitLocalServiceClp implements UnitLocalService {
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.Unit createPrePersistedUnit() {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.Unit)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.Unit addUnit(java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
 						ClpSerializer.translateInput(name),
 						
@@ -868,8 +895,8 @@ public class UnitLocalServiceClp implements UnitLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] {
 						ClpSerializer.translateInput(name),
 						
@@ -900,8 +927,8 @@ public class UnitLocalServiceClp implements UnitLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] {
 						ClpSerializer.translateInput(unit),
 						
@@ -926,8 +953,8 @@ public class UnitLocalServiceClp implements UnitLocalService {
 	@Override
 	public void completelyRemoveAll() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName27,
-				_methodParameterTypes27, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName28,
+				_methodParameterTypes28, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -997,4 +1024,6 @@ public class UnitLocalServiceClp implements UnitLocalService {
 	private String[] _methodParameterTypes26;
 	private String _methodName27;
 	private String[] _methodParameterTypes27;
+	private String _methodName28;
+	private String[] _methodParameterTypes28;
 }

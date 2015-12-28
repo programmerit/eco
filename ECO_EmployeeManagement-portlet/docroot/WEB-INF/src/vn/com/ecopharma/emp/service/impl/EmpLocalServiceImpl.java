@@ -35,6 +35,7 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -86,6 +87,9 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	 * service.
 	 */
 
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(EmpLocalServiceImpl.class);
+
 	@Override
 	public List<Emp> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -102,7 +106,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		try {
 			return empPersistence.findAll(start, end, orderByComparator);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return new ArrayList<>();
 	}
@@ -112,7 +116,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		try {
 			return empPersistence.fetchByEmpCode(empCode);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -122,9 +126,28 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		try {
 			return empPersistence.fetchByUser(empUserId);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
+	}
+
+	public List<Emp> findByTitles(long titlesId) {
+		try {
+			return empPersistence.findByTitles(titlesId);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return new ArrayList<>();
+	}
+
+	public List<Emp> findResignedEmp() {
+		try {
+			return empPersistence.findByStatus(EmployeeStatus.RESIGNED
+					.toString());
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return new ArrayList<>();
 	}
 
 	/*
@@ -140,7 +163,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			return empPersistence.fetchByEmpCode(empCode) != null
 					&& fetchEmp(prePersistedEmpId) == null;
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return false;
 	}
@@ -185,15 +208,14 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			final List<Document> documents = SearchEngineUtil.search(
 					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
 					fullQuery, sort, start, end).toList();
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(
-					"RESULT SIZE: " + documents.size());
+			LOGGER.info("RESULT SIZE: " + documents.size());
 
 			return documents;
 
 		} catch (SearchException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		} catch (ParseException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return new ArrayList<>();
 	}
@@ -213,9 +235,9 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			indexer.reindex(Emp.class.getName(), emp.getEmpId());
 			return emp;
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		} catch (SearchException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -454,9 +476,9 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			}
 			return employee;
 		} catch (PortalException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 
@@ -615,9 +637,9 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			}
 			return employee;
 		} catch (PortalException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 
@@ -800,9 +822,9 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			}
 			return employee;
 		} catch (PortalException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -831,7 +853,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 					numberOfDependents, dependentNames, insurranceCode,
 					healthInsuranceNo);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 
@@ -918,9 +940,9 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 					fullQuery, new Sort("empId", false), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS).toList();
 		} catch (SearchException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		} catch (ParseException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return new ArrayList<>();
 	}
@@ -946,9 +968,9 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
 			return !hits.toList().isEmpty() ? hits.toList().get(0) : null;
 		} catch (ParseException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		} catch (SearchException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 
 		return null;
@@ -967,9 +989,9 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			indexer.reindex(employee);
 			return employee;
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		} catch (SearchException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 
@@ -980,7 +1002,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		try {
 			return markDeletedEmp(empPersistence.fetchByPrimaryKey(employeeId));
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -998,7 +1020,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			try {
 				indexer.reindex(employee);
 			} catch (SearchException e) {
-				LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+				LOGGER.info(e);
 			}
 		}
 
@@ -1014,7 +1036,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			try {
 				indexer.reindex(employee);
 			} catch (SearchException e) {
-				LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+				LOGGER.info(e);
 			}
 		}
 
@@ -1037,7 +1059,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 
 			}
 		} catch (SearchException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 	}
 
@@ -1077,16 +1099,15 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 										.getResignationHistoryId());
 					}
 
-					LogFactoryUtil.getLog(EmpLocalServiceImpl.class).debug(
-							"On Deleting Employee: " + employee.getEmpId());
+					LOGGER.debug("On Deleting Employee: " + employee.getEmpId());
 					empLocalService.deleteEmp(employee.getEmpId());
 
 				}
 			}
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		} catch (PortalException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 	}
 
@@ -1122,16 +1143,15 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 										.getResignationHistoryId());
 					}
 
-					LogFactoryUtil.getLog(EmpLocalServiceImpl.class).debug(
-							"On Deleting Employee: " + employee.getEmpId());
+					LOGGER.debug("On Deleting Employee: " + employee.getEmpId());
 					empLocalService.deleteEmp(employee.getEmpId());
 
 				}
 			}
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		} catch (PortalException e) {
-			LogFactoryUtil.getLog(EmpLocalServiceImpl.class).info(e);
+			LOGGER.info(e);
 		}
 	}
 }

@@ -129,31 +129,35 @@ public class DepartmentLocalServiceClp implements DepartmentLocalService {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName22 = "findByNameAndDevision";
+		_methodName22 = "createPrePersistedDepartment";
 
-		_methodParameterTypes22 = new String[] { "java.lang.String", "long" };
+		_methodParameterTypes22 = new String[] {  };
 
-		_methodName23 = "findByDevision";
+		_methodName23 = "findByNameAndDevision";
 
-		_methodParameterTypes23 = new String[] { "long" };
+		_methodParameterTypes23 = new String[] { "java.lang.String", "long" };
 
-		_methodName24 = "addDepartment";
+		_methodName24 = "findByDevision";
 
-		_methodParameterTypes24 = new String[] {
-				"java.lang.String", "long",
-				"com.liferay.portal.service.ServiceContext"
-			};
+		_methodParameterTypes24 = new String[] { "long" };
 
 		_methodName25 = "addDepartment";
 
 		_methodParameterTypes25 = new String[] {
+				"java.lang.String", "long",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName26 = "addDepartment";
+
+		_methodParameterTypes26 = new String[] {
 				"vn.com.ecopharma.emp.model.Department",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName26 = "completelyRemoveAll";
+		_methodName27 = "completelyRemoveAll";
 
-		_methodParameterTypes26 = new String[] {  };
+		_methodParameterTypes27 = new String[] {  };
 	}
 
 	@Override
@@ -786,13 +790,36 @@ public class DepartmentLocalServiceClp implements DepartmentLocalService {
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.Department createPrePersistedDepartment() {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.Department)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.Department findByNameAndDevision(
 		java.lang.String name, long devisionId) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] { ClpSerializer.translateInput(name), devisionId });
 		}
 		catch (Throwable t) {
@@ -816,8 +843,8 @@ public class DepartmentLocalServiceClp implements DepartmentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23, new Object[] { devisionId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24, new Object[] { devisionId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -841,8 +868,8 @@ public class DepartmentLocalServiceClp implements DepartmentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
 						ClpSerializer.translateInput(name),
 						
@@ -873,8 +900,8 @@ public class DepartmentLocalServiceClp implements DepartmentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] {
 						ClpSerializer.translateInput(department),
 						
@@ -899,8 +926,8 @@ public class DepartmentLocalServiceClp implements DepartmentLocalService {
 	@Override
 	public void completelyRemoveAll() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName26,
-				_methodParameterTypes26, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName27,
+				_methodParameterTypes27, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -968,4 +995,6 @@ public class DepartmentLocalServiceClp implements DepartmentLocalService {
 	private String[] _methodParameterTypes25;
 	private String _methodName26;
 	private String[] _methodParameterTypes26;
+	private String _methodName27;
+	private String[] _methodParameterTypes27;
 }

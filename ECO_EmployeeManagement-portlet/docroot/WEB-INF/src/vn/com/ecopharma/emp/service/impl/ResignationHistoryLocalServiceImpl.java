@@ -26,11 +26,10 @@ import vn.com.ecopharma.emp.model.ResignationHistory;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.base.ResignationHistoryLocalServiceBaseImpl;
 
-import com.liferay.faces.util.logging.Logger;
-import com.liferay.faces.util.logging.LoggerFactory;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -77,15 +76,14 @@ public class ResignationHistoryLocalServiceImpl extends
 	 * vn.com.ecopharma.emp.service.ResignationHistoryLocalServiceUtil} to
 	 * access the resignation history local service.
 	 */
-	public static final Logger LOGGER = LoggerFactory
-			.getLogger(ResignationHistoryLocalServiceImpl.class);
+	public static final Log LOGGER = LogFactoryUtil
+			.getLog(ResignationHistoryLocalServiceImpl.class);
 
 	public List<ResignationHistory> findAll() {
 		try {
 			return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(ResignationHistoryLocalServiceImpl.class)
-					.info(e);
+			LOGGER.info(e);
 		}
 		return new ArrayList<>();
 	}
@@ -105,8 +103,7 @@ public class ResignationHistoryLocalServiceImpl extends
 		try {
 			return resignationHistoryPersistence.findByEmployee(employeeId);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(ResignationHistoryLocalServiceImpl.class)
-					.info(e);
+			LOGGER.info(e);
 		}
 		return new ArrayList<>();
 	}
@@ -119,8 +116,7 @@ public class ResignationHistoryLocalServiceImpl extends
 			resignationHistory.setResignedDate(new Date());
 			return resignationHistory;
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(ResignationHistoryLocalServiceImpl.class)
-					.info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -132,15 +128,9 @@ public class ResignationHistoryLocalServiceImpl extends
 			resignationHistory.setGroupId(serviceContext.getScopeGroupId());
 			resignationHistory.setCreateDate(new Date());
 			resignationHistory.setModifiedDate(new Date());
-			resignationHistory = resignationHistoryPersistence
-					.update(resignationHistory);
+			resignationHistory = super
+					.addResignationHistory(resignationHistory);
 			if (resignationHistory != null) {
-				// update employee status
-				Emp employee = EmpLocalServiceUtil.getEmp(resignationHistory
-						.getEmployeeId());
-				employee.setStatus(EmployeeStatus.RESIGNED.toString());
-				EmpLocalServiceUtil.updateEmp(employee);
-
 				// add permission
 				resourceLocalService.addResources(
 						resignationHistory.getCompanyId(),
@@ -156,11 +146,36 @@ public class ResignationHistoryLocalServiceImpl extends
 				indexer.reindex(ResignationHistory.class.getName(),
 						resignationHistory.getResignationHistoryId());
 
+				// update employee status
+				Emp employee = EmpLocalServiceUtil.getEmp(resignationHistory
+						.getEmployeeId());
+				employee.setStatus(EmployeeStatus.RESIGNED.toString());
+				EmpLocalServiceUtil.updateEmp(employee);
+
 			}
 			return resignationHistory;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (PortalException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
+	public ResignationHistory updateResignationHistory(
+			long resignationHistoryId, Date resignedDate, String resignedType,
+			String comment) {
+		try {
+			ResignationHistory resignationHistory = super
+					.fetchResignationHistory(resignationHistoryId);
+
+			resignationHistory.setResignedDate(resignedDate);
+			resignationHistory.setResignedType(resignedType);
+			resignationHistory.setComment(comment);
+
+			resignationHistory.setModifiedDate(new Date());
+			return super.updateResignationHistory(resignationHistory);
+		} catch (SystemException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -179,9 +194,9 @@ public class ResignationHistoryLocalServiceImpl extends
 			indexer.reindex(resignationHistory);
 			return resignationHistory;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -226,8 +241,6 @@ public class ResignationHistoryLocalServiceImpl extends
 			final List<Document> documents = SearchEngineUtil.search(
 					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
 					fullQuery, sort, start, end).toList();
-			System.out.println("RESULT SIZE: " + documents.size());
-
 			return documents;
 
 		} catch (SearchException e) {
@@ -256,9 +269,9 @@ public class ResignationHistoryLocalServiceImpl extends
 			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
 			return !hits.toList().isEmpty() ? hits.toList().get(0) : null;
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 
 		return null;
@@ -273,7 +286,7 @@ public class ResignationHistoryLocalServiceImpl extends
 			try {
 				indexer.reindex(item);
 			} catch (SearchException e) {
-				e.printStackTrace();
+				LOGGER.info(e);
 			}
 		}
 	}
@@ -297,8 +310,50 @@ public class ResignationHistoryLocalServiceImpl extends
 
 			}
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
+	}
+
+	// fix
+
+	public void addMissingResignedEmployee(ServiceContext serviceContext) {
+		// List<Long> resignedEmps =
+		// empIdsFromResignedEmps(empLocalService.findResignedEmp());
+		List<Emp> resignedEmps = empLocalService.findResignedEmp();
+		List<Long> currentResignedList = empIdsFromResignedResignedHistory(findAll());
+
+		List<Emp> toAddedList = new ArrayList<>();
+
+		for (Emp emp : resignedEmps) {
+			if (!currentResignedList.contains(emp.getEmpId())) {
+				toAddedList.add(emp);
+			}
+		}
+
+		// add missing
+		for (Emp emp : toAddedList) {
+			ResignationHistory resignationHistory = createPrePersisted();
+			resignationHistory.setEmployeeId(emp.getEmpId());
+
+			addResignationHistory(resignationHistory, serviceContext);
+		}
+	}
+
+	private List<Long> empIdsFromResignedEmps(List<Emp> emps) {
+		final List<Long> ids = new ArrayList<>();
+		for (Emp emp : emps) {
+			ids.add(emp.getEmpId());
+		}
+		return ids;
+	}
+
+	private List<Long> empIdsFromResignedResignedHistory(
+			List<ResignationHistory> resignationHistories) {
+		final List<Long> ids = new ArrayList<>();
+		for (ResignationHistory r : resignationHistories) {
+			ids.add(r.getEmployeeId());
+		}
+		return ids;
 	}
 
 }

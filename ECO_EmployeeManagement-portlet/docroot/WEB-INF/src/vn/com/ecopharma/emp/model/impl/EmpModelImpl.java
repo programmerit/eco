@@ -134,7 +134,9 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 			true);
 	public static long EMPCODE_COLUMN_BITMASK = 1L;
 	public static long EMPUSERID_COLUMN_BITMASK = 2L;
-	public static long EMPID_COLUMN_BITMASK = 4L;
+	public static long STATUS_COLUMN_BITMASK = 4L;
+	public static long TITLESID_COLUMN_BITMASK = 8L;
+	public static long EMPID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -769,7 +771,19 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 
 	@Override
 	public void setTitlesId(long titlesId) {
+		_columnBitmask |= TITLESID_COLUMN_BITMASK;
+
+		if (!_setOriginalTitlesId) {
+			_setOriginalTitlesId = true;
+
+			_originalTitlesId = _titlesId;
+		}
+
 		_titlesId = titlesId;
+	}
+
+	public long getOriginalTitlesId() {
+		return _originalTitlesId;
 	}
 
 	@JSON
@@ -1266,7 +1280,17 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 
 	@Override
 	public void setStatus(String status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (_originalStatus == null) {
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public String getOriginalStatus() {
+		return GetterUtil.getString(_originalStatus);
 	}
 
 	@JSON
@@ -1474,9 +1498,15 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 
 		empModelImpl._originalEmpCode = empModelImpl._empCode;
 
+		empModelImpl._originalTitlesId = empModelImpl._titlesId;
+
+		empModelImpl._setOriginalTitlesId = false;
+
 		empModelImpl._originalEmpUserId = empModelImpl._empUserId;
 
 		empModelImpl._setOriginalEmpUserId = false;
+
+		empModelImpl._originalStatus = empModelImpl._status;
 
 		empModelImpl._columnBitmask = 0;
 	}
@@ -2128,6 +2158,8 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 	private String _religion;
 	private Date _joinedDate;
 	private long _titlesId;
+	private long _originalTitlesId;
+	private boolean _setOriginalTitlesId;
 	private long _levelId;
 	private Date _promotedDate;
 	private Date _laborContractSignedDate;
@@ -2166,6 +2198,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 	private String _companyEmailAddress;
 	private long _workingPlaceId;
 	private String _status;
+	private String _originalStatus;
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;

@@ -1,7 +1,6 @@
 package vn.com.ecopharma.emp.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,7 +10,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
-import vn.com.ecopharma.emp.enumeration.ResignationType;
 import vn.com.ecopharma.emp.model.ResignationHistory;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.ResignationHistoryLocalServiceUtil;
@@ -74,15 +72,11 @@ public class ResignationBean implements Serializable {
 	}
 
 	public List<String> getResignationTypes() {
-		final List<String> result = new ArrayList<String>();
-		for (ResignationType resignationType : ResignationType.values()) {
-			result.add(resignationType.toString());
-		}
-		return result;
+		return EmployeeUtils.getResignationTypes();
 	}
 
-	public String getLocalizedLaborContractType(String r) {
-		return ResignationType.valueOf(r).getLocalizedString();
+	public String getLocalizedResignationType(String r) {
+		return EmployeeUtils.getLocalizedResignationType(r);
 	}
 
 	public long getEmployeeId() {

@@ -171,7 +171,7 @@ public class TimeTrackingBean implements Serializable {
 	}
 
 	public List<String> completeColumns(String query) {
-		final List<String> filteredItem = new ArrayList<String>();
+		final List<String> filteredItem = new ArrayList<>();
 		for (String s : VALID_COLUMNS) {
 			if ("*".equals(query) || s.contains(query))
 				filteredItem.add(s);

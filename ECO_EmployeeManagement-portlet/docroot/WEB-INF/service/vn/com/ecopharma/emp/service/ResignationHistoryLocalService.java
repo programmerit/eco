@@ -274,6 +274,10 @@ public interface ResignationHistoryLocalService extends BaseLocalService,
 		vn.com.ecopharma.emp.model.ResignationHistory resignationHistory,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
+	public vn.com.ecopharma.emp.model.ResignationHistory updateResignationHistory(
+		long resignationHistoryId, java.util.Date resignedDate,
+		java.lang.String resignedType, java.lang.String comment);
+
 	public vn.com.ecopharma.emp.model.ResignationHistory markDeleted(
 		vn.com.ecopharma.emp.model.ResignationHistory resignationHistory);
 
@@ -303,4 +307,7 @@ public interface ResignationHistoryLocalService extends BaseLocalService,
 	public void removeAllIndexes(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		long companyId);
+
+	public void addMissingResignedEmployee(
+		com.liferay.portal.service.ServiceContext serviceContext);
 }

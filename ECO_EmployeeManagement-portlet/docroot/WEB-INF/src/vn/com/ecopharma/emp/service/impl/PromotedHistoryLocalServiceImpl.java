@@ -150,8 +150,7 @@ public class PromotedHistoryLocalServiceImpl extends
 		promotedHistory.setCreateDate(new Date());
 		promotedHistory.setModifiedDate(new Date());
 		try {
-			promotedHistory = promotedHistoryPersistence
-					.update(promotedHistory);
+			promotedHistory = super.addPromotedHistory(promotedHistory);
 			Emp employee = empLocalService.getEmp(promotedHistory
 					.getEmployeeId());
 			employee.setTitlesId(promotedHistory.getNewTitlesId());
@@ -249,10 +248,10 @@ public class PromotedHistoryLocalServiceImpl extends
 
 		} catch (SearchException e) {
 			LogFactoryUtil.getLog(PromotedHistoryLocalServiceImpl.class)
-			.info(e);
+					.info(e);
 		} catch (ParseException e) {
 			LogFactoryUtil.getLog(PromotedHistoryLocalServiceImpl.class)
-			.info(e);
+					.info(e);
 		}
 		return null;
 	}
@@ -276,10 +275,10 @@ public class PromotedHistoryLocalServiceImpl extends
 			return !hits.toList().isEmpty() ? hits.toList().get(0) : null;
 		} catch (ParseException e) {
 			LogFactoryUtil.getLog(PromotedHistoryLocalServiceImpl.class)
-			.info(e);
+					.info(e);
 		} catch (SearchException e) {
 			LogFactoryUtil.getLog(PromotedHistoryLocalServiceImpl.class)
-			.info(e);
+					.info(e);
 		}
 
 		return null;

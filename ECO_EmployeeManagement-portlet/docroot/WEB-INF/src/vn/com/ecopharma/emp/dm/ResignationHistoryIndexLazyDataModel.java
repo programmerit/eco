@@ -12,7 +12,6 @@ import vn.com.ecopharma.emp.dto.ResignationHistoryIndexedItem;
 import vn.com.ecopharma.emp.service.ResignationHistoryLocalServiceUtil;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -41,7 +40,7 @@ public class ResignationHistoryIndexLazyDataModel extends
 	@Override
 	public List<ResignationHistoryIndexedItem> load(int first, int pageSize,
 			String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-		final List<ResignationHistoryIndexedItem> results = new ArrayList<ResignationHistoryIndexedItem>();
+		final List<ResignationHistoryIndexedItem> results = new ArrayList<>();
 		final SearchContext searchContext = EmployeeUtils
 				.getCurrentSearchContext();
 
@@ -49,7 +48,7 @@ public class ResignationHistoryIndexLazyDataModel extends
 		final List<Document> documents = ResignationHistoryLocalServiceUtil
 				.searchAllUnDeletedDocuments(searchContext,
 						new ArrayList<Query>(), searchContext.getCompanyId(),
-						sort, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+						sort, first, first + pageSize);
 		for (Document document : documents) {
 			results.add(new ResignationHistoryIndexedItem(document));
 		}

@@ -290,6 +290,10 @@ public class DepartmentLocalServiceUtil {
 		return getService().findAll(start, end, orderByComparator);
 	}
 
+	public static vn.com.ecopharma.emp.model.Department createPrePersistedDepartment() {
+		return getService().createPrePersistedDepartment();
+	}
+
 	public static vn.com.ecopharma.emp.model.Department findByNameAndDevision(
 		java.lang.String name, long devisionId) {
 		return getService().findByNameAndDevision(name, devisionId);

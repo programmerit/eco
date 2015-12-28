@@ -130,29 +130,33 @@ public class UnitLocalServiceClpInvoker {
 
 		_methodParameterTypes140 = new String[] { "long" };
 
-		_methodName141 = "addUnit";
+		_methodName141 = "createPrePersistedUnit";
 
-		_methodParameterTypes141 = new String[] {
-				"java.lang.String", "com.liferay.portal.service.ServiceContext"
-			};
+		_methodParameterTypes141 = new String[] {  };
 
 		_methodName142 = "addUnit";
 
 		_methodParameterTypes142 = new String[] {
-				"java.lang.String", "long",
-				"com.liferay.portal.service.ServiceContext"
+				"java.lang.String", "com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName143 = "addUnit";
 
 		_methodParameterTypes143 = new String[] {
+				"java.lang.String", "long",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName144 = "addUnit";
+
+		_methodParameterTypes144 = new String[] {
 				"vn.com.ecopharma.emp.model.Unit",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName144 = "completelyRemoveAll";
+		_methodName145 = "completelyRemoveAll";
 
-		_methodParameterTypes144 = new String[] {  };
+		_methodParameterTypes145 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -287,25 +291,30 @@ public class UnitLocalServiceClpInvoker {
 
 		if (_methodName141.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
-			return UnitLocalServiceUtil.addUnit((java.lang.String)arguments[0],
-				(com.liferay.portal.service.ServiceContext)arguments[1]);
+			return UnitLocalServiceUtil.createPrePersistedUnit();
 		}
 
 		if (_methodName142.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
 			return UnitLocalServiceUtil.addUnit((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[2]);
+				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
 
 		if (_methodName143.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
-			return UnitLocalServiceUtil.addUnit((vn.com.ecopharma.emp.model.Unit)arguments[0],
-				(com.liferay.portal.service.ServiceContext)arguments[1]);
+			return UnitLocalServiceUtil.addUnit((java.lang.String)arguments[0],
+				((Long)arguments[1]).longValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[2]);
 		}
 
 		if (_methodName144.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
+			return UnitLocalServiceUtil.addUnit((vn.com.ecopharma.emp.model.Unit)arguments[0],
+				(com.liferay.portal.service.ServiceContext)arguments[1]);
+		}
+
+		if (_methodName145.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
 			UnitLocalServiceUtil.completelyRemoveAll();
 
 			return null;
@@ -368,4 +377,6 @@ public class UnitLocalServiceClpInvoker {
 	private String[] _methodParameterTypes143;
 	private String _methodName144;
 	private String[] _methodParameterTypes144;
+	private String _methodName145;
+	private String[] _methodParameterTypes145;
 }
