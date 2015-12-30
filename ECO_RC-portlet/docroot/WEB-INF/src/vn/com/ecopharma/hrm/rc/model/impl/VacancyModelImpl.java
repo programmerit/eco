@@ -67,25 +67,38 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 	public static final String TABLE_NAME = "eco_rcp_Vacancy";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "vacancyId", Types.BIGINT },
-			{ "name", Types.VARCHAR },
-			{ "numberOfPosition", Types.INTEGER },
+			{ "approvedNumberOfPosition", Types.INTEGER },
+			{ "currentNumberOfEmployee", Types.INTEGER },
 			{ "titlesId", Types.BIGINT },
+			{ "numberOfNewRecruitment", Types.INTEGER },
+			{ "numberOfReplacedRecruitment", Types.INTEGER },
+			{ "expectedSalary", Types.DOUBLE },
+			{ "expectedJoinedDate", Types.TIMESTAMP },
+			{ "workingPlace", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
+			{ "requiredGender", Types.VARCHAR },
+			{ "certificateType", Types.VARCHAR },
+			{ "specialized", Types.VARCHAR },
+			{ "experiences", Types.DOUBLE },
+			{ "foreignLanguages", Types.VARCHAR },
+			{ "skills", Types.VARCHAR },
+			{ "officeSkills", Types.VARCHAR },
+			{ "awayToBusinessType", Types.VARCHAR },
+			{ "workingTimeType", Types.VARCHAR },
+			{ "jobType", Types.VARCHAR },
+			{ "code_", Types.VARCHAR },
 			{ "status", Types.VARCHAR },
 			{ "postedDate", Types.TIMESTAMP },
 			{ "expiredDate", Types.TIMESTAMP },
-			{ "deleted", Types.BOOLEAN },
-			{ "description", Types.VARCHAR },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "code_", Types.VARCHAR },
-			{ "certificateType", Types.VARCHAR },
-			{ "experiences", Types.DOUBLE }
+			{ "deleted", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_rcp_Vacancy (vacancyId LONG not null primary key,name VARCHAR(75) null,numberOfPosition INTEGER,titlesId LONG,status VARCHAR(75) null,postedDate DATE null,expiredDate DATE null,deleted BOOLEAN,description VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,code_ VARCHAR(75) null,certificateType VARCHAR(75) null,experiences DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table eco_rcp_Vacancy (vacancyId LONG not null primary key,approvedNumberOfPosition INTEGER,currentNumberOfEmployee INTEGER,titlesId LONG,numberOfNewRecruitment INTEGER,numberOfReplacedRecruitment INTEGER,expectedSalary DOUBLE,expectedJoinedDate DATE null,workingPlace VARCHAR(75) null,description VARCHAR(75) null,requiredGender VARCHAR(75) null,certificateType VARCHAR(75) null,specialized VARCHAR(75) null,experiences DOUBLE,foreignLanguages VARCHAR(75) null,skills VARCHAR(75) null,officeSkills VARCHAR(75) null,awayToBusinessType VARCHAR(75) null,workingTimeType VARCHAR(75) null,jobType VARCHAR(75) null,code_ VARCHAR(75) null,status VARCHAR(75) null,postedDate DATE null,expiredDate DATE null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,deleted BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table eco_rcp_Vacancy";
 	public static final String ORDER_BY_JPQL = " ORDER BY vacancy.vacancyId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_rcp_Vacancy.vacancyId ASC";
@@ -102,8 +115,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 				"value.object.column.bitmask.enabled.vn.com.ecopharma.hrm.rc.model.Vacancy"),
 			true);
 	public static long DELETED_COLUMN_BITMASK = 1L;
-	public static long NAME_COLUMN_BITMASK = 2L;
-	public static long VACANCYID_COLUMN_BITMASK = 4L;
+	public static long VACANCYID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -119,23 +131,36 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		Vacancy model = new VacancyImpl();
 
 		model.setVacancyId(soapModel.getVacancyId());
-		model.setName(soapModel.getName());
-		model.setNumberOfPosition(soapModel.getNumberOfPosition());
+		model.setApprovedNumberOfPosition(soapModel.getApprovedNumberOfPosition());
+		model.setCurrentNumberOfEmployee(soapModel.getCurrentNumberOfEmployee());
 		model.setTitlesId(soapModel.getTitlesId());
+		model.setNumberOfNewRecruitment(soapModel.getNumberOfNewRecruitment());
+		model.setNumberOfReplacedRecruitment(soapModel.getNumberOfReplacedRecruitment());
+		model.setExpectedSalary(soapModel.getExpectedSalary());
+		model.setExpectedJoinedDate(soapModel.getExpectedJoinedDate());
+		model.setWorkingPlace(soapModel.getWorkingPlace());
+		model.setDescription(soapModel.getDescription());
+		model.setRequiredGender(soapModel.getRequiredGender());
+		model.setCertificateType(soapModel.getCertificateType());
+		model.setSpecialized(soapModel.getSpecialized());
+		model.setExperiences(soapModel.getExperiences());
+		model.setForeignLanguages(soapModel.getForeignLanguages());
+		model.setSkills(soapModel.getSkills());
+		model.setOfficeSkills(soapModel.getOfficeSkills());
+		model.setAwayToBusinessType(soapModel.getAwayToBusinessType());
+		model.setWorkingTimeType(soapModel.getWorkingTimeType());
+		model.setJobType(soapModel.getJobType());
+		model.setCode(soapModel.getCode());
 		model.setStatus(soapModel.getStatus());
 		model.setPostedDate(soapModel.getPostedDate());
 		model.setExpiredDate(soapModel.getExpiredDate());
-		model.setDeleted(soapModel.getDeleted());
-		model.setDescription(soapModel.getDescription());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCode(soapModel.getCode());
-		model.setCertificateType(soapModel.getCertificateType());
-		model.setExperiences(soapModel.getExperiences());
+		model.setDeleted(soapModel.getDeleted());
 
 		return model;
 	}
@@ -201,23 +226,37 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("vacancyId", getVacancyId());
-		attributes.put("name", getName());
-		attributes.put("numberOfPosition", getNumberOfPosition());
+		attributes.put("approvedNumberOfPosition", getApprovedNumberOfPosition());
+		attributes.put("currentNumberOfEmployee", getCurrentNumberOfEmployee());
 		attributes.put("titlesId", getTitlesId());
+		attributes.put("numberOfNewRecruitment", getNumberOfNewRecruitment());
+		attributes.put("numberOfReplacedRecruitment",
+			getNumberOfReplacedRecruitment());
+		attributes.put("expectedSalary", getExpectedSalary());
+		attributes.put("expectedJoinedDate", getExpectedJoinedDate());
+		attributes.put("workingPlace", getWorkingPlace());
+		attributes.put("description", getDescription());
+		attributes.put("requiredGender", getRequiredGender());
+		attributes.put("certificateType", getCertificateType());
+		attributes.put("specialized", getSpecialized());
+		attributes.put("experiences", getExperiences());
+		attributes.put("foreignLanguages", getForeignLanguages());
+		attributes.put("skills", getSkills());
+		attributes.put("officeSkills", getOfficeSkills());
+		attributes.put("awayToBusinessType", getAwayToBusinessType());
+		attributes.put("workingTimeType", getWorkingTimeType());
+		attributes.put("jobType", getJobType());
+		attributes.put("code", getCode());
 		attributes.put("status", getStatus());
 		attributes.put("postedDate", getPostedDate());
 		attributes.put("expiredDate", getExpiredDate());
-		attributes.put("deleted", getDeleted());
-		attributes.put("description", getDescription());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("code", getCode());
-		attributes.put("certificateType", getCertificateType());
-		attributes.put("experiences", getExperiences());
+		attributes.put("deleted", getDeleted());
 
 		return attributes;
 	}
@@ -230,22 +269,128 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 			setVacancyId(vacancyId);
 		}
 
-		String name = (String)attributes.get("name");
+		Integer approvedNumberOfPosition = (Integer)attributes.get(
+				"approvedNumberOfPosition");
 
-		if (name != null) {
-			setName(name);
+		if (approvedNumberOfPosition != null) {
+			setApprovedNumberOfPosition(approvedNumberOfPosition);
 		}
 
-		Integer numberOfPosition = (Integer)attributes.get("numberOfPosition");
+		Integer currentNumberOfEmployee = (Integer)attributes.get(
+				"currentNumberOfEmployee");
 
-		if (numberOfPosition != null) {
-			setNumberOfPosition(numberOfPosition);
+		if (currentNumberOfEmployee != null) {
+			setCurrentNumberOfEmployee(currentNumberOfEmployee);
 		}
 
 		Long titlesId = (Long)attributes.get("titlesId");
 
 		if (titlesId != null) {
 			setTitlesId(titlesId);
+		}
+
+		Integer numberOfNewRecruitment = (Integer)attributes.get(
+				"numberOfNewRecruitment");
+
+		if (numberOfNewRecruitment != null) {
+			setNumberOfNewRecruitment(numberOfNewRecruitment);
+		}
+
+		Integer numberOfReplacedRecruitment = (Integer)attributes.get(
+				"numberOfReplacedRecruitment");
+
+		if (numberOfReplacedRecruitment != null) {
+			setNumberOfReplacedRecruitment(numberOfReplacedRecruitment);
+		}
+
+		Double expectedSalary = (Double)attributes.get("expectedSalary");
+
+		if (expectedSalary != null) {
+			setExpectedSalary(expectedSalary);
+		}
+
+		Date expectedJoinedDate = (Date)attributes.get("expectedJoinedDate");
+
+		if (expectedJoinedDate != null) {
+			setExpectedJoinedDate(expectedJoinedDate);
+		}
+
+		String workingPlace = (String)attributes.get("workingPlace");
+
+		if (workingPlace != null) {
+			setWorkingPlace(workingPlace);
+		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
+		}
+
+		String requiredGender = (String)attributes.get("requiredGender");
+
+		if (requiredGender != null) {
+			setRequiredGender(requiredGender);
+		}
+
+		String certificateType = (String)attributes.get("certificateType");
+
+		if (certificateType != null) {
+			setCertificateType(certificateType);
+		}
+
+		String specialized = (String)attributes.get("specialized");
+
+		if (specialized != null) {
+			setSpecialized(specialized);
+		}
+
+		Double experiences = (Double)attributes.get("experiences");
+
+		if (experiences != null) {
+			setExperiences(experiences);
+		}
+
+		String foreignLanguages = (String)attributes.get("foreignLanguages");
+
+		if (foreignLanguages != null) {
+			setForeignLanguages(foreignLanguages);
+		}
+
+		String skills = (String)attributes.get("skills");
+
+		if (skills != null) {
+			setSkills(skills);
+		}
+
+		String officeSkills = (String)attributes.get("officeSkills");
+
+		if (officeSkills != null) {
+			setOfficeSkills(officeSkills);
+		}
+
+		String awayToBusinessType = (String)attributes.get("awayToBusinessType");
+
+		if (awayToBusinessType != null) {
+			setAwayToBusinessType(awayToBusinessType);
+		}
+
+		String workingTimeType = (String)attributes.get("workingTimeType");
+
+		if (workingTimeType != null) {
+			setWorkingTimeType(workingTimeType);
+		}
+
+		String jobType = (String)attributes.get("jobType");
+
+		if (jobType != null) {
+			setJobType(jobType);
+		}
+
+		String code = (String)attributes.get("code");
+
+		if (code != null) {
+			setCode(code);
 		}
 
 		String status = (String)attributes.get("status");
@@ -264,18 +409,6 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
 		if (expiredDate != null) {
 			setExpiredDate(expiredDate);
-		}
-
-		Boolean deleted = (Boolean)attributes.get("deleted");
-
-		if (deleted != null) {
-			setDeleted(deleted);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -314,22 +447,10 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 			setModifiedDate(modifiedDate);
 		}
 
-		String code = (String)attributes.get("code");
+		Boolean deleted = (Boolean)attributes.get("deleted");
 
-		if (code != null) {
-			setCode(code);
-		}
-
-		String certificateType = (String)attributes.get("certificateType");
-
-		if (certificateType != null) {
-			setCertificateType(certificateType);
-		}
-
-		Double experiences = (Double)attributes.get("experiences");
-
-		if (experiences != null) {
-			setExperiences(experiences);
+		if (deleted != null) {
+			setDeleted(deleted);
 		}
 	}
 
@@ -346,39 +467,24 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
 	@JSON
 	@Override
-	public String getName() {
-		if (_name == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _name;
-		}
+	public int getApprovedNumberOfPosition() {
+		return _approvedNumberOfPosition;
 	}
 
 	@Override
-	public void setName(String name) {
-		_columnBitmask |= NAME_COLUMN_BITMASK;
-
-		if (_originalName == null) {
-			_originalName = _name;
-		}
-
-		_name = name;
-	}
-
-	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+	public void setApprovedNumberOfPosition(int approvedNumberOfPosition) {
+		_approvedNumberOfPosition = approvedNumberOfPosition;
 	}
 
 	@JSON
 	@Override
-	public int getNumberOfPosition() {
-		return _numberOfPosition;
+	public int getCurrentNumberOfEmployee() {
+		return _currentNumberOfEmployee;
 	}
 
 	@Override
-	public void setNumberOfPosition(int numberOfPosition) {
-		_numberOfPosition = numberOfPosition;
+	public void setCurrentNumberOfEmployee(int currentNumberOfEmployee) {
+		_currentNumberOfEmployee = currentNumberOfEmployee;
 	}
 
 	@JSON
@@ -390,6 +496,253 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 	@Override
 	public void setTitlesId(long titlesId) {
 		_titlesId = titlesId;
+	}
+
+	@JSON
+	@Override
+	public int getNumberOfNewRecruitment() {
+		return _numberOfNewRecruitment;
+	}
+
+	@Override
+	public void setNumberOfNewRecruitment(int numberOfNewRecruitment) {
+		_numberOfNewRecruitment = numberOfNewRecruitment;
+	}
+
+	@JSON
+	@Override
+	public int getNumberOfReplacedRecruitment() {
+		return _numberOfReplacedRecruitment;
+	}
+
+	@Override
+	public void setNumberOfReplacedRecruitment(int numberOfReplacedRecruitment) {
+		_numberOfReplacedRecruitment = numberOfReplacedRecruitment;
+	}
+
+	@JSON
+	@Override
+	public double getExpectedSalary() {
+		return _expectedSalary;
+	}
+
+	@Override
+	public void setExpectedSalary(double expectedSalary) {
+		_expectedSalary = expectedSalary;
+	}
+
+	@JSON
+	@Override
+	public Date getExpectedJoinedDate() {
+		return _expectedJoinedDate;
+	}
+
+	@Override
+	public void setExpectedJoinedDate(Date expectedJoinedDate) {
+		_expectedJoinedDate = expectedJoinedDate;
+	}
+
+	@JSON
+	@Override
+	public String getWorkingPlace() {
+		if (_workingPlace == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _workingPlace;
+		}
+	}
+
+	@Override
+	public void setWorkingPlace(String workingPlace) {
+		_workingPlace = workingPlace;
+	}
+
+	@JSON
+	@Override
+	public String getDescription() {
+		if (_description == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _description;
+		}
+	}
+
+	@Override
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	@JSON
+	@Override
+	public String getRequiredGender() {
+		if (_requiredGender == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _requiredGender;
+		}
+	}
+
+	@Override
+	public void setRequiredGender(String requiredGender) {
+		_requiredGender = requiredGender;
+	}
+
+	@JSON
+	@Override
+	public String getCertificateType() {
+		if (_certificateType == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _certificateType;
+		}
+	}
+
+	@Override
+	public void setCertificateType(String certificateType) {
+		_certificateType = certificateType;
+	}
+
+	@JSON
+	@Override
+	public String getSpecialized() {
+		if (_specialized == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _specialized;
+		}
+	}
+
+	@Override
+	public void setSpecialized(String specialized) {
+		_specialized = specialized;
+	}
+
+	@JSON
+	@Override
+	public double getExperiences() {
+		return _experiences;
+	}
+
+	@Override
+	public void setExperiences(double experiences) {
+		_experiences = experiences;
+	}
+
+	@JSON
+	@Override
+	public String getForeignLanguages() {
+		if (_foreignLanguages == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _foreignLanguages;
+		}
+	}
+
+	@Override
+	public void setForeignLanguages(String foreignLanguages) {
+		_foreignLanguages = foreignLanguages;
+	}
+
+	@JSON
+	@Override
+	public String getSkills() {
+		if (_skills == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _skills;
+		}
+	}
+
+	@Override
+	public void setSkills(String skills) {
+		_skills = skills;
+	}
+
+	@JSON
+	@Override
+	public String getOfficeSkills() {
+		if (_officeSkills == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _officeSkills;
+		}
+	}
+
+	@Override
+	public void setOfficeSkills(String officeSkills) {
+		_officeSkills = officeSkills;
+	}
+
+	@JSON
+	@Override
+	public String getAwayToBusinessType() {
+		if (_awayToBusinessType == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _awayToBusinessType;
+		}
+	}
+
+	@Override
+	public void setAwayToBusinessType(String awayToBusinessType) {
+		_awayToBusinessType = awayToBusinessType;
+	}
+
+	@JSON
+	@Override
+	public String getWorkingTimeType() {
+		if (_workingTimeType == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _workingTimeType;
+		}
+	}
+
+	@Override
+	public void setWorkingTimeType(String workingTimeType) {
+		_workingTimeType = workingTimeType;
+	}
+
+	@JSON
+	@Override
+	public String getJobType() {
+		if (_jobType == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _jobType;
+		}
+	}
+
+	@Override
+	public void setJobType(String jobType) {
+		_jobType = jobType;
+	}
+
+	@JSON
+	@Override
+	public String getCode() {
+		if (_code == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _code;
+		}
+	}
+
+	@Override
+	public void setCode(String code) {
+		_code = code;
 	}
 
 	@JSON
@@ -428,50 +781,6 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 	@Override
 	public void setExpiredDate(Date expiredDate) {
 		_expiredDate = expiredDate;
-	}
-
-	@JSON
-	@Override
-	public boolean getDeleted() {
-		return _deleted;
-	}
-
-	@Override
-	public boolean isDeleted() {
-		return _deleted;
-	}
-
-	@Override
-	public void setDeleted(boolean deleted) {
-		_columnBitmask |= DELETED_COLUMN_BITMASK;
-
-		if (!_setOriginalDeleted) {
-			_setOriginalDeleted = true;
-
-			_originalDeleted = _deleted;
-		}
-
-		_deleted = deleted;
-	}
-
-	public boolean getOriginalDeleted() {
-		return _originalDeleted;
-	}
-
-	@JSON
-	@Override
-	public String getDescription() {
-		if (_description == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _description;
-		}
-	}
-
-	@Override
-	public void setDescription(String description) {
-		_description = description;
 	}
 
 	@JSON
@@ -557,45 +866,30 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
 	@JSON
 	@Override
-	public String getCode() {
-		if (_code == null) {
-			return StringPool.BLANK;
+	public boolean getDeleted() {
+		return _deleted;
+	}
+
+	@Override
+	public boolean isDeleted() {
+		return _deleted;
+	}
+
+	@Override
+	public void setDeleted(boolean deleted) {
+		_columnBitmask |= DELETED_COLUMN_BITMASK;
+
+		if (!_setOriginalDeleted) {
+			_setOriginalDeleted = true;
+
+			_originalDeleted = _deleted;
 		}
-		else {
-			return _code;
-		}
+
+		_deleted = deleted;
 	}
 
-	@Override
-	public void setCode(String code) {
-		_code = code;
-	}
-
-	@JSON
-	@Override
-	public String getCertificateType() {
-		if (_certificateType == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _certificateType;
-		}
-	}
-
-	@Override
-	public void setCertificateType(String certificateType) {
-		_certificateType = certificateType;
-	}
-
-	@JSON
-	@Override
-	public double getExperiences() {
-		return _experiences;
-	}
-
-	@Override
-	public void setExperiences(double experiences) {
-		_experiences = experiences;
+	public boolean getOriginalDeleted() {
+		return _originalDeleted;
 	}
 
 	public long getColumnBitmask() {
@@ -630,23 +924,36 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		VacancyImpl vacancyImpl = new VacancyImpl();
 
 		vacancyImpl.setVacancyId(getVacancyId());
-		vacancyImpl.setName(getName());
-		vacancyImpl.setNumberOfPosition(getNumberOfPosition());
+		vacancyImpl.setApprovedNumberOfPosition(getApprovedNumberOfPosition());
+		vacancyImpl.setCurrentNumberOfEmployee(getCurrentNumberOfEmployee());
 		vacancyImpl.setTitlesId(getTitlesId());
+		vacancyImpl.setNumberOfNewRecruitment(getNumberOfNewRecruitment());
+		vacancyImpl.setNumberOfReplacedRecruitment(getNumberOfReplacedRecruitment());
+		vacancyImpl.setExpectedSalary(getExpectedSalary());
+		vacancyImpl.setExpectedJoinedDate(getExpectedJoinedDate());
+		vacancyImpl.setWorkingPlace(getWorkingPlace());
+		vacancyImpl.setDescription(getDescription());
+		vacancyImpl.setRequiredGender(getRequiredGender());
+		vacancyImpl.setCertificateType(getCertificateType());
+		vacancyImpl.setSpecialized(getSpecialized());
+		vacancyImpl.setExperiences(getExperiences());
+		vacancyImpl.setForeignLanguages(getForeignLanguages());
+		vacancyImpl.setSkills(getSkills());
+		vacancyImpl.setOfficeSkills(getOfficeSkills());
+		vacancyImpl.setAwayToBusinessType(getAwayToBusinessType());
+		vacancyImpl.setWorkingTimeType(getWorkingTimeType());
+		vacancyImpl.setJobType(getJobType());
+		vacancyImpl.setCode(getCode());
 		vacancyImpl.setStatus(getStatus());
 		vacancyImpl.setPostedDate(getPostedDate());
 		vacancyImpl.setExpiredDate(getExpiredDate());
-		vacancyImpl.setDeleted(getDeleted());
-		vacancyImpl.setDescription(getDescription());
 		vacancyImpl.setGroupId(getGroupId());
 		vacancyImpl.setCompanyId(getCompanyId());
 		vacancyImpl.setUserId(getUserId());
 		vacancyImpl.setUserName(getUserName());
 		vacancyImpl.setCreateDate(getCreateDate());
 		vacancyImpl.setModifiedDate(getModifiedDate());
-		vacancyImpl.setCode(getCode());
-		vacancyImpl.setCertificateType(getCertificateType());
-		vacancyImpl.setExperiences(getExperiences());
+		vacancyImpl.setDeleted(getDeleted());
 
 		vacancyImpl.resetOriginalValues();
 
@@ -699,8 +1006,6 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 	public void resetOriginalValues() {
 		VacancyModelImpl vacancyModelImpl = this;
 
-		vacancyModelImpl._originalName = vacancyModelImpl._name;
-
 		vacancyModelImpl._originalDeleted = vacancyModelImpl._deleted;
 
 		vacancyModelImpl._setOriginalDeleted = false;
@@ -714,17 +1019,124 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
 		vacancyCacheModel.vacancyId = getVacancyId();
 
-		vacancyCacheModel.name = getName();
+		vacancyCacheModel.approvedNumberOfPosition = getApprovedNumberOfPosition();
 
-		String name = vacancyCacheModel.name;
-
-		if ((name != null) && (name.length() == 0)) {
-			vacancyCacheModel.name = null;
-		}
-
-		vacancyCacheModel.numberOfPosition = getNumberOfPosition();
+		vacancyCacheModel.currentNumberOfEmployee = getCurrentNumberOfEmployee();
 
 		vacancyCacheModel.titlesId = getTitlesId();
+
+		vacancyCacheModel.numberOfNewRecruitment = getNumberOfNewRecruitment();
+
+		vacancyCacheModel.numberOfReplacedRecruitment = getNumberOfReplacedRecruitment();
+
+		vacancyCacheModel.expectedSalary = getExpectedSalary();
+
+		Date expectedJoinedDate = getExpectedJoinedDate();
+
+		if (expectedJoinedDate != null) {
+			vacancyCacheModel.expectedJoinedDate = expectedJoinedDate.getTime();
+		}
+		else {
+			vacancyCacheModel.expectedJoinedDate = Long.MIN_VALUE;
+		}
+
+		vacancyCacheModel.workingPlace = getWorkingPlace();
+
+		String workingPlace = vacancyCacheModel.workingPlace;
+
+		if ((workingPlace != null) && (workingPlace.length() == 0)) {
+			vacancyCacheModel.workingPlace = null;
+		}
+
+		vacancyCacheModel.description = getDescription();
+
+		String description = vacancyCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			vacancyCacheModel.description = null;
+		}
+
+		vacancyCacheModel.requiredGender = getRequiredGender();
+
+		String requiredGender = vacancyCacheModel.requiredGender;
+
+		if ((requiredGender != null) && (requiredGender.length() == 0)) {
+			vacancyCacheModel.requiredGender = null;
+		}
+
+		vacancyCacheModel.certificateType = getCertificateType();
+
+		String certificateType = vacancyCacheModel.certificateType;
+
+		if ((certificateType != null) && (certificateType.length() == 0)) {
+			vacancyCacheModel.certificateType = null;
+		}
+
+		vacancyCacheModel.specialized = getSpecialized();
+
+		String specialized = vacancyCacheModel.specialized;
+
+		if ((specialized != null) && (specialized.length() == 0)) {
+			vacancyCacheModel.specialized = null;
+		}
+
+		vacancyCacheModel.experiences = getExperiences();
+
+		vacancyCacheModel.foreignLanguages = getForeignLanguages();
+
+		String foreignLanguages = vacancyCacheModel.foreignLanguages;
+
+		if ((foreignLanguages != null) && (foreignLanguages.length() == 0)) {
+			vacancyCacheModel.foreignLanguages = null;
+		}
+
+		vacancyCacheModel.skills = getSkills();
+
+		String skills = vacancyCacheModel.skills;
+
+		if ((skills != null) && (skills.length() == 0)) {
+			vacancyCacheModel.skills = null;
+		}
+
+		vacancyCacheModel.officeSkills = getOfficeSkills();
+
+		String officeSkills = vacancyCacheModel.officeSkills;
+
+		if ((officeSkills != null) && (officeSkills.length() == 0)) {
+			vacancyCacheModel.officeSkills = null;
+		}
+
+		vacancyCacheModel.awayToBusinessType = getAwayToBusinessType();
+
+		String awayToBusinessType = vacancyCacheModel.awayToBusinessType;
+
+		if ((awayToBusinessType != null) && (awayToBusinessType.length() == 0)) {
+			vacancyCacheModel.awayToBusinessType = null;
+		}
+
+		vacancyCacheModel.workingTimeType = getWorkingTimeType();
+
+		String workingTimeType = vacancyCacheModel.workingTimeType;
+
+		if ((workingTimeType != null) && (workingTimeType.length() == 0)) {
+			vacancyCacheModel.workingTimeType = null;
+		}
+
+		vacancyCacheModel.jobType = getJobType();
+
+		String jobType = vacancyCacheModel.jobType;
+
+		if ((jobType != null) && (jobType.length() == 0)) {
+			vacancyCacheModel.jobType = null;
+		}
+
+		vacancyCacheModel.code = getCode();
+
+		String code = vacancyCacheModel.code;
+
+		if ((code != null) && (code.length() == 0)) {
+			vacancyCacheModel.code = null;
+		}
 
 		vacancyCacheModel.status = getStatus();
 
@@ -750,16 +1162,6 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		}
 		else {
 			vacancyCacheModel.expiredDate = Long.MIN_VALUE;
-		}
-
-		vacancyCacheModel.deleted = getDeleted();
-
-		vacancyCacheModel.description = getDescription();
-
-		String description = vacancyCacheModel.description;
-
-		if ((description != null) && (description.length() == 0)) {
-			vacancyCacheModel.description = null;
 		}
 
 		vacancyCacheModel.groupId = getGroupId();
@@ -794,49 +1196,63 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 			vacancyCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		vacancyCacheModel.code = getCode();
-
-		String code = vacancyCacheModel.code;
-
-		if ((code != null) && (code.length() == 0)) {
-			vacancyCacheModel.code = null;
-		}
-
-		vacancyCacheModel.certificateType = getCertificateType();
-
-		String certificateType = vacancyCacheModel.certificateType;
-
-		if ((certificateType != null) && (certificateType.length() == 0)) {
-			vacancyCacheModel.certificateType = null;
-		}
-
-		vacancyCacheModel.experiences = getExperiences();
+		vacancyCacheModel.deleted = getDeleted();
 
 		return vacancyCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(63);
 
 		sb.append("{vacancyId=");
 		sb.append(getVacancyId());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", numberOfPosition=");
-		sb.append(getNumberOfPosition());
+		sb.append(", approvedNumberOfPosition=");
+		sb.append(getApprovedNumberOfPosition());
+		sb.append(", currentNumberOfEmployee=");
+		sb.append(getCurrentNumberOfEmployee());
 		sb.append(", titlesId=");
 		sb.append(getTitlesId());
+		sb.append(", numberOfNewRecruitment=");
+		sb.append(getNumberOfNewRecruitment());
+		sb.append(", numberOfReplacedRecruitment=");
+		sb.append(getNumberOfReplacedRecruitment());
+		sb.append(", expectedSalary=");
+		sb.append(getExpectedSalary());
+		sb.append(", expectedJoinedDate=");
+		sb.append(getExpectedJoinedDate());
+		sb.append(", workingPlace=");
+		sb.append(getWorkingPlace());
+		sb.append(", description=");
+		sb.append(getDescription());
+		sb.append(", requiredGender=");
+		sb.append(getRequiredGender());
+		sb.append(", certificateType=");
+		sb.append(getCertificateType());
+		sb.append(", specialized=");
+		sb.append(getSpecialized());
+		sb.append(", experiences=");
+		sb.append(getExperiences());
+		sb.append(", foreignLanguages=");
+		sb.append(getForeignLanguages());
+		sb.append(", skills=");
+		sb.append(getSkills());
+		sb.append(", officeSkills=");
+		sb.append(getOfficeSkills());
+		sb.append(", awayToBusinessType=");
+		sb.append(getAwayToBusinessType());
+		sb.append(", workingTimeType=");
+		sb.append(getWorkingTimeType());
+		sb.append(", jobType=");
+		sb.append(getJobType());
+		sb.append(", code=");
+		sb.append(getCode());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append(", postedDate=");
 		sb.append(getPostedDate());
 		sb.append(", expiredDate=");
 		sb.append(getExpiredDate());
-		sb.append(", deleted=");
-		sb.append(getDeleted());
-		sb.append(", description=");
-		sb.append(getDescription());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
@@ -849,12 +1265,8 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", code=");
-		sb.append(getCode());
-		sb.append(", certificateType=");
-		sb.append(getCertificateType());
-		sb.append(", experiences=");
-		sb.append(getExperiences());
+		sb.append(", deleted=");
+		sb.append(getDeleted());
 		sb.append("}");
 
 		return sb.toString();
@@ -862,7 +1274,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(58);
+		StringBundler sb = new StringBundler(97);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.hrm.rc.model.Vacancy");
@@ -873,16 +1285,84 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		sb.append(getVacancyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
+			"<column><column-name>approvedNumberOfPosition</column-name><column-value><![CDATA[");
+		sb.append(getApprovedNumberOfPosition());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>numberOfPosition</column-name><column-value><![CDATA[");
-		sb.append(getNumberOfPosition());
+			"<column><column-name>currentNumberOfEmployee</column-name><column-value><![CDATA[");
+		sb.append(getCurrentNumberOfEmployee());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>titlesId</column-name><column-value><![CDATA[");
 		sb.append(getTitlesId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>numberOfNewRecruitment</column-name><column-value><![CDATA[");
+		sb.append(getNumberOfNewRecruitment());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>numberOfReplacedRecruitment</column-name><column-value><![CDATA[");
+		sb.append(getNumberOfReplacedRecruitment());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>expectedSalary</column-name><column-value><![CDATA[");
+		sb.append(getExpectedSalary());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>expectedJoinedDate</column-name><column-value><![CDATA[");
+		sb.append(getExpectedJoinedDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>workingPlace</column-name><column-value><![CDATA[");
+		sb.append(getWorkingPlace());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>description</column-name><column-value><![CDATA[");
+		sb.append(getDescription());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>requiredGender</column-name><column-value><![CDATA[");
+		sb.append(getRequiredGender());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>certificateType</column-name><column-value><![CDATA[");
+		sb.append(getCertificateType());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>specialized</column-name><column-value><![CDATA[");
+		sb.append(getSpecialized());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>experiences</column-name><column-value><![CDATA[");
+		sb.append(getExperiences());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>foreignLanguages</column-name><column-value><![CDATA[");
+		sb.append(getForeignLanguages());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>skills</column-name><column-value><![CDATA[");
+		sb.append(getSkills());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>officeSkills</column-name><column-value><![CDATA[");
+		sb.append(getOfficeSkills());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>awayToBusinessType</column-name><column-value><![CDATA[");
+		sb.append(getAwayToBusinessType());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>workingTimeType</column-name><column-value><![CDATA[");
+		sb.append(getWorkingTimeType());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>jobType</column-name><column-value><![CDATA[");
+		sb.append(getJobType());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>code</column-name><column-value><![CDATA[");
+		sb.append(getCode());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
@@ -895,14 +1375,6 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		sb.append(
 			"<column><column-name>expiredDate</column-name><column-value><![CDATA[");
 		sb.append(getExpiredDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>deleted</column-name><column-value><![CDATA[");
-		sb.append(getDeleted());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -929,16 +1401,8 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>code</column-name><column-value><![CDATA[");
-		sb.append(getCode());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>certificateType</column-name><column-value><![CDATA[");
-		sb.append(getCertificateType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>experiences</column-name><column-value><![CDATA[");
-		sb.append(getExperiences());
+			"<column><column-name>deleted</column-name><column-value><![CDATA[");
+		sb.append(getDeleted());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -951,17 +1415,29 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 			Vacancy.class
 		};
 	private long _vacancyId;
-	private String _name;
-	private String _originalName;
-	private int _numberOfPosition;
+	private int _approvedNumberOfPosition;
+	private int _currentNumberOfEmployee;
 	private long _titlesId;
+	private int _numberOfNewRecruitment;
+	private int _numberOfReplacedRecruitment;
+	private double _expectedSalary;
+	private Date _expectedJoinedDate;
+	private String _workingPlace;
+	private String _description;
+	private String _requiredGender;
+	private String _certificateType;
+	private String _specialized;
+	private double _experiences;
+	private String _foreignLanguages;
+	private String _skills;
+	private String _officeSkills;
+	private String _awayToBusinessType;
+	private String _workingTimeType;
+	private String _jobType;
+	private String _code;
 	private String _status;
 	private Date _postedDate;
 	private Date _expiredDate;
-	private boolean _deleted;
-	private boolean _originalDeleted;
-	private boolean _setOriginalDeleted;
-	private String _description;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
@@ -969,9 +1445,9 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _code;
-	private String _certificateType;
-	private double _experiences;
+	private boolean _deleted;
+	private boolean _originalDeleted;
+	private boolean _setOriginalDeleted;
 	private long _columnBitmask;
 	private Vacancy _escapedModel;
 }

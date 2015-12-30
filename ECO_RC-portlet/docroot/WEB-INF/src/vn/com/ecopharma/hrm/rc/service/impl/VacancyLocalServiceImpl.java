@@ -101,18 +101,6 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 		return null;
 	}
 
-	/* Finder methods */
-	public Vacancy findByName(String name) {
-		try {
-			return vacancyPersistence.findByName(name);
-		} catch (NoSuchVacancyException e) {
-			e.printStackTrace();
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 	public int countAllUnDeletedIndexedVacancyDocuments(
 			SearchContext searchContext, List<Query> filterQueries,
 			long companyId, Sort sort) {
@@ -200,8 +188,6 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 			Date postedDate, Date expiredDate, String status) {
 		final Vacancy vacancy = createPrePersistedVacancy();
 		vacancy.setCode(vacancyCode);
-		vacancy.setName(name);
-		vacancy.setNumberOfPosition(numberOfPosition);
 		vacancy.setTitlesId(titlesId);
 		vacancy.setDescription(description);
 		vacancy.setPostedDate(postedDate);

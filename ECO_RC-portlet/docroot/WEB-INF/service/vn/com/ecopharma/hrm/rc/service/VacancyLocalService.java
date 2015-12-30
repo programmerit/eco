@@ -261,9 +261,6 @@ public interface VacancyLocalService extends BaseLocalService,
 
 	public java.util.List<vn.com.ecopharma.hrm.rc.model.Vacancy> findAllUnDeleted();
 
-	public vn.com.ecopharma.hrm.rc.model.Vacancy findByName(
-		java.lang.String name);
-
 	public int countAllUnDeletedIndexedVacancyDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,

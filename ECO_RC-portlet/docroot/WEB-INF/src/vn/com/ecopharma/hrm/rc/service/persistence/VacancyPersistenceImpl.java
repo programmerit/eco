@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -85,254 +84,6 @@ public class VacancyPersistenceImpl extends BasePersistenceImpl<Vacancy>
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(VacancyModelImpl.ENTITY_CACHE_ENABLED,
 			VacancyModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_FETCH_BY_NAME = new FinderPath(VacancyModelImpl.ENTITY_CACHE_ENABLED,
-			VacancyModelImpl.FINDER_CACHE_ENABLED, VacancyImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] { String.class.getName() },
-			VacancyModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_NAME = new FinderPath(VacancyModelImpl.ENTITY_CACHE_ENABLED,
-			VacancyModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
-			new String[] { String.class.getName() });
-
-	/**
-	 * Returns the vacancy where name = &#63; or throws a {@link vn.com.ecopharma.hrm.rc.NoSuchVacancyException} if it could not be found.
-	 *
-	 * @param name the name
-	 * @return the matching vacancy
-	 * @throws vn.com.ecopharma.hrm.rc.NoSuchVacancyException if a matching vacancy could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Vacancy findByName(String name)
-		throws NoSuchVacancyException, SystemException {
-		Vacancy vacancy = fetchByName(name);
-
-		if (vacancy == null) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("name=");
-			msg.append(name);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchVacancyException(msg.toString());
-		}
-
-		return vacancy;
-	}
-
-	/**
-	 * Returns the vacancy where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param name the name
-	 * @return the matching vacancy, or <code>null</code> if a matching vacancy could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Vacancy fetchByName(String name) throws SystemException {
-		return fetchByName(name, true);
-	}
-
-	/**
-	 * Returns the vacancy where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param name the name
-	 * @param retrieveFromCache whether to use the finder cache
-	 * @return the matching vacancy, or <code>null</code> if a matching vacancy could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Vacancy fetchByName(String name, boolean retrieveFromCache)
-		throws SystemException {
-		Object[] finderArgs = new Object[] { name };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_NAME,
-					finderArgs, this);
-		}
-
-		if (result instanceof Vacancy) {
-			Vacancy vacancy = (Vacancy)result;
-
-			if (!Validator.equals(name, vacancy.getName())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_SELECT_VACANCY_WHERE);
-
-			boolean bindName = false;
-
-			if (name == null) {
-				query.append(_FINDER_COLUMN_NAME_NAME_1);
-			}
-			else if (name.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_NAME_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				query.append(_FINDER_COLUMN_NAME_NAME_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (bindName) {
-					qPos.add(name);
-				}
-
-				List<Vacancy> list = q.list();
-
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME,
-						finderArgs, list);
-				}
-				else {
-					if ((list.size() > 1) && _log.isWarnEnabled()) {
-						_log.warn(
-							"VacancyPersistenceImpl.fetchByName(String, boolean) with parameters (" +
-							StringUtil.merge(finderArgs) +
-							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-					}
-
-					Vacancy vacancy = list.get(0);
-
-					result = vacancy;
-
-					cacheResult(vacancy);
-
-					if ((vacancy.getName() == null) ||
-							!vacancy.getName().equals(name)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME,
-							finderArgs, vacancy);
-					}
-				}
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAME,
-					finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (Vacancy)result;
-		}
-	}
-
-	/**
-	 * Removes the vacancy where name = &#63; from the database.
-	 *
-	 * @param name the name
-	 * @return the vacancy that was removed
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Vacancy removeByName(String name)
-		throws NoSuchVacancyException, SystemException {
-		Vacancy vacancy = findByName(name);
-
-		return remove(vacancy);
-	}
-
-	/**
-	 * Returns the number of vacancies where name = &#63;.
-	 *
-	 * @param name the name
-	 * @return the number of matching vacancies
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public int countByName(String name) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_NAME;
-
-		Object[] finderArgs = new Object[] { name };
-
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_VACANCY_WHERE);
-
-			boolean bindName = false;
-
-			if (name == null) {
-				query.append(_FINDER_COLUMN_NAME_NAME_1);
-			}
-			else if (name.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_NAME_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				query.append(_FINDER_COLUMN_NAME_NAME_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (bindName) {
-					qPos.add(name);
-				}
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_NAME_NAME_1 = "vacancy.name IS NULL";
-	private static final String _FINDER_COLUMN_NAME_NAME_2 = "vacancy.name = ?";
-	private static final String _FINDER_COLUMN_NAME_NAME_3 = "(vacancy.name IS NULL OR vacancy.name = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UNDELETED =
 		new FinderPath(VacancyModelImpl.ENTITY_CACHE_ENABLED,
 			VacancyModelImpl.FINDER_CACHE_ENABLED, VacancyImpl.class,
@@ -837,9 +588,6 @@ public class VacancyPersistenceImpl extends BasePersistenceImpl<Vacancy>
 		EntityCacheUtil.putResult(VacancyModelImpl.ENTITY_CACHE_ENABLED,
 			VacancyImpl.class, vacancy.getPrimaryKey(), vacancy);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME,
-			new Object[] { vacancy.getName() }, vacancy);
-
 		vacancy.resetOriginalValues();
 	}
 
@@ -896,8 +644,6 @@ public class VacancyPersistenceImpl extends BasePersistenceImpl<Vacancy>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache(vacancy);
 	}
 
 	@Override
@@ -908,48 +654,6 @@ public class VacancyPersistenceImpl extends BasePersistenceImpl<Vacancy>
 		for (Vacancy vacancy : vacancies) {
 			EntityCacheUtil.removeResult(VacancyModelImpl.ENTITY_CACHE_ENABLED,
 				VacancyImpl.class, vacancy.getPrimaryKey());
-
-			clearUniqueFindersCache(vacancy);
-		}
-	}
-
-	protected void cacheUniqueFindersCache(Vacancy vacancy) {
-		if (vacancy.isNew()) {
-			Object[] args = new Object[] { vacancy.getName() };
-
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_NAME, args,
-				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME, args, vacancy);
-		}
-		else {
-			VacancyModelImpl vacancyModelImpl = (VacancyModelImpl)vacancy;
-
-			if ((vacancyModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_NAME.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { vacancy.getName() };
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_NAME, args,
-					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAME, args,
-					vacancy);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(Vacancy vacancy) {
-		VacancyModelImpl vacancyModelImpl = (VacancyModelImpl)vacancy;
-
-		Object[] args = new Object[] { vacancy.getName() };
-
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAME, args);
-
-		if ((vacancyModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_NAME.getColumnBitmask()) != 0) {
-			args = new Object[] { vacancyModelImpl.getOriginalName() };
-
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAME, args);
 		}
 	}
 
@@ -1115,9 +819,6 @@ public class VacancyPersistenceImpl extends BasePersistenceImpl<Vacancy>
 		EntityCacheUtil.putResult(VacancyModelImpl.ENTITY_CACHE_ENABLED,
 			VacancyImpl.class, vacancy.getPrimaryKey(), vacancy);
 
-		clearUniqueFindersCache(vacancy);
-		cacheUniqueFindersCache(vacancy);
-
 		return vacancy;
 	}
 
@@ -1132,23 +833,36 @@ public class VacancyPersistenceImpl extends BasePersistenceImpl<Vacancy>
 		vacancyImpl.setPrimaryKey(vacancy.getPrimaryKey());
 
 		vacancyImpl.setVacancyId(vacancy.getVacancyId());
-		vacancyImpl.setName(vacancy.getName());
-		vacancyImpl.setNumberOfPosition(vacancy.getNumberOfPosition());
+		vacancyImpl.setApprovedNumberOfPosition(vacancy.getApprovedNumberOfPosition());
+		vacancyImpl.setCurrentNumberOfEmployee(vacancy.getCurrentNumberOfEmployee());
 		vacancyImpl.setTitlesId(vacancy.getTitlesId());
+		vacancyImpl.setNumberOfNewRecruitment(vacancy.getNumberOfNewRecruitment());
+		vacancyImpl.setNumberOfReplacedRecruitment(vacancy.getNumberOfReplacedRecruitment());
+		vacancyImpl.setExpectedSalary(vacancy.getExpectedSalary());
+		vacancyImpl.setExpectedJoinedDate(vacancy.getExpectedJoinedDate());
+		vacancyImpl.setWorkingPlace(vacancy.getWorkingPlace());
+		vacancyImpl.setDescription(vacancy.getDescription());
+		vacancyImpl.setRequiredGender(vacancy.getRequiredGender());
+		vacancyImpl.setCertificateType(vacancy.getCertificateType());
+		vacancyImpl.setSpecialized(vacancy.getSpecialized());
+		vacancyImpl.setExperiences(vacancy.getExperiences());
+		vacancyImpl.setForeignLanguages(vacancy.getForeignLanguages());
+		vacancyImpl.setSkills(vacancy.getSkills());
+		vacancyImpl.setOfficeSkills(vacancy.getOfficeSkills());
+		vacancyImpl.setAwayToBusinessType(vacancy.getAwayToBusinessType());
+		vacancyImpl.setWorkingTimeType(vacancy.getWorkingTimeType());
+		vacancyImpl.setJobType(vacancy.getJobType());
+		vacancyImpl.setCode(vacancy.getCode());
 		vacancyImpl.setStatus(vacancy.getStatus());
 		vacancyImpl.setPostedDate(vacancy.getPostedDate());
 		vacancyImpl.setExpiredDate(vacancy.getExpiredDate());
-		vacancyImpl.setDeleted(vacancy.isDeleted());
-		vacancyImpl.setDescription(vacancy.getDescription());
 		vacancyImpl.setGroupId(vacancy.getGroupId());
 		vacancyImpl.setCompanyId(vacancy.getCompanyId());
 		vacancyImpl.setUserId(vacancy.getUserId());
 		vacancyImpl.setUserName(vacancy.getUserName());
 		vacancyImpl.setCreateDate(vacancy.getCreateDate());
 		vacancyImpl.setModifiedDate(vacancy.getModifiedDate());
-		vacancyImpl.setCode(vacancy.getCode());
-		vacancyImpl.setCertificateType(vacancy.getCertificateType());
-		vacancyImpl.setExperiences(vacancy.getExperiences());
+		vacancyImpl.setDeleted(vacancy.isDeleted());
 
 		return vacancyImpl;
 	}

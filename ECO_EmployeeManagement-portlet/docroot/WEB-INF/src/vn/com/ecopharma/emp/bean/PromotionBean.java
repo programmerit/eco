@@ -175,7 +175,7 @@ public class PromotionBean implements Serializable {
 	}
 
 	public void onUnitGroupChanged() {
-		unit = null;
+		titles = null;
 	}
 
 	public Titles getTitles() {

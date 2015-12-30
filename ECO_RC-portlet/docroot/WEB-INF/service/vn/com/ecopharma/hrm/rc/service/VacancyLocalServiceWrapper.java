@@ -304,12 +304,6 @@ public class VacancyLocalServiceWrapper implements VacancyLocalService,
 	}
 
 	@Override
-	public vn.com.ecopharma.hrm.rc.model.Vacancy findByName(
-		java.lang.String name) {
-		return _vacancyLocalService.findByName(name);
-	}
-
-	@Override
 	public int countAllUnDeletedIndexedVacancyDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,

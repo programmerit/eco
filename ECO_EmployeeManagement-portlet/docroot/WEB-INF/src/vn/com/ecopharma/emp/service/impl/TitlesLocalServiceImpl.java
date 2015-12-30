@@ -193,7 +193,6 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 	@Override
 	public List<Titles> findByNameAndRelatedEntities(Department department,
 			Unit unit, UnitGroup unitGroup) {
-		final List<Titles> titlesList = new ArrayList<>();
 		try {
 			long departmentId = department != null ? department
 					.getDepartmentId() : 0L;
@@ -206,7 +205,7 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 			LogFactoryUtil.getLog(TitlesLocalServiceImpl.class).info(e);
 		}
 
-		return titlesList;
+		return new ArrayList<>();
 	}
 
 	@Override

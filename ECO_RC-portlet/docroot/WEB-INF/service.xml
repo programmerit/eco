@@ -50,14 +50,29 @@
 		<!-- Group instance -->
 
 		<!-- Audit fields -->
-		<column name="name" type="String"></column>
-		<column name="numberOfPosition" type="int"></column>
-		<column name="titlesId" type="long"></column>
+        <column name="approvedNumberOfPosition" type="int"></column>
+        <column name="currentNumberOfEmployee" type="int"></column>
+        <column name="titlesId" type="long"></column>
+        <column name="numberOfNewRecruitment" type="int"></column>
+        <column name="numberOfReplacedRecruitment" type="int"></column>
+        <column name="expectedSalary" type="double"></column>
+        <column name="expectedJoinedDate" type="Date"></column>
+        <column name="workingPlace" type="String"></column>
+        <column name="description" type="String"></column>
+        <column name="requiredGender" type="String"></column>
+        <column name="certificateType" type="String"></column>
+        <column name="specialized" type="String"></column>
+        <column name="experiences" type="double"></column>
+        <column name="foreignLanguages" type="String"></column>
+        <column name="skills" type="String"></column>
+        <column name="officeSkills" type="String"></column>
+        <column name="awayToBusinessType" type="String"></column>
+        <column name="workingTimeType" type="String"></column>
+        <column name="jobType" type="String"></column>
+        <column name="code" type="String"></column>
         <column name="status" type="String"></column>
         <column name="postedDate" type="Date"></column>
         <column name="expiredDate" type="Date"></column>
-		<column name="deleted" type="boolean"></column>
-		<column name="description" type="String"></column>
 
 
 		<!-- PK fields -->
@@ -73,12 +88,7 @@
 		<column name="userName" type="String"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
-        <column name="code" type="String"></column>
-        <column name="certificateType" type="String"></column>
-        <column name="experiences" type="double"></column>
-        <finder name="Name" return-type="Vacancy">
-            <finder-column name="name"></finder-column>
-        </finder>
+        <column name="deleted" type="boolean"></column>
         <finder name="UnDeleted" return-type="Collection">
             <finder-column name="deleted"></finder-column>
         </finder>

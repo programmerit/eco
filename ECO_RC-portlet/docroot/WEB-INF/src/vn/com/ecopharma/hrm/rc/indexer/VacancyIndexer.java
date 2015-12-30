@@ -44,9 +44,9 @@ public class VacancyIndexer extends BaseIndexer {
 		final Document doc = getBaseModelDocument(ECO_RCUtils.PORTLET_ID,
 				vacancy);
 		doc.addNumber(VacancyField.VACANCY_ID, vacancy.getVacancyId());
-		doc.addText(VacancyField.NAME, vacancy.getName());
-		doc.addNumber(VacancyField.NUMBER_OF_POSITION,
-				vacancy.getNumberOfPosition());
+		// doc.addText(VacancyField.NAME, vacancy.getName());
+		// doc.addNumber(VacancyField.NUMBER_OF_POSITION,
+		// vacancy.getNumberOfPosition());
 		doc.addText(
 				VacancyField.TITLES,
 				vacancy.getTitlesId() != 0 ? TitlesLocalServiceUtil.getTitles(

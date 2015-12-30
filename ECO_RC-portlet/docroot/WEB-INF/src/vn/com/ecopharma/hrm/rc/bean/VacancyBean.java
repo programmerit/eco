@@ -35,22 +35,21 @@ import vn.com.ecopharma.hrm.rc.util.DLUtils;
 import vn.com.ecopharma.hrm.rc.util.RCUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
-import com.liferay.faces.util.logging.Logger;
-import com.liferay.faces.util.logging.LoggerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 
-@ManagedBean(name = "vacancyBean")
+@ManagedBean
 @ViewScoped
 public class VacancyBean extends PersistableBean {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(VacancyBean.class);
+	private static final Log LOGGER = LogFactoryUtil.getLog(VacancyBean.class);
 
 	private VacancyIndexItem selectedItem;
 
@@ -106,7 +105,6 @@ public class VacancyBean extends PersistableBean {
 
 	@Override
 	public void onSave() {
-
 		try {
 			ServiceContext serviceContext = LiferayFacesContext.getInstance()
 					.getServiceContext();
@@ -204,7 +202,7 @@ public class VacancyBean extends PersistableBean {
 
 	public void onRowDblSelect(SelectEvent selectEvent) {
 		try {
-			VacancyIndexItem vacancyIndexItem = (VacancyIndexItem) selectEvent
+			final VacancyIndexItem vacancyIndexItem = (VacancyIndexItem) selectEvent
 					.getObject();
 
 			this.vacancyItem = new VacancyItem(

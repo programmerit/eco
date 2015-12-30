@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.constant.CandidateField;
 import vn.com.ecopharma.hrm.rc.dto.EvaluationItem.EvaluationKeyValueItem;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
@@ -179,11 +180,11 @@ public class CandidateIndexItem implements Serializable {
 
 					for (EvaluationKeyValueItem item1 : evaluationItem
 							.getEvaluationKeyValueItems()) {
-//						if (item1.getEvaluationCriteriaKeyValue()
-//								.getEvaluationCriteriaKeyValueId() == item
-//								.getEvaluationCriteriaKeyValueId()) {
-							item1.setValue(item.getRatingPoint());
-//						}
+						// if (item1.getEvaluationCriteriaKeyValue()
+						// .getEvaluationCriteriaKeyValueId() == item
+						// .getEvaluationCriteriaKeyValueId()) {
+						item1.setValue(item.getRatingPoint());
+						// }
 					}
 
 				} catch (SystemException e) {
@@ -205,9 +206,10 @@ public class CandidateIndexItem implements Serializable {
 			for (VacancyCandidate vc : desiredPositions) {
 				Vacancy v = VacancyLocalServiceUtil.getVacancy(vc
 						.getVacancyId());
-
-				result += count < desiredPositions.size() - 1 ? v.getName()
-						+ ";  " : v.getName() + ".";
+				String titlesName = TitlesLocalServiceUtil.fetchTitles(
+						v.getTitlesId()).getName();
+				result += count < desiredPositions.size() - 1 ? titlesName
+						+ ";  " : titlesName + ".";
 				count++;
 			}
 			return desiredPositions.size() > 0 ? result : "N/A";

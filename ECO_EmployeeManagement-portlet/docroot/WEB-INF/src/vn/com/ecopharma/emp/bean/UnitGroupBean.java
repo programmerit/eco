@@ -13,11 +13,16 @@ import vn.com.ecopharma.emp.util.BeanUtils;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 @ManagedBean
 public class UnitGroupBean extends AbstractOrganizationBean {
 
 	private static final long serialVersionUID = 1L;
+
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(UnitGroupBean.class);
 
 	private UnitGroup unitGroup;
 
@@ -27,7 +32,7 @@ public class UnitGroupBean extends AbstractOrganizationBean {
 			unitGroup = UnitGroupLocalServiceUtil
 					.createUnitGroup(CounterLocalServiceUtil.increment());
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 	}
 
@@ -45,13 +50,13 @@ public class UnitGroupBean extends AbstractOrganizationBean {
 				if (result != null) {
 					FacesMessage msg = new FacesMessage(
 							FacesMessage.SEVERITY_INFO,
-							"Create Unit Group successfully", "Devision "
+							"Create Unit Group successfully", "Unit group "
 									+ result.getName() + " has been created");
 					FacesContext.getCurrentInstance().addMessage(null, msg);
 				}
 			}
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 	}
 

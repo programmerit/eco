@@ -7,10 +7,13 @@ import javax.portlet.PortletURL;
 
 import org.apache.commons.lang.StringUtils;
 
+import vn.com.ecopharma.emp.model.Titles;
+import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.constant.CandidateField;
 import vn.com.ecopharma.hrm.rc.constant.ECO_RCUtils;
 import vn.com.ecopharma.hrm.rc.enumeration.VacancyCandidateType;
 import vn.com.ecopharma.hrm.rc.model.Candidate;
+import vn.com.ecopharma.hrm.rc.model.Vacancy;
 import vn.com.ecopharma.hrm.rc.model.VacancyCandidate;
 import vn.com.ecopharma.hrm.rc.permission.CandidatePermission;
 import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
@@ -62,6 +65,12 @@ public class CandidateIndexer extends BaseIndexer {
 				&& !vacancyCandidates.isEmpty() ? vacancyCandidates.get(0)
 				: null;
 
+		final Vacancy vacancy = vacancyCandidate != null ? VacancyLocalServiceUtil
+				.fetchVacancy(vacancyCandidate.getVacancyId()) : null;
+
+		final Titles titles = vacancy != null ? TitlesLocalServiceUtil
+				.fetchTitles(vacancy.getTitlesId()) : null;
+
 		doc.addNumber(CandidateField.CANDIDATE_ID, candidate.getCandidateId());
 		doc.addText(CandidateField.FULLNAME, candidate.getFullName());
 		doc.addText(CandidateField.EMAIL, candidate.getEmailAddress());
@@ -72,11 +81,8 @@ public class CandidateIndexer extends BaseIndexer {
 						.getVacancyCandidateId() : 0L);
 		doc.addNumber(CandidateField.VACANCY_ID,
 				vacancyCandidate != null ? vacancyCandidate.getVacancyId() : 0L);
-		doc.addText(
-				CandidateField.VACANCY,
-				vacancyCandidate != null ? VacancyLocalServiceUtil.getVacancy(
-						vacancyCandidate.getVacancyId()).getName()
-						: StringUtils.EMPTY);
+		doc.addText(CandidateField.VACANCY, titles != null ? titles.getName()
+				: StringUtils.EMPTY);
 		doc.addNumber(CandidateField.LOCATION_ID, candidate.getLocationId());
 		doc.addDate(CandidateField.APPLICATION_DATE,
 				candidate.getApplicationDate());

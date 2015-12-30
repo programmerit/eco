@@ -294,11 +294,6 @@ public class VacancyLocalServiceUtil {
 		return getService().findAllUnDeleted();
 	}
 
-	public static vn.com.ecopharma.hrm.rc.model.Vacancy findByName(
-		java.lang.String name) {
-		return getService().findByName(name);
-	}
-
 	public static int countAllUnDeletedIndexedVacancyDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,

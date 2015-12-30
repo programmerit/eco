@@ -76,33 +76,32 @@ public interface VacancyModel extends BaseModel<Vacancy>, GroupedModel {
 	public void setVacancyId(long vacancyId);
 
 	/**
-	 * Returns the name of this vacancy.
+	 * Returns the approved number of position of this vacancy.
 	 *
-	 * @return the name of this vacancy
+	 * @return the approved number of position of this vacancy
 	 */
-	@AutoEscape
-	public String getName();
+	public int getApprovedNumberOfPosition();
 
 	/**
-	 * Sets the name of this vacancy.
+	 * Sets the approved number of position of this vacancy.
 	 *
-	 * @param name the name of this vacancy
+	 * @param approvedNumberOfPosition the approved number of position of this vacancy
 	 */
-	public void setName(String name);
+	public void setApprovedNumberOfPosition(int approvedNumberOfPosition);
 
 	/**
-	 * Returns the number of position of this vacancy.
+	 * Returns the current number of employee of this vacancy.
 	 *
-	 * @return the number of position of this vacancy
+	 * @return the current number of employee of this vacancy
 	 */
-	public int getNumberOfPosition();
+	public int getCurrentNumberOfEmployee();
 
 	/**
-	 * Sets the number of position of this vacancy.
+	 * Sets the current number of employee of this vacancy.
 	 *
-	 * @param numberOfPosition the number of position of this vacancy
+	 * @param currentNumberOfEmployee the current number of employee of this vacancy
 	 */
-	public void setNumberOfPosition(int numberOfPosition);
+	public void setCurrentNumberOfEmployee(int currentNumberOfEmployee);
 
 	/**
 	 * Returns the titles ID of this vacancy.
@@ -117,6 +116,256 @@ public interface VacancyModel extends BaseModel<Vacancy>, GroupedModel {
 	 * @param titlesId the titles ID of this vacancy
 	 */
 	public void setTitlesId(long titlesId);
+
+	/**
+	 * Returns the number of new recruitment of this vacancy.
+	 *
+	 * @return the number of new recruitment of this vacancy
+	 */
+	public int getNumberOfNewRecruitment();
+
+	/**
+	 * Sets the number of new recruitment of this vacancy.
+	 *
+	 * @param numberOfNewRecruitment the number of new recruitment of this vacancy
+	 */
+	public void setNumberOfNewRecruitment(int numberOfNewRecruitment);
+
+	/**
+	 * Returns the number of replaced recruitment of this vacancy.
+	 *
+	 * @return the number of replaced recruitment of this vacancy
+	 */
+	public int getNumberOfReplacedRecruitment();
+
+	/**
+	 * Sets the number of replaced recruitment of this vacancy.
+	 *
+	 * @param numberOfReplacedRecruitment the number of replaced recruitment of this vacancy
+	 */
+	public void setNumberOfReplacedRecruitment(int numberOfReplacedRecruitment);
+
+	/**
+	 * Returns the expected salary of this vacancy.
+	 *
+	 * @return the expected salary of this vacancy
+	 */
+	public double getExpectedSalary();
+
+	/**
+	 * Sets the expected salary of this vacancy.
+	 *
+	 * @param expectedSalary the expected salary of this vacancy
+	 */
+	public void setExpectedSalary(double expectedSalary);
+
+	/**
+	 * Returns the expected joined date of this vacancy.
+	 *
+	 * @return the expected joined date of this vacancy
+	 */
+	public Date getExpectedJoinedDate();
+
+	/**
+	 * Sets the expected joined date of this vacancy.
+	 *
+	 * @param expectedJoinedDate the expected joined date of this vacancy
+	 */
+	public void setExpectedJoinedDate(Date expectedJoinedDate);
+
+	/**
+	 * Returns the working place of this vacancy.
+	 *
+	 * @return the working place of this vacancy
+	 */
+	@AutoEscape
+	public String getWorkingPlace();
+
+	/**
+	 * Sets the working place of this vacancy.
+	 *
+	 * @param workingPlace the working place of this vacancy
+	 */
+	public void setWorkingPlace(String workingPlace);
+
+	/**
+	 * Returns the description of this vacancy.
+	 *
+	 * @return the description of this vacancy
+	 */
+	@AutoEscape
+	public String getDescription();
+
+	/**
+	 * Sets the description of this vacancy.
+	 *
+	 * @param description the description of this vacancy
+	 */
+	public void setDescription(String description);
+
+	/**
+	 * Returns the required gender of this vacancy.
+	 *
+	 * @return the required gender of this vacancy
+	 */
+	@AutoEscape
+	public String getRequiredGender();
+
+	/**
+	 * Sets the required gender of this vacancy.
+	 *
+	 * @param requiredGender the required gender of this vacancy
+	 */
+	public void setRequiredGender(String requiredGender);
+
+	/**
+	 * Returns the certificate type of this vacancy.
+	 *
+	 * @return the certificate type of this vacancy
+	 */
+	@AutoEscape
+	public String getCertificateType();
+
+	/**
+	 * Sets the certificate type of this vacancy.
+	 *
+	 * @param certificateType the certificate type of this vacancy
+	 */
+	public void setCertificateType(String certificateType);
+
+	/**
+	 * Returns the specialized of this vacancy.
+	 *
+	 * @return the specialized of this vacancy
+	 */
+	@AutoEscape
+	public String getSpecialized();
+
+	/**
+	 * Sets the specialized of this vacancy.
+	 *
+	 * @param specialized the specialized of this vacancy
+	 */
+	public void setSpecialized(String specialized);
+
+	/**
+	 * Returns the experiences of this vacancy.
+	 *
+	 * @return the experiences of this vacancy
+	 */
+	public double getExperiences();
+
+	/**
+	 * Sets the experiences of this vacancy.
+	 *
+	 * @param experiences the experiences of this vacancy
+	 */
+	public void setExperiences(double experiences);
+
+	/**
+	 * Returns the foreign languages of this vacancy.
+	 *
+	 * @return the foreign languages of this vacancy
+	 */
+	@AutoEscape
+	public String getForeignLanguages();
+
+	/**
+	 * Sets the foreign languages of this vacancy.
+	 *
+	 * @param foreignLanguages the foreign languages of this vacancy
+	 */
+	public void setForeignLanguages(String foreignLanguages);
+
+	/**
+	 * Returns the skills of this vacancy.
+	 *
+	 * @return the skills of this vacancy
+	 */
+	@AutoEscape
+	public String getSkills();
+
+	/**
+	 * Sets the skills of this vacancy.
+	 *
+	 * @param skills the skills of this vacancy
+	 */
+	public void setSkills(String skills);
+
+	/**
+	 * Returns the office skills of this vacancy.
+	 *
+	 * @return the office skills of this vacancy
+	 */
+	@AutoEscape
+	public String getOfficeSkills();
+
+	/**
+	 * Sets the office skills of this vacancy.
+	 *
+	 * @param officeSkills the office skills of this vacancy
+	 */
+	public void setOfficeSkills(String officeSkills);
+
+	/**
+	 * Returns the away to business type of this vacancy.
+	 *
+	 * @return the away to business type of this vacancy
+	 */
+	@AutoEscape
+	public String getAwayToBusinessType();
+
+	/**
+	 * Sets the away to business type of this vacancy.
+	 *
+	 * @param awayToBusinessType the away to business type of this vacancy
+	 */
+	public void setAwayToBusinessType(String awayToBusinessType);
+
+	/**
+	 * Returns the working time type of this vacancy.
+	 *
+	 * @return the working time type of this vacancy
+	 */
+	@AutoEscape
+	public String getWorkingTimeType();
+
+	/**
+	 * Sets the working time type of this vacancy.
+	 *
+	 * @param workingTimeType the working time type of this vacancy
+	 */
+	public void setWorkingTimeType(String workingTimeType);
+
+	/**
+	 * Returns the job type of this vacancy.
+	 *
+	 * @return the job type of this vacancy
+	 */
+	@AutoEscape
+	public String getJobType();
+
+	/**
+	 * Sets the job type of this vacancy.
+	 *
+	 * @param jobType the job type of this vacancy
+	 */
+	public void setJobType(String jobType);
+
+	/**
+	 * Returns the code of this vacancy.
+	 *
+	 * @return the code of this vacancy
+	 */
+	@AutoEscape
+	public String getCode();
+
+	/**
+	 * Sets the code of this vacancy.
+	 *
+	 * @param code the code of this vacancy
+	 */
+	public void setCode(String code);
 
 	/**
 	 * Returns the status of this vacancy.
@@ -160,42 +409,6 @@ public interface VacancyModel extends BaseModel<Vacancy>, GroupedModel {
 	 * @param expiredDate the expired date of this vacancy
 	 */
 	public void setExpiredDate(Date expiredDate);
-
-	/**
-	 * Returns the deleted of this vacancy.
-	 *
-	 * @return the deleted of this vacancy
-	 */
-	public boolean getDeleted();
-
-	/**
-	 * Returns <code>true</code> if this vacancy is deleted.
-	 *
-	 * @return <code>true</code> if this vacancy is deleted; <code>false</code> otherwise
-	 */
-	public boolean isDeleted();
-
-	/**
-	 * Sets whether this vacancy is deleted.
-	 *
-	 * @param deleted the deleted of this vacancy
-	 */
-	public void setDeleted(boolean deleted);
-
-	/**
-	 * Returns the description of this vacancy.
-	 *
-	 * @return the description of this vacancy
-	 */
-	@AutoEscape
-	public String getDescription();
-
-	/**
-	 * Sets the description of this vacancy.
-	 *
-	 * @param description the description of this vacancy
-	 */
-	public void setDescription(String description);
 
 	/**
 	 * Returns the group ID of this vacancy.
@@ -312,48 +525,25 @@ public interface VacancyModel extends BaseModel<Vacancy>, GroupedModel {
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the code of this vacancy.
+	 * Returns the deleted of this vacancy.
 	 *
-	 * @return the code of this vacancy
+	 * @return the deleted of this vacancy
 	 */
-	@AutoEscape
-	public String getCode();
+	public boolean getDeleted();
 
 	/**
-	 * Sets the code of this vacancy.
+	 * Returns <code>true</code> if this vacancy is deleted.
 	 *
-	 * @param code the code of this vacancy
+	 * @return <code>true</code> if this vacancy is deleted; <code>false</code> otherwise
 	 */
-	public void setCode(String code);
+	public boolean isDeleted();
 
 	/**
-	 * Returns the certificate type of this vacancy.
+	 * Sets whether this vacancy is deleted.
 	 *
-	 * @return the certificate type of this vacancy
+	 * @param deleted the deleted of this vacancy
 	 */
-	@AutoEscape
-	public String getCertificateType();
-
-	/**
-	 * Sets the certificate type of this vacancy.
-	 *
-	 * @param certificateType the certificate type of this vacancy
-	 */
-	public void setCertificateType(String certificateType);
-
-	/**
-	 * Returns the experiences of this vacancy.
-	 *
-	 * @return the experiences of this vacancy
-	 */
-	public double getExperiences();
-
-	/**
-	 * Sets the experiences of this vacancy.
-	 *
-	 * @param experiences the experiences of this vacancy
-	 */
-	public void setExperiences(double experiences);
+	public void setDeleted(boolean deleted);
 
 	@Override
 	public boolean isNew();

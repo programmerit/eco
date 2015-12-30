@@ -336,9 +336,30 @@
 	<mapped-superclass class="vn.com.ecopharma.hrm.rc.model.impl.VacancyModelImpl">
 		<attributes>
 			<id name="vacancyId" />
-			<basic name="name" />
-			<basic name="numberOfPosition" />
+			<basic name="approvedNumberOfPosition" />
+			<basic name="currentNumberOfEmployee" />
 			<basic name="titlesId" />
+			<basic name="numberOfNewRecruitment" />
+			<basic name="numberOfReplacedRecruitment" />
+			<basic name="expectedSalary" />
+			<basic name="expectedJoinedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="workingPlace" />
+			<basic name="description" />
+			<basic name="requiredGender" />
+			<basic name="certificateType" />
+			<basic name="specialized" />
+			<basic name="experiences" />
+			<basic name="foreignLanguages" />
+			<basic name="skills" />
+			<basic name="officeSkills" />
+			<basic name="awayToBusinessType" />
+			<basic name="workingTimeType" />
+			<basic name="jobType" />
+			<basic name="code">
+				<column name="CODE_" />
+			</basic>
 			<basic name="status" />
 			<basic name="postedDate">
 				<temporal>TIMESTAMP</temporal>
@@ -346,8 +367,6 @@
 			<basic name="expiredDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="deleted" />
-			<basic name="description" />
 			<basic name="groupId" />
 			<basic name="companyId" />
 			<basic name="userId" />
@@ -358,11 +377,7 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="code">
-				<column name="CODE_" />
-			</basic>
-			<basic name="certificateType" />
-			<basic name="experiences" />
+			<basic name="deleted" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

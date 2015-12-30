@@ -75,23 +75,37 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("vacancyId", getVacancyId());
-		attributes.put("name", getName());
-		attributes.put("numberOfPosition", getNumberOfPosition());
+		attributes.put("approvedNumberOfPosition", getApprovedNumberOfPosition());
+		attributes.put("currentNumberOfEmployee", getCurrentNumberOfEmployee());
 		attributes.put("titlesId", getTitlesId());
+		attributes.put("numberOfNewRecruitment", getNumberOfNewRecruitment());
+		attributes.put("numberOfReplacedRecruitment",
+			getNumberOfReplacedRecruitment());
+		attributes.put("expectedSalary", getExpectedSalary());
+		attributes.put("expectedJoinedDate", getExpectedJoinedDate());
+		attributes.put("workingPlace", getWorkingPlace());
+		attributes.put("description", getDescription());
+		attributes.put("requiredGender", getRequiredGender());
+		attributes.put("certificateType", getCertificateType());
+		attributes.put("specialized", getSpecialized());
+		attributes.put("experiences", getExperiences());
+		attributes.put("foreignLanguages", getForeignLanguages());
+		attributes.put("skills", getSkills());
+		attributes.put("officeSkills", getOfficeSkills());
+		attributes.put("awayToBusinessType", getAwayToBusinessType());
+		attributes.put("workingTimeType", getWorkingTimeType());
+		attributes.put("jobType", getJobType());
+		attributes.put("code", getCode());
 		attributes.put("status", getStatus());
 		attributes.put("postedDate", getPostedDate());
 		attributes.put("expiredDate", getExpiredDate());
-		attributes.put("deleted", getDeleted());
-		attributes.put("description", getDescription());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("code", getCode());
-		attributes.put("certificateType", getCertificateType());
-		attributes.put("experiences", getExperiences());
+		attributes.put("deleted", getDeleted());
 
 		return attributes;
 	}
@@ -104,22 +118,128 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 			setVacancyId(vacancyId);
 		}
 
-		String name = (String)attributes.get("name");
+		Integer approvedNumberOfPosition = (Integer)attributes.get(
+				"approvedNumberOfPosition");
 
-		if (name != null) {
-			setName(name);
+		if (approvedNumberOfPosition != null) {
+			setApprovedNumberOfPosition(approvedNumberOfPosition);
 		}
 
-		Integer numberOfPosition = (Integer)attributes.get("numberOfPosition");
+		Integer currentNumberOfEmployee = (Integer)attributes.get(
+				"currentNumberOfEmployee");
 
-		if (numberOfPosition != null) {
-			setNumberOfPosition(numberOfPosition);
+		if (currentNumberOfEmployee != null) {
+			setCurrentNumberOfEmployee(currentNumberOfEmployee);
 		}
 
 		Long titlesId = (Long)attributes.get("titlesId");
 
 		if (titlesId != null) {
 			setTitlesId(titlesId);
+		}
+
+		Integer numberOfNewRecruitment = (Integer)attributes.get(
+				"numberOfNewRecruitment");
+
+		if (numberOfNewRecruitment != null) {
+			setNumberOfNewRecruitment(numberOfNewRecruitment);
+		}
+
+		Integer numberOfReplacedRecruitment = (Integer)attributes.get(
+				"numberOfReplacedRecruitment");
+
+		if (numberOfReplacedRecruitment != null) {
+			setNumberOfReplacedRecruitment(numberOfReplacedRecruitment);
+		}
+
+		Double expectedSalary = (Double)attributes.get("expectedSalary");
+
+		if (expectedSalary != null) {
+			setExpectedSalary(expectedSalary);
+		}
+
+		Date expectedJoinedDate = (Date)attributes.get("expectedJoinedDate");
+
+		if (expectedJoinedDate != null) {
+			setExpectedJoinedDate(expectedJoinedDate);
+		}
+
+		String workingPlace = (String)attributes.get("workingPlace");
+
+		if (workingPlace != null) {
+			setWorkingPlace(workingPlace);
+		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
+		}
+
+		String requiredGender = (String)attributes.get("requiredGender");
+
+		if (requiredGender != null) {
+			setRequiredGender(requiredGender);
+		}
+
+		String certificateType = (String)attributes.get("certificateType");
+
+		if (certificateType != null) {
+			setCertificateType(certificateType);
+		}
+
+		String specialized = (String)attributes.get("specialized");
+
+		if (specialized != null) {
+			setSpecialized(specialized);
+		}
+
+		Double experiences = (Double)attributes.get("experiences");
+
+		if (experiences != null) {
+			setExperiences(experiences);
+		}
+
+		String foreignLanguages = (String)attributes.get("foreignLanguages");
+
+		if (foreignLanguages != null) {
+			setForeignLanguages(foreignLanguages);
+		}
+
+		String skills = (String)attributes.get("skills");
+
+		if (skills != null) {
+			setSkills(skills);
+		}
+
+		String officeSkills = (String)attributes.get("officeSkills");
+
+		if (officeSkills != null) {
+			setOfficeSkills(officeSkills);
+		}
+
+		String awayToBusinessType = (String)attributes.get("awayToBusinessType");
+
+		if (awayToBusinessType != null) {
+			setAwayToBusinessType(awayToBusinessType);
+		}
+
+		String workingTimeType = (String)attributes.get("workingTimeType");
+
+		if (workingTimeType != null) {
+			setWorkingTimeType(workingTimeType);
+		}
+
+		String jobType = (String)attributes.get("jobType");
+
+		if (jobType != null) {
+			setJobType(jobType);
+		}
+
+		String code = (String)attributes.get("code");
+
+		if (code != null) {
+			setCode(code);
 		}
 
 		String status = (String)attributes.get("status");
@@ -138,18 +258,6 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 
 		if (expiredDate != null) {
 			setExpiredDate(expiredDate);
-		}
-
-		Boolean deleted = (Boolean)attributes.get("deleted");
-
-		if (deleted != null) {
-			setDeleted(deleted);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -188,22 +296,10 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 			setModifiedDate(modifiedDate);
 		}
 
-		String code = (String)attributes.get("code");
+		Boolean deleted = (Boolean)attributes.get("deleted");
 
-		if (code != null) {
-			setCode(code);
-		}
-
-		String certificateType = (String)attributes.get("certificateType");
-
-		if (certificateType != null) {
-			setCertificateType(certificateType);
-		}
-
-		Double experiences = (Double)attributes.get("experiences");
-
-		if (experiences != null) {
-			setExperiences(experiences);
+		if (deleted != null) {
+			setDeleted(deleted);
 		}
 	}
 
@@ -231,21 +327,22 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 	}
 
 	@Override
-	public String getName() {
-		return _name;
+	public int getApprovedNumberOfPosition() {
+		return _approvedNumberOfPosition;
 	}
 
 	@Override
-	public void setName(String name) {
-		_name = name;
+	public void setApprovedNumberOfPosition(int approvedNumberOfPosition) {
+		_approvedNumberOfPosition = approvedNumberOfPosition;
 
 		if (_vacancyRemoteModel != null) {
 			try {
 				Class<?> clazz = _vacancyRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setName", String.class);
+				Method method = clazz.getMethod("setApprovedNumberOfPosition",
+						int.class);
 
-				method.invoke(_vacancyRemoteModel, name);
+				method.invoke(_vacancyRemoteModel, approvedNumberOfPosition);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -254,21 +351,22 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 	}
 
 	@Override
-	public int getNumberOfPosition() {
-		return _numberOfPosition;
+	public int getCurrentNumberOfEmployee() {
+		return _currentNumberOfEmployee;
 	}
 
 	@Override
-	public void setNumberOfPosition(int numberOfPosition) {
-		_numberOfPosition = numberOfPosition;
+	public void setCurrentNumberOfEmployee(int currentNumberOfEmployee) {
+		_currentNumberOfEmployee = currentNumberOfEmployee;
 
 		if (_vacancyRemoteModel != null) {
 			try {
 				Class<?> clazz = _vacancyRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setNumberOfPosition", int.class);
+				Method method = clazz.getMethod("setCurrentNumberOfEmployee",
+						int.class);
 
-				method.invoke(_vacancyRemoteModel, numberOfPosition);
+				method.invoke(_vacancyRemoteModel, currentNumberOfEmployee);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -292,6 +390,406 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 				Method method = clazz.getMethod("setTitlesId", long.class);
 
 				method.invoke(_vacancyRemoteModel, titlesId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public int getNumberOfNewRecruitment() {
+		return _numberOfNewRecruitment;
+	}
+
+	@Override
+	public void setNumberOfNewRecruitment(int numberOfNewRecruitment) {
+		_numberOfNewRecruitment = numberOfNewRecruitment;
+
+		if (_vacancyRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacancyRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setNumberOfNewRecruitment",
+						int.class);
+
+				method.invoke(_vacancyRemoteModel, numberOfNewRecruitment);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public int getNumberOfReplacedRecruitment() {
+		return _numberOfReplacedRecruitment;
+	}
+
+	@Override
+	public void setNumberOfReplacedRecruitment(int numberOfReplacedRecruitment) {
+		_numberOfReplacedRecruitment = numberOfReplacedRecruitment;
+
+		if (_vacancyRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacancyRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setNumberOfReplacedRecruitment",
+						int.class);
+
+				method.invoke(_vacancyRemoteModel, numberOfReplacedRecruitment);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public double getExpectedSalary() {
+		return _expectedSalary;
+	}
+
+	@Override
+	public void setExpectedSalary(double expectedSalary) {
+		_expectedSalary = expectedSalary;
+
+		if (_vacancyRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacancyRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setExpectedSalary",
+						double.class);
+
+				method.invoke(_vacancyRemoteModel, expectedSalary);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public Date getExpectedJoinedDate() {
+		return _expectedJoinedDate;
+	}
+
+	@Override
+	public void setExpectedJoinedDate(Date expectedJoinedDate) {
+		_expectedJoinedDate = expectedJoinedDate;
+
+		if (_vacancyRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacancyRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setExpectedJoinedDate",
+						Date.class);
+
+				method.invoke(_vacancyRemoteModel, expectedJoinedDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getWorkingPlace() {
+		return _workingPlace;
+	}
+
+	@Override
+	public void setWorkingPlace(String workingPlace) {
+		_workingPlace = workingPlace;
+
+		if (_vacancyRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacancyRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setWorkingPlace", String.class);
+
+				method.invoke(_vacancyRemoteModel, workingPlace);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getDescription() {
+		return _description;
+	}
+
+	@Override
+	public void setDescription(String description) {
+		_description = description;
+
+		if (_vacancyRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacancyRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setDescription", String.class);
+
+				method.invoke(_vacancyRemoteModel, description);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getRequiredGender() {
+		return _requiredGender;
+	}
+
+	@Override
+	public void setRequiredGender(String requiredGender) {
+		_requiredGender = requiredGender;
+
+		if (_vacancyRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacancyRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setRequiredGender",
+						String.class);
+
+				method.invoke(_vacancyRemoteModel, requiredGender);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getCertificateType() {
+		return _certificateType;
+	}
+
+	@Override
+	public void setCertificateType(String certificateType) {
+		_certificateType = certificateType;
+
+		if (_vacancyRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacancyRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCertificateType",
+						String.class);
+
+				method.invoke(_vacancyRemoteModel, certificateType);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getSpecialized() {
+		return _specialized;
+	}
+
+	@Override
+	public void setSpecialized(String specialized) {
+		_specialized = specialized;
+
+		if (_vacancyRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacancyRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setSpecialized", String.class);
+
+				method.invoke(_vacancyRemoteModel, specialized);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public double getExperiences() {
+		return _experiences;
+	}
+
+	@Override
+	public void setExperiences(double experiences) {
+		_experiences = experiences;
+
+		if (_vacancyRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacancyRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setExperiences", double.class);
+
+				method.invoke(_vacancyRemoteModel, experiences);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getForeignLanguages() {
+		return _foreignLanguages;
+	}
+
+	@Override
+	public void setForeignLanguages(String foreignLanguages) {
+		_foreignLanguages = foreignLanguages;
+
+		if (_vacancyRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacancyRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setForeignLanguages",
+						String.class);
+
+				method.invoke(_vacancyRemoteModel, foreignLanguages);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getSkills() {
+		return _skills;
+	}
+
+	@Override
+	public void setSkills(String skills) {
+		_skills = skills;
+
+		if (_vacancyRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacancyRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setSkills", String.class);
+
+				method.invoke(_vacancyRemoteModel, skills);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getOfficeSkills() {
+		return _officeSkills;
+	}
+
+	@Override
+	public void setOfficeSkills(String officeSkills) {
+		_officeSkills = officeSkills;
+
+		if (_vacancyRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacancyRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setOfficeSkills", String.class);
+
+				method.invoke(_vacancyRemoteModel, officeSkills);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getAwayToBusinessType() {
+		return _awayToBusinessType;
+	}
+
+	@Override
+	public void setAwayToBusinessType(String awayToBusinessType) {
+		_awayToBusinessType = awayToBusinessType;
+
+		if (_vacancyRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacancyRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setAwayToBusinessType",
+						String.class);
+
+				method.invoke(_vacancyRemoteModel, awayToBusinessType);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getWorkingTimeType() {
+		return _workingTimeType;
+	}
+
+	@Override
+	public void setWorkingTimeType(String workingTimeType) {
+		_workingTimeType = workingTimeType;
+
+		if (_vacancyRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacancyRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setWorkingTimeType",
+						String.class);
+
+				method.invoke(_vacancyRemoteModel, workingTimeType);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getJobType() {
+		return _jobType;
+	}
+
+	@Override
+	public void setJobType(String jobType) {
+		_jobType = jobType;
+
+		if (_vacancyRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacancyRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setJobType", String.class);
+
+				method.invoke(_vacancyRemoteModel, jobType);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getCode() {
+		return _code;
+	}
+
+	@Override
+	public void setCode(String code) {
+		_code = code;
+
+		if (_vacancyRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacancyRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCode", String.class);
+
+				method.invoke(_vacancyRemoteModel, code);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -361,57 +859,6 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 				Method method = clazz.getMethod("setExpiredDate", Date.class);
 
 				method.invoke(_vacancyRemoteModel, expiredDate);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public boolean getDeleted() {
-		return _deleted;
-	}
-
-	@Override
-	public boolean isDeleted() {
-		return _deleted;
-	}
-
-	@Override
-	public void setDeleted(boolean deleted) {
-		_deleted = deleted;
-
-		if (_vacancyRemoteModel != null) {
-			try {
-				Class<?> clazz = _vacancyRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setDeleted", boolean.class);
-
-				method.invoke(_vacancyRemoteModel, deleted);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public String getDescription() {
-		return _description;
-	}
-
-	@Override
-	public void setDescription(String description) {
-		_description = description;
-
-		if (_vacancyRemoteModel != null) {
-			try {
-				Class<?> clazz = _vacancyRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setDescription", String.class);
-
-				method.invoke(_vacancyRemoteModel, description);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -568,68 +1015,26 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 	}
 
 	@Override
-	public String getCode() {
-		return _code;
+	public boolean getDeleted() {
+		return _deleted;
 	}
 
 	@Override
-	public void setCode(String code) {
-		_code = code;
+	public boolean isDeleted() {
+		return _deleted;
+	}
+
+	@Override
+	public void setDeleted(boolean deleted) {
+		_deleted = deleted;
 
 		if (_vacancyRemoteModel != null) {
 			try {
 				Class<?> clazz = _vacancyRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setCode", String.class);
+				Method method = clazz.getMethod("setDeleted", boolean.class);
 
-				method.invoke(_vacancyRemoteModel, code);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public String getCertificateType() {
-		return _certificateType;
-	}
-
-	@Override
-	public void setCertificateType(String certificateType) {
-		_certificateType = certificateType;
-
-		if (_vacancyRemoteModel != null) {
-			try {
-				Class<?> clazz = _vacancyRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setCertificateType",
-						String.class);
-
-				method.invoke(_vacancyRemoteModel, certificateType);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public double getExperiences() {
-		return _experiences;
-	}
-
-	@Override
-	public void setExperiences(double experiences) {
-		_experiences = experiences;
-
-		if (_vacancyRemoteModel != null) {
-			try {
-				Class<?> clazz = _vacancyRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setExperiences", double.class);
-
-				method.invoke(_vacancyRemoteModel, experiences);
+				method.invoke(_vacancyRemoteModel, deleted);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -707,23 +1112,36 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 		VacancyClp clone = new VacancyClp();
 
 		clone.setVacancyId(getVacancyId());
-		clone.setName(getName());
-		clone.setNumberOfPosition(getNumberOfPosition());
+		clone.setApprovedNumberOfPosition(getApprovedNumberOfPosition());
+		clone.setCurrentNumberOfEmployee(getCurrentNumberOfEmployee());
 		clone.setTitlesId(getTitlesId());
+		clone.setNumberOfNewRecruitment(getNumberOfNewRecruitment());
+		clone.setNumberOfReplacedRecruitment(getNumberOfReplacedRecruitment());
+		clone.setExpectedSalary(getExpectedSalary());
+		clone.setExpectedJoinedDate(getExpectedJoinedDate());
+		clone.setWorkingPlace(getWorkingPlace());
+		clone.setDescription(getDescription());
+		clone.setRequiredGender(getRequiredGender());
+		clone.setCertificateType(getCertificateType());
+		clone.setSpecialized(getSpecialized());
+		clone.setExperiences(getExperiences());
+		clone.setForeignLanguages(getForeignLanguages());
+		clone.setSkills(getSkills());
+		clone.setOfficeSkills(getOfficeSkills());
+		clone.setAwayToBusinessType(getAwayToBusinessType());
+		clone.setWorkingTimeType(getWorkingTimeType());
+		clone.setJobType(getJobType());
+		clone.setCode(getCode());
 		clone.setStatus(getStatus());
 		clone.setPostedDate(getPostedDate());
 		clone.setExpiredDate(getExpiredDate());
-		clone.setDeleted(getDeleted());
-		clone.setDescription(getDescription());
 		clone.setGroupId(getGroupId());
 		clone.setCompanyId(getCompanyId());
 		clone.setUserId(getUserId());
 		clone.setUserName(getUserName());
 		clone.setCreateDate(getCreateDate());
 		clone.setModifiedDate(getModifiedDate());
-		clone.setCode(getCode());
-		clone.setCertificateType(getCertificateType());
-		clone.setExperiences(getExperiences());
+		clone.setDeleted(getDeleted());
 
 		return clone;
 	}
@@ -776,26 +1194,56 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(63);
 
 		sb.append("{vacancyId=");
 		sb.append(getVacancyId());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", numberOfPosition=");
-		sb.append(getNumberOfPosition());
+		sb.append(", approvedNumberOfPosition=");
+		sb.append(getApprovedNumberOfPosition());
+		sb.append(", currentNumberOfEmployee=");
+		sb.append(getCurrentNumberOfEmployee());
 		sb.append(", titlesId=");
 		sb.append(getTitlesId());
+		sb.append(", numberOfNewRecruitment=");
+		sb.append(getNumberOfNewRecruitment());
+		sb.append(", numberOfReplacedRecruitment=");
+		sb.append(getNumberOfReplacedRecruitment());
+		sb.append(", expectedSalary=");
+		sb.append(getExpectedSalary());
+		sb.append(", expectedJoinedDate=");
+		sb.append(getExpectedJoinedDate());
+		sb.append(", workingPlace=");
+		sb.append(getWorkingPlace());
+		sb.append(", description=");
+		sb.append(getDescription());
+		sb.append(", requiredGender=");
+		sb.append(getRequiredGender());
+		sb.append(", certificateType=");
+		sb.append(getCertificateType());
+		sb.append(", specialized=");
+		sb.append(getSpecialized());
+		sb.append(", experiences=");
+		sb.append(getExperiences());
+		sb.append(", foreignLanguages=");
+		sb.append(getForeignLanguages());
+		sb.append(", skills=");
+		sb.append(getSkills());
+		sb.append(", officeSkills=");
+		sb.append(getOfficeSkills());
+		sb.append(", awayToBusinessType=");
+		sb.append(getAwayToBusinessType());
+		sb.append(", workingTimeType=");
+		sb.append(getWorkingTimeType());
+		sb.append(", jobType=");
+		sb.append(getJobType());
+		sb.append(", code=");
+		sb.append(getCode());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append(", postedDate=");
 		sb.append(getPostedDate());
 		sb.append(", expiredDate=");
 		sb.append(getExpiredDate());
-		sb.append(", deleted=");
-		sb.append(getDeleted());
-		sb.append(", description=");
-		sb.append(getDescription());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
@@ -808,12 +1256,8 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", code=");
-		sb.append(getCode());
-		sb.append(", certificateType=");
-		sb.append(getCertificateType());
-		sb.append(", experiences=");
-		sb.append(getExperiences());
+		sb.append(", deleted=");
+		sb.append(getDeleted());
 		sb.append("}");
 
 		return sb.toString();
@@ -821,7 +1265,7 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(58);
+		StringBundler sb = new StringBundler(97);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.hrm.rc.model.Vacancy");
@@ -832,16 +1276,84 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 		sb.append(getVacancyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
+			"<column><column-name>approvedNumberOfPosition</column-name><column-value><![CDATA[");
+		sb.append(getApprovedNumberOfPosition());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>numberOfPosition</column-name><column-value><![CDATA[");
-		sb.append(getNumberOfPosition());
+			"<column><column-name>currentNumberOfEmployee</column-name><column-value><![CDATA[");
+		sb.append(getCurrentNumberOfEmployee());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>titlesId</column-name><column-value><![CDATA[");
 		sb.append(getTitlesId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>numberOfNewRecruitment</column-name><column-value><![CDATA[");
+		sb.append(getNumberOfNewRecruitment());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>numberOfReplacedRecruitment</column-name><column-value><![CDATA[");
+		sb.append(getNumberOfReplacedRecruitment());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>expectedSalary</column-name><column-value><![CDATA[");
+		sb.append(getExpectedSalary());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>expectedJoinedDate</column-name><column-value><![CDATA[");
+		sb.append(getExpectedJoinedDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>workingPlace</column-name><column-value><![CDATA[");
+		sb.append(getWorkingPlace());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>description</column-name><column-value><![CDATA[");
+		sb.append(getDescription());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>requiredGender</column-name><column-value><![CDATA[");
+		sb.append(getRequiredGender());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>certificateType</column-name><column-value><![CDATA[");
+		sb.append(getCertificateType());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>specialized</column-name><column-value><![CDATA[");
+		sb.append(getSpecialized());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>experiences</column-name><column-value><![CDATA[");
+		sb.append(getExperiences());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>foreignLanguages</column-name><column-value><![CDATA[");
+		sb.append(getForeignLanguages());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>skills</column-name><column-value><![CDATA[");
+		sb.append(getSkills());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>officeSkills</column-name><column-value><![CDATA[");
+		sb.append(getOfficeSkills());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>awayToBusinessType</column-name><column-value><![CDATA[");
+		sb.append(getAwayToBusinessType());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>workingTimeType</column-name><column-value><![CDATA[");
+		sb.append(getWorkingTimeType());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>jobType</column-name><column-value><![CDATA[");
+		sb.append(getJobType());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>code</column-name><column-value><![CDATA[");
+		sb.append(getCode());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
@@ -854,14 +1366,6 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 		sb.append(
 			"<column><column-name>expiredDate</column-name><column-value><![CDATA[");
 		sb.append(getExpiredDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>deleted</column-name><column-value><![CDATA[");
-		sb.append(getDeleted());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -888,16 +1392,8 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>code</column-name><column-value><![CDATA[");
-		sb.append(getCode());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>certificateType</column-name><column-value><![CDATA[");
-		sb.append(getCertificateType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>experiences</column-name><column-value><![CDATA[");
-		sb.append(getExperiences());
+			"<column><column-name>deleted</column-name><column-value><![CDATA[");
+		sb.append(getDeleted());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -906,14 +1402,29 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 	}
 
 	private long _vacancyId;
-	private String _name;
-	private int _numberOfPosition;
+	private int _approvedNumberOfPosition;
+	private int _currentNumberOfEmployee;
 	private long _titlesId;
+	private int _numberOfNewRecruitment;
+	private int _numberOfReplacedRecruitment;
+	private double _expectedSalary;
+	private Date _expectedJoinedDate;
+	private String _workingPlace;
+	private String _description;
+	private String _requiredGender;
+	private String _certificateType;
+	private String _specialized;
+	private double _experiences;
+	private String _foreignLanguages;
+	private String _skills;
+	private String _officeSkills;
+	private String _awayToBusinessType;
+	private String _workingTimeType;
+	private String _jobType;
+	private String _code;
 	private String _status;
 	private Date _postedDate;
 	private Date _expiredDate;
-	private boolean _deleted;
-	private String _description;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
@@ -921,9 +1432,7 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _code;
-	private String _certificateType;
-	private double _experiences;
+	private boolean _deleted;
 	private BaseModel<?> _vacancyRemoteModel;
 	private Class<?> _clpSerializerClass = vn.com.ecopharma.hrm.rc.service.ClpSerializer.class;
 }

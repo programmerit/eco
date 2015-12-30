@@ -151,19 +151,19 @@
 					</p:column>
 
 					<p:column headerText="Action" width="85">
-						<p:commandButton id="editBtn" icon="fa fa-edit Fs16 White"
+						<p:commandLink id="editBtn" value="Edit"
 							action="#{vacancyBean.editVacancy(vacancy)}"
 							update=":VacancyPanelGroup"
 							rendered="#{vacancyPermission.checkPermission(vacancy.id, 'UPDATE')}">
-						</p:commandButton>
+						</p:commandLink> | 
 
-						<p:commandButton id="deleteBtn" styleClass="RedButton"
-							onclick="PF('wDeleteConfirmDialog').show()"
-							icon="fa fa-remove Fs16 White"
+						<p:commandLink id="deleteBtn" styleClass="RedButton"
+							style="margin-left: 2px;"
+							onclick="PF('wDeleteConfirmDialog').show()" value="Delete"
 							rendered="#{vacancyPermission.checkPermission(vacancy.id, 'DELETE')}">
 							<f:setPropertyActionListener
 								target="#{vacancyBean.deletedVacancyId}" value="#{vacancy.id}" />
-						</p:commandButton>
+						</p:commandLink>
 					</p:column>
 
 				</p:dataTable>

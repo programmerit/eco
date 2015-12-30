@@ -132,108 +132,104 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 
 		_methodParameterTypes22 = new String[] {  };
 
-		_methodName23 = "findByName";
+		_methodName23 = "countAllUnDeletedIndexedVacancyDocuments";
 
-		_methodParameterTypes23 = new String[] { "java.lang.String" };
+		_methodParameterTypes23 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.List", "long",
+				"com.liferay.portal.kernel.search.Sort"
+			};
 
-		_methodName24 = "countAllUnDeletedIndexedVacancyDocuments";
+		_methodName24 = "searchAllUnDeletedVacanciesIndexedDocument";
 
 		_methodParameterTypes24 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
-				"com.liferay.portal.kernel.search.Sort"
+				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName25 = "searchAllUnDeletedVacanciesIndexedDocument";
+		_methodName25 = "countAllUnDeletedAndPublishedIndexedVacancyDocuments";
 
 		_methodParameterTypes25 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
-				"com.liferay.portal.kernel.search.Sort", "int", "int"
+				"com.liferay.portal.kernel.search.Sort"
 			};
 
-		_methodName26 = "countAllUnDeletedAndPublishedIndexedVacancyDocuments";
+		_methodName26 = "searchAllUnDeletedAndPublishedVacanciesIndexedDocument";
 
 		_methodParameterTypes26 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
-				"com.liferay.portal.kernel.search.Sort"
-			};
-
-		_methodName27 = "searchAllUnDeletedAndPublishedVacanciesIndexedDocument";
-
-		_methodParameterTypes27 = new String[] {
-				"com.liferay.portal.kernel.search.SearchContext",
-				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
+		_methodName27 = "createPrePersistedVacancy";
+
+		_methodParameterTypes27 = new String[] {  };
+
 		_methodName28 = "createPrePersistedVacancy";
 
-		_methodParameterTypes28 = new String[] {  };
-
-		_methodName29 = "createPrePersistedVacancy";
-
-		_methodParameterTypes29 = new String[] {
+		_methodParameterTypes28 = new String[] {
 				"java.lang.String", "java.lang.String", "int", "long",
 				"java.lang.String", "java.util.Date", "java.util.Date",
 				"java.lang.String"
 			};
 
-		_methodName30 = "addVacancy";
+		_methodName29 = "addVacancy";
 
-		_methodParameterTypes30 = new String[] {
+		_methodParameterTypes29 = new String[] {
 				"vn.com.ecopharma.hrm.rc.model.Vacancy", "long",
 				"java.util.List", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName31 = "updateVacancy";
+		_methodName30 = "updateVacancy";
 
-		_methodParameterTypes31 = new String[] {
+		_methodParameterTypes30 = new String[] {
 				"vn.com.ecopharma.hrm.rc.model.Vacancy", "java.util.List",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName32 = "getVacancyByCandidateId";
+		_methodName31 = "getVacancyByCandidateId";
 
-		_methodParameterTypes32 = new String[] { "long" };
+		_methodParameterTypes31 = new String[] { "long" };
+
+		_methodName32 = "getIndexVacancyDocument";
+
+		_methodParameterTypes32 = new String[] {
+				"long", "com.liferay.portal.kernel.search.SearchContext"
+			};
 
 		_methodName33 = "getIndexVacancyDocument";
 
 		_methodParameterTypes33 = new String[] {
-				"long", "com.liferay.portal.kernel.search.SearchContext"
-			};
-
-		_methodName34 = "getIndexVacancyDocument";
-
-		_methodParameterTypes34 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName35 = "getUndeletedIndexVacancyDocument";
+		_methodName34 = "getUndeletedIndexVacancyDocument";
 
-		_methodParameterTypes35 = new String[] {
+		_methodParameterTypes34 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
+		_methodName35 = "markDeleted";
+
+		_methodParameterTypes35 = new String[] { "long" };
+
 		_methodName36 = "markDeleted";
 
-		_methodParameterTypes36 = new String[] { "long" };
-
-		_methodName37 = "markDeleted";
-
-		_methodParameterTypes37 = new String[] {
+		_methodParameterTypes36 = new String[] {
 				"vn.com.ecopharma.hrm.rc.model.Vacancy"
 			};
 
-		_methodName38 = "indexAllVacancies";
+		_methodName37 = "indexAllVacancies";
 
-		_methodParameterTypes38 = new String[] {  };
+		_methodParameterTypes37 = new String[] {  };
 
-		_methodName39 = "removeAllVacanciesIndexes";
+		_methodName38 = "removeAllVacanciesIndexes";
 
-		_methodParameterTypes39 = new String[] {
+		_methodParameterTypes38 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 	}
@@ -887,31 +883,6 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 	}
 
 	@Override
-	public vn.com.ecopharma.hrm.rc.model.Vacancy findByName(
-		java.lang.String name) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23,
-					new Object[] { ClpSerializer.translateInput(name) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (vn.com.ecopharma.hrm.rc.model.Vacancy)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
 	public int countAllUnDeletedIndexedVacancyDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
@@ -919,8 +890,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -955,8 +926,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -994,8 +965,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1030,8 +1001,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1066,8 +1037,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28, new Object[] {  });
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1093,8 +1064,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] {
 						ClpSerializer.translateInput(vacancyCode),
 						
@@ -1136,8 +1107,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30,
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
 					new Object[] {
 						ClpSerializer.translateInput(vacancy),
 						
@@ -1171,8 +1142,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
 					new Object[] {
 						ClpSerializer.translateInput(vacancy),
 						
@@ -1202,8 +1173,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32, new Object[] { candidateId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31, new Object[] { candidateId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1226,8 +1197,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] { id, ClpSerializer.translateInput(
 							searchContext) });
 		}
@@ -1253,8 +1224,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName34,
-					_methodParameterTypes34,
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
 					new Object[] {
 						ClpSerializer.translateInput(id),
 						
@@ -1282,8 +1253,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName35,
-					_methodParameterTypes35,
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
 					new Object[] { id, ClpSerializer.translateInput(
 							searchContext) });
 		}
@@ -1307,8 +1278,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName36,
-					_methodParameterTypes36, new Object[] { id });
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35, new Object[] { id });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1331,8 +1302,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName37,
-					_methodParameterTypes37,
+			returnObj = _invokableLocalService.invokeMethod(_methodName36,
+					_methodParameterTypes36,
 					new Object[] { ClpSerializer.translateInput(vacancy) });
 		}
 		catch (Throwable t) {
@@ -1353,8 +1324,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 	@Override
 	public void indexAllVacancies() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName38,
-				_methodParameterTypes38, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName37,
+				_methodParameterTypes37, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1374,8 +1345,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		long companyId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName39,
-				_methodParameterTypes39,
+			_invokableLocalService.invokeMethod(_methodName38,
+				_methodParameterTypes38,
 				new Object[] {
 					ClpSerializer.translateInput(searchContext),
 					
@@ -1472,6 +1443,4 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 	private String[] _methodParameterTypes37;
 	private String _methodName38;
 	private String[] _methodParameterTypes38;
-	private String _methodName39;
-	private String[] _methodParameterTypes39;
 }

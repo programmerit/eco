@@ -184,23 +184,36 @@
 	</model>
 	<model name="vn.com.ecopharma.hrm.rc.model.Vacancy">
 		<field name="vacancyId" type="long" />
-		<field name="name" type="String" />
-		<field name="numberOfPosition" type="int" />
+		<field name="approvedNumberOfPosition" type="int" />
+		<field name="currentNumberOfEmployee" type="int" />
 		<field name="titlesId" type="long" />
+		<field name="numberOfNewRecruitment" type="int" />
+		<field name="numberOfReplacedRecruitment" type="int" />
+		<field name="expectedSalary" type="double" />
+		<field name="expectedJoinedDate" type="Date" />
+		<field name="workingPlace" type="String" />
+		<field name="description" type="String" />
+		<field name="requiredGender" type="String" />
+		<field name="certificateType" type="String" />
+		<field name="specialized" type="String" />
+		<field name="experiences" type="double" />
+		<field name="foreignLanguages" type="String" />
+		<field name="skills" type="String" />
+		<field name="officeSkills" type="String" />
+		<field name="awayToBusinessType" type="String" />
+		<field name="workingTimeType" type="String" />
+		<field name="jobType" type="String" />
+		<field name="code" type="String" />
 		<field name="status" type="String" />
 		<field name="postedDate" type="Date" />
 		<field name="expiredDate" type="Date" />
-		<field name="deleted" type="boolean" />
-		<field name="description" type="String" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="code" type="String" />
-		<field name="certificateType" type="String" />
-		<field name="experiences" type="double" />
+		<field name="deleted" type="boolean" />
 	</model>
 	<model name="vn.com.ecopharma.hrm.rc.model.VacancyCandidate">
 		<field name="vacancyCandidateId" type="long" />

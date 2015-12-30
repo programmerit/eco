@@ -32,23 +32,36 @@ public class VacancySoap implements Serializable {
 		VacancySoap soapModel = new VacancySoap();
 
 		soapModel.setVacancyId(model.getVacancyId());
-		soapModel.setName(model.getName());
-		soapModel.setNumberOfPosition(model.getNumberOfPosition());
+		soapModel.setApprovedNumberOfPosition(model.getApprovedNumberOfPosition());
+		soapModel.setCurrentNumberOfEmployee(model.getCurrentNumberOfEmployee());
 		soapModel.setTitlesId(model.getTitlesId());
+		soapModel.setNumberOfNewRecruitment(model.getNumberOfNewRecruitment());
+		soapModel.setNumberOfReplacedRecruitment(model.getNumberOfReplacedRecruitment());
+		soapModel.setExpectedSalary(model.getExpectedSalary());
+		soapModel.setExpectedJoinedDate(model.getExpectedJoinedDate());
+		soapModel.setWorkingPlace(model.getWorkingPlace());
+		soapModel.setDescription(model.getDescription());
+		soapModel.setRequiredGender(model.getRequiredGender());
+		soapModel.setCertificateType(model.getCertificateType());
+		soapModel.setSpecialized(model.getSpecialized());
+		soapModel.setExperiences(model.getExperiences());
+		soapModel.setForeignLanguages(model.getForeignLanguages());
+		soapModel.setSkills(model.getSkills());
+		soapModel.setOfficeSkills(model.getOfficeSkills());
+		soapModel.setAwayToBusinessType(model.getAwayToBusinessType());
+		soapModel.setWorkingTimeType(model.getWorkingTimeType());
+		soapModel.setJobType(model.getJobType());
+		soapModel.setCode(model.getCode());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setPostedDate(model.getPostedDate());
 		soapModel.setExpiredDate(model.getExpiredDate());
-		soapModel.setDeleted(model.getDeleted());
-		soapModel.setDescription(model.getDescription());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setCode(model.getCode());
-		soapModel.setCertificateType(model.getCertificateType());
-		soapModel.setExperiences(model.getExperiences());
+		soapModel.setDeleted(model.getDeleted());
 
 		return soapModel;
 	}
@@ -109,20 +122,20 @@ public class VacancySoap implements Serializable {
 		_vacancyId = vacancyId;
 	}
 
-	public String getName() {
-		return _name;
+	public int getApprovedNumberOfPosition() {
+		return _approvedNumberOfPosition;
 	}
 
-	public void setName(String name) {
-		_name = name;
+	public void setApprovedNumberOfPosition(int approvedNumberOfPosition) {
+		_approvedNumberOfPosition = approvedNumberOfPosition;
 	}
 
-	public int getNumberOfPosition() {
-		return _numberOfPosition;
+	public int getCurrentNumberOfEmployee() {
+		return _currentNumberOfEmployee;
 	}
 
-	public void setNumberOfPosition(int numberOfPosition) {
-		_numberOfPosition = numberOfPosition;
+	public void setCurrentNumberOfEmployee(int currentNumberOfEmployee) {
+		_currentNumberOfEmployee = currentNumberOfEmployee;
 	}
 
 	public long getTitlesId() {
@@ -131,6 +144,142 @@ public class VacancySoap implements Serializable {
 
 	public void setTitlesId(long titlesId) {
 		_titlesId = titlesId;
+	}
+
+	public int getNumberOfNewRecruitment() {
+		return _numberOfNewRecruitment;
+	}
+
+	public void setNumberOfNewRecruitment(int numberOfNewRecruitment) {
+		_numberOfNewRecruitment = numberOfNewRecruitment;
+	}
+
+	public int getNumberOfReplacedRecruitment() {
+		return _numberOfReplacedRecruitment;
+	}
+
+	public void setNumberOfReplacedRecruitment(int numberOfReplacedRecruitment) {
+		_numberOfReplacedRecruitment = numberOfReplacedRecruitment;
+	}
+
+	public double getExpectedSalary() {
+		return _expectedSalary;
+	}
+
+	public void setExpectedSalary(double expectedSalary) {
+		_expectedSalary = expectedSalary;
+	}
+
+	public Date getExpectedJoinedDate() {
+		return _expectedJoinedDate;
+	}
+
+	public void setExpectedJoinedDate(Date expectedJoinedDate) {
+		_expectedJoinedDate = expectedJoinedDate;
+	}
+
+	public String getWorkingPlace() {
+		return _workingPlace;
+	}
+
+	public void setWorkingPlace(String workingPlace) {
+		_workingPlace = workingPlace;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	public String getRequiredGender() {
+		return _requiredGender;
+	}
+
+	public void setRequiredGender(String requiredGender) {
+		_requiredGender = requiredGender;
+	}
+
+	public String getCertificateType() {
+		return _certificateType;
+	}
+
+	public void setCertificateType(String certificateType) {
+		_certificateType = certificateType;
+	}
+
+	public String getSpecialized() {
+		return _specialized;
+	}
+
+	public void setSpecialized(String specialized) {
+		_specialized = specialized;
+	}
+
+	public double getExperiences() {
+		return _experiences;
+	}
+
+	public void setExperiences(double experiences) {
+		_experiences = experiences;
+	}
+
+	public String getForeignLanguages() {
+		return _foreignLanguages;
+	}
+
+	public void setForeignLanguages(String foreignLanguages) {
+		_foreignLanguages = foreignLanguages;
+	}
+
+	public String getSkills() {
+		return _skills;
+	}
+
+	public void setSkills(String skills) {
+		_skills = skills;
+	}
+
+	public String getOfficeSkills() {
+		return _officeSkills;
+	}
+
+	public void setOfficeSkills(String officeSkills) {
+		_officeSkills = officeSkills;
+	}
+
+	public String getAwayToBusinessType() {
+		return _awayToBusinessType;
+	}
+
+	public void setAwayToBusinessType(String awayToBusinessType) {
+		_awayToBusinessType = awayToBusinessType;
+	}
+
+	public String getWorkingTimeType() {
+		return _workingTimeType;
+	}
+
+	public void setWorkingTimeType(String workingTimeType) {
+		_workingTimeType = workingTimeType;
+	}
+
+	public String getJobType() {
+		return _jobType;
+	}
+
+	public void setJobType(String jobType) {
+		_jobType = jobType;
+	}
+
+	public String getCode() {
+		return _code;
+	}
+
+	public void setCode(String code) {
+		_code = code;
 	}
 
 	public String getStatus() {
@@ -155,26 +304,6 @@ public class VacancySoap implements Serializable {
 
 	public void setExpiredDate(Date expiredDate) {
 		_expiredDate = expiredDate;
-	}
-
-	public boolean getDeleted() {
-		return _deleted;
-	}
-
-	public boolean isDeleted() {
-		return _deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		_deleted = deleted;
-	}
-
-	public String getDescription() {
-		return _description;
-	}
-
-	public void setDescription(String description) {
-		_description = description;
 	}
 
 	public long getGroupId() {
@@ -225,46 +354,47 @@ public class VacancySoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getCode() {
-		return _code;
+	public boolean getDeleted() {
+		return _deleted;
 	}
 
-	public void setCode(String code) {
-		_code = code;
+	public boolean isDeleted() {
+		return _deleted;
 	}
 
-	public String getCertificateType() {
-		return _certificateType;
-	}
-
-	public void setCertificateType(String certificateType) {
-		_certificateType = certificateType;
-	}
-
-	public double getExperiences() {
-		return _experiences;
-	}
-
-	public void setExperiences(double experiences) {
-		_experiences = experiences;
+	public void setDeleted(boolean deleted) {
+		_deleted = deleted;
 	}
 
 	private long _vacancyId;
-	private String _name;
-	private int _numberOfPosition;
+	private int _approvedNumberOfPosition;
+	private int _currentNumberOfEmployee;
 	private long _titlesId;
+	private int _numberOfNewRecruitment;
+	private int _numberOfReplacedRecruitment;
+	private double _expectedSalary;
+	private Date _expectedJoinedDate;
+	private String _workingPlace;
+	private String _description;
+	private String _requiredGender;
+	private String _certificateType;
+	private String _specialized;
+	private double _experiences;
+	private String _foreignLanguages;
+	private String _skills;
+	private String _officeSkills;
+	private String _awayToBusinessType;
+	private String _workingTimeType;
+	private String _jobType;
+	private String _code;
 	private String _status;
 	private Date _postedDate;
 	private Date _expiredDate;
-	private boolean _deleted;
-	private String _description;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _code;
-	private String _certificateType;
-	private double _experiences;
+	private boolean _deleted;
 }

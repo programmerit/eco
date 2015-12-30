@@ -63,8 +63,10 @@ public class CandidateImportExportDTO implements Serializable {
 
 		/* */
 
-		this.vacancyId = VacancyLocalServiceUtil.findByName(vacancy)
-				.getVacancyId();
+		// TODO
+		// this.vacancyId = VacancyLocalServiceUtil.findByName(vacancy)
+		// .getVacancyId();
+
 		// this.subUnitId = SubUnitLocalServiceUtil.findByName(subUnit)
 		// .getSubUnitId();
 	}

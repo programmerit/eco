@@ -37,26 +37,56 @@ import java.util.Date;
 public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(63);
 
 		sb.append("{vacancyId=");
 		sb.append(vacancyId);
-		sb.append(", name=");
-		sb.append(name);
-		sb.append(", numberOfPosition=");
-		sb.append(numberOfPosition);
+		sb.append(", approvedNumberOfPosition=");
+		sb.append(approvedNumberOfPosition);
+		sb.append(", currentNumberOfEmployee=");
+		sb.append(currentNumberOfEmployee);
 		sb.append(", titlesId=");
 		sb.append(titlesId);
+		sb.append(", numberOfNewRecruitment=");
+		sb.append(numberOfNewRecruitment);
+		sb.append(", numberOfReplacedRecruitment=");
+		sb.append(numberOfReplacedRecruitment);
+		sb.append(", expectedSalary=");
+		sb.append(expectedSalary);
+		sb.append(", expectedJoinedDate=");
+		sb.append(expectedJoinedDate);
+		sb.append(", workingPlace=");
+		sb.append(workingPlace);
+		sb.append(", description=");
+		sb.append(description);
+		sb.append(", requiredGender=");
+		sb.append(requiredGender);
+		sb.append(", certificateType=");
+		sb.append(certificateType);
+		sb.append(", specialized=");
+		sb.append(specialized);
+		sb.append(", experiences=");
+		sb.append(experiences);
+		sb.append(", foreignLanguages=");
+		sb.append(foreignLanguages);
+		sb.append(", skills=");
+		sb.append(skills);
+		sb.append(", officeSkills=");
+		sb.append(officeSkills);
+		sb.append(", awayToBusinessType=");
+		sb.append(awayToBusinessType);
+		sb.append(", workingTimeType=");
+		sb.append(workingTimeType);
+		sb.append(", jobType=");
+		sb.append(jobType);
+		sb.append(", code=");
+		sb.append(code);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", postedDate=");
 		sb.append(postedDate);
 		sb.append(", expiredDate=");
 		sb.append(expiredDate);
-		sb.append(", deleted=");
-		sb.append(deleted);
-		sb.append(", description=");
-		sb.append(description);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -69,12 +99,8 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", code=");
-		sb.append(code);
-		sb.append(", certificateType=");
-		sb.append(certificateType);
-		sb.append(", experiences=");
-		sb.append(experiences);
+		sb.append(", deleted=");
+		sb.append(deleted);
 		sb.append("}");
 
 		return sb.toString();
@@ -85,16 +111,105 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 		VacancyImpl vacancyImpl = new VacancyImpl();
 
 		vacancyImpl.setVacancyId(vacancyId);
+		vacancyImpl.setApprovedNumberOfPosition(approvedNumberOfPosition);
+		vacancyImpl.setCurrentNumberOfEmployee(currentNumberOfEmployee);
+		vacancyImpl.setTitlesId(titlesId);
+		vacancyImpl.setNumberOfNewRecruitment(numberOfNewRecruitment);
+		vacancyImpl.setNumberOfReplacedRecruitment(numberOfReplacedRecruitment);
+		vacancyImpl.setExpectedSalary(expectedSalary);
 
-		if (name == null) {
-			vacancyImpl.setName(StringPool.BLANK);
+		if (expectedJoinedDate == Long.MIN_VALUE) {
+			vacancyImpl.setExpectedJoinedDate(null);
 		}
 		else {
-			vacancyImpl.setName(name);
+			vacancyImpl.setExpectedJoinedDate(new Date(expectedJoinedDate));
 		}
 
-		vacancyImpl.setNumberOfPosition(numberOfPosition);
-		vacancyImpl.setTitlesId(titlesId);
+		if (workingPlace == null) {
+			vacancyImpl.setWorkingPlace(StringPool.BLANK);
+		}
+		else {
+			vacancyImpl.setWorkingPlace(workingPlace);
+		}
+
+		if (description == null) {
+			vacancyImpl.setDescription(StringPool.BLANK);
+		}
+		else {
+			vacancyImpl.setDescription(description);
+		}
+
+		if (requiredGender == null) {
+			vacancyImpl.setRequiredGender(StringPool.BLANK);
+		}
+		else {
+			vacancyImpl.setRequiredGender(requiredGender);
+		}
+
+		if (certificateType == null) {
+			vacancyImpl.setCertificateType(StringPool.BLANK);
+		}
+		else {
+			vacancyImpl.setCertificateType(certificateType);
+		}
+
+		if (specialized == null) {
+			vacancyImpl.setSpecialized(StringPool.BLANK);
+		}
+		else {
+			vacancyImpl.setSpecialized(specialized);
+		}
+
+		vacancyImpl.setExperiences(experiences);
+
+		if (foreignLanguages == null) {
+			vacancyImpl.setForeignLanguages(StringPool.BLANK);
+		}
+		else {
+			vacancyImpl.setForeignLanguages(foreignLanguages);
+		}
+
+		if (skills == null) {
+			vacancyImpl.setSkills(StringPool.BLANK);
+		}
+		else {
+			vacancyImpl.setSkills(skills);
+		}
+
+		if (officeSkills == null) {
+			vacancyImpl.setOfficeSkills(StringPool.BLANK);
+		}
+		else {
+			vacancyImpl.setOfficeSkills(officeSkills);
+		}
+
+		if (awayToBusinessType == null) {
+			vacancyImpl.setAwayToBusinessType(StringPool.BLANK);
+		}
+		else {
+			vacancyImpl.setAwayToBusinessType(awayToBusinessType);
+		}
+
+		if (workingTimeType == null) {
+			vacancyImpl.setWorkingTimeType(StringPool.BLANK);
+		}
+		else {
+			vacancyImpl.setWorkingTimeType(workingTimeType);
+		}
+
+		if (jobType == null) {
+			vacancyImpl.setJobType(StringPool.BLANK);
+		}
+		else {
+			vacancyImpl.setJobType(jobType);
+		}
+
+		if (code == null) {
+			vacancyImpl.setCode(StringPool.BLANK);
+		}
+		else {
+			vacancyImpl.setCode(code);
+		}
 
 		if (status == null) {
 			vacancyImpl.setStatus(StringPool.BLANK);
@@ -115,15 +230,6 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 		}
 		else {
 			vacancyImpl.setExpiredDate(new Date(expiredDate));
-		}
-
-		vacancyImpl.setDeleted(deleted);
-
-		if (description == null) {
-			vacancyImpl.setDescription(StringPool.BLANK);
-		}
-		else {
-			vacancyImpl.setDescription(description);
 		}
 
 		vacancyImpl.setGroupId(groupId);
@@ -151,21 +257,7 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 			vacancyImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (code == null) {
-			vacancyImpl.setCode(StringPool.BLANK);
-		}
-		else {
-			vacancyImpl.setCode(code);
-		}
-
-		if (certificateType == null) {
-			vacancyImpl.setCertificateType(StringPool.BLANK);
-		}
-		else {
-			vacancyImpl.setCertificateType(certificateType);
-		}
-
-		vacancyImpl.setExperiences(experiences);
+		vacancyImpl.setDeleted(deleted);
 
 		vacancyImpl.resetOriginalValues();
 
@@ -175,39 +267,135 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		vacancyId = objectInput.readLong();
-		name = objectInput.readUTF();
-		numberOfPosition = objectInput.readInt();
+		approvedNumberOfPosition = objectInput.readInt();
+		currentNumberOfEmployee = objectInput.readInt();
 		titlesId = objectInput.readLong();
+		numberOfNewRecruitment = objectInput.readInt();
+		numberOfReplacedRecruitment = objectInput.readInt();
+		expectedSalary = objectInput.readDouble();
+		expectedJoinedDate = objectInput.readLong();
+		workingPlace = objectInput.readUTF();
+		description = objectInput.readUTF();
+		requiredGender = objectInput.readUTF();
+		certificateType = objectInput.readUTF();
+		specialized = objectInput.readUTF();
+		experiences = objectInput.readDouble();
+		foreignLanguages = objectInput.readUTF();
+		skills = objectInput.readUTF();
+		officeSkills = objectInput.readUTF();
+		awayToBusinessType = objectInput.readUTF();
+		workingTimeType = objectInput.readUTF();
+		jobType = objectInput.readUTF();
+		code = objectInput.readUTF();
 		status = objectInput.readUTF();
 		postedDate = objectInput.readLong();
 		expiredDate = objectInput.readLong();
-		deleted = objectInput.readBoolean();
-		description = objectInput.readUTF();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		code = objectInput.readUTF();
-		certificateType = objectInput.readUTF();
-		experiences = objectInput.readDouble();
+		deleted = objectInput.readBoolean();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(vacancyId);
+		objectOutput.writeInt(approvedNumberOfPosition);
+		objectOutput.writeInt(currentNumberOfEmployee);
+		objectOutput.writeLong(titlesId);
+		objectOutput.writeInt(numberOfNewRecruitment);
+		objectOutput.writeInt(numberOfReplacedRecruitment);
+		objectOutput.writeDouble(expectedSalary);
+		objectOutput.writeLong(expectedJoinedDate);
 
-		if (name == null) {
+		if (workingPlace == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(name);
+			objectOutput.writeUTF(workingPlace);
 		}
 
-		objectOutput.writeInt(numberOfPosition);
-		objectOutput.writeLong(titlesId);
+		if (description == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
+		if (requiredGender == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(requiredGender);
+		}
+
+		if (certificateType == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(certificateType);
+		}
+
+		if (specialized == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(specialized);
+		}
+
+		objectOutput.writeDouble(experiences);
+
+		if (foreignLanguages == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(foreignLanguages);
+		}
+
+		if (skills == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(skills);
+		}
+
+		if (officeSkills == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(officeSkills);
+		}
+
+		if (awayToBusinessType == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(awayToBusinessType);
+		}
+
+		if (workingTimeType == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(workingTimeType);
+		}
+
+		if (jobType == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(jobType);
+		}
+
+		if (code == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(code);
+		}
 
 		if (status == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -218,15 +406,6 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 
 		objectOutput.writeLong(postedDate);
 		objectOutput.writeLong(expiredDate);
-		objectOutput.writeBoolean(deleted);
-
-		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(description);
-		}
-
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
@@ -240,40 +419,38 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
-
-		if (code == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(code);
-		}
-
-		if (certificateType == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(certificateType);
-		}
-
-		objectOutput.writeDouble(experiences);
+		objectOutput.writeBoolean(deleted);
 	}
 
 	public long vacancyId;
-	public String name;
-	public int numberOfPosition;
+	public int approvedNumberOfPosition;
+	public int currentNumberOfEmployee;
 	public long titlesId;
+	public int numberOfNewRecruitment;
+	public int numberOfReplacedRecruitment;
+	public double expectedSalary;
+	public long expectedJoinedDate;
+	public String workingPlace;
+	public String description;
+	public String requiredGender;
+	public String certificateType;
+	public String specialized;
+	public double experiences;
+	public String foreignLanguages;
+	public String skills;
+	public String officeSkills;
+	public String awayToBusinessType;
+	public String workingTimeType;
+	public String jobType;
+	public String code;
 	public String status;
 	public long postedDate;
 	public long expiredDate;
-	public boolean deleted;
-	public String description;
 	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String code;
-	public String certificateType;
-	public double experiences;
+	public boolean deleted;
 }

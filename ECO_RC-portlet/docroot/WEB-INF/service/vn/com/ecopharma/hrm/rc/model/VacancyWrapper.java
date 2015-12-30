@@ -50,23 +50,37 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("vacancyId", getVacancyId());
-		attributes.put("name", getName());
-		attributes.put("numberOfPosition", getNumberOfPosition());
+		attributes.put("approvedNumberOfPosition", getApprovedNumberOfPosition());
+		attributes.put("currentNumberOfEmployee", getCurrentNumberOfEmployee());
 		attributes.put("titlesId", getTitlesId());
+		attributes.put("numberOfNewRecruitment", getNumberOfNewRecruitment());
+		attributes.put("numberOfReplacedRecruitment",
+			getNumberOfReplacedRecruitment());
+		attributes.put("expectedSalary", getExpectedSalary());
+		attributes.put("expectedJoinedDate", getExpectedJoinedDate());
+		attributes.put("workingPlace", getWorkingPlace());
+		attributes.put("description", getDescription());
+		attributes.put("requiredGender", getRequiredGender());
+		attributes.put("certificateType", getCertificateType());
+		attributes.put("specialized", getSpecialized());
+		attributes.put("experiences", getExperiences());
+		attributes.put("foreignLanguages", getForeignLanguages());
+		attributes.put("skills", getSkills());
+		attributes.put("officeSkills", getOfficeSkills());
+		attributes.put("awayToBusinessType", getAwayToBusinessType());
+		attributes.put("workingTimeType", getWorkingTimeType());
+		attributes.put("jobType", getJobType());
+		attributes.put("code", getCode());
 		attributes.put("status", getStatus());
 		attributes.put("postedDate", getPostedDate());
 		attributes.put("expiredDate", getExpiredDate());
-		attributes.put("deleted", getDeleted());
-		attributes.put("description", getDescription());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("code", getCode());
-		attributes.put("certificateType", getCertificateType());
-		attributes.put("experiences", getExperiences());
+		attributes.put("deleted", getDeleted());
 
 		return attributes;
 	}
@@ -79,22 +93,128 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 			setVacancyId(vacancyId);
 		}
 
-		String name = (String)attributes.get("name");
+		Integer approvedNumberOfPosition = (Integer)attributes.get(
+				"approvedNumberOfPosition");
 
-		if (name != null) {
-			setName(name);
+		if (approvedNumberOfPosition != null) {
+			setApprovedNumberOfPosition(approvedNumberOfPosition);
 		}
 
-		Integer numberOfPosition = (Integer)attributes.get("numberOfPosition");
+		Integer currentNumberOfEmployee = (Integer)attributes.get(
+				"currentNumberOfEmployee");
 
-		if (numberOfPosition != null) {
-			setNumberOfPosition(numberOfPosition);
+		if (currentNumberOfEmployee != null) {
+			setCurrentNumberOfEmployee(currentNumberOfEmployee);
 		}
 
 		Long titlesId = (Long)attributes.get("titlesId");
 
 		if (titlesId != null) {
 			setTitlesId(titlesId);
+		}
+
+		Integer numberOfNewRecruitment = (Integer)attributes.get(
+				"numberOfNewRecruitment");
+
+		if (numberOfNewRecruitment != null) {
+			setNumberOfNewRecruitment(numberOfNewRecruitment);
+		}
+
+		Integer numberOfReplacedRecruitment = (Integer)attributes.get(
+				"numberOfReplacedRecruitment");
+
+		if (numberOfReplacedRecruitment != null) {
+			setNumberOfReplacedRecruitment(numberOfReplacedRecruitment);
+		}
+
+		Double expectedSalary = (Double)attributes.get("expectedSalary");
+
+		if (expectedSalary != null) {
+			setExpectedSalary(expectedSalary);
+		}
+
+		Date expectedJoinedDate = (Date)attributes.get("expectedJoinedDate");
+
+		if (expectedJoinedDate != null) {
+			setExpectedJoinedDate(expectedJoinedDate);
+		}
+
+		String workingPlace = (String)attributes.get("workingPlace");
+
+		if (workingPlace != null) {
+			setWorkingPlace(workingPlace);
+		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
+		}
+
+		String requiredGender = (String)attributes.get("requiredGender");
+
+		if (requiredGender != null) {
+			setRequiredGender(requiredGender);
+		}
+
+		String certificateType = (String)attributes.get("certificateType");
+
+		if (certificateType != null) {
+			setCertificateType(certificateType);
+		}
+
+		String specialized = (String)attributes.get("specialized");
+
+		if (specialized != null) {
+			setSpecialized(specialized);
+		}
+
+		Double experiences = (Double)attributes.get("experiences");
+
+		if (experiences != null) {
+			setExperiences(experiences);
+		}
+
+		String foreignLanguages = (String)attributes.get("foreignLanguages");
+
+		if (foreignLanguages != null) {
+			setForeignLanguages(foreignLanguages);
+		}
+
+		String skills = (String)attributes.get("skills");
+
+		if (skills != null) {
+			setSkills(skills);
+		}
+
+		String officeSkills = (String)attributes.get("officeSkills");
+
+		if (officeSkills != null) {
+			setOfficeSkills(officeSkills);
+		}
+
+		String awayToBusinessType = (String)attributes.get("awayToBusinessType");
+
+		if (awayToBusinessType != null) {
+			setAwayToBusinessType(awayToBusinessType);
+		}
+
+		String workingTimeType = (String)attributes.get("workingTimeType");
+
+		if (workingTimeType != null) {
+			setWorkingTimeType(workingTimeType);
+		}
+
+		String jobType = (String)attributes.get("jobType");
+
+		if (jobType != null) {
+			setJobType(jobType);
+		}
+
+		String code = (String)attributes.get("code");
+
+		if (code != null) {
+			setCode(code);
 		}
 
 		String status = (String)attributes.get("status");
@@ -113,18 +233,6 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 
 		if (expiredDate != null) {
 			setExpiredDate(expiredDate);
-		}
-
-		Boolean deleted = (Boolean)attributes.get("deleted");
-
-		if (deleted != null) {
-			setDeleted(deleted);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -163,22 +271,10 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 			setModifiedDate(modifiedDate);
 		}
 
-		String code = (String)attributes.get("code");
+		Boolean deleted = (Boolean)attributes.get("deleted");
 
-		if (code != null) {
-			setCode(code);
-		}
-
-		String certificateType = (String)attributes.get("certificateType");
-
-		if (certificateType != null) {
-			setCertificateType(certificateType);
-		}
-
-		Double experiences = (Double)attributes.get("experiences");
-
-		if (experiences != null) {
-			setExperiences(experiences);
+		if (deleted != null) {
+			setDeleted(deleted);
 		}
 	}
 
@@ -223,43 +319,43 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 	}
 
 	/**
-	* Returns the name of this vacancy.
+	* Returns the approved number of position of this vacancy.
 	*
-	* @return the name of this vacancy
+	* @return the approved number of position of this vacancy
 	*/
 	@Override
-	public java.lang.String getName() {
-		return _vacancy.getName();
+	public int getApprovedNumberOfPosition() {
+		return _vacancy.getApprovedNumberOfPosition();
 	}
 
 	/**
-	* Sets the name of this vacancy.
+	* Sets the approved number of position of this vacancy.
 	*
-	* @param name the name of this vacancy
+	* @param approvedNumberOfPosition the approved number of position of this vacancy
 	*/
 	@Override
-	public void setName(java.lang.String name) {
-		_vacancy.setName(name);
+	public void setApprovedNumberOfPosition(int approvedNumberOfPosition) {
+		_vacancy.setApprovedNumberOfPosition(approvedNumberOfPosition);
 	}
 
 	/**
-	* Returns the number of position of this vacancy.
+	* Returns the current number of employee of this vacancy.
 	*
-	* @return the number of position of this vacancy
+	* @return the current number of employee of this vacancy
 	*/
 	@Override
-	public int getNumberOfPosition() {
-		return _vacancy.getNumberOfPosition();
+	public int getCurrentNumberOfEmployee() {
+		return _vacancy.getCurrentNumberOfEmployee();
 	}
 
 	/**
-	* Sets the number of position of this vacancy.
+	* Sets the current number of employee of this vacancy.
 	*
-	* @param numberOfPosition the number of position of this vacancy
+	* @param currentNumberOfEmployee the current number of employee of this vacancy
 	*/
 	@Override
-	public void setNumberOfPosition(int numberOfPosition) {
-		_vacancy.setNumberOfPosition(numberOfPosition);
+	public void setCurrentNumberOfEmployee(int currentNumberOfEmployee) {
+		_vacancy.setCurrentNumberOfEmployee(currentNumberOfEmployee);
 	}
 
 	/**
@@ -280,6 +376,346 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 	@Override
 	public void setTitlesId(long titlesId) {
 		_vacancy.setTitlesId(titlesId);
+	}
+
+	/**
+	* Returns the number of new recruitment of this vacancy.
+	*
+	* @return the number of new recruitment of this vacancy
+	*/
+	@Override
+	public int getNumberOfNewRecruitment() {
+		return _vacancy.getNumberOfNewRecruitment();
+	}
+
+	/**
+	* Sets the number of new recruitment of this vacancy.
+	*
+	* @param numberOfNewRecruitment the number of new recruitment of this vacancy
+	*/
+	@Override
+	public void setNumberOfNewRecruitment(int numberOfNewRecruitment) {
+		_vacancy.setNumberOfNewRecruitment(numberOfNewRecruitment);
+	}
+
+	/**
+	* Returns the number of replaced recruitment of this vacancy.
+	*
+	* @return the number of replaced recruitment of this vacancy
+	*/
+	@Override
+	public int getNumberOfReplacedRecruitment() {
+		return _vacancy.getNumberOfReplacedRecruitment();
+	}
+
+	/**
+	* Sets the number of replaced recruitment of this vacancy.
+	*
+	* @param numberOfReplacedRecruitment the number of replaced recruitment of this vacancy
+	*/
+	@Override
+	public void setNumberOfReplacedRecruitment(int numberOfReplacedRecruitment) {
+		_vacancy.setNumberOfReplacedRecruitment(numberOfReplacedRecruitment);
+	}
+
+	/**
+	* Returns the expected salary of this vacancy.
+	*
+	* @return the expected salary of this vacancy
+	*/
+	@Override
+	public double getExpectedSalary() {
+		return _vacancy.getExpectedSalary();
+	}
+
+	/**
+	* Sets the expected salary of this vacancy.
+	*
+	* @param expectedSalary the expected salary of this vacancy
+	*/
+	@Override
+	public void setExpectedSalary(double expectedSalary) {
+		_vacancy.setExpectedSalary(expectedSalary);
+	}
+
+	/**
+	* Returns the expected joined date of this vacancy.
+	*
+	* @return the expected joined date of this vacancy
+	*/
+	@Override
+	public java.util.Date getExpectedJoinedDate() {
+		return _vacancy.getExpectedJoinedDate();
+	}
+
+	/**
+	* Sets the expected joined date of this vacancy.
+	*
+	* @param expectedJoinedDate the expected joined date of this vacancy
+	*/
+	@Override
+	public void setExpectedJoinedDate(java.util.Date expectedJoinedDate) {
+		_vacancy.setExpectedJoinedDate(expectedJoinedDate);
+	}
+
+	/**
+	* Returns the working place of this vacancy.
+	*
+	* @return the working place of this vacancy
+	*/
+	@Override
+	public java.lang.String getWorkingPlace() {
+		return _vacancy.getWorkingPlace();
+	}
+
+	/**
+	* Sets the working place of this vacancy.
+	*
+	* @param workingPlace the working place of this vacancy
+	*/
+	@Override
+	public void setWorkingPlace(java.lang.String workingPlace) {
+		_vacancy.setWorkingPlace(workingPlace);
+	}
+
+	/**
+	* Returns the description of this vacancy.
+	*
+	* @return the description of this vacancy
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _vacancy.getDescription();
+	}
+
+	/**
+	* Sets the description of this vacancy.
+	*
+	* @param description the description of this vacancy
+	*/
+	@Override
+	public void setDescription(java.lang.String description) {
+		_vacancy.setDescription(description);
+	}
+
+	/**
+	* Returns the required gender of this vacancy.
+	*
+	* @return the required gender of this vacancy
+	*/
+	@Override
+	public java.lang.String getRequiredGender() {
+		return _vacancy.getRequiredGender();
+	}
+
+	/**
+	* Sets the required gender of this vacancy.
+	*
+	* @param requiredGender the required gender of this vacancy
+	*/
+	@Override
+	public void setRequiredGender(java.lang.String requiredGender) {
+		_vacancy.setRequiredGender(requiredGender);
+	}
+
+	/**
+	* Returns the certificate type of this vacancy.
+	*
+	* @return the certificate type of this vacancy
+	*/
+	@Override
+	public java.lang.String getCertificateType() {
+		return _vacancy.getCertificateType();
+	}
+
+	/**
+	* Sets the certificate type of this vacancy.
+	*
+	* @param certificateType the certificate type of this vacancy
+	*/
+	@Override
+	public void setCertificateType(java.lang.String certificateType) {
+		_vacancy.setCertificateType(certificateType);
+	}
+
+	/**
+	* Returns the specialized of this vacancy.
+	*
+	* @return the specialized of this vacancy
+	*/
+	@Override
+	public java.lang.String getSpecialized() {
+		return _vacancy.getSpecialized();
+	}
+
+	/**
+	* Sets the specialized of this vacancy.
+	*
+	* @param specialized the specialized of this vacancy
+	*/
+	@Override
+	public void setSpecialized(java.lang.String specialized) {
+		_vacancy.setSpecialized(specialized);
+	}
+
+	/**
+	* Returns the experiences of this vacancy.
+	*
+	* @return the experiences of this vacancy
+	*/
+	@Override
+	public double getExperiences() {
+		return _vacancy.getExperiences();
+	}
+
+	/**
+	* Sets the experiences of this vacancy.
+	*
+	* @param experiences the experiences of this vacancy
+	*/
+	@Override
+	public void setExperiences(double experiences) {
+		_vacancy.setExperiences(experiences);
+	}
+
+	/**
+	* Returns the foreign languages of this vacancy.
+	*
+	* @return the foreign languages of this vacancy
+	*/
+	@Override
+	public java.lang.String getForeignLanguages() {
+		return _vacancy.getForeignLanguages();
+	}
+
+	/**
+	* Sets the foreign languages of this vacancy.
+	*
+	* @param foreignLanguages the foreign languages of this vacancy
+	*/
+	@Override
+	public void setForeignLanguages(java.lang.String foreignLanguages) {
+		_vacancy.setForeignLanguages(foreignLanguages);
+	}
+
+	/**
+	* Returns the skills of this vacancy.
+	*
+	* @return the skills of this vacancy
+	*/
+	@Override
+	public java.lang.String getSkills() {
+		return _vacancy.getSkills();
+	}
+
+	/**
+	* Sets the skills of this vacancy.
+	*
+	* @param skills the skills of this vacancy
+	*/
+	@Override
+	public void setSkills(java.lang.String skills) {
+		_vacancy.setSkills(skills);
+	}
+
+	/**
+	* Returns the office skills of this vacancy.
+	*
+	* @return the office skills of this vacancy
+	*/
+	@Override
+	public java.lang.String getOfficeSkills() {
+		return _vacancy.getOfficeSkills();
+	}
+
+	/**
+	* Sets the office skills of this vacancy.
+	*
+	* @param officeSkills the office skills of this vacancy
+	*/
+	@Override
+	public void setOfficeSkills(java.lang.String officeSkills) {
+		_vacancy.setOfficeSkills(officeSkills);
+	}
+
+	/**
+	* Returns the away to business type of this vacancy.
+	*
+	* @return the away to business type of this vacancy
+	*/
+	@Override
+	public java.lang.String getAwayToBusinessType() {
+		return _vacancy.getAwayToBusinessType();
+	}
+
+	/**
+	* Sets the away to business type of this vacancy.
+	*
+	* @param awayToBusinessType the away to business type of this vacancy
+	*/
+	@Override
+	public void setAwayToBusinessType(java.lang.String awayToBusinessType) {
+		_vacancy.setAwayToBusinessType(awayToBusinessType);
+	}
+
+	/**
+	* Returns the working time type of this vacancy.
+	*
+	* @return the working time type of this vacancy
+	*/
+	@Override
+	public java.lang.String getWorkingTimeType() {
+		return _vacancy.getWorkingTimeType();
+	}
+
+	/**
+	* Sets the working time type of this vacancy.
+	*
+	* @param workingTimeType the working time type of this vacancy
+	*/
+	@Override
+	public void setWorkingTimeType(java.lang.String workingTimeType) {
+		_vacancy.setWorkingTimeType(workingTimeType);
+	}
+
+	/**
+	* Returns the job type of this vacancy.
+	*
+	* @return the job type of this vacancy
+	*/
+	@Override
+	public java.lang.String getJobType() {
+		return _vacancy.getJobType();
+	}
+
+	/**
+	* Sets the job type of this vacancy.
+	*
+	* @param jobType the job type of this vacancy
+	*/
+	@Override
+	public void setJobType(java.lang.String jobType) {
+		_vacancy.setJobType(jobType);
+	}
+
+	/**
+	* Returns the code of this vacancy.
+	*
+	* @return the code of this vacancy
+	*/
+	@Override
+	public java.lang.String getCode() {
+		return _vacancy.getCode();
+	}
+
+	/**
+	* Sets the code of this vacancy.
+	*
+	* @param code the code of this vacancy
+	*/
+	@Override
+	public void setCode(java.lang.String code) {
+		_vacancy.setCode(code);
 	}
 
 	/**
@@ -340,56 +776,6 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 	@Override
 	public void setExpiredDate(java.util.Date expiredDate) {
 		_vacancy.setExpiredDate(expiredDate);
-	}
-
-	/**
-	* Returns the deleted of this vacancy.
-	*
-	* @return the deleted of this vacancy
-	*/
-	@Override
-	public boolean getDeleted() {
-		return _vacancy.getDeleted();
-	}
-
-	/**
-	* Returns <code>true</code> if this vacancy is deleted.
-	*
-	* @return <code>true</code> if this vacancy is deleted; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isDeleted() {
-		return _vacancy.isDeleted();
-	}
-
-	/**
-	* Sets whether this vacancy is deleted.
-	*
-	* @param deleted the deleted of this vacancy
-	*/
-	@Override
-	public void setDeleted(boolean deleted) {
-		_vacancy.setDeleted(deleted);
-	}
-
-	/**
-	* Returns the description of this vacancy.
-	*
-	* @return the description of this vacancy
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _vacancy.getDescription();
-	}
-
-	/**
-	* Sets the description of this vacancy.
-	*
-	* @param description the description of this vacancy
-	*/
-	@Override
-	public void setDescription(java.lang.String description) {
-		_vacancy.setDescription(description);
 	}
 
 	/**
@@ -535,63 +921,33 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 	}
 
 	/**
-	* Returns the code of this vacancy.
+	* Returns the deleted of this vacancy.
 	*
-	* @return the code of this vacancy
+	* @return the deleted of this vacancy
 	*/
 	@Override
-	public java.lang.String getCode() {
-		return _vacancy.getCode();
+	public boolean getDeleted() {
+		return _vacancy.getDeleted();
 	}
 
 	/**
-	* Sets the code of this vacancy.
+	* Returns <code>true</code> if this vacancy is deleted.
 	*
-	* @param code the code of this vacancy
+	* @return <code>true</code> if this vacancy is deleted; <code>false</code> otherwise
 	*/
 	@Override
-	public void setCode(java.lang.String code) {
-		_vacancy.setCode(code);
+	public boolean isDeleted() {
+		return _vacancy.isDeleted();
 	}
 
 	/**
-	* Returns the certificate type of this vacancy.
+	* Sets whether this vacancy is deleted.
 	*
-	* @return the certificate type of this vacancy
+	* @param deleted the deleted of this vacancy
 	*/
 	@Override
-	public java.lang.String getCertificateType() {
-		return _vacancy.getCertificateType();
-	}
-
-	/**
-	* Sets the certificate type of this vacancy.
-	*
-	* @param certificateType the certificate type of this vacancy
-	*/
-	@Override
-	public void setCertificateType(java.lang.String certificateType) {
-		_vacancy.setCertificateType(certificateType);
-	}
-
-	/**
-	* Returns the experiences of this vacancy.
-	*
-	* @return the experiences of this vacancy
-	*/
-	@Override
-	public double getExperiences() {
-		return _vacancy.getExperiences();
-	}
-
-	/**
-	* Sets the experiences of this vacancy.
-	*
-	* @param experiences the experiences of this vacancy
-	*/
-	@Override
-	public void setExperiences(double experiences) {
-		_vacancy.setExperiences(experiences);
+	public void setDeleted(boolean deleted) {
+		_vacancy.setDeleted(deleted);
 	}
 
 	@Override

@@ -193,23 +193,36 @@ create table eco_rcp_Skill (
 
 create table eco_rcp_Vacancy (
 	vacancyId LONG not null primary key,
-	name VARCHAR(75) null,
-	numberOfPosition INTEGER,
+	approvedNumberOfPosition INTEGER,
+	currentNumberOfEmployee INTEGER,
 	titlesId LONG,
+	numberOfNewRecruitment INTEGER,
+	numberOfReplacedRecruitment INTEGER,
+	expectedSalary DOUBLE,
+	expectedJoinedDate DATE null,
+	workingPlace VARCHAR(75) null,
+	description VARCHAR(75) null,
+	requiredGender VARCHAR(75) null,
+	certificateType VARCHAR(75) null,
+	specialized VARCHAR(75) null,
+	experiences DOUBLE,
+	foreignLanguages VARCHAR(75) null,
+	skills VARCHAR(75) null,
+	officeSkills VARCHAR(75) null,
+	awayToBusinessType VARCHAR(75) null,
+	workingTimeType VARCHAR(75) null,
+	jobType VARCHAR(75) null,
+	code_ VARCHAR(75) null,
 	status VARCHAR(75) null,
 	postedDate DATE null,
 	expiredDate DATE null,
-	deleted BOOLEAN,
-	description VARCHAR(75) null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	code_ VARCHAR(75) null,
-	certificateType VARCHAR(75) null,
-	experiences DOUBLE
+	deleted BOOLEAN
 );
 
 create table eco_rcp_VacancyCandidate (

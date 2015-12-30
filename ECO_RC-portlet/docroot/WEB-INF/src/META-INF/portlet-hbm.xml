@@ -239,23 +239,36 @@
 		<id name="vacancyId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="numberOfPosition" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="approvedNumberOfPosition" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="currentNumberOfEmployee" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="titlesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="numberOfNewRecruitment" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="numberOfReplacedRecruitment" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="expectedSalary" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="expectedJoinedDate" type="org.hibernate.type.TimestampType" />
+		<property name="workingPlace" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="requiredGender" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="certificateType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="specialized" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="experiences" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="foreignLanguages" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="skills" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="officeSkills" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="awayToBusinessType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="workingTimeType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="jobType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="code" type="com.liferay.portal.dao.orm.hibernate.StringType" column="code_" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="postedDate" type="org.hibernate.type.TimestampType" />
 		<property name="expiredDate" type="org.hibernate.type.TimestampType" />
-		<property name="deleted" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="code" type="com.liferay.portal.dao.orm.hibernate.StringType" column="code_" />
-		<property name="certificateType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="experiences" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="deleted" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="vn.com.ecopharma.hrm.rc.model.impl.VacancyCandidateImpl" table="eco_rcp_VacancyCandidate">
 		<cache usage="read-write" />
