@@ -163,7 +163,7 @@ public class TitlesLocalServiceClp implements TitlesLocalService {
 
 		_methodParameterTypes29 = new String[] { "java.lang.String", "long" };
 
-		_methodName30 = "findByNameAndRelatedEntities";
+		_methodName30 = "findByRelatedEntities";
 
 		_methodParameterTypes30 = new String[] {
 				"vn.com.ecopharma.emp.model.Department",
@@ -171,37 +171,41 @@ public class TitlesLocalServiceClp implements TitlesLocalService {
 				"vn.com.ecopharma.emp.model.UnitGroup"
 			};
 
-		_methodName31 = "findFilterTitlesByRelatedEntities";
+		_methodName31 = "findByRelatedEntities";
 
-		_methodParameterTypes31 = new String[] {
+		_methodParameterTypes31 = new String[] { "long", "long", "long" };
+
+		_methodName32 = "findFilterTitlesByRelatedEntities";
+
+		_methodParameterTypes32 = new String[] {
 				"vn.com.ecopharma.emp.model.Department",
 				"vn.com.ecopharma.emp.model.Unit",
 				"vn.com.ecopharma.emp.model.UnitGroup"
 			};
 
-		_methodName32 = "findByName";
+		_methodName33 = "findByName";
 
-		_methodParameterTypes32 = new String[] { "java.lang.String" };
+		_methodParameterTypes33 = new String[] { "java.lang.String" };
 
-		_methodName33 = "findByNameAndRelatedFields";
+		_methodName34 = "findByNameAndRelatedFields";
 
-		_methodParameterTypes33 = new String[] {
+		_methodParameterTypes34 = new String[] {
 				"java.lang.String", "long", "long", "long"
 			};
 
-		_methodName34 = "createPrePersistedTitles";
+		_methodName35 = "createPrePersistedTitles";
 
-		_methodParameterTypes34 = new String[] {  };
+		_methodParameterTypes35 = new String[] {  };
 
-		_methodName35 = "updateTitles";
+		_methodName36 = "updateTitles";
 
-		_methodParameterTypes35 = new String[] {
+		_methodParameterTypes36 = new String[] {
 				"vn.com.ecopharma.emp.model.Titles", "long", "long", "long"
 			};
 
-		_methodName36 = "completelyRemoveAll";
+		_methodName37 = "completelyRemoveAll";
 
-		_methodParameterTypes36 = new String[] {  };
+		_methodParameterTypes37 = new String[] {  };
 	}
 
 	@Override
@@ -1052,7 +1056,7 @@ public class TitlesLocalServiceClp implements TitlesLocalService {
 	}
 
 	@Override
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByNameAndRelatedEntities(
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByRelatedEntities(
 		vn.com.ecopharma.emp.model.Department department,
 		vn.com.ecopharma.emp.model.Unit unit,
 		vn.com.ecopharma.emp.model.UnitGroup unitGroup) {
@@ -1085,6 +1089,31 @@ public class TitlesLocalServiceClp implements TitlesLocalService {
 	}
 
 	@Override
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByRelatedEntities(
+		long departmentId, long unitId, long unitGroupId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
+					new Object[] { departmentId, unitId, unitGroupId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<vn.com.ecopharma.emp.model.Titles>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.util.List<vn.com.ecopharma.emp.model.Titles> findFilterTitlesByRelatedEntities(
 		vn.com.ecopharma.emp.model.Department department,
 		vn.com.ecopharma.emp.model.Unit unit,
@@ -1092,8 +1121,8 @@ public class TitlesLocalServiceClp implements TitlesLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] {
 						ClpSerializer.translateInput(department),
 						
@@ -1122,8 +1151,8 @@ public class TitlesLocalServiceClp implements TitlesLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32,
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
 					new Object[] { ClpSerializer.translateInput(name) });
 		}
 		catch (Throwable t) {
@@ -1147,8 +1176,8 @@ public class TitlesLocalServiceClp implements TitlesLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33,
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
 					new Object[] {
 						ClpSerializer.translateInput(name),
 						
@@ -1179,8 +1208,8 @@ public class TitlesLocalServiceClp implements TitlesLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName34,
-					_methodParameterTypes34, new Object[] {  });
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1204,8 +1233,8 @@ public class TitlesLocalServiceClp implements TitlesLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName35,
-					_methodParameterTypes35,
+			returnObj = _invokableLocalService.invokeMethod(_methodName36,
+					_methodParameterTypes36,
 					new Object[] {
 						ClpSerializer.translateInput(titles),
 						
@@ -1234,8 +1263,8 @@ public class TitlesLocalServiceClp implements TitlesLocalService {
 	@Override
 	public void completelyRemoveAll() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName36,
-				_methodParameterTypes36, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName37,
+				_methodParameterTypes37, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1323,4 +1352,6 @@ public class TitlesLocalServiceClp implements TitlesLocalService {
 	private String[] _methodParameterTypes35;
 	private String _methodName36;
 	private String[] _methodParameterTypes36;
+	private String _methodName37;
+	private String[] _methodParameterTypes37;
 }

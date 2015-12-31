@@ -22,20 +22,44 @@
 								<p:panelGrid columns="2">
 
 									<h:outputText value="Position: " />
-									<h:panelGroup>
-										<p:selectOneMenu id="vTitlesSelect"
-											converter="titlesConverter" required="true"
-											value="#{vacancyBean.vacancyItem.titles}">
-											<f:selectItem itemLabel="Select Titles" itemValue="" />
-											<f:selectItems value="#{vacancyBean.titlesList}" var="t"
-												itemLabel="#{t.name}" itemValue="#{t}" />
-											<p:column>
-										    	#{t.name}
-										    </p:column>
-										</p:selectOneMenu>
-										<p:commandLink value="choose..."
+									<h:panelGroup id="titlesNameGroup">
+										<h:outputText value="#{vacancyBean.currentTitlesName}" />
+										<p:commandLink style="margin-left: 15px;"
+											value="#{vacancyBean.vacancyItem.titles != null ? 'change...' : 'choose...'}"
 											onclick="PF('titlesSelectDialog').show();" />
 									</h:panelGroup>
+
+									<h:outputText value="Number of Approved Position" />
+									<p:inputText
+										value="#{vacancyBean.vacancyItem.vacancy.approvedNumberOfPosition}" />
+
+									<h:outputText value="Number of Current Employee" />
+									<p:inputText
+										value="#{vacancyBean.vacancyItem.vacancy.currentNumberOfEmployee}" />
+
+									<h:outputText value="Number of New Recruitment" />
+									<p:inputText
+										value="#{vacancyBean.vacancyItem.vacancy.numberOfNewRecruitment}" />
+
+									<h:outputText value="Number of Replaced Recruitment" />
+									<p:inputText
+										value="#{vacancyBean.vacancyItem.vacancy.numberOfReplacedRecruitment}" />
+
+									<h:outputText value="Number of Replaced Recruitment" />
+									<p:inputText
+										value="#{vacancyBean.vacancyItem.vacancy.numberOfReplacedRecruitment}" />
+
+									<h:outputText value="Expected Salary" />
+									<p:inputText
+										value="#{vacancyBean.vacancyItem.vacancy.expectedSalary}" />
+
+									<h:outputText value="Expected Joined Date" />
+									<p:calendar
+										value="#{vacancyBean.vacancyItem.vacancy.expectedJoinedDate}" />
+
+									<h:outputText value="Working Place" />
+									<p:inputText
+										value="#{vacancyBean.vacancyItem.vacancy.workingPlace}" />
 
 									<h:outputText value="Required Education: " />
 									<p:selectOneMenu id="certificateTypeSelect"
@@ -144,8 +168,10 @@
 				<p:commandButton id="discardDelete" value="No"
 					onclick="PF('wDeleteConfirmDialog').hide()" />
 			</p:confirmDialog>
+		</h:form>
 
-			<p:dialog widgetVar="titlesSelectDialog">
+		<h:form>
+			<p:dialog widgetVar="titlesSelectDialog" showHeader="false">
 				<p:outputPanel>
 					<h:panelGrid columns="2">
 						<h:outputText value="Devision" />
@@ -222,11 +248,19 @@
 							<f:selectItems value="#{titlesActionBean.titlesList}" var="t"
 								itemLabel="#{t.name}" itemValue="#{t}" />
 							<p:column>
-					                #{t.name}
-					            </p:column>
+					        	#{t.name}
+					        </p:column>
 						</p:selectOneMenu>
 					</h:panelGrid>
 				</p:outputPanel>
+				<br />
+				<br />
+				<p:commandLink value="Update Titles"
+					actionListener="#{titlesActionBean.onUpdateTitles}"
+					update=":modifyVacancy:accordion:titlesNameGroup"
+					oncomplete="PF('titlesSelectDialog').hide();" /> |
+				<p:commandLink value="Cancel" style="margin-left: 2px;"
+					onclick="PF('titlesSelectDialog').hide();" />
 			</p:dialog>
 		</h:form>
 

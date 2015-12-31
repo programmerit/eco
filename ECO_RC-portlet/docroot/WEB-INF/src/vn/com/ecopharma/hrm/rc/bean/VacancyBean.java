@@ -17,7 +17,6 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import vn.com.ecopharma.emp.model.Titles;
-import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.constant.VacancyField;
 import vn.com.ecopharma.hrm.rc.constant.VacancyNavigation;
 import vn.com.ecopharma.hrm.rc.dm.VacancyLazyDM;
@@ -214,8 +213,9 @@ public class VacancyBean extends PersistableBean {
 		}
 	}
 
-	public void onSubUnitChange() {
-		getTitlesList();
+	public String getCurrentTitlesName() {
+		final Titles currentTitles = vacancyItem.getTitles();
+		return currentTitles != null ? currentTitles.getName() : "(Empty)";
 	}
 
 	public void deleteFileEntry(ActionEvent event) {
@@ -246,10 +246,6 @@ public class VacancyBean extends PersistableBean {
 
 	public void setVacancyItem(VacancyItem vacancyItem) {
 		this.vacancyItem = vacancyItem;
-	}
-
-	public List<Titles> getTitlesList() {
-		return TitlesLocalServiceUtil.findAll();
 	}
 
 	public long getDeletedVacancyId() {

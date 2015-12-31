@@ -332,12 +332,17 @@ public class TitlesLocalServiceUtil {
 		return getService().findByNameAndDepartment(name, departmentId);
 	}
 
-	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByNameAndRelatedEntities(
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByRelatedEntities(
 		vn.com.ecopharma.emp.model.Department department,
 		vn.com.ecopharma.emp.model.Unit unit,
 		vn.com.ecopharma.emp.model.UnitGroup unitGroup) {
+		return getService().findByRelatedEntities(department, unit, unitGroup);
+	}
+
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByRelatedEntities(
+		long departmentId, long unitId, long unitGroupId) {
 		return getService()
-				   .findByNameAndRelatedEntities(department, unit, unitGroup);
+				   .findByRelatedEntities(departmentId, unitId, unitGroupId);
 	}
 
 	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findFilterTitlesByRelatedEntities(

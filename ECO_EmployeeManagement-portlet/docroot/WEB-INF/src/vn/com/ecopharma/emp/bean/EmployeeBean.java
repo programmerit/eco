@@ -475,7 +475,7 @@ public class EmployeeBean implements Serializable {
 	}
 
 	public List<Titles> getTitlesList() {
-		return TitlesLocalServiceUtil.findByNameAndRelatedEntities(
+		return TitlesLocalServiceUtil.findByRelatedEntities(
 				modifyEmployeeInfoItem.getDepartment(),
 				modifyEmployeeInfoItem.getUnit(),
 				modifyEmployeeInfoItem.getUnitGroup());
@@ -528,7 +528,7 @@ public class EmployeeBean implements Serializable {
 	// Dependent Names action part
 	public void onAddDependence() {
 		modifyEmployeeInfoItem.getDependentNames().add(
-				new DependentName("", false));
+				new DependentName(StringUtils.EMPTY, false));
 	}
 
 	public void onRemoveDependence(int index) {

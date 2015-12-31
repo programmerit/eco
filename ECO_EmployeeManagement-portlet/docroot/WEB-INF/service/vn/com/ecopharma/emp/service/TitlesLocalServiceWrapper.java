@@ -352,12 +352,19 @@ public class TitlesLocalServiceWrapper implements TitlesLocalService,
 	}
 
 	@Override
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByNameAndRelatedEntities(
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByRelatedEntities(
 		vn.com.ecopharma.emp.model.Department department,
 		vn.com.ecopharma.emp.model.Unit unit,
 		vn.com.ecopharma.emp.model.UnitGroup unitGroup) {
-		return _titlesLocalService.findByNameAndRelatedEntities(department,
-			unit, unitGroup);
+		return _titlesLocalService.findByRelatedEntities(department, unit,
+			unitGroup);
+	}
+
+	@Override
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByRelatedEntities(
+		long departmentId, long unitId, long unitGroupId) {
+		return _titlesLocalService.findByRelatedEntities(departmentId, unitId,
+			unitGroupId);
 	}
 
 	@Override

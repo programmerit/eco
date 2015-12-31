@@ -126,8 +126,8 @@ public class PromotionBean implements Serializable {
 	}
 
 	public List<Titles> getTitlesList() {
-		return TitlesLocalServiceUtil.findByNameAndRelatedEntities(department,
-				unit, unitGroup);
+		return TitlesLocalServiceUtil.findByRelatedEntities(department, unit,
+				unitGroup);
 	}
 
 	public List<UnitGroup> getUnitGroups() {

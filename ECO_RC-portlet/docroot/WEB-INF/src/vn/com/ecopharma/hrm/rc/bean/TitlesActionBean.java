@@ -16,6 +16,7 @@ import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
+import vn.com.ecopharma.hrm.rc.util.BeanUtils;
 
 @ManagedBean
 @ViewScoped
@@ -27,11 +28,20 @@ public class TitlesActionBean {
 	private Unit unit;
 	private UnitGroup unitGroup;
 
+	public void onUpdateTitles() {
+		final VacancyBean vacancyBean = BeanUtils.getVacancyBean();
+		vacancyBean.getVacancyItem().setTitles(this.titles);
+	}
+
 	public List<Titles> getTitlesList() {
 		if (department == null && unit == null && unitGroup == null)
 			return new ArrayList<Titles>();
-		return TitlesLocalServiceUtil.findByNameAndRelatedEntities(department,
-				unit, unitGroup);
+		long departmentId = department != null ? department.getDepartmentId()
+				: 0L;
+		long unitId = unit != null ? unit.getUnitId() : 0L;
+		long unitGroupId = unitGroup != null ? unitGroup.getUnitGroupId() : 0L;
+		return TitlesLocalServiceUtil.findByRelatedEntities(departmentId,
+				unitId, unitGroupId);
 	}
 
 	public List<UnitGroup> getUnitGroups() {

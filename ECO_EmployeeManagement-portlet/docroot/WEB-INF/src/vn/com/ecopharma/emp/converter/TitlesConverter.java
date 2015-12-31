@@ -14,7 +14,6 @@ public class TitlesConverter extends AbstractBaseModelConverter<Titles> {
 	@Override
 	protected Titles returnedModelObject(String value) {
 		try {
-			System.out.println("TEST" + Long.valueOf(value));
 			return TitlesLocalServiceUtil.getTitles(Long.valueOf(value));
 		} catch (NumberFormatException e) {
 			e.printStackTrace();

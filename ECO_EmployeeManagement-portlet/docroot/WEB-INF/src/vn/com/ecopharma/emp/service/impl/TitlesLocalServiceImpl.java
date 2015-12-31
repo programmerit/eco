@@ -191,20 +191,23 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 	 * vn.com.ecopharma.emp.model.UnitGroup)
 	 */
 	@Override
-	public List<Titles> findByNameAndRelatedEntities(Department department,
-			Unit unit, UnitGroup unitGroup) {
+	public List<Titles> findByRelatedEntities(Department department, Unit unit,
+			UnitGroup unitGroup) {
+		long departmentId = department != null ? department.getDepartmentId()
+				: 0L;
+		long unitId = unit != null ? unit.getUnitId() : 0L;
+		long unitGroupId = unitGroup != null ? unitGroup.getUnitGroupId() : 0L;
+		return findByRelatedEntities(unitGroupId, unitId, departmentId);
+	}
+
+	public List<Titles> findByRelatedEntities(long departmentId, long unitId,
+			long unitGroupId) {
 		try {
-			long departmentId = department != null ? department
-					.getDepartmentId() : 0L;
-			long unitId = unit != null ? unit.getUnitId() : 0L;
-			long unitGroupId = unitGroup != null ? unitGroup.getUnitGroupId()
-					: 0L;
 			return titlesPersistence.findByUnitGroupUnitDepartment(unitGroupId,
 					unitId, departmentId);
 		} catch (SystemException e) {
 			LogFactoryUtil.getLog(TitlesLocalServiceImpl.class).info(e);
 		}
-
 		return new ArrayList<>();
 	}
 
