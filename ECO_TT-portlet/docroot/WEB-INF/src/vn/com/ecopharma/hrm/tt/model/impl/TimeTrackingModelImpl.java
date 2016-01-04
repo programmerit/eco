@@ -98,8 +98,9 @@ public class TimeTrackingModelImpl extends BaseModelImpl<TimeTracking>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.vn.com.ecopharma.hrm.tt.model.TimeTracking"),
 			true);
-	public static long EMPID_COLUMN_BITMASK = 1L;
-	public static long TIMETRACKINGID_COLUMN_BITMASK = 2L;
+	public static long DATE_COLUMN_BITMASK = 1L;
+	public static long EMPID_COLUMN_BITMASK = 2L;
+	public static long TIMETRACKINGID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -347,7 +348,17 @@ public class TimeTrackingModelImpl extends BaseModelImpl<TimeTracking>
 
 	@Override
 	public void setDate(Date date) {
+		_columnBitmask |= DATE_COLUMN_BITMASK;
+
+		if (_originalDate == null) {
+			_originalDate = _date;
+		}
+
 		_date = date;
+	}
+
+	public Date getOriginalDate() {
+		return _originalDate;
 	}
 
 	@JSON
@@ -599,6 +610,8 @@ public class TimeTrackingModelImpl extends BaseModelImpl<TimeTracking>
 
 		timeTrackingModelImpl._setOriginalEmpId = false;
 
+		timeTrackingModelImpl._originalDate = timeTrackingModelImpl._date;
+
 		timeTrackingModelImpl._columnBitmask = 0;
 	}
 
@@ -830,6 +843,7 @@ public class TimeTrackingModelImpl extends BaseModelImpl<TimeTracking>
 	private long _originalEmpId;
 	private boolean _setOriginalEmpId;
 	private Date _date;
+	private Date _originalDate;
 	private Date _in1;
 	private Date _out1;
 	private Date _in2;

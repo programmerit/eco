@@ -261,25 +261,9 @@ public interface TitlesLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public vn.com.ecopharma.emp.model.Titles createTitles(
-		java.lang.String name, long unitGroupId, long unitId,
-		long departmentId,
+	public vn.com.ecopharma.emp.model.Titles addTitles(java.lang.String name,
+		long departmentId, java.lang.String name_en, java.lang.String code,
 		com.liferay.portal.service.ServiceContext serviceContext);
-
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnit(
-		long unitId);
-
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitAndNullUnitGroup(
-		long unitId);
-
-	public vn.com.ecopharma.emp.model.Titles findByNameAndUnit(
-		java.lang.String name, long unitId);
-
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitGroup(
-		long unitGroupId);
-
-	public vn.com.ecopharma.emp.model.Titles findByNameAndUnitGroup(
-		java.lang.String name, long unitGroupId);
 
 	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartment(
 		long departmentId);
@@ -287,29 +271,12 @@ public interface TitlesLocalService extends BaseLocalService,
 	public vn.com.ecopharma.emp.model.Titles findByNameAndDepartment(
 		java.lang.String name, long departmentId);
 
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByRelatedEntities(
-		vn.com.ecopharma.emp.model.Department department,
-		vn.com.ecopharma.emp.model.Unit unit,
-		vn.com.ecopharma.emp.model.UnitGroup unitGroup);
-
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByRelatedEntities(
-		long departmentId, long unitId, long unitGroupId);
-
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findFilterTitlesByRelatedEntities(
-		vn.com.ecopharma.emp.model.Department department,
-		vn.com.ecopharma.emp.model.Unit unit,
-		vn.com.ecopharma.emp.model.UnitGroup unitGroup);
-
 	public vn.com.ecopharma.emp.model.Titles findByName(java.lang.String name);
-
-	public vn.com.ecopharma.emp.model.Titles findByNameAndRelatedFields(
-		java.lang.String name, long unitGroupId, long unitId, long departmentId);
 
 	public vn.com.ecopharma.emp.model.Titles createPrePersistedTitles();
 
 	public vn.com.ecopharma.emp.model.Titles updateTitles(
-		vn.com.ecopharma.emp.model.Titles titles, long unitGroupId,
-		long unitId, long departmentId);
+		vn.com.ecopharma.emp.model.Titles titles, long departmentId);
 
 	public void completelyRemoveAll();
 }

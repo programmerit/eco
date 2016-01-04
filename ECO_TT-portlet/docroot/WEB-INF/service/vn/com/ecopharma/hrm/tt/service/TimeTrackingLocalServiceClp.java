@@ -129,52 +129,56 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName22 = "countSearch";
+		_methodName22 = "findByEmpAndDate";
 
-		_methodParameterTypes22 = new String[] {
+		_methodParameterTypes22 = new String[] { "long", "java.util.Date" };
+
+		_methodName23 = "countSearch";
+
+		_methodParameterTypes23 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long"
 			};
 
-		_methodName23 = "search";
+		_methodName24 = "search";
 
-		_methodParameterTypes23 = new String[] {
+		_methodParameterTypes24 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName24 = "getIndexedTimeTracking";
-
-		_methodParameterTypes24 = new String[] {
-				"long", "com.liferay.portal.kernel.search.SearchContext"
-			};
-
 		_methodName25 = "getIndexedTimeTracking";
 
 		_methodParameterTypes25 = new String[] {
+				"long", "com.liferay.portal.kernel.search.SearchContext"
+			};
+
+		_methodName26 = "getIndexedTimeTracking";
+
+		_methodParameterTypes26 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName26 = "addTimeTracking";
+		_methodName27 = "addTimeTracking";
 
-		_methodParameterTypes26 = new String[] {
+		_methodParameterTypes27 = new String[] {
 				"long", "java.util.Date", "java.util.Date", "java.util.Date",
 				"java.util.Date", "java.util.Date", "java.util.Date",
 				"java.util.Date", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName27 = "updateTimeTracking";
+		_methodName28 = "updateTimeTracking";
 
-		_methodParameterTypes27 = new String[] {
+		_methodParameterTypes28 = new String[] {
 				"long", "java.util.Date", "java.util.Date", "java.util.Date",
 				"java.util.Date", "java.util.Date", "java.util.Date"
 			};
 
-		_methodName28 = "completelyRemoveAllTimeTrackings";
+		_methodName29 = "completelyRemoveAllTimeTrackings";
 
-		_methodParameterTypes28 = new String[] {  };
+		_methodParameterTypes29 = new String[] {  };
 	}
 
 	@Override
@@ -807,6 +811,31 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 	}
 
 	@Override
+	public vn.com.ecopharma.hrm.tt.model.TimeTracking findByEmpAndDate(
+		long empId, java.util.Date date) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
+					new Object[] { empId, ClpSerializer.translateInput(date) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.hrm.tt.model.TimeTracking)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public int countSearch(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> queries,
@@ -816,8 +845,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -860,8 +889,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23,
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -905,8 +934,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] { id, ClpSerializer.translateInput(
 							searchContext) });
 		}
@@ -932,8 +961,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] {
 						ClpSerializer.translateInput(id),
 						
@@ -964,8 +993,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] {
 						empId,
 						
@@ -1009,8 +1038,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] {
 						timeTrackingId,
 						
@@ -1045,8 +1074,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 	@Override
 	public void completelyRemoveAllTimeTrackings() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName28,
-				_methodParameterTypes28, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName29,
+				_methodParameterTypes29, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1118,4 +1147,6 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 	private String[] _methodParameterTypes27;
 	private String _methodName28;
 	private String[] _methodParameterTypes28;
+	private String _methodName29;
+	private String[] _methodParameterTypes29;
 }

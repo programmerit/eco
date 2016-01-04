@@ -290,6 +290,11 @@ public class TimeTrackingLocalServiceUtil {
 		return getService().findAll(start, end, orderByComparator);
 	}
 
+	public static vn.com.ecopharma.hrm.tt.model.TimeTracking findByEmpAndDate(
+		long empId, java.util.Date date) {
+		return getService().findByEmpAndDate(empId, date);
+	}
+
 	public static int countSearch(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> queries,

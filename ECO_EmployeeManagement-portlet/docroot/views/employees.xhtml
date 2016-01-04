@@ -276,7 +276,10 @@
 				<p:commandLink value="Completely Remove All Organizations"
 					rendered="true"
 					actionListener="#{employeeIndexedBean.onCompletelyRemoveAllOrganizations}"
-					ajax="true" />
+					ajax="true" /> | 
+					
+				<p:link value="Organization Tree" outcome="organizationView" />
+
 			</h:panelGroup>
 			<!-- EMPLOYEE TABLE-->
 			<p:dataTable id="employees" var="employeeInfo" reflow="true"

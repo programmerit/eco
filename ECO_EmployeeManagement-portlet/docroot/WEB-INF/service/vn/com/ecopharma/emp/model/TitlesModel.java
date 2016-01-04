@@ -90,32 +90,34 @@ public interface TitlesModel extends BaseModel<Titles> {
 	public void setName(String name);
 
 	/**
-	 * Returns the unit group ID of this titles.
+	 * Returns the name_en of this titles.
 	 *
-	 * @return the unit group ID of this titles
+	 * @return the name_en of this titles
 	 */
-	public long getUnitGroupId();
+	@AutoEscape
+	public String getName_en();
 
 	/**
-	 * Sets the unit group ID of this titles.
+	 * Sets the name_en of this titles.
 	 *
-	 * @param unitGroupId the unit group ID of this titles
+	 * @param name_en the name_en of this titles
 	 */
-	public void setUnitGroupId(long unitGroupId);
+	public void setName_en(String name_en);
 
 	/**
-	 * Returns the unit ID of this titles.
+	 * Returns the code of this titles.
 	 *
-	 * @return the unit ID of this titles
+	 * @return the code of this titles
 	 */
-	public long getUnitId();
+	@AutoEscape
+	public String getCode();
 
 	/**
-	 * Sets the unit ID of this titles.
+	 * Sets the code of this titles.
 	 *
-	 * @param unitId the unit ID of this titles
+	 * @param code the code of this titles
 	 */
-	public void setUnitId(long unitId);
+	public void setCode(String code);
 
 	/**
 	 * Returns the department ID of this titles.

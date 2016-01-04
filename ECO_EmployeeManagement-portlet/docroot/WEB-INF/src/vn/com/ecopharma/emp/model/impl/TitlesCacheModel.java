@@ -43,10 +43,10 @@ public class TitlesCacheModel implements CacheModel<Titles>, Externalizable {
 		sb.append(titlesId);
 		sb.append(", name=");
 		sb.append(name);
-		sb.append(", unitGroupId=");
-		sb.append(unitGroupId);
-		sb.append(", unitId=");
-		sb.append(unitId);
+		sb.append(", name_en=");
+		sb.append(name_en);
+		sb.append(", code=");
+		sb.append(code);
 		sb.append(", departmentId=");
 		sb.append(departmentId);
 		sb.append(", groupId=");
@@ -77,8 +77,20 @@ public class TitlesCacheModel implements CacheModel<Titles>, Externalizable {
 			titlesImpl.setName(name);
 		}
 
-		titlesImpl.setUnitGroupId(unitGroupId);
-		titlesImpl.setUnitId(unitId);
+		if (name_en == null) {
+			titlesImpl.setName_en(StringPool.BLANK);
+		}
+		else {
+			titlesImpl.setName_en(name_en);
+		}
+
+		if (code == null) {
+			titlesImpl.setCode(StringPool.BLANK);
+		}
+		else {
+			titlesImpl.setCode(code);
+		}
+
 		titlesImpl.setDepartmentId(departmentId);
 		titlesImpl.setGroupId(groupId);
 		titlesImpl.setCompanyId(companyId);
@@ -107,8 +119,8 @@ public class TitlesCacheModel implements CacheModel<Titles>, Externalizable {
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		titlesId = objectInput.readLong();
 		name = objectInput.readUTF();
-		unitGroupId = objectInput.readLong();
-		unitId = objectInput.readLong();
+		name_en = objectInput.readUTF();
+		code = objectInput.readUTF();
 		departmentId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
@@ -129,8 +141,20 @@ public class TitlesCacheModel implements CacheModel<Titles>, Externalizable {
 			objectOutput.writeUTF(name);
 		}
 
-		objectOutput.writeLong(unitGroupId);
-		objectOutput.writeLong(unitId);
+		if (name_en == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name_en);
+		}
+
+		if (code == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(code);
+		}
+
 		objectOutput.writeLong(departmentId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
@@ -141,8 +165,8 @@ public class TitlesCacheModel implements CacheModel<Titles>, Externalizable {
 
 	public long titlesId;
 	public String name;
-	public long unitGroupId;
-	public long unitId;
+	public String name_en;
+	public String code;
 	public long departmentId;
 	public long groupId;
 	public long companyId;

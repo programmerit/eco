@@ -19,11 +19,8 @@ import java.util.Date;
 import java.util.List;
 
 import vn.com.ecopharma.emp.NoSuchTitlesException;
-import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.Titles;
-import vn.com.ecopharma.emp.model.Unit;
-import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.service.base.TitlesLocalServiceBaseImpl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -84,15 +81,14 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 		return titlesPersistence.findAll(start, end, orderByComparator);
 	}
 
-	@Override
-	public Titles createTitles(String name, long unitGroupId, long unitId,
-			long departmentId, ServiceContext serviceContext) {
+	public Titles addTitles(String name, long departmentId, String name_en,
+			String code, ServiceContext serviceContext) {
 		try {
 			long id = counterLocalService.increment();
 			Titles titles = titlesPersistence.create(id);
 			titles.setName(name);
-			titles.setUnitGroupId(unitGroupId);
-			titles.setUnitId(unitId);
+			titles.setName_en(name_en);
+			titles.setCode(code);
 			titles.setDepartmentId(departmentId);
 			titles.setUserId(serviceContext.getUserId());
 			titles.setCompanyId(serviceContext.getCompanyId());
@@ -100,61 +96,7 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 			titles.setCreateDate(new Date());
 			titles.setModifiedDate(new Date());
 
-			return titlesPersistence.update(titles);
-		} catch (SystemException e) {
-			LOGGER.info(e);
-		}
-		return null;
-	}
-
-	@Override
-	public List<Titles> findByUnit(long unitId) {
-		try {
-			return titlesPersistence.findByUnit(unitId);
-		} catch (SystemException e) {
-			LOGGER.info(e);
-		}
-		return new ArrayList<>();
-	}
-
-	@Override
-	public List<Titles> findByUnitAndNullUnitGroup(long unitId) {
-		try {
-			return titlesPersistence.findByUnitAndUnitGroup(unitId, 0);
-		} catch (SystemException e) {
-			LOGGER.info(e);
-		}
-		return new ArrayList<>();
-	}
-
-	@Override
-	public Titles findByNameAndUnit(String name, long unitId) {
-		try {
-			return titlesPersistence.findByNameAndUnit(name, unitId);
-		} catch (NoSuchTitlesException e) {
-			LOGGER.info(e);
-		} catch (SystemException e) {
-			LOGGER.info(e);
-		}
-		return null;
-	}
-
-	@Override
-	public List<Titles> findByUnitGroup(long unitGroupId) {
-		try {
-			return titlesPersistence.findByUnitGroup(unitGroupId);
-		} catch (SystemException e) {
-			LOGGER.info(e);
-		}
-		return new ArrayList<>();
-	}
-
-	@Override
-	public Titles findByNameAndUnitGroup(String name, long unitGroupId) {
-		try {
-			return titlesPersistence.findByNameAndUnitGroup(name, unitGroupId);
-		} catch (NoSuchTitlesException e) {
-			LOGGER.info(e);
+			return super.addTitles(titles);
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}
@@ -190,73 +132,11 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 	 * (vn.com.ecopharma.emp.model.Department, vn.com.ecopharma.emp.model.Unit,
 	 * vn.com.ecopharma.emp.model.UnitGroup)
 	 */
-	@Override
-	public List<Titles> findByRelatedEntities(Department department, Unit unit,
-			UnitGroup unitGroup) {
-		long departmentId = department != null ? department.getDepartmentId()
-				: 0L;
-		long unitId = unit != null ? unit.getUnitId() : 0L;
-		long unitGroupId = unitGroup != null ? unitGroup.getUnitGroupId() : 0L;
-		return findByRelatedEntities(unitGroupId, unitId, departmentId);
-	}
-
-	public List<Titles> findByRelatedEntities(long departmentId, long unitId,
-			long unitGroupId) {
-		try {
-			return titlesPersistence.findByUnitGroupUnitDepartment(unitGroupId,
-					unitId, departmentId);
-		} catch (SystemException e) {
-			LogFactoryUtil.getLog(TitlesLocalServiceImpl.class).info(e);
-		}
-		return new ArrayList<>();
-	}
-
-	@Override
-	public List<Titles> findFilterTitlesByRelatedEntities(
-			Department department, Unit unit, UnitGroup unitGroup) {
-		List<Titles> titlesList = new ArrayList<>();
-		try {
-			if (department != null) {
-				long departmentId = department.getDepartmentId();
-				if (unit != null) {
-					long unitId = unit.getUnitId();
-					if (unitGroup != null) { // NOSONAR
-						long unitGroupId = unitGroup.getUnitGroupId();
-						return titlesPersistence.findByUnitGroupUnitDepartment(
-								unitGroupId, unitId, departmentId);
-					} else {
-						return eliminateSameNameTitles(titlesPersistence
-								.findByUnit(unitId));
-					}
-				} else {
-					return eliminateSameNameTitles(titlesPersistence
-							.findByDepartment(department.getDepartmentId()));
-				}
-			}
-
-		} catch (SystemException e) {
-			LogFactoryUtil.getLog(TitlesLocalServiceImpl.class).info(e);
-		}
-
-		return titlesList;
-	}
 
 	@Override
 	public Titles findByName(String name) {
 		try {
 			return titlesPersistence.fetchByName(name);
-		} catch (SystemException e) {
-			LogFactoryUtil.getLog(TitlesLocalServiceImpl.class).info(e);
-		}
-		return null;
-	}
-
-	@Override
-	public Titles findByNameAndRelatedFields(String name, long unitGroupId,
-			long unitId, long departmentId) {
-		try {
-			return titlesPersistence.fetchByfindByNameAndRelatedFields(name,
-					unitGroupId, unitId, departmentId);
 		} catch (SystemException e) {
 			LogFactoryUtil.getLog(TitlesLocalServiceImpl.class).info(e);
 		}
@@ -272,15 +152,10 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 		return null;
 	}
 
-	public Titles updateTitles(Titles titles, long unitGroupId, long unitId,
-			long departmentId) {
+	public Titles updateTitles(Titles titles, long departmentId) {
 		try {
-			titles.setUnitGroupId(unitGroupId);
-			titles.setUnitId(unitId);
 			titles.setDepartmentId(departmentId);
-
 			titles.setModifiedDate(new Date());
-
 			return super.updateTitles(titles);
 		} catch (SystemException e) {
 			LOGGER.info(e);
@@ -313,17 +188,4 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 			}
 		}
 	}
-
-	private static List<Titles> eliminateSameNameTitles(List<Titles> titlesList) {
-		final List<String> names = new ArrayList<>();
-		final List<Titles> result = new ArrayList<>();
-		for (Titles titles : titlesList) {
-			if (!names.contains(titles.getName())) {
-				names.add(titles.getName());
-				result.add(titles);
-			}
-		}
-		return result;
-	}
-
 }

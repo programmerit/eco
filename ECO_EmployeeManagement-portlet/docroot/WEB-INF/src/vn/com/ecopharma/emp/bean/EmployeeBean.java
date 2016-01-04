@@ -475,10 +475,8 @@ public class EmployeeBean implements Serializable {
 	}
 
 	public List<Titles> getTitlesList() {
-		return TitlesLocalServiceUtil.findByRelatedEntities(
-				modifyEmployeeInfoItem.getDepartment(),
-				modifyEmployeeInfoItem.getUnit(),
-				modifyEmployeeInfoItem.getUnitGroup());
+		return TitlesLocalServiceUtil.findByDepartment(modifyEmployeeInfoItem
+				.getDepartment().getDepartmentId());
 	}
 
 	public List<UnitGroup> getUnitGroups() {

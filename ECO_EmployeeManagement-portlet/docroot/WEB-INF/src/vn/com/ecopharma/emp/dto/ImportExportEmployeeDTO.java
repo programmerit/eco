@@ -217,14 +217,15 @@ public class ImportExportEmployeeDTO implements Serializable {
 		String titlesName = getCellValueAsString(r.getCell(3));
 		LOGGER.info("============ Checking titles =============");
 		if (!titlesName.equals(StringUtils.EMPTY)) {
-			this.titles = TitlesLocalServiceUtil.findByNameAndRelatedFields(
-					titlesName, unitGroupId, unitId, departmentId);
+			this.titles = TitlesLocalServiceUtil.findByNameAndDepartment(
+					titlesName, departmentId);
 
 			if (this.titles == null) {
 				// create new
 				LOGGER.info("============ Creating unit =============");
-				this.titles = TitlesLocalServiceUtil.createTitles(titlesName,
-						unitGroupId, unitId, departmentId, serviceContext);
+				this.titles = TitlesLocalServiceUtil.addTitles(titlesName,
+						departmentId, StringUtils.EMPTY, StringUtils.EMPTY,
+						serviceContext);
 			}
 			this.titlesId = this.titles.getTitlesId();
 		}

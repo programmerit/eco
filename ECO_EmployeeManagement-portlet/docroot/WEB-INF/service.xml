@@ -39,8 +39,8 @@
 		<!-- PK fields -->
 
 		<!-- Group instance -->
-		<column name="unitGroupId" type="long"></column>
-		<column name="unitId" type="long"></column>
+        <column name="name_en" type="String"></column>
+        <column name="code" type="String"></column>
 		<column name="departmentId" type="long"></column>
 
 		<column name="groupId" type="long"></column>
@@ -51,32 +51,12 @@
 		<column name="userId" type="long"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
-		<finder name="NameAndUnit" return-type="Titles">
-			<finder-column name="name"></finder-column>
-			<finder-column name="unitId"></finder-column>
-		</finder>
 
 		<finder name="Name" return-type="Titles">
 			<finder-column name="name"></finder-column>
 		</finder>
-		<finder name="Unit" return-type="Collection">
-			<finder-column name="unitId"></finder-column>
-		</finder>
-		<finder name="UnitGroup" return-type="Collection">
-			<finder-column name="unitGroupId"></finder-column>
-		</finder>
-		<finder name="NameAndUnitGroup" return-type="Titles">
-			<finder-column name="name"></finder-column>
-			<finder-column name="unitGroupId"></finder-column>
-		</finder>
 		<finder name="NameAndDepartment" return-type="Titles">
 			<finder-column name="name"></finder-column>
-			<finder-column name="departmentId"></finder-column>
-		</finder>
-		<finder name="NameUnitGroupUnitDepartment" return-type="Titles">
-			<finder-column name="name"></finder-column>
-			<finder-column name="unitGroupId"></finder-column>
-			<finder-column name="unitId"></finder-column>
 			<finder-column name="departmentId"></finder-column>
 		</finder>
 		<finder name="Department" return-type="Collection">
@@ -84,24 +64,8 @@
 		</finder>
 		<finder name="findByNameAndRelatedFields" return-type="Titles">
 			<finder-column name="name"></finder-column>
-			<finder-column name="unitGroupId"></finder-column>
-			<finder-column name="unitId"></finder-column>
 			<finder-column name="departmentId"></finder-column>
 		</finder>
-        <finder name="UnitAndUnitGroup" return-type="Collection">
-            <finder-column name="unitId"></finder-column>
-            <finder-column name="unitGroupId"></finder-column>
-        </finder>
-        <finder name="DepartmentUnitAndUnitGroup" return-type="Collection">
-            <finder-column name="departmentId"></finder-column>
-            <finder-column name="unitId"></finder-column>
-            <finder-column name="unitGroupId"></finder-column>
-        </finder>
-        <finder name="UnitGroupUnitDepartment" return-type="Collection">
-            <finder-column name="unitGroupId"></finder-column>
-            <finder-column name="unitId"></finder-column>
-            <finder-column name="departmentId"></finder-column>
-        </finder>
 	</entity>
 	<entity name="Level" local-service="true">
 		<column name="levelId" primary="true" type="long"></column>
@@ -416,6 +380,8 @@
 		<column name="joinedDate" type="Date"></column>
 		<column name="titlesId" type="long"></column>
 		<column name="levelId" type="long"></column>
+        <column name="unitGroupId" type="long"></column>
+        <column name="unitId" type="long"></column>
 		<column name="promotedDate" type="Date"></column>
 		<column name="laborContractSignedDate" type="Date"></column>
 		<column name="laborContractExpiredDate" type="Date"></column>

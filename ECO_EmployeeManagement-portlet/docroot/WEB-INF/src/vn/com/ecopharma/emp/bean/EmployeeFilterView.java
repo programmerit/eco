@@ -212,8 +212,9 @@ public class EmployeeFilterView implements Serializable {
 	}
 
 	public List<Titles> getTitlesList() {
-		return TitlesLocalServiceUtil.findFilterTitlesByRelatedEntities(
-				department, unit, unitGroup);
+		return department != null ? TitlesLocalServiceUtil
+				.findByDepartment(department.getDepartmentId())
+				: new ArrayList<Titles>();
 	}
 
 	public Titles getTitles() {

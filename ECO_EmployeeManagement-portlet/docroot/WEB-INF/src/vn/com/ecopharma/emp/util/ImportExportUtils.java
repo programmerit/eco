@@ -235,12 +235,11 @@ public class ImportExportUtils {
 			final Titles titles = employee.getTitlesId() != 0 ? TitlesLocalServiceUtil
 					.fetchTitles(employee.getTitlesId()) : null;
 
-			final UnitGroup unitGroup = titles != null
-					&& titles.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
-					.fetchUnitGroup(titles.getUnitGroupId()) : null;
+			final UnitGroup unitGroup = employee.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
+					.fetchUnitGroup(employee.getUnitGroupId()) : null;
 
-			final Unit unit = titles != null && titles.getUnitId() != 0 ? UnitLocalServiceUtil
-					.fetchUnit(titles.getUnitId()) : null;
+			final Unit unit = employee.getUnitId() != 0 ? UnitLocalServiceUtil
+					.fetchUnit(employee.getUnitId()) : null;
 
 			final Department department = titles != null
 					&& titles.getDepartmentId() != 0 ? DepartmentLocalServiceUtil
@@ -412,12 +411,11 @@ public class ImportExportUtils {
 			final Titles titles = employee.getTitlesId() != 0 ? TitlesLocalServiceUtil
 					.fetchTitles(employee.getTitlesId()) : null;
 
-			final UnitGroup unitGroup = titles != null
-					&& titles.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
-					.fetchUnitGroup(titles.getUnitGroupId()) : null;
+			final UnitGroup unitGroup = employee.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
+					.fetchUnitGroup(employee.getUnitGroupId()) : null;
 
-			final Unit unit = titles != null && titles.getUnitId() != 0 ? UnitLocalServiceUtil
-					.fetchUnit(titles.getUnitId()) : null;
+			final Unit unit = employee.getUnitId() != 0 ? UnitLocalServiceUtil
+					.fetchUnit(employee.getUnitId()) : null;
 
 			final Department department = titles != null
 					&& titles.getDepartmentId() != 0 ? DepartmentLocalServiceUtil

@@ -97,14 +97,12 @@ public class EmpInfoItem implements Serializable {
 		try {
 			user = UserLocalServiceUtil.fetchUser(employee.getEmpUserId());
 			titles = TitlesLocalServiceUtil.getTitles(employee.getTitlesId());
-			unitGroup = titles != null && titles.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
-					.getUnitGroup(titles.getUnitGroupId()) : null;
-			unit = titles != null && titles.getUnitId() != 0 ? UnitLocalServiceUtil
-					.getUnit(titles.getUnitId()) : null;
-			department = devision != null ? DepartmentLocalServiceUtil
-					.getDepartment(unit.getDepartmentId())
-					: (titles != null ? DepartmentLocalServiceUtil
-							.getDepartment(titles.getDepartmentId()) : null);
+			unitGroup = employee.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
+					.getUnitGroup(employee.getUnitGroupId()) : null;
+			unit = employee.getUnitId() != 0 ? UnitLocalServiceUtil
+					.getUnit(employee.getUnitId()) : null;
+			department = DepartmentLocalServiceUtil.getDepartment(titles
+					.getDepartmentId());
 			devision = department != null ? DevisionLocalServiceUtil
 					.getDevision(department.getDevisionId()) : null;
 

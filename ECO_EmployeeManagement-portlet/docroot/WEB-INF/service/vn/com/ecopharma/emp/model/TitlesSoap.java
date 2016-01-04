@@ -33,8 +33,8 @@ public class TitlesSoap implements Serializable {
 
 		soapModel.setTitlesId(model.getTitlesId());
 		soapModel.setName(model.getName());
-		soapModel.setUnitGroupId(model.getUnitGroupId());
-		soapModel.setUnitId(model.getUnitId());
+		soapModel.setName_en(model.getName_en());
+		soapModel.setCode(model.getCode());
 		soapModel.setDepartmentId(model.getDepartmentId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -109,20 +109,20 @@ public class TitlesSoap implements Serializable {
 		_name = name;
 	}
 
-	public long getUnitGroupId() {
-		return _unitGroupId;
+	public String getName_en() {
+		return _name_en;
 	}
 
-	public void setUnitGroupId(long unitGroupId) {
-		_unitGroupId = unitGroupId;
+	public void setName_en(String name_en) {
+		_name_en = name_en;
 	}
 
-	public long getUnitId() {
-		return _unitId;
+	public String getCode() {
+		return _code;
 	}
 
-	public void setUnitId(long unitId) {
-		_unitId = unitId;
+	public void setCode(String code) {
+		_code = code;
 	}
 
 	public long getDepartmentId() {
@@ -175,8 +175,8 @@ public class TitlesSoap implements Serializable {
 
 	private long _titlesId;
 	private String _name;
-	private long _unitGroupId;
-	private long _unitId;
+	private String _name_en;
+	private String _code;
 	private long _departmentId;
 	private long _groupId;
 	private long _companyId;

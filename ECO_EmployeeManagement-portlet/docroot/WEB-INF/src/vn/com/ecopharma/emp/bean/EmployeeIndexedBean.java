@@ -47,16 +47,17 @@ public class EmployeeIndexedBean implements Serializable {
 			"employeeCode", "fullName", "titles", "gender", "birthdayString",
 			"joinedDateString", "promotedDateString",
 			"laborContractSignedDateString", "laborContractExpiredDateString",
-			"laborContractType", "contactNumber", "unit", "department",
-			"devision", "level", "emailAddress", "companyEmailAddress",
-			"taxCode", "maritalStatus", "education");
+			"laborContractType", "contactNumber", "unitGroup", "unit",
+			"department", "devision", "level", "emailAddress",
+			"companyEmailAddress", "taxCode", "maritalStatus", "education");
 
 	private static final List<String> SORTABLE_COLUMNS = Arrays.asList(
 			"employeeCode", "fullName", "titles", "gender", "birthdayString",
 			"joinedDate", "promotedDate", "laborContractSignedDate",
 			"laborContractExpiredDate", "laborContractType", "contactNumber",
-			"unit", "department", "devision", "level", "emailAddress",
-			"companyEmailAddress", "taxCode", "maritalStatus", "education");
+			"unitGroup", "unit", "department", "devision", "level",
+			"emailAddress", "companyEmailAddress", "taxCode", "maritalStatus",
+			"education");
 
 	private List<ColumnModel> columns;
 

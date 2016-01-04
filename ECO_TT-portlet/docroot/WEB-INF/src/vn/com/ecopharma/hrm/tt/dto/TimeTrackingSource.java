@@ -37,7 +37,7 @@ public class TimeTrackingSource implements Serializable {
 	}
 
 	public TimeTrackingSource(Row row) {
-		this.timeItems = new ArrayList<SourceTimeItem>();
+		this.timeItems = new ArrayList<>();
 		this.bindRowToObjectFields(row);
 	}
 

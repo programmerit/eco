@@ -9,8 +9,6 @@ import javax.faces.event.ActionEvent;
 
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Titles;
-import vn.com.ecopharma.emp.model.Unit;
-import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
 
@@ -39,16 +37,9 @@ public class TitlesBean extends AbstractOrganizationBean {
 					.getEmployeeViewBean();
 			final Department department = employeeViewBean
 					.getModifyEmployeeInfoItem().getDepartment();
-			final Unit unit = employeeViewBean.getModifyEmployeeInfoItem()
-					.getUnit();
-			final UnitGroup unitGroup = employeeViewBean
-					.getModifyEmployeeInfoItem().getUnitGroup();
 			if (department != null) {
 				FacesMessage msg = null;
 				titles.setDepartmentId(department.getDepartmentId());
-				titles.setUnitId(unit != null ? unit.getUnitId() : 0L);
-				titles.setUnitGroupId(unitGroup != null ? unitGroup
-						.getUnitGroupId() : 0L);
 				if (TitlesLocalServiceUtil.fetchTitles(titles.getTitlesId()) == null) {
 					Titles result = TitlesLocalServiceUtil.addTitles(titles);
 					addResultMessage(result, msg, "Create Titles successfully",

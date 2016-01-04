@@ -76,8 +76,8 @@ public class TitlesClp extends BaseModelImpl<Titles> implements Titles {
 
 		attributes.put("titlesId", getTitlesId());
 		attributes.put("name", getName());
-		attributes.put("unitGroupId", getUnitGroupId());
-		attributes.put("unitId", getUnitId());
+		attributes.put("name_en", getName_en());
+		attributes.put("code", getCode());
 		attributes.put("departmentId", getDepartmentId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -102,16 +102,16 @@ public class TitlesClp extends BaseModelImpl<Titles> implements Titles {
 			setName(name);
 		}
 
-		Long unitGroupId = (Long)attributes.get("unitGroupId");
+		String name_en = (String)attributes.get("name_en");
 
-		if (unitGroupId != null) {
-			setUnitGroupId(unitGroupId);
+		if (name_en != null) {
+			setName_en(name_en);
 		}
 
-		Long unitId = (Long)attributes.get("unitId");
+		String code = (String)attributes.get("code");
 
-		if (unitId != null) {
-			setUnitId(unitId);
+		if (code != null) {
+			setCode(code);
 		}
 
 		Long departmentId = (Long)attributes.get("departmentId");
@@ -198,21 +198,21 @@ public class TitlesClp extends BaseModelImpl<Titles> implements Titles {
 	}
 
 	@Override
-	public long getUnitGroupId() {
-		return _unitGroupId;
+	public String getName_en() {
+		return _name_en;
 	}
 
 	@Override
-	public void setUnitGroupId(long unitGroupId) {
-		_unitGroupId = unitGroupId;
+	public void setName_en(String name_en) {
+		_name_en = name_en;
 
 		if (_titlesRemoteModel != null) {
 			try {
 				Class<?> clazz = _titlesRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setUnitGroupId", long.class);
+				Method method = clazz.getMethod("setName_en", String.class);
 
-				method.invoke(_titlesRemoteModel, unitGroupId);
+				method.invoke(_titlesRemoteModel, name_en);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -221,21 +221,21 @@ public class TitlesClp extends BaseModelImpl<Titles> implements Titles {
 	}
 
 	@Override
-	public long getUnitId() {
-		return _unitId;
+	public String getCode() {
+		return _code;
 	}
 
 	@Override
-	public void setUnitId(long unitId) {
-		_unitId = unitId;
+	public void setCode(String code) {
+		_code = code;
 
 		if (_titlesRemoteModel != null) {
 			try {
 				Class<?> clazz = _titlesRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setUnitId", long.class);
+				Method method = clazz.getMethod("setCode", String.class);
 
-				method.invoke(_titlesRemoteModel, unitId);
+				method.invoke(_titlesRemoteModel, code);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -462,8 +462,8 @@ public class TitlesClp extends BaseModelImpl<Titles> implements Titles {
 
 		clone.setTitlesId(getTitlesId());
 		clone.setName(getName());
-		clone.setUnitGroupId(getUnitGroupId());
-		clone.setUnitId(getUnitId());
+		clone.setName_en(getName_en());
+		clone.setCode(getCode());
 		clone.setDepartmentId(getDepartmentId());
 		clone.setGroupId(getGroupId());
 		clone.setCompanyId(getCompanyId());
@@ -528,10 +528,10 @@ public class TitlesClp extends BaseModelImpl<Titles> implements Titles {
 		sb.append(getTitlesId());
 		sb.append(", name=");
 		sb.append(getName());
-		sb.append(", unitGroupId=");
-		sb.append(getUnitGroupId());
-		sb.append(", unitId=");
-		sb.append(getUnitId());
+		sb.append(", name_en=");
+		sb.append(getName_en());
+		sb.append(", code=");
+		sb.append(getCode());
 		sb.append(", departmentId=");
 		sb.append(getDepartmentId());
 		sb.append(", groupId=");
@@ -566,12 +566,12 @@ public class TitlesClp extends BaseModelImpl<Titles> implements Titles {
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>unitGroupId</column-name><column-value><![CDATA[");
-		sb.append(getUnitGroupId());
+			"<column><column-name>name_en</column-name><column-value><![CDATA[");
+		sb.append(getName_en());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>unitId</column-name><column-value><![CDATA[");
-		sb.append(getUnitId());
+			"<column><column-name>code</column-name><column-value><![CDATA[");
+		sb.append(getCode());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>departmentId</column-name><column-value><![CDATA[");
@@ -605,8 +605,8 @@ public class TitlesClp extends BaseModelImpl<Titles> implements Titles {
 
 	private long _titlesId;
 	private String _name;
-	private long _unitGroupId;
-	private long _unitId;
+	private String _name_en;
+	private String _code;
 	private long _departmentId;
 	private long _groupId;
 	private long _companyId;

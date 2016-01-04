@@ -117,6 +117,16 @@ public class EmpIndexedItem implements Serializable {
 				.getValue());
 	}
 
+	public long getUnitGroupId() {
+		return Long.valueOf(employeeDocument.getField(EmpField.UNITGROUP_ID)
+				.getValue());
+	}
+
+	public long getUnitId() {
+		return Long.valueOf(employeeDocument.getField(EmpField.UNIT_ID)
+				.getValue());
+	}
+
 	public long getLevelId() {
 		return Long.valueOf(employeeDocument.getField(EmpField.LEVEL_ID)
 				.getValue());

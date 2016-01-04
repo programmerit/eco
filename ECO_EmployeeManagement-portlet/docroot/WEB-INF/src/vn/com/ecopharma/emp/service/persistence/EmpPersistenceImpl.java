@@ -1919,6 +1919,8 @@ public class EmpPersistenceImpl extends BasePersistenceImpl<Emp>
 		empImpl.setJoinedDate(emp.getJoinedDate());
 		empImpl.setTitlesId(emp.getTitlesId());
 		empImpl.setLevelId(emp.getLevelId());
+		empImpl.setUnitGroupId(emp.getUnitGroupId());
+		empImpl.setUnitId(emp.getUnitId());
 		empImpl.setPromotedDate(emp.getPromotedDate());
 		empImpl.setLaborContractSignedDate(emp.getLaborContractSignedDate());
 		empImpl.setLaborContractExpiredDate(emp.getLaborContractExpiredDate());

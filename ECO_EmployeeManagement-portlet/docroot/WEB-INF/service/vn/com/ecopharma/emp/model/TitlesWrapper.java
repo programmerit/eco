@@ -51,8 +51,8 @@ public class TitlesWrapper implements Titles, ModelWrapper<Titles> {
 
 		attributes.put("titlesId", getTitlesId());
 		attributes.put("name", getName());
-		attributes.put("unitGroupId", getUnitGroupId());
-		attributes.put("unitId", getUnitId());
+		attributes.put("name_en", getName_en());
+		attributes.put("code", getCode());
 		attributes.put("departmentId", getDepartmentId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -77,16 +77,16 @@ public class TitlesWrapper implements Titles, ModelWrapper<Titles> {
 			setName(name);
 		}
 
-		Long unitGroupId = (Long)attributes.get("unitGroupId");
+		String name_en = (String)attributes.get("name_en");
 
-		if (unitGroupId != null) {
-			setUnitGroupId(unitGroupId);
+		if (name_en != null) {
+			setName_en(name_en);
 		}
 
-		Long unitId = (Long)attributes.get("unitId");
+		String code = (String)attributes.get("code");
 
-		if (unitId != null) {
-			setUnitId(unitId);
+		if (code != null) {
+			setCode(code);
 		}
 
 		Long departmentId = (Long)attributes.get("departmentId");
@@ -187,43 +187,43 @@ public class TitlesWrapper implements Titles, ModelWrapper<Titles> {
 	}
 
 	/**
-	* Returns the unit group ID of this titles.
+	* Returns the name_en of this titles.
 	*
-	* @return the unit group ID of this titles
+	* @return the name_en of this titles
 	*/
 	@Override
-	public long getUnitGroupId() {
-		return _titles.getUnitGroupId();
+	public java.lang.String getName_en() {
+		return _titles.getName_en();
 	}
 
 	/**
-	* Sets the unit group ID of this titles.
+	* Sets the name_en of this titles.
 	*
-	* @param unitGroupId the unit group ID of this titles
+	* @param name_en the name_en of this titles
 	*/
 	@Override
-	public void setUnitGroupId(long unitGroupId) {
-		_titles.setUnitGroupId(unitGroupId);
+	public void setName_en(java.lang.String name_en) {
+		_titles.setName_en(name_en);
 	}
 
 	/**
-	* Returns the unit ID of this titles.
+	* Returns the code of this titles.
 	*
-	* @return the unit ID of this titles
+	* @return the code of this titles
 	*/
 	@Override
-	public long getUnitId() {
-		return _titles.getUnitId();
+	public java.lang.String getCode() {
+		return _titles.getCode();
 	}
 
 	/**
-	* Sets the unit ID of this titles.
+	* Sets the code of this titles.
 	*
-	* @param unitId the unit ID of this titles
+	* @param code the code of this titles
 	*/
 	@Override
-	public void setUnitId(long unitId) {
-		_titles.setUnitId(unitId);
+	public void setCode(java.lang.String code) {
+		_titles.setCode(code);
 	}
 
 	/**

@@ -42,6 +42,8 @@ public class EmpSoap implements Serializable {
 		soapModel.setJoinedDate(model.getJoinedDate());
 		soapModel.setTitlesId(model.getTitlesId());
 		soapModel.setLevelId(model.getLevelId());
+		soapModel.setUnitGroupId(model.getUnitGroupId());
+		soapModel.setUnitId(model.getUnitId());
 		soapModel.setPromotedDate(model.getPromotedDate());
 		soapModel.setLaborContractSignedDate(model.getLaborContractSignedDate());
 		soapModel.setLaborContractExpiredDate(model.getLaborContractExpiredDate());
@@ -219,6 +221,22 @@ public class EmpSoap implements Serializable {
 
 	public void setLevelId(long levelId) {
 		_levelId = levelId;
+	}
+
+	public long getUnitGroupId() {
+		return _unitGroupId;
+	}
+
+	public void setUnitGroupId(long unitGroupId) {
+		_unitGroupId = unitGroupId;
+	}
+
+	public long getUnitId() {
+		return _unitId;
+	}
+
+	public void setUnitId(long unitId) {
+		_unitId = unitId;
 	}
 
 	public Date getPromotedDate() {
@@ -548,6 +566,8 @@ public class EmpSoap implements Serializable {
 	private Date _joinedDate;
 	private long _titlesId;
 	private long _levelId;
+	private long _unitGroupId;
+	private long _unitId;
 	private Date _promotedDate;
 	private Date _laborContractSignedDate;
 	private Date _laborContractExpiredDate;

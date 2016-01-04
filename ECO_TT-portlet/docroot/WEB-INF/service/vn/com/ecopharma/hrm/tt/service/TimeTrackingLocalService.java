@@ -263,6 +263,9 @@ public interface TimeTrackingLocalService extends BaseLocalService,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
+	public vn.com.ecopharma.hrm.tt.model.TimeTracking findByEmpAndDate(
+		long empId, java.util.Date date);
+
 	public int countSearch(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> queries,

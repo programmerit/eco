@@ -14,6 +14,7 @@
 
 package vn.com.ecopharma.hrm.tt.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,8 @@ import vn.com.ecopharma.hrm.tt.service.base.TimeTrackingLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
@@ -70,25 +73,41 @@ public class TimeTrackingLocalServiceImpl extends
 	 * the time tracking local service.
 	 */
 
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(TimeTrackingLocalServiceImpl.class);
+
+	@Override
 	public List<TimeTracking> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
+	@Override
 	public List<TimeTracking> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
+	@Override
 	public List<TimeTracking> findAll(int start, int end,
 			OrderByComparator orderByComparator) {
 		try {
 			return timeTrackingPersistence.findAll(start, end,
 					orderByComparator);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
+		}
+		return new ArrayList<>();
+	}
+
+	public TimeTracking findByEmpAndDate(long empId, Date date) {
+		try {
+			return timeTrackingPersistence.fetchByEmpAndDate(empId, date);
+		} catch (SystemException e) {
+			LOGGER.info(e);
 		}
 		return null;
 	}
 
+	@Override
 	public int countSearch(SearchContext searchContext, List<Query> queries,
 			long companyId) throws ParseException, SearchException {
 		return search(searchContext, queries, companyId,
@@ -96,6 +115,7 @@ public class TimeTrackingLocalServiceImpl extends
 				QueryUtil.ALL_POS).size();
 	}
 
+	@Override
 	public List<Document> search(SearchContext searchContext,
 			List<Query> queries, long companyId, Sort sort, int start, int end)
 			throws ParseException, SearchException {
@@ -111,12 +131,12 @@ public class TimeTrackingLocalServiceImpl extends
 		for (Query query : queries) {
 			fullQuery.add(query, BooleanClauseOccur.MUST);
 		}
-		final List<Document> documents = SearchEngineUtil.search(
+		return SearchEngineUtil.search(
 				SearchEngineUtil.getDefaultSearchEngineId(), companyId,
 				fullQuery, sort, start, end).toList();
-		return documents;
 	}
 
+	@Override
 	public Document getIndexedTimeTracking(long id, SearchContext searchContext) {
 		searchContext.setPortletIds(new String[] { ECO_TT_Info.PORTLET_ID });
 		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
@@ -131,13 +151,14 @@ public class TimeTrackingLocalServiceImpl extends
 			final Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
 			return !hits.toList().isEmpty() ? hits.toList().get(0) : null;
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
 
+	@Override
 	public Document getIndexedTimeTracking(String id,
 			SearchContext searchContext) {
 		return getIndexedTimeTracking(Long.valueOf(id), searchContext);
@@ -152,6 +173,7 @@ public class TimeTrackingLocalServiceImpl extends
 	 * java.util.Date, java.util.Date, java.util.Date,
 	 * com.liferay.portal.service.ServiceContext)
 	 */
+	@Override
 	public TimeTracking addTimeTracking(long empId, Date date, Date in1,
 			Date out1, Date in2, Date out2, Date in3, Date out3,
 			ServiceContext serviceContext) {
@@ -193,9 +215,9 @@ public class TimeTrackingLocalServiceImpl extends
 			return timeTracking;
 
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (PortalException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -208,6 +230,7 @@ public class TimeTrackingLocalServiceImpl extends
 	 * (long, java.util.Date, java.util.Date, java.util.Date, java.util.Date,
 	 * java.util.Date, java.util.Date)
 	 */
+	@Override
 	public TimeTracking updateTimeTracking(long timeTrackingId, Date in1,
 			Date in2, Date in3, Date out1, Date out2, Date out3) {
 		try {
@@ -232,9 +255,9 @@ public class TimeTrackingLocalServiceImpl extends
 			return timeTracking;
 
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -245,6 +268,7 @@ public class TimeTrackingLocalServiceImpl extends
 	 * @see vn.com.ecopharma.hrm.tt.service.TimeTrackingLocalService#
 	 * completelyRemoveAllTimeTrackings()
 	 */
+	@Override
 	public void completelyRemoveAllTimeTrackings() {
 		List<TimeTracking> items = findAll();
 		try {
@@ -255,10 +279,10 @@ public class TimeTrackingLocalServiceImpl extends
 				timeTrackingLocalService.deleteTimeTracking(item
 						.getTimeTrackingId());
 			}
-		} catch (SystemException exception) {
-			exception.printStackTrace();
-		} catch (PortalException exception) {
-			exception.printStackTrace();
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		} catch (PortalException e) {
+			LOGGER.info(e);
 		}
 	}
 }

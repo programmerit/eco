@@ -122,6 +122,8 @@
 			</basic>
 			<basic name="titlesId" />
 			<basic name="levelId" />
+			<basic name="unitGroupId" />
+			<basic name="unitId" />
 			<basic name="promotedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
@@ -360,8 +362,10 @@
 		<attributes>
 			<id name="titlesId" />
 			<basic name="name" />
-			<basic name="unitGroupId" />
-			<basic name="unitId" />
+			<basic name="name_en" />
+			<basic name="code">
+				<column name="CODE_" />
+			</basic>
 			<basic name="departmentId" />
 			<basic name="groupId" />
 			<basic name="companyId" />

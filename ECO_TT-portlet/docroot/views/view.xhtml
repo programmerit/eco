@@ -160,7 +160,7 @@
 						<p:ajax update=":reportForm:reports" />
 						<p:column>#{timeTrackingFilterBean.getMonthName(m)}</p:column>
 					</p:selectOneMenu>
-					<br />
+					<!-- 					<br />
 					<p:selectOneMenu id="valueFilterSelect"
 						value="#{timeTrackingFilterBean.valueFilter}" var="v">
 						<p:ajax oncomplete="PF('wReportTable')" />
@@ -168,7 +168,7 @@
 							var="v" itemLabel="#{v}" itemValue="#{v}" />
 						<p:ajax update=":reportForm:reports" />
 						<p:column>#{v}</p:column>
-					</p:selectOneMenu>
+					</p:selectOneMenu> -->
 				</h:panelGroup>
 			</p:panelGrid>
 		</h:form>

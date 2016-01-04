@@ -31,6 +31,10 @@
         <finder name="Emp" return-type="Collection">
             <finder-column name="empId"></finder-column>
         </finder>
+        <finder name="EmpAndDate" return-type="TimeTracking">
+            <finder-column name="empId"></finder-column>
+            <finder-column name="date"></finder-column>
+        </finder>
 	</entity>
 
 </service-builder>

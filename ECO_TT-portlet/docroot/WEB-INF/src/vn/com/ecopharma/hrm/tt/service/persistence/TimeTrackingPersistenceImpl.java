@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -48,6 +50,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -569,6 +572,269 @@ public class TimeTrackingPersistenceImpl extends BasePersistenceImpl<TimeTrackin
 	}
 
 	private static final String _FINDER_COLUMN_EMP_EMPID_2 = "timeTracking.empId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_EMPANDDATE = new FinderPath(TimeTrackingModelImpl.ENTITY_CACHE_ENABLED,
+			TimeTrackingModelImpl.FINDER_CACHE_ENABLED, TimeTrackingImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByEmpAndDate",
+			new String[] { Long.class.getName(), Date.class.getName() },
+			TimeTrackingModelImpl.EMPID_COLUMN_BITMASK |
+			TimeTrackingModelImpl.DATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_EMPANDDATE = new FinderPath(TimeTrackingModelImpl.ENTITY_CACHE_ENABLED,
+			TimeTrackingModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEmpAndDate",
+			new String[] { Long.class.getName(), Date.class.getName() });
+
+	/**
+	 * Returns the time tracking where empId = &#63; and date = &#63; or throws a {@link vn.com.ecopharma.hrm.tt.NoSuchTimeTrackingException} if it could not be found.
+	 *
+	 * @param empId the emp ID
+	 * @param date the date
+	 * @return the matching time tracking
+	 * @throws vn.com.ecopharma.hrm.tt.NoSuchTimeTrackingException if a matching time tracking could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public TimeTracking findByEmpAndDate(long empId, Date date)
+		throws NoSuchTimeTrackingException, SystemException {
+		TimeTracking timeTracking = fetchByEmpAndDate(empId, date);
+
+		if (timeTracking == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("empId=");
+			msg.append(empId);
+
+			msg.append(", date=");
+			msg.append(date);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchTimeTrackingException(msg.toString());
+		}
+
+		return timeTracking;
+	}
+
+	/**
+	 * Returns the time tracking where empId = &#63; and date = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param empId the emp ID
+	 * @param date the date
+	 * @return the matching time tracking, or <code>null</code> if a matching time tracking could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public TimeTracking fetchByEmpAndDate(long empId, Date date)
+		throws SystemException {
+		return fetchByEmpAndDate(empId, date, true);
+	}
+
+	/**
+	 * Returns the time tracking where empId = &#63; and date = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param empId the emp ID
+	 * @param date the date
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching time tracking, or <code>null</code> if a matching time tracking could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public TimeTracking fetchByEmpAndDate(long empId, Date date,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { empId, date };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_EMPANDDATE,
+					finderArgs, this);
+		}
+
+		if (result instanceof TimeTracking) {
+			TimeTracking timeTracking = (TimeTracking)result;
+
+			if ((empId != timeTracking.getEmpId()) ||
+					!Validator.equals(date, timeTracking.getDate())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_TIMETRACKING_WHERE);
+
+			query.append(_FINDER_COLUMN_EMPANDDATE_EMPID_2);
+
+			boolean bindDate = false;
+
+			if (date == null) {
+				query.append(_FINDER_COLUMN_EMPANDDATE_DATE_1);
+			}
+			else {
+				bindDate = true;
+
+				query.append(_FINDER_COLUMN_EMPANDDATE_DATE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(empId);
+
+				if (bindDate) {
+					qPos.add(CalendarUtil.getTimestamp(date));
+				}
+
+				List<TimeTracking> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_EMPANDDATE,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"TimeTrackingPersistenceImpl.fetchByEmpAndDate(long, Date, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					TimeTracking timeTracking = list.get(0);
+
+					result = timeTracking;
+
+					cacheResult(timeTracking);
+
+					if ((timeTracking.getEmpId() != empId) ||
+							(timeTracking.getDate() == null) ||
+							!timeTracking.getDate().equals(date)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_EMPANDDATE,
+							finderArgs, timeTracking);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_EMPANDDATE,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (TimeTracking)result;
+		}
+	}
+
+	/**
+	 * Removes the time tracking where empId = &#63; and date = &#63; from the database.
+	 *
+	 * @param empId the emp ID
+	 * @param date the date
+	 * @return the time tracking that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public TimeTracking removeByEmpAndDate(long empId, Date date)
+		throws NoSuchTimeTrackingException, SystemException {
+		TimeTracking timeTracking = findByEmpAndDate(empId, date);
+
+		return remove(timeTracking);
+	}
+
+	/**
+	 * Returns the number of time trackings where empId = &#63; and date = &#63;.
+	 *
+	 * @param empId the emp ID
+	 * @param date the date
+	 * @return the number of matching time trackings
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByEmpAndDate(long empId, Date date)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_EMPANDDATE;
+
+		Object[] finderArgs = new Object[] { empId, date };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_TIMETRACKING_WHERE);
+
+			query.append(_FINDER_COLUMN_EMPANDDATE_EMPID_2);
+
+			boolean bindDate = false;
+
+			if (date == null) {
+				query.append(_FINDER_COLUMN_EMPANDDATE_DATE_1);
+			}
+			else {
+				bindDate = true;
+
+				query.append(_FINDER_COLUMN_EMPANDDATE_DATE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(empId);
+
+				if (bindDate) {
+					qPos.add(CalendarUtil.getTimestamp(date));
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_EMPANDDATE_EMPID_2 = "timeTracking.empId = ? AND ";
+	private static final String _FINDER_COLUMN_EMPANDDATE_DATE_1 = "timeTracking.date IS NULL";
+	private static final String _FINDER_COLUMN_EMPANDDATE_DATE_2 = "timeTracking.date = ?";
 
 	public TimeTrackingPersistenceImpl() {
 		setModelClass(TimeTracking.class);
@@ -583,6 +849,10 @@ public class TimeTrackingPersistenceImpl extends BasePersistenceImpl<TimeTrackin
 	public void cacheResult(TimeTracking timeTracking) {
 		EntityCacheUtil.putResult(TimeTrackingModelImpl.ENTITY_CACHE_ENABLED,
 			TimeTrackingImpl.class, timeTracking.getPrimaryKey(), timeTracking);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_EMPANDDATE,
+			new Object[] { timeTracking.getEmpId(), timeTracking.getDate() },
+			timeTracking);
 
 		timeTracking.resetOriginalValues();
 	}
@@ -640,6 +910,8 @@ public class TimeTrackingPersistenceImpl extends BasePersistenceImpl<TimeTrackin
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(timeTracking);
 	}
 
 	@Override
@@ -650,6 +922,58 @@ public class TimeTrackingPersistenceImpl extends BasePersistenceImpl<TimeTrackin
 		for (TimeTracking timeTracking : timeTrackings) {
 			EntityCacheUtil.removeResult(TimeTrackingModelImpl.ENTITY_CACHE_ENABLED,
 				TimeTrackingImpl.class, timeTracking.getPrimaryKey());
+
+			clearUniqueFindersCache(timeTracking);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(TimeTracking timeTracking) {
+		if (timeTracking.isNew()) {
+			Object[] args = new Object[] {
+					timeTracking.getEmpId(), timeTracking.getDate()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_EMPANDDATE, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_EMPANDDATE, args,
+				timeTracking);
+		}
+		else {
+			TimeTrackingModelImpl timeTrackingModelImpl = (TimeTrackingModelImpl)timeTracking;
+
+			if ((timeTrackingModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_EMPANDDATE.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						timeTracking.getEmpId(), timeTracking.getDate()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_EMPANDDATE,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_EMPANDDATE,
+					args, timeTracking);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(TimeTracking timeTracking) {
+		TimeTrackingModelImpl timeTrackingModelImpl = (TimeTrackingModelImpl)timeTracking;
+
+		Object[] args = new Object[] {
+				timeTracking.getEmpId(), timeTracking.getDate()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_EMPANDDATE, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_EMPANDDATE, args);
+
+		if ((timeTrackingModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_EMPANDDATE.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					timeTrackingModelImpl.getOriginalEmpId(),
+					timeTrackingModelImpl.getOriginalDate()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_EMPANDDATE, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_EMPANDDATE, args);
 		}
 	}
 
@@ -815,6 +1139,9 @@ public class TimeTrackingPersistenceImpl extends BasePersistenceImpl<TimeTrackin
 
 		EntityCacheUtil.putResult(TimeTrackingModelImpl.ENTITY_CACHE_ENABLED,
 			TimeTrackingImpl.class, timeTracking.getPrimaryKey(), timeTracking);
+
+		clearUniqueFindersCache(timeTracking);
+		cacheUniqueFindersCache(timeTracking);
 
 		return timeTracking;
 	}

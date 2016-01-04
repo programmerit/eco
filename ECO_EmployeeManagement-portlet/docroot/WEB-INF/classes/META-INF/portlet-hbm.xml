@@ -100,6 +100,8 @@
 		<property name="joinedDate" type="org.hibernate.type.TimestampType" />
 		<property name="titlesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="levelId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="unitGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="unitId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="promotedDate" type="org.hibernate.type.TimestampType" />
 		<property name="laborContractSignedDate" type="org.hibernate.type.TimestampType" />
 		<property name="laborContractExpiredDate" type="org.hibernate.type.TimestampType" />
@@ -255,8 +257,8 @@
 			<generator class="assigned" />
 		</id>
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="unitGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="unitId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name_en" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="code" type="com.liferay.portal.dao.orm.hibernate.StringType" column="code_" />
 		<property name="departmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

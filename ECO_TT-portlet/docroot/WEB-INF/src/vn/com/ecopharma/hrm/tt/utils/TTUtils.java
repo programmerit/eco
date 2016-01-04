@@ -131,22 +131,22 @@ public class TTUtils {
 				.create(searchContext);
 		empCodeBooleanQuery.addExactTerm(EmpField.EMP_CODE, empCode);
 
-		final BooleanQuery emptyInBooleanQuery = BooleanQueryFactoryUtil
-				.create(searchContext);
-		emptyInBooleanQuery.addExactTerm(TimeTrackingField.IS_EMPTY_IN,
-				isEmptyIn ? "true" : "false");
-
-		final BooleanQuery emptyOutBooleanQuery = BooleanQueryFactoryUtil
-				.create(searchContext);
-		emptyOutBooleanQuery.addExactTerm(TimeTrackingField.IS_EMPTY_OUT,
-				isEmptyOut ? "true" : "false");
+		// final BooleanQuery emptyInBooleanQuery = BooleanQueryFactoryUtil
+		// .create(searchContext);
+		// emptyInBooleanQuery.addExactTerm(TimeTrackingField.IS_EMPTY_IN,
+		// isEmptyIn ? "true" : "false");
+		//
+		// final BooleanQuery emptyOutBooleanQuery = BooleanQueryFactoryUtil
+		// .create(searchContext);
+		// emptyOutBooleanQuery.addExactTerm(TimeTrackingField.IS_EMPTY_OUT,
+		// isEmptyOut ? "true" : "false");
 
 		final TermRangeQuery monthRangeQuery = TermRangeQueryFactoryUtil
 				.create(searchContext, TimeTrackingField.DATE,
 						formattedDateFrom, formattedDateTo, true, true);
 
-		queries.add(emptyInBooleanQuery);
-		queries.add(emptyInBooleanQuery);
+		// queries.add(emptyInBooleanQuery);
+		// queries.add(emptyInBooleanQuery);
 		queries.add(empCodeBooleanQuery);
 		queries.add(monthRangeQuery);
 

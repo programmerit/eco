@@ -143,9 +143,7 @@ public class DevisionLocalServiceImpl extends DevisionLocalServiceBaseImpl {
 	@Override
 	public Devision findByName(String name) {
 		try {
-			return devisionPersistence.findByName(name);
-		} catch (NoSuchDevisionException e) {
-			LOGGER.info(e);
+			return devisionPersistence.fetchByName(name);
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}

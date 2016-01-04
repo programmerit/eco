@@ -67,6 +67,8 @@
 		<field name="joinedDate" type="Date" />
 		<field name="titlesId" type="long" />
 		<field name="levelId" type="long" />
+		<field name="unitGroupId" type="long" />
+		<field name="unitId" type="long" />
 		<field name="promotedDate" type="Date" />
 		<field name="laborContractSignedDate" type="Date" />
 		<field name="laborContractExpiredDate" type="Date" />
@@ -200,8 +202,8 @@
 	<model name="vn.com.ecopharma.emp.model.Titles">
 		<field name="titlesId" type="long" />
 		<field name="name" type="String" />
-		<field name="unitGroupId" type="long" />
-		<field name="unitId" type="long" />
+		<field name="name_en" type="String" />
+		<field name="code" type="String" />
 		<field name="departmentId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

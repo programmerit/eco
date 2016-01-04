@@ -301,42 +301,11 @@ public class TitlesLocalServiceWrapper implements TitlesLocalService,
 	}
 
 	@Override
-	public vn.com.ecopharma.emp.model.Titles createTitles(
-		java.lang.String name, long unitGroupId, long unitId,
-		long departmentId,
+	public vn.com.ecopharma.emp.model.Titles addTitles(java.lang.String name,
+		long departmentId, java.lang.String name_en, java.lang.String code,
 		com.liferay.portal.service.ServiceContext serviceContext) {
-		return _titlesLocalService.createTitles(name, unitGroupId, unitId,
-			departmentId, serviceContext);
-	}
-
-	@Override
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnit(
-		long unitId) {
-		return _titlesLocalService.findByUnit(unitId);
-	}
-
-	@Override
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitAndNullUnitGroup(
-		long unitId) {
-		return _titlesLocalService.findByUnitAndNullUnitGroup(unitId);
-	}
-
-	@Override
-	public vn.com.ecopharma.emp.model.Titles findByNameAndUnit(
-		java.lang.String name, long unitId) {
-		return _titlesLocalService.findByNameAndUnit(name, unitId);
-	}
-
-	@Override
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitGroup(
-		long unitGroupId) {
-		return _titlesLocalService.findByUnitGroup(unitGroupId);
-	}
-
-	@Override
-	public vn.com.ecopharma.emp.model.Titles findByNameAndUnitGroup(
-		java.lang.String name, long unitGroupId) {
-		return _titlesLocalService.findByNameAndUnitGroup(name, unitGroupId);
+		return _titlesLocalService.addTitles(name, departmentId, name_en, code,
+			serviceContext);
 	}
 
 	@Override
@@ -352,40 +321,8 @@ public class TitlesLocalServiceWrapper implements TitlesLocalService,
 	}
 
 	@Override
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByRelatedEntities(
-		vn.com.ecopharma.emp.model.Department department,
-		vn.com.ecopharma.emp.model.Unit unit,
-		vn.com.ecopharma.emp.model.UnitGroup unitGroup) {
-		return _titlesLocalService.findByRelatedEntities(department, unit,
-			unitGroup);
-	}
-
-	@Override
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByRelatedEntities(
-		long departmentId, long unitId, long unitGroupId) {
-		return _titlesLocalService.findByRelatedEntities(departmentId, unitId,
-			unitGroupId);
-	}
-
-	@Override
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findFilterTitlesByRelatedEntities(
-		vn.com.ecopharma.emp.model.Department department,
-		vn.com.ecopharma.emp.model.Unit unit,
-		vn.com.ecopharma.emp.model.UnitGroup unitGroup) {
-		return _titlesLocalService.findFilterTitlesByRelatedEntities(department,
-			unit, unitGroup);
-	}
-
-	@Override
 	public vn.com.ecopharma.emp.model.Titles findByName(java.lang.String name) {
 		return _titlesLocalService.findByName(name);
-	}
-
-	@Override
-	public vn.com.ecopharma.emp.model.Titles findByNameAndRelatedFields(
-		java.lang.String name, long unitGroupId, long unitId, long departmentId) {
-		return _titlesLocalService.findByNameAndRelatedFields(name,
-			unitGroupId, unitId, departmentId);
 	}
 
 	@Override
@@ -395,10 +332,8 @@ public class TitlesLocalServiceWrapper implements TitlesLocalService,
 
 	@Override
 	public vn.com.ecopharma.emp.model.Titles updateTitles(
-		vn.com.ecopharma.emp.model.Titles titles, long unitGroupId,
-		long unitId, long departmentId) {
-		return _titlesLocalService.updateTitles(titles, unitGroupId, unitId,
-			departmentId);
+		vn.com.ecopharma.emp.model.Titles titles, long departmentId) {
+		return _titlesLocalService.updateTitles(titles, departmentId);
 	}
 
 	@Override

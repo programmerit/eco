@@ -109,6 +109,10 @@ public class EmpField {
 	public static final String DEVISION_ID = "devisionId";
 
 	public static final String TITLES_ID = "titlesId";
+	
+	public static final String UNITGROUP_ID = "unitGroupId";
+	
+	public static final String UNIT_ID = "unitId";
 
 	public static final String LEVEL_ID = "levelId";
 

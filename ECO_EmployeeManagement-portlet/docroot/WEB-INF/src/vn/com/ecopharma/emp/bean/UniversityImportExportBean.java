@@ -20,12 +20,17 @@ import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.service.ServiceContext;
 
 @ManagedBean
 public class UniversityImportExportBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(UniversityImportExportBean.class);
 
 	private String sheetNameOrIndex = "1";
 
@@ -63,11 +68,11 @@ public class UniversityImportExportBean implements Serializable {
 					"Sucessfully Imported");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 	}
 

@@ -306,6 +306,12 @@ public class TimeTrackingLocalServiceWrapper implements TimeTrackingLocalService
 	}
 
 	@Override
+	public vn.com.ecopharma.hrm.tt.model.TimeTracking findByEmpAndDate(
+		long empId, java.util.Date date) {
+		return _timeTrackingLocalService.findByEmpAndDate(empId, date);
+	}
+
+	@Override
 	public int countSearch(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> queries,

@@ -37,7 +37,7 @@ import java.util.Date;
 public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(101);
+		StringBundler sb = new StringBundler(105);
 
 		sb.append("{empId=");
 		sb.append(empId);
@@ -61,6 +61,10 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		sb.append(titlesId);
 		sb.append(", levelId=");
 		sb.append(levelId);
+		sb.append(", unitGroupId=");
+		sb.append(unitGroupId);
+		sb.append(", unitId=");
+		sb.append(unitId);
 		sb.append(", promotedDate=");
 		sb.append(promotedDate);
 		sb.append(", laborContractSignedDate=");
@@ -202,6 +206,8 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 
 		empImpl.setTitlesId(titlesId);
 		empImpl.setLevelId(levelId);
+		empImpl.setUnitGroupId(unitGroupId);
+		empImpl.setUnitId(unitId);
 
 		if (promotedDate == Long.MIN_VALUE) {
 			empImpl.setPromotedDate(null);
@@ -419,6 +425,8 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		joinedDate = objectInput.readLong();
 		titlesId = objectInput.readLong();
 		levelId = objectInput.readLong();
+		unitGroupId = objectInput.readLong();
+		unitId = objectInput.readLong();
 		promotedDate = objectInput.readLong();
 		laborContractSignedDate = objectInput.readLong();
 		laborContractExpiredDate = objectInput.readLong();
@@ -506,6 +514,8 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		objectOutput.writeLong(joinedDate);
 		objectOutput.writeLong(titlesId);
 		objectOutput.writeLong(levelId);
+		objectOutput.writeLong(unitGroupId);
+		objectOutput.writeLong(unitId);
 		objectOutput.writeLong(promotedDate);
 		objectOutput.writeLong(laborContractSignedDate);
 		objectOutput.writeLong(laborContractExpiredDate);
@@ -674,6 +684,8 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 	public long joinedDate;
 	public long titlesId;
 	public long levelId;
+	public long unitGroupId;
+	public long unitId;
 	public long promotedDate;
 	public long laborContractSignedDate;
 	public long laborContractExpiredDate;

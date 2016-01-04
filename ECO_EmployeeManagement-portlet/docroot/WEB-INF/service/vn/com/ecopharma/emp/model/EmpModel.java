@@ -223,6 +223,34 @@ public interface EmpModel extends BaseModel<Emp>, GroupedModel {
 	public void setLevelId(long levelId);
 
 	/**
+	 * Returns the unit group ID of this emp.
+	 *
+	 * @return the unit group ID of this emp
+	 */
+	public long getUnitGroupId();
+
+	/**
+	 * Sets the unit group ID of this emp.
+	 *
+	 * @param unitGroupId the unit group ID of this emp
+	 */
+	public void setUnitGroupId(long unitGroupId);
+
+	/**
+	 * Returns the unit ID of this emp.
+	 *
+	 * @return the unit ID of this emp
+	 */
+	public long getUnitId();
+
+	/**
+	 * Sets the unit ID of this emp.
+	 *
+	 * @param unitId the unit ID of this emp
+	 */
+	public void setUnitId(long unitId);
+
+	/**
 	 * Returns the promoted date of this emp.
 	 *
 	 * @return the promoted date of this emp

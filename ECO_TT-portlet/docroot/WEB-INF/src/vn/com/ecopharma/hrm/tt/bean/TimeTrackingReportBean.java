@@ -88,17 +88,17 @@ public class TimeTrackingReportBean implements Serializable {
 						filterBean.getTitles() != null ? filterBean.getTitles()
 								.getName() : StringUtils.EMPTY, filters);
 
-				TTUtils.checkAndAddFilterValue(
-						TimeTrackingField.IS_EMPTY_IN,
-						filterBean.getValueFilter().equalsIgnoreCase(
-								ValueFilterType.EMPTY_MIN_IN.toString()) ? true
-								: false, filters);
-
-				TTUtils.checkAndAddFilterValue(
-						TimeTrackingField.IS_EMPTY_OUT,
-						filterBean.getValueFilter().equalsIgnoreCase(
-								ValueFilterType.EMPTY_MAX_OUT.toString()) ? true
-								: false, filters);
+				// TTUtils.checkAndAddFilterValue(
+				// TimeTrackingField.IS_EMPTY_IN,
+				// filterBean.getValueFilter().equalsIgnoreCase(
+				// ValueFilterType.EMPTY_MIN_IN.toString()) ? true
+				// : false, filters);
+				//
+				// TTUtils.checkAndAddFilterValue(
+				// TimeTrackingField.IS_EMPTY_OUT,
+				// filterBean.getValueFilter().equalsIgnoreCase(
+				// ValueFilterType.EMPTY_MAX_OUT.toString()) ? true
+				// : false, filters);
 
 				// month
 				filters.put(TimeTrackingField.MONTH, filterBean.getMonth());

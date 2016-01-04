@@ -97,15 +97,15 @@ public class TimeTrackingReportLazyDataModel extends
 						document);
 				final int month = (Integer) filters
 						.get(TimeTrackingField.MONTH);
-				final boolean isEmptyIn = (Boolean) filters
-						.get(TimeTrackingField.IS_EMPTY_IN);
-				final boolean isEmptyOut = (Boolean) filters
-						.get(TimeTrackingField.IS_EMPTY_OUT);
+				// final boolean isEmptyIn = (Boolean) filters
+				// .get(TimeTrackingField.IS_EMPTY_IN);
+				// final boolean isEmptyOut = (Boolean) filters
+				// .get(TimeTrackingField.IS_EMPTY_OUT);
 
 				final List<TimeTrackingIndexItem> timeTrackingIndexItems = TTUtils
 						.getTimeTrackingIndexItems(
 								empTimeTrackingIndexedItem.getEmployeeCode(),
-								month, DEFAULT_YEAR, isEmptyIn, isEmptyOut);
+								month, DEFAULT_YEAR, true, true);
 				final Map<String, Date> minInMap = getMinInMap(timeTrackingIndexItems);
 				final Map<String, Date> maxOutMap = getMaxOutMap(timeTrackingIndexItems);
 				empTimeTrackingIndexedItem.setMinInMap(minInMap);
@@ -115,19 +115,19 @@ public class TimeTrackingReportLazyDataModel extends
 				empTimeTrackingIndexedItem
 						.setGrandTotalMaxOutTime(getGrandMaxOut(maxOutMap));
 
-				if (isEmptyIn) {
-					if (!hasEmptyIn(timeTrackingIndexItems)) {
-						empTimeTrackingIndexedItems
-								.add(empTimeTrackingIndexedItem);
-					}
-				} else if (isEmptyOut) {
-					if (!hasEmptyOut(timeTrackingIndexItems)) {
-						empTimeTrackingIndexedItems
-								.add(empTimeTrackingIndexedItem);
-					}
-				} else {
-					empTimeTrackingIndexedItems.add(empTimeTrackingIndexedItem);
-				}
+				// if (isEmptyIn) {
+				// if (!hasEmptyIn(timeTrackingIndexItems)) {
+				// empTimeTrackingIndexedItems
+				// .add(empTimeTrackingIndexedItem);
+				// }
+				// } else if (isEmptyOut) {
+				// if (!hasEmptyOut(timeTrackingIndexItems)) {
+				// empTimeTrackingIndexedItems
+				// .add(empTimeTrackingIndexedItem);
+				// }
+				// } else {
+				empTimeTrackingIndexedItems.add(empTimeTrackingIndexedItem);
+				// }
 
 			}
 
@@ -201,18 +201,6 @@ public class TimeTrackingReportLazyDataModel extends
 			List<TimeTrackingIndexItem> timeTrackingIndexItems) {
 		Map<String, Date> resultMap = new LinkedHashMap<>();
 		for (TimeTrackingIndexItem item : timeTrackingIndexItems) {
-			// Date maxOut = null;
-			// if (item.getOut3() != null) {
-			// maxOut = item.getOut3();
-			// } else if (item.getOut2() != null) {
-			// maxOut = item.getOut2();
-			// } else if (item.getIn2() != null && item.getOut2() == null) {
-			// maxOut = item.getIn2();
-			// } else if (item.getOut1() != null) {
-			// maxOut = item.getOut1();
-			// }
-			// resultMap.put(item.getDateFormatted(), maxOut);
-
 			final Date[] outArray = new Date[] { item.getOut1(),
 					item.getOut2(), item.getOut3() };
 

@@ -175,6 +175,69 @@ public interface TimeTrackingPersistence extends BasePersistence<TimeTracking> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the time tracking where empId = &#63; and date = &#63; or throws a {@link vn.com.ecopharma.hrm.tt.NoSuchTimeTrackingException} if it could not be found.
+	*
+	* @param empId the emp ID
+	* @param date the date
+	* @return the matching time tracking
+	* @throws vn.com.ecopharma.hrm.tt.NoSuchTimeTrackingException if a matching time tracking could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public vn.com.ecopharma.hrm.tt.model.TimeTracking findByEmpAndDate(
+		long empId, java.util.Date date)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.hrm.tt.NoSuchTimeTrackingException;
+
+	/**
+	* Returns the time tracking where empId = &#63; and date = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param empId the emp ID
+	* @param date the date
+	* @return the matching time tracking, or <code>null</code> if a matching time tracking could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public vn.com.ecopharma.hrm.tt.model.TimeTracking fetchByEmpAndDate(
+		long empId, java.util.Date date)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the time tracking where empId = &#63; and date = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param empId the emp ID
+	* @param date the date
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching time tracking, or <code>null</code> if a matching time tracking could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public vn.com.ecopharma.hrm.tt.model.TimeTracking fetchByEmpAndDate(
+		long empId, java.util.Date date, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the time tracking where empId = &#63; and date = &#63; from the database.
+	*
+	* @param empId the emp ID
+	* @param date the date
+	* @return the time tracking that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public vn.com.ecopharma.hrm.tt.model.TimeTracking removeByEmpAndDate(
+		long empId, java.util.Date date)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.hrm.tt.NoSuchTimeTrackingException;
+
+	/**
+	* Returns the number of time trackings where empId = &#63; and date = &#63;.
+	*
+	* @param empId the emp ID
+	* @param date the date
+	* @return the number of matching time trackings
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByEmpAndDate(long empId, java.util.Date date)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the time tracking in the entity cache if it is enabled.
 	*
 	* @param timeTracking the time tracking

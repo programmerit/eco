@@ -68,8 +68,8 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "titlesId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
-			{ "unitGroupId", Types.BIGINT },
-			{ "unitId", Types.BIGINT },
+			{ "name_en", Types.VARCHAR },
+			{ "code_", Types.VARCHAR },
 			{ "departmentId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -77,7 +77,7 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_Titles (titlesId LONG not null primary key,name VARCHAR(75) null,unitGroupId LONG,unitId LONG,departmentId LONG,groupId LONG,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_Titles (titlesId LONG not null primary key,name VARCHAR(75) null,name_en VARCHAR(75) null,code_ VARCHAR(75) null,departmentId LONG,groupId LONG,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table eco_em_portlet_Titles";
 	public static final String ORDER_BY_JPQL = " ORDER BY titles.titlesId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_em_portlet_Titles.titlesId ASC";
@@ -95,9 +95,7 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 			true);
 	public static long DEPARTMENTID_COLUMN_BITMASK = 1L;
 	public static long NAME_COLUMN_BITMASK = 2L;
-	public static long UNITGROUPID_COLUMN_BITMASK = 4L;
-	public static long UNITID_COLUMN_BITMASK = 8L;
-	public static long TITLESID_COLUMN_BITMASK = 16L;
+	public static long TITLESID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -114,8 +112,8 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 
 		model.setTitlesId(soapModel.getTitlesId());
 		model.setName(soapModel.getName());
-		model.setUnitGroupId(soapModel.getUnitGroupId());
-		model.setUnitId(soapModel.getUnitId());
+		model.setName_en(soapModel.getName_en());
+		model.setCode(soapModel.getCode());
 		model.setDepartmentId(soapModel.getDepartmentId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -188,8 +186,8 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 
 		attributes.put("titlesId", getTitlesId());
 		attributes.put("name", getName());
-		attributes.put("unitGroupId", getUnitGroupId());
-		attributes.put("unitId", getUnitId());
+		attributes.put("name_en", getName_en());
+		attributes.put("code", getCode());
 		attributes.put("departmentId", getDepartmentId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -214,16 +212,16 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 			setName(name);
 		}
 
-		Long unitGroupId = (Long)attributes.get("unitGroupId");
+		String name_en = (String)attributes.get("name_en");
 
-		if (unitGroupId != null) {
-			setUnitGroupId(unitGroupId);
+		if (name_en != null) {
+			setName_en(name_en);
 		}
 
-		Long unitId = (Long)attributes.get("unitId");
+		String code = (String)attributes.get("code");
 
-		if (unitId != null) {
-			setUnitId(unitId);
+		if (code != null) {
+			setCode(code);
 		}
 
 		Long departmentId = (Long)attributes.get("departmentId");
@@ -302,48 +300,34 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 
 	@JSON
 	@Override
-	public long getUnitGroupId() {
-		return _unitGroupId;
+	public String getName_en() {
+		if (_name_en == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _name_en;
+		}
 	}
 
 	@Override
-	public void setUnitGroupId(long unitGroupId) {
-		_columnBitmask |= UNITGROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalUnitGroupId) {
-			_setOriginalUnitGroupId = true;
-
-			_originalUnitGroupId = _unitGroupId;
-		}
-
-		_unitGroupId = unitGroupId;
-	}
-
-	public long getOriginalUnitGroupId() {
-		return _originalUnitGroupId;
+	public void setName_en(String name_en) {
+		_name_en = name_en;
 	}
 
 	@JSON
 	@Override
-	public long getUnitId() {
-		return _unitId;
+	public String getCode() {
+		if (_code == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _code;
+		}
 	}
 
 	@Override
-	public void setUnitId(long unitId) {
-		_columnBitmask |= UNITID_COLUMN_BITMASK;
-
-		if (!_setOriginalUnitId) {
-			_setOriginalUnitId = true;
-
-			_originalUnitId = _unitId;
-		}
-
-		_unitId = unitId;
-	}
-
-	public long getOriginalUnitId() {
-		return _originalUnitId;
+	public void setCode(String code) {
+		_code = code;
 	}
 
 	@JSON
@@ -467,8 +451,8 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 
 		titlesImpl.setTitlesId(getTitlesId());
 		titlesImpl.setName(getName());
-		titlesImpl.setUnitGroupId(getUnitGroupId());
-		titlesImpl.setUnitId(getUnitId());
+		titlesImpl.setName_en(getName_en());
+		titlesImpl.setCode(getCode());
 		titlesImpl.setDepartmentId(getDepartmentId());
 		titlesImpl.setGroupId(getGroupId());
 		titlesImpl.setCompanyId(getCompanyId());
@@ -529,14 +513,6 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 
 		titlesModelImpl._originalName = titlesModelImpl._name;
 
-		titlesModelImpl._originalUnitGroupId = titlesModelImpl._unitGroupId;
-
-		titlesModelImpl._setOriginalUnitGroupId = false;
-
-		titlesModelImpl._originalUnitId = titlesModelImpl._unitId;
-
-		titlesModelImpl._setOriginalUnitId = false;
-
 		titlesModelImpl._originalDepartmentId = titlesModelImpl._departmentId;
 
 		titlesModelImpl._setOriginalDepartmentId = false;
@@ -558,9 +534,21 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 			titlesCacheModel.name = null;
 		}
 
-		titlesCacheModel.unitGroupId = getUnitGroupId();
+		titlesCacheModel.name_en = getName_en();
 
-		titlesCacheModel.unitId = getUnitId();
+		String name_en = titlesCacheModel.name_en;
+
+		if ((name_en != null) && (name_en.length() == 0)) {
+			titlesCacheModel.name_en = null;
+		}
+
+		titlesCacheModel.code = getCode();
+
+		String code = titlesCacheModel.code;
+
+		if ((code != null) && (code.length() == 0)) {
+			titlesCacheModel.code = null;
+		}
 
 		titlesCacheModel.departmentId = getDepartmentId();
 
@@ -599,10 +587,10 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 		sb.append(getTitlesId());
 		sb.append(", name=");
 		sb.append(getName());
-		sb.append(", unitGroupId=");
-		sb.append(getUnitGroupId());
-		sb.append(", unitId=");
-		sb.append(getUnitId());
+		sb.append(", name_en=");
+		sb.append(getName_en());
+		sb.append(", code=");
+		sb.append(getCode());
 		sb.append(", departmentId=");
 		sb.append(getDepartmentId());
 		sb.append(", groupId=");
@@ -637,12 +625,12 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>unitGroupId</column-name><column-value><![CDATA[");
-		sb.append(getUnitGroupId());
+			"<column><column-name>name_en</column-name><column-value><![CDATA[");
+		sb.append(getName_en());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>unitId</column-name><column-value><![CDATA[");
-		sb.append(getUnitId());
+			"<column><column-name>code</column-name><column-value><![CDATA[");
+		sb.append(getCode());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>departmentId</column-name><column-value><![CDATA[");
@@ -679,12 +667,8 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 	private long _titlesId;
 	private String _name;
 	private String _originalName;
-	private long _unitGroupId;
-	private long _originalUnitGroupId;
-	private boolean _setOriginalUnitGroupId;
-	private long _unitId;
-	private long _originalUnitId;
-	private boolean _setOriginalUnitId;
+	private String _name_en;
+	private String _code;
 	private long _departmentId;
 	private long _originalDepartmentId;
 	private boolean _setOriginalDepartmentId;

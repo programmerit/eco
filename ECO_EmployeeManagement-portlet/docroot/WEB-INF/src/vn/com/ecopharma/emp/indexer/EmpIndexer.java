@@ -74,11 +74,11 @@ public class EmpIndexer extends BaseIndexer {
 		final Titles titles = emp.getTitlesId() != 0 ? TitlesLocalServiceUtil
 				.getTitles(emp.getTitlesId()) : null;
 
-		final Unit unit = titles != null && titles.getUnitId() != 0 ? UnitLocalServiceUtil
-				.getUnit(titles.getUnitId()) : null;
-		final UnitGroup unitGroup = titles != null
-				&& titles.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
-				.getUnitGroup(titles.getUnitGroupId()) : null;
+		final Unit unit = emp.getUnitId() != 0 ? UnitLocalServiceUtil
+				.fetchUnit(emp.getUnitId()) : null;
+
+		final UnitGroup unitGroup = emp.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
+				.fetchUnitGroup(emp.getUnitGroupId()) : null;
 
 		final Department department = titles != null
 				&& titles.getDepartmentId() != 0 ? DepartmentLocalServiceUtil

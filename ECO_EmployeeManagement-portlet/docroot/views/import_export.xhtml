@@ -91,6 +91,14 @@
 					<p:growl id="messages" showDetail="true" />
 				</p:tab>
 
+				<p:tab id="importOrganizationTab" title="Import Organization">
+					<p:fileUpload fileUploadListener="#{orgIEBean.handleFileImport}"
+						mode="advanced" dragDropSupport="true" update="messages"
+						sizeLimit="10000000" allowTypes="/(\.|\/)(xls|xlsx)$/" />
+
+					<p:growl id="messages1" showDetail="true" />
+				</p:tab>
+
 				<p:tab id="universityTab" title="Import University">
 
 					<h:panelGroup>

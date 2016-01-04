@@ -17,6 +17,7 @@ import org.primefaces.model.UploadedFile;
 
 import vn.com.ecopharma.hrm.tt.dto.SourceTimeItem;
 import vn.com.ecopharma.hrm.tt.dto.TimeTrackingSource;
+import vn.com.ecopharma.hrm.tt.model.TimeTracking;
 import vn.com.ecopharma.hrm.tt.service.TimeTrackingLocalServiceUtil;
 import vn.com.ecopharma.hrm.tt.utils.TTUtils;
 
@@ -80,13 +81,24 @@ public class ImportExportTimeTrackingBean implements Serializable {
 							.getTimeItems()) {
 						LogFactoryUtil.getLog(
 								ImportExportTimeTrackingBean.class).info(item);
-						TimeTrackingLocalServiceUtil.addTimeTracking(
-								timeTrackingSource.getEmp().getEmpId(), item
-										.getDate(), item.getIn1(), item
-										.getOut1(), item.getIn2(), item
-										.getOut2(), item.getIn3(), item
-										.getOut3(), LiferayFacesContext
-										.getInstance().getServiceContext());
+						final TimeTracking checkedTimeTracking = TimeTrackingLocalServiceUtil
+								.findByEmpAndDate(timeTrackingSource.getEmp()
+										.getEmpId(), item.getDate());
+						if (checkedTimeTracking == null) {
+							TimeTrackingLocalServiceUtil.addTimeTracking(
+									timeTrackingSource.getEmp().getEmpId(),
+									item.getDate(), item.getIn1(), item
+											.getOut1(), item.getIn2(), item
+											.getOut2(), item.getIn3(), item
+											.getOut3(), LiferayFacesContext
+											.getInstance().getServiceContext());
+						} else {
+							TimeTrackingLocalServiceUtil.updateTimeTracking(
+									checkedTimeTracking.getTimeTrackingId(),
+									item.getIn1(), item.getOut1(),
+									item.getIn2(), item.getOut2(),
+									item.getIn3(), item.getOut3());
+						}
 					}
 				}
 			}
