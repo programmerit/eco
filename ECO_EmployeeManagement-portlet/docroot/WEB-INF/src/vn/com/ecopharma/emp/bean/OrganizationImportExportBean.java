@@ -20,10 +20,14 @@ import org.primefaces.model.UploadedFile;
 import vn.com.ecopharma.emp.dto.OrganizationItem;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
+import vn.com.ecopharma.emp.model.Titles;
 import vn.com.ecopharma.emp.model.Unit;
+import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
+import vn.com.ecopharma.emp.service.TitlesUnitUnitGroupLocalServiceUtil;
+import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
@@ -62,12 +66,15 @@ public class OrganizationImportExportBean implements Serializable {
 			Department department = null;
 			String departmentName = StringUtils.EMPTY;
 
-			String unitName = StringUtils.EMPTY;
-			for (OrganizationItem item : items) {
+			for (final OrganizationItem item : items) {
+				Unit unit = null;
+				UnitGroup unitGroup = null;
+
 				// check if previous devision existed or not
 				if (!item.getDevision().equalsIgnoreCase(devisionName)) { // not
+																			// existed
 					Devision checkDevision = DevisionLocalServiceUtil
-							.findByName(item.getDevision()); // existed
+							.findByName(item.getDevision());
 					devision = checkDevision == null ? DevisionLocalServiceUtil
 							.addDevision(item.getDevision(), serviceContext)
 							: checkDevision;
@@ -87,23 +94,59 @@ public class OrganizationImportExportBean implements Serializable {
 				}
 
 				// check if previous unit existed or not
-				if (item.getUnit() != null
-						&& !item.getUnit().equalsIgnoreCase(unitName)) {
+				// if (item.getUnit() != null
+				// && !item.getUnit().equalsIgnoreCase(unitName)) {
+				// if (item.getDepartment().equalsIgnoreCase(departmentName)) {
+				// Unit checkUnit = UnitLocalServiceUtil
+				// .findByNameAndDepartment(item.getUnit(),
+				// department.getDepartmentId());
+				//
+				// unit = checkUnit == null ? UnitLocalServiceUtil
+				// .addUnit(item.getUnit(),
+				// department.getDepartmentId(),
+				// serviceContext) : checkUnit;
+				// unitName = unit.getName();
+				// } else {
+				// unit = null;
+				// unitName = StringUtils.EMPTY;
+				// }
+				//
+				// }
+
+				if (item.getUnit() != null) {
 					Unit checkUnit = UnitLocalServiceUtil
 							.findByNameAndDepartment(item.getUnit(),
 									department.getDepartmentId());
-
-					Unit unit = checkUnit == null ? UnitLocalServiceUtil
-							.addUnit(item.getUnit(),
-									department.getDepartmentId(),
-									serviceContext) : checkUnit;
-					unitName = unit.getName();
+					unit = checkUnit == null ? UnitLocalServiceUtil.addUnit(
+							item.getUnit(), department.getDepartmentId(),
+							serviceContext) : checkUnit;
 				}
 
-				TitlesLocalServiceUtil.addTitles(item.getViTitles(),
-						department.getDepartmentId(), item.getEnTitles(),
-						item.getTitlesCode(), serviceContext);
+				if (item.getUnitGroup() != null && unit != null) {
+					UnitGroup checkUnitGroup = UnitGroupLocalServiceUtil
+							.findByNameAndUnit(item.getUnitGroup(),
+									unit.getUnitId());
 
+					unitGroup = checkUnitGroup == null ? UnitGroupLocalServiceUtil
+							.addUnitGroup(item.getUnitGroup(),
+									unit.getUnitId(), serviceContext)
+							: checkUnitGroup;
+
+				}
+
+				Titles titles = TitlesLocalServiceUtil.findByNameAndDepartment(
+						item.getViTitles(), department.getDepartmentId());
+
+				if (titles == null) {
+					titles = TitlesLocalServiceUtil.addTitles(
+							item.getViTitles(), department.getDepartmentId(),
+							item.getEnTitles(), item.getTitlesCode(),
+							serviceContext);
+				}
+				if (TitlesUnitUnitGroupLocalServiceUtil
+						.findByTitlesUnitUnitGroup(titles, unit, unitGroup) == null)
+					TitlesUnitUnitGroupLocalServiceUtil.addTitlesUnitUnitGroup(
+							titles, unit, unitGroup, serviceContext);
 			}
 			FacesMessage message = new FacesMessage("Notice",
 					"Sucessfully Imported");

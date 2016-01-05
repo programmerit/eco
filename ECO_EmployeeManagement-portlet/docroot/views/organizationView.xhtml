@@ -11,24 +11,39 @@
 	<h:head />
 
 	<h:body>
-		<p:tree value="#{organizationTreeViewBean.root}" var="doc"
-			selectionMode="multiple"
-			selection="#{organizationTreeViewBean.selectedNodes}">
-			<p:treeNode type="DEVISION" expandedIcon="ui-icon-folder-open"
-				collapsedIcon="ui-icon-folder-collapsed">
-				<h:outputText value="#{doc.name}" />
-			</p:treeNode>
-			<p:treeNode type="DEPARTMENT" icon="ui-icon-document">
-				<h:outputText value="#{doc.name}" />
-			</p:treeNode>
-			<p:treeNode type="UNIT" icon="ui-icon-image">
-				<h:outputText value="#{doc.name}" />
-			</p:treeNode>
-			<p:treeNode type="TITLES" icon="ui-icon-video">
-				<h:outputText value="#{doc.name}" />
-			</p:treeNode>
-		</p:tree>
+		<h:form id="orgTreeForm">
 
+			<p:contextMenu id="orgTreeContextMenu" for="orgTree">
+				<p:menuitem value="Test" />
+			</p:contextMenu>
+
+			<p:tree value="#{organizationTreeViewBean.root}" var="org"
+				id="orgTree" selectionMode="multiple"
+				selection="#{organizationTreeViewBean.selectedNodes}" animate="true"
+				draggable="true" droppable="true" highlight="true"
+				showUnselectableCheckbox="true">
+				<p:treeNode type="Devision" expandedIcon="ui-icon-folder-open"
+					collapsedIcon="ui-icon-folder-collapsed">
+					<h:outputText value="#{org.name}" />
+				</p:treeNode>
+
+				<p:treeNode type="Department" icon="ui-icon-document">
+					<h:outputText value="#{org.name}" />
+				</p:treeNode>
+
+				<p:treeNode type="Unit" icon="ui-icon-image">
+					<h:outputText value="#{org.name}" />
+				</p:treeNode>
+
+				<p:treeNode type="UnitGroup" icon="ui-icon-comment">
+					<h:outputText value="#{org.name}" />
+				</p:treeNode>
+
+				<p:treeNode type="Titles" icon="ui-icon-video">
+					<h:outputText value="#{org.name}" />
+				</p:treeNode>
+			</p:tree>
+		</h:form>
 	</h:body>
 </f:view>
 

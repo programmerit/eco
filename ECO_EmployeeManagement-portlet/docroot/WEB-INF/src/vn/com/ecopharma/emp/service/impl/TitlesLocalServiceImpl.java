@@ -21,7 +21,9 @@ import java.util.List;
 import vn.com.ecopharma.emp.NoSuchTitlesException;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.Titles;
+import vn.com.ecopharma.emp.model.TitlesUnitUnitGroup;
 import vn.com.ecopharma.emp.service.base.TitlesLocalServiceBaseImpl;
+import vn.com.ecopharma.emp.service.persistence.TitlesFinderUtil;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -113,6 +115,50 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 		return new ArrayList<>();
 	}
 
+	public List<Titles> findNoneUnitUnitGroupDependentTitlesListByDepartment(
+			long departmentId) {
+		List<Titles> result = new ArrayList<>();
+
+		List<Titles> titlesListByDepartment = findByDepartment(departmentId);
+
+		for (Titles titles : titlesListByDepartment) {
+			if (titlesUnitUnitGroupLocalService.findByTitles(
+					titles.getTitlesId()).isEmpty()) {
+				result.add(titles);
+			}
+		}
+
+		return result;
+	}
+
+	public List<Titles> findTitlesByUnit(long unitId) {
+		List<Titles> result = new ArrayList<>();
+		List<TitlesUnitUnitGroup> titlesUnitUnitGroups = titlesUnitUnitGroupLocalService
+				.findByUnitAndNoneUnitGroup(unitId);
+		for (TitlesUnitUnitGroup t : titlesUnitUnitGroups) {
+			try {
+				result.add(super.fetchTitles(t.getTitlesId()));
+			} catch (SystemException e) {
+				LOGGER.info(e);
+			}
+		}
+		return result;
+	}
+
+	public List<Titles> findTitlesByUnitGroup(long unitGroupId) {
+		List<Titles> result = new ArrayList<>();
+		List<TitlesUnitUnitGroup> titlesUnitUnitGroups = titlesUnitUnitGroupLocalService
+				.findByUnitGroup(unitGroupId);
+		for (TitlesUnitUnitGroup t : titlesUnitUnitGroups) {
+			try {
+				result.add(super.fetchTitles(t.getTitlesId()));
+			} catch (SystemException e) {
+				LOGGER.info(e);
+			}
+		}
+		return result;
+	}
+
 	@Override
 	public Titles findByNameAndDepartment(String name, long departmentId) {
 		try {
@@ -141,6 +187,24 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 			LogFactoryUtil.getLog(TitlesLocalServiceImpl.class).info(e);
 		}
 		return null;
+	}
+
+	// public List<Titles> findNoneUnitUnitGroupDependentTitlesListByDepartment(
+	// long departmentId) {
+	// return findNoneUnitUnitGroupDependentTitlesListByDepartment(
+	// departmentId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	// }
+
+	public List<Titles> findNoneUnitUnitGroupDependentTitlesListByDepartment(
+			long departmentId, int start, int end) {
+		try {
+			return TitlesFinderUtil
+					.findNoneUnitUnitGroupDependentTitlesListByDepartment(
+							departmentId, start, end);
+		} catch (SystemException e) {
+			LogFactoryUtil.getLog(TitlesLocalServiceImpl.class).info(e);
+		}
+		return new ArrayList<>();
 	}
 
 	public Titles createPrePersistedTitles() {

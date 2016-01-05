@@ -16,9 +16,11 @@ import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Titles;
 import vn.com.ecopharma.emp.model.Unit;
+import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
+import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 
 @ManagedBean(name = "organizationTreeViewBean")
@@ -41,8 +43,8 @@ public class OrganizationTreeViewBean {
 		final List<Devision> allDevisions = DevisionLocalServiceUtil.findAll();
 		final List<TreeNode> devisionTreeNodes = new ArrayList<>();
 		for (Devision devision : allDevisions) {
-			TreeNode devisionNode = new DefaultTreeNode("DEVISION",
-					new OrgNodeItem(devision), root);
+			TreeNode devisionNode = new DefaultTreeNode(
+					OrgNodeItem.DEVISION_TYPE, new OrgNodeItem(devision), root);
 			devisionTreeNodes.add(devisionNode);
 		}
 
@@ -54,13 +56,15 @@ public class OrganizationTreeViewBean {
 
 			if (!departmentsByDevision.isEmpty()) {
 				for (Department department : departmentsByDevision) {
-					TreeNode deptNode = new DefaultTreeNode("DEPARTMENT",
-							new OrgNodeItem(department), devisionNode);
+					TreeNode deptNode = new DefaultTreeNode(
+							OrgNodeItem.DEPARTMENT_TYPE, new OrgNodeItem(
+									department), devisionNode);
 					deptTreeNodes.add(deptNode);
 				}
 			} else {
-				deptTreeNodes.add(new DefaultTreeNode("DEPARTMENT",
-						new OrgNodeItem("DEPARTMENT"), devisionNode));
+				deptTreeNodes.add(new DefaultTreeNode(
+						OrgNodeItem.DEPARTMENT_TYPE, new OrgNodeItem(
+								OrgNodeItem.DEPARTMENT_TYPE), devisionNode));
 			}
 		}
 
@@ -71,22 +75,69 @@ public class OrganizationTreeViewBean {
 					.findByDepartment(deptItem.getId());
 
 			for (Unit unit : unitsByDept) {
-				TreeNode unitNode = new DefaultTreeNode("UNIT",
+				TreeNode unitNode = new DefaultTreeNode(OrgNodeItem.UNIT_TYPE,
 						new OrgNodeItem(unit), deptNode);
 				unitTreeNodes.add(unitNode);
 			}
 		}
 
-		final List<TreeNode> titlesTreeNodes = new ArrayList<>();
+		final List<TreeNode> unitGroupTreeNodes = new ArrayList<>();
+		for (TreeNode unitNode : unitTreeNodes) {
+			OrgNodeItem unitItem = (OrgNodeItem) unitNode.getData();
+			final List<UnitGroup> unitGroupsByUnit = UnitGroupLocalServiceUtil
+					.findByUnit(unitItem.getId());
+
+			for (UnitGroup unitGroup : unitGroupsByUnit) {
+				TreeNode unitGroupNode = new DefaultTreeNode(
+						OrgNodeItem.UNITGROUP_TYPE, new OrgNodeItem(unitGroup),
+						unitNode);
+				unitGroupTreeNodes.add(unitGroupNode);
+			}
+		}
+
+		final List<TreeNode> titlesTreeNodesByDept = new ArrayList<>();
 		for (TreeNode deptNode : deptTreeNodes) {
 			OrgNodeItem deptItem = (OrgNodeItem) deptNode.getData();
+			// final List<Titles> titlesListByDept = TitlesLocalServiceUtil
+			// .findByDepartment(deptItem.getId());
 			final List<Titles> titlesListByDept = TitlesLocalServiceUtil
-					.findByDepartment(deptItem.getId());
-
+					.findNoneUnitUnitGroupDependentTitlesListByDepartment(deptItem
+							.getId());
 			for (Titles titles : titlesListByDept) {
-				TreeNode titlesNode = new DefaultTreeNode("TITLES",
-						new OrgNodeItem(titles), deptNode);
-				titlesTreeNodes.add(titlesNode);
+				TreeNode titlesNode = new DefaultTreeNode(
+						OrgNodeItem.TITLES_TYPE, new OrgNodeItem(titles),
+						deptNode);
+				titlesTreeNodesByDept.add(titlesNode);
+			}
+		}
+
+		final List<TreeNode> titlesTreeNodesByUnit = new ArrayList<>();
+		for (TreeNode unitNode : unitTreeNodes) {
+			OrgNodeItem unitItem = (OrgNodeItem) unitNode.getData();
+			// final List<Titles> titlesListByDept = TitlesLocalServiceUtil
+			// .findByDepartment(deptItem.getId());
+			final List<Titles> titlesListByUnit = TitlesLocalServiceUtil
+					.findTitlesByUnit(unitItem.getId());
+			for (Titles titles : titlesListByUnit) {
+				TreeNode titlesNode = new DefaultTreeNode(
+						OrgNodeItem.TITLES_TYPE, new OrgNodeItem(titles),
+						unitNode);
+				titlesTreeNodesByUnit.add(titlesNode);
+			}
+		}
+
+		final List<TreeNode> titlesTreeNodesByUnitGroup = new ArrayList<>();
+		for (TreeNode unitGroupNode : unitGroupTreeNodes) {
+			OrgNodeItem unitGroupItem = (OrgNodeItem) unitGroupNode.getData();
+			// final List<Titles> titlesListByDept = TitlesLocalServiceUtil
+			// .findByDepartment(deptItem.getId());
+			final List<Titles> titlesListByUnitGroup = TitlesLocalServiceUtil
+					.findTitlesByUnitGroup(unitGroupItem.getId());
+			for (Titles titles : titlesListByUnitGroup) {
+				TreeNode titlesNode = new DefaultTreeNode(
+						OrgNodeItem.TITLES_TYPE, new OrgNodeItem(titles),
+						unitGroupNode);
+				titlesTreeNodesByUnitGroup.add(titlesNode);
 			}
 		}
 

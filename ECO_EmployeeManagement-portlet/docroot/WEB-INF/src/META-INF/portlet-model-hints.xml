@@ -67,8 +67,6 @@
 		<field name="joinedDate" type="Date" />
 		<field name="titlesId" type="long" />
 		<field name="levelId" type="long" />
-		<field name="unitGroupId" type="long" />
-		<field name="unitId" type="long" />
 		<field name="promotedDate" type="Date" />
 		<field name="laborContractSignedDate" type="Date" />
 		<field name="laborContractExpiredDate" type="Date" />
@@ -108,6 +106,8 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="unitId" type="long" />
+		<field name="unitGroupId" type="long" />
 	</model>
 	<model name="vn.com.ecopharma.emp.model.EmpBankInfo">
 		<field name="empBankInfoId" type="long" />
@@ -208,6 +208,18 @@
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.emp.model.TitlesUnitUnitGroup">
+		<field name="titlesUnitUnitGroupId" type="long" />
+		<field name="titlesId" type="long" />
+		<field name="unitId" type="long" />
+		<field name="unitGroupId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 	</model>

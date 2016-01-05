@@ -42,8 +42,6 @@ public class EmpSoap implements Serializable {
 		soapModel.setJoinedDate(model.getJoinedDate());
 		soapModel.setTitlesId(model.getTitlesId());
 		soapModel.setLevelId(model.getLevelId());
-		soapModel.setUnitGroupId(model.getUnitGroupId());
-		soapModel.setUnitId(model.getUnitId());
 		soapModel.setPromotedDate(model.getPromotedDate());
 		soapModel.setLaborContractSignedDate(model.getLaborContractSignedDate());
 		soapModel.setLaborContractExpiredDate(model.getLaborContractExpiredDate());
@@ -83,6 +81,8 @@ public class EmpSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setUnitId(model.getUnitId());
+		soapModel.setUnitGroupId(model.getUnitGroupId());
 
 		return soapModel;
 	}
@@ -221,22 +221,6 @@ public class EmpSoap implements Serializable {
 
 	public void setLevelId(long levelId) {
 		_levelId = levelId;
-	}
-
-	public long getUnitGroupId() {
-		return _unitGroupId;
-	}
-
-	public void setUnitGroupId(long unitGroupId) {
-		_unitGroupId = unitGroupId;
-	}
-
-	public long getUnitId() {
-		return _unitId;
-	}
-
-	public void setUnitId(long unitId) {
-		_unitId = unitId;
 	}
 
 	public Date getPromotedDate() {
@@ -555,6 +539,22 @@ public class EmpSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getUnitId() {
+		return _unitId;
+	}
+
+	public void setUnitId(long unitId) {
+		_unitId = unitId;
+	}
+
+	public long getUnitGroupId() {
+		return _unitGroupId;
+	}
+
+	public void setUnitGroupId(long unitGroupId) {
+		_unitGroupId = unitGroupId;
+	}
+
 	private long _empId;
 	private long _groupId;
 	private String _empCode;
@@ -566,8 +566,6 @@ public class EmpSoap implements Serializable {
 	private Date _joinedDate;
 	private long _titlesId;
 	private long _levelId;
-	private long _unitGroupId;
-	private long _unitId;
 	private Date _promotedDate;
 	private Date _laborContractSignedDate;
 	private Date _laborContractExpiredDate;
@@ -607,4 +605,6 @@ public class EmpSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _unitId;
+	private long _unitGroupId;
 }

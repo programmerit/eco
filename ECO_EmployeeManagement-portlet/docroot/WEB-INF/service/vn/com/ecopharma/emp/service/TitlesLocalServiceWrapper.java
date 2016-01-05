@@ -315,6 +315,24 @@ public class TitlesLocalServiceWrapper implements TitlesLocalService,
 	}
 
 	@Override
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findNoneUnitUnitGroupDependentTitlesListByDepartment(
+		long departmentId) {
+		return _titlesLocalService.findNoneUnitUnitGroupDependentTitlesListByDepartment(departmentId);
+	}
+
+	@Override
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findTitlesByUnit(
+		long unitId) {
+		return _titlesLocalService.findTitlesByUnit(unitId);
+	}
+
+	@Override
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findTitlesByUnitGroup(
+		long unitGroupId) {
+		return _titlesLocalService.findTitlesByUnitGroup(unitGroupId);
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.Titles findByNameAndDepartment(
 		java.lang.String name, long departmentId) {
 		return _titlesLocalService.findByNameAndDepartment(name, departmentId);
@@ -323,6 +341,13 @@ public class TitlesLocalServiceWrapper implements TitlesLocalService,
 	@Override
 	public vn.com.ecopharma.emp.model.Titles findByName(java.lang.String name) {
 		return _titlesLocalService.findByName(name);
+	}
+
+	@Override
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findNoneUnitUnitGroupDependentTitlesListByDepartment(
+		long departmentId, int start, int end) {
+		return _titlesLocalService.findNoneUnitUnitGroupDependentTitlesListByDepartment(departmentId,
+			start, end);
 	}
 
 	@Override

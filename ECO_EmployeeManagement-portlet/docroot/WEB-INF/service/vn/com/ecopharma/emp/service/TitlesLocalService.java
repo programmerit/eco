@@ -268,10 +268,22 @@ public interface TitlesLocalService extends BaseLocalService,
 	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartment(
 		long departmentId);
 
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findNoneUnitUnitGroupDependentTitlesListByDepartment(
+		long departmentId);
+
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findTitlesByUnit(
+		long unitId);
+
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findTitlesByUnitGroup(
+		long unitGroupId);
+
 	public vn.com.ecopharma.emp.model.Titles findByNameAndDepartment(
 		java.lang.String name, long departmentId);
 
 	public vn.com.ecopharma.emp.model.Titles findByName(java.lang.String name);
+
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findNoneUnitUnitGroupDependentTitlesListByDepartment(
+		long departmentId, int start, int end);
 
 	public vn.com.ecopharma.emp.model.Titles createPrePersistedTitles();
 

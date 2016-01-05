@@ -106,42 +106,42 @@ public class DistrictLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.District"
 			};
 
-		_methodName130 = "getBeanIdentifier";
+		_methodName138 = "getBeanIdentifier";
 
-		_methodParameterTypes130 = new String[] {  };
+		_methodParameterTypes138 = new String[] {  };
 
-		_methodName131 = "setBeanIdentifier";
-
-		_methodParameterTypes131 = new String[] { "java.lang.String" };
-
-		_methodName136 = "findAll";
-
-		_methodParameterTypes136 = new String[] {  };
-
-		_methodName137 = "findAll";
-
-		_methodParameterTypes137 = new String[] { "int", "int" };
-
-		_methodName138 = "findAll";
-
-		_methodParameterTypes138 = new String[] {
-				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
-			};
-
-		_methodName139 = "findByRegionCode";
+		_methodName139 = "setBeanIdentifier";
 
 		_methodParameterTypes139 = new String[] { "java.lang.String" };
 
-		_methodName140 = "addDistrict";
+		_methodName144 = "findAll";
 
-		_methodParameterTypes140 = new String[] {
+		_methodParameterTypes144 = new String[] {  };
+
+		_methodName145 = "findAll";
+
+		_methodParameterTypes145 = new String[] { "int", "int" };
+
+		_methodName146 = "findAll";
+
+		_methodParameterTypes146 = new String[] {
+				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
+			};
+
+		_methodName147 = "findByRegionCode";
+
+		_methodParameterTypes147 = new String[] { "java.lang.String" };
+
+		_methodName148 = "addDistrict";
+
+		_methodParameterTypes148 = new String[] {
 				"java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName141 = "findByRegionCodeAndName";
+		_methodName149 = "findByRegionCodeAndName";
 
-		_methodParameterTypes141 = new String[] {
+		_methodParameterTypes149 = new String[] {
 				"java.lang.String", "java.lang.String"
 			};
 	}
@@ -235,50 +235,50 @@ public class DistrictLocalServiceClpInvoker {
 			return DistrictLocalServiceUtil.updateDistrict((vn.com.ecopharma.emp.model.District)arguments[0]);
 		}
 
-		if (_methodName130.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
+		if (_methodName138.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
 			return DistrictLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName131.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
+		if (_methodName139.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
 			DistrictLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName136.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
+		if (_methodName144.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
 			return DistrictLocalServiceUtil.findAll();
 		}
 
-		if (_methodName137.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
+		if (_methodName145.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
 			return DistrictLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName138.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
+		if (_methodName146.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
 			return DistrictLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[2]);
 		}
 
-		if (_methodName139.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
+		if (_methodName147.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
 			return DistrictLocalServiceUtil.findByRegionCode((java.lang.String)arguments[0]);
 		}
 
-		if (_methodName140.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
+		if (_methodName148.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes148, parameterTypes)) {
 			return DistrictLocalServiceUtil.addDistrict((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1],
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
 		}
 
-		if (_methodName141.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
+		if (_methodName149.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes149, parameterTypes)) {
 			return DistrictLocalServiceUtil.findByRegionCodeAndName((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1]);
 		}
@@ -318,20 +318,20 @@ public class DistrictLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName130;
-	private String[] _methodParameterTypes130;
-	private String _methodName131;
-	private String[] _methodParameterTypes131;
-	private String _methodName136;
-	private String[] _methodParameterTypes136;
-	private String _methodName137;
-	private String[] _methodParameterTypes137;
 	private String _methodName138;
 	private String[] _methodParameterTypes138;
 	private String _methodName139;
 	private String[] _methodParameterTypes139;
-	private String _methodName140;
-	private String[] _methodParameterTypes140;
-	private String _methodName141;
-	private String[] _methodParameterTypes141;
+	private String _methodName144;
+	private String[] _methodParameterTypes144;
+	private String _methodName145;
+	private String[] _methodParameterTypes145;
+	private String _methodName146;
+	private String[] _methodParameterTypes146;
+	private String _methodName147;
+	private String[] _methodParameterTypes147;
+	private String _methodName148;
+	private String[] _methodParameterTypes148;
+	private String _methodName149;
+	private String[] _methodParameterTypes149;
 }

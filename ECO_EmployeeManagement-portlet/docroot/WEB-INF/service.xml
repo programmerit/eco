@@ -30,7 +30,64 @@
 			<finder-column name="code"></finder-column>
 		</finder>
 	</entity>
-	<entity name="Titles" local-service="true">
+	<entity local-service="true" name="Department">
+		<column name="departmentId" primary="true" type="long"></column>
+		<column name="name" type="String"></column>
+		<column name="devisionId" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<finder name="NameAndDevision" return-type="Department">
+			<finder-column name="name"></finder-column>
+			<finder-column name="devisionId"></finder-column>
+		</finder>
+		<finder name="Devision" return-type="Collection">
+			<finder-column name="devisionId"></finder-column>
+		</finder>
+	</entity>
+	<entity local-service="true" name="Unit">
+		<column name="unitId" primary="true" type="long"></column>
+		<column name="name" type="String"></column>
+		<column name="departmentId" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<finder name="NameAndDepartment" return-type="Unit">
+			<finder-column name="name"></finder-column>
+			<finder-column name="departmentId"></finder-column>
+		</finder>
+		<finder name="Department" return-type="Collection">
+			<finder-column name="departmentId"></finder-column>
+		</finder>
+		<finder name="Name" return-type="Unit">
+			<finder-column name="name"></finder-column>
+		</finder>
+	</entity>
+	<entity local-service="true" name="UnitGroup">
+		<column name="unitGroupId" primary="true" type="long"></column>
+		<column name="name" type="String"></column>
+		<column name="unitId" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<finder name="Unit" return-type="Collection">
+			<finder-column name="unitId"></finder-column>
+		</finder>
+		<finder name="NameAndUnit" return-type="UnitGroup">
+			<finder-column name="name"></finder-column>
+			<finder-column name="unitId"></finder-column>
+		</finder>
+	</entity>
+	<entity name="Titles" local-service="true" remote-service="true">
 
 		<column name="titlesId" type="long" primary="true"></column>
 		<column name="name" type="String"></column>
@@ -39,8 +96,8 @@
 		<!-- PK fields -->
 
 		<!-- Group instance -->
-        <column name="name_en" type="String"></column>
-        <column name="code" type="String"></column>
+		<column name="name_en" type="String"></column>
+		<column name="code" type="String"></column>
 		<column name="departmentId" type="long"></column>
 
 		<column name="groupId" type="long"></column>
@@ -66,6 +123,36 @@
 			<finder-column name="name"></finder-column>
 			<finder-column name="departmentId"></finder-column>
 		</finder>
+	</entity>
+	<entity local-service="true" name="TitlesUnitUnitGroup">
+		<column name="titlesUnitUnitGroupId" primary="true" type="long"></column>
+		<column name="titlesId" type="long"></column>
+		<column name="unitId" type="long"></column>
+		<column name="unitGroupId" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<finder name="Unit" return-type="Collection">
+			<finder-column name="unitId"></finder-column>
+		</finder>
+		<finder name="UnitGroup" return-type="Collection">
+			<finder-column name="unitGroupId"></finder-column>
+		</finder>
+		<finder name="TitlesUnitUnitGroup" return-type="TitlesUnitUnitGroup">
+			<finder-column name="titlesId"></finder-column>
+			<finder-column name="unitId"></finder-column>
+			<finder-column name="unitGroupId"></finder-column>
+		</finder>
+        <finder name="Titles" return-type="Collection">
+            <finder-column name="titlesId"></finder-column>
+        </finder>
+        <finder name="UnitAndUnitGroup" return-type="Collection">
+            <finder-column name="unitId"></finder-column>
+            <finder-column name="unitGroupId"></finder-column>
+        </finder>
 	</entity>
 	<entity name="Level" local-service="true">
 		<column name="levelId" primary="true" type="long"></column>
@@ -147,72 +234,6 @@
 			<finder-column name="name"></finder-column>
 		</finder>
 	</entity>
-	<entity local-service="true" name="Department">
-		<column name="departmentId" primary="true" type="long"></column>
-		<column name="name" type="String"></column>
-		<column name="devisionId" type="long"></column>
-		<column name="groupId" type="long"></column>
-		<column name="companyId" type="long"></column>
-		<column name="userId" type="long"></column>
-		<column name="userName" type="String"></column>
-		<column name="createDate" type="Date"></column>
-		<column name="modifiedDate" type="Date"></column>
-		<finder name="NameAndDevision" return-type="Department">
-			<finder-column name="name"></finder-column>
-			<finder-column name="devisionId"></finder-column>
-		</finder>
-		<finder name="Devision" return-type="Collection">
-			<finder-column name="devisionId"></finder-column>
-		</finder>
-	</entity>
-	<entity name="Unit" local-service="true">
-
-		<!-- PK fields -->
-
-		<column name="unitId" type="long" primary="true"></column>
-
-		<!-- Group instance -->
-		<column name="name" type="String"></column>
-		<column name="departmentId" type="long"></column>
-
-		<column name="groupId" type="long"></column>
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long"></column>
-		<column name="userId" type="long"></column>
-		<column name="userName" type="String"></column>
-		<column name="createDate" type="Date"></column>
-		<column name="modifiedDate" type="Date"></column>
-		<finder name="NameAndDepartment" return-type="Unit">
-			<finder-column name="name"></finder-column>
-			<finder-column name="departmentId"></finder-column>
-		</finder>
-		<finder name="Department" return-type="Collection">
-			<finder-column name="departmentId"></finder-column>
-		</finder>
-		<finder name="Name" return-type="Unit">
-			<finder-column name="name"></finder-column>
-		</finder>
-	</entity>
-	<entity local-service="true" name="UnitGroup">
-		<column name="unitGroupId" primary="true" type="long"></column>
-		<column name="name" type="String"></column>
-		<column name="unitId" type="long"></column>
-		<column name="groupId" type="long"></column>
-		<column name="companyId" type="long"></column>
-		<column name="userId" type="long"></column>
-		<column name="userName" type="String"></column>
-		<column name="createDate" type="Date"></column>
-		<column name="modifiedDate" type="Date"></column>
-		<finder name="Unit" return-type="Collection">
-			<finder-column name="unitId"></finder-column>
-		</finder>
-		<finder name="NameAndUnit" return-type="UnitGroup">
-			<finder-column name="name"></finder-column>
-			<finder-column name="unitId"></finder-column>
-		</finder>
-	</entity>
 	<entity name="WorkingLocation" local-service="true">
 
 
@@ -257,9 +278,9 @@
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
 		<column name="deleted" type="boolean"></column>
-        <finder name="Employee" return-type="Collection">
-            <finder-column name="employeeId"></finder-column>
-        </finder>
+		<finder name="Employee" return-type="Collection">
+			<finder-column name="employeeId"></finder-column>
+		</finder>
 	</entity>
 	<entity name="PromotedHistory" local-service="true">
 
@@ -380,12 +401,10 @@
 		<column name="joinedDate" type="Date"></column>
 		<column name="titlesId" type="long"></column>
 		<column name="levelId" type="long"></column>
-        <column name="unitGroupId" type="long"></column>
-        <column name="unitId" type="long"></column>
 		<column name="promotedDate" type="Date"></column>
 		<column name="laborContractSignedDate" type="Date"></column>
 		<column name="laborContractExpiredDate" type="Date"></column>
-        <column name="laborContractSignedTime" type="int"></column>
+		<column name="laborContractSignedTime" type="int"></column>
 		<column name="laborContractType" type="String"></column>
 		<column name="gender" type="String"></column>
 		<column name="placeOfBirth" type="String"></column>
@@ -422,24 +441,26 @@
 		<column name="userName" type="String"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
+		<column name="unitId" type="long"></column>
+		<column name="unitGroupId" type="long"></column>
 		<finder name="EmpCode" return-type="Emp">
 			<finder-column name="empCode"></finder-column>
 		</finder>
 		<finder name="User" return-type="Emp">
 			<finder-column name="empUserId"></finder-column>
 		</finder>
-        <finder name="Titles" return-type="Collection">
-            <finder-column name="titlesId"></finder-column>
-        </finder>
-        <finder name="Status" return-type="Collection">
-            <finder-column name="status"></finder-column>
-        </finder>
+		<finder name="Titles" return-type="Collection">
+			<finder-column name="titlesId"></finder-column>
+		</finder>
+		<finder name="Status" return-type="Collection">
+			<finder-column name="status"></finder-column>
+		</finder>
 	</entity>
 	<entity name="Certificate" local-service="true">
 		<column name="certificateId" primary="true" type="long"></column>
-        <column name="className" type="String"></column>
-        <column name="classPK" type="long"></column>
-        <column name="education" type="String"></column>
+		<column name="className" type="String"></column>
+		<column name="classPK" type="long"></column>
+		<column name="education" type="String"></column>
 		<column name="certificateType" type="String"></column>
 		<column name="name" type="String"></column>
 		<column name="specialize" type="String"></column>
@@ -465,18 +486,18 @@
 		<column name="userName" type="String"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
-        <finder name="CertificateType" return-type="Collection">
-            <finder-column name="certificateType"></finder-column>
-        </finder>
-        <finder name="ClassNameAndClassPK" return-type="Collection">
-            <finder-column name="className"></finder-column>
-            <finder-column name="classPK"></finder-column>
-        </finder>
-        <finder name="ClassNameClassPKAndCertificateType" return-type="Collection">
-            <finder-column name="className"></finder-column>
-            <finder-column name="classPK"></finder-column>
-            <finder-column name="certificateType"></finder-column>
-        </finder>
+		<finder name="CertificateType" return-type="Collection">
+			<finder-column name="certificateType"></finder-column>
+		</finder>
+		<finder name="ClassNameAndClassPK" return-type="Collection">
+			<finder-column name="className"></finder-column>
+			<finder-column name="classPK"></finder-column>
+		</finder>
+		<finder name="ClassNameClassPKAndCertificateType" return-type="Collection">
+			<finder-column name="className"></finder-column>
+			<finder-column name="classPK"></finder-column>
+			<finder-column name="certificateType"></finder-column>
+		</finder>
 	</entity>
 	<entity name="EmpBankInfo" local-service="true">
 
@@ -485,10 +506,10 @@
 		<column name="empBankInfoId" type="long" primary="true"></column>
 
 		<!-- Group instance -->
-        <column name="empId" type="long"></column>
-        <column name="bankAccountNo" type="String"></column>
-        <column name="bankName" type="String"></column>
-        <column name="branchName" type="String"></column>
+		<column name="empId" type="long"></column>
+		<column name="bankAccountNo" type="String"></column>
+		<column name="bankName" type="String"></column>
+		<column name="branchName" type="String"></column>
 
 		<column name="groupId" type="long"></column>
 
@@ -499,9 +520,9 @@
 		<column name="userName" type="String"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
-        <finder name="Emp" return-type="Collection">
-            <finder-column name="empId"></finder-column>
-        </finder>
+		<finder name="Emp" return-type="Collection">
+			<finder-column name="empId"></finder-column>
+		</finder>
 	</entity>
 
 </service-builder>

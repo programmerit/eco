@@ -301,6 +301,22 @@ public class TitlesLocalServiceUtil {
 		return getService().findByDepartment(departmentId);
 	}
 
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findNoneUnitUnitGroupDependentTitlesListByDepartment(
+		long departmentId) {
+		return getService()
+				   .findNoneUnitUnitGroupDependentTitlesListByDepartment(departmentId);
+	}
+
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findTitlesByUnit(
+		long unitId) {
+		return getService().findTitlesByUnit(unitId);
+	}
+
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findTitlesByUnitGroup(
+		long unitGroupId) {
+		return getService().findTitlesByUnitGroup(unitGroupId);
+	}
+
 	public static vn.com.ecopharma.emp.model.Titles findByNameAndDepartment(
 		java.lang.String name, long departmentId) {
 		return getService().findByNameAndDepartment(name, departmentId);
@@ -309,6 +325,13 @@ public class TitlesLocalServiceUtil {
 	public static vn.com.ecopharma.emp.model.Titles findByName(
 		java.lang.String name) {
 		return getService().findByName(name);
+	}
+
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findNoneUnitUnitGroupDependentTitlesListByDepartment(
+		long departmentId, int start, int end) {
+		return getService()
+				   .findNoneUnitUnitGroupDependentTitlesListByDepartment(departmentId,
+			start, end);
 	}
 
 	public static vn.com.ecopharma.emp.model.Titles createPrePersistedTitles() {

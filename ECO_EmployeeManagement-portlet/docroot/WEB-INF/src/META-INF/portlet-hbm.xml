@@ -15,6 +15,7 @@
 	<import class="vn.com.ecopharma.emp.model.ResignationHistory" />
 	<import class="vn.com.ecopharma.emp.model.ResourceConfig" />
 	<import class="vn.com.ecopharma.emp.model.Titles" />
+	<import class="vn.com.ecopharma.emp.model.TitlesUnitUnitGroup" />
 	<import class="vn.com.ecopharma.emp.model.Unit" />
 	<import class="vn.com.ecopharma.emp.model.UnitGroup" />
 	<import class="vn.com.ecopharma.emp.model.University" />
@@ -100,8 +101,6 @@
 		<property name="joinedDate" type="org.hibernate.type.TimestampType" />
 		<property name="titlesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="levelId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="unitGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="unitId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="promotedDate" type="org.hibernate.type.TimestampType" />
 		<property name="laborContractSignedDate" type="org.hibernate.type.TimestampType" />
 		<property name="laborContractExpiredDate" type="org.hibernate.type.TimestampType" />
@@ -141,6 +140,8 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="unitId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="unitGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="vn.com.ecopharma.emp.model.impl.EmpBankInfoImpl" table="eco_em_portlet_EmpBankInfo">
 		<cache usage="read-write" />
@@ -263,6 +264,21 @@
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="vn.com.ecopharma.emp.model.impl.TitlesUnitUnitGroupImpl" table="eco_em_portlet_TitlesUnitUnitGroup">
+		<cache usage="read-write" />
+		<id name="titlesUnitUnitGroupId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="titlesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="unitId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="unitGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 	</class>

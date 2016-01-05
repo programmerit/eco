@@ -40,6 +40,10 @@
 	<bean id="vn.com.ecopharma.emp.service.TitlesLocalService" class="vn.com.ecopharma.emp.service.impl.TitlesLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.TitlesService" class="vn.com.ecopharma.emp.service.impl.TitlesServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.persistence.TitlesPersistence" class="vn.com.ecopharma.emp.service.persistence.TitlesPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.emp.service.persistence.TitlesFinder" class="vn.com.ecopharma.emp.service.persistence.TitlesFinderImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.emp.service.TitlesUnitUnitGroupLocalService" class="vn.com.ecopharma.emp.service.impl.TitlesUnitUnitGroupLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.emp.service.TitlesUnitUnitGroupService" class="vn.com.ecopharma.emp.service.impl.TitlesUnitUnitGroupServiceImpl" />
+	<bean id="vn.com.ecopharma.emp.service.persistence.TitlesUnitUnitGroupPersistence" class="vn.com.ecopharma.emp.service.persistence.TitlesUnitUnitGroupPersistenceImpl" parent="basePersistence" />
 	<bean id="vn.com.ecopharma.emp.service.UnitLocalService" class="vn.com.ecopharma.emp.service.impl.UnitLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.UnitService" class="vn.com.ecopharma.emp.service.impl.UnitServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.persistence.UnitPersistence" class="vn.com.ecopharma.emp.service.persistence.UnitPersistenceImpl" parent="basePersistence" />

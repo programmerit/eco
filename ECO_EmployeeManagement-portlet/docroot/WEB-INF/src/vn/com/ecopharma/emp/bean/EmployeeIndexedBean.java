@@ -27,6 +27,7 @@ import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
+import vn.com.ecopharma.emp.service.TitlesUnitUnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
@@ -259,6 +260,8 @@ public class EmployeeIndexedBean implements Serializable {
 		DepartmentLocalServiceUtil.completelyRemoveAll();
 
 		DevisionLocalServiceUtil.completelyDeleteAll();
+
+		TitlesUnitUnitGroupLocalServiceUtil.completelyRemoveAll();
 	}
 
 	public String getHeaderi18nKey(String header) {

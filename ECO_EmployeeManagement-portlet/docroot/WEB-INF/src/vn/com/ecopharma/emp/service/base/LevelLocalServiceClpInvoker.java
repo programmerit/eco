@@ -102,35 +102,35 @@ public class LevelLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.Level"
 			};
 
-		_methodName130 = "getBeanIdentifier";
+		_methodName138 = "getBeanIdentifier";
 
-		_methodParameterTypes130 = new String[] {  };
+		_methodParameterTypes138 = new String[] {  };
 
-		_methodName131 = "setBeanIdentifier";
-
-		_methodParameterTypes131 = new String[] { "java.lang.String" };
-
-		_methodName136 = "findAll";
-
-		_methodParameterTypes136 = new String[] {  };
-
-		_methodName137 = "findAll";
-
-		_methodParameterTypes137 = new String[] { "int", "int" };
-
-		_methodName138 = "findAll";
-
-		_methodParameterTypes138 = new String[] {
-				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
-			};
-
-		_methodName139 = "findByName";
+		_methodName139 = "setBeanIdentifier";
 
 		_methodParameterTypes139 = new String[] { "java.lang.String" };
 
-		_methodName140 = "addLevel";
+		_methodName144 = "findAll";
 
-		_methodParameterTypes140 = new String[] {
+		_methodParameterTypes144 = new String[] {  };
+
+		_methodName145 = "findAll";
+
+		_methodParameterTypes145 = new String[] { "int", "int" };
+
+		_methodName146 = "findAll";
+
+		_methodParameterTypes146 = new String[] {
+				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
+			};
+
+		_methodName147 = "findByName";
+
+		_methodParameterTypes147 = new String[] { "java.lang.String" };
+
+		_methodName148 = "addLevel";
+
+		_methodParameterTypes148 = new String[] {
 				"java.lang.String", "int",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -225,43 +225,43 @@ public class LevelLocalServiceClpInvoker {
 			return LevelLocalServiceUtil.updateLevel((vn.com.ecopharma.emp.model.Level)arguments[0]);
 		}
 
-		if (_methodName130.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
+		if (_methodName138.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
 			return LevelLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName131.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
+		if (_methodName139.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
 			LevelLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName136.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
+		if (_methodName144.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
 			return LevelLocalServiceUtil.findAll();
 		}
 
-		if (_methodName137.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
+		if (_methodName145.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
 			return LevelLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName138.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
+		if (_methodName146.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
 			return LevelLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[2]);
 		}
 
-		if (_methodName139.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
+		if (_methodName147.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
 			return LevelLocalServiceUtil.findByName((java.lang.String)arguments[0]);
 		}
 
-		if (_methodName140.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
+		if (_methodName148.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes148, parameterTypes)) {
 			return LevelLocalServiceUtil.addLevel((java.lang.String)arguments[0],
 				((Integer)arguments[1]).intValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
@@ -302,18 +302,18 @@ public class LevelLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName130;
-	private String[] _methodParameterTypes130;
-	private String _methodName131;
-	private String[] _methodParameterTypes131;
-	private String _methodName136;
-	private String[] _methodParameterTypes136;
-	private String _methodName137;
-	private String[] _methodParameterTypes137;
 	private String _methodName138;
 	private String[] _methodParameterTypes138;
 	private String _methodName139;
 	private String[] _methodParameterTypes139;
-	private String _methodName140;
-	private String[] _methodParameterTypes140;
+	private String _methodName144;
+	private String[] _methodParameterTypes144;
+	private String _methodName145;
+	private String[] _methodParameterTypes145;
+	private String _methodName146;
+	private String[] _methodParameterTypes146;
+	private String _methodName147;
+	private String[] _methodParameterTypes147;
+	private String _methodName148;
+	private String[] _methodParameterTypes148;
 }

@@ -44,6 +44,8 @@ import vn.com.ecopharma.emp.service.ResourceConfigLocalServiceUtil;
 import vn.com.ecopharma.emp.service.ResourceConfigServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesServiceUtil;
+import vn.com.ecopharma.emp.service.TitlesUnitUnitGroupLocalServiceUtil;
+import vn.com.ecopharma.emp.service.TitlesUnitUnitGroupServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
@@ -107,6 +109,9 @@ public class ClpMessageListener extends BaseMessageListener {
 			TitlesLocalServiceUtil.clearService();
 
 			TitlesServiceUtil.clearService();
+			TitlesUnitUnitGroupLocalServiceUtil.clearService();
+
+			TitlesUnitUnitGroupServiceUtil.clearService();
 			UnitLocalServiceUtil.clearService();
 
 			UnitServiceUtil.clearService();

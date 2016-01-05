@@ -122,8 +122,6 @@
 			</basic>
 			<basic name="titlesId" />
 			<basic name="levelId" />
-			<basic name="unitGroupId" />
-			<basic name="unitId" />
 			<basic name="promotedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
@@ -177,6 +175,8 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="unitId" />
+			<basic name="unitGroupId" />
 			<transient name="empUserUuid" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
@@ -382,6 +382,28 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.emp.model.impl.TitlesUnitUnitGroupModelImpl">
+		<attributes>
+			<id name="titlesUnitUnitGroupId" />
+			<basic name="titlesId" />
+			<basic name="unitId" />
+			<basic name="unitGroupId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="vn.com.ecopharma.emp.model.impl.UnitModelImpl">
 		<attributes>
 			<id name="unitId" />
@@ -518,6 +540,10 @@
 	</entity>
 	<entity class="vn.com.ecopharma.emp.model.impl.TitlesImpl" name="Titles">
 		<table name="eco_em_portlet_Titles" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.emp.model.impl.TitlesUnitUnitGroupImpl" name="TitlesUnitUnitGroup">
+		<table name="eco_em_portlet_TitlesUnitUnitGroup" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.emp.model.impl.UnitImpl" name="Unit">

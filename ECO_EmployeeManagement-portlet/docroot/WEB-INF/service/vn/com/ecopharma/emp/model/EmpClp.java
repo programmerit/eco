@@ -85,8 +85,6 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		attributes.put("joinedDate", getJoinedDate());
 		attributes.put("titlesId", getTitlesId());
 		attributes.put("levelId", getLevelId());
-		attributes.put("unitGroupId", getUnitGroupId());
-		attributes.put("unitId", getUnitId());
 		attributes.put("promotedDate", getPromotedDate());
 		attributes.put("laborContractSignedDate", getLaborContractSignedDate());
 		attributes.put("laborContractExpiredDate", getLaborContractExpiredDate());
@@ -126,6 +124,8 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("unitId", getUnitId());
+		attributes.put("unitGroupId", getUnitGroupId());
 
 		return attributes;
 	}
@@ -196,18 +196,6 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 
 		if (levelId != null) {
 			setLevelId(levelId);
-		}
-
-		Long unitGroupId = (Long)attributes.get("unitGroupId");
-
-		if (unitGroupId != null) {
-			setUnitGroupId(unitGroupId);
-		}
-
-		Long unitId = (Long)attributes.get("unitId");
-
-		if (unitId != null) {
-			setUnitId(unitId);
 		}
 
 		Date promotedDate = (Date)attributes.get("promotedDate");
@@ -449,6 +437,18 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long unitId = (Long)attributes.get("unitId");
+
+		if (unitId != null) {
+			setUnitId(unitId);
+		}
+
+		Long unitGroupId = (Long)attributes.get("unitGroupId");
+
+		if (unitGroupId != null) {
+			setUnitGroupId(unitGroupId);
 		}
 	}
 
@@ -698,52 +698,6 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 				Method method = clazz.getMethod("setLevelId", long.class);
 
 				method.invoke(_empRemoteModel, levelId);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public long getUnitGroupId() {
-		return _unitGroupId;
-	}
-
-	@Override
-	public void setUnitGroupId(long unitGroupId) {
-		_unitGroupId = unitGroupId;
-
-		if (_empRemoteModel != null) {
-			try {
-				Class<?> clazz = _empRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setUnitGroupId", long.class);
-
-				method.invoke(_empRemoteModel, unitGroupId);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public long getUnitId() {
-		return _unitId;
-	}
-
-	@Override
-	public void setUnitId(long unitId) {
-		_unitId = unitId;
-
-		if (_empRemoteModel != null) {
-			try {
-				Class<?> clazz = _empRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setUnitId", long.class);
-
-				method.invoke(_empRemoteModel, unitId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -1688,6 +1642,52 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		}
 	}
 
+	@Override
+	public long getUnitId() {
+		return _unitId;
+	}
+
+	@Override
+	public void setUnitId(long unitId) {
+		_unitId = unitId;
+
+		if (_empRemoteModel != null) {
+			try {
+				Class<?> clazz = _empRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setUnitId", long.class);
+
+				method.invoke(_empRemoteModel, unitId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getUnitGroupId() {
+		return _unitGroupId;
+	}
+
+	@Override
+	public void setUnitGroupId(long unitGroupId) {
+		_unitGroupId = unitGroupId;
+
+		if (_empRemoteModel != null) {
+			try {
+				Class<?> clazz = _empRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setUnitGroupId", long.class);
+
+				method.invoke(_empRemoteModel, unitGroupId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getEmpRemoteModel() {
 		return _empRemoteModel;
 	}
@@ -1768,8 +1768,6 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		clone.setJoinedDate(getJoinedDate());
 		clone.setTitlesId(getTitlesId());
 		clone.setLevelId(getLevelId());
-		clone.setUnitGroupId(getUnitGroupId());
-		clone.setUnitId(getUnitId());
 		clone.setPromotedDate(getPromotedDate());
 		clone.setLaborContractSignedDate(getLaborContractSignedDate());
 		clone.setLaborContractExpiredDate(getLaborContractExpiredDate());
@@ -1809,6 +1807,8 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		clone.setUserName(getUserName());
 		clone.setCreateDate(getCreateDate());
 		clone.setModifiedDate(getModifiedDate());
+		clone.setUnitId(getUnitId());
+		clone.setUnitGroupId(getUnitGroupId());
 
 		return clone;
 	}
@@ -1885,10 +1885,6 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		sb.append(getTitlesId());
 		sb.append(", levelId=");
 		sb.append(getLevelId());
-		sb.append(", unitGroupId=");
-		sb.append(getUnitGroupId());
-		sb.append(", unitId=");
-		sb.append(getUnitId());
 		sb.append(", promotedDate=");
 		sb.append(getPromotedDate());
 		sb.append(", laborContractSignedDate=");
@@ -1967,6 +1963,10 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", unitId=");
+		sb.append(getUnitId());
+		sb.append(", unitGroupId=");
+		sb.append(getUnitGroupId());
 		sb.append("}");
 
 		return sb.toString();
@@ -2023,14 +2023,6 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		sb.append(
 			"<column><column-name>levelId</column-name><column-value><![CDATA[");
 		sb.append(getLevelId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>unitGroupId</column-name><column-value><![CDATA[");
-		sb.append(getUnitGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>unitId</column-name><column-value><![CDATA[");
-		sb.append(getUnitId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>promotedDate</column-name><column-value><![CDATA[");
@@ -2188,6 +2180,14 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>unitId</column-name><column-value><![CDATA[");
+		sb.append(getUnitId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>unitGroupId</column-name><column-value><![CDATA[");
+		sb.append(getUnitGroupId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -2205,8 +2205,6 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 	private Date _joinedDate;
 	private long _titlesId;
 	private long _levelId;
-	private long _unitGroupId;
-	private long _unitId;
 	private Date _promotedDate;
 	private Date _laborContractSignedDate;
 	private Date _laborContractExpiredDate;
@@ -2248,6 +2246,8 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _unitId;
+	private long _unitGroupId;
 	private BaseModel<?> _empRemoteModel;
 	private Class<?> _clpSerializerClass = vn.com.ecopharma.emp.service.ClpSerializer.class;
 }
