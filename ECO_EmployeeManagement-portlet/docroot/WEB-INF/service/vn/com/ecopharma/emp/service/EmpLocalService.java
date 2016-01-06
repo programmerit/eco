@@ -357,7 +357,8 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		com.liferay.portal.service.ServiceContext serviceContext);
 
 	public vn.com.ecopharma.emp.model.Emp createEmployee(
-		java.lang.String employeeCode, long titlesId, long levelId,
+		java.lang.String employeeCode, long titlesId, long unitGroupId,
+		long unitId, long departmentId, long levelId,
 		java.util.Date promotedDate, java.util.Date joinedDate,
 		java.util.Date laborContractSignedDate,
 		java.util.Date laborContractExpiredDate,
@@ -374,8 +375,9 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 
 	public vn.com.ecopharma.emp.model.Emp updateExistedEmployee(
 		vn.com.ecopharma.emp.model.Emp employee, java.lang.String employeeCode,
-		long titlesId, long levelId, java.util.Date promotedDate,
-		java.util.Date joinedDate, java.util.Date laborContractSignedDate,
+		long titlesId, long unitGroupId, long unitId, long departmentId,
+		long levelId, java.util.Date promotedDate, java.util.Date joinedDate,
+		java.util.Date laborContractSignedDate,
 		java.util.Date laborContractExpiredDate,
 		java.lang.String laborContractType, int laborContractSignedTime,
 		java.util.Date dob, java.lang.String gender,

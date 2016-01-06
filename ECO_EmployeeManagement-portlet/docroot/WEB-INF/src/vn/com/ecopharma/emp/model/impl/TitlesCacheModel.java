@@ -37,7 +37,7 @@ import java.util.Date;
 public class TitlesCacheModel implements CacheModel<Titles>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{titlesId=");
 		sb.append(titlesId);
@@ -47,8 +47,6 @@ public class TitlesCacheModel implements CacheModel<Titles>, Externalizable {
 		sb.append(name_en);
 		sb.append(", code=");
 		sb.append(code);
-		sb.append(", departmentId=");
-		sb.append(departmentId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -91,7 +89,6 @@ public class TitlesCacheModel implements CacheModel<Titles>, Externalizable {
 			titlesImpl.setCode(code);
 		}
 
-		titlesImpl.setDepartmentId(departmentId);
 		titlesImpl.setGroupId(groupId);
 		titlesImpl.setCompanyId(companyId);
 		titlesImpl.setUserId(userId);
@@ -121,7 +118,6 @@ public class TitlesCacheModel implements CacheModel<Titles>, Externalizable {
 		name = objectInput.readUTF();
 		name_en = objectInput.readUTF();
 		code = objectInput.readUTF();
-		departmentId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
@@ -155,7 +151,6 @@ public class TitlesCacheModel implements CacheModel<Titles>, Externalizable {
 			objectOutput.writeUTF(code);
 		}
 
-		objectOutput.writeLong(departmentId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
@@ -167,7 +162,6 @@ public class TitlesCacheModel implements CacheModel<Titles>, Externalizable {
 	public String name;
 	public String name_en;
 	public String code;
-	public long departmentId;
 	public long groupId;
 	public long companyId;
 	public long userId;

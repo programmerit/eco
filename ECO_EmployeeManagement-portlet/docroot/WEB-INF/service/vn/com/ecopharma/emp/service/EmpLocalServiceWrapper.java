@@ -454,7 +454,8 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 
 	@Override
 	public vn.com.ecopharma.emp.model.Emp createEmployee(
-		java.lang.String employeeCode, long titlesId, long levelId,
+		java.lang.String employeeCode, long titlesId, long unitGroupId,
+		long unitId, long departmentId, long levelId,
 		java.util.Date promotedDate, java.util.Date joinedDate,
 		java.util.Date laborContractSignedDate,
 		java.util.Date laborContractExpiredDate,
@@ -468,21 +469,22 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 		java.lang.String taxCode, int numberOfDependents,
 		java.lang.String dependentNames, java.lang.String insurranceCode,
 		java.lang.String healthInsuranceNo) {
-		return _empLocalService.createEmployee(employeeCode, titlesId, levelId,
-			promotedDate, joinedDate, laborContractSignedDate,
-			laborContractExpiredDate, laborContractType,
-			laborContractSignedTime, dob, gender, placeOfBirth, education,
-			educationSpecialize, universityId, maritalStatus, identityCardNo,
-			issuedDate, issuedPlace, contactNumber, companyEmailAddress,
-			taxCode, numberOfDependents, dependentNames, insurranceCode,
-			healthInsuranceNo);
+		return _empLocalService.createEmployee(employeeCode, titlesId,
+			unitGroupId, unitId, departmentId, levelId, promotedDate,
+			joinedDate, laborContractSignedDate, laborContractExpiredDate,
+			laborContractType, laborContractSignedTime, dob, gender,
+			placeOfBirth, education, educationSpecialize, universityId,
+			maritalStatus, identityCardNo, issuedDate, issuedPlace,
+			contactNumber, companyEmailAddress, taxCode, numberOfDependents,
+			dependentNames, insurranceCode, healthInsuranceNo);
 	}
 
 	@Override
 	public vn.com.ecopharma.emp.model.Emp updateExistedEmployee(
 		vn.com.ecopharma.emp.model.Emp employee, java.lang.String employeeCode,
-		long titlesId, long levelId, java.util.Date promotedDate,
-		java.util.Date joinedDate, java.util.Date laborContractSignedDate,
+		long titlesId, long unitGroupId, long unitId, long departmentId,
+		long levelId, java.util.Date promotedDate, java.util.Date joinedDate,
+		java.util.Date laborContractSignedDate,
 		java.util.Date laborContractExpiredDate,
 		java.lang.String laborContractType, int laborContractSignedTime,
 		java.util.Date dob, java.lang.String gender,
@@ -495,8 +497,8 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 		java.lang.String dependentNames, java.lang.String insurranceCode,
 		java.lang.String healthInsuranceNo) {
 		return _empLocalService.updateExistedEmployee(employee, employeeCode,
-			titlesId, levelId, promotedDate, joinedDate,
-			laborContractSignedDate, laborContractExpiredDate,
+			titlesId, unitGroupId, unitId, departmentId, levelId, promotedDate,
+			joinedDate, laborContractSignedDate, laborContractExpiredDate,
 			laborContractType, laborContractSignedTime, dob, gender,
 			placeOfBirth, education, educationSpecialize, universityId,
 			maritalStatus, identityCardNo, issuedDate, issuedPlace,

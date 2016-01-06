@@ -127,7 +127,7 @@ public class PromotionBean implements Serializable {
 
 	public List<Titles> getTitlesList() {
 		return department != null ? TitlesLocalServiceUtil
-				.findByDepartment(department.getDepartmentId())
+				.findByDepartmentOnly(department.getDepartmentId())
 				: new ArrayList<Titles>();
 	}
 

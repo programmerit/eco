@@ -288,6 +288,15 @@ public class EmployeeBean implements Serializable {
 				employee.setTitlesId(EmployeeUtils
 						.getBaseModelPrimaryKey(modifyEmployeeInfoItem
 								.getTitles()));
+
+				employee.setUnitGroupId(EmployeeUtils
+						.getBaseModelPrimaryKey(modifyEmployeeInfoItem
+								.getUnitGroup()));
+
+				employee.setUnitId(EmployeeUtils
+						.getBaseModelPrimaryKey(modifyEmployeeInfoItem
+								.getUnit()));
+
 				employee.setLevelId(EmployeeUtils
 						.getBaseModelPrimaryKey(modifyEmployeeInfoItem
 								.getLevel()));
@@ -475,8 +484,21 @@ public class EmployeeBean implements Serializable {
 	}
 
 	public List<Titles> getTitlesList() {
-		return TitlesLocalServiceUtil.findByDepartment(modifyEmployeeInfoItem
-				.getDepartment().getDepartmentId());
+		if (modifyEmployeeInfoItem.getUnit() == null) {
+			return TitlesLocalServiceUtil
+					.findByDepartmentOnly(modifyEmployeeInfoItem
+							.getDepartment().getDepartmentId());
+		} else {
+			if (modifyEmployeeInfoItem.getUnitGroup() != null) {
+				return TitlesLocalServiceUtil
+						.findByUnitGroupOnly(modifyEmployeeInfoItem
+								.getUnitGroup().getUnitGroupId());
+			} else {
+				return TitlesLocalServiceUtil
+						.findByUnitOnly(modifyEmployeeInfoItem.getUnit()
+								.getUnitId());
+			}
+		}
 	}
 
 	public List<UnitGroup> getUnitGroups() {

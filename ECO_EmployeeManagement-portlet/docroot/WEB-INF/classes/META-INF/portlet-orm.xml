@@ -177,6 +177,7 @@
 			</basic>
 			<basic name="unitId" />
 			<basic name="unitGroupId" />
+			<basic name="departmentId" />
 			<transient name="empUserUuid" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
@@ -366,7 +367,6 @@
 			<basic name="code">
 				<column name="CODE_" />
 			</basic>
-			<basic name="departmentId" />
 			<basic name="groupId" />
 			<basic name="companyId" />
 			<basic name="userId" />
@@ -382,10 +382,11 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="vn.com.ecopharma.emp.model.impl.TitlesUnitUnitGroupModelImpl">
+	<mapped-superclass class="vn.com.ecopharma.emp.model.impl.TitlesDepartmentUnitUnitGroupModelImpl">
 		<attributes>
-			<id name="titlesUnitUnitGroupId" />
+			<id name="titlesDepartmentUnitUnitGroupId" />
 			<basic name="titlesId" />
+			<basic name="departmentId" />
 			<basic name="unitId" />
 			<basic name="unitGroupId" />
 			<basic name="groupId" />
@@ -542,8 +543,8 @@
 		<table name="eco_em_portlet_Titles" />
 		<attributes />
 	</entity>
-	<entity class="vn.com.ecopharma.emp.model.impl.TitlesUnitUnitGroupImpl" name="TitlesUnitUnitGroup">
-		<table name="eco_em_portlet_TitlesUnitUnitGroup" />
+	<entity class="vn.com.ecopharma.emp.model.impl.TitlesDepartmentUnitUnitGroupImpl" name="TitlesDepartmentUnitUnitGroup">
+		<table name="eco_em_portlet_TitlesDepartmentUnitUnitGroup" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.emp.model.impl.UnitImpl" name="Unit">

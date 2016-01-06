@@ -1,5 +1,6 @@
 package vn.com.ecopharma.emp.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,6 @@ import javax.faces.bean.ViewScoped;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
-import vn.com.ecopharma.emp.dto.Document;
 import vn.com.ecopharma.emp.dto.OrgNodeItem;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
@@ -25,7 +25,12 @@ import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 
 @ManagedBean(name = "organizationTreeViewBean")
 @ViewScoped
-public class OrganizationTreeViewBean {
+public class OrganizationTreeViewBean implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2928998067622705654L;
 
 	private TreeNode root;
 
@@ -37,14 +42,14 @@ public class OrganizationTreeViewBean {
 	}
 
 	public TreeNode createDocuments() {
-		TreeNode root = new DefaultTreeNode(
-				new Document("Files", "-", "Folder"), null);
+		TreeNode treeRoot = new DefaultTreeNode(new Object(), null);
 
 		final List<Devision> allDevisions = DevisionLocalServiceUtil.findAll();
 		final List<TreeNode> devisionTreeNodes = new ArrayList<>();
 		for (Devision devision : allDevisions) {
 			TreeNode devisionNode = new DefaultTreeNode(
-					OrgNodeItem.DEVISION_TYPE, new OrgNodeItem(devision), root);
+					OrgNodeItem.DEVISION_TYPE, new OrgNodeItem(devision),
+					treeRoot);
 			devisionTreeNodes.add(devisionNode);
 		}
 
@@ -98,11 +103,8 @@ public class OrganizationTreeViewBean {
 		final List<TreeNode> titlesTreeNodesByDept = new ArrayList<>();
 		for (TreeNode deptNode : deptTreeNodes) {
 			OrgNodeItem deptItem = (OrgNodeItem) deptNode.getData();
-			// final List<Titles> titlesListByDept = TitlesLocalServiceUtil
-			// .findByDepartment(deptItem.getId());
 			final List<Titles> titlesListByDept = TitlesLocalServiceUtil
-					.findNoneUnitUnitGroupDependentTitlesListByDepartment(deptItem
-							.getId());
+					.findByDepartmentOnly(deptItem.getId());
 			for (Titles titles : titlesListByDept) {
 				TreeNode titlesNode = new DefaultTreeNode(
 						OrgNodeItem.TITLES_TYPE, new OrgNodeItem(titles),
@@ -114,10 +116,8 @@ public class OrganizationTreeViewBean {
 		final List<TreeNode> titlesTreeNodesByUnit = new ArrayList<>();
 		for (TreeNode unitNode : unitTreeNodes) {
 			OrgNodeItem unitItem = (OrgNodeItem) unitNode.getData();
-			// final List<Titles> titlesListByDept = TitlesLocalServiceUtil
-			// .findByDepartment(deptItem.getId());
 			final List<Titles> titlesListByUnit = TitlesLocalServiceUtil
-					.findTitlesByUnit(unitItem.getId());
+					.findByUnitOnly(unitItem.getId());
 			for (Titles titles : titlesListByUnit) {
 				TreeNode titlesNode = new DefaultTreeNode(
 						OrgNodeItem.TITLES_TYPE, new OrgNodeItem(titles),
@@ -129,10 +129,8 @@ public class OrganizationTreeViewBean {
 		final List<TreeNode> titlesTreeNodesByUnitGroup = new ArrayList<>();
 		for (TreeNode unitGroupNode : unitGroupTreeNodes) {
 			OrgNodeItem unitGroupItem = (OrgNodeItem) unitGroupNode.getData();
-			// final List<Titles> titlesListByDept = TitlesLocalServiceUtil
-			// .findByDepartment(deptItem.getId());
 			final List<Titles> titlesListByUnitGroup = TitlesLocalServiceUtil
-					.findTitlesByUnitGroup(unitGroupItem.getId());
+					.findByUnitGroupOnly(unitGroupItem.getId());
 			for (Titles titles : titlesListByUnitGroup) {
 				TreeNode titlesNode = new DefaultTreeNode(
 						OrgNodeItem.TITLES_TYPE, new OrgNodeItem(titles),
@@ -141,7 +139,7 @@ public class OrganizationTreeViewBean {
 			}
 		}
 
-		return root;
+		return treeRoot;
 	}
 
 	public TreeNode getRoot() {

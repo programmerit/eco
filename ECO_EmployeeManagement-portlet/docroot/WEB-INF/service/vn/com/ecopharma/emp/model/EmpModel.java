@@ -863,6 +863,20 @@ public interface EmpModel extends BaseModel<Emp>, GroupedModel {
 	 */
 	public void setUnitGroupId(long unitGroupId);
 
+	/**
+	 * Returns the department ID of this emp.
+	 *
+	 * @return the department ID of this emp
+	 */
+	public long getDepartmentId();
+
+	/**
+	 * Sets the department ID of this emp.
+	 *
+	 * @param departmentId the department ID of this emp
+	 */
+	public void setDepartmentId(long departmentId);
+
 	@Override
 	public boolean isNew();
 

@@ -148,7 +148,7 @@ public class UnitGroupLocalServiceImpl extends UnitGroupLocalServiceBaseImpl {
 	public void completelyRemoveAll() {
 		for (UnitGroup unitGroup : findAll()) {
 			try {
-				unitGroupPersistence.remove(unitGroup.getUnitId());
+				unitGroupPersistence.remove(unitGroup.getUnitGroupId());
 			} catch (NoSuchUnitGroupException e) {
 				LOGGER.info(e);
 			} catch (SystemException e) {

@@ -1960,6 +1960,7 @@ public class EmpPersistenceImpl extends BasePersistenceImpl<Emp>
 		empImpl.setModifiedDate(emp.getModifiedDate());
 		empImpl.setUnitId(emp.getUnitId());
 		empImpl.setUnitGroupId(emp.getUnitGroupId());
+		empImpl.setDepartmentId(emp.getDepartmentId());
 
 		return empImpl;
 	}

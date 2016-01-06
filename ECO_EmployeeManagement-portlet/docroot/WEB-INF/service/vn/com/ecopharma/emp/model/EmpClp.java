@@ -126,6 +126,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("unitId", getUnitId());
 		attributes.put("unitGroupId", getUnitGroupId());
+		attributes.put("departmentId", getDepartmentId());
 
 		return attributes;
 	}
@@ -449,6 +450,12 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 
 		if (unitGroupId != null) {
 			setUnitGroupId(unitGroupId);
+		}
+
+		Long departmentId = (Long)attributes.get("departmentId");
+
+		if (departmentId != null) {
+			setDepartmentId(departmentId);
 		}
 	}
 
@@ -1688,6 +1695,29 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		}
 	}
 
+	@Override
+	public long getDepartmentId() {
+		return _departmentId;
+	}
+
+	@Override
+	public void setDepartmentId(long departmentId) {
+		_departmentId = departmentId;
+
+		if (_empRemoteModel != null) {
+			try {
+				Class<?> clazz = _empRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setDepartmentId", long.class);
+
+				method.invoke(_empRemoteModel, departmentId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getEmpRemoteModel() {
 		return _empRemoteModel;
 	}
@@ -1809,6 +1839,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		clone.setModifiedDate(getModifiedDate());
 		clone.setUnitId(getUnitId());
 		clone.setUnitGroupId(getUnitGroupId());
+		clone.setDepartmentId(getDepartmentId());
 
 		return clone;
 	}
@@ -1861,7 +1892,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(105);
+		StringBundler sb = new StringBundler(107);
 
 		sb.append("{empId=");
 		sb.append(getEmpId());
@@ -1967,6 +1998,8 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		sb.append(getUnitId());
 		sb.append(", unitGroupId=");
 		sb.append(getUnitGroupId());
+		sb.append(", departmentId=");
+		sb.append(getDepartmentId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1974,7 +2007,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(160);
+		StringBundler sb = new StringBundler(163);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.Emp");
@@ -2188,6 +2221,10 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 			"<column><column-name>unitGroupId</column-name><column-value><![CDATA[");
 		sb.append(getUnitGroupId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>departmentId</column-name><column-value><![CDATA[");
+		sb.append(getDepartmentId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -2248,6 +2285,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 	private Date _modifiedDate;
 	private long _unitId;
 	private long _unitGroupId;
+	private long _departmentId;
 	private BaseModel<?> _empRemoteModel;
 	private Class<?> _clpSerializerClass = vn.com.ecopharma.emp.service.ClpSerializer.class;
 }

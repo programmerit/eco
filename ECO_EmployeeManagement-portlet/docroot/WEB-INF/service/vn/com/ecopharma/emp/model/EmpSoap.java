@@ -83,6 +83,7 @@ public class EmpSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setUnitId(model.getUnitId());
 		soapModel.setUnitGroupId(model.getUnitGroupId());
+		soapModel.setDepartmentId(model.getDepartmentId());
 
 		return soapModel;
 	}
@@ -555,6 +556,14 @@ public class EmpSoap implements Serializable {
 		_unitGroupId = unitGroupId;
 	}
 
+	public long getDepartmentId() {
+		return _departmentId;
+	}
+
+	public void setDepartmentId(long departmentId) {
+		_departmentId = departmentId;
+	}
+
 	private long _empId;
 	private long _groupId;
 	private String _empCode;
@@ -607,4 +616,5 @@ public class EmpSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _unitId;
 	private long _unitGroupId;
+	private long _departmentId;
 }

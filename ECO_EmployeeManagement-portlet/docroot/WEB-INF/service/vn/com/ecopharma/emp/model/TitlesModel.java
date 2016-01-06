@@ -120,20 +120,6 @@ public interface TitlesModel extends BaseModel<Titles> {
 	public void setCode(String code);
 
 	/**
-	 * Returns the department ID of this titles.
-	 *
-	 * @return the department ID of this titles
-	 */
-	public long getDepartmentId();
-
-	/**
-	 * Sets the department ID of this titles.
-	 *
-	 * @param departmentId the department ID of this titles
-	 */
-	public void setDepartmentId(long departmentId);
-
-	/**
 	 * Returns the group ID of this titles.
 	 *
 	 * @return the group ID of this titles

@@ -15,7 +15,7 @@
 	<import class="vn.com.ecopharma.emp.model.ResignationHistory" />
 	<import class="vn.com.ecopharma.emp.model.ResourceConfig" />
 	<import class="vn.com.ecopharma.emp.model.Titles" />
-	<import class="vn.com.ecopharma.emp.model.TitlesUnitUnitGroup" />
+	<import class="vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup" />
 	<import class="vn.com.ecopharma.emp.model.Unit" />
 	<import class="vn.com.ecopharma.emp.model.UnitGroup" />
 	<import class="vn.com.ecopharma.emp.model.University" />
@@ -142,6 +142,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="unitId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="unitGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="departmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="vn.com.ecopharma.emp.model.impl.EmpBankInfoImpl" table="eco_em_portlet_EmpBankInfo">
 		<cache usage="read-write" />
@@ -260,19 +261,19 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="name_en" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="code" type="com.liferay.portal.dao.orm.hibernate.StringType" column="code_" />
-		<property name="departmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="vn.com.ecopharma.emp.model.impl.TitlesUnitUnitGroupImpl" table="eco_em_portlet_TitlesUnitUnitGroup">
+	<class name="vn.com.ecopharma.emp.model.impl.TitlesDepartmentUnitUnitGroupImpl" table="eco_em_portlet_TitlesDepartmentUnitUnitGroup">
 		<cache usage="read-write" />
-		<id name="titlesUnitUnitGroupId" type="long">
+		<id name="titlesDepartmentUnitUnitGroupId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="titlesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="departmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="unitId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="unitGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

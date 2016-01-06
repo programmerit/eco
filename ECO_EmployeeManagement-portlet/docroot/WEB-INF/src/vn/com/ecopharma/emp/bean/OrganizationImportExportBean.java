@@ -25,6 +25,7 @@ import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
+import vn.com.ecopharma.emp.service.TitlesDepartmentUnitUnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesUnitUnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
@@ -134,19 +135,20 @@ public class OrganizationImportExportBean implements Serializable {
 
 				}
 
-				Titles titles = TitlesLocalServiceUtil.findByNameAndDepartment(
-						item.getViTitles(), department.getDepartmentId());
+				Titles titles = TitlesLocalServiceUtil.findByName(item
+						.getViTitles());
 
 				if (titles == null) {
 					titles = TitlesLocalServiceUtil.addTitles(
-							item.getViTitles(), department.getDepartmentId(),
-							item.getEnTitles(), item.getTitlesCode(),
-							serviceContext);
+							item.getViTitles(), item.getEnTitles(),
+							item.getTitlesCode(), serviceContext);
 				}
-				if (TitlesUnitUnitGroupLocalServiceUtil
-						.findByTitlesUnitUnitGroup(titles, unit, unitGroup) == null)
-					TitlesUnitUnitGroupLocalServiceUtil.addTitlesUnitUnitGroup(
-							titles, unit, unitGroup, serviceContext);
+				if (TitlesDepartmentUnitUnitGroupLocalServiceUtil
+						.findByTitlesDepartmentUnitUnitGroup(titles,
+								department, unit, unitGroup) == null)
+					TitlesDepartmentUnitUnitGroupLocalServiceUtil
+							.addTitlesDepartmentUnitUnitGroup(titles,
+									department, unit, unitGroup, serviceContext);
 			}
 			FacesMessage message = new FacesMessage("Notice",
 					"Sucessfully Imported");

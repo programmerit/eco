@@ -38,7 +38,7 @@ import vn.com.ecopharma.emp.model.PromotedHistoryClp;
 import vn.com.ecopharma.emp.model.ResignationHistoryClp;
 import vn.com.ecopharma.emp.model.ResourceConfigClp;
 import vn.com.ecopharma.emp.model.TitlesClp;
-import vn.com.ecopharma.emp.model.TitlesUnitUnitGroupClp;
+import vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroupClp;
 import vn.com.ecopharma.emp.model.UnitClp;
 import vn.com.ecopharma.emp.model.UnitGroupClp;
 import vn.com.ecopharma.emp.model.UniversityClp;
@@ -171,8 +171,9 @@ public class ClpSerializer {
 			return translateInputTitles(oldModel);
 		}
 
-		if (oldModelClassName.equals(TitlesUnitUnitGroupClp.class.getName())) {
-			return translateInputTitlesUnitUnitGroup(oldModel);
+		if (oldModelClassName.equals(
+					TitlesDepartmentUnitUnitGroupClp.class.getName())) {
+			return translateInputTitlesDepartmentUnitUnitGroup(oldModel);
 		}
 
 		if (oldModelClassName.equals(UnitClp.class.getName())) {
@@ -337,11 +338,11 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateInputTitlesUnitUnitGroup(
+	public static Object translateInputTitlesDepartmentUnitUnitGroup(
 		BaseModel<?> oldModel) {
-		TitlesUnitUnitGroupClp oldClpModel = (TitlesUnitUnitGroupClp)oldModel;
+		TitlesDepartmentUnitUnitGroupClp oldClpModel = (TitlesDepartmentUnitUnitGroupClp)oldModel;
 
-		BaseModel<?> newModel = oldClpModel.getTitlesUnitUnitGroupRemoteModel();
+		BaseModel<?> newModel = oldClpModel.getTitlesDepartmentUnitUnitGroupRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -886,8 +887,8 @@ public class ClpSerializer {
 		}
 
 		if (oldModelClassName.equals(
-					"vn.com.ecopharma.emp.model.impl.TitlesUnitUnitGroupImpl")) {
-			return translateOutputTitlesUnitUnitGroup(oldModel);
+					"vn.com.ecopharma.emp.model.impl.TitlesDepartmentUnitUnitGroupImpl")) {
+			return translateOutputTitlesDepartmentUnitUnitGroup(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -1206,8 +1207,8 @@ public class ClpSerializer {
 		}
 
 		if (className.equals(
-					"vn.com.ecopharma.emp.NoSuchTitlesUnitUnitGroupException")) {
-			return new vn.com.ecopharma.emp.NoSuchTitlesUnitUnitGroupException();
+					"vn.com.ecopharma.emp.NoSuchTitlesDepartmentUnitUnitGroupException")) {
+			return new vn.com.ecopharma.emp.NoSuchTitlesDepartmentUnitUnitGroupException();
 		}
 
 		if (className.equals("vn.com.ecopharma.emp.NoSuchUnitException")) {
@@ -1362,13 +1363,13 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateOutputTitlesUnitUnitGroup(
+	public static Object translateOutputTitlesDepartmentUnitUnitGroup(
 		BaseModel<?> oldModel) {
-		TitlesUnitUnitGroupClp newModel = new TitlesUnitUnitGroupClp();
+		TitlesDepartmentUnitUnitGroupClp newModel = new TitlesDepartmentUnitUnitGroupClp();
 
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
-		newModel.setTitlesUnitUnitGroupRemoteModel(oldModel);
+		newModel.setTitlesDepartmentUnitUnitGroupRemoteModel(oldModel);
 
 		return newModel;
 	}

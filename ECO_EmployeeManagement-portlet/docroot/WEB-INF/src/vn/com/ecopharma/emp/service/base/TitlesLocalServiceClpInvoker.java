@@ -131,37 +131,33 @@ public class TitlesLocalServiceClpInvoker {
 		_methodName147 = "addTitles";
 
 		_methodParameterTypes147 = new String[] {
-				"java.lang.String", "long", "java.lang.String",
-				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName148 = "findByDepartment";
+		_methodName148 = "findByDepartmentUnitUnitGroup";
 
-		_methodParameterTypes148 = new String[] { "long" };
+		_methodParameterTypes148 = new String[] { "long", "long", "long" };
 
-		_methodName149 = "findNoneUnitUnitGroupDependentTitlesListByDepartment";
+		_methodName149 = "findByUnitUnitGroup";
 
-		_methodParameterTypes149 = new String[] { "long" };
+		_methodParameterTypes149 = new String[] { "long", "long" };
 
-		_methodName150 = "findTitlesByUnit";
+		_methodName150 = "findByDepartmentOnly";
 
 		_methodParameterTypes150 = new String[] { "long" };
 
-		_methodName151 = "findTitlesByUnitGroup";
+		_methodName151 = "findByUnitOnly";
 
 		_methodParameterTypes151 = new String[] { "long" };
 
-		_methodName152 = "findByNameAndDepartment";
+		_methodName152 = "findByUnitGroupOnly";
 
-		_methodParameterTypes152 = new String[] { "java.lang.String", "long" };
+		_methodParameterTypes152 = new String[] { "long" };
 
-		_methodName153 = "findByName";
+		_methodName154 = "findByName";
 
-		_methodParameterTypes153 = new String[] { "java.lang.String" };
-
-		_methodName154 = "findNoneUnitUnitGroupDependentTitlesListByDepartment";
-
-		_methodParameterTypes154 = new String[] { "long", "int", "int" };
+		_methodParameterTypes154 = new String[] { "java.lang.String" };
 
 		_methodName155 = "createPrePersistedTitles";
 
@@ -170,18 +166,12 @@ public class TitlesLocalServiceClpInvoker {
 		_methodName156 = "updateTitles";
 
 		_methodParameterTypes156 = new String[] {
-				"vn.com.ecopharma.emp.model.Titles", "long"
-			};
-
-		_methodName157 = "updateTitles";
-
-		_methodParameterTypes157 = new String[] {
 				"vn.com.ecopharma.emp.model.Titles"
 			};
 
-		_methodName158 = "completelyRemoveAll";
+		_methodName157 = "completelyRemoveAll";
 
-		_methodParameterTypes158 = new String[] {  };
+		_methodParameterTypes157 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -306,47 +296,41 @@ public class TitlesLocalServiceClpInvoker {
 		if (_methodName147.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
 			return TitlesLocalServiceUtil.addTitles((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue(),
-				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
-				(com.liferay.portal.service.ServiceContext)arguments[4]);
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				(com.liferay.portal.service.ServiceContext)arguments[3]);
 		}
 
 		if (_methodName148.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes148, parameterTypes)) {
-			return TitlesLocalServiceUtil.findByDepartment(((Long)arguments[0]).longValue());
+			return TitlesLocalServiceUtil.findByDepartmentUnitUnitGroup(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				((Long)arguments[2]).longValue());
 		}
 
 		if (_methodName149.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes149, parameterTypes)) {
-			return TitlesLocalServiceUtil.findNoneUnitUnitGroupDependentTitlesListByDepartment(((Long)arguments[0]).longValue());
+			return TitlesLocalServiceUtil.findByUnitUnitGroup(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName150.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
-			return TitlesLocalServiceUtil.findTitlesByUnit(((Long)arguments[0]).longValue());
+			return TitlesLocalServiceUtil.findByDepartmentOnly(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName151.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
-			return TitlesLocalServiceUtil.findTitlesByUnitGroup(((Long)arguments[0]).longValue());
+			return TitlesLocalServiceUtil.findByUnitOnly(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName152.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
-			return TitlesLocalServiceUtil.findByNameAndDepartment((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue());
-		}
-
-		if (_methodName153.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
-			return TitlesLocalServiceUtil.findByName((java.lang.String)arguments[0]);
+			return TitlesLocalServiceUtil.findByUnitGroupOnly(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName154.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
-			return TitlesLocalServiceUtil.findNoneUnitUnitGroupDependentTitlesListByDepartment(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue(),
-				((Integer)arguments[2]).intValue());
+			return TitlesLocalServiceUtil.findByName((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName155.equals(name) &&
@@ -356,17 +340,11 @@ public class TitlesLocalServiceClpInvoker {
 
 		if (_methodName156.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
-			return TitlesLocalServiceUtil.updateTitles((vn.com.ecopharma.emp.model.Titles)arguments[0],
-				((Long)arguments[1]).longValue());
+			return TitlesLocalServiceUtil.updateTitles((vn.com.ecopharma.emp.model.Titles)arguments[0]);
 		}
 
 		if (_methodName157.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
-			return TitlesLocalServiceUtil.updateTitles((vn.com.ecopharma.emp.model.Titles)arguments[0]);
-		}
-
-		if (_methodName158.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
 			TitlesLocalServiceUtil.completelyRemoveAll();
 
 			return null;
@@ -429,8 +407,6 @@ public class TitlesLocalServiceClpInvoker {
 	private String[] _methodParameterTypes151;
 	private String _methodName152;
 	private String[] _methodParameterTypes152;
-	private String _methodName153;
-	private String[] _methodParameterTypes153;
 	private String _methodName154;
 	private String[] _methodParameterTypes154;
 	private String _methodName155;
@@ -439,6 +415,4 @@ public class TitlesLocalServiceClpInvoker {
 	private String[] _methodParameterTypes156;
 	private String _methodName157;
 	private String[] _methodParameterTypes157;
-	private String _methodName158;
-	private String[] _methodParameterTypes158;
 }

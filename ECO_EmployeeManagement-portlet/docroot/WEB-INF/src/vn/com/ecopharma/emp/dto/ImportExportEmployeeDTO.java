@@ -19,6 +19,7 @@ import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.model.Titles;
+import vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup;
 import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
@@ -26,6 +27,7 @@ import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpBankInfoLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
+import vn.com.ecopharma.emp.service.TitlesDepartmentUnitUnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
@@ -33,10 +35,9 @@ import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
-import com.liferay.faces.util.logging.Logger;
-import com.liferay.faces.util.logging.LoggerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.model.Region;
@@ -50,6 +51,9 @@ public class ImportExportEmployeeDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(ImportExportEmployeeDTO.class);
+
 	private static final String DATE_STRING_CELL_FORMAT = "dd/MM/yyyy";
 
 	private static final int STRING_CELL_TYPE = 1;
@@ -58,8 +62,6 @@ public class ImportExportEmployeeDTO implements Serializable {
 	private static final String MALE_VNESE = "Nam";
 	private static final String MALE = "Male";
 	private static final String FEMALE = "Female";
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(ImportExportEmployeeDTO.class);
 
 	private int no = 0;
 	private String employeeCode;
@@ -149,9 +151,9 @@ public class ImportExportEmployeeDTO implements Serializable {
 		no = getConvertedIntegerCell(r.getCell(0));
 		employeeCode = getCellValueAsString(r.getCell(1));
 		fullname = getCellValueAsString(r.getCell(2));
-		firstName = EmployeeUtils.getFirstNameFromFullname(fullname);
+		firstName = EmployeeUtils.getFirstName(fullname);
 		middleName = EmployeeUtils.getMiddleNameFromFullname(fullname);
-		lastName = EmployeeUtils.getLastNameFromFullname(fullname);
+		lastName = EmployeeUtils.getLastName(fullname);
 
 		LOGGER.info("============ " + fullname + " =============");
 
@@ -217,15 +219,99 @@ public class ImportExportEmployeeDTO implements Serializable {
 		String titlesName = getCellValueAsString(r.getCell(3));
 		LOGGER.info("============ Checking titles =============");
 		if (!titlesName.equals(StringUtils.EMPTY)) {
-			this.titles = TitlesLocalServiceUtil.findByNameAndDepartment(
-					titlesName, departmentId);
+			this.titles = TitlesLocalServiceUtil.findByName(titlesName);
 
 			if (this.titles == null) {
 				// create new
 				LOGGER.info("============ Creating unit =============");
 				this.titles = TitlesLocalServiceUtil.addTitles(titlesName,
-						departmentId, StringUtils.EMPTY, StringUtils.EMPTY,
-						serviceContext);
+						StringUtils.EMPTY, StringUtils.EMPTY, serviceContext);
+
+				if (departmentId != 0) {
+					TitlesDepartmentUnitUnitGroupLocalServiceUtil
+							.addTitlesDepartmentUnitUnitGroup(
+									titles.getTitlesId(), departmentId, unitId,
+									unitGroupId, serviceContext);
+				}
+			} else {
+				// update missing unit/unitGroup for Existing Titles
+				if (unit != null) {
+					if (unitGroup != null) { // NOSONAR
+						TitlesDepartmentUnitUnitGroup o = TitlesDepartmentUnitUnitGroupLocalServiceUtil
+								.findByTitlesDepartmentUnitUnitGroup(
+										this.titles.getTitlesId(),
+										departmentId, unitId, unitGroupId);
+						// means need to be updated
+						if (o == null) {
+
+							// check whether titles associates with department
+							// and unit existed ?
+							final TitlesDepartmentUnitUnitGroup o1 = TitlesDepartmentUnitUnitGroupLocalServiceUtil
+									.findByTitlesDepartmentUnitUnitGroup(
+											titles.getTitlesId(), departmentId,
+											unitId, 0L);
+
+							// if not check to another level
+							if (o1 == null) {
+								// check level of department
+								TitlesDepartmentUnitUnitGroup o2 = TitlesDepartmentUnitUnitGroupLocalServiceUtil
+										.findByTitlesDepartmentUnitUnitGroup(
+												titles.getTitlesId(),
+												departmentId, 0L, 0L);
+								if (o2 == null) {
+									TitlesDepartmentUnitUnitGroupLocalServiceUtil
+											.addTitlesDepartmentUnitUnitGroup(
+													titles.getTitlesId(),
+													departmentId, unitId,
+													unitGroupId, serviceContext);
+								} else {
+									o2.setUnitId(unitId);
+									o2.setUnitGroupId(unitGroupId);
+									try {
+										TitlesDepartmentUnitUnitGroupLocalServiceUtil
+												.updateTitlesDepartmentUnitUnitGroup(o2);
+									} catch (SystemException e) {
+										LOGGER.info(e);
+									}
+								}
+							} else {
+								o1.setUnitGroupId(unitGroupId);
+								try {
+									TitlesDepartmentUnitUnitGroupLocalServiceUtil
+											.updateTitlesDepartmentUnitUnitGroup(o1);
+								} catch (SystemException e) {
+									LOGGER.info(e);
+								}
+							}
+						}
+					} else {
+						TitlesDepartmentUnitUnitGroup o1 = TitlesDepartmentUnitUnitGroupLocalServiceUtil
+								.findByTitlesDepartmentUnitUnitGroup(
+										titles.getTitlesId(), departmentId,
+										unitId, 0L);
+						if (o1 == null) {
+							TitlesDepartmentUnitUnitGroup o2 = TitlesDepartmentUnitUnitGroupLocalServiceUtil
+									.findByTitlesDepartmentUnitUnitGroup(
+											titles.getTitlesId(), departmentId,
+											0L, 0L);
+							if (o2 == null) {
+								TitlesDepartmentUnitUnitGroupLocalServiceUtil
+										.addTitlesDepartmentUnitUnitGroup(
+												titles.getTitlesId(),
+												departmentId, unitId, 0L,
+												serviceContext);
+							} else {
+								o2.setUnitId(unitId);
+								try {
+									TitlesDepartmentUnitUnitGroupLocalServiceUtil
+											.updateTitlesDepartmentUnitUnitGroup(o2);
+								} catch (SystemException e) {
+									LOGGER.info(e);
+								}
+							}
+						}
+					}
+				}
 			}
 			this.titlesId = this.titles.getTitlesId();
 		}
@@ -300,7 +386,7 @@ public class ImportExportEmployeeDTO implements Serializable {
 		bankBranchName3 = getCellValueAsString(r.getCell(43));
 	}
 
-	private int getLaborContractSignedTime(Cell cell) {
+	private static int getLaborContractSignedTime(Cell cell) {
 		if (cell == null)
 			return 0;
 		final String s = cell.getStringCellValue();
@@ -310,7 +396,8 @@ public class ImportExportEmployeeDTO implements Serializable {
 
 	public Emp createPrePersistedEmployee() {
 		return EmpLocalServiceUtil.createEmployee(employeeCode, titlesId,
-				levelId, promotedDate, joinedDate, laborContractSignedDate,
+				getUnitGroupId(), getUnitId(), getDepartmentId(), levelId,
+				promotedDate, joinedDate, laborContractSignedDate,
 				laborContractExpiredDate, laborContractType,
 				laborContractSignedTime, dob, gender, pob, education,
 				educationSpecialize, universityId, marritalStatus,
@@ -321,10 +408,11 @@ public class ImportExportEmployeeDTO implements Serializable {
 
 	public Emp updateExistedEmployee(Emp emp) {
 		return EmpLocalServiceUtil.updateExistedEmployee(emp, employeeCode,
-				titlesId, levelId, promotedDate, joinedDate,
-				laborContractSignedDate, laborContractExpiredDate,
-				laborContractType, laborContractSignedTime, dob, gender, pob,
-				education, educationSpecialize, universityId, marritalStatus,
+				titlesId, getUnitGroupId(), getUnitId(), getDepartmentId(),
+				levelId, promotedDate, joinedDate, laborContractSignedDate,
+				laborContractExpiredDate, laborContractType,
+				laborContractSignedTime, dob, gender, pob, education,
+				educationSpecialize, universityId, marritalStatus,
 				identityCardNo, issuedDate, issuedPlace, contactNumber,
 				companyEmailAddress, taxCode, numberOfDependents,
 				dependentNames, insurranceCode, healthInsurranceCode);
@@ -339,8 +427,8 @@ public class ImportExportEmployeeDTO implements Serializable {
 	/**
 	 * @return 0 if there is no user existed with current generated username
 	 * 
-	 *         1 if there is user existed associated with an employee ->
-	 *         GENERATE new username/email
+	 *         1 if there is user existed associated with an employee (but DIFF
+	 *         w current checking Emp) -> GENERATE new username/email
 	 * 
 	 *         -1 if there's user existed but W/O employee association and
 	 *         Birthday is not match b/w employee & user
@@ -887,6 +975,18 @@ public class ImportExportEmployeeDTO implements Serializable {
 
 	public void setServiceContext(ServiceContext serviceContext) {
 		this.serviceContext = serviceContext;
+	}
+
+	public long getDepartmentId() {
+		return this.department != null ? this.department.getDepartmentId() : 0L;
+	}
+
+	public long getUnitId() {
+		return this.unit != null ? this.unit.getUnitId() : 0L;
+	}
+
+	public long getUnitGroupId() {
+		return this.unitGroup != null ? this.unitGroup.getUnitGroupId() : 0L;
 	}
 
 	public long getTitlesId() {

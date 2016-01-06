@@ -223,21 +223,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		_methodName35 = "createEmployee";
 
 		_methodParameterTypes35 = new String[] {
-				"java.lang.String", "long", "long", "java.util.Date",
+				"java.lang.String", "long", "long", "long", "long", "long",
 				"java.util.Date", "java.util.Date", "java.util.Date",
-				"java.lang.String", "int", "java.util.Date", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"long", "java.lang.String", "java.lang.String", "java.util.Date",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "int", "java.lang.String",
-				"java.lang.String", "java.lang.String"
-			};
-
-		_methodName36 = "updateExistedEmployee";
-
-		_methodParameterTypes36 = new String[] {
-				"vn.com.ecopharma.emp.model.Emp", "java.lang.String", "long",
-				"long", "java.util.Date", "java.util.Date", "java.util.Date",
 				"java.util.Date", "java.lang.String", "int", "java.util.Date",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "long", "java.lang.String",
@@ -245,6 +232,20 @@ public class EmpLocalServiceClp implements EmpLocalService {
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"int", "java.lang.String", "java.lang.String",
 				"java.lang.String"
+			};
+
+		_methodName36 = "updateExistedEmployee";
+
+		_methodParameterTypes36 = new String[] {
+				"vn.com.ecopharma.emp.model.Emp", "java.lang.String", "long",
+				"long", "long", "long", "long", "java.util.Date",
+				"java.util.Date", "java.util.Date", "java.util.Date",
+				"java.lang.String", "int", "java.util.Date", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"long", "java.lang.String", "java.lang.String", "java.util.Date",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"java.lang.String", "int", "java.lang.String",
+				"java.lang.String", "java.lang.String"
 			};
 
 		_methodName37 = "searchAllEmpDocs";
@@ -1539,7 +1540,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 
 	@Override
 	public vn.com.ecopharma.emp.model.Emp createEmployee(
-		java.lang.String employeeCode, long titlesId, long levelId,
+		java.lang.String employeeCode, long titlesId, long unitGroupId,
+		long unitId, long departmentId, long levelId,
 		java.util.Date promotedDate, java.util.Date joinedDate,
 		java.util.Date laborContractSignedDate,
 		java.util.Date laborContractExpiredDate,
@@ -1562,6 +1564,12 @@ public class EmpLocalServiceClp implements EmpLocalService {
 						ClpSerializer.translateInput(employeeCode),
 						
 					titlesId,
+						
+					unitGroupId,
+						
+					unitId,
+						
+					departmentId,
 						
 					levelId,
 						
@@ -1630,8 +1638,9 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	@Override
 	public vn.com.ecopharma.emp.model.Emp updateExistedEmployee(
 		vn.com.ecopharma.emp.model.Emp employee, java.lang.String employeeCode,
-		long titlesId, long levelId, java.util.Date promotedDate,
-		java.util.Date joinedDate, java.util.Date laborContractSignedDate,
+		long titlesId, long unitGroupId, long unitId, long departmentId,
+		long levelId, java.util.Date promotedDate, java.util.Date joinedDate,
+		java.util.Date laborContractSignedDate,
 		java.util.Date laborContractExpiredDate,
 		java.lang.String laborContractType, int laborContractSignedTime,
 		java.util.Date dob, java.lang.String gender,
@@ -1654,6 +1663,12 @@ public class EmpLocalServiceClp implements EmpLocalService {
 					ClpSerializer.translateInput(employeeCode),
 						
 					titlesId,
+						
+					unitGroupId,
+						
+					unitId,
+						
+					departmentId,
 						
 					levelId,
 						

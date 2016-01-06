@@ -829,8 +829,8 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		return null;
 	}
 
-	@Override
-	public Emp createEmployee(String employeeCode, long titlesId, long levelId,
+	public Emp createEmployee(String employeeCode, long titlesId,
+			long unitGroupId, long unitId, long departmentId, long levelId,
 			Date promotedDate, Date joinedDate, Date laborContractSignedDate,
 			Date laborContractExpiredDate, String laborContractType,
 			int laborContractSignedTime, Date dob, String gender,
@@ -843,11 +843,11 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		try {
 			final long employeeId = CounterLocalServiceUtil.increment();
 			final Emp employee = createEmp(employeeId);
-			return setInfoToEmp(employee, employeeCode, titlesId, levelId,
-					promotedDate, joinedDate, laborContractSignedDate,
-					laborContractExpiredDate, laborContractType,
-					laborContractSignedTime, dob, gender, placeOfBirth,
-					education, educationSpecialize, universityId,
+			return setInfoToEmp(employee, employeeCode, titlesId, unitGroupId,
+					unitId, departmentId, levelId, promotedDate, joinedDate,
+					laborContractSignedDate, laborContractExpiredDate,
+					laborContractType, laborContractSignedTime, dob, gender,
+					placeOfBirth, education, educationSpecialize, universityId,
 					maritalStatus, identityCardNo, issuedDate, issuedPlace,
 					contactNumber, companyEmailAddress, taxCode,
 					numberOfDependents, dependentNames, insurranceCode,
@@ -859,32 +859,8 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 
 	}
 
-	@Override
 	public Emp updateExistedEmployee(Emp employee, String employeeCode,
-			long titlesId, long levelId, Date promotedDate, Date joinedDate,
-			Date laborContractSignedDate, Date laborContractExpiredDate,
-			String laborContractType, int laborContractSignedTime, Date dob,
-			String gender, String placeOfBirth, String education,
-			String educationSpecialize, long universityId,
-			String maritalStatus, String identityCardNo, Date issuedDate,
-			String issuedPlace, String contactNumber,
-			String companyEmailAddress, String taxCode, int numberOfDependents,
-			String dependentNames, String insurranceCode,
-			String healthInsuranceNo) {
-		return setInfoToEmp(employee, employeeCode, titlesId, levelId,
-				promotedDate, joinedDate, laborContractSignedDate,
-				laborContractExpiredDate, laborContractType,
-				laborContractSignedTime, dob, gender, placeOfBirth, education,
-				educationSpecialize, universityId, maritalStatus,
-				identityCardNo, issuedDate, issuedPlace, contactNumber,
-				companyEmailAddress, taxCode, numberOfDependents,
-				dependentNames, insurranceCode, healthInsuranceNo);
-	}
-
-	private Emp setInfoToEmp(
-			Emp employee,
-			String employeeCode,
-			long titlesId, // NOSONAR
+			long titlesId, long unitGroupId, long unitId, long departmentId,
 			long levelId, Date promotedDate, Date joinedDate,
 			Date laborContractSignedDate, Date laborContractExpiredDate,
 			String laborContractType, int laborContractSignedTime, Date dob,
@@ -895,8 +871,35 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			String companyEmailAddress, String taxCode, int numberOfDependents,
 			String dependentNames, String insurranceCode,
 			String healthInsuranceNo) {
+		return setInfoToEmp(employee, employeeCode, titlesId, unitGroupId,
+				unitId, departmentId, levelId, promotedDate, joinedDate,
+				laborContractSignedDate, laborContractExpiredDate,
+				laborContractType, laborContractSignedTime, dob, gender,
+				placeOfBirth, education, educationSpecialize, universityId,
+				maritalStatus, identityCardNo, issuedDate, issuedPlace,
+				contactNumber, companyEmailAddress, taxCode,
+				numberOfDependents, dependentNames, insurranceCode,
+				healthInsuranceNo);
+	}
+
+	private Emp setInfoToEmp(
+			// NOSONAR
+			Emp employee, String employeeCode, long titlesId, long unitGroupId,
+			long unitId, long departmentId, long levelId, Date promotedDate,
+			Date joinedDate, Date laborContractSignedDate,
+			Date laborContractExpiredDate, String laborContractType,
+			int laborContractSignedTime, Date dob, String gender,
+			String placeOfBirth, String education, String educationSpecialize,
+			long universityId, String maritalStatus, String identityCardNo,
+			Date issuedDate, String issuedPlace, String contactNumber,
+			String companyEmailAddress, String taxCode, int numberOfDependents,
+			String dependentNames, String insurranceCode,
+			String healthInsuranceNo) {
 		employee.setEmpCode(employeeCode);
 		employee.setContactNumber(contactNumber);
+		employee.setDepartmentId(departmentId);
+		employee.setUnitId(unitId);
+		employee.setUnitGroupId(unitGroupId);
 		employee.setTitlesId(titlesId);
 		employee.setLevelId(levelId);
 		employee.setPromotedDate(promotedDate);

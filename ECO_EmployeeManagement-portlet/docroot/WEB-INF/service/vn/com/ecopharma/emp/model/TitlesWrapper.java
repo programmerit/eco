@@ -53,7 +53,6 @@ public class TitlesWrapper implements Titles, ModelWrapper<Titles> {
 		attributes.put("name", getName());
 		attributes.put("name_en", getName_en());
 		attributes.put("code", getCode());
-		attributes.put("departmentId", getDepartmentId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -87,12 +86,6 @@ public class TitlesWrapper implements Titles, ModelWrapper<Titles> {
 
 		if (code != null) {
 			setCode(code);
-		}
-
-		Long departmentId = (Long)attributes.get("departmentId");
-
-		if (departmentId != null) {
-			setDepartmentId(departmentId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -224,26 +217,6 @@ public class TitlesWrapper implements Titles, ModelWrapper<Titles> {
 	@Override
 	public void setCode(java.lang.String code) {
 		_titles.setCode(code);
-	}
-
-	/**
-	* Returns the department ID of this titles.
-	*
-	* @return the department ID of this titles
-	*/
-	@Override
-	public long getDepartmentId() {
-		return _titles.getDepartmentId();
-	}
-
-	/**
-	* Sets the department ID of this titles.
-	*
-	* @param departmentId the department ID of this titles
-	*/
-	@Override
-	public void setDepartmentId(long departmentId) {
-		_titles.setDepartmentId(departmentId);
 	}
 
 	/**

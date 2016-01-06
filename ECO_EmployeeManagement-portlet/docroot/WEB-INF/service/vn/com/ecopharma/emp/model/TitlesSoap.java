@@ -35,7 +35,6 @@ public class TitlesSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setName_en(model.getName_en());
 		soapModel.setCode(model.getCode());
-		soapModel.setDepartmentId(model.getDepartmentId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -125,14 +124,6 @@ public class TitlesSoap implements Serializable {
 		_code = code;
 	}
 
-	public long getDepartmentId() {
-		return _departmentId;
-	}
-
-	public void setDepartmentId(long departmentId) {
-		_departmentId = departmentId;
-	}
-
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -177,7 +168,6 @@ public class TitlesSoap implements Serializable {
 	private String _name;
 	private String _name_en;
 	private String _code;
-	private long _departmentId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

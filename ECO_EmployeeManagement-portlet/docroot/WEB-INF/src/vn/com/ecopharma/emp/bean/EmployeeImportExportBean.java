@@ -214,8 +214,8 @@ public class EmployeeImportExportBean implements Serializable {
 				serviceContext.getCompanyId(), USER_ROLE).getRoleId() };
 
 		for (ImportExportEmployeeDTO dto : totalList) {
-			String generatedUserScreenName = EmployeeUtils.generateUsername(dto
-					.getFullname());
+			String generatedUserScreenName = EmployeeUtils
+					.generateOriginalUsername(dto.getFullname());
 
 			final Map<Address, Boolean> addressMap = EmployeeUtils
 					.transferAddressObjectListToAddressMap(dto.getAddresses());
@@ -230,10 +230,8 @@ public class EmployeeImportExportBean implements Serializable {
 			User user = dto.getExistedUser();
 			try {
 				if (checkEmp == 0 || checkEmp == 1 || checkEmp == -1) {
-					// generatedUserScreenName = checkEmp == 1 || checkEmp == -1
-					// ? EmployeeUtils
-					// .regenerateUsername(generatedUserScreenName, 1)
-					// : generatedUserScreenName;
+					generatedUserScreenName = EmployeeUtils
+							.generateUsername(dto.getFullname());
 					LogFactoryUtil.getLog(EmployeeImportExportBean.class).info(
 							"CHECK RESULT: " + checkEmp);
 					// create pre-persisted ready to set fields & import
@@ -244,6 +242,8 @@ public class EmployeeImportExportBean implements Serializable {
 
 					// set fields before saving
 					employee.setTitlesId(dto.getTitlesId());
+					employee.setUnitGroupId(dto.getUnitGroupId());
+					employee.setUnitId(dto.getUnitId());
 					employee.setLevelId(dto.getLevelId());
 					employee.setBirthday(dto.getDob());
 					dto.setEmailAddress(generatedUserScreenName + EMAIL_SUFFIX);
@@ -274,6 +274,8 @@ public class EmployeeImportExportBean implements Serializable {
 
 					// set fields before saving
 					employee.setTitlesId(dto.getTitlesId());
+					employee.setUnitGroupId(dto.getUnitGroupId());
+					employee.setUnitId(dto.getUnitId());
 					employee.setLevelId(dto.getLevelId());
 					employee.setBirthday(dto.getDob());
 					try {

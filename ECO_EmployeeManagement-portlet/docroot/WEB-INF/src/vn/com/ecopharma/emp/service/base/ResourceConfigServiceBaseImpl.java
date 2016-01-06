@@ -36,9 +36,9 @@ import vn.com.ecopharma.emp.service.persistence.LocationPersistence;
 import vn.com.ecopharma.emp.service.persistence.PromotedHistoryPersistence;
 import vn.com.ecopharma.emp.service.persistence.ResignationHistoryPersistence;
 import vn.com.ecopharma.emp.service.persistence.ResourceConfigPersistence;
+import vn.com.ecopharma.emp.service.persistence.TitlesDepartmentUnitUnitGroupPersistence;
 import vn.com.ecopharma.emp.service.persistence.TitlesFinder;
 import vn.com.ecopharma.emp.service.persistence.TitlesPersistence;
-import vn.com.ecopharma.emp.service.persistence.TitlesUnitUnitGroupPersistence;
 import vn.com.ecopharma.emp.service.persistence.UnitGroupPersistence;
 import vn.com.ecopharma.emp.service.persistence.UnitPersistence;
 import vn.com.ecopharma.emp.service.persistence.UniversityPersistence;
@@ -820,60 +820,60 @@ public abstract class ResourceConfigServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the titles unit unit group local service.
+	 * Returns the titles department unit unit group local service.
 	 *
-	 * @return the titles unit unit group local service
+	 * @return the titles department unit unit group local service
 	 */
-	public vn.com.ecopharma.emp.service.TitlesUnitUnitGroupLocalService getTitlesUnitUnitGroupLocalService() {
-		return titlesUnitUnitGroupLocalService;
+	public vn.com.ecopharma.emp.service.TitlesDepartmentUnitUnitGroupLocalService getTitlesDepartmentUnitUnitGroupLocalService() {
+		return titlesDepartmentUnitUnitGroupLocalService;
 	}
 
 	/**
-	 * Sets the titles unit unit group local service.
+	 * Sets the titles department unit unit group local service.
 	 *
-	 * @param titlesUnitUnitGroupLocalService the titles unit unit group local service
+	 * @param titlesDepartmentUnitUnitGroupLocalService the titles department unit unit group local service
 	 */
-	public void setTitlesUnitUnitGroupLocalService(
-		vn.com.ecopharma.emp.service.TitlesUnitUnitGroupLocalService titlesUnitUnitGroupLocalService) {
-		this.titlesUnitUnitGroupLocalService = titlesUnitUnitGroupLocalService;
+	public void setTitlesDepartmentUnitUnitGroupLocalService(
+		vn.com.ecopharma.emp.service.TitlesDepartmentUnitUnitGroupLocalService titlesDepartmentUnitUnitGroupLocalService) {
+		this.titlesDepartmentUnitUnitGroupLocalService = titlesDepartmentUnitUnitGroupLocalService;
 	}
 
 	/**
-	 * Returns the titles unit unit group remote service.
+	 * Returns the titles department unit unit group remote service.
 	 *
-	 * @return the titles unit unit group remote service
+	 * @return the titles department unit unit group remote service
 	 */
-	public vn.com.ecopharma.emp.service.TitlesUnitUnitGroupService getTitlesUnitUnitGroupService() {
-		return titlesUnitUnitGroupService;
+	public vn.com.ecopharma.emp.service.TitlesDepartmentUnitUnitGroupService getTitlesDepartmentUnitUnitGroupService() {
+		return titlesDepartmentUnitUnitGroupService;
 	}
 
 	/**
-	 * Sets the titles unit unit group remote service.
+	 * Sets the titles department unit unit group remote service.
 	 *
-	 * @param titlesUnitUnitGroupService the titles unit unit group remote service
+	 * @param titlesDepartmentUnitUnitGroupService the titles department unit unit group remote service
 	 */
-	public void setTitlesUnitUnitGroupService(
-		vn.com.ecopharma.emp.service.TitlesUnitUnitGroupService titlesUnitUnitGroupService) {
-		this.titlesUnitUnitGroupService = titlesUnitUnitGroupService;
+	public void setTitlesDepartmentUnitUnitGroupService(
+		vn.com.ecopharma.emp.service.TitlesDepartmentUnitUnitGroupService titlesDepartmentUnitUnitGroupService) {
+		this.titlesDepartmentUnitUnitGroupService = titlesDepartmentUnitUnitGroupService;
 	}
 
 	/**
-	 * Returns the titles unit unit group persistence.
+	 * Returns the titles department unit unit group persistence.
 	 *
-	 * @return the titles unit unit group persistence
+	 * @return the titles department unit unit group persistence
 	 */
-	public TitlesUnitUnitGroupPersistence getTitlesUnitUnitGroupPersistence() {
-		return titlesUnitUnitGroupPersistence;
+	public TitlesDepartmentUnitUnitGroupPersistence getTitlesDepartmentUnitUnitGroupPersistence() {
+		return titlesDepartmentUnitUnitGroupPersistence;
 	}
 
 	/**
-	 * Sets the titles unit unit group persistence.
+	 * Sets the titles department unit unit group persistence.
 	 *
-	 * @param titlesUnitUnitGroupPersistence the titles unit unit group persistence
+	 * @param titlesDepartmentUnitUnitGroupPersistence the titles department unit unit group persistence
 	 */
-	public void setTitlesUnitUnitGroupPersistence(
-		TitlesUnitUnitGroupPersistence titlesUnitUnitGroupPersistence) {
-		this.titlesUnitUnitGroupPersistence = titlesUnitUnitGroupPersistence;
+	public void setTitlesDepartmentUnitUnitGroupPersistence(
+		TitlesDepartmentUnitUnitGroupPersistence titlesDepartmentUnitUnitGroupPersistence) {
+		this.titlesDepartmentUnitUnitGroupPersistence = titlesDepartmentUnitUnitGroupPersistence;
 	}
 
 	/**
@@ -1354,12 +1354,12 @@ public abstract class ResourceConfigServiceBaseImpl extends BaseServiceImpl
 	protected TitlesPersistence titlesPersistence;
 	@BeanReference(type = TitlesFinder.class)
 	protected TitlesFinder titlesFinder;
-	@BeanReference(type = vn.com.ecopharma.emp.service.TitlesUnitUnitGroupLocalService.class)
-	protected vn.com.ecopharma.emp.service.TitlesUnitUnitGroupLocalService titlesUnitUnitGroupLocalService;
-	@BeanReference(type = vn.com.ecopharma.emp.service.TitlesUnitUnitGroupService.class)
-	protected vn.com.ecopharma.emp.service.TitlesUnitUnitGroupService titlesUnitUnitGroupService;
-	@BeanReference(type = TitlesUnitUnitGroupPersistence.class)
-	protected TitlesUnitUnitGroupPersistence titlesUnitUnitGroupPersistence;
+	@BeanReference(type = vn.com.ecopharma.emp.service.TitlesDepartmentUnitUnitGroupLocalService.class)
+	protected vn.com.ecopharma.emp.service.TitlesDepartmentUnitUnitGroupLocalService titlesDepartmentUnitUnitGroupLocalService;
+	@BeanReference(type = vn.com.ecopharma.emp.service.TitlesDepartmentUnitUnitGroupService.class)
+	protected vn.com.ecopharma.emp.service.TitlesDepartmentUnitUnitGroupService titlesDepartmentUnitUnitGroupService;
+	@BeanReference(type = TitlesDepartmentUnitUnitGroupPersistence.class)
+	protected TitlesDepartmentUnitUnitGroupPersistence titlesDepartmentUnitUnitGroupPersistence;
 	@BeanReference(type = vn.com.ecopharma.emp.service.UnitLocalService.class)
 	protected vn.com.ecopharma.emp.service.UnitLocalService unitLocalService;
 	@BeanReference(type = vn.com.ecopharma.emp.service.UnitService.class)

@@ -220,7 +220,7 @@ public class EmployeeUtils {
 	 * @param fullname
 	 * @return
 	 */
-	public static String getFirstNameFromFullname(String fullname) {
+	public static String getLastName(String fullname) {
 		return StringUtils.trimToNull(fullname) == null ? StringUtils.EMPTY
 				: fullname.split(" ")[0];
 	}
@@ -250,7 +250,7 @@ public class EmployeeUtils {
 	 * @param fullname
 	 * @return
 	 */
-	public static String getLastNameFromFullname(String fullname) {
+	public static String getFirstName(String fullname) {
 		if (StringUtils.trimToNull(fullname) == null)
 			return StringUtils.EMPTY;
 		String[] fullnameArr = fullname.split(" ");
@@ -267,7 +267,7 @@ public class EmployeeUtils {
 
 		fullname = VNCharacterUtils.removeAccent(fullname).toLowerCase(); // NOSONAR
 		StringBuilder resultBuilder = new StringBuilder();
-		char firstChar = getFirstNameFromFullname(fullname).toCharArray()[0];
+		char firstChar = getLastName(fullname).toCharArray()[0];
 
 		String[] middleNameArr = getMiddleNameFromFullname(fullname).split(" ");
 		char[] middleNameChars;
@@ -284,15 +284,11 @@ public class EmployeeUtils {
 		if (middleNameChars != null) {
 			resultBuilder.append(middleNameChars);
 		}
-		resultBuilder.append(getLastNameFromFullname(fullname));
+		resultBuilder.append(getFirstName(fullname));
 		return resultBuilder.toString();
 	}
 
-	/**
-	 * @param fullname
-	 * @return
-	 */
-	public static String generateUsername(String fullname) {
+	public static String generateOriginalUsername(String fullname) {
 		if (StringUtils.trimToNull(fullname) == null)
 			return StringUtils.EMPTY;
 		fullname = StringUtils.stripAccents(fullname); // NOSONAR
@@ -300,7 +296,7 @@ public class EmployeeUtils {
 				"FULL NAME AFTER STRIPPING ACCENTS: " + fullname);
 
 		StringBuilder resultBuilder = new StringBuilder();
-		char firstChar = getFirstNameFromFullname(fullname).toCharArray()[0];
+		char firstChar = getLastName(fullname).toCharArray()[0];
 
 		String[] middleNameArr = getMiddleNameFromFullname(fullname).split(" ");
 		char[] middleNameChars;
@@ -317,11 +313,20 @@ public class EmployeeUtils {
 		if (middleNameChars != null) {
 			resultBuilder.append(middleNameChars);
 		}
-		resultBuilder.append(getLastNameFromFullname(fullname));
+		resultBuilder.append(getFirstName(fullname));
 		String resultString = resultBuilder.toString().toLowerCase();
 		resultString = resultString.replaceAll("đ", "d");
 		LogFactoryUtil.getLog(EmployeeUtils.class).info(
 				"USERNAME AFTER STRIPPING ACCENTS: " + fullname);
+		return resultString;
+	}
+
+	/**
+	 * @param fullname
+	 * @return
+	 */
+	public static String generateUsername(String fullname) {
+		String resultString = generateOriginalUsername(fullname);
 		return regenerateUsername(resultString, 1);
 	}
 

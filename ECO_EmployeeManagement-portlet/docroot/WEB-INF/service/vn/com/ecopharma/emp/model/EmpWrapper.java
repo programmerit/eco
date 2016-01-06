@@ -101,6 +101,7 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("unitId", getUnitId());
 		attributes.put("unitGroupId", getUnitGroupId());
+		attributes.put("departmentId", getDepartmentId());
 
 		return attributes;
 	}
@@ -424,6 +425,12 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 
 		if (unitGroupId != null) {
 			setUnitGroupId(unitGroupId);
+		}
+
+		Long departmentId = (Long)attributes.get("departmentId");
+
+		if (departmentId != null) {
+			setDepartmentId(departmentId);
 		}
 	}
 
@@ -1541,6 +1548,26 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 	@Override
 	public void setUnitGroupId(long unitGroupId) {
 		_emp.setUnitGroupId(unitGroupId);
+	}
+
+	/**
+	* Returns the department ID of this emp.
+	*
+	* @return the department ID of this emp
+	*/
+	@Override
+	public long getDepartmentId() {
+		return _emp.getDepartmentId();
+	}
+
+	/**
+	* Sets the department ID of this emp.
+	*
+	* @param departmentId the department ID of this emp
+	*/
+	@Override
+	public void setDepartmentId(long departmentId) {
+		_emp.setDepartmentId(departmentId);
 	}
 
 	@Override

@@ -289,37 +289,36 @@ public class TitlesLocalServiceUtil {
 	}
 
 	public static vn.com.ecopharma.emp.model.Titles addTitles(
-		java.lang.String name, long departmentId, java.lang.String name_en,
-		java.lang.String code,
+		java.lang.String name, java.lang.String name_en, java.lang.String code,
 		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService().addTitles(name, name_en, code, serviceContext);
+	}
+
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartmentUnitUnitGroup(
+		long departmentId, long unitId, long unitGroupId) {
 		return getService()
-				   .addTitles(name, departmentId, name_en, code, serviceContext);
+				   .findByDepartmentUnitUnitGroup(departmentId, unitId,
+			unitGroupId);
 	}
 
-	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartment(
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitUnitGroup(
+		long unitId, long unitGroupId) {
+		return getService().findByUnitUnitGroup(unitId, unitGroupId);
+	}
+
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartmentOnly(
 		long departmentId) {
-		return getService().findByDepartment(departmentId);
+		return getService().findByDepartmentOnly(departmentId);
 	}
 
-	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findNoneUnitUnitGroupDependentTitlesListByDepartment(
-		long departmentId) {
-		return getService()
-				   .findNoneUnitUnitGroupDependentTitlesListByDepartment(departmentId);
-	}
-
-	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findTitlesByUnit(
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitOnly(
 		long unitId) {
-		return getService().findTitlesByUnit(unitId);
+		return getService().findByUnitOnly(unitId);
 	}
 
-	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findTitlesByUnitGroup(
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitGroupOnly(
 		long unitGroupId) {
-		return getService().findTitlesByUnitGroup(unitGroupId);
-	}
-
-	public static vn.com.ecopharma.emp.model.Titles findByNameAndDepartment(
-		java.lang.String name, long departmentId) {
-		return getService().findByNameAndDepartment(name, departmentId);
+		return getService().findByUnitGroupOnly(unitGroupId);
 	}
 
 	public static vn.com.ecopharma.emp.model.Titles findByName(
@@ -327,20 +326,8 @@ public class TitlesLocalServiceUtil {
 		return getService().findByName(name);
 	}
 
-	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findNoneUnitUnitGroupDependentTitlesListByDepartment(
-		long departmentId, int start, int end) {
-		return getService()
-				   .findNoneUnitUnitGroupDependentTitlesListByDepartment(departmentId,
-			start, end);
-	}
-
 	public static vn.com.ecopharma.emp.model.Titles createPrePersistedTitles() {
 		return getService().createPrePersistedTitles();
-	}
-
-	public static vn.com.ecopharma.emp.model.Titles updateTitles(
-		vn.com.ecopharma.emp.model.Titles titles, long departmentId) {
-		return getService().updateTitles(titles, departmentId);
 	}
 
 	public static void completelyRemoveAll() {

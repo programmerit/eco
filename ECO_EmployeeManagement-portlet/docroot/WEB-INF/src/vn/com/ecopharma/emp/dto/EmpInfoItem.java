@@ -101,8 +101,8 @@ public class EmpInfoItem implements Serializable {
 					.getUnitGroup(employee.getUnitGroupId()) : null;
 			unit = employee.getUnitId() != 0 ? UnitLocalServiceUtil
 					.getUnit(employee.getUnitId()) : null;
-			department = DepartmentLocalServiceUtil.getDepartment(titles
-					.getDepartmentId());
+			department = employee.getDepartmentId() != 0 ? DepartmentLocalServiceUtil
+					.getDepartment(employee.getDepartmentId()) : null;
 			devision = department != null ? DevisionLocalServiceUtil
 					.getDevision(department.getDevisionId()) : null;
 

@@ -223,21 +223,8 @@ public class EmpLocalServiceClpInvoker {
 		_methodName160 = "createEmployee";
 
 		_methodParameterTypes160 = new String[] {
-				"java.lang.String", "long", "long", "java.util.Date",
+				"java.lang.String", "long", "long", "long", "long", "long",
 				"java.util.Date", "java.util.Date", "java.util.Date",
-				"java.lang.String", "int", "java.util.Date", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"long", "java.lang.String", "java.lang.String", "java.util.Date",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "int", "java.lang.String",
-				"java.lang.String", "java.lang.String"
-			};
-
-		_methodName161 = "updateExistedEmployee";
-
-		_methodParameterTypes161 = new String[] {
-				"vn.com.ecopharma.emp.model.Emp", "java.lang.String", "long",
-				"long", "java.util.Date", "java.util.Date", "java.util.Date",
 				"java.util.Date", "java.lang.String", "int", "java.util.Date",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "long", "java.lang.String",
@@ -245,6 +232,20 @@ public class EmpLocalServiceClpInvoker {
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"int", "java.lang.String", "java.lang.String",
 				"java.lang.String"
+			};
+
+		_methodName161 = "updateExistedEmployee";
+
+		_methodParameterTypes161 = new String[] {
+				"vn.com.ecopharma.emp.model.Emp", "java.lang.String", "long",
+				"long", "long", "long", "long", "java.util.Date",
+				"java.util.Date", "java.util.Date", "java.util.Date",
+				"java.lang.String", "int", "java.util.Date", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"long", "java.lang.String", "java.lang.String", "java.util.Date",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"java.lang.String", "int", "java.lang.String",
+				"java.lang.String", "java.lang.String"
 			};
 
 		_methodName163 = "searchAllEmpDocs";
@@ -566,24 +567,27 @@ public class EmpLocalServiceClpInvoker {
 				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
 			return EmpLocalServiceUtil.createEmployee((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
-				((Long)arguments[2]).longValue(), (java.util.Date)arguments[3],
-				(java.util.Date)arguments[4], (java.util.Date)arguments[5],
-				(java.util.Date)arguments[6], (java.lang.String)arguments[7],
-				((Integer)arguments[8]).intValue(),
+				((Long)arguments[2]).longValue(),
+				((Long)arguments[3]).longValue(),
+				((Long)arguments[4]).longValue(),
+				((Long)arguments[5]).longValue(), (java.util.Date)arguments[6],
+				(java.util.Date)arguments[7], (java.util.Date)arguments[8],
 				(java.util.Date)arguments[9], (java.lang.String)arguments[10],
-				(java.lang.String)arguments[11],
-				(java.lang.String)arguments[12],
-				(java.lang.String)arguments[13],
-				((Long)arguments[14]).longValue(),
+				((Integer)arguments[11]).intValue(),
+				(java.util.Date)arguments[12], (java.lang.String)arguments[13],
+				(java.lang.String)arguments[14],
 				(java.lang.String)arguments[15],
-				(java.lang.String)arguments[16], (java.util.Date)arguments[17],
+				(java.lang.String)arguments[16],
+				((Long)arguments[17]).longValue(),
 				(java.lang.String)arguments[18],
-				(java.lang.String)arguments[19],
-				(java.lang.String)arguments[20],
+				(java.lang.String)arguments[19], (java.util.Date)arguments[20],
 				(java.lang.String)arguments[21],
-				((Integer)arguments[22]).intValue(),
+				(java.lang.String)arguments[22],
 				(java.lang.String)arguments[23],
-				(java.lang.String)arguments[24], (java.lang.String)arguments[25]);
+				(java.lang.String)arguments[24],
+				((Integer)arguments[25]).intValue(),
+				(java.lang.String)arguments[26],
+				(java.lang.String)arguments[27], (java.lang.String)arguments[28]);
 		}
 
 		if (_methodName161.equals(name) &&
@@ -591,24 +595,27 @@ public class EmpLocalServiceClpInvoker {
 			return EmpLocalServiceUtil.updateExistedEmployee((vn.com.ecopharma.emp.model.Emp)arguments[0],
 				(java.lang.String)arguments[1],
 				((Long)arguments[2]).longValue(),
-				((Long)arguments[3]).longValue(), (java.util.Date)arguments[4],
-				(java.util.Date)arguments[5], (java.util.Date)arguments[6],
-				(java.util.Date)arguments[7], (java.lang.String)arguments[8],
-				((Integer)arguments[9]).intValue(),
+				((Long)arguments[3]).longValue(),
+				((Long)arguments[4]).longValue(),
+				((Long)arguments[5]).longValue(),
+				((Long)arguments[6]).longValue(), (java.util.Date)arguments[7],
+				(java.util.Date)arguments[8], (java.util.Date)arguments[9],
 				(java.util.Date)arguments[10], (java.lang.String)arguments[11],
-				(java.lang.String)arguments[12],
-				(java.lang.String)arguments[13],
-				(java.lang.String)arguments[14],
-				((Long)arguments[15]).longValue(),
+				((Integer)arguments[12]).intValue(),
+				(java.util.Date)arguments[13], (java.lang.String)arguments[14],
+				(java.lang.String)arguments[15],
 				(java.lang.String)arguments[16],
-				(java.lang.String)arguments[17], (java.util.Date)arguments[18],
+				(java.lang.String)arguments[17],
+				((Long)arguments[18]).longValue(),
 				(java.lang.String)arguments[19],
-				(java.lang.String)arguments[20],
-				(java.lang.String)arguments[21],
+				(java.lang.String)arguments[20], (java.util.Date)arguments[21],
 				(java.lang.String)arguments[22],
-				((Integer)arguments[23]).intValue(),
+				(java.lang.String)arguments[23],
 				(java.lang.String)arguments[24],
-				(java.lang.String)arguments[25], (java.lang.String)arguments[26]);
+				(java.lang.String)arguments[25],
+				((Integer)arguments[26]).intValue(),
+				(java.lang.String)arguments[27],
+				(java.lang.String)arguments[28], (java.lang.String)arguments[29]);
 		}
 
 		if (_methodName163.equals(name) &&

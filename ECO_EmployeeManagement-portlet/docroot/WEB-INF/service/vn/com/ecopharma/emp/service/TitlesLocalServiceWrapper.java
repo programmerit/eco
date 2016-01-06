@@ -302,40 +302,40 @@ public class TitlesLocalServiceWrapper implements TitlesLocalService,
 
 	@Override
 	public vn.com.ecopharma.emp.model.Titles addTitles(java.lang.String name,
-		long departmentId, java.lang.String name_en, java.lang.String code,
+		java.lang.String name_en, java.lang.String code,
 		com.liferay.portal.service.ServiceContext serviceContext) {
-		return _titlesLocalService.addTitles(name, departmentId, name_en, code,
-			serviceContext);
+		return _titlesLocalService.addTitles(name, name_en, code, serviceContext);
 	}
 
 	@Override
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartment(
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartmentUnitUnitGroup(
+		long departmentId, long unitId, long unitGroupId) {
+		return _titlesLocalService.findByDepartmentUnitUnitGroup(departmentId,
+			unitId, unitGroupId);
+	}
+
+	@Override
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitUnitGroup(
+		long unitId, long unitGroupId) {
+		return _titlesLocalService.findByUnitUnitGroup(unitId, unitGroupId);
+	}
+
+	@Override
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartmentOnly(
 		long departmentId) {
-		return _titlesLocalService.findByDepartment(departmentId);
+		return _titlesLocalService.findByDepartmentOnly(departmentId);
 	}
 
 	@Override
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findNoneUnitUnitGroupDependentTitlesListByDepartment(
-		long departmentId) {
-		return _titlesLocalService.findNoneUnitUnitGroupDependentTitlesListByDepartment(departmentId);
-	}
-
-	@Override
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findTitlesByUnit(
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitOnly(
 		long unitId) {
-		return _titlesLocalService.findTitlesByUnit(unitId);
+		return _titlesLocalService.findByUnitOnly(unitId);
 	}
 
 	@Override
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findTitlesByUnitGroup(
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitGroupOnly(
 		long unitGroupId) {
-		return _titlesLocalService.findTitlesByUnitGroup(unitGroupId);
-	}
-
-	@Override
-	public vn.com.ecopharma.emp.model.Titles findByNameAndDepartment(
-		java.lang.String name, long departmentId) {
-		return _titlesLocalService.findByNameAndDepartment(name, departmentId);
+		return _titlesLocalService.findByUnitGroupOnly(unitGroupId);
 	}
 
 	@Override
@@ -344,21 +344,8 @@ public class TitlesLocalServiceWrapper implements TitlesLocalService,
 	}
 
 	@Override
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findNoneUnitUnitGroupDependentTitlesListByDepartment(
-		long departmentId, int start, int end) {
-		return _titlesLocalService.findNoneUnitUnitGroupDependentTitlesListByDepartment(departmentId,
-			start, end);
-	}
-
-	@Override
 	public vn.com.ecopharma.emp.model.Titles createPrePersistedTitles() {
 		return _titlesLocalService.createPrePersistedTitles();
-	}
-
-	@Override
-	public vn.com.ecopharma.emp.model.Titles updateTitles(
-		vn.com.ecopharma.emp.model.Titles titles, long departmentId) {
-		return _titlesLocalService.updateTitles(titles, departmentId);
 	}
 
 	@Override

@@ -21,9 +21,8 @@ import java.util.List;
 import vn.com.ecopharma.emp.NoSuchTitlesException;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.Titles;
-import vn.com.ecopharma.emp.model.TitlesUnitUnitGroup;
+import vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup;
 import vn.com.ecopharma.emp.service.base.TitlesLocalServiceBaseImpl;
-import vn.com.ecopharma.emp.service.persistence.TitlesFinderUtil;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -83,15 +82,14 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 		return titlesPersistence.findAll(start, end, orderByComparator);
 	}
 
-	public Titles addTitles(String name, long departmentId, String name_en,
-			String code, ServiceContext serviceContext) {
+	public Titles addTitles(String name, String name_en, String code,
+			ServiceContext serviceContext) {
 		try {
 			long id = counterLocalService.increment();
 			Titles titles = titlesPersistence.create(id);
 			titles.setName(name);
 			titles.setName_en(name_en);
 			titles.setCode(code);
-			titles.setDepartmentId(departmentId);
 			titles.setUserId(serviceContext.getUserId());
 			titles.setCompanyId(serviceContext.getCompanyId());
 			titles.setGroupId(serviceContext.getScopeGroupId());
@@ -105,79 +103,63 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 		return null;
 	}
 
-	@Override
-	public List<Titles> findByDepartment(long departmentId) {
+	public List<Titles> findByDepartmentUnitUnitGroup(long departmentId,
+			long unitId, long unitGroupId) {
 		try {
-			return titlesPersistence.findByDepartment(departmentId);
+			final List<Titles> result = new ArrayList<>();
+			final List<TitlesDepartmentUnitUnitGroup> list = titlesDepartmentUnitUnitGroupPersistence
+					.findByDepartmentUnitUnitGroup(departmentId, unitId,
+							unitGroupId);
+			for (TitlesDepartmentUnitUnitGroup item : list) {
+				result.add(super.fetchTitles(item.getTitlesId()));
+			}
+			return result;
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}
 		return new ArrayList<>();
 	}
 
-	public List<Titles> findNoneUnitUnitGroupDependentTitlesListByDepartment(
-			long departmentId) {
-		List<Titles> result = new ArrayList<>();
-
-		List<Titles> titlesListByDepartment = findByDepartment(departmentId);
-
-		for (Titles titles : titlesListByDepartment) {
-			if (titlesUnitUnitGroupLocalService.findByTitles(
-					titles.getTitlesId()).isEmpty()) {
-				result.add(titles);
-			}
-		}
-
-		return result;
-	}
-
-	public List<Titles> findTitlesByUnit(long unitId) {
-		List<Titles> result = new ArrayList<>();
-		List<TitlesUnitUnitGroup> titlesUnitUnitGroups = titlesUnitUnitGroupLocalService
-				.findByUnitAndNoneUnitGroup(unitId);
-		for (TitlesUnitUnitGroup t : titlesUnitUnitGroups) {
-			try {
-				result.add(super.fetchTitles(t.getTitlesId()));
-			} catch (SystemException e) {
-				LOGGER.info(e);
-			}
-		}
-		return result;
-	}
-
-	public List<Titles> findTitlesByUnitGroup(long unitGroupId) {
-		List<Titles> result = new ArrayList<>();
-		List<TitlesUnitUnitGroup> titlesUnitUnitGroups = titlesUnitUnitGroupLocalService
-				.findByUnitGroup(unitGroupId);
-		for (TitlesUnitUnitGroup t : titlesUnitUnitGroups) {
-			try {
-				result.add(super.fetchTitles(t.getTitlesId()));
-			} catch (SystemException e) {
-				LOGGER.info(e);
-			}
-		}
-		return result;
-	}
-
-	@Override
-	public Titles findByNameAndDepartment(String name, long departmentId) {
+	public List<Titles> findByUnitUnitGroup(long unitId, long unitGroupId) {
 		try {
-			return titlesPersistence.fetchByNameAndDepartment(name,
-					departmentId);
+			final List<Titles> result = new ArrayList<>();
+			final List<TitlesDepartmentUnitUnitGroup> list = titlesDepartmentUnitUnitGroupPersistence
+					.findByUnitAndUnitGroup(unitId, unitGroupId);
+			for (TitlesDepartmentUnitUnitGroup item : list) {
+				result.add(super.fetchTitles(item.getTitlesId()));
+			}
+			return result;
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * vn.com.ecopharma.emp.service.TitlesLocalService#findByNameAndRelatedEntities
-	 * (vn.com.ecopharma.emp.model.Department, vn.com.ecopharma.emp.model.Unit,
-	 * vn.com.ecopharma.emp.model.UnitGroup)
-	 */
+	public List<Titles> findByDepartmentOnly(long departmentId) {
+		return findByDepartmentUnitUnitGroup(departmentId, 0, 0);
+	}
+
+	public List<Titles> findByUnitOnly(long unitId) {
+		return findByUnitUnitGroup(unitId, 0);
+	}
+
+	public List<Titles> findByUnitGroupOnly(long unitGroupId) {
+		return getTitlesListFromTitlesDepartmentUnitUnitGroups(titlesDepartmentUnitUnitGroupLocalService
+				.findByUnitGroup(unitGroupId));
+	}
+
+	private List<Titles> getTitlesListFromTitlesDepartmentUnitUnitGroups(
+			List<TitlesDepartmentUnitUnitGroup> list) {
+		final List<Titles> result = new ArrayList<>();
+		for (TitlesDepartmentUnitUnitGroup item : list) {
+			try {
+				result.add(super.fetchTitles(item.getTitlesId()));
+			} catch (SystemException e) {
+				LOGGER.info(e);
+			}
+		}
+		return result;
+	}
 
 	@Override
 	public Titles findByName(String name) {
@@ -189,24 +171,6 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 		return null;
 	}
 
-	// public List<Titles> findNoneUnitUnitGroupDependentTitlesListByDepartment(
-	// long departmentId) {
-	// return findNoneUnitUnitGroupDependentTitlesListByDepartment(
-	// departmentId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-	// }
-
-	public List<Titles> findNoneUnitUnitGroupDependentTitlesListByDepartment(
-			long departmentId, int start, int end) {
-		try {
-			return TitlesFinderUtil
-					.findNoneUnitUnitGroupDependentTitlesListByDepartment(
-							departmentId, start, end);
-		} catch (SystemException e) {
-			LogFactoryUtil.getLog(TitlesLocalServiceImpl.class).info(e);
-		}
-		return new ArrayList<>();
-	}
-
 	public Titles createPrePersistedTitles() {
 		try {
 			return super.createTitles(counterLocalService.increment());
@@ -216,19 +180,9 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 		return null;
 	}
 
-	public Titles updateTitles(Titles titles, long departmentId) {
-		try {
-			titles.setDepartmentId(departmentId);
-			titles.setModifiedDate(new Date());
-			return super.updateTitles(titles);
-		} catch (SystemException e) {
-			LOGGER.info(e);
-		}
-		return null;
-	}
-
 	@Override
 	public Titles updateTitles(Titles titles) throws SystemException {
+		titles.setModifiedDate(new Date());
 		final Titles result = super.updateTitles(titles);
 		if (result != null) {
 			final List<Emp> emps = empLocalService.findByTitles(result

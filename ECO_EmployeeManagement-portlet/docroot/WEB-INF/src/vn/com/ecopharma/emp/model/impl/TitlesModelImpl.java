@@ -70,14 +70,13 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 			{ "name", Types.VARCHAR },
 			{ "name_en", Types.VARCHAR },
 			{ "code_", Types.VARCHAR },
-			{ "departmentId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_Titles (titlesId LONG not null primary key,name VARCHAR(75) null,name_en VARCHAR(75) null,code_ VARCHAR(75) null,departmentId LONG,groupId LONG,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_Titles (titlesId LONG not null primary key,name VARCHAR(75) null,name_en VARCHAR(75) null,code_ VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table eco_em_portlet_Titles";
 	public static final String ORDER_BY_JPQL = " ORDER BY titles.titlesId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_em_portlet_Titles.titlesId ASC";
@@ -93,9 +92,8 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.vn.com.ecopharma.emp.model.Titles"),
 			true);
-	public static long DEPARTMENTID_COLUMN_BITMASK = 1L;
-	public static long NAME_COLUMN_BITMASK = 2L;
-	public static long TITLESID_COLUMN_BITMASK = 4L;
+	public static long NAME_COLUMN_BITMASK = 1L;
+	public static long TITLESID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -114,7 +112,6 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 		model.setName(soapModel.getName());
 		model.setName_en(soapModel.getName_en());
 		model.setCode(soapModel.getCode());
-		model.setDepartmentId(soapModel.getDepartmentId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -188,7 +185,6 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 		attributes.put("name", getName());
 		attributes.put("name_en", getName_en());
 		attributes.put("code", getCode());
-		attributes.put("departmentId", getDepartmentId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -222,12 +218,6 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 
 		if (code != null) {
 			setCode(code);
-		}
-
-		Long departmentId = (Long)attributes.get("departmentId");
-
-		if (departmentId != null) {
-			setDepartmentId(departmentId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -332,29 +322,6 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 
 	@JSON
 	@Override
-	public long getDepartmentId() {
-		return _departmentId;
-	}
-
-	@Override
-	public void setDepartmentId(long departmentId) {
-		_columnBitmask |= DEPARTMENTID_COLUMN_BITMASK;
-
-		if (!_setOriginalDepartmentId) {
-			_setOriginalDepartmentId = true;
-
-			_originalDepartmentId = _departmentId;
-		}
-
-		_departmentId = departmentId;
-	}
-
-	public long getOriginalDepartmentId() {
-		return _originalDepartmentId;
-	}
-
-	@JSON
-	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -453,7 +420,6 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 		titlesImpl.setName(getName());
 		titlesImpl.setName_en(getName_en());
 		titlesImpl.setCode(getCode());
-		titlesImpl.setDepartmentId(getDepartmentId());
 		titlesImpl.setGroupId(getGroupId());
 		titlesImpl.setCompanyId(getCompanyId());
 		titlesImpl.setUserId(getUserId());
@@ -513,10 +479,6 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 
 		titlesModelImpl._originalName = titlesModelImpl._name;
 
-		titlesModelImpl._originalDepartmentId = titlesModelImpl._departmentId;
-
-		titlesModelImpl._setOriginalDepartmentId = false;
-
 		titlesModelImpl._columnBitmask = 0;
 	}
 
@@ -550,8 +512,6 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 			titlesCacheModel.code = null;
 		}
 
-		titlesCacheModel.departmentId = getDepartmentId();
-
 		titlesCacheModel.groupId = getGroupId();
 
 		titlesCacheModel.companyId = getCompanyId();
@@ -581,7 +541,7 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{titlesId=");
 		sb.append(getTitlesId());
@@ -591,8 +551,6 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 		sb.append(getName_en());
 		sb.append(", code=");
 		sb.append(getCode());
-		sb.append(", departmentId=");
-		sb.append(getDepartmentId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
@@ -610,7 +568,7 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.Titles");
@@ -631,10 +589,6 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 		sb.append(
 			"<column><column-name>code</column-name><column-value><![CDATA[");
 		sb.append(getCode());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>departmentId</column-name><column-value><![CDATA[");
-		sb.append(getDepartmentId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -669,9 +623,6 @@ public class TitlesModelImpl extends BaseModelImpl<Titles>
 	private String _originalName;
 	private String _name_en;
 	private String _code;
-	private long _departmentId;
-	private long _originalDepartmentId;
-	private boolean _setOriginalDepartmentId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

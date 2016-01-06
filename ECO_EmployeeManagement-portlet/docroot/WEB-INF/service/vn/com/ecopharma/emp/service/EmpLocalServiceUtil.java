@@ -434,7 +434,8 @@ public class EmpLocalServiceUtil {
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp createEmployee(
-		java.lang.String employeeCode, long titlesId, long levelId,
+		java.lang.String employeeCode, long titlesId, long unitGroupId,
+		long unitId, long departmentId, long levelId,
 		java.util.Date promotedDate, java.util.Date joinedDate,
 		java.util.Date laborContractSignedDate,
 		java.util.Date laborContractExpiredDate,
@@ -449,20 +450,21 @@ public class EmpLocalServiceUtil {
 		java.lang.String dependentNames, java.lang.String insurranceCode,
 		java.lang.String healthInsuranceNo) {
 		return getService()
-				   .createEmployee(employeeCode, titlesId, levelId,
-			promotedDate, joinedDate, laborContractSignedDate,
-			laborContractExpiredDate, laborContractType,
-			laborContractSignedTime, dob, gender, placeOfBirth, education,
-			educationSpecialize, universityId, maritalStatus, identityCardNo,
-			issuedDate, issuedPlace, contactNumber, companyEmailAddress,
-			taxCode, numberOfDependents, dependentNames, insurranceCode,
-			healthInsuranceNo);
+				   .createEmployee(employeeCode, titlesId, unitGroupId, unitId,
+			departmentId, levelId, promotedDate, joinedDate,
+			laborContractSignedDate, laborContractExpiredDate,
+			laborContractType, laborContractSignedTime, dob, gender,
+			placeOfBirth, education, educationSpecialize, universityId,
+			maritalStatus, identityCardNo, issuedDate, issuedPlace,
+			contactNumber, companyEmailAddress, taxCode, numberOfDependents,
+			dependentNames, insurranceCode, healthInsuranceNo);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp updateExistedEmployee(
 		vn.com.ecopharma.emp.model.Emp employee, java.lang.String employeeCode,
-		long titlesId, long levelId, java.util.Date promotedDate,
-		java.util.Date joinedDate, java.util.Date laborContractSignedDate,
+		long titlesId, long unitGroupId, long unitId, long departmentId,
+		long levelId, java.util.Date promotedDate, java.util.Date joinedDate,
+		java.util.Date laborContractSignedDate,
 		java.util.Date laborContractExpiredDate,
 		java.lang.String laborContractType, int laborContractSignedTime,
 		java.util.Date dob, java.lang.String gender,
@@ -476,13 +478,13 @@ public class EmpLocalServiceUtil {
 		java.lang.String healthInsuranceNo) {
 		return getService()
 				   .updateExistedEmployee(employee, employeeCode, titlesId,
-			levelId, promotedDate, joinedDate, laborContractSignedDate,
-			laborContractExpiredDate, laborContractType,
-			laborContractSignedTime, dob, gender, placeOfBirth, education,
-			educationSpecialize, universityId, maritalStatus, identityCardNo,
-			issuedDate, issuedPlace, contactNumber, companyEmailAddress,
-			taxCode, numberOfDependents, dependentNames, insurranceCode,
-			healthInsuranceNo);
+			unitGroupId, unitId, departmentId, levelId, promotedDate,
+			joinedDate, laborContractSignedDate, laborContractExpiredDate,
+			laborContractType, laborContractSignedTime, dob, gender,
+			placeOfBirth, education, educationSpecialize, universityId,
+			maritalStatus, identityCardNo, issuedDate, issuedPlace,
+			contactNumber, companyEmailAddress, taxCode, numberOfDependents,
+			dependentNames, insurranceCode, healthInsuranceNo);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.search.Document> searchAllEmpDocs(

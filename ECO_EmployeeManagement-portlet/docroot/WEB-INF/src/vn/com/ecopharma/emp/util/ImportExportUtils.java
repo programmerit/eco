@@ -241,9 +241,8 @@ public class ImportExportUtils {
 			final Unit unit = employee.getUnitId() != 0 ? UnitLocalServiceUtil
 					.fetchUnit(employee.getUnitId()) : null;
 
-			final Department department = titles != null
-					&& titles.getDepartmentId() != 0 ? DepartmentLocalServiceUtil
-					.fetchDepartment(titles.getDepartmentId()) : null;
+			final Department department = employee.getDepartmentId() != 0 ? DepartmentLocalServiceUtil
+					.fetchDepartment(employee.getDepartmentId()) : null;
 
 			final Devision devision = department != null ? DevisionLocalServiceUtil
 					.getDevision(department.getDevisionId()) : null;
@@ -417,9 +416,8 @@ public class ImportExportUtils {
 			final Unit unit = employee.getUnitId() != 0 ? UnitLocalServiceUtil
 					.fetchUnit(employee.getUnitId()) : null;
 
-			final Department department = titles != null
-					&& titles.getDepartmentId() != 0 ? DepartmentLocalServiceUtil
-					.fetchDepartment(titles.getDepartmentId()) : null;
+			final Department department = employee.getDepartmentId() != 0 ? DepartmentLocalServiceUtil
+					.fetchDepartment(employee.getDepartmentId()) : null;
 
 			final Devision devision = department != null ? DevisionLocalServiceUtil
 					.getDevision(department.getDevisionId()) : null;

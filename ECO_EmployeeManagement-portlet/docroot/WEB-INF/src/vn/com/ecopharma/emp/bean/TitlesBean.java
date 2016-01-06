@@ -9,8 +9,12 @@ import javax.faces.event.ActionEvent;
 
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Titles;
+import vn.com.ecopharma.emp.model.Unit;
+import vn.com.ecopharma.emp.model.UnitGroup;
+import vn.com.ecopharma.emp.service.TitlesDepartmentUnitUnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
+import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -37,11 +41,18 @@ public class TitlesBean extends AbstractOrganizationBean {
 					.getEmployeeViewBean();
 			final Department department = employeeViewBean
 					.getModifyEmployeeInfoItem().getDepartment();
+			final Unit unit = employeeViewBean.getModifyEmployeeInfoItem()
+					.getUnit();
+			final UnitGroup unitGroup = employeeViewBean
+					.getModifyEmployeeInfoItem().getUnitGroup();
 			if (department != null) {
 				FacesMessage msg = null;
-				titles.setDepartmentId(department.getDepartmentId());
 				if (TitlesLocalServiceUtil.fetchTitles(titles.getTitlesId()) == null) {
 					Titles result = TitlesLocalServiceUtil.addTitles(titles);
+					TitlesDepartmentUnitUnitGroupLocalServiceUtil
+							.addTitlesDepartmentUnitUnitGroup(result,
+									department, unit, unitGroup,
+									EmployeeUtils.getServiceContext());
 					addResultMessage(result, msg, "Create Titles successfully",
 							"Titles " + titles.getName() + " has been created");
 

@@ -262,33 +262,27 @@ public interface TitlesLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public vn.com.ecopharma.emp.model.Titles addTitles(java.lang.String name,
-		long departmentId, java.lang.String name_en, java.lang.String code,
+		java.lang.String name_en, java.lang.String code,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartment(
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartmentUnitUnitGroup(
+		long departmentId, long unitId, long unitGroupId);
+
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitUnitGroup(
+		long unitId, long unitGroupId);
+
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartmentOnly(
 		long departmentId);
 
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findNoneUnitUnitGroupDependentTitlesListByDepartment(
-		long departmentId);
-
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findTitlesByUnit(
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitOnly(
 		long unitId);
 
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findTitlesByUnitGroup(
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitGroupOnly(
 		long unitGroupId);
-
-	public vn.com.ecopharma.emp.model.Titles findByNameAndDepartment(
-		java.lang.String name, long departmentId);
 
 	public vn.com.ecopharma.emp.model.Titles findByName(java.lang.String name);
 
-	public java.util.List<vn.com.ecopharma.emp.model.Titles> findNoneUnitUnitGroupDependentTitlesListByDepartment(
-		long departmentId, int start, int end);
-
 	public vn.com.ecopharma.emp.model.Titles createPrePersistedTitles();
-
-	public vn.com.ecopharma.emp.model.Titles updateTitles(
-		vn.com.ecopharma.emp.model.Titles titles, long departmentId);
 
 	public void completelyRemoveAll();
 }

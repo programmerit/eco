@@ -59,6 +59,14 @@ create index IX_59DF60AB on eco_em_portlet_Titles (unitGroupId, unitId, departme
 create index IX_89CF9262 on eco_em_portlet_Titles (unitId);
 create index IX_7FF6DD64 on eco_em_portlet_Titles (unitId, unitGroupId);
 
+create index IX_9E27BF63 on eco_em_portlet_TitlesDepartmentUnitUnitGroup (departmentId);
+create index IX_BE443E70 on eco_em_portlet_TitlesDepartmentUnitUnitGroup (departmentId, unitId, unitGroupId);
+create index IX_53A3EAAC on eco_em_portlet_TitlesDepartmentUnitUnitGroup (titlesId);
+create index IX_9696BFA6 on eco_em_portlet_TitlesDepartmentUnitUnitGroup (titlesId, departmentId, unitId, unitGroupId);
+create index IX_D4D67FA4 on eco_em_portlet_TitlesDepartmentUnitUnitGroup (unitGroupId);
+create index IX_271C795 on eco_em_portlet_TitlesDepartmentUnitUnitGroup (unitId);
+create index IX_8881F311 on eco_em_portlet_TitlesDepartmentUnitUnitGroup (unitId, unitGroupId);
+
 create index IX_E5C4D1D2 on eco_em_portlet_TitlesUnitUnitGroup (departmentId, unitId, titlesId);
 create index IX_9C898E48 on eco_em_portlet_TitlesUnitUnitGroup (departmentId, unitId, unitGroupId, titlesId);
 create index IX_15EE9E9E on eco_em_portlet_TitlesUnitUnitGroup (titlesId);

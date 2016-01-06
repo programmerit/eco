@@ -108,6 +108,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="unitId" type="long" />
 		<field name="unitGroupId" type="long" />
+		<field name="departmentId" type="long" />
 	</model>
 	<model name="vn.com.ecopharma.emp.model.EmpBankInfo">
 		<field name="empBankInfoId" type="long" />
@@ -204,16 +205,16 @@
 		<field name="name" type="String" />
 		<field name="name_en" type="String" />
 		<field name="code" type="String" />
-		<field name="departmentId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 	</model>
-	<model name="vn.com.ecopharma.emp.model.TitlesUnitUnitGroup">
-		<field name="titlesUnitUnitGroupId" type="long" />
+	<model name="vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup">
+		<field name="titlesDepartmentUnitUnitGroupId" type="long" />
 		<field name="titlesId" type="long" />
+		<field name="departmentId" type="long" />
 		<field name="unitId" type="long" />
 		<field name="unitGroupId" type="long" />
 		<field name="groupId" type="long" />

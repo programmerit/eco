@@ -78,7 +78,6 @@ public class TitlesClp extends BaseModelImpl<Titles> implements Titles {
 		attributes.put("name", getName());
 		attributes.put("name_en", getName_en());
 		attributes.put("code", getCode());
-		attributes.put("departmentId", getDepartmentId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -112,12 +111,6 @@ public class TitlesClp extends BaseModelImpl<Titles> implements Titles {
 
 		if (code != null) {
 			setCode(code);
-		}
-
-		Long departmentId = (Long)attributes.get("departmentId");
-
-		if (departmentId != null) {
-			setDepartmentId(departmentId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -236,29 +229,6 @@ public class TitlesClp extends BaseModelImpl<Titles> implements Titles {
 				Method method = clazz.getMethod("setCode", String.class);
 
 				method.invoke(_titlesRemoteModel, code);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public long getDepartmentId() {
-		return _departmentId;
-	}
-
-	@Override
-	public void setDepartmentId(long departmentId) {
-		_departmentId = departmentId;
-
-		if (_titlesRemoteModel != null) {
-			try {
-				Class<?> clazz = _titlesRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setDepartmentId", long.class);
-
-				method.invoke(_titlesRemoteModel, departmentId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -464,7 +434,6 @@ public class TitlesClp extends BaseModelImpl<Titles> implements Titles {
 		clone.setName(getName());
 		clone.setName_en(getName_en());
 		clone.setCode(getCode());
-		clone.setDepartmentId(getDepartmentId());
 		clone.setGroupId(getGroupId());
 		clone.setCompanyId(getCompanyId());
 		clone.setUserId(getUserId());
@@ -522,7 +491,7 @@ public class TitlesClp extends BaseModelImpl<Titles> implements Titles {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{titlesId=");
 		sb.append(getTitlesId());
@@ -532,8 +501,6 @@ public class TitlesClp extends BaseModelImpl<Titles> implements Titles {
 		sb.append(getName_en());
 		sb.append(", code=");
 		sb.append(getCode());
-		sb.append(", departmentId=");
-		sb.append(getDepartmentId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
@@ -551,7 +518,7 @@ public class TitlesClp extends BaseModelImpl<Titles> implements Titles {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.Titles");
@@ -572,10 +539,6 @@ public class TitlesClp extends BaseModelImpl<Titles> implements Titles {
 		sb.append(
 			"<column><column-name>code</column-name><column-value><![CDATA[");
 		sb.append(getCode());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>departmentId</column-name><column-value><![CDATA[");
-		sb.append(getDepartmentId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -607,7 +570,6 @@ public class TitlesClp extends BaseModelImpl<Titles> implements Titles {
 	private String _name;
 	private String _name_en;
 	private String _code;
-	private long _departmentId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

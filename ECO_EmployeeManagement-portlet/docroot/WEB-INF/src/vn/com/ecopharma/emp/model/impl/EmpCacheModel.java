@@ -37,7 +37,7 @@ import java.util.Date;
 public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(105);
+		StringBundler sb = new StringBundler(107);
 
 		sb.append("{empId=");
 		sb.append(empId);
@@ -143,6 +143,8 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		sb.append(unitId);
 		sb.append(", unitGroupId=");
 		sb.append(unitGroupId);
+		sb.append(", departmentId=");
+		sb.append(departmentId);
 		sb.append("}");
 
 		return sb.toString();
@@ -407,6 +409,7 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 
 		empImpl.setUnitId(unitId);
 		empImpl.setUnitGroupId(unitGroupId);
+		empImpl.setDepartmentId(departmentId);
 
 		empImpl.resetOriginalValues();
 
@@ -467,6 +470,7 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		modifiedDate = objectInput.readLong();
 		unitId = objectInput.readLong();
 		unitGroupId = objectInput.readLong();
+		departmentId = objectInput.readLong();
 	}
 
 	@Override
@@ -672,6 +676,7 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeLong(unitId);
 		objectOutput.writeLong(unitGroupId);
+		objectOutput.writeLong(departmentId);
 	}
 
 	public long empId;
@@ -726,4 +731,5 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 	public long modifiedDate;
 	public long unitId;
 	public long unitGroupId;
+	public long departmentId;
 }

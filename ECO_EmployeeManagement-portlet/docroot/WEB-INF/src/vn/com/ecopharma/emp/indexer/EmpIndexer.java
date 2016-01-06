@@ -80,9 +80,8 @@ public class EmpIndexer extends BaseIndexer {
 		final UnitGroup unitGroup = emp.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
 				.fetchUnitGroup(emp.getUnitGroupId()) : null;
 
-		final Department department = titles != null
-				&& titles.getDepartmentId() != 0 ? DepartmentLocalServiceUtil
-				.getDepartment(titles.getDepartmentId()) : null;
+		final Department department = emp.getDepartmentId() != 0 ? DepartmentLocalServiceUtil
+				.fetchDepartment(emp.getDepartmentId()) : null;
 
 		final Devision devision = department != null ? DevisionLocalServiceUtil
 				.getDevision(department.getDevisionId()) : null;

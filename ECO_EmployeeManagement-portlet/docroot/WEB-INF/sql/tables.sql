@@ -120,7 +120,8 @@ create table eco_em_portlet_Emp (
 	createDate DATE null,
 	modifiedDate DATE null,
 	unitId LONG,
-	unitGroupId LONG
+	unitGroupId LONG,
+	departmentId LONG
 );
 
 create table eco_em_portlet_EmpBankInfo (
@@ -224,10 +225,23 @@ create table eco_em_portlet_Titles (
 	name VARCHAR(75) null,
 	name_en VARCHAR(75) null,
 	code_ VARCHAR(75) null,
-	departmentId LONG,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
+	createDate DATE null,
+	modifiedDate DATE null
+);
+
+create table eco_em_portlet_TitlesDepartmentUnitUnitGroup (
+	titlesDepartmentUnitUnitGroupId LONG not null primary key,
+	titlesId LONG,
+	departmentId LONG,
+	unitId LONG,
+	unitGroupId LONG,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null
 );

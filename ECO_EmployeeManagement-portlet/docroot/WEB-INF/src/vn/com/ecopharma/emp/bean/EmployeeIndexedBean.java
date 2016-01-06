@@ -26,8 +26,8 @@ import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
+import vn.com.ecopharma.emp.service.TitlesDepartmentUnitUnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
-import vn.com.ecopharma.emp.service.TitlesUnitUnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
@@ -90,6 +90,10 @@ public class EmployeeIndexedBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
+
+		 String empCode = "92408";
+		
+
 		lazyDataModel = new EmployeeIndexLazyDataModel() {
 			private static final long serialVersionUID = 1L;
 
@@ -261,7 +265,7 @@ public class EmployeeIndexedBean implements Serializable {
 
 		DevisionLocalServiceUtil.completelyDeleteAll();
 
-		TitlesUnitUnitGroupLocalServiceUtil.completelyRemoveAll();
+		TitlesDepartmentUnitUnitGroupLocalServiceUtil.completelyRemoveAll();
 	}
 
 	public String getHeaderi18nKey(String header) {
