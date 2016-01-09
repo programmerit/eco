@@ -1,68 +1,56 @@
-package vn.com.ecopharma.emp.dto;
+package vn.com.ecopharma.emp.node;
 
 import java.io.Serializable;
 
-import vn.com.ecopharma.emp.model.Department;
-import vn.com.ecopharma.emp.model.Devision;
-import vn.com.ecopharma.emp.model.Titles;
-import vn.com.ecopharma.emp.model.Unit;
-import vn.com.ecopharma.emp.model.UnitGroup;
+import vn.com.ecopharma.emp.model.District;
 
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.Country;
+import com.liferay.portal.model.Region;
 
-/**
- * @author TaoTran
- * @version 1.0
- * @since 2016/01/05
- */
-public class OrgNodeItem implements Serializable, Comparable<OrgNodeItem> {
+public class LocationNodeItem implements Serializable,
+		Comparable<LocationNodeItem> {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-
-	public static final String DEVISION_TYPE = "Devision";
-	public static final String DEPARTMENT_TYPE = "Department";
-	public static final String UNIT_TYPE = "Unit";
-	public static final String UNITGROUP_TYPE = "UnitGroup";
-	public static final String TITLES_TYPE = "Titles";
+	public static final String COUNTRY_TYPE = "Country";
+	public static final String CITY_TYPE = "City";
+	public static final String DISTRICT_TYPE = "District";
 
 	private long id;
 	private String name;
 	private String type;
 
-	public OrgNodeItem(long id, String name, String type) {
+	public LocationNodeItem(long id, String name, String type) {
 		this.id = id;
 		this.name = name;
 		this.type = type;
 	}
 
-	public OrgNodeItem(BaseModel<?> t) {
+	public LocationNodeItem(BaseModel<?> t) {
 		this.id = Long.valueOf(String.valueOf(t.getPrimaryKeyObj()));
 		this.setNameAndTypeFromBaseModel(t);
 	}
 
 	// for emptyNode
-	public OrgNodeItem(String type) {
+	public LocationNodeItem(String type) {
 		this.type = type;
 		this.id = 0;
 		this.name = "Not available";
 	}
 
 	private void setNameAndTypeFromBaseModel(BaseModel<?> t) {
-		if (t instanceof Devision) {
-			this.name = ((Devision) t).getName();
-			this.type = DEVISION_TYPE;
-		} else if (t instanceof Department) {
-			this.name = ((Department) t).getName();
-			this.type = DEPARTMENT_TYPE;
-		} else if (t instanceof Unit) {
-			this.name = ((Unit) t).getName();
-			this.type = UNIT_TYPE;
-		} else if (t instanceof UnitGroup) {
-			this.name = ((UnitGroup) t).getName();
-			this.type = UNITGROUP_TYPE;
-		} else if (t instanceof Titles) {
-			this.name = ((Titles) t).getName();
-			this.type = TITLES_TYPE;
+		if (t instanceof Country) {
+			this.name = ((Country) t).getName();
+			this.type = COUNTRY_TYPE;
+		} else if (t instanceof Region) {
+			this.name = ((Region) t).getName();
+			this.type = CITY_TYPE;
+		} else if (t instanceof District) {
+			this.name = ((District) t).getName();
+			this.type = DISTRICT_TYPE;
 		}
 	}
 
@@ -91,7 +79,7 @@ public class OrgNodeItem implements Serializable, Comparable<OrgNodeItem> {
 	}
 
 	@Override
-	public int compareTo(OrgNodeItem o) {
+	public int compareTo(LocationNodeItem o) {
 		int i = name.compareTo(o.getName());
 		if (i != 0)
 			return i;
@@ -103,8 +91,8 @@ public class OrgNodeItem implements Serializable, Comparable<OrgNodeItem> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof OrgNodeItem) {
-			OrgNodeItem that = (OrgNodeItem) obj;
+		if (obj instanceof LocationNodeItem) {
+			LocationNodeItem that = (LocationNodeItem) obj;
 			return this.type.equals(that.getType()) && this.id == that.id
 					&& this.name == that.name;
 		}

@@ -485,9 +485,10 @@ public class EmployeeBean implements Serializable {
 
 	public List<Titles> getTitlesList() {
 		if (modifyEmployeeInfoItem.getUnit() == null) {
-			return TitlesLocalServiceUtil
+			return modifyEmployeeInfoItem.getDepartment() != null ? TitlesLocalServiceUtil
 					.findByDepartmentOnly(modifyEmployeeInfoItem
-							.getDepartment().getDepartmentId());
+							.getDepartment().getDepartmentId())
+					: new ArrayList<Titles>();
 		} else {
 			if (modifyEmployeeInfoItem.getUnitGroup() != null) {
 				return TitlesLocalServiceUtil

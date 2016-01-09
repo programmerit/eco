@@ -190,10 +190,9 @@ public class TTUtils {
 			return StringUtils.EMPTY;
 		}
 
-		String empCode = unformattedEmpCode.substring(1,
-				unformattedEmpCode.length());
-		empCode = "9" + empCode;
-		return empCode;
+		return unformattedEmpCode.length() == 5 ? "9"
+				+ unformattedEmpCode.substring(1, unformattedEmpCode.length())
+				: unformattedEmpCode;
 	}
 
 	/**

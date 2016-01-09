@@ -80,6 +80,10 @@ public class EmpIndexedItem implements Serializable {
 	public String getFullName() {
 		return employeeDocument.getField(EmpField.FULL_NAME).getValue();
 	}
+	
+	public String getFullNameVi() {
+		return employeeDocument.getField(EmpField.VN_FULL_NAME).getValue();
+	}
 
 	public String getContactNumber() {
 		return employeeDocument.getField(EmpField.CONTACT_NUMBER) != null ? employeeDocument

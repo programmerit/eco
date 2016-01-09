@@ -103,6 +103,21 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 		return null;
 	}
 
+	public Titles addTitles(Titles titles, ServiceContext serviceContext) {
+		try {
+			titles.setUserId(serviceContext.getUserId());
+			titles.setCompanyId(serviceContext.getCompanyId());
+			titles.setGroupId(serviceContext.getScopeGroupId());
+			titles.setCreateDate(new Date());
+			titles.setModifiedDate(new Date());
+
+			return super.addTitles(titles);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
 	public List<Titles> findByDepartmentUnitUnitGroup(long departmentId,
 			long unitId, long unitGroupId) {
 		try {
@@ -135,6 +150,11 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 		return new ArrayList<>();
 	}
 
+	public List<Titles> findAllByDepartment(long departmentId) {
+		return getUniqueTitlesListFromTitlesDepartmentUnitUnitGroups(titlesDepartmentUnitUnitGroupLocalService
+				.findByDepartment(departmentId));
+	}
+
 	public List<Titles> findByDepartmentOnly(long departmentId) {
 		return findByDepartmentUnitUnitGroup(departmentId, 0, 0);
 	}
@@ -146,19 +166,6 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 	public List<Titles> findByUnitGroupOnly(long unitGroupId) {
 		return getTitlesListFromTitlesDepartmentUnitUnitGroups(titlesDepartmentUnitUnitGroupLocalService
 				.findByUnitGroup(unitGroupId));
-	}
-
-	private List<Titles> getTitlesListFromTitlesDepartmentUnitUnitGroups(
-			List<TitlesDepartmentUnitUnitGroup> list) {
-		final List<Titles> result = new ArrayList<>();
-		for (TitlesDepartmentUnitUnitGroup item : list) {
-			try {
-				result.add(super.fetchTitles(item.getTitlesId()));
-			} catch (SystemException e) {
-				LOGGER.info(e);
-			}
-		}
-		return result;
 	}
 
 	@Override
@@ -205,5 +212,33 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 				LogFactoryUtil.getLog(TitlesLocalServiceImpl.class).info(e);
 			}
 		}
+	}
+
+	private List<Titles> getTitlesListFromTitlesDepartmentUnitUnitGroups(
+			List<TitlesDepartmentUnitUnitGroup> list) {
+		final List<Titles> result = new ArrayList<>();
+		for (TitlesDepartmentUnitUnitGroup item : list) {
+			try {
+				result.add(super.fetchTitles(item.getTitlesId()));
+			} catch (SystemException e) {
+				LOGGER.info(e);
+			}
+		}
+		return result;
+	}
+
+	private List<Titles> getUniqueTitlesListFromTitlesDepartmentUnitUnitGroups(
+			List<TitlesDepartmentUnitUnitGroup> list) {
+		final List<Titles> result = new ArrayList<>();
+		for (TitlesDepartmentUnitUnitGroup item : list) {
+			try {
+				Titles titles = super.fetchTitles(item.getTitlesId());
+				if (!result.contains(titles))
+					result.add(titles);
+			} catch (SystemException e) {
+				LOGGER.info(e);
+			}
+		}
+		return result;
 	}
 }

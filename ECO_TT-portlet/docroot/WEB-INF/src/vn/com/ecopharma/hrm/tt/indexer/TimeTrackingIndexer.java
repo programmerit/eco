@@ -64,17 +64,20 @@ public class TimeTrackingIndexer extends BaseIndexer {
 		final Emp emp = EmpLocalServiceUtil.fetchEmp(o.getEmpId());
 		final User user = UserLocalServiceUtil.fetchUser(emp.getEmpUserId());
 		final Titles titles = emp.getTitlesId() != 0 ? TitlesLocalServiceUtil
-				.fetchTitles(emp.getTitlesId()) : null;
-		final UnitGroup unitGroup = titles != null
-				&& titles.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
-				.fetchUnitGroup(titles.getUnitGroupId()) : null;
-		final Unit unit = titles != null && titles.getUnitId() != 0 ? UnitLocalServiceUtil
-				.fetchUnit(titles.getUnitId()) : null;
-		final Department department = titles != null
-				&& titles.getDepartmentId() != 0 ? DepartmentLocalServiceUtil
-				.fetchDepartment(titles.getDepartmentId()) : null;
+				.getTitles(emp.getTitlesId()) : null;
+
+		final Unit unit = emp.getUnitId() != 0 ? UnitLocalServiceUtil
+				.fetchUnit(emp.getUnitId()) : null;
+
+		final UnitGroup unitGroup = emp.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
+				.fetchUnitGroup(emp.getUnitGroupId()) : null;
+
+		final Department department = emp.getDepartmentId() != 0 ? DepartmentLocalServiceUtil
+				.fetchDepartment(emp.getDepartmentId()) : null;
+
 		final Devision devision = department != null ? DevisionLocalServiceUtil
-				.fetchDevision(department.getDevisionId()) : null;
+				.getDevision(department.getDevisionId()) : null;
+				
 		final SimpleDateFormat sdf = new SimpleDateFormat(DAY_OF_WEEK,
 				Locale.ENGLISH);
 

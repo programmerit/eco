@@ -294,6 +294,12 @@ public class TitlesLocalServiceUtil {
 		return getService().addTitles(name, name_en, code, serviceContext);
 	}
 
+	public static vn.com.ecopharma.emp.model.Titles addTitles(
+		vn.com.ecopharma.emp.model.Titles titles,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService().addTitles(titles, serviceContext);
+	}
+
 	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartmentUnitUnitGroup(
 		long departmentId, long unitId, long unitGroupId) {
 		return getService()
@@ -304,6 +310,11 @@ public class TitlesLocalServiceUtil {
 	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitUnitGroup(
 		long unitId, long unitGroupId) {
 		return getService().findByUnitUnitGroup(unitId, unitGroupId);
+	}
+
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findAllByDepartment(
+		long departmentId) {
+		return getService().findAllByDepartment(departmentId);
 	}
 
 	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartmentOnly(

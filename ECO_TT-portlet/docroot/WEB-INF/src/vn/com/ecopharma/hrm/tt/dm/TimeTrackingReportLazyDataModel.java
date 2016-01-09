@@ -36,8 +36,6 @@ public class TimeTrackingReportLazyDataModel extends
 
 	private static final long YEAR_MONTH_DATE_CONS = 86400000L; // 24*60*60*1000L
 
-	private static final int DEFAULT_YEAR = 2015;
-
 	private static final String[] GLOBAL_FILTER_FIELDS = new String[] {
 			TimeTrackingField.EMP_CODE, TimeTrackingField.FULLNAME,
 			TimeTrackingField.DEVISION, TimeTrackingField.DEPARTMENT,
@@ -62,6 +60,8 @@ public class TimeTrackingReportLazyDataModel extends
 								TimeTrackingField.GLOBAL)
 						&& !entry.getKey().equalsIgnoreCase(
 								TimeTrackingField.MONTH)
+						&& !entry.getKey().equalsIgnoreCase(
+								TimeTrackingField.YEAR)
 						&& !entry.getKey().equalsIgnoreCase(
 								TimeTrackingField.IS_EMPTY_IN)
 						&& !entry.getKey().equalsIgnoreCase(
@@ -97,6 +97,8 @@ public class TimeTrackingReportLazyDataModel extends
 						document);
 				final int month = (Integer) filters
 						.get(TimeTrackingField.MONTH);
+
+				final int year = (Integer) filters.get(TimeTrackingField.YEAR);
 				// final boolean isEmptyIn = (Boolean) filters
 				// .get(TimeTrackingField.IS_EMPTY_IN);
 				// final boolean isEmptyOut = (Boolean) filters
@@ -105,7 +107,7 @@ public class TimeTrackingReportLazyDataModel extends
 				final List<TimeTrackingIndexItem> timeTrackingIndexItems = TTUtils
 						.getTimeTrackingIndexItems(
 								empTimeTrackingIndexedItem.getEmployeeCode(),
-								month, DEFAULT_YEAR, true, true);
+								month, year, true, true);
 				final Map<String, Date> minInMap = getMinInMap(timeTrackingIndexItems);
 				final Map<String, Date> maxOutMap = getMaxOutMap(timeTrackingIndexItems);
 				empTimeTrackingIndexedItem.setMinInMap(minInMap);

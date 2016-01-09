@@ -285,10 +285,7 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		int end);
 
 	public vn.com.ecopharma.emp.model.Emp addEmp(
-		com.liferay.portal.service.ServiceContext serviceContext);
-
-	public vn.com.ecopharma.emp.model.Emp addEmp(
-		vn.com.ecopharma.emp.model.Emp e, boolean autoPassword,
+		vn.com.ecopharma.emp.model.Emp employee, boolean autoPassword,
 		java.lang.String password1, java.lang.String password2,
 		boolean autoScreenName, java.lang.String screenName,
 		java.lang.String emailAddress, long facebookId,
@@ -305,51 +302,45 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public vn.com.ecopharma.emp.model.Emp updateEmp(
-		vn.com.ecopharma.emp.model.Emp employee,
-		com.liferay.portal.model.User user, java.lang.String password1,
-		java.lang.String password2, boolean autoScreenName,
-		java.lang.String screenName, java.lang.String emailAddress,
-		long facebookId, java.lang.String openId, java.util.Locale locale,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, int prefixId, int suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear, long[] groupIds,
-		long[] organizationIds, long[] roleIds, long[] userGroupIds,
-		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
-		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
-		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isImportAction,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	public vn.com.ecopharma.emp.model.Emp updateEmp(
-		vn.com.ecopharma.emp.model.Emp employee,
-		com.liferay.portal.model.User user, java.lang.String password1,
-		java.lang.String password2, boolean autoScreenName,
-		java.lang.String emailAddress, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, int prefixId,
-		int suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear,
-		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
-		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
-		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isImportAction,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
 	public vn.com.ecopharma.emp.model.Emp addEmp(
-		vn.com.ecopharma.emp.model.Emp e, com.liferay.portal.model.User user,
-		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addresses,
+		vn.com.ecopharma.emp.model.Emp employee,
+		com.liferay.portal.model.User user,
+		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public vn.com.ecopharma.emp.model.Emp update(
+		vn.com.ecopharma.emp.model.Emp employee, long userId, long oldTitlesId,
+		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
+		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		boolean isImportAction,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public vn.com.ecopharma.emp.model.Emp update(
 		vn.com.ecopharma.emp.model.Emp employee,
 		com.liferay.portal.model.User user, long oldTitlesId,
+		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
+		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		boolean isImportAction,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public vn.com.ecopharma.emp.model.Emp addOrUpdateWithExistUser(
+		vn.com.ecopharma.emp.model.Emp employee,
+		com.liferay.portal.model.User user, long oldTitlesId,
+		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
+		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		boolean isImportAction,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public vn.com.ecopharma.emp.model.Emp addOrUpdateWithExistUser(
+		vn.com.ecopharma.emp.model.Emp employee,
+		java.lang.String userScreenName, long oldTitlesId,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
@@ -422,4 +413,22 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 	public void completelyRemoveAllEmp(long companyId);
 
 	public void completelyRemoveAllEmpFromDB(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getUserEmployeeCodeValue(long userId, long companyId);
+
+	public void addOrUpdateUserEmployeeCodeValue(
+		java.lang.String employeeCode, long userId, long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isUserExisted(java.lang.String generatedScreenName,
+		java.lang.String employeeCode, java.util.Date empDoB, long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isSameOrWrongOrderDoB(java.util.Date empDob,
+		java.util.Date userEmpDob);
+
+	public java.lang.String regenerateDuplicateEmailAddress(
+		java.lang.String emailAddress, int number, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

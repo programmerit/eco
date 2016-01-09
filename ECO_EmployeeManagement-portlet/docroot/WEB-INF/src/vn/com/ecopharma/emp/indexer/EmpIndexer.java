@@ -23,6 +23,7 @@ import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
+import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
@@ -94,6 +95,9 @@ public class EmpIndexer extends BaseIndexer {
 		document.addNumber(EmpField.EMPLOYEE_USER_ID, emp.getEmpUserId());
 		document.addText(EmpField.FULL_NAME,
 				UserLocalServiceUtil.getUser(emp.getEmpUserId()).getFullName());
+		document.addText(EmpField.VN_FULL_NAME, EmployeeUtils
+				.getViFullnameFromUser(UserLocalServiceUtil.getUser(emp
+						.getEmpUserId())));
 
 		document.addText(EmpField.EMP_CODE, emp.getEmpCode());
 
@@ -109,20 +113,28 @@ public class EmpIndexer extends BaseIndexer {
 
 		document.addDate(EmpField.JOINED_DATE, emp.getJoinedDate());
 
-		document.addText(EmpField.TITLES, titles != null ? titles.getName()
-				: StringUtils.EMPTY);
+		document.addText(EmpField.TITLES,
+				titles != null ? EmployeeUtils.removeDashChar(titles.getName())
+						: StringUtils.EMPTY);
 
-		document.addText(EmpField.UNIT_GROUP,
-				unitGroup != null ? unitGroup.getName() : StringUtils.EMPTY);
+		document.addText(
+				EmpField.UNIT_GROUP,
+				unitGroup != null ? EmployeeUtils.removeDashChar(unitGroup
+						.getName()) : StringUtils.EMPTY);
 
-		document.addText(EmpField.UNIT, unit != null ? unit.getName()
-				: StringUtils.EMPTY);
+		document.addText(EmpField.UNIT,
+				unit != null ? EmployeeUtils.removeDashChar(unit.getName())
+						: StringUtils.EMPTY);
 
-		document.addText(EmpField.DEPARTMENT,
-				department != null ? department.getName() : StringUtils.EMPTY);
+		document.addText(
+				EmpField.DEPARTMENT,
+				department != null ? EmployeeUtils.removeDashChar(department
+						.getName()) : StringUtils.EMPTY);
 
-		document.addText(EmpField.DEVISION,
-				devision != null ? devision.getName() : StringUtils.EMPTY);
+		document.addText(
+				EmpField.DEVISION,
+				devision != null ? EmployeeUtils.removeDashChar(devision
+						.getName()) : StringUtils.EMPTY);
 
 		document.addText(
 				EmpField.LEVEL,

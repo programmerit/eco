@@ -310,6 +310,12 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup> findByDepartment(
+		long departmentId) {
+		return _titlesDepartmentUnitUnitGroupLocalService.findByDepartment(departmentId);
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup addTitlesDepartmentUnitUnitGroup(
 		long titlesId, long departmentId, long unitId, long unitGroupId,
 		com.liferay.portal.service.ServiceContext serviceContext) {

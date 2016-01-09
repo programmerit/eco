@@ -211,9 +211,15 @@ public class EmployeeUtils {
 	}
 
 	public static String getFullnameFromUser(User user) {
-		return StringUtils.trimToEmpty(user.getFirstName()) + " "
+		return StringUtils.trimToEmpty(user.getLastName()) + " "
 				+ StringUtils.trimToEmpty(user.getMiddleName()) + " "
-				+ StringUtils.trimToEmpty(user.getLastName());
+				+ StringUtils.trimToEmpty(user.getFirstName());
+	}
+
+	public static String getViFullnameFromUser(User user) {
+		return StringUtils.trimToEmpty(user.getLastName()) + " "
+				+ StringUtils.trimToEmpty(user.getMiddleName()) + " "
+				+ StringUtils.trimToEmpty(user.getFirstName());
 	}
 
 	/**
@@ -472,5 +478,15 @@ public class EmployeeUtils {
 	public static String getLocalizedResignationType(String r) {
 		return StringUtils.trimToNull(r) != null ? ResignationType.valueOf(r)
 				.getLocalizedString() : StringUtils.EMPTY;
+	}
+
+	public static String removeDashChar(String s) {
+		final String[] dashChars = new String[] { "-" };
+
+		for (String dashChar : dashChars)
+			if (s.contains(dashChar)) {
+				s = s.replaceAll(dashChar, " "); // NOSONAR
+			}
+		return s;
 	}
 }

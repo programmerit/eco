@@ -52,10 +52,12 @@ public class TimeTrackingFilterBean implements Serializable {
 
 	// for report page only
 	private int month;
+	private int year;
 
 	@PostConstruct
 	public void init() {
 		month = getDefaultMonth();
+		year = getDefaultYear();
 	}
 
 	public void onDevisionChanged() {
@@ -92,17 +94,19 @@ public class TimeTrackingFilterBean implements Serializable {
 
 	public List<Unit> getUnits() {
 		return department != null ? UnitLocalServiceUtil
-				.findByDepartment(department.getDepartmentId()) : null;
+				.findByDepartment(department.getDepartmentId())
+				: new ArrayList<Unit>();
 	}
 
 	public List<UnitGroup> getUnitGroups() {
 		return unit != null ? UnitGroupLocalServiceUtil.findByUnit(unit
-				.getUnitId()) : null;
+				.getUnitId()) : new ArrayList<UnitGroup>();
 	}
 
 	public List<Department> getDepartments() {
 		return devision != null ? DepartmentLocalServiceUtil
-				.findByDevision(devision.getDevisionId()) : null;
+				.findByDevision(devision.getDevisionId())
+				: new ArrayList<Department>();
 	}
 
 	public List<Devision> getDevisions() {
@@ -110,22 +114,18 @@ public class TimeTrackingFilterBean implements Serializable {
 	}
 
 	public List<Titles> getTitlesList() {
-		if (devision != null) {
-			if (department != null) {
-				return TitlesLocalServiceUtil.findByDepartment(department
-						.getDepartmentId());
-			}
-
-			if (unit != null) {
-				return TitlesLocalServiceUtil.findByUnit(unit.getUnitId());
-			}
-
+		if (unit == null) {
+			return department != null ? TitlesLocalServiceUtil
+					.findAllByDepartment(department.getDepartmentId())
+					: new ArrayList<Titles>();
+		} else {
 			if (unitGroup != null) {
-				return TitlesLocalServiceUtil.findByUnitGroup(unitGroup
+				return TitlesLocalServiceUtil.findByUnitGroupOnly(unitGroup
 						.getUnitGroupId());
+			} else {
+				return TitlesLocalServiceUtil.findByUnitOnly(unit.getUnitId());
 			}
 		}
-		return new ArrayList<>();
 	}
 
 	public String getGlobalString() {
@@ -216,6 +216,14 @@ public class TimeTrackingFilterBean implements Serializable {
 		this.month = month;
 	}
 
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
 	public String getValueFilter() {
 		return valueFilter;
 	}
@@ -237,6 +245,10 @@ public class TimeTrackingFilterBean implements Serializable {
 		return Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
 	}
 
+	public List<Integer> getYears() {
+		return Arrays.asList(2015, 2016);
+	}
+
 	public List<String> getValuesFilter() {
 		return ValueFilterType.getStringValues();
 	}
@@ -249,5 +261,9 @@ public class TimeTrackingFilterBean implements Serializable {
 		final Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
 		return calendar.get(Calendar.MONTH);
+	}
+
+	private static int getDefaultYear() {
+		return 2016;
 	}
 }

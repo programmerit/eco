@@ -16,6 +16,8 @@ public class EmpField {
 
 	public static final String FULL_NAME = "fullName";
 
+	public static final String VN_FULL_NAME = "fullNameVi";
+
 	public static final String CONTACT_NUMBER = "contactNumber";
 
 	public static final String BIRTHDAY = "birthday";

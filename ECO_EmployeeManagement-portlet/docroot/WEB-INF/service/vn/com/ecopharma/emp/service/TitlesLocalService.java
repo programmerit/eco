@@ -265,11 +265,18 @@ public interface TitlesLocalService extends BaseLocalService,
 		java.lang.String name_en, java.lang.String code,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
+	public vn.com.ecopharma.emp.model.Titles addTitles(
+		vn.com.ecopharma.emp.model.Titles titles,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
 	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartmentUnitUnitGroup(
 		long departmentId, long unitId, long unitGroupId);
 
 	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByUnitUnitGroup(
 		long unitId, long unitGroupId);
+
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findAllByDepartment(
+		long departmentId);
 
 	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartmentOnly(
 		long departmentId);

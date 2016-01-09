@@ -160,6 +160,15 @@
 						<p:ajax update=":reportForm:reports" />
 						<p:column>#{timeTrackingFilterBean.getMonthName(m)}</p:column>
 					</p:selectOneMenu>
+
+					<p:selectOneMenu id="yearSelect"
+						value="#{timeTrackingFilterBean.year}" var="y">
+						<p:ajax oncomplete="PF('wReportTable')" />
+						<f:selectItems value="#{timeTrackingFilterBean.years}" var="y"
+							itemLabel="#{y}" itemValue="#{y}" />
+						<p:ajax update=":reportForm:reports" />
+						<p:column>#{y}</p:column>
+					</p:selectOneMenu>
 					<!-- 					<br />
 					<p:selectOneMenu id="valueFilterSelect"
 						value="#{timeTrackingFilterBean.valueFilter}" var="v">

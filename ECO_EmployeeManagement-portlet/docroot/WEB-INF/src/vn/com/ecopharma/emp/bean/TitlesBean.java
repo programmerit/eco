@@ -48,7 +48,8 @@ public class TitlesBean extends AbstractOrganizationBean {
 			if (department != null) {
 				FacesMessage msg = null;
 				if (TitlesLocalServiceUtil.fetchTitles(titles.getTitlesId()) == null) {
-					Titles result = TitlesLocalServiceUtil.addTitles(titles);
+					Titles result = TitlesLocalServiceUtil.addTitles(titles,
+							EmployeeUtils.getServiceContext());
 					TitlesDepartmentUnitUnitGroupLocalServiceUtil
 							.addTitlesDepartmentUnitUnitGroup(result,
 									department, unit, unitGroup,

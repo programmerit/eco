@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.loc/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.loc/ui"
+	xmlns:pe="http://primefaces.loc/ui/extensions"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
+	<h:head />
+
+	<h:body>
+		<h:form id="locTreeForm">
+
+			<p:contextMenu id="locTreeContextMenu" for="locTree">
+				<p:menuitem value="Test" />
+			</p:contextMenu>
+
+			<p:tree value="#{locationTreeViewBean.root}" var="loc" id="locTree"
+				selectionMode="multiple"
+				selection="#{locationTreeViewBean.selectedNodes}" animate="true"
+				draggable="true" droppable="true" highlight="true"
+				showUnselectableCheckbox="true">
+				<p:treeNode type="City" expandedIcon="ui-icon-folder-open"
+					collapsedIcon="ui-icon-folder-collapsed">
+					<h:outputText value="#{loc.name}" />
+				</p:treeNode>
+
+				<p:treeNode type="District" icon="ui-icon-document">
+					<h:outputText value="#{loc.name}" />
+				</p:treeNode>
+			</p:tree>
+		</h:form>
+	</h:body>
+</f:view>
+

@@ -84,6 +84,17 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceImpl extends
 		return new ArrayList<>();
 	}
 
+	public List<TitlesDepartmentUnitUnitGroup> findByDepartment(
+			long departmentId) {
+		try {
+			return titlesDepartmentUnitUnitGroupPersistence
+					.findByDepartment(departmentId);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return new ArrayList<>();
+	}
+
 	public TitlesDepartmentUnitUnitGroup addTitlesDepartmentUnitUnitGroup(
 			long titlesId, long departmentId, long unitId, long unitGroupId,
 			ServiceContext serviceContext) {

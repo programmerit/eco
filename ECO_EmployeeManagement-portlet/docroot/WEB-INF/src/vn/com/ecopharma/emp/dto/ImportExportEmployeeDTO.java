@@ -35,17 +35,14 @@ import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.model.Region;
-import com.liferay.portal.model.User;
 import com.liferay.portal.service.CountryServiceUtil;
 import com.liferay.portal.service.RegionServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 public class ImportExportEmployeeDTO implements Serializable {
 
@@ -130,12 +127,11 @@ public class ImportExportEmployeeDTO implements Serializable {
 	private Devision devision;
 	private Titles titles;
 
-	private User existedUser;
-
 	private String importFailedException;
 
 	private static final String[] HCMC_POSSIBLE_NAMES = new String[] {
-			"TP.HCM", "Tp.HCM", "Tp. HCM", "TpHCM", "TP. HCM", "TPHCM" };
+			"TP.HCM", "Tp.HCM", "Tp. HCM", "TpHCM", "TP. HCM", "TPHCM",
+			"TP HCM" };
 
 	public ImportExportEmployeeDTO(XSSFRow r) {
 		this.bindFieldsFromExcelRow(r);
@@ -323,8 +319,8 @@ public class ImportExportEmployeeDTO implements Serializable {
 				.findByName(r.getCell(4).getStringCellValue()).getLevelId() : 0;
 		promotedDate = r.getCell(5) != null ? r.getCell(5).getDateCellValue()
 				: null;
-		joinedDate = r.getCell(10) != null ? r.getCell(10).getDateCellValue()
-				: null;
+		joinedDate = r.getCell(10) != null ? getConvertedDateStringCell(r
+				.getCell(10)) : null;
 		laborContractSignedDate = r.getCell(11) != null ? r.getCell(11)
 				.getDateCellValue() : null;
 		laborContractExpiredDate = isNotNullCell(r.getCell(12)) ? r.getCell(12)
@@ -336,8 +332,9 @@ public class ImportExportEmployeeDTO implements Serializable {
 		laborContractSignedTime = getLaborContractSignedTime(r.getCell(14));
 
 		dob = getConvertedDateStringCell(r.getCell(15));
-		gender = getCellValueAsString(r.getCell(16)).equalsIgnoreCase(
-				MALE_VNESE) ? MALE : FEMALE;
+		String genderCellVal = getCellValueAsString(r.getCell(16));
+		gender = genderCellVal.equalsIgnoreCase(MALE_VNESE)
+				|| genderCellVal.equalsIgnoreCase(MALE) ? MALE : FEMALE;
 
 		pob = getCellValueAsString(r.getCell(17));
 		education = getCellValueAsString(r.getCell(18));
@@ -351,7 +348,7 @@ public class ImportExportEmployeeDTO implements Serializable {
 				.getUniversityId() : 0;
 		marritalStatus = getCellValueAsString(r.getCell(21));
 		identityCardNo = getCellValueAsString(r.getCell(22));
-		issuedDate = r.getCell(23).getDateCellValue();
+		issuedDate = getConvertedDateStringCell(r.getCell(23));
 		issuedPlace = getCellValueAsString(r.getCell(24));
 
 		presentAddress = getCellValueAsString(r.getCell(25));
@@ -364,8 +361,7 @@ public class ImportExportEmployeeDTO implements Serializable {
 				getCityFromTemporaryAddress());
 
 		contactNumber = getCellValueAsString(r.getCell(27));
-		String srcEmailAddress = getCellValueAsString(r.getCell(28));
-		emailAddress = srcEmailAddress;
+		emailAddress = getCellValueAsString(r.getCell(28));
 		companyEmailAddress = getCellValueAsString(r.getCell(29));
 		taxCode = getCellValueAsString(r.getCell(30));
 		numberOfDependents = getConvertedIntegerCell(r.getCell(31));
@@ -440,52 +436,6 @@ public class ImportExportEmployeeDTO implements Serializable {
 	 *         info
 	 * 
 	 */
-	public long checkExistedEmpEmpUser(String username, String empCode,
-			Date birthday) {
-		try {
-			existedUser = UserLocalServiceUtil.fetchUserByScreenName(
-					serviceContext.getCompanyId(), username);
-			LogFactoryUtil.getLog(ImportExportEmployeeDTO.class).info(
-					existedUser != null ? "screen name: "
-							+ existedUser.getScreenName() : "user null");
-			final Emp emp = existedUser != null ? EmpLocalServiceUtil
-					.findByUser(existedUser.getUserId()) : null;
-
-			if (emp != null) {
-				if (empCode.equalsIgnoreCase(emp.getEmpCode())) {
-					return emp.getEmpId(); // this employee has already existed,
-											// call UPDATE instead
-				} else {
-					return 1; // a duplicate employee with the same NAME
-								// existed, generate NEW USERNAME && CREATE NEW
-								// EMPLOYEE, EMPLOYEE USER
-				}
-			} else {
-				if (existedUser != null)
-					LogFactoryUtil.getLog(ImportExportEmployeeDTO.class).info(
-							"user birthday: "
-									+ existedUser.getBirthday()
-									+ "\n checking emp birthday: "
-									+ birthday
-									+ "\n comparision result: "
-									+ existedUser.getBirthday()
-											.equals(birthday));
-				if (existedUser != null
-						&& existedUser.getBirthday().equals(birthday))
-					return 2;
-				else
-					return -1;
-
-			}
-		} catch (SystemException e) {
-			LogFactoryUtil.getLog(ImportExportEmployeeDTO.class).info(
-					"Exception on checkExistedEmpEmpUser", e);
-		} catch (PortalException e) {
-			LogFactoryUtil.getLog(ImportExportEmployeeDTO.class).info(
-					"Exception on checkExistedEmpEmpUser", e);
-		}
-		return 0;
-	}
 
 	private Calendar getBirthDayCalendar() {
 		if (dob == null)
@@ -1147,14 +1097,6 @@ public class ImportExportEmployeeDTO implements Serializable {
 
 	public void setImportFailedException(String importFailedException) {
 		this.importFailedException = importFailedException;
-	}
-
-	public User getExistedUser() {
-		return existedUser;
-	}
-
-	public void setExistedUser(User existedUser) {
-		this.existedUser = existedUser;
 	}
 
 	public boolean isEmployeeExisted() {

@@ -330,12 +330,7 @@ public class EmpLocalServiceUtil {
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp addEmp(
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		return getService().addEmp(serviceContext);
-	}
-
-	public static vn.com.ecopharma.emp.model.Emp addEmp(
-		vn.com.ecopharma.emp.model.Emp e, boolean autoPassword,
+		vn.com.ecopharma.emp.model.Emp employee, boolean autoPassword,
 		java.lang.String password1, java.lang.String password2,
 		boolean autoScreenName, java.lang.String screenName,
 		java.lang.String emailAddress, long facebookId,
@@ -352,7 +347,7 @@ public class EmpLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addEmp(e, autoPassword, password1, password2,
+				   .addEmp(employee, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			locale, firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, groupIds,
@@ -360,64 +355,30 @@ public class EmpLocalServiceUtil {
 			addresses, dependentNameMap, bankInfoMap, serviceContext);
 	}
 
-	public static vn.com.ecopharma.emp.model.Emp updateEmp(
-		vn.com.ecopharma.emp.model.Emp employee,
-		com.liferay.portal.model.User user, java.lang.String password1,
-		java.lang.String password2, boolean autoScreenName,
-		java.lang.String screenName, java.lang.String emailAddress,
-		long facebookId, java.lang.String openId, java.util.Locale locale,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, int prefixId, int suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear, long[] groupIds,
-		long[] organizationIds, long[] roleIds, long[] userGroupIds,
-		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
-		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
-		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isImportAction,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .updateEmp(employee, user, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, groupIds,
-			organizationIds, roleIds, userGroupIds, addressesMap,
-			dependentNameMap, bankInfoMap, isImportAction, serviceContext);
-	}
-
-	public static vn.com.ecopharma.emp.model.Emp updateEmp(
-		vn.com.ecopharma.emp.model.Emp employee,
-		com.liferay.portal.model.User user, java.lang.String password1,
-		java.lang.String password2, boolean autoScreenName,
-		java.lang.String emailAddress, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, int prefixId,
-		int suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear,
-		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
-		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
-		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isImportAction,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .updateEmp(employee, user, password1, password2,
-			autoScreenName, emailAddress, firstName, middleName, lastName,
-			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			addressesMap, dependentNameMap, bankInfoMap, isImportAction,
-			serviceContext);
-	}
-
 	public static vn.com.ecopharma.emp.model.Emp addEmp(
-		vn.com.ecopharma.emp.model.Emp e, com.liferay.portal.model.User user,
-		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addresses,
+		vn.com.ecopharma.emp.model.Emp employee,
+		com.liferay.portal.model.User user,
+		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addEmp(e, user, addresses, dependentNameMap, serviceContext);
+				   .addEmp(employee, user, addressesMap, dependentNameMap,
+			bankInfoMap, serviceContext);
+	}
+
+	public static vn.com.ecopharma.emp.model.Emp update(
+		vn.com.ecopharma.emp.model.Emp employee, long userId, long oldTitlesId,
+		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
+		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		boolean isImportAction,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService()
+				   .update(employee, userId, oldTitlesId, addressesMap,
+			dependentNameMap, bankInfoMap, isImportAction, serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp update(
@@ -431,6 +392,34 @@ public class EmpLocalServiceUtil {
 		return getService()
 				   .update(employee, user, oldTitlesId, addressesMap,
 			dependentNameMap, bankInfoMap, isImportAction, serviceContext);
+	}
+
+	public static vn.com.ecopharma.emp.model.Emp addOrUpdateWithExistUser(
+		vn.com.ecopharma.emp.model.Emp employee,
+		com.liferay.portal.model.User user, long oldTitlesId,
+		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
+		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		boolean isImportAction,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService()
+				   .addOrUpdateWithExistUser(employee, user, oldTitlesId,
+			addressesMap, dependentNameMap, bankInfoMap, isImportAction,
+			serviceContext);
+	}
+
+	public static vn.com.ecopharma.emp.model.Emp addOrUpdateWithExistUser(
+		vn.com.ecopharma.emp.model.Emp employee,
+		java.lang.String userScreenName, long oldTitlesId,
+		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
+		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		boolean isImportAction,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService()
+				   .addOrUpdateWithExistUser(employee, userScreenName,
+			oldTitlesId, addressesMap, dependentNameMap, bankInfoMap,
+			isImportAction, serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp createEmployee(
@@ -535,6 +524,37 @@ public class EmpLocalServiceUtil {
 
 	public static void completelyRemoveAllEmpFromDB(long companyId) {
 		getService().completelyRemoveAllEmpFromDB(companyId);
+	}
+
+	public static java.lang.String getUserEmployeeCodeValue(long userId,
+		long companyId) {
+		return getService().getUserEmployeeCodeValue(userId, companyId);
+	}
+
+	public static void addOrUpdateUserEmployeeCodeValue(
+		java.lang.String employeeCode, long userId, long companyId) {
+		getService()
+			.addOrUpdateUserEmployeeCodeValue(employeeCode, userId, companyId);
+	}
+
+	public static boolean isUserExisted(java.lang.String generatedScreenName,
+		java.lang.String employeeCode, java.util.Date empDoB, long companyId) {
+		return getService()
+				   .isUserExisted(generatedScreenName, employeeCode, empDoB,
+			companyId);
+	}
+
+	public static boolean isSameOrWrongOrderDoB(java.util.Date empDob,
+		java.util.Date userEmpDob) {
+		return getService().isSameOrWrongOrderDoB(empDob, userEmpDob);
+	}
+
+	public static java.lang.String regenerateDuplicateEmailAddress(
+		java.lang.String emailAddress, int number, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .regenerateDuplicateEmailAddress(emailAddress, number,
+			companyId);
 	}
 
 	public static void clearService() {

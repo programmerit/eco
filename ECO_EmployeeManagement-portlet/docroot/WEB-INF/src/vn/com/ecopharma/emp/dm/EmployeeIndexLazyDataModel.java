@@ -80,8 +80,8 @@ public class EmployeeIndexLazyDataModel extends LazyDataModel<EmpIndexedItem> {
 			globalFilter = filters.get(GLOBAL_FILTER) != null ? (String) filters
 					.get(GLOBAL_FILTER) : StringUtils.EMPTY;
 
-			fullName = filters.get(EmpField.FULL_NAME) != null ? (String) filters
-					.get(EmpField.FULL_NAME) : StringUtils.EMPTY;
+			fullName = filters.get(EmpField.VN_FULL_NAME) != null ? (String) filters
+					.get(EmpField.VN_FULL_NAME) : StringUtils.EMPTY;
 
 			empCode = filters.get(EmpField.EMP_CODE) != null ? (String) filters
 					.get(EmpField.EMP_CODE) : StringUtils.EMPTY;
@@ -206,7 +206,7 @@ public class EmployeeIndexLazyDataModel extends LazyDataModel<EmpIndexedItem> {
 			}
 
 			if (StringUtils.trimToNull(fullName) != null) {
-				fullNameFilterBooleanQuery.addTerm(EmpField.FULL_NAME,
+				fullNameFilterBooleanQuery.addTerm(EmpField.VN_FULL_NAME,
 						fullName, true, BooleanClauseOccur.MUST);
 				queries.add(fullNameFilterBooleanQuery);
 			}
@@ -219,9 +219,6 @@ public class EmployeeIndexLazyDataModel extends LazyDataModel<EmpIndexedItem> {
 			}
 
 			if (StringUtils.trimToNull(department) != null) {
-				// department = String.format(department, "'%s'");//"'" +
-				// department + "'";
-				department = department.replaceAll("-", "/-");
 				TermQuery departmentTermQuery = TermQueryFactoryUtil.create(
 						searchContext, EmpField.DEPARTMENT,
 						StringUtils.trimToEmpty(department));

@@ -161,12 +161,6 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		_methodName29 = "addEmp";
 
 		_methodParameterTypes29 = new String[] {
-				"com.liferay.portal.service.ServiceContext"
-			};
-
-		_methodName30 = "addEmp";
-
-		_methodParameterTypes30 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp", "boolean", "java.lang.String",
 				"java.lang.String", "boolean", "java.lang.String",
 				"java.lang.String", "long", "java.lang.String",
@@ -177,46 +171,46 @@ public class EmpLocalServiceClp implements EmpLocalService {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName31 = "updateEmp";
+		_methodName30 = "addEmp";
 
-		_methodParameterTypes31 = new String[] {
+		_methodParameterTypes30 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp",
-				"com.liferay.portal.model.User", "java.lang.String",
-				"java.lang.String", "boolean", "java.lang.String",
-				"java.lang.String", "long", "java.lang.String",
-				"java.util.Locale", "java.lang.String", "java.lang.String",
-				"java.lang.String", "int", "int", "boolean", "int", "int", "int",
-				"long[][]", "long[][]", "long[][]", "long[][]", "java.util.Map",
-				"java.util.Map", "java.util.Map", "boolean",
+				"com.liferay.portal.model.User", "java.util.Map",
+				"java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName32 = "updateEmp";
+		_methodName31 = "update";
+
+		_methodParameterTypes31 = new String[] {
+				"vn.com.ecopharma.emp.model.Emp", "long", "long",
+				"java.util.Map", "java.util.Map", "java.util.Map", "boolean",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName32 = "update";
 
 		_methodParameterTypes32 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp",
-				"com.liferay.portal.model.User", "java.lang.String",
-				"java.lang.String", "boolean", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"int", "int", "boolean", "int", "int", "int", "java.util.Map",
+				"com.liferay.portal.model.User", "long", "java.util.Map",
 				"java.util.Map", "java.util.Map", "boolean",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName33 = "addEmp";
+		_methodName33 = "addOrUpdateWithExistUser";
 
 		_methodParameterTypes33 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp",
-				"com.liferay.portal.model.User", "java.util.Map",
-				"java.util.Map", "com.liferay.portal.service.ServiceContext"
-			};
-
-		_methodName34 = "update";
-
-		_methodParameterTypes34 = new String[] {
-				"vn.com.ecopharma.emp.model.Emp",
 				"com.liferay.portal.model.User", "long", "java.util.Map",
 				"java.util.Map", "java.util.Map", "boolean",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName34 = "addOrUpdateWithExistUser";
+
+		_methodParameterTypes34 = new String[] {
+				"vn.com.ecopharma.emp.model.Emp", "java.lang.String", "long",
+				"java.util.Map", "java.util.Map", "java.util.Map", "boolean",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
@@ -297,6 +291,32 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		_methodName46 = "completelyRemoveAllEmpFromDB";
 
 		_methodParameterTypes46 = new String[] { "long" };
+
+		_methodName47 = "getUserEmployeeCodeValue";
+
+		_methodParameterTypes47 = new String[] { "long", "long" };
+
+		_methodName48 = "addOrUpdateUserEmployeeCodeValue";
+
+		_methodParameterTypes48 = new String[] {
+				"java.lang.String", "long", "long"
+			};
+
+		_methodName49 = "isUserExisted";
+
+		_methodParameterTypes49 = new String[] {
+				"java.lang.String", "java.lang.String", "java.util.Date", "long"
+			};
+
+		_methodName50 = "isSameOrWrongOrderDoB";
+
+		_methodParameterTypes50 = new String[] {
+				"java.util.Date", "java.util.Date"
+			};
+
+		_methodName51 = "regenerateDuplicateEmailAddress";
+
+		_methodParameterTypes51 = new String[] { "java.lang.String", "int", "long" };
 	}
 
 	@Override
@@ -1124,32 +1144,7 @@ public class EmpLocalServiceClp implements EmpLocalService {
 
 	@Override
 	public vn.com.ecopharma.emp.model.Emp addEmp(
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
-					new Object[] { ClpSerializer.translateInput(serviceContext) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (vn.com.ecopharma.emp.model.Emp)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public vn.com.ecopharma.emp.model.Emp addEmp(
-		vn.com.ecopharma.emp.model.Emp e, boolean autoPassword,
+		vn.com.ecopharma.emp.model.Emp employee, boolean autoPassword,
 		java.lang.String password1, java.lang.String password2,
 		boolean autoScreenName, java.lang.String screenName,
 		java.lang.String emailAddress, long facebookId,
@@ -1168,10 +1163,10 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30,
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
 					new Object[] {
-						ClpSerializer.translateInput(e),
+						ClpSerializer.translateInput(employee),
 						
 					autoPassword,
 						
@@ -1254,216 +1249,30 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	}
 
 	@Override
-	public vn.com.ecopharma.emp.model.Emp updateEmp(
-		vn.com.ecopharma.emp.model.Emp employee,
-		com.liferay.portal.model.User user, java.lang.String password1,
-		java.lang.String password2, boolean autoScreenName,
-		java.lang.String screenName, java.lang.String emailAddress,
-		long facebookId, java.lang.String openId, java.util.Locale locale,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, int prefixId, int suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear, long[] groupIds,
-		long[] organizationIds, long[] roleIds, long[] userGroupIds,
-		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
-		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
-		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isImportAction,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
-					new Object[] {
-						ClpSerializer.translateInput(employee),
-						
-					ClpSerializer.translateInput(user),
-						
-					ClpSerializer.translateInput(password1),
-						
-					ClpSerializer.translateInput(password2),
-						
-					autoScreenName,
-						
-					ClpSerializer.translateInput(screenName),
-						
-					ClpSerializer.translateInput(emailAddress),
-						
-					facebookId,
-						
-					ClpSerializer.translateInput(openId),
-						
-					ClpSerializer.translateInput(locale),
-						
-					ClpSerializer.translateInput(firstName),
-						
-					ClpSerializer.translateInput(middleName),
-						
-					ClpSerializer.translateInput(lastName),
-						
-					prefixId,
-						
-					suffixId,
-						
-					male,
-						
-					birthdayMonth,
-						
-					birthdayDay,
-						
-					birthdayYear,
-						
-					ClpSerializer.translateInput(groupIds),
-						
-					ClpSerializer.translateInput(organizationIds),
-						
-					ClpSerializer.translateInput(roleIds),
-						
-					ClpSerializer.translateInput(userGroupIds),
-						
-					ClpSerializer.translateInput(addressesMap),
-						
-					ClpSerializer.translateInput(dependentNameMap),
-						
-					ClpSerializer.translateInput(bankInfoMap),
-						
-					isImportAction,
-						
-					ClpSerializer.translateInput(serviceContext)
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (vn.com.ecopharma.emp.model.Emp)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public vn.com.ecopharma.emp.model.Emp updateEmp(
-		vn.com.ecopharma.emp.model.Emp employee,
-		com.liferay.portal.model.User user, java.lang.String password1,
-		java.lang.String password2, boolean autoScreenName,
-		java.lang.String emailAddress, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, int prefixId,
-		int suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear,
-		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
-		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
-		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isImportAction,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32,
-					new Object[] {
-						ClpSerializer.translateInput(employee),
-						
-					ClpSerializer.translateInput(user),
-						
-					ClpSerializer.translateInput(password1),
-						
-					ClpSerializer.translateInput(password2),
-						
-					autoScreenName,
-						
-					ClpSerializer.translateInput(emailAddress),
-						
-					ClpSerializer.translateInput(firstName),
-						
-					ClpSerializer.translateInput(middleName),
-						
-					ClpSerializer.translateInput(lastName),
-						
-					prefixId,
-						
-					suffixId,
-						
-					male,
-						
-					birthdayMonth,
-						
-					birthdayDay,
-						
-					birthdayYear,
-						
-					ClpSerializer.translateInput(addressesMap),
-						
-					ClpSerializer.translateInput(dependentNameMap),
-						
-					ClpSerializer.translateInput(bankInfoMap),
-						
-					isImportAction,
-						
-					ClpSerializer.translateInput(serviceContext)
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (vn.com.ecopharma.emp.model.Emp)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
 	public vn.com.ecopharma.emp.model.Emp addEmp(
-		vn.com.ecopharma.emp.model.Emp e, com.liferay.portal.model.User user,
-		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addresses,
+		vn.com.ecopharma.emp.model.Emp employee,
+		com.liferay.portal.model.User user,
+		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33,
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
 					new Object[] {
-						ClpSerializer.translateInput(e),
+						ClpSerializer.translateInput(employee),
 						
 					ClpSerializer.translateInput(user),
 						
-					ClpSerializer.translateInput(addresses),
+					ClpSerializer.translateInput(addressesMap),
 						
 					ClpSerializer.translateInput(dependentNameMap),
+						
+					ClpSerializer.translateInput(bankInfoMap),
 						
 					ClpSerializer.translateInput(serviceContext)
 					});
@@ -1493,8 +1302,148 @@ public class EmpLocalServiceClp implements EmpLocalService {
 
 	@Override
 	public vn.com.ecopharma.emp.model.Emp update(
+		vn.com.ecopharma.emp.model.Emp employee, long userId, long oldTitlesId,
+		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
+		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		boolean isImportAction,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
+					new Object[] {
+						ClpSerializer.translateInput(employee),
+						
+					userId,
+						
+					oldTitlesId,
+						
+					ClpSerializer.translateInput(addressesMap),
+						
+					ClpSerializer.translateInput(dependentNameMap),
+						
+					ClpSerializer.translateInput(bankInfoMap),
+						
+					isImportAction,
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.Emp)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.Emp update(
 		vn.com.ecopharma.emp.model.Emp employee,
 		com.liferay.portal.model.User user, long oldTitlesId,
+		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
+		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		boolean isImportAction,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
+					new Object[] {
+						ClpSerializer.translateInput(employee),
+						
+					ClpSerializer.translateInput(user),
+						
+					oldTitlesId,
+						
+					ClpSerializer.translateInput(addressesMap),
+						
+					ClpSerializer.translateInput(dependentNameMap),
+						
+					ClpSerializer.translateInput(bankInfoMap),
+						
+					isImportAction,
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.Emp)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.Emp addOrUpdateWithExistUser(
+		vn.com.ecopharma.emp.model.Emp employee,
+		com.liferay.portal.model.User user, long oldTitlesId,
+		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
+		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		boolean isImportAction,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
+					new Object[] {
+						ClpSerializer.translateInput(employee),
+						
+					ClpSerializer.translateInput(user),
+						
+					oldTitlesId,
+						
+					ClpSerializer.translateInput(addressesMap),
+						
+					ClpSerializer.translateInput(dependentNameMap),
+						
+					ClpSerializer.translateInput(bankInfoMap),
+						
+					isImportAction,
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.Emp)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.Emp addOrUpdateWithExistUser(
+		vn.com.ecopharma.emp.model.Emp employee,
+		java.lang.String userScreenName, long oldTitlesId,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
@@ -1508,7 +1457,7 @@ public class EmpLocalServiceClp implements EmpLocalService {
 					new Object[] {
 						ClpSerializer.translateInput(employee),
 						
-					ClpSerializer.translateInput(user),
+					ClpSerializer.translateInput(userScreenName),
 						
 					oldTitlesId,
 						
@@ -1977,6 +1926,154 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		}
 	}
 
+	@Override
+	public java.lang.String getUserEmployeeCodeValue(long userId, long companyId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName47,
+					_methodParameterTypes47, new Object[] { userId, companyId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public void addOrUpdateUserEmployeeCodeValue(
+		java.lang.String employeeCode, long userId, long companyId) {
+		try {
+			_invokableLocalService.invokeMethod(_methodName48,
+				_methodParameterTypes48,
+				new Object[] {
+					ClpSerializer.translateInput(employeeCode),
+					
+				userId,
+					
+				companyId
+				});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public boolean isUserExisted(java.lang.String generatedScreenName,
+		java.lang.String employeeCode, java.util.Date empDoB, long companyId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName49,
+					_methodParameterTypes49,
+					new Object[] {
+						ClpSerializer.translateInput(generatedScreenName),
+						
+					ClpSerializer.translateInput(employeeCode),
+						
+					ClpSerializer.translateInput(empDoB),
+						
+					companyId
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Boolean)returnObj).booleanValue();
+	}
+
+	@Override
+	public boolean isSameOrWrongOrderDoB(java.util.Date empDob,
+		java.util.Date userEmpDob) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName50,
+					_methodParameterTypes50,
+					new Object[] {
+						ClpSerializer.translateInput(empDob),
+						
+					ClpSerializer.translateInput(userEmpDob)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Boolean)returnObj).booleanValue();
+	}
+
+	@Override
+	public java.lang.String regenerateDuplicateEmailAddress(
+		java.lang.String emailAddress, int number, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName51,
+					_methodParameterTypes51,
+					new Object[] {
+						ClpSerializer.translateInput(emailAddress),
+						
+					number,
+						
+					companyId
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -2070,4 +2167,14 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	private String[] _methodParameterTypes45;
 	private String _methodName46;
 	private String[] _methodParameterTypes46;
+	private String _methodName47;
+	private String[] _methodParameterTypes47;
+	private String _methodName48;
+	private String[] _methodParameterTypes48;
+	private String _methodName49;
+	private String[] _methodParameterTypes49;
+	private String _methodName50;
+	private String[] _methodParameterTypes50;
+	private String _methodName51;
+	private String[] _methodParameterTypes51;
 }

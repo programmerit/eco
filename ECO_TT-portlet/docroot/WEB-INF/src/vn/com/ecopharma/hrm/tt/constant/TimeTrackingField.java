@@ -21,7 +21,7 @@ public final class TimeTrackingField {
 	public static final String TITLES = "titles";
 
 	public static final String DATE = "trackingDate";
-	
+
 	public static final String DAY = "day";
 
 	public static final String IN_1 = "in1";
@@ -45,6 +45,8 @@ public final class TimeTrackingField {
 	public static final String GLOBAL = "globalString";
 
 	public static final String MONTH = "month";
+
+	public static final String YEAR = "year";
 
 	public static final String FILTERED_DATE_FROM = "filteredDateFrom";
 

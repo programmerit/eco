@@ -11,6 +11,8 @@ public class EmployeeField {
 	public static final String EMPLOYEE_CODE = "employeeCode";
 
 	public static final String FULL_NAME = "fullName";
+	
+	public static final String VN_FULL_NAME = "fullNameVi";
 
 	public static final String CONTACT_NUMBER = "contactNumber";
 

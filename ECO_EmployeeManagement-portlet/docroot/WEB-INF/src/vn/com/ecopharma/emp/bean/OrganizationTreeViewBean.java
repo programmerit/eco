@@ -11,12 +11,12 @@ import javax.faces.bean.ViewScoped;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
-import vn.com.ecopharma.emp.dto.OrgNodeItem;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Titles;
 import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.model.UnitGroup;
+import vn.com.ecopharma.emp.node.OrgNodeItem;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;

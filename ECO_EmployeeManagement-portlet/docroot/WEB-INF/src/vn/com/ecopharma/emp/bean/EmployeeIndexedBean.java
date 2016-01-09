@@ -31,6 +31,7 @@ import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
+import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.search.Query;
@@ -45,25 +46,25 @@ public class EmployeeIndexedBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final List<String> VALID_COLUMNS = Arrays.asList(
-			"employeeCode", "fullName", "titles", "gender", "birthdayString",
-			"joinedDateString", "promotedDateString",
+			"employeeCode", "fullName", "fullNameVi", "titles", "gender",
+			"birthdayString", "joinedDateString", "promotedDateString",
 			"laborContractSignedDateString", "laborContractExpiredDateString",
 			"laborContractType", "contactNumber", "unitGroup", "unit",
 			"department", "devision", "level", "emailAddress",
 			"companyEmailAddress", "taxCode", "maritalStatus", "education");
 
 	private static final List<String> SORTABLE_COLUMNS = Arrays.asList(
-			"employeeCode", "fullName", "titles", "gender", "birthdayString",
-			"joinedDate", "promotedDate", "laborContractSignedDate",
-			"laborContractExpiredDate", "laborContractType", "contactNumber",
-			"unitGroup", "unit", "department", "devision", "level",
-			"emailAddress", "companyEmailAddress", "taxCode", "maritalStatus",
-			"education");
+			"employeeCode", "fullName", "fullNameVi", "titles", "gender",
+			"birthdayString", "joinedDate", "promotedDate",
+			"laborContractSignedDate", "laborContractExpiredDate",
+			"laborContractType", "contactNumber", "unitGroup", "unit",
+			"department", "devision", "level", "emailAddress",
+			"companyEmailAddress", "taxCode", "maritalStatus", "education");
 
 	private List<ColumnModel> columns;
 
 	private List<String> columnTemplates = Arrays.asList("employeeCode",
-			"fullName", "titles", "gender", "birthdayString",
+			"fullNameVi", "titles", "gender", "birthdayString",
 			"joinedDateString");
 
 	private static final String DATE_FORMAT = "dd/MM/yyyy";
@@ -90,9 +91,6 @@ public class EmployeeIndexedBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-
-		 String empCode = "92408";
-		
 
 		lazyDataModel = new EmployeeIndexLazyDataModel() {
 			private static final long serialVersionUID = 1L;
@@ -127,7 +125,7 @@ public class EmployeeIndexedBean implements Serializable {
 				}
 
 				if (filterBean.getFullName() != StringUtils.EMPTY) {
-					filters.put(EmpField.FULL_NAME, filterBean.getFullName());
+					filters.put(EmpField.VN_FULL_NAME, filterBean.getFullName());
 				}
 
 				if (filterBean.getSelectedGenders() != null
@@ -137,25 +135,28 @@ public class EmployeeIndexedBean implements Serializable {
 				}
 
 				if (filterBean.getDevision() != null) {
-					filters.put(EmpField.DEVISION, filterBean.getDevision()
-							.getName());
+					filters.put(EmpField.DEVISION, EmployeeUtils
+							.removeDashChar(filterBean.getDevision().getName()));
 				}
 				if (filterBean.getDepartment() != null) {
-					filters.put(EmpField.DEPARTMENT, filterBean.getDepartment()
-							.getName());
+					filters.put(EmpField.DEPARTMENT, EmployeeUtils
+							.removeDashChar(filterBean.getDepartment()
+									.getName()));
 				}
 				if (filterBean.getUnit() != null) {
-					filters.put(EmpField.UNIT, filterBean.getUnit().getName());
+					filters.put(EmpField.UNIT, EmployeeUtils
+							.removeDashChar(filterBean.getUnit().getName()));
 				}
 
 				if (filterBean.getUnitGroup() != null) {
-					filters.put(EmpField.UNIT_GROUP, filterBean.getUnitGroup()
-							.getName());
+					filters.put(EmpField.UNIT_GROUP,
+							EmployeeUtils.removeDashChar(filterBean
+									.getUnitGroup().getName()));
 				}
 
 				if (filterBean.getTitles() != null) {
-					filters.put(EmpField.TITLES, filterBean.getTitles()
-							.getName());
+					filters.put(EmpField.TITLES, EmployeeUtils
+							.removeDashChar(filterBean.getTitles().getName()));
 				}
 				sortField = sortField_;
 				sortOder = sortOrder_;

@@ -263,6 +263,9 @@ public interface TitlesDepartmentUnitUnitGroupLocalService
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
+	public java.util.List<vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup> findByDepartment(
+		long departmentId);
+
 	public vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup addTitlesDepartmentUnitUnitGroup(
 		long titlesId, long departmentId, long unitId, long unitGroupId,
 		com.liferay.portal.service.ServiceContext serviceContext);

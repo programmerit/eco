@@ -118,6 +118,12 @@
 									display="icon" />
 							</h:panelGroup>
 
+							<h:outputText rendered="#{not empView.showUserTab}"
+								value="Username" />
+							<h:outputText rendered="#{not empView.showUserTab}"
+								value="#{empView.modifyEmployeeInfoItem.user.screenName}" />
+							<h:outputText rendered="#{not empView.showUserTab}" />
+
 							<h:outputText value="Contact Number" />
 							<p:inputText id="contactNumber"
 								value="#{empView.modifyEmployeeInfoItem.emp.contactNumber}"

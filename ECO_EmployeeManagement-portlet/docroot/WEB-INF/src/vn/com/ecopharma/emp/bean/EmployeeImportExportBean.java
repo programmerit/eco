@@ -49,6 +49,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 @ManagedBean
 @ViewScoped
@@ -214,7 +215,7 @@ public class EmployeeImportExportBean implements Serializable {
 				serviceContext.getCompanyId(), USER_ROLE).getRoleId() };
 
 		for (ImportExportEmployeeDTO dto : totalList) {
-			String generatedUserScreenName = EmployeeUtils
+			String originGeneratedUserScreenName = EmployeeUtils
 					.generateOriginalUsername(dto.getFullname());
 
 			final Map<Address, Boolean> addressMap = EmployeeUtils
@@ -224,85 +225,98 @@ public class EmployeeImportExportBean implements Serializable {
 							.getDependentNamesFromString(dto
 									.getDependentNames()));
 
-			long checkEmp = dto.checkExistedEmpEmpUser(generatedUserScreenName,
-					dto.getEmployeeCode(), dto.getDob());
-			Emp employee = null;
-			User user = dto.getExistedUser();
-			try {
-				if (checkEmp == 0 || checkEmp == 1 || checkEmp == -1) {
-					generatedUserScreenName = EmployeeUtils
-							.generateUsername(dto.getFullname());
-					LogFactoryUtil.getLog(EmployeeImportExportBean.class).info(
-							"CHECK RESULT: " + checkEmp);
-					// create pre-persisted ready to set fields & import
-					employee = dto.createPrePersistedEmployee();
-					LogFactoryUtil.getLog(EmployeeImportExportBean.class).info(
-							"ON IMPORTING EMPLOYEE WITH GENERATED USERNAME: "
-									+ generatedUserScreenName);
+			Emp checkExistEmp = EmpLocalServiceUtil.findByEmpCode(dto
+					.getEmployeeCode());
+			if (checkExistEmp == null) {
+				Emp employee = dto.createPrePersistedEmployee();
+				try {
+					if (!EmpLocalServiceUtil.isUserExisted(
+							originGeneratedUserScreenName,
+							dto.getEmployeeCode(), dto.getDob(),
+							EmployeeUtils.getCompanyId())) {
+						originGeneratedUserScreenName = EmployeeUtils
+								.generateUsername(dto.getFullname());
 
-					// set fields before saving
-					employee.setTitlesId(dto.getTitlesId());
-					employee.setUnitGroupId(dto.getUnitGroupId());
-					employee.setUnitId(dto.getUnitId());
-					employee.setLevelId(dto.getLevelId());
-					employee.setBirthday(dto.getDob());
-					dto.setEmailAddress(generatedUserScreenName + EMAIL_SUFFIX);
-					EmpLocalServiceUtil.addEmp(employee, false, DEFAULT_PWD,
-							DEFAULT_PWD, false, generatedUserScreenName, dto
-									.getEmailAddress(),
-							0, // facebook Id
-							StringUtils.EMPTY, // openId
-							LocaleUtil.getDefault(), dto.getFirstName(), dto
-									.getMiddleName(), dto.getLastName(),
-							0, // prefix Id
-							0, // suffix Id
-							employee.getGender().equalsIgnoreCase(MALE) ? true
-									: false, dto.getBirthdayMonth(), dto
-									.getBirthdayDay(), dto.getBirthdayYear(),
-							groups, null, // organization Ids
-							roles, null, // userGroup Ids
-							false, // send email?
-							0, addressMap, dependentNameMap, dto
-									.getBankInfoMap(), serviceContext);
+						LogFactoryUtil
+								.getLog(EmployeeImportExportBean.class)
+								.info("ON IMPORTING EMPLOYEE WITH GENERATED USERNAME: "
+										+ originGeneratedUserScreenName);
 
-				} else if (checkEmp == 2) {
-					// create pre-persisted ready to set fields & import
-					employee = dto.createPrePersistedEmployee();
-					LogFactoryUtil.getLog(EmployeeImportExportBean.class).info(
-							"ON IMPORTING EMPLOYEE WITH GENERATED USERNAME: "
-									+ generatedUserScreenName);
+						// set fields before saving
+						employee.setTitlesId(dto.getTitlesId());
+						employee.setUnitGroupId(dto.getUnitGroupId());
+						employee.setUnitId(dto.getUnitId());
+						employee.setLevelId(dto.getLevelId());
+						employee.setBirthday(dto.getDob());
+						dto.setEmailAddress(StringUtils.trimToNull(dto
+								.getEmailAddress()) == null ? originGeneratedUserScreenName
+								+ EMAIL_SUFFIX
+								: dto.getEmailAddress());
+						EmpLocalServiceUtil
+								.addEmp(employee,
+										false,
+										DEFAULT_PWD,
+										DEFAULT_PWD,
+										false,
+										originGeneratedUserScreenName,
+										dto.getEmailAddress(),
+										0, // facebook Id
+										StringUtils.EMPTY, // openId
+										LocaleUtil.getDefault(),
+										dto.getFirstName(),
+										dto.getMiddleName(),
+										dto.getLastName(),
+										0, // prefix Id
+										0, // suffix Id
+										employee.getGender().equalsIgnoreCase(
+												MALE) ? true : false,
+										dto.getBirthdayMonth(),
+										dto.getBirthdayDay(),
+										dto.getBirthdayYear(), groups,
+										null, // organization Ids
+										roles,
+										null, // userGroup Ids
+										false, // send email?
+										0, addressMap, dependentNameMap,
+										dto.getBankInfoMap(), serviceContext);
 
-					// set fields before saving
-					employee.setTitlesId(dto.getTitlesId());
-					employee.setUnitGroupId(dto.getUnitGroupId());
-					employee.setUnitId(dto.getUnitId());
-					employee.setLevelId(dto.getLevelId());
-					employee.setBirthday(dto.getDob());
-					try {
-						EmpLocalServiceUtil.addEmp(employee, user, addressMap,
-								dependentNameMap, serviceContext);
-					} catch (Exception e) {
-						dto.setImportFailedException(e.getMessage());
-						failedImportList.add(dto);
-						LogFactoryUtil.getLog(EmployeeImportExportBean.class)
-								.info(e);
+					} else {
+						LogFactoryUtil
+								.getLog(EmployeeImportExportBean.class)
+								.info("ON IMPORTING EMPLOYEE WITH GENERATED USERNAME: "
+										+ originGeneratedUserScreenName);
+
+						// set fields before saving
+						employee.setTitlesId(dto.getTitlesId());
+						employee.setUnitGroupId(dto.getUnitGroupId());
+						employee.setUnitId(dto.getUnitId());
+						employee.setLevelId(dto.getLevelId());
+						employee.setBirthday(dto.getDob());
+						EmpLocalServiceUtil.addOrUpdateWithExistUser(employee,
+								originGeneratedUserScreenName,
+								employee.getTitlesId(), addressMap,
+								dependentNameMap, dto.getBankInfoMap(), true,
+								serviceContext);
 					}
 
-				} else {
-					employee = EmpLocalServiceUtil.fetchEmp(checkEmp);
-					// call UPDATE
-					Emp emp = dto.updateExistedEmployee(employee);
-					EmpLocalServiceUtil.update(emp, user,
-							employee.getTitlesId(), addressMap,
-							dependentNameMap, dto.getBankInfoMap(),
-							Boolean.TRUE, serviceContext);
+				} catch (Exception e) {
+					dto.setImportFailedException(e.getMessage());
+					failedImportList.add(dto);
+					LogFactoryUtil.getLog(EmployeeImportExportBean.class).info(
+							e);
 				}
-			} catch (Exception e) {
-				dto.setImportFailedException(e.getMessage());
-				failedImportList.add(dto);
-				LogFactoryUtil.getLog(EmployeeImportExportBean.class).info(e);
+				isFinishedImport = true;
+			} else {
+				User user = UserLocalServiceUtil.fetchUser(checkExistEmp
+						.getEmpUserId());
+				user.setFirstName(dto.getFirstName());
+				user.setMiddleName(dto.getMiddleName());
+				user.setLastName(dto.getLastName());
+				EmpLocalServiceUtil.update(checkExistEmp, user,
+						checkExistEmp.getTitlesId(), addressMap,
+						dependentNameMap, dto.getBankInfoMap(), true,
+						serviceContext);
 			}
-			isFinishedImport = true;
 		}
 	}
 
