@@ -277,7 +277,7 @@ public class EmployeeImportExportBean implements Serializable {
 										roles,
 										null, // userGroup Ids
 										false, // send email?
-										0, addressMap, dependentNameMap,
+										addressMap, dependentNameMap,
 										dto.getBankInfoMap(), serviceContext);
 
 					} else {

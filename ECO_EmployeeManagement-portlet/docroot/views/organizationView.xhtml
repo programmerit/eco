@@ -12,16 +12,40 @@
 
 	<h:body>
 		<h:form id="orgTreeForm">
-
+			<p:growl id="growl" showSummary="false" showDetail="true"
+				sticky="false" life="4000" />
 			<p:contextMenu id="orgTreeContextMenu" for="orgTree">
-				<p:menuitem value="Test" />
+				<p:menuitem value="Add Department"
+					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Devision'}" />
+				<p:menuitem value="Add Unit"
+					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Department'}" />
+				<p:menuitem value="Add UnitGroup"
+					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Unit'}" />
+				<p:menuitem value="Add Titles"
+					actionListener="#{organizationTreeViewBean.addTitles}"
+					oncomplete="PF('wTitlesDialog').show()"
+					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Department' || organizationTreeViewBean.currentSelectedLevel eq 'Unit' || organizationTreeViewBean.currentSelectedLevel eq 'UnitGroup' }" />
+
+				<p:menuitem value="Edit Department"
+					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Department'}" />
+				<p:menuitem value="Edit Unit"
+					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Unit'}" />
+				<p:menuitem value="Edit UnitGroup"
+					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'UnitGroup'}" />
+				<p:menuitem value="Edit Titles"
+					actionListener="#{organizationTreeViewBean.editTitles}"
+					oncomplete="PF('wTitlesDialog').show()"
+					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Titles'}" />
 			</p:contextMenu>
 
 			<p:tree value="#{organizationTreeViewBean.root}" var="org"
-				id="orgTree" selectionMode="multiple"
+				id="orgTree" selectionMode="multiple" dynamic="true"
 				selection="#{organizationTreeViewBean.selectedNodes}" animate="true"
 				draggable="true" droppable="true" highlight="true"
 				showUnselectableCheckbox="true">
+
+				<p:ajax event="select" update=":orgTreeForm:orgTreeContextMenu" />
+
 				<p:treeNode type="Devision" expandedIcon="ui-icon-folder-open"
 					collapsedIcon="ui-icon-folder-collapsed">
 					<h:outputText value="#{org.name}" />
@@ -44,6 +68,34 @@
 				</p:treeNode>
 			</p:tree>
 		</h:form>
+
+		<h:form id="modifyForm">
+			<p:dialog id="titlesDialog" widgetVar="wTitlesDialog"
+				header="Add/Modify Titles" closeOnEscape="true" closable="true"
+				modal="true">
+				<p:outputPanel autoUpdate="true">
+					<h:panelGrid columns="3">
+						<h:outputText value="Name" />
+						<p:inputText id="titlesName" value="#{titlesBean.titles.name}" />
+						<p:message for="titlesName" />
+
+						<h:outputText value="Name(En)" />
+						<p:inputText id="titlesNameEn"
+							value="#{titlesBean.titles.name_en}" />
+						<p:message for="titlesNameEn" />
+
+						<p:commandButton value="Save"
+							actionListener="#{titlesBean.onSave}" 
+							update=":orgTreeForm:orgTree"
+							oncomplete="PF('wTitlesDialog').hide();" />
+						<p:commandLink value="Cancel" style="margin-left: 3px"
+							onclick="PF('wTitlesDialog').hide();" />
+					</h:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+
+		</h:form>
+
 	</h:body>
 </f:view>
 

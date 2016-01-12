@@ -19,6 +19,7 @@ import vn.com.ecopharma.emp.dto.AddressObjectItem;
 import vn.com.ecopharma.emp.dto.BankInfoObject;
 import vn.com.ecopharma.emp.dto.DependentName;
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
+import vn.com.ecopharma.emp.dto.EmpInfoItem;
 import vn.com.ecopharma.emp.enumeration.ResignationType;
 import vn.com.ecopharma.emp.model.District;
 import vn.com.ecopharma.emp.model.Emp;
@@ -53,8 +54,10 @@ public class EmployeeUtils {
 
 	private static final String EMAIL_SUFFIX = "@ecopharma.com.vn";
 
-	private EmployeeUtils() {
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(EmployeeUtils.class);
 
+	private EmployeeUtils() {
 	}
 
 	/**
@@ -84,11 +87,11 @@ public class EmployeeUtils {
 
 			for (Address address : AddressLocalServiceUtil.getAddresses(
 					companyId, clazzName, primaryKey)) {
-				results.add(new AddressObjectItem(address, false));
+				results.add(new AddressObjectItem(address));
 			}
 			return results;
 		} catch (SystemException e) {
-			writeDebugLog(EmployeeUtils.class, e);
+			LOGGER.info(e);
 		}
 		return new ArrayList<>();
 	}
@@ -344,9 +347,9 @@ public class EmployeeUtils {
 		try {
 			return EmpLocalServiceUtil.getEmp(id);
 		} catch (PortalException e) {
-			writeDebugLog(EmployeeUtils.class, e);
+			LOGGER.info(e);
 		} catch (SystemException e) {
-			writeDebugLog(EmployeeUtils.class, e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -359,9 +362,9 @@ public class EmployeeUtils {
 		try {
 			return EmpLocalServiceUtil.getEmp(id);
 		} catch (PortalException e) {
-			writeDebugLog(EmployeeUtils.class, e);
+			LOGGER.info(e);
 		} catch (SystemException e) {
-			writeDebugLog(EmployeeUtils.class, e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -373,9 +376,9 @@ public class EmployeeUtils {
 
 				EmployeeLocalServiceUtil.deleteEmployee(employee.getEmpId());
 			} catch (PortalException e) {
-				writeDebugLog(EmployeeUtils.class, e);
+				LOGGER.info(e);
 			} catch (SystemException e) {
-				writeDebugLog(EmployeeUtils.class, e);
+				LOGGER.info(e);
 			}
 		}
 	}
@@ -425,7 +428,7 @@ public class EmployeeUtils {
 			increment += 1; // NOSONAR
 			return regenerateUsername(currentUsername, increment);
 		} catch (SystemException e) {
-			writeDebugLog(EmployeeUtils.class, e);
+			LOGGER.info(e);
 		}
 		return currentUsername;
 	}
@@ -461,12 +464,6 @@ public class EmployeeUtils {
 		return baos.toString();
 	}
 
-	public static void writeDebugLog(Class<?> clazz, Exception e) {
-		final Log log = LogFactoryUtil.getLog(clazz);
-		if (log.isDebugEnabled())
-			log.debug(exceptionStacktraceToString(e));
-	}
-
 	public static List<String> getResignationTypes() {
 		final List<String> result = new ArrayList<>();
 		for (ResignationType resignationType : ResignationType.values()) {
@@ -488,5 +485,22 @@ public class EmployeeUtils {
 				s = s.replaceAll(dashChar, " "); // NOSONAR
 			}
 		return s;
+	}
+
+	public static void setAttributesToEmpFromEditItem(Emp employee,
+			EmpInfoItem empInfoItem) {
+		employee.setTitlesId(getBaseModelPrimaryKey(empInfoItem.getTitles()));
+
+		employee.setUnitGroupId(getBaseModelPrimaryKey(empInfoItem
+				.getUnitGroup()));
+
+		employee.setUnitId(getBaseModelPrimaryKey(empInfoItem.getUnit()));
+
+		employee.setDepartmentId(getBaseModelPrimaryKey(empInfoItem
+				.getDepartment()));
+
+		employee.setLevelId(getBaseModelPrimaryKey(empInfoItem.getLevel()));
+		employee.setUniversityId(getBaseModelPrimaryKey(empInfoItem
+				.getUniversity()));
 	}
 }

@@ -25,12 +25,14 @@ import vn.com.ecopharma.emp.enumeration.EmployeeExportType;
 import vn.com.ecopharma.emp.enumeration.LaborContractType;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
+import vn.com.ecopharma.emp.model.District;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.Titles;
 import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
+import vn.com.ecopharma.emp.service.DistrictLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
@@ -645,6 +647,34 @@ public class ImportExportUtils {
 	private static String getAddressStringFromAddressObj(Address address) {
 		return address.getStreet1() + ", " + address.getStreet3().split("_")[1]
 				+ ", " + address.getRegion().getName();
+	}
+
+	/**
+	 * @param street3
+	 *            VN-65_Bình Tân
+	 * @return
+	 */
+	public static District getDistrictByStreet3(Address address) {
+		final String[] districtArr = address.getStreet3().split("_");
+		return DistrictLocalServiceUtil.findByRegionCodeAndName(districtArr[0],
+				districtArr[1]);
+	}
+
+	public static String getFullAddressString(Address address) {
+		if (address == null)
+			return StringUtils.EMPTY;
+
+		String city = address.getRegion().getName();
+		String street = address.getStreet1();
+		String districtName = StringUtils.trimToNull(address.getStreet3()) != null ? getDistrictNameFromStreet3String(address
+				.getStreet3()) : StringUtils.EMPTY;
+
+		return street + ", " + districtName + ", " + city;
+	}
+
+	private static String getDistrictNameFromStreet3String(String street3) {
+		return street3.indexOf("-") != -1 ? street3.split("-")[1]
+				: StringUtils.EMPTY;
 	}
 
 }

@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.apache.commons.lang.StringUtils;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
@@ -22,6 +23,7 @@ import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
+import vn.com.ecopharma.emp.util.BeanUtils;
 
 @ManagedBean(name = "organizationTreeViewBean")
 @ViewScoped
@@ -142,6 +144,46 @@ public class OrganizationTreeViewBean implements Serializable {
 		return treeRoot;
 	}
 
+	public void addTitles() {
+		TreeNode firstParentNode = selectedNodes[0];
+		OrgNodeItem firstParentItem = (OrgNodeItem) firstParentNode.getData();
+		TitlesBean titlesBean = BeanUtils.getTitlesBean();
+
+		Department department = null;
+		Unit unit = null;
+		UnitGroup unitGroup = null;
+		if (firstParentItem.getType().equalsIgnoreCase(
+				OrgNodeItem.DEPARTMENT_TYPE)) {
+			department = (Department) firstParentItem.getModelObject();
+		} else if (firstParentItem.getType().equalsIgnoreCase(
+				OrgNodeItem.UNIT_TYPE)) {
+			unit = (Unit) firstParentItem.getModelObject();
+			department = (Department) ((OrgNodeItem) firstParentNode
+					.getParent().getData()).getModelObject();
+		} else if (firstParentItem.getType().equalsIgnoreCase(
+				OrgNodeItem.UNITGROUP_TYPE)) {
+			unitGroup = (UnitGroup) firstParentItem.getModelObject();
+			TreeNode unitNode = firstParentNode.getParent();
+			unit = (Unit) ((OrgNodeItem) unitNode.getData()).getModelObject();
+			department = (Department) ((OrgNodeItem) unitNode.getParent()
+					.getData()).getModelObject();
+		}
+
+		titlesBean.setTitles(TitlesLocalServiceUtil.createPrePersistedTitles());
+		titlesBean.setUnitGroup(unitGroup);
+		titlesBean.setUnit(unit);
+		titlesBean.setDepartment(department);
+	}
+
+	public void editTitles() {
+
+		OrgNodeItem item = (OrgNodeItem) selectedNodes[0].getData();
+		if (item.getType().equalsIgnoreCase(OrgNodeItem.TITLES_TYPE)) {
+
+			BeanUtils.getTitlesBean().setTitles((Titles) item.getModelObject());
+		}
+	}
+
 	public TreeNode getRoot() {
 		return root;
 	}
@@ -156,6 +198,21 @@ public class OrganizationTreeViewBean implements Serializable {
 
 	public void setSelectedNodes(TreeNode[] selectedNodes) {
 		this.selectedNodes = selectedNodes;
+	}
+
+	public String getCurrentSelectedLevel() {
+		if (selectedNodes == null || selectedNodes.length > 1)
+			return StringUtils.EMPTY;
+		TreeNode selectedNode = selectedNodes[0];
+		OrgNodeItem item = (OrgNodeItem) selectedNode.getData();
+		return item.getType();
+	}
+
+	public void updateTreeOnTitlesAdded(Titles titles) {
+		TreeNode firstParentNode = selectedNodes[0];
+		TreeNode newTitlesNode = new DefaultTreeNode(OrgNodeItem.TITLES_TYPE,
+				new OrgNodeItem(titles), firstParentNode);
+
 	}
 
 }

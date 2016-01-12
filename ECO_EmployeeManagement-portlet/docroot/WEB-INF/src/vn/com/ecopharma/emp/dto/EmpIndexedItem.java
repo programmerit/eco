@@ -80,7 +80,7 @@ public class EmpIndexedItem implements Serializable {
 	public String getFullName() {
 		return employeeDocument.getField(EmpField.FULL_NAME).getValue();
 	}
-	
+
 	public String getFullNameVi() {
 		return employeeDocument.getField(EmpField.VN_FULL_NAME).getValue();
 	}
@@ -122,18 +122,21 @@ public class EmpIndexedItem implements Serializable {
 	}
 
 	public long getUnitGroupId() {
-		return Long.valueOf(employeeDocument.getField(EmpField.UNITGROUP_ID)
-				.getValue());
+		return employeeDocument.getField(EmpField.UNITGROUP_ID) != null ? Long
+				.valueOf(employeeDocument.getField(EmpField.UNITGROUP_ID)
+						.getValue()) : 0L;
 	}
 
 	public long getUnitId() {
-		return Long.valueOf(employeeDocument.getField(EmpField.UNIT_ID)
-				.getValue());
+		return employeeDocument.getField(EmpField.UNIT_ID) != null ? Long
+				.valueOf(employeeDocument.getField(EmpField.UNIT_ID).getValue())
+				: 0L;
 	}
 
 	public long getDepartmentId() {
-		return Long.valueOf(employeeDocument.getField(EmpField.DEPARTMENT_ID)
-				.getValue());
+		return employeeDocument.getField(EmpField.DEPARTMENT_ID) != null ? Long
+				.valueOf(employeeDocument.getField(EmpField.DEPARTMENT_ID)
+						.getValue()) : 0L;
 	}
 
 	public long getLevelId() {

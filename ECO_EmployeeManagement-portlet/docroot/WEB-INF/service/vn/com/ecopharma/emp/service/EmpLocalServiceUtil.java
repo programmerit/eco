@@ -339,7 +339,7 @@ public class EmpLocalServiceUtil {
 		java.lang.String lastName, int prefixId, int suffixId, boolean male,
 		int birthdayMonth, int birthdayDay, int birthdayYear, long[] groupIds,
 		long[] organizationIds, long[] roleIds, long[] userGroupIds,
-		boolean sendEmail, long empUserId,
+		boolean sendEmail,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addresses,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
@@ -351,8 +351,8 @@ public class EmpLocalServiceUtil {
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			locale, firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, groupIds,
-			organizationIds, roleIds, userGroupIds, sendEmail, empUserId,
-			addresses, dependentNameMap, bankInfoMap, serviceContext);
+			organizationIds, roleIds, userGroupIds, sendEmail, addresses,
+			dependentNameMap, bankInfoMap, serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp addEmp(
@@ -555,6 +555,16 @@ public class EmpLocalServiceUtil {
 		return getService()
 				   .regenerateDuplicateEmailAddress(emailAddress, number,
 			companyId);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Address> findAllEmpAddress(
+		long employeeId) {
+		return getService().findAllEmpAddress(employeeId);
+	}
+
+	public static com.liferay.portal.model.Address getPresentAddress(
+		long employeeId) {
+		return getService().getPresentAddress(employeeId);
 	}
 
 	public static void clearService() {

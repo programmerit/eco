@@ -24,6 +24,7 @@ import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
+import vn.com.ecopharma.emp.util.ImportExportUtils;
 
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.model.Address;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
@@ -69,7 +71,7 @@ public class EmpIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
+	protected Document doGetDocument(Object obj) throws Exception { // NOSONAR
 		final Emp emp = (Emp) obj;
 		final Document document = getBaseModelDocument(EMInfo.PORTLET_ID, emp);
 		final Titles titles = emp.getTitlesId() != 0 ? TitlesLocalServiceUtil
@@ -163,7 +165,11 @@ public class EmpIndexer extends BaseIndexer {
 		document.addText(EmpField.PASSPORT, emp.getPassport());
 
 		document.addText(EmpField.CONTACT_NUMBER, emp.getContactNumber());
-		document.addText(EmpField.ADDRESS, "address");
+		Address address = EmpLocalServiceUtil.getPresentAddress(emp.getEmpId());
+		document.addText(EmpField.ADDRESS,
+				ImportExportUtils.getFullAddressString(address));
+		document.addText(EmpField.CITY, address != null ? address.getRegion()
+				.getName() : StringUtils.EMPTY);
 		document.addText(EmpField.EMAIL,
 				UserLocalServiceUtil.getUser(emp.getEmpUserId())
 						.getEmailAddress());

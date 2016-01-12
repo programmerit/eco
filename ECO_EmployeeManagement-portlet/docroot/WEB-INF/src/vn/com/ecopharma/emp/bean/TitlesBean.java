@@ -28,6 +28,14 @@ public class TitlesBean extends AbstractOrganizationBean {
 
 	private Titles titles;
 
+	private Department department;
+
+	private Unit unit;
+
+	private UnitGroup unitGroup;
+
+	private boolean updateTree;
+
 	@PostConstruct
 	public void init() {
 		titles = titles != null ? titles : TitlesLocalServiceUtil
@@ -37,31 +45,32 @@ public class TitlesBean extends AbstractOrganizationBean {
 	@Override
 	public void onSave(ActionEvent event) {
 		try {
-			final EmployeeBean employeeViewBean = BeanUtils
-					.getEmployeeViewBean();
-			final Department department = employeeViewBean
-					.getModifyEmployeeInfoItem().getDepartment();
-			final Unit unit = employeeViewBean.getModifyEmployeeInfoItem()
-					.getUnit();
-			final UnitGroup unitGroup = employeeViewBean
-					.getModifyEmployeeInfoItem().getUnitGroup();
 			if (department != null) {
-				FacesMessage msg = null;
+				FacesMessage msg;
+				Titles result;
 				if (TitlesLocalServiceUtil.fetchTitles(titles.getTitlesId()) == null) {
-					Titles result = TitlesLocalServiceUtil.addTitles(titles,
+					result = TitlesLocalServiceUtil.addTitles(titles,
 							EmployeeUtils.getServiceContext());
 					TitlesDepartmentUnitUnitGroupLocalServiceUtil
 							.addTitlesDepartmentUnitUnitGroup(result,
 									department, unit, unitGroup,
 									EmployeeUtils.getServiceContext());
-					addResultMessage(result, msg, "Create Titles successfully",
+					msg = getResultMessage(result,
+							"Create Titles successfully",
 							"Titles " + titles.getName() + " has been created");
 
 				} else {
-					Titles result = TitlesLocalServiceUtil.updateTitles(titles);
-					addResultMessage(result, msg, "Update Titles successfully",
+					result = TitlesLocalServiceUtil.updateTitles(titles);
+					msg = getResultMessage(result,
+							"Update Titles successfully",
 							"Titles " + titles.getName() + " has been updated");
 				}
+				if (updateTree) {
+					BeanUtils.getOrganizationTreeViewBean()
+							.updateTreeOnTitlesAdded(result);
+					;
+				}
+
 				FacesContext.getCurrentInstance().addMessage(null, msg);
 			}
 		} catch (SystemException e) {
@@ -69,15 +78,15 @@ public class TitlesBean extends AbstractOrganizationBean {
 		}
 	}
 
-	private static void addResultMessage(Titles notNullObj, FacesMessage msg,
+	private static FacesMessage getResultMessage(Titles notNullObj,
 			String successMsgTitle, String successMsgContent) {
 		if (notNullObj == null)
-			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+			return new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"Action on Titles Failed",
 					"Failed on taking action on Titles");
 		else
-			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, successMsgTitle,
-					successMsgContent);
+			return new FacesMessage(FacesMessage.SEVERITY_INFO,
+					successMsgTitle, successMsgContent);
 	}
 
 	public Titles getTitles() {
@@ -86,5 +95,37 @@ public class TitlesBean extends AbstractOrganizationBean {
 
 	public void setTitles(Titles titles) {
 		this.titles = titles;
+	}
+
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+	public Unit getUnit() {
+		return unit;
+	}
+
+	public void setUnit(Unit unit) {
+		this.unit = unit;
+	}
+
+	public UnitGroup getUnitGroup() {
+		return unitGroup;
+	}
+
+	public void setUnitGroup(UnitGroup unitGroup) {
+		this.unitGroup = unitGroup;
+	}
+
+	public boolean isUpdateTree() {
+		return updateTree;
+	}
+
+	public void setUpdateTree(boolean updateTree) {
+		this.updateTree = updateTree;
 	}
 }

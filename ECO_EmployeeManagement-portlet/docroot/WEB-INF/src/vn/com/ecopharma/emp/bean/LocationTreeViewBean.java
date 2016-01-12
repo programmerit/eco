@@ -14,6 +14,7 @@ import org.primefaces.model.TreeNode;
 import vn.com.ecopharma.emp.model.District;
 import vn.com.ecopharma.emp.node.LocationNodeItem;
 import vn.com.ecopharma.emp.service.DistrictLocalServiceUtil;
+import vn.com.ecopharma.emp.util.EmployeePortletServicesUtils;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -22,13 +23,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.model.Region;
 import com.liferay.portal.service.CountryServiceUtil;
-import com.liferay.portal.service.RegionServiceUtil;
 
-@ManagedBean(name = "locationTreeViewBean")
+@ManagedBean(name = "locationTreeBean")
 @ViewScoped
 public class LocationTreeViewBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7420787934576982916L;
 
 	private static final Log LOGGER = LogFactoryUtil
 			.getLog(LocationTreeViewBean.class);
@@ -39,32 +42,40 @@ public class LocationTreeViewBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		try {
-			root = createDocuments();
-		} catch (SystemException e) {
-			LOGGER.info(e);
-		} catch (PortalException e) {
-			LOGGER.info(e);
-		}
+		root = createDocuments();
 	}
 
-	public TreeNode createDocuments() throws SystemException, PortalException {
-		TreeNode treeRoot = new DefaultTreeNode(new LocationNodeItem(
-				getDefaultRootCountry()), null);
+	public TreeNode createDocuments() {
 
-		final List<Region> allVNRegions = RegionServiceUtil
-				.getRegions(((LocationNodeItem) treeRoot.getData()).getId());
+		TreeNode treeRoot = new DefaultTreeNode(new Object(), null);
+
+		List<Country> countries = new ArrayList<>();
+		countries.add(getDefaultRootCountry());
+
+		List<TreeNode> countryNodes = new ArrayList<>();
+		for (Country country : countries) {
+			TreeNode countryNode = new DefaultTreeNode(
+					LocationNodeItem.COUNTRY_TYPE,
+					new LocationNodeItem(country), treeRoot);
+			countryNodes.add(countryNode);
+		}
+
 		final List<TreeNode> regionTreeNodes = new ArrayList<>();
-		for (Region region : allVNRegions) {
-			TreeNode regionNode = new DefaultTreeNode(
-					LocationNodeItem.CITY_TYPE, new LocationNodeItem(region),
-					treeRoot);
-			regionTreeNodes.add(regionNode);
+		for (TreeNode countryNode : countryNodes) {
+			final List<Region> allVNRegions = EmployeePortletServicesUtils
+					.getRegionByCountry(((LocationNodeItem) countryNode
+							.getData()).getId());
+			for (Region region : allVNRegions) {
+				TreeNode regionNode = new DefaultTreeNode(
+						LocationNodeItem.CITY_TYPE,
+						new LocationNodeItem(region), countryNode);
+				regionTreeNodes.add(regionNode);
+			}
 		}
 
 		final List<TreeNode> districtNodes = new ArrayList<>();
 		for (TreeNode regionNode : regionTreeNodes) {
-			Region region = RegionServiceUtil
+			Region region = EmployeePortletServicesUtils
 					.getRegion(((LocationNodeItem) regionNode.getData())
 							.getId());
 			final List<District> districtsByRegion = DistrictLocalServiceUtil
@@ -102,16 +113,37 @@ public class LocationTreeViewBean implements Serializable {
 		return root;
 	}
 
-	public void setRoot(TreeNode root) {
-		this.root = root;
-	}
-
 	public TreeNode[] getSelectedNodes() {
 		return selectedNodes;
 	}
 
+	public List<LocationNodeItem> getSelectedTreeNodeItemList() {
+		if (selectedNodes == null || selectedNodes.length == 0)
+			return new ArrayList<>();
+		final List<LocationNodeItem> result = new ArrayList<>();
+		for (TreeNode treeNode : selectedNodes)
+			result.add((LocationNodeItem) treeNode.getData());
+		return result;
+	}
+
 	public void setSelectedNodes(TreeNode[] selectedNodes) {
 		this.selectedNodes = selectedNodes;
+	}
+
+	public boolean isAllDistrictSelected() {
+		if (selectedNodes == null || selectedNodes.length == 0)
+			return false;
+		for (TreeNode node : selectedNodes) {
+			if (!((LocationNodeItem) node.getData()).getType()
+					.equalsIgnoreCase(LocationNodeItem.DISTRICT_TYPE)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public Region getCurrentParentRegion() {
+		return null;
 	}
 
 }

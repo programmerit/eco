@@ -167,7 +167,7 @@ public class EmpLocalServiceClpInvoker {
 				"java.util.Locale", "java.lang.String", "java.lang.String",
 				"java.lang.String", "int", "int", "boolean", "int", "int", "int",
 				"long[][]", "long[][]", "long[][]", "long[][]", "boolean",
-				"long", "java.util.Map", "java.util.Map", "java.util.Map",
+				"java.util.Map", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
@@ -319,6 +319,14 @@ public class EmpLocalServiceClpInvoker {
 		_methodParameterTypes177 = new String[] {
 				"java.lang.String", "int", "long"
 			};
+
+		_methodName178 = "findAllEmpAddress";
+
+		_methodParameterTypes178 = new String[] { "long" };
+
+		_methodName179 = "getPresentAddress";
+
+		_methodParameterTypes179 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -504,11 +512,10 @@ public class EmpLocalServiceClpInvoker {
 				((Integer)arguments[18]).intValue(), (long[])arguments[19],
 				(long[])arguments[20], (long[])arguments[21],
 				(long[])arguments[22], ((Boolean)arguments[23]).booleanValue(),
-				((Long)arguments[24]).longValue(),
-				(java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean>)arguments[25],
-				(java.util.Map<java.lang.String, java.lang.Boolean>)arguments[26],
-				(java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean>)arguments[27],
-				(com.liferay.portal.service.ServiceContext)arguments[28]);
+				(java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean>)arguments[24],
+				(java.util.Map<java.lang.String, java.lang.Boolean>)arguments[25],
+				(java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean>)arguments[26],
+				(com.liferay.portal.service.ServiceContext)arguments[27]);
 		}
 
 		if (_methodName155.equals(name) &&
@@ -724,6 +731,16 @@ public class EmpLocalServiceClpInvoker {
 				((Long)arguments[2]).longValue());
 		}
 
+		if (_methodName178.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes178, parameterTypes)) {
+			return EmpLocalServiceUtil.findAllEmpAddress(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName179.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes179, parameterTypes)) {
+			return EmpLocalServiceUtil.getPresentAddress(((Long)arguments[0]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -829,4 +846,8 @@ public class EmpLocalServiceClpInvoker {
 	private String[] _methodParameterTypes176;
 	private String _methodName177;
 	private String[] _methodParameterTypes177;
+	private String _methodName178;
+	private String[] _methodParameterTypes178;
+	private String _methodName179;
+	private String[] _methodParameterTypes179;
 }

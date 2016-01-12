@@ -222,11 +222,6 @@ public class EmployeeIndexedBean implements Serializable {
 		EmpLocalServiceUtil.indexAllEmps();
 	}
 
-	public void indexSomeEmployees() {
-		EmpLocalServiceUtil.indexSomeEmps();
-
-	}
-
 	public void removeIndexes() {
 		final LiferayFacesContext liferayFacesContext = LiferayFacesContext
 				.getInstance();
@@ -247,11 +242,6 @@ public class EmployeeIndexedBean implements Serializable {
 
 	public void onCompletelyRemoveAllEmployees() {
 		EmpLocalServiceUtil.completelyRemoveAllEmp(LiferayFacesContext
-				.getInstance().getCompanyId());
-	}
-
-	public void onCompletelyRemoveAllEmployeesFromDB() {
-		EmpLocalServiceUtil.completelyRemoveAllEmpFromDB(LiferayFacesContext
 				.getInstance().getCompanyId());
 	}
 

@@ -10,6 +10,8 @@ public final class TimeTrackingField {
 
 	public static final String FULLNAME = "fullName";
 
+	public static final String VN_FULLNAME = "fullNameVi";
+
 	public static final String DEVISION = "devision";
 
 	public static final String DEPARTMENT = "department";

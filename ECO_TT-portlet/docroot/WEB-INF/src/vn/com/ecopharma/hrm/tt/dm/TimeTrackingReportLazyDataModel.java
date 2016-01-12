@@ -16,6 +16,7 @@ import vn.com.ecopharma.hrm.tt.dto.EmpTimeTrackingIndexedItem;
 import vn.com.ecopharma.hrm.tt.dto.TimeTrackingIndexItem;
 import vn.com.ecopharma.hrm.tt.utils.TTUtils;
 
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -33,6 +34,9 @@ public class TimeTrackingReportLazyDataModel extends
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(TimeTrackingReportLazyDataModel.class);
 
 	private static final long YEAR_MONTH_DATE_CONS = 86400000L; // 24*60*60*1000L
 
@@ -92,6 +96,7 @@ public class TimeTrackingReportLazyDataModel extends
 			final List<EmpTimeTrackingIndexedItem> empTimeTrackingIndexedItems = new ArrayList<>();
 
 			// iterate to bind results to DTOs
+			int noTimeTrackingDataEmpCount = 0;
 			for (Document document : empDocs) {
 				final EmpTimeTrackingIndexedItem empTimeTrackingIndexedItem = new EmpTimeTrackingIndexedItem(
 						document);
@@ -108,36 +113,44 @@ public class TimeTrackingReportLazyDataModel extends
 						.getTimeTrackingIndexItems(
 								empTimeTrackingIndexedItem.getEmployeeCode(),
 								month, year, true, true);
-				final Map<String, Date> minInMap = getMinInMap(timeTrackingIndexItems);
-				final Map<String, Date> maxOutMap = getMaxOutMap(timeTrackingIndexItems);
-				empTimeTrackingIndexedItem.setMinInMap(minInMap);
-				empTimeTrackingIndexedItem.setMaxOutMap(maxOutMap);
-				empTimeTrackingIndexedItem
-						.setGrandTotalMinInTime(getGrandMinIn(minInMap));
-				empTimeTrackingIndexedItem
-						.setGrandTotalMaxOutTime(getGrandMaxOut(maxOutMap));
 
-				// if (isEmptyIn) {
-				// if (!hasEmptyIn(timeTrackingIndexItems)) {
-				// empTimeTrackingIndexedItems
-				// .add(empTimeTrackingIndexedItem);
-				// }
-				// } else if (isEmptyOut) {
-				// if (!hasEmptyOut(timeTrackingIndexItems)) {
-				// empTimeTrackingIndexedItems
-				// .add(empTimeTrackingIndexedItem);
-				// }
-				// } else {
-				empTimeTrackingIndexedItems.add(empTimeTrackingIndexedItem);
-				// }
+				LOGGER.info(empTimeTrackingIndexedItem.getFullName() + "    "
+						+ timeTrackingIndexItems.size());
+
+				if (!timeTrackingIndexItems.isEmpty()) {
+					final Map<String, Date> minInMap = getMinInMap(timeTrackingIndexItems);
+					final Map<String, Date> maxOutMap = getMaxOutMap(timeTrackingIndexItems);
+					empTimeTrackingIndexedItem.setMinInMap(minInMap);
+					empTimeTrackingIndexedItem.setMaxOutMap(maxOutMap);
+					empTimeTrackingIndexedItem
+							.setGrandTotalMinInTime(getGrandMinIn(minInMap));
+					empTimeTrackingIndexedItem
+							.setGrandTotalMaxOutTime(getGrandMaxOut(maxOutMap));
+
+					// if (isEmptyIn) {
+					// if (!hasEmptyIn(timeTrackingIndexItems)) {
+					// empTimeTrackingIndexedItems
+					// .add(empTimeTrackingIndexedItem);
+					// }
+					// } else if (isEmptyOut) {
+					// if (!hasEmptyOut(timeTrackingIndexItems)) {
+					// empTimeTrackingIndexedItems
+					// .add(empTimeTrackingIndexedItem);
+					// }
+					// } else {
+					empTimeTrackingIndexedItems.add(empTimeTrackingIndexedItem);
+					// }
+				} else {
+					noTimeTrackingDataEmpCount++;
+				}
 
 			}
-
-			setPageSize(pageSize);
-			setRowCount(EmpLocalServiceUtil
+			int countTotal = EmpLocalServiceUtil
 					.countAllUnDeletedIndexedEmpDocuments(getSearchContext(),
 							queries, TTUtils.getCompanyId(), new Sort(
-									EmpField.EMP_ID, false)));
+									EmpField.EMP_ID, false));
+			setPageSize(pageSize);
+			setRowCount(countTotal - noTimeTrackingDataEmpCount);
 
 			return empTimeTrackingIndexedItems;
 		} catch (ParseException e) {

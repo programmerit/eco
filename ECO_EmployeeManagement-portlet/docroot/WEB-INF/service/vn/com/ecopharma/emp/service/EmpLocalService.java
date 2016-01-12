@@ -294,7 +294,7 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		java.lang.String lastName, int prefixId, int suffixId, boolean male,
 		int birthdayMonth, int birthdayDay, int birthdayYear, long[] groupIds,
 		long[] organizationIds, long[] roleIds, long[] userGroupIds,
-		boolean sendEmail, long empUserId,
+		boolean sendEmail,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addresses,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
@@ -431,4 +431,10 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 	public java.lang.String regenerateDuplicateEmailAddress(
 		java.lang.String emailAddress, int number, long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portal.model.Address> findAllEmpAddress(
+		long employeeId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Address getPresentAddress(long employeeId);
 }

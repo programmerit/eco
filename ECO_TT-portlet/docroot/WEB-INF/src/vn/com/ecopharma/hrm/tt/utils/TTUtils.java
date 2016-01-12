@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.TermRangeQueryFactoryUtil;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 
@@ -302,5 +303,11 @@ public class TTUtils {
 				return false;
 		}
 		return true;
+	}
+
+	public static String getViFullnameFromUser(User user) {
+		return StringUtils.trimToEmpty(user.getLastName()) + " "
+				+ StringUtils.trimToEmpty(user.getMiddleName()) + " "
+				+ StringUtils.trimToEmpty(user.getFirstName());
 	}
 }

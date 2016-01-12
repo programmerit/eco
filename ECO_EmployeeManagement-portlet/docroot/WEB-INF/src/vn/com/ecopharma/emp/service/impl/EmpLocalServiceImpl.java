@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.AddressLocalServiceUtil;
+import com.liferay.portal.service.AddressServiceUtil;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -237,7 +238,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			long[] roleIds,
 			long[] userGroupIds,
 			boolean sendEmail, // End user part
-			long empUserId, Map<Address, Boolean> addresses,
+			Map<Address, Boolean> addresses,
 			Map<String, Boolean> dependentNameMap,
 			Map<EmpBankInfo, Boolean> bankInfoMap, ServiceContext serviceContext)
 			throws SystemException, PortalException {
@@ -278,7 +279,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 				addressEntity.setClassName(Emp.class.getName());
 				addressEntity.setClassPK(employee.getEmpId());
 				addressEntity.setCompanyId(serviceContext.getCompanyId());
-				AddressLocalServiceUtil.updateAddress(addressEntity);
+				AddressLocalServiceUtil.addAddress(addressEntity);
 			}
 		}
 
@@ -468,6 +469,14 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 				for (Address address : addresses) {
 					AddressLocalServiceUtil.deleteAddress(address
 							.getAddressId());
+				}
+
+				final List<EmpBankInfo> bankInfos = empBankInfoLocalService
+						.findByEmp(employee.getEmpId());
+
+				for (EmpBankInfo bankInfo : bankInfos) {
+					empBankInfoLocalService.deleteEmpBankInfo(bankInfo
+							.getEmpBankInfoId());
 				}
 			}
 
@@ -1062,5 +1071,24 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		number = number + 1;
 		return regenerateDuplicateEmailAddress(prefixEmailAddress, number,
 				companyId);
+	}
+
+	public List<Address> findAllEmpAddress(long employeeId) {
+		try {
+			return AddressServiceUtil.getAddresses(Emp.class.getName(),
+					employeeId);
+		} catch (PortalException e) {
+			LOGGER.info(e);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return new ArrayList<>();
+	}
+
+	public Address getPresentAddress(long employeeId) {
+		List<Address> empAddresses = findAllEmpAddress(employeeId);
+		if (empAddresses.isEmpty())
+			return null;
+		return empAddresses.get(0);
 	}
 }

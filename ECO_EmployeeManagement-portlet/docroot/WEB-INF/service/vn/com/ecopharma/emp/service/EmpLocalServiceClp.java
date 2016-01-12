@@ -167,7 +167,7 @@ public class EmpLocalServiceClp implements EmpLocalService {
 				"java.util.Locale", "java.lang.String", "java.lang.String",
 				"java.lang.String", "int", "int", "boolean", "int", "int", "int",
 				"long[][]", "long[][]", "long[][]", "long[][]", "boolean",
-				"long", "java.util.Map", "java.util.Map", "java.util.Map",
+				"java.util.Map", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
@@ -317,6 +317,14 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		_methodName51 = "regenerateDuplicateEmailAddress";
 
 		_methodParameterTypes51 = new String[] { "java.lang.String", "int", "long" };
+
+		_methodName52 = "findAllEmpAddress";
+
+		_methodParameterTypes52 = new String[] { "long" };
+
+		_methodName53 = "getPresentAddress";
+
+		_methodParameterTypes53 = new String[] { "long" };
 	}
 
 	@Override
@@ -1153,7 +1161,7 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		java.lang.String lastName, int prefixId, int suffixId, boolean male,
 		int birthdayMonth, int birthdayDay, int birthdayYear, long[] groupIds,
 		long[] organizationIds, long[] roleIds, long[] userGroupIds,
-		boolean sendEmail, long empUserId,
+		boolean sendEmail,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addresses,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
@@ -1213,8 +1221,6 @@ public class EmpLocalServiceClp implements EmpLocalService {
 					ClpSerializer.translateInput(userGroupIds),
 						
 					sendEmail,
-						
-					empUserId,
 						
 					ClpSerializer.translateInput(addresses),
 						
@@ -2074,6 +2080,53 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.model.Address> findAllEmpAddress(
+		long employeeId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName52,
+					_methodParameterTypes52, new Object[] { employeeId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.portal.model.Address>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.portal.model.Address getPresentAddress(long employeeId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName53,
+					_methodParameterTypes53, new Object[] { employeeId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portal.model.Address)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -2177,4 +2230,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	private String[] _methodParameterTypes50;
 	private String _methodName51;
 	private String[] _methodParameterTypes51;
+	private String _methodName52;
+	private String[] _methodParameterTypes52;
+	private String _methodName53;
+	private String[] _methodParameterTypes53;
 }

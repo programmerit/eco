@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -27,6 +28,7 @@ import vn.com.ecopharma.emp.enumeration.LocationType;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Emp;
+import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.model.Level;
 import vn.com.ecopharma.emp.model.Location;
 import vn.com.ecopharma.emp.model.Titles;
@@ -49,8 +51,12 @@ import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Country;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.CountryServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RegionServiceUtil;
@@ -63,6 +69,8 @@ public class EmployeeBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final Log LOGGER = LogFactoryUtil.getLog(EmployeeBean.class);
+
 	private static final String EMPLOYEE_VIEW_PAGE = "/views/employees.xhtml";
 
 	private static final String EMPLOYEE_MODIFY_PAGE = "/views/employeeForm.xhtml";
@@ -73,9 +81,8 @@ public class EmployeeBean implements Serializable {
 
 	private static final String MALE = "male";
 
-	private String testString = "Filter Panel";
-
 	private EmpInfoItem modifyEmployeeInfoItem;
+
 	private EmpInfoItem selectedEmployeeInfoItem;
 
 	private List<Country> countries;
@@ -85,6 +92,10 @@ public class EmployeeBean implements Serializable {
 	private boolean showUserTab = false;
 
 	private boolean autoPassword = true;
+
+	private boolean showFilterPanel = false;
+
+	private String filterPanelIncluded = "";
 
 	private String deletedEmployeeId;
 
@@ -106,7 +117,7 @@ public class EmployeeBean implements Serializable {
 			countries = CountryServiceUtil.getCountries(true);
 
 		} catch (SystemException e) {
-			EmployeeUtils.writeDebugLog(EmployeeBean.class, e);
+			LOGGER.info(e);
 		}
 	}
 
@@ -185,6 +196,12 @@ public class EmployeeBean implements Serializable {
 		switchPage(1);
 	}
 
+	/* */
+	public void onShowHideFilterPanel() {
+		showFilterPanel = !showFilterPanel;
+		filterPanelIncluded = showFilterPanel ? "filterPanel.xhtml" : "";
+	}
+
 	public void onRowDblSelect(SelectEvent event) {
 		editEmployee(String.valueOf(((EmpIndexedItem) event.getObject())
 				.getEmployeeId()));
@@ -199,16 +216,24 @@ public class EmployeeBean implements Serializable {
 		FacesMessage msg = null;
 		boolean isSuccessfulModified = false;
 		try {
+			final Map<Address, Boolean> addressMap = EmployeeUtils
+					.transferAddressObjectListToAddressMap(modifyEmployeeInfoItem
+							.getAddresses());
+			final Map<String, Boolean> dependentMap = EmployeeUtils
+					.transferDependentNameObjectListToDependentNameMap(modifyEmployeeInfoItem
+							.getDependentNames());
+
+			final Map<EmpBankInfo, Boolean> bankInfoMap = EmployeeUtils
+					.transferBankInfoObjectListToBankInfoMap(modifyEmployeeInfoItem
+							.getBankInfos());
+
 			if (showUserTab) {
 				final Emp employee = modifyEmployeeInfoItem.getEmp();
 
-				employee.setUniversityId(modifyEmployeeInfoItem
-						.getUniversityId());
-				employee.setTitlesId(modifyEmployeeInfoItem.getTitlesId());
-				employee.setLevelId(modifyEmployeeInfoItem.getLevelId());
+				User empUser = modifyEmployeeInfoItem.getUser();
 
-				employee.setGroupId(serviceContext.getScopeGroupId());
-				employee.setCompanyId(serviceContext.getCompanyId());
+				EmployeeUtils.setAttributesToEmpFromEditItem(employee,
+						modifyEmployeeInfoItem);
 
 				final Calendar cal = Calendar.getInstance();
 				cal.setTime(employee.getBirthday());
@@ -224,49 +249,31 @@ public class EmployeeBean implements Serializable {
 				long[] roles = new long[] { RoleLocalServiceUtil.getRole(
 						serviceContext.getCompanyId(), "User").getRoleId() };
 
-				Emp result = EmpLocalServiceUtil
-						.addEmp(employee,
-								false,
-								!autoPassword ? modifyEmployeeInfoItem
-										.getUserPassword1() : DEFAULT_PW,
-								!autoPassword ? modifyEmployeeInfoItem
-										.getUserPassword2() : DEFAULT_PW,
-								false,
-								modifyEmployeeInfoItem.getUserName(),
-								modifyEmployeeInfoItem.getUser()
-										.getEmailAddress(),
-								0,
-								StringUtils.EMPTY,
-								LocaleUtil.getDefault(),
-								modifyEmployeeInfoItem.getUser().getFirstName(),
-								modifyEmployeeInfoItem.getUser()
-										.getMiddleName(),
-								modifyEmployeeInfoItem.getUser().getLastName(),
-								0,
-								0,
-								employee.getGender().equalsIgnoreCase(MALE) ? true
-										: false,
-								month,
-								day,
-								year,
-								groups,
-								null,
-								roles,
-								null,
-								false,
-								0,
-								EmployeeUtils
-										.transferAddressObjectListToAddressMap(modifyEmployeeInfoItem
-												.getAddresses()),
-								EmployeeUtils
-										.transferDependentNameObjectListToDependentNameMap(modifyEmployeeInfoItem
-												.getDependentNames()),
-								EmployeeUtils
-										.transferBankInfoObjectListToBankInfoMap(modifyEmployeeInfoItem
-												.getBankInfos()),
-								serviceContext);
+				final long facebookId = 0L;
+				final int prefixId = 0;
+				final int suffixId = 0;
 
-				// EmpLocalServiceUtil
+				final long[] organizationIds = null;
+				final long[] userGroupIds = null;
+
+				final boolean sendEmail = false;
+
+				Emp result = EmpLocalServiceUtil.addEmp(
+						employee,
+						false,
+						!autoPassword ? modifyEmployeeInfoItem
+								.getUserPassword1() : DEFAULT_PW,
+						!autoPassword ? modifyEmployeeInfoItem
+								.getUserPassword2() : DEFAULT_PW, false,
+						modifyEmployeeInfoItem.getUserName(), empUser
+								.getEmailAddress(), facebookId,
+						StringUtils.EMPTY, LocaleUtil.getDefault(), empUser
+								.getFirstName(), empUser.getMiddleName(),
+						empUser.getLastName(), prefixId, suffixId, employee
+								.getGender().equalsIgnoreCase(MALE) ? true
+								: false, month, day, year, groups,
+						organizationIds, roles, userGroupIds, sendEmail,
+						addressMap, dependentMap, bankInfoMap, serviceContext);
 
 				if (result != null) {
 					msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -285,38 +292,12 @@ public class EmployeeBean implements Serializable {
 			} else {
 				Emp employee = modifyEmployeeInfoItem.getEmp();
 				long oldTitlesId = employee.getTitlesId();
-				employee.setTitlesId(EmployeeUtils
-						.getBaseModelPrimaryKey(modifyEmployeeInfoItem
-								.getTitles()));
-
-				employee.setUnitGroupId(EmployeeUtils
-						.getBaseModelPrimaryKey(modifyEmployeeInfoItem
-								.getUnitGroup()));
-
-				employee.setUnitId(EmployeeUtils
-						.getBaseModelPrimaryKey(modifyEmployeeInfoItem
-								.getUnit()));
-
-				employee.setLevelId(EmployeeUtils
-						.getBaseModelPrimaryKey(modifyEmployeeInfoItem
-								.getLevel()));
-				employee.setUniversityId(EmployeeUtils
-						.getBaseModelPrimaryKey(modifyEmployeeInfoItem
-								.getUniversity()));
-				EmpLocalServiceUtil
-						.update(employee,
-								modifyEmployeeInfoItem.getUser(),
-								oldTitlesId,
-								EmployeeUtils
-										.transferAddressObjectListToAddressMap(modifyEmployeeInfoItem
-												.getAddresses()),
-								EmployeeUtils
-										.transferDependentNameObjectListToDependentNameMap(modifyEmployeeInfoItem
-												.getDependentNames()),
-								EmployeeUtils
-										.transferBankInfoObjectListToBankInfoMap(modifyEmployeeInfoItem
-												.getBankInfos()),
-								Boolean.FALSE, serviceContext);
+				EmployeeUtils.setAttributesToEmpFromEditItem(employee,
+						modifyEmployeeInfoItem);
+				EmpLocalServiceUtil.update(employee,
+						modifyEmployeeInfoItem.getUser(), oldTitlesId,
+						addressMap, dependentMap, bankInfoMap, Boolean.FALSE,
+						serviceContext);
 
 				msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 						"Update employee successfully", "Employee "
@@ -327,7 +308,7 @@ public class EmployeeBean implements Serializable {
 			}
 		} catch (Exception e) {
 			isSuccessfulModified = false;
-			EmployeeUtils.writeDebugLog(EmployeeBean.class, e);
+			LOGGER.info(e);
 		}
 
 		if (isSuccessfulModified) {// NOSONAR
@@ -369,8 +350,11 @@ public class EmployeeBean implements Serializable {
 		modifyEmployeeInfoItem.setTitles(null);
 	}
 
-	public void onTitlesChanges() {
-
+	public void addTitles() {
+		TitlesBean titlesBean = BeanUtils.getTitlesBean();
+		titlesBean.setDepartment(modifyEmployeeInfoItem.getDepartment());
+		titlesBean.setUnit(modifyEmployeeInfoItem.getUnit());
+		titlesBean.setUnitGroup(modifyEmployeeInfoItem.getUnitGroup());
 	}
 
 	public void onEditTitles() {
@@ -427,7 +411,7 @@ public class EmployeeBean implements Serializable {
 									.getAddresses().get(index).getCountry()
 									.getCountryId()));
 		} catch (SystemException e) {
-			EmployeeUtils.writeDebugLog(EmployeeBean.class, e);
+			LOGGER.info(e);
 		}
 	}
 
@@ -626,6 +610,22 @@ public class EmployeeBean implements Serializable {
 		this.autoPassword = autoPassword;
 	}
 
+	public boolean isShowFilterPanel() {
+		return showFilterPanel;
+	}
+
+	public void setShowFilterPanel(boolean showFilterPanel) {
+		this.showFilterPanel = showFilterPanel;
+	}
+
+	public String getFilterPanelIncluded() {
+		return filterPanelIncluded;
+	}
+
+	public void setFilterPanelIncluded(String filterPanelIncluded) {
+		this.filterPanelIncluded = filterPanelIncluded;
+	}
+
 	public String getSelectedStatus() {
 		return selectedStatus;
 	}
@@ -665,14 +665,6 @@ public class EmployeeBean implements Serializable {
 
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
-	}
-
-	public String getTestString() {
-		return testString;
-	}
-
-	public void setTestString(String testString) {
-		this.testString = testString;
 	}
 
 }

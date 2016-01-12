@@ -24,6 +24,7 @@ import vn.com.ecopharma.hrm.tt.constant.ECO_TT_Info;
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
 import vn.com.ecopharma.hrm.tt.model.TimeTracking;
 import vn.com.ecopharma.hrm.tt.service.TimeTrackingLocalServiceUtil;
+import vn.com.ecopharma.hrm.tt.utils.TTUtils;
 
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
@@ -77,7 +78,7 @@ public class TimeTrackingIndexer extends BaseIndexer {
 
 		final Devision devision = department != null ? DevisionLocalServiceUtil
 				.getDevision(department.getDevisionId()) : null;
-				
+
 		final SimpleDateFormat sdf = new SimpleDateFormat(DAY_OF_WEEK,
 				Locale.ENGLISH);
 
@@ -86,6 +87,9 @@ public class TimeTrackingIndexer extends BaseIndexer {
 		document.addNumber(TimeTrackingField.EMP_ID, o.getEmpId());
 		document.addText(TimeTrackingField.EMP_CODE, emp.getEmpCode());
 		document.addText(TimeTrackingField.FULLNAME, user.getFullName());
+
+		document.addText(TimeTrackingField.VN_FULLNAME,
+				TTUtils.getViFullnameFromUser(user));
 		document.addText(TimeTrackingField.DEVISION, devision.getName());
 		document.addText(TimeTrackingField.DEPARTMENT, department.getName());
 		document.addText(TimeTrackingField.UNIT, unit != null ? unit.getName()

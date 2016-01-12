@@ -31,6 +31,8 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -40,7 +42,10 @@ import com.liferay.portal.service.UserLocalServiceUtil;
  *
  */
 public class EmpInfoItem implements Serializable {
+
 	private static final long serialVersionUID = 1L;
+
+	private static final Log LOGGER = LogFactoryUtil.getLog(EmpInfoItem.class);
 
 	private static final String MALE = "Male";
 	private Emp employee;
@@ -107,9 +112,9 @@ public class EmpInfoItem implements Serializable {
 					.getDevision(department.getDevisionId()) : null;
 
 		} catch (PortalException e) {
-			EmployeeUtils.writeDebugLog(EmpInfoItem.class, e);
+			LOGGER.info(e);
 		} catch (SystemException e) {
-			EmployeeUtils.writeDebugLog(EmpInfoItem.class, e);
+			LOGGER.info(e);
 		}
 
 	}
@@ -143,7 +148,7 @@ public class EmpInfoItem implements Serializable {
 					Arrays.asList(new BankInfoObject()));
 
 		} catch (SystemException e) {
-			EmployeeUtils.writeDebugLog(EmpInfoItem.class, e);
+			LOGGER.info(e);
 		}
 		return employee;
 	}
@@ -153,7 +158,7 @@ public class EmpInfoItem implements Serializable {
 			return UserLocalServiceUtil.createUser(CounterLocalServiceUtil
 					.increment());
 		} catch (SystemException e) {
-			EmployeeUtils.writeDebugLog(EmpInfoItem.class, e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -174,9 +179,9 @@ public class EmpInfoItem implements Serializable {
 			}
 			return university;
 		} catch (PortalException e) {
-			EmployeeUtils.writeDebugLog(EmpInfoItem.class, e);
+			LOGGER.info(e);
 		} catch (SystemException e) {
-			EmployeeUtils.writeDebugLog(EmpInfoItem.class, e);
+			LOGGER.info(e);
 		}
 		return university;
 	}

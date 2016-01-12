@@ -28,6 +28,7 @@ public class OrgNodeItem implements Serializable, Comparable<OrgNodeItem> {
 	private long id;
 	private String name;
 	private String type;
+	private Object modelObject;
 
 	public OrgNodeItem(long id, String name, String type) {
 		this.id = id;
@@ -36,6 +37,7 @@ public class OrgNodeItem implements Serializable, Comparable<OrgNodeItem> {
 	}
 
 	public OrgNodeItem(BaseModel<?> t) {
+		this.modelObject = t;
 		this.id = Long.valueOf(String.valueOf(t.getPrimaryKeyObj()));
 		this.setNameAndTypeFromBaseModel(t);
 	}
@@ -88,6 +90,14 @@ public class OrgNodeItem implements Serializable, Comparable<OrgNodeItem> {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public Object getModelObject() {
+		return modelObject;
+	}
+
+	public void setModelObject(Object modelObject) {
+		this.modelObject = modelObject;
 	}
 
 	@Override

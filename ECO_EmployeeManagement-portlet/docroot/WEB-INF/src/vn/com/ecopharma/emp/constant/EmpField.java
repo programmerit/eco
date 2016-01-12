@@ -4,11 +4,12 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 public class EmpField {
 
-	private EmpField() {
-
-	}
+	private static final Log LOGGER = LogFactoryUtil.getLog(EmpField.class);
 
 	public static final String EMP_ID = "empId";
 
@@ -22,11 +23,11 @@ public class EmpField {
 
 	public static final String BIRTHDAY = "birthday";
 
-	public static final String ETHNIC = "birthday";
+	public static final String ETHNIC = "ethnic";
 
-	public static final String NATIONALITY = "birthday";
+	public static final String NATIONALITY = "nationality";
 
-	public static final String RELIGION = "birthday";
+	public static final String RELIGION = "religion";
 
 	public static final String PASSPORT = "birthday";
 
@@ -71,6 +72,8 @@ public class EmpField {
 	public static final String ISSUED_PLACE = "issuedPlace";
 
 	public static final String ADDRESS = "address";
+
+	public static final String CITY = "city";
 
 	public static final String EMAIL = "emailAddress";
 
@@ -122,22 +125,24 @@ public class EmpField {
 
 	public static final String UNIVERSITY_ID = "universityId";
 
+	private EmpField() {
+	}
+
 	public static List<String> getAllFields() {
 		Field[] fields = EmpField.class.getFields();
-		List<String> results = new ArrayList<String>();
+		List<String> results = new ArrayList<>();
 		Object objectValue;
 		try {
 			objectValue = EmpField.class.newInstance();
 			for (int i = 0; i < fields.length; i++) {
-				// System.out.println((String) fields[i].get(objectValue));
 				results.add((String) fields[i].get(objectValue));
 			}
 			return results;
 		} catch (InstantiationException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
-		return null;
+		return results;
 	}
 }
