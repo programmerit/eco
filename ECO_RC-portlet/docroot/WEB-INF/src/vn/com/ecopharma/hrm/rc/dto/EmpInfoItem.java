@@ -30,6 +30,7 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -40,7 +41,10 @@ import com.liferay.portal.service.UserLocalServiceUtil;
  *
  */
 public class EmpInfoItem implements Serializable {
+
 	private static final long serialVersionUID = 1L;
+
+	private static final Log LOGGER = LogFactoryUtil.getLog(EmpInfoItem.class);
 
 	private static final String MALE = "Male";
 	private Emp employee;
@@ -76,8 +80,7 @@ public class EmpInfoItem implements Serializable {
 		final ServiceContext serviceContext = liferayFacesContext
 				.getServiceContext();
 
-		dependentNames = EmployeeUtils.getDependentNamesFromString(employee
-				.getDependentNames());
+		this.dependentNames = new ArrayList<>();
 		addresses = EmployeeUtils.getAddressObjectItemsFromClassNameAndPK(
 				Emp.class.getName(), employee.getEmpId(),
 				serviceContext.getCompanyId());
@@ -98,21 +101,19 @@ public class EmpInfoItem implements Serializable {
 		try {
 			user = UserLocalServiceUtil.fetchUser(employee.getEmpUserId());
 			titles = TitlesLocalServiceUtil.getTitles(employee.getTitlesId());
-			unitGroup = titles != null && titles.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
-					.getUnitGroup(titles.getUnitGroupId()) : null;
-			unit = titles != null && titles.getUnitId() != 0 ? UnitLocalServiceUtil
-					.getUnit(titles.getUnitId()) : null;
-			department = devision != null ? DepartmentLocalServiceUtil
-					.getDepartment(unit.getDepartmentId())
-					: (titles != null ? DepartmentLocalServiceUtil
-							.getDepartment(titles.getDepartmentId()) : null);
+			unitGroup = employee.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
+					.getUnitGroup(employee.getUnitGroupId()) : null;
+			unit = employee.getUnitId() != 0 ? UnitLocalServiceUtil
+					.getUnit(employee.getUnitId()) : null;
+			department = employee.getDepartmentId() != 0 ? DepartmentLocalServiceUtil
+					.getDepartment(employee.getDepartmentId()) : null;
 			devision = department != null ? DevisionLocalServiceUtil
 					.getDevision(department.getDevisionId()) : null;
 
 		} catch (PortalException e) {
-			LogFactoryUtil.getLog(EmpInfoItem.class).info(e);
+			LOGGER.info(e);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmpInfoItem.class).info(e);
+			LOGGER.info(e);
 		}
 
 	}
@@ -146,7 +147,7 @@ public class EmpInfoItem implements Serializable {
 					Arrays.asList(new BankInfoObject()));
 
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmpInfoItem.class).info(e);
+			LOGGER.info(e);
 		}
 		return employee;
 	}
@@ -156,7 +157,7 @@ public class EmpInfoItem implements Serializable {
 			return UserLocalServiceUtil.createUser(CounterLocalServiceUtil
 					.increment());
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmpInfoItem.class).info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -177,9 +178,9 @@ public class EmpInfoItem implements Serializable {
 			}
 			return university;
 		} catch (PortalException e) {
-			LogFactoryUtil.getLog(EmpInfoItem.class).info(e);
+			LOGGER.info(e);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmpInfoItem.class).info(e);
+			LOGGER.info(e);
 		}
 		return university;
 	}

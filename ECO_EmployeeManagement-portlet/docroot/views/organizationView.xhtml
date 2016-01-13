@@ -36,10 +36,14 @@
 					actionListener="#{organizationTreeViewBean.editTitles}"
 					oncomplete="PF('wTitlesDialog').show()"
 					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Titles'}" />
+
+				<p:menuitem value="Delete Titles"
+					onclick="PF('wDeleteConfirmDialog').show()"
+					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Titles'}" />
 			</p:contextMenu>
 
 			<p:tree value="#{organizationTreeViewBean.root}" var="org"
-				id="orgTree" selectionMode="multiple" dynamic="true"
+				id="orgTree" selectionMode="multiple"
 				selection="#{organizationTreeViewBean.selectedNodes}" animate="true"
 				draggable="true" droppable="true" highlight="true"
 				showUnselectableCheckbox="true">
@@ -85,7 +89,7 @@
 						<p:message for="titlesNameEn" />
 
 						<p:commandButton value="Save"
-							actionListener="#{titlesBean.onSave}" 
+							actionListener="#{titlesBean.onSave}"
 							update=":orgTreeForm:orgTree"
 							oncomplete="PF('wTitlesDialog').hide();" />
 						<p:commandLink value="Cancel" style="margin-left: 3px"
@@ -93,6 +97,12 @@
 					</h:panelGrid>
 				</p:outputPanel>
 			</p:dialog>
+
+			<eco:confirmDialog wDialogVar="wDeleteConfirmDialog"
+				message="Delete this titles?" header="Delete Confirmation"
+				onAction="#{organizationTreeViewBean.deleteTitles}"
+				oncompleteActions="PF('wDeleteConfirmDialog').hide()"
+				update=":orgTreeForm:orgTree" />
 
 		</h:form>
 

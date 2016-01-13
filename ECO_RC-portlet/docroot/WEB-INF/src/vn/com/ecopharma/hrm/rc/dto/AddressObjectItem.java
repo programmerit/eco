@@ -24,7 +24,6 @@ import com.liferay.portal.service.RegionServiceUtil;
 public class AddressObjectItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final String DEFAULT_COUNTRY = "vietnam";
 	private Region selectedRegion;
 	private Region region;
 	private List<Region> regions;

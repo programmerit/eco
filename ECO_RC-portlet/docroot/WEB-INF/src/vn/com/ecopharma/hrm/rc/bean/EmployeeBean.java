@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -14,21 +15,13 @@ import javax.faces.context.FacesContext;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
 
-import vn.com.ecopharma.emp.model.Department;
-import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Emp;
+import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.model.Level;
-import vn.com.ecopharma.emp.model.Titles;
-import vn.com.ecopharma.emp.model.Unit;
-import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.model.University;
-import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
-import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
-import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
-import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.dto.AddressObjectItem;
 import vn.com.ecopharma.hrm.rc.dto.BankInfoObject;
@@ -53,7 +46,9 @@ import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Country;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.CountryServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RegionServiceUtil;
@@ -77,9 +72,6 @@ public class EmployeeBean implements Serializable {
 	private Candidate candidate;
 
 	private boolean autoPassword = true;
-
-	@SuppressWarnings("unused")
-	private List<Titles> titlesList;
 
 	public void transferCandidateInfo(CandidateItem candidateItem) {
 		try {
@@ -173,12 +165,21 @@ public class EmployeeBean implements Serializable {
 		try {
 			final Emp employee = modifyEmployeeInfoItem.getEmp();
 
-			employee.setUniversityId(modifyEmployeeInfoItem.getUniversityId());
-			employee.setTitlesId(modifyEmployeeInfoItem.getTitlesId());
-			employee.setLevelId(modifyEmployeeInfoItem.getLevelId());
+			User empUser = modifyEmployeeInfoItem.getUser();
 
-			employee.setGroupId(serviceContext.getScopeGroupId());
-			employee.setCompanyId(serviceContext.getCompanyId());
+			final Map<Address, Boolean> addressMap = EmployeeUtils
+					.transferAddressObjectListToAddressMap(modifyEmployeeInfoItem
+							.getAddresses());
+			final Map<String, Boolean> dependentMap = EmployeeUtils
+					.transferDependentNameObjectListToDependentNameMap(modifyEmployeeInfoItem
+							.getDependentNames());
+
+			final Map<EmpBankInfo, Boolean> bankInfoMap = EmployeeUtils
+					.transferBankInfoObjectListToBankInfoMap(modifyEmployeeInfoItem
+							.getBankInfos());
+
+			EmployeeUtils.setAttributesToEmpFromEditItem(employee,
+					modifyEmployeeInfoItem);
 
 			final Calendar cal = Calendar.getInstance();
 			cal.setTime(employee.getBirthday());
@@ -194,44 +195,28 @@ public class EmployeeBean implements Serializable {
 			long[] roles = new long[] { RoleLocalServiceUtil.getRole(
 					serviceContext.getCompanyId(), "User").getRoleId() };
 
-			Emp result = EmpLocalServiceUtil
-					.addEmp(employee,
-							false,
-							!autoPassword ? modifyEmployeeInfoItem
-									.getUserPassword1() : DEFAULT_PW,
-							!autoPassword ? modifyEmployeeInfoItem
-									.getUserPassword2() : DEFAULT_PW,
-							false,
-							modifyEmployeeInfoItem.getUserName(),
-							modifyEmployeeInfoItem.getUser().getEmailAddress(),
-							0,
-							StringUtils.EMPTY,
-							LocaleUtil.getDefault(),
-							modifyEmployeeInfoItem.getUser().getFirstName(),
-							modifyEmployeeInfoItem.getUser().getMiddleName(),
-							modifyEmployeeInfoItem.getUser().getLastName(),
-							0,
-							0,
-							employee.getGender().equalsIgnoreCase(MALE) ? true
-									: false,
-							month,
-							day,
-							year,
-							groups,
-							null,
-							roles,
-							null,
-							false,
-							0,
-							EmployeeUtils
-									.transferAddressObjectListToAddressMap(modifyEmployeeInfoItem
-											.getAddresses()),
-							EmployeeUtils
-									.transferDependentNameObjectListToDependentNameMap(modifyEmployeeInfoItem
-											.getDependentNames()),
-							EmployeeUtils
-									.transferBankInfoObjectListToBankInfoMap(modifyEmployeeInfoItem
-											.getBankInfos()), serviceContext);
+			final long facebookId = 0L;
+			final int prefixId = 0;
+			final int suffixId = 0;
+
+			final long[] organizationIds = null;
+			final long[] userGroupIds = null;
+
+			final boolean sendEmail = false;
+
+			Emp result = EmpLocalServiceUtil.addEmp(employee, false,
+					!autoPassword ? modifyEmployeeInfoItem.getUserPassword1()
+							: DEFAULT_PW,
+					!autoPassword ? modifyEmployeeInfoItem.getUserPassword2()
+							: DEFAULT_PW, false, modifyEmployeeInfoItem
+							.getUserName(), empUser.getEmailAddress(),
+					facebookId, StringUtils.EMPTY, LocaleUtil.getDefault(),
+					empUser.getFirstName(), empUser.getMiddleName(), empUser
+							.getLastName(), prefixId, suffixId, employee
+							.getGender().equalsIgnoreCase(MALE) ? true : false,
+					month, day, year, groups, organizationIds, roles,
+					userGroupIds, sendEmail, addressMap, dependentMap,
+					bankInfoMap, serviceContext);
 
 			if (result != null) {
 				candidate.setStatus(CandidateStatus.HIRE.toString());
@@ -338,42 +323,6 @@ public class EmployeeBean implements Serializable {
 		this.modifyEmployeeInfoItem = modifyEmployeeInfoItem;
 	}
 
-	public List<Unit> getUnits() {
-		final Department empDepartment = modifyEmployeeInfoItem.getDepartment();
-		return empDepartment != null ? UnitLocalServiceUtil
-				.findByDepartment(empDepartment.getDepartmentId())
-				: new ArrayList<Unit>();
-	}
-
-	public List<Department> getDepartments() {
-		List<Department> departments = modifyEmployeeInfoItem.getDevision() != null ? DepartmentLocalServiceUtil
-				.findByDevision(modifyEmployeeInfoItem.getDevision()
-						.getDevisionId()) : new ArrayList<Department>();
-		if (departments.isEmpty()
-				|| !departments
-						.contains(modifyEmployeeInfoItem.getDepartment())) {
-			modifyEmployeeInfoItem.setDepartment(null);
-		}
-		return departments;
-	}
-
-	public List<Devision> getDevisions() {
-		return DevisionLocalServiceUtil.findAll();
-	}
-
-	public List<UnitGroup> getUnitGroups() {
-		return modifyEmployeeInfoItem.getUnit() != null ? UnitGroupLocalServiceUtil
-				.findByUnit(modifyEmployeeInfoItem.getUnit().getUnitId())
-				: null;
-	}
-
-	public List<Titles> getTitlesList() {
-		return TitlesLocalServiceUtil.findByRelatedEntities(
-				modifyEmployeeInfoItem.getDepartment(),
-				modifyEmployeeInfoItem.getUnit(),
-				modifyEmployeeInfoItem.getUnitGroup());
-	}
-
 	public List<Level> getLevels() {
 		return LevelLocalServiceUtil.findAll();
 	}
@@ -436,4 +385,5 @@ public class EmployeeBean implements Serializable {
 		}
 		return defaultUsername;
 	}
+
 }

@@ -14,10 +14,14 @@ import vn.com.ecopharma.hrm.rc.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 public class VacancyItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	private static final Log LOGGER = LogFactoryUtil.getLog(VacancyItem.class);
 
 	private Titles titles;
 
@@ -58,7 +62,7 @@ public class VacancyItem implements Serializable {
 						.fetchTitles(vacancy.getTitlesId()) : null;
 			return titles;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return titles;
 	}

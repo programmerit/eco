@@ -180,9 +180,19 @@ public class TitlesLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.Titles"
 			};
 
-		_methodName158 = "completelyRemoveAll";
+		_methodName158 = "deleteTitles";
 
-		_methodParameterTypes158 = new String[] {  };
+		_methodParameterTypes158 = new String[] {
+				"vn.com.ecopharma.emp.model.Titles"
+			};
+
+		_methodName159 = "deleteTitles";
+
+		_methodParameterTypes159 = new String[] { "long" };
+
+		_methodName160 = "completelyRemoveAll";
+
+		_methodParameterTypes160 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -367,6 +377,16 @@ public class TitlesLocalServiceClpInvoker {
 
 		if (_methodName158.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
+			return TitlesLocalServiceUtil.deleteTitles((vn.com.ecopharma.emp.model.Titles)arguments[0]);
+		}
+
+		if (_methodName159.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
+			return TitlesLocalServiceUtil.deleteTitles(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName160.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
 			TitlesLocalServiceUtil.completelyRemoveAll();
 
 			return null;
@@ -441,4 +461,8 @@ public class TitlesLocalServiceClpInvoker {
 	private String[] _methodParameterTypes157;
 	private String _methodName158;
 	private String[] _methodParameterTypes158;
+	private String _methodName159;
+	private String[] _methodParameterTypes159;
+	private String _methodName160;
+	private String[] _methodParameterTypes160;
 }

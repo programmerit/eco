@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:head />
+	<h:body>
+
+		<h:link outcome="importExport" value="Go to Import/Export " />
+		<h:link outcome="timetracking" value="Go to TimeTrackings " />
+		<h:outputText value="#{timeTrackingReportBean.test}" />
+		<h:form id="reportFilterForm">
+
+			<h:outputText value="Filter:" styleClass="label" />
+			<p:panelGrid columns="2" layout="grid"
+				style="margin-bottom: 7px!important;">
+				<h:panelGroup>
+					<p:selectOneMenu id="unitSelect"
+						value="#{timeTrackingReportFilterBean.unit}"
+						converter="unitConverter" effect="fade" filter="true"
+						filterMatchMode="contains" var="u">
+						<!-- <p:ajax listener="#{timeTrackingReportFilterBean.onUnitChanged}"
+								oncomplete="PF('employeeTable').filter(); refreshFooter();" /> -->
+
+						<f:selectItem itemLabel="ALL UNIT" itemValue="" />
+						<f:selectItems value="#{timeTrackingReportFilterBean.units}"
+							var="u" itemLabel="#{u.name}" itemValue="#{u}" />
+						<p:column>
+					                #{u.unitId} - #{u.name}
+					            </p:column>
+					</p:selectOneMenu>
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<p:selectOneMenu id="monthSelect"
+						value="#{timeTrackingReportFilterBean.month}" var="m">
+						<f:selectItem itemLabel="SELECT MONTH" itemValue="" />
+						<f:selectItems value="#{timeTrackingReportFilterBean.months}"
+							var="m" itemLabel="#{m}" itemValue="#{m}" />
+						<p:column>#{m}</p:column>
+					</p:selectOneMenu>
+				</h:panelGroup>
+			</p:panelGrid>
+		</h:form>
+		<h:form id="reportForm">
+			<p:dataTable var="t"
+				value="#{timeTrackingReportBean.timeTrackingReports}"
+				scrollable="true" style="margin-top:40px">
+
+				<p:columnGroup type="header">
+					<p:row>
+						<p:column rowspan="3" headerText="Emp Code" width="50" />
+						<p:column rowspan="3" headerText="Name" width="100" />
+						<p:column rowspan="3" headerText="Values" width="80" />
+						<p:column colspan="#{timeTrackingReportBean.getDatesSize(7)}"
+							headerText="BẢNG CHI TIẾT CHẤM CÔNG" width="2000" />
+						<p:column rowspan="3" headerText="Grand Total" width="80"
+							style="font-size: 15px; font-weight: bold;" />
+					</p:row>
+					<p:row>
+						<ui:repeat
+							value="#{timeTrackingReportBean.getDatesOfMonthString(7)}"
+							var="d">
+							<p:column headerText="#{d}" width="80" />
+						</ui:repeat>
+					</p:row>
+					<p:row>
+						<ui:repeat
+							value="#{timeTrackingReportBean.getDaysOfMonthString(7)}" var="d">
+							<p:column headerText="#{d}" width="80" style="font-weight: bold;"
+								styleClass="#{d == 'Sun' ? 'sunday' : ''}" />
+						</ui:repeat>
+					</p:row>
+				</p:columnGroup>
+
+
+				<p:column width="80">
+					<h:outputText value="#{t.empCode}" />
+				</p:column>
+
+				<p:column width="100">
+					<h:outputText value="#{t.fullName}" />
+				</p:column>
+
+				<p:column>
+					<h:outputText value="Min IN" style="color: blue;" />
+					<p:separator style="width: 80px;" />
+					<h:outputText value="Max OUT" />
+				</p:column>
+
+
+				<p:columns
+					value="#{timeTrackingReportBean.getDatesOfMonthString(7)}" var="d">
+					<h:outputText value="#{t.getMinIn(d)}" style="color: blue;" />
+					<p:separator />
+					<h:outputText value="#{t.getMaxOut(d)}" />
+				</p:columns>
+
+				<p:column>
+					<h:outputText value="Value" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+
+	</h:body>
+
+	<style type="text/css">
+.sunday>span.ui-column-title {
+	color: red !important;
+}
+</style>
+</f:view>

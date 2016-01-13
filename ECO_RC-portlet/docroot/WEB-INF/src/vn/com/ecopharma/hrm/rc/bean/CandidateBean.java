@@ -35,8 +35,8 @@ import vn.com.ecopharma.hrm.rc.dto.ExperienceObjectItem;
 import vn.com.ecopharma.hrm.rc.dto.InterviewScheduleForAllItem;
 import vn.com.ecopharma.hrm.rc.dto.InterviewScheduleItem;
 import vn.com.ecopharma.hrm.rc.dto.VacancyIndexItem;
-import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateCertificateType;
+import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
 import vn.com.ecopharma.hrm.rc.enumeration.InterviewScheduleStatus;
 import vn.com.ecopharma.hrm.rc.model.Candidate;
 import vn.com.ecopharma.hrm.rc.model.Certificate;
@@ -216,17 +216,19 @@ public class CandidateBean implements Serializable {
 			if (candidate == null) { // create new
 				candidate = candidateItem.getCandidate();
 				CandidateLocalServiceUtil.addCandidate(candidate, 0,
-						candidateItem.getVacancy().getVacancyId(),
+						candidateItem.getVacancyItem().getVacancy()
+								.getVacancyId(),
 						candidateItem.getPossibleDesiredVacancies(),
 						fileEntryIds, experienceMap, certificateMap,
 						serviceContext);
 			} else { // update
 
-				CandidateLocalServiceUtil.updateCandidate(candidateItem
-						.getCandidate(), candidateItem.getVacancy()
-						.getVacancyId(), candidateItem
-						.getPossibleDesiredVacancies(), fileEntryIds,
-						experienceMap, certificateMap, serviceContext);
+				CandidateLocalServiceUtil.updateCandidate(
+						candidateItem.getCandidate(), candidateItem
+								.getVacancyItem().getVacancy().getVacancyId(),
+						candidateItem.getPossibleDesiredVacancies(),
+						fileEntryIds, experienceMap, certificateMap,
+						serviceContext);
 			}
 
 			// RequestContext.getCurrentInstance().execute(

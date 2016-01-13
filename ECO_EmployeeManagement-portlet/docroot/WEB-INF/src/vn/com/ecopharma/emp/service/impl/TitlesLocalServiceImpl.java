@@ -25,6 +25,7 @@ import vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup;
 import vn.com.ecopharma.emp.service.base.TitlesLocalServiceBaseImpl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -199,6 +200,26 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 			}
 		}
 		return result;
+	}
+
+	public Titles deleteTitles(Titles titles) {
+		try {
+			return super.deleteTitles(titles);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
+	public Titles deleteTitles(long titlesId) {
+		try {
+			return super.deleteTitles(titlesId);
+		} catch (PortalException e) {
+			LOGGER.info(e);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
 	}
 
 	@Override

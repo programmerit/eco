@@ -7,7 +7,6 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 
 import vn.com.ecopharma.hrm.rc.model.Candidate;
 import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
-import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
 
 public class CandidateImportExportDTO implements Serializable {
 

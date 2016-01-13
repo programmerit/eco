@@ -29,9 +29,9 @@
 				update=":searchForm:filterGroup" />
 
 			<h:link value="Show/Hide filter" styleClass="label"
-				onclick="toggle('#{requestScope.foo.clientId}'); return false;" />
+				onclick="toggle('#{requestScope.filterGrid.clientId}'); return false;" />
 
-			<h:panelGroup binding="#{requestScope.foo}" id="filterGroup"
+			<h:panelGroup binding="#{requestScope.filterGrid}" id="filterGroup"
 				style="display: none;">
 				<p:panelGrid id="filterGrid" columns="5" layout="grid"
 					styleClass="filter-grid"
@@ -230,6 +230,7 @@
 			</p:contextMenu>
 
 			<h:outputText value="Columns to show:" styleClass="label" />
+			
 			<h:panelGrid columns="3" style="margin:10px 0">
 				<p:autoComplete id="columns" multiple="true" scrollHeight="300"
 					value="#{employeeIndexedBean.columnTemplates}"

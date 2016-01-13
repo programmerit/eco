@@ -34,14 +34,18 @@ public class TitlesActionBean {
 	}
 
 	public List<Titles> getTitlesList() {
-		if (department == null && unit == null && unitGroup == null)
-			return new ArrayList<Titles>();
-		long departmentId = department != null ? department.getDepartmentId()
-				: 0L;
-		long unitId = unit != null ? unit.getUnitId() : 0L;
-		long unitGroupId = unitGroup != null ? unitGroup.getUnitGroupId() : 0L;
-		return TitlesLocalServiceUtil.findByRelatedEntities(departmentId,
-				unitId, unitGroupId);
+		if (unit == null) {
+			return department != null ? TitlesLocalServiceUtil
+					.findByDepartmentOnly(department.getDepartmentId())
+					: new ArrayList<Titles>();
+		} else {
+			if (unitGroup != null) {
+				return TitlesLocalServiceUtil.findByUnitGroupOnly(unitGroup
+						.getUnitGroupId());
+			} else {
+				return TitlesLocalServiceUtil.findByUnitOnly(unit.getUnitId());
+			}
+		}
 	}
 
 	public List<UnitGroup> getUnitGroups() {

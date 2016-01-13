@@ -88,11 +88,12 @@ public class LocationTreeViewBean implements Serializable {
 							new LocationNodeItem(district), regionNode);
 					districtNodes.add(districtNode);
 				}
-			} else {
-				districtNodes.add(new DefaultTreeNode(
-						LocationNodeItem.DISTRICT_TYPE, new LocationNodeItem(
-								LocationNodeItem.DISTRICT_TYPE), regionNode));
 			}
+			// else {
+			// districtNodes.add(new DefaultTreeNode(
+			// LocationNodeItem.DISTRICT_TYPE, new LocationNodeItem(
+			// LocationNodeItem.DISTRICT_TYPE), regionNode));
+			// }
 		}
 
 		return treeRoot;

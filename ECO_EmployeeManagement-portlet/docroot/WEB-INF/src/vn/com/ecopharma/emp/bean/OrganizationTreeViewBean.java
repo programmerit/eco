@@ -12,6 +12,11 @@ import org.apache.commons.lang.StringUtils;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Titles;
@@ -34,6 +39,9 @@ public class OrganizationTreeViewBean implements Serializable {
 	 */
 	private static final long serialVersionUID = -2928998067622705654L;
 
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(OrganizationTreeViewBean.class);
+
 	private TreeNode root;
 
 	private TreeNode[] selectedNodes;
@@ -44,7 +52,7 @@ public class OrganizationTreeViewBean implements Serializable {
 	}
 
 	public TreeNode createDocuments() {
-		TreeNode treeRoot = new DefaultTreeNode(new Object(), null);
+		TreeNode treeRoot = new DefaultTreeNode(new OrgNodeItem(), null);
 
 		final List<Devision> allDevisions = DevisionLocalServiceUtil.findAll();
 		final List<TreeNode> devisionTreeNodes = new ArrayList<>();
@@ -63,16 +71,20 @@ public class OrganizationTreeViewBean implements Serializable {
 
 			if (!departmentsByDevision.isEmpty()) {
 				for (Department department : departmentsByDevision) {
+					OrgNodeItem departmentNodeItem = new OrgNodeItem(department);
 					TreeNode deptNode = new DefaultTreeNode(
-							OrgNodeItem.DEPARTMENT_TYPE, new OrgNodeItem(
-									department), devisionNode);
+							OrgNodeItem.DEPARTMENT_TYPE, departmentNodeItem,
+							devisionNode);
 					deptTreeNodes.add(deptNode);
+
+					devisionItem.getChildrenModels().add(departmentNodeItem);
 				}
-			} else {
-				deptTreeNodes.add(new DefaultTreeNode(
-						OrgNodeItem.DEPARTMENT_TYPE, new OrgNodeItem(
-								OrgNodeItem.DEPARTMENT_TYPE), devisionNode));
 			}
+			// else {
+			// deptTreeNodes.add(new DefaultTreeNode(
+			// OrgNodeItem.DEPARTMENT_TYPE, new OrgNodeItem(
+			// OrgNodeItem.DEPARTMENT_TYPE), devisionNode));
+			// }
 		}
 
 		final List<TreeNode> unitTreeNodes = new ArrayList<>();
@@ -173,14 +185,36 @@ public class OrganizationTreeViewBean implements Serializable {
 		titlesBean.setUnitGroup(unitGroup);
 		titlesBean.setUnit(unit);
 		titlesBean.setDepartment(department);
+		titlesBean.setUpdateTree(true);
 	}
 
 	public void editTitles() {
 
 		OrgNodeItem item = (OrgNodeItem) selectedNodes[0].getData();
+		TitlesBean titlesBean = BeanUtils.getTitlesBean();
 		if (item.getType().equalsIgnoreCase(OrgNodeItem.TITLES_TYPE)) {
 
-			BeanUtils.getTitlesBean().setTitles((Titles) item.getModelObject());
+			titlesBean.setTitles((Titles) item.getModelObject());
+			titlesBean.setUpdateTree(true);
+		}
+	}
+
+	public void deleteTitles() {
+		TreeNode titlesNode = selectedNodes[0];
+
+		TreeNode firstParentNode = titlesNode.getParent();
+		String firstParentNodeType = ((OrgNodeItem) firstParentNode).getType();
+		if (firstParentNodeType.equalsIgnoreCase(OrgNodeItem.DEPARTMENT_TYPE)) {
+
+		}
+
+		OrgNodeItem item = (OrgNodeItem) selectedNodes[0].getData();
+		try {
+			TitlesLocalServiceUtil.deleteTitles(item.getId());
+		} catch (PortalException e) {
+			LOGGER.info(e);
+		} catch (SystemException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -210,9 +244,19 @@ public class OrganizationTreeViewBean implements Serializable {
 
 	public void updateTreeOnTitlesAdded(Titles titles) {
 		TreeNode firstParentNode = selectedNodes[0];
-		TreeNode newTitlesNode = new DefaultTreeNode(OrgNodeItem.TITLES_TYPE,
-				new OrgNodeItem(titles), firstParentNode);
+		firstParentNode.getChildren().add(
+				new DefaultTreeNode(OrgNodeItem.TITLES_TYPE, new OrgNodeItem(
+						titles), firstParentNode));
+	}
 
+	public void updateTreeOnTitlesEdited(Titles titles) {
+		TreeNode selectedTitlesNode = selectedNodes[0];
+		TreeNode parent = selectedTitlesNode.getParent();
+
+		parent.getChildren().remove(selectedTitlesNode);
+		parent.getChildren().add(
+				new DefaultTreeNode(OrgNodeItem.TITLES_TYPE, new OrgNodeItem(
+						titles), parent));
 	}
 
 }

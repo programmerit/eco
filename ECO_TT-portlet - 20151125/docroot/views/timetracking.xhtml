@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:head />
+	<h:body>
+		<h:form id="timeTrackingForm">
+			<p:autoComplete id="columns" multiple="true" scrollHeight="300"
+				value="#{timeTrackingBean.columnTemplates}"
+				completeMethod="#{timeTrackingBean.completeColumns}" var="column"
+				itemValue="#{column}" itemLabel="#{column}" autoHighlight="true"
+				placeholder="Type to select column..." styleClass="column-setting">
+				<p:ajax event="itemSelect" update="timeTrackings" process="@parent"
+					oncomplete="PF('wTimeTrackings').clearFilters()"
+					listener="#{timeTrackingBean.updateColumns}" />
+				<p:ajax event="itemUnselect" update="timeTrackings"
+					process="@parent" oncomplete="PF('wTimeTrackings').clearFilters()"
+					listener="#{timeTrackingBean.updateColumns}" />
+			</p:autoComplete>
+
+			<p:dataTable id="timeTrackings" var="t" reflow="true"
+				widgetVar="wTimeTrackings" value="#{timeTrackingBean.lazyDataModel}"
+				paginatorAlwaysVisible="true" paginator="true" rows="50"
+				paginatorPosition="bottom"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,25,50" lazy="true" rowKey="#{t.id}"
+				emptyMessage="No time tracking found" scrollable="true"
+				scrollRows="7" styleClass="timeTrackingTbl">
+				<p:columns var="column" value="#{timeTrackingBean.columns}"
+					columnIndexVar="colIndex">
+					<f:facet name="header">
+						<h:outputText value="#{column.header}" />
+					</f:facet>
+					<h:outputText value="#{t[column.property]}" />
+				</p:columns>
+
+				<f:facet name="footer">
+            	Data between 2010-2014
+        	</f:facet>
+			</p:dataTable>
+		</h:form>
+
+	</h:body>
+	<style type="text/css">
+.timeTrackingTbl .ui-datatable .ui-datatable-data tr {
+	height: 100px;
+}
+
+.column-setting select.ui-helper-hidden {
+	display: none;
+}
+
+.column-setting .ui-autocomplete-multiple-container.ui-inputfield {
+	width: 100%;
+}
+</style>
+</f:view>

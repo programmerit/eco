@@ -2,8 +2,10 @@ package vn.com.ecopharma.hrm.rc.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import vn.com.ecopharma.emp.model.Certificate;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Emp;
@@ -12,6 +14,7 @@ import vn.com.ecopharma.emp.model.Titles;
 import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.model.University;
+import vn.com.ecopharma.emp.service.CertificateLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
@@ -19,6 +22,7 @@ import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
+import vn.com.ecopharma.hrm.rc.enumeration.CertificateType;
 import vn.com.ecopharma.hrm.rc.enumeration.LaborContractType;
 import vn.com.ecopharma.hrm.rc.util.EmployeeUtils;
 
@@ -26,6 +30,7 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -44,9 +49,13 @@ public class EmpInfoItem implements Serializable {
 	private Titles titles;
 	private Level level;
 	private Devision devision;
-	public Department department;
-	public Unit unit;
-	public UnitGroup unitGroup;
+	private Department department;
+	private Unit unit;
+	private UnitGroup unitGroup;
+
+	private List<Certificate> majorCertificates;
+
+	private List<Certificate> vocationalCertificates;
 
 	/* Fields for creating employee's user */
 	private String userName;
@@ -57,7 +66,10 @@ public class EmpInfoItem implements Serializable {
 
 	private List<DependentName> dependentNames;
 
+	private List<BankInfoObject> bankInfos;
+
 	public EmpInfoItem(Emp employee) {
+
 		this.employee = employee;
 		LiferayFacesContext liferayFacesContext = LiferayFacesContext
 				.getInstance();
@@ -70,22 +82,37 @@ public class EmpInfoItem implements Serializable {
 				Emp.class.getName(), employee.getEmpId(),
 				serviceContext.getCompanyId());
 
+		dependentNames = EmployeeUtils.getDependentNamesFromString(employee
+				.getDependentNames());
+
+		majorCertificates = CertificateLocalServiceUtil
+				.findByClassNameClassPKAndType(Emp.class.getName(),
+						employee.getEmpId(), CertificateType.MAJOR.toString());
+		vocationalCertificates = CertificateLocalServiceUtil
+				.findByClassNameClassPKAndType(Emp.class.getName(),
+						employee.getEmpId(),
+						CertificateType.VOCATIONAL.toString());
+		bankInfos = EmployeeUtils
+				.getBankInfoObjectsFromEmp(employee.getEmpId());
+
 		try {
+			user = UserLocalServiceUtil.fetchUser(employee.getEmpUserId());
 			titles = TitlesLocalServiceUtil.getTitles(employee.getTitlesId());
 			unitGroup = titles != null && titles.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
 					.getUnitGroup(titles.getUnitGroupId()) : null;
-			unit = titles != null ? UnitLocalServiceUtil.getUnit(titles
-					.getUnitId()) : null;
+			unit = titles != null && titles.getUnitId() != 0 ? UnitLocalServiceUtil
+					.getUnit(titles.getUnitId()) : null;
 			department = devision != null ? DepartmentLocalServiceUtil
 					.getDepartment(unit.getDepartmentId())
 					: (titles != null ? DepartmentLocalServiceUtil
 							.getDepartment(titles.getDepartmentId()) : null);
 			devision = department != null ? DevisionLocalServiceUtil
 					.getDevision(department.getDevisionId()) : null;
+
 		} catch (PortalException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpInfoItem.class).info(e);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpInfoItem.class).info(e);
 		}
 
 	}
@@ -113,8 +140,13 @@ public class EmpInfoItem implements Serializable {
 					.toString());
 			this.addresses = new ArrayList<>();
 			this.dependentNames = new ArrayList<>();
+			this.majorCertificates = new ArrayList<>();
+			this.vocationalCertificates = new ArrayList<>();
+			this.bankInfos = new ArrayList<>(
+					Arrays.asList(new BankInfoObject()));
+
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpInfoItem.class).info(e);
 		}
 		return employee;
 	}
@@ -124,7 +156,7 @@ public class EmpInfoItem implements Serializable {
 			return UserLocalServiceUtil.createUser(CounterLocalServiceUtil
 					.increment());
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpInfoItem.class).info(e);
 		}
 		return null;
 	}
@@ -134,31 +166,20 @@ public class EmpInfoItem implements Serializable {
 	}
 
 	public User getUser() {
-		try {
-			if (user == null) {
-				return user = employee.getEmpUserId() != 0 ? UserLocalServiceUtil
-						.getUser(employee.getEmpUserId()) : null;
-			}
-			return user;
-		} catch (PortalException e) {
-			e.printStackTrace();
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
 		return user;
 	}
 
 	public University getUniversity() {
 		try {
 			if (university == null) {
-				return university = employee.getUniversityId() != 0 ? UniversityLocalServiceUtil
+				return employee.getUniversityId() != 0 ? UniversityLocalServiceUtil
 						.getUniversity(employee.getUniversityId()) : null;
 			}
 			return university;
 		} catch (PortalException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpInfoItem.class).info(e);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(EmpInfoItem.class).info(e);
 		}
 		return university;
 	}
@@ -173,6 +194,18 @@ public class EmpInfoItem implements Serializable {
 
 	public Level getLevel() {
 		return level;
+	}
+
+	public boolean isEmptyOrAllDeletedDependentNames() {
+		if (dependentNames.isEmpty())
+			return true;
+		for (DependentName name : dependentNames) {
+			// return false if there is any none UIDeleted item
+			if (!name.isUIDeleted()) {
+				return false;
+			}
+		}
+		return false;
 	}
 
 	public void setEmp(Emp employee) {
@@ -275,25 +308,40 @@ public class EmpInfoItem implements Serializable {
 		this.department = department;
 	}
 
+	public List<Certificate> getMajorCertificates() {
+		return majorCertificates;
+	}
+
+	public void setMajorCertificates(List<Certificate> majorCertificates) {
+		this.majorCertificates = majorCertificates;
+	}
+
+	public List<Certificate> getVocationalCertificates() {
+		return vocationalCertificates;
+	}
+
+	public void setVocationalCertificates(
+			List<Certificate> vocationalCertificates) {
+		this.vocationalCertificates = vocationalCertificates;
+	}
+
+	public Certificate getTopMajorCertificate() {
+		if (getMajorCertificates().isEmpty()) {
+			return null;
+		}
+		return majorCertificates.get(0);
+	}
+
+	public List<BankInfoObject> getBankInfos() {
+		return bankInfos;
+	}
+
+	public void setBankInfos(List<BankInfoObject> bankInfos) {
+		this.bankInfos = bankInfos;
+	}
+
 	public String getLocalizedLaborContractType(String laborContractType) {
 		return LaborContractType.valueOf(laborContractType)
 				.getLocalizedString();
 	}
-
-	public boolean isEmptyOrAllDeletedDependentNames() {
-		if (dependentNames.isEmpty())
-			return true;
-		for (DependentName name : dependentNames) {
-			// return false if there is any none UIDeleted item
-			if (!name.isUIDeleted()) {
-				return false;
-			}
-		}
-		return false;
-	}
-
-	// public String getStatusCss() {
-	// return EmployeeStatus.getCssClass(EmployeeStatus.valueOf(employee
-	// .getStatus()));
-	// }
 }

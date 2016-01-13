@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="vn.com.ecopharma.hrm.tt.service.TimeTrackingLocalService" class="vn.com.ecopharma.hrm.tt.service.impl.TimeTrackingLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.tt.service.TimeTrackingService" class="vn.com.ecopharma.hrm.tt.service.impl.TimeTrackingServiceImpl" />
+	<bean id="vn.com.ecopharma.hrm.tt.service.persistence.TimeTrackingPersistence" class="vn.com.ecopharma.hrm.tt.service.persistence.TimeTrackingPersistenceImpl" parent="basePersistence" />
+</beans>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<service-builder package-path="vn.com.ecopharma.hrm.tt">
+	<author>tvt</author>
+	<namespace>eco_ttp</namespace>
+	<entity name="TimeTracking" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="timeTrackingId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+        <column name="empId" type="long"></column>
+        <column name="date" type="Date"></column>
+        <column name="in1" type="Date"></column>
+        <column name="out1" type="Date"></column>
+        <column name="in2" type="Date"></column>
+        <column name="out2" type="Date"></column>
+        <column name="in3" type="Date"></column>
+        <column name="out3" type="Date"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+        <finder name="Emp" return-type="Collection">
+            <finder-column name="empId"></finder-column>
+        </finder>
+	</entity>
+
+</service-builder>

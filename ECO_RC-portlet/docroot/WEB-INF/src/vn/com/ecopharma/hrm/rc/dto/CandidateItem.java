@@ -5,14 +5,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import vn.com.ecopharma.hrm.rc.constant.ECO_RCUtils;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
 import vn.com.ecopharma.hrm.rc.enumeration.VacancyCandidateType;
 import vn.com.ecopharma.hrm.rc.model.Candidate;
 import vn.com.ecopharma.hrm.rc.model.Certificate;
 import vn.com.ecopharma.hrm.rc.model.Document;
 import vn.com.ecopharma.hrm.rc.model.Experience;
-import vn.com.ecopharma.hrm.rc.model.Vacancy;
 import vn.com.ecopharma.hrm.rc.model.VacancyCandidate;
 import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.CertificateLocalServiceUtil;
@@ -30,7 +28,7 @@ public class CandidateItem implements Serializable {
 
 	private VacancyIndexItem vacancyIndexItem;
 
-	private Vacancy vacancy;
+	private VacancyItem vacancyItem;
 
 	private List<VacancyIndexItem> desiredVacancies;
 
@@ -46,17 +44,18 @@ public class CandidateItem implements Serializable {
 				.toString());
 		this.candidate.setApplicationDate(new Date(System.currentTimeMillis()));
 		this.vacancyIndexItem = null;
-		this.documentItems = new ArrayList<DocumentItem>();
-		this.experiences = new ArrayList<ExperienceObjectItem>();
-		this.certificates = new ArrayList<CertificateObjectItem>();
-		this.desiredVacancies = new ArrayList<VacancyIndexItem>();
+		this.documentItems = new ArrayList<>();
+		this.experiences = new ArrayList<>();
+		this.certificates = new ArrayList<>();
+		this.desiredVacancies = new ArrayList<>();
 	}
 
 	public CandidateItem(Candidate candidate) {
 		this.candidate = candidate;
 		// this.vacancyIndexItem = getIndexVacancy(candidate.getCandidateId());
-		this.vacancy = VacancyLocalServiceUtil
-				.getVacancyByCandidateId(candidate.getCandidateId());
+		this.vacancyItem = new VacancyItem(
+				VacancyLocalServiceUtil.getVacancyByCandidateId(candidate
+						.getCandidateId()));
 		this.documentItems = getDocumentList(candidate.getCandidateId());
 		this.experiences = getExperienceList(candidate.getCandidateId());
 		this.certificates = getCertificateList(candidate.getCandidateId());
@@ -67,7 +66,7 @@ public class CandidateItem implements Serializable {
 	private List<DocumentItem> getDocumentList(long candidateId) {
 		List<Document> documents = DocumentLocalServiceUtil
 				.findByClassAndClassPK(Candidate.class.getName(), candidateId);
-		final List<DocumentItem> docItems = new ArrayList<DocumentItem>();
+		final List<DocumentItem> docItems = new ArrayList<>();
 		for (Document doc : documents) {
 			docItems.add(new DocumentItem(doc));
 		}
@@ -75,7 +74,7 @@ public class CandidateItem implements Serializable {
 	}
 
 	private List<ExperienceObjectItem> getExperienceList(long candidateId) {
-		final List<ExperienceObjectItem> experienceObjectItems = new ArrayList<ExperienceObjectItem>();
+		final List<ExperienceObjectItem> experienceObjectItems = new ArrayList<>();
 		for (Experience experience : ExperienceLocalServiceUtil
 				.findByClassNameAndClassPK(Candidate.class.getName(),
 						candidateId)) {
@@ -85,7 +84,7 @@ public class CandidateItem implements Serializable {
 	}
 
 	private List<VacancyIndexItem> getDesireVacanciesList(long candidateId) {
-		final List<VacancyIndexItem> vacancyIndexItems = new ArrayList<VacancyIndexItem>();
+		final List<VacancyIndexItem> vacancyIndexItems = new ArrayList<>();
 		for (VacancyCandidate vacancyCandidate : VacancyCandidateLocalServiceUtil
 				.findByCandidateAndType(candidateId,
 						VacancyCandidateType.OPTIONAL.toString())) {
@@ -99,31 +98,13 @@ public class CandidateItem implements Serializable {
 	}
 
 	private List<CertificateObjectItem> getCertificateList(long candidateId) {
-		final List<CertificateObjectItem> items = new ArrayList<CertificateObjectItem>();
+		final List<CertificateObjectItem> items = new ArrayList<>();
 		for (Certificate o : CertificateLocalServiceUtil
 				.findByClassNameAndClassPK(Candidate.class.getName(),
 						candidateId)) {
 			items.add(new CertificateObjectItem(o));
 		}
 		return items;
-	}
-
-	private VacancyIndexItem getIndexVacancy(long candidateId) {
-		// final VacancyCandidate vacancyCandidate =
-		// VacancyCandidateLocalServiceUtil
-		// .findByCandidateAndActiveStatus(candidateId);
-
-		// get(0) because one Candidate at the same time only have 1 MAIN
-		// vacancy
-		final VacancyCandidate vacancyCandidate = VacancyCandidateLocalServiceUtil
-				.findByCandidateAndType(candidateId,
-						VacancyCandidateType.MAIN.toString()).get(0);
-
-		final VacancyIndexItem vacancyIndexItem = new VacancyIndexItem(
-				VacancyLocalServiceUtil.getIndexVacancyDocument(
-						vacancyCandidate.getVacancyId(),
-						ECO_RCUtils.getCurrentSearchContext()));
-		return vacancyIndexItem;
 	}
 
 	public Candidate getCandidate() {
@@ -140,14 +121,6 @@ public class CandidateItem implements Serializable {
 
 	public void setVacancyIndexItem(VacancyIndexItem vacancyIndexItem) {
 		this.vacancyIndexItem = vacancyIndexItem;
-	}
-
-	public Vacancy getVacancy() {
-		return vacancy;
-	}
-
-	public void setVacancy(Vacancy vacancy) {
-		this.vacancy = vacancy;
 	}
 
 	public List<DocumentItem> getDocumentItems() {
@@ -172,6 +145,14 @@ public class CandidateItem implements Serializable {
 
 	public void setCertificates(List<CertificateObjectItem> certificates) {
 		this.certificates = certificates;
+	}
+
+	public VacancyItem getVacancyItem() {
+		return vacancyItem;
+	}
+
+	public void setVacancyItem(VacancyItem vacancyItem) {
+		this.vacancyItem = vacancyItem;
 	}
 
 	public List<VacancyIndexItem> getDesiredVacancies() {

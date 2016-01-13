@@ -45,34 +45,36 @@ public class TitlesBean extends AbstractOrganizationBean {
 	@Override
 	public void onSave(ActionEvent event) {
 		try {
-			if (department != null) {
-				FacesMessage msg;
-				Titles result;
-				if (TitlesLocalServiceUtil.fetchTitles(titles.getTitlesId()) == null) {
-					result = TitlesLocalServiceUtil.addTitles(titles,
-							EmployeeUtils.getServiceContext());
-					TitlesDepartmentUnitUnitGroupLocalServiceUtil
-							.addTitlesDepartmentUnitUnitGroup(result,
-									department, unit, unitGroup,
-									EmployeeUtils.getServiceContext());
-					msg = getResultMessage(result,
-							"Create Titles successfully",
-							"Titles " + titles.getName() + " has been created");
+			FacesMessage msg;
+			Titles result;
+			boolean isEdit = false;
+			if (TitlesLocalServiceUtil.fetchTitles(titles.getTitlesId()) == null) {
+				result = TitlesLocalServiceUtil.addTitles(titles,
+						EmployeeUtils.getServiceContext());
+				TitlesDepartmentUnitUnitGroupLocalServiceUtil
+						.addTitlesDepartmentUnitUnitGroup(result, department,
+								unit, unitGroup,
+								EmployeeUtils.getServiceContext());
+				msg = getResultMessage(result, "Create Titles successfully",
+						"Titles " + titles.getName() + " has been created");
 
+			} else {
+				isEdit = true;
+				result = TitlesLocalServiceUtil.updateTitles(titles);
+				msg = getResultMessage(result, "Update Titles successfully",
+						"Titles " + titles.getName() + " has been updated");
+			}
+			if (updateTree) {
+				if (isEdit) {
+					BeanUtils.getOrganizationTreeViewBean()
+							.updateTreeOnTitlesEdited(result);
 				} else {
-					result = TitlesLocalServiceUtil.updateTitles(titles);
-					msg = getResultMessage(result,
-							"Update Titles successfully",
-							"Titles " + titles.getName() + " has been updated");
-				}
-				if (updateTree) {
 					BeanUtils.getOrganizationTreeViewBean()
 							.updateTreeOnTitlesAdded(result);
-					;
 				}
-
-				FacesContext.getCurrentInstance().addMessage(null, msg);
 			}
+
+			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}
