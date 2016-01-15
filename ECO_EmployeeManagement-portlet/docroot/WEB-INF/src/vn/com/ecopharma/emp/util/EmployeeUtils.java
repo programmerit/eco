@@ -484,7 +484,7 @@ public class EmployeeUtils {
 			if (s.contains(dashChar)) {
 				s = s.replaceAll(dashChar, " "); // NOSONAR
 			}
-		return s;
+		return s.replaceAll("\\s+", " ").trim();
 	}
 
 	public static void setAttributesToEmpFromEditItem(Emp employee,

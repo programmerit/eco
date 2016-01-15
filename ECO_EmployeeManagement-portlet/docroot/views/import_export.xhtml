@@ -115,6 +115,21 @@
 
 					<p:growl id="messages2" showDetail="true" />
 				</p:tab>
+
+				<p:tab id="locationTab" title="Import Location">
+					<p:fileUpload
+						fileUploadListener="#{locationIEBean.handleFileImport}"
+						mode="advanced" dragDropSupport="true" update="messages2"
+						sizeLimit="10000000" allowTypes="/(\.|\/)(xls|xlsx)$/" />
+				</p:tab>
+
+				<p:tab id="updateAddressTab" title="Update Employee Address">
+					<p:fileUpload
+						fileUploadListener="#{updateEmpAddressBean.handleFileImport}"
+						mode="advanced" dragDropSupport="true" update="messages2"
+						sizeLimit="10000000" allowTypes="/(\.|\/)(xls|xlsx)$/" />
+				</p:tab>
+
 			</p:tabView>
 			<br />
 

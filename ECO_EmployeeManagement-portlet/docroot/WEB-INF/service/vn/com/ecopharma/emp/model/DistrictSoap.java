@@ -32,14 +32,15 @@ public class DistrictSoap implements Serializable {
 		DistrictSoap soapModel = new DistrictSoap();
 
 		soapModel.setDistrictId(model.getDistrictId());
+		soapModel.setRegionCode(model.getRegionCode());
+		soapModel.setDistrictType(model.getDistrictType());
+		soapModel.setName(model.getName());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setRegionCode(model.getRegionCode());
-		soapModel.setName(model.getName());
 
 		return soapModel;
 	}
@@ -100,6 +101,30 @@ public class DistrictSoap implements Serializable {
 		_districtId = districtId;
 	}
 
+	public String getRegionCode() {
+		return _regionCode;
+	}
+
+	public void setRegionCode(String regionCode) {
+		_regionCode = regionCode;
+	}
+
+	public String getDistrictType() {
+		return _districtType;
+	}
+
+	public void setDistrictType(String districtType) {
+		_districtType = districtType;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -148,29 +173,14 @@ public class DistrictSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getRegionCode() {
-		return _regionCode;
-	}
-
-	public void setRegionCode(String regionCode) {
-		_regionCode = regionCode;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
 	private long _districtId;
+	private String _regionCode;
+	private String _districtType;
+	private String _name;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _regionCode;
-	private String _name;
 }

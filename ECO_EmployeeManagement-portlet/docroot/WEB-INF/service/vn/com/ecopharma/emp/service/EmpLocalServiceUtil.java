@@ -476,6 +476,28 @@ public class EmpLocalServiceUtil {
 			dependentNames, insurranceCode, healthInsuranceNo);
 	}
 
+	public static vn.com.ecopharma.emp.model.Emp updateEmpAddresses(
+		java.lang.String empCode, java.lang.String address,
+		vn.com.ecopharma.emp.model.District district,
+		com.liferay.portal.model.Region region, long countryId,
+		boolean isPrimary,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateEmpAddresses(empCode, address, district, region,
+			countryId, isPrimary, serviceContext);
+	}
+
+	public static void removeAllExistingEmpAddresses(java.lang.String empCode,
+		long companyId) {
+		getService().removeAllExistingEmpAddresses(empCode, companyId);
+	}
+
+	public static void removeAllExistingEmpAddresses(long empId, long companyId) {
+		getService().removeAllExistingEmpAddresses(empId, companyId);
+	}
+
 	public static java.util.List<com.liferay.portal.kernel.search.Document> searchAllEmpDocs(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> queries,

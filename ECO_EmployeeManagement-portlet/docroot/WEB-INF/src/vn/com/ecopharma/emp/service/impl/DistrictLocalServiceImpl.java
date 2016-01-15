@@ -14,6 +14,7 @@
 
 package vn.com.ecopharma.emp.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import vn.com.ecopharma.emp.model.District;
@@ -21,6 +22,8 @@ import vn.com.ecopharma.emp.service.base.DistrictLocalServiceBaseImpl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
@@ -50,6 +53,9 @@ public class DistrictLocalServiceImpl extends DistrictLocalServiceBaseImpl {
 	 * vn.com.ecopharma.emp.service.DistrictLocalServiceUtil} to access the
 	 * district local service.
 	 */
+
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(DistrictLocalServiceImpl.class);
 
 	public List<District> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -86,22 +92,44 @@ public class DistrictLocalServiceImpl extends DistrictLocalServiceBaseImpl {
 			district.setName(name);
 			district.setRegionCode(regionCode);
 
+			district.setCreateDate(new Date());
+			district.setModifiedDate(new Date());
 			district.setGroupId(serviceContext.getScopeGroupId());
 			district.setCompanyId(serviceContext.getCompanyId());
 			district.setUserId(serviceContext.getUserId());
+
 			return super.addDistrict(district);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
 
 	public District findByRegionCodeAndName(String regionCode, String name) {
 		try {
-			return districtPersistence.fetchByRegionCodeAndName(regionCode,
-					name);
+			District matchDistrict = districtPersistence
+					.fetchByRegionCodeAndName(regionCode, name);
+			if (matchDistrict == null && name.contains("'")) {
+				LOGGER.info("INSIDE deep compare district's name");
+				LOGGER.info("name before replace: " + name);
+				name = name.replaceAll("'", "");
+				LOGGER.info("name after replace: " + name);
+				List<District> allRegionDistricts = this
+						.findByRegionCode(regionCode);
+				for (District district : allRegionDistricts) {
+					LOGGER.info("name comparision: " + name + " vs "
+							+ district.getName());
+					if (district.getName().replaceAll("'", "")
+							.equalsIgnoreCase(name)) {
+						matchDistrict = district;
+						break;
+					}
+				}
+			}
+
+			return matchDistrict;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}

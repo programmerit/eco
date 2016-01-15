@@ -33,6 +33,7 @@ import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
+import vn.com.ecopharma.emp.util.ImportExportUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -354,10 +355,10 @@ public class ImportExportEmployeeDTO implements Serializable {
 		presentAddress = getCellValueAsString(r.getCell(25));
 		temporaryAddress = getCellValueAsString(r.getCell(26));
 
-		final List<Region> allVNRegions = getAllVNRegions();
-		presentRegion = getRegionFromListByName(allVNRegions,
+		final List<Region> allVNRegions = ImportExportUtils.getAllVNRegions();
+		presentRegion = ImportExportUtils.getRegionFromListByName(allVNRegions,
 				getCityFromPresentAddress());
-		tempRegion = getRegionFromListByName(allVNRegions,
+		tempRegion = ImportExportUtils.getRegionFromListByName(allVNRegions,
 				getCityFromTemporaryAddress());
 
 		contactNumber = getCellValueAsString(r.getCell(27));
@@ -420,23 +421,6 @@ public class ImportExportEmployeeDTO implements Serializable {
 		return true;
 	}
 
-	/**
-	 * @return 0 if there is no user existed with current generated username
-	 * 
-	 *         1 if there is user existed associated with an employee (but DIFF
-	 *         w current checking Emp) -> GENERATE new username/email
-	 * 
-	 *         -1 if there's user existed but W/O employee association and
-	 *         Birthday is not match b/w employee & user
-	 * 
-	 *         2 user with the same info (name, birthday) with current checking
-	 *         employee has been existed => UPDATE association
-	 * 
-	 *         [empId] user and employee has already EXISTED => UPDATE employee
-	 *         info
-	 * 
-	 */
-
 	private Calendar getBirthDayCalendar() {
 		if (dob == null)
 			return null;
@@ -456,25 +440,6 @@ public class ImportExportEmployeeDTO implements Serializable {
 					"Exception on getCityFromTemporaryAddress()", e);
 		}
 		return StringUtils.EMPTY;
-	}
-
-	private Region getRegionFromListByName(List<Region> list, String name) {
-		for (Region region : list) {
-			if (region.getName().trim().equalsIgnoreCase(name.trim())) {
-				return region;
-			}
-		}
-		return null;
-	}
-
-	private List<Region> getAllVNRegions() {
-		try {
-			return RegionServiceUtil.getRegions(17L);
-		} catch (SystemException e) {
-			LogFactoryUtil.getLog(ImportExportEmployeeDTO.class).info(
-					"Exception on getAllVNRegions()", e);
-		}
-		return new ArrayList<>();
 	}
 
 	public Country getCountry() {

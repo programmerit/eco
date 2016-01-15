@@ -37,10 +37,16 @@ import java.util.Date;
 public class DistrictCacheModel implements CacheModel<District>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{districtId=");
 		sb.append(districtId);
+		sb.append(", regionCode=");
+		sb.append(regionCode);
+		sb.append(", districtType=");
+		sb.append(districtType);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -53,10 +59,6 @@ public class DistrictCacheModel implements CacheModel<District>, Externalizable 
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", regionCode=");
-		sb.append(regionCode);
-		sb.append(", name=");
-		sb.append(name);
 		sb.append("}");
 
 		return sb.toString();
@@ -67,6 +69,28 @@ public class DistrictCacheModel implements CacheModel<District>, Externalizable 
 		DistrictImpl districtImpl = new DistrictImpl();
 
 		districtImpl.setDistrictId(districtId);
+
+		if (regionCode == null) {
+			districtImpl.setRegionCode(StringPool.BLANK);
+		}
+		else {
+			districtImpl.setRegionCode(regionCode);
+		}
+
+		if (districtType == null) {
+			districtImpl.setDistrictType(StringPool.BLANK);
+		}
+		else {
+			districtImpl.setDistrictType(districtType);
+		}
+
+		if (name == null) {
+			districtImpl.setName(StringPool.BLANK);
+		}
+		else {
+			districtImpl.setName(name);
+		}
+
 		districtImpl.setGroupId(groupId);
 		districtImpl.setCompanyId(companyId);
 		districtImpl.setUserId(userId);
@@ -92,20 +116,6 @@ public class DistrictCacheModel implements CacheModel<District>, Externalizable 
 			districtImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (regionCode == null) {
-			districtImpl.setRegionCode(StringPool.BLANK);
-		}
-		else {
-			districtImpl.setRegionCode(regionCode);
-		}
-
-		if (name == null) {
-			districtImpl.setName(StringPool.BLANK);
-		}
-		else {
-			districtImpl.setName(name);
-		}
-
 		districtImpl.resetOriginalValues();
 
 		return districtImpl;
@@ -114,20 +124,43 @@ public class DistrictCacheModel implements CacheModel<District>, Externalizable 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		districtId = objectInput.readLong();
+		regionCode = objectInput.readUTF();
+		districtType = objectInput.readUTF();
+		name = objectInput.readUTF();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		regionCode = objectInput.readUTF();
-		name = objectInput.readUTF();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(districtId);
+
+		if (regionCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(regionCode);
+		}
+
+		if (districtType == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(districtType);
+		}
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
@@ -141,29 +174,16 @@ public class DistrictCacheModel implements CacheModel<District>, Externalizable 
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
-
-		if (regionCode == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(regionCode);
-		}
-
-		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(name);
-		}
 	}
 
 	public long districtId;
+	public String regionCode;
+	public String districtType;
+	public String name;
 	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String regionCode;
-	public String name;
 }

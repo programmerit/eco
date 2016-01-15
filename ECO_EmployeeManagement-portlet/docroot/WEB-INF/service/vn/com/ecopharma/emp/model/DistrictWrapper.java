@@ -50,14 +50,15 @@ public class DistrictWrapper implements District, ModelWrapper<District> {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("districtId", getDistrictId());
+		attributes.put("regionCode", getRegionCode());
+		attributes.put("districtType", getDistrictType());
+		attributes.put("name", getName());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("regionCode", getRegionCode());
-		attributes.put("name", getName());
 
 		return attributes;
 	}
@@ -68,6 +69,24 @@ public class DistrictWrapper implements District, ModelWrapper<District> {
 
 		if (districtId != null) {
 			setDistrictId(districtId);
+		}
+
+		String regionCode = (String)attributes.get("regionCode");
+
+		if (regionCode != null) {
+			setRegionCode(regionCode);
+		}
+
+		String districtType = (String)attributes.get("districtType");
+
+		if (districtType != null) {
+			setDistrictType(districtType);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -104,18 +123,6 @@ public class DistrictWrapper implements District, ModelWrapper<District> {
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		String regionCode = (String)attributes.get("regionCode");
-
-		if (regionCode != null) {
-			setRegionCode(regionCode);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
 		}
 	}
 
@@ -157,6 +164,66 @@ public class DistrictWrapper implements District, ModelWrapper<District> {
 	@Override
 	public void setDistrictId(long districtId) {
 		_district.setDistrictId(districtId);
+	}
+
+	/**
+	* Returns the region code of this district.
+	*
+	* @return the region code of this district
+	*/
+	@Override
+	public java.lang.String getRegionCode() {
+		return _district.getRegionCode();
+	}
+
+	/**
+	* Sets the region code of this district.
+	*
+	* @param regionCode the region code of this district
+	*/
+	@Override
+	public void setRegionCode(java.lang.String regionCode) {
+		_district.setRegionCode(regionCode);
+	}
+
+	/**
+	* Returns the district type of this district.
+	*
+	* @return the district type of this district
+	*/
+	@Override
+	public java.lang.String getDistrictType() {
+		return _district.getDistrictType();
+	}
+
+	/**
+	* Sets the district type of this district.
+	*
+	* @param districtType the district type of this district
+	*/
+	@Override
+	public void setDistrictType(java.lang.String districtType) {
+		_district.setDistrictType(districtType);
+	}
+
+	/**
+	* Returns the name of this district.
+	*
+	* @return the name of this district
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _district.getName();
+	}
+
+	/**
+	* Sets the name of this district.
+	*
+	* @param name the name of this district
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_district.setName(name);
 	}
 
 	/**
@@ -299,46 +366,6 @@ public class DistrictWrapper implements District, ModelWrapper<District> {
 	@Override
 	public void setModifiedDate(java.util.Date modifiedDate) {
 		_district.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Returns the region code of this district.
-	*
-	* @return the region code of this district
-	*/
-	@Override
-	public java.lang.String getRegionCode() {
-		return _district.getRegionCode();
-	}
-
-	/**
-	* Sets the region code of this district.
-	*
-	* @param regionCode the region code of this district
-	*/
-	@Override
-	public void setRegionCode(java.lang.String regionCode) {
-		_district.setRegionCode(regionCode);
-	}
-
-	/**
-	* Returns the name of this district.
-	*
-	* @return the name of this district
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _district.getName();
-	}
-
-	/**
-	* Sets the name of this district.
-	*
-	* @param name the name of this district
-	*/
-	@Override
-	public void setName(java.lang.String name) {
-		_district.setName(name);
 	}
 
 	@Override

@@ -67,16 +67,17 @@ public class DistrictModelImpl extends BaseModelImpl<District>
 	public static final String TABLE_NAME = "eco_em_portlet_District";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "districtId", Types.BIGINT },
+			{ "regionCode", Types.VARCHAR },
+			{ "districtType", Types.VARCHAR },
+			{ "name", Types.VARCHAR },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "regionCode", Types.VARCHAR },
-			{ "name", Types.VARCHAR }
+			{ "modifiedDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_District (districtId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,regionCode VARCHAR(75) null,name VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_District (districtId LONG not null primary key,regionCode VARCHAR(75) null,districtType VARCHAR(75) null,name VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table eco_em_portlet_District";
 	public static final String ORDER_BY_JPQL = " ORDER BY district.districtId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_em_portlet_District.districtId ASC";
@@ -110,14 +111,15 @@ public class DistrictModelImpl extends BaseModelImpl<District>
 		District model = new DistrictImpl();
 
 		model.setDistrictId(soapModel.getDistrictId());
+		model.setRegionCode(soapModel.getRegionCode());
+		model.setDistrictType(soapModel.getDistrictType());
+		model.setName(soapModel.getName());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setRegionCode(soapModel.getRegionCode());
-		model.setName(soapModel.getName());
 
 		return model;
 	}
@@ -183,14 +185,15 @@ public class DistrictModelImpl extends BaseModelImpl<District>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("districtId", getDistrictId());
+		attributes.put("regionCode", getRegionCode());
+		attributes.put("districtType", getDistrictType());
+		attributes.put("name", getName());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("regionCode", getRegionCode());
-		attributes.put("name", getName());
 
 		return attributes;
 	}
@@ -201,6 +204,24 @@ public class DistrictModelImpl extends BaseModelImpl<District>
 
 		if (districtId != null) {
 			setDistrictId(districtId);
+		}
+
+		String regionCode = (String)attributes.get("regionCode");
+
+		if (regionCode != null) {
+			setRegionCode(regionCode);
+		}
+
+		String districtType = (String)attributes.get("districtType");
+
+		if (districtType != null) {
+			setDistrictType(districtType);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -238,18 +259,6 @@ public class DistrictModelImpl extends BaseModelImpl<District>
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
 		}
-
-		String regionCode = (String)attributes.get("regionCode");
-
-		if (regionCode != null) {
-			setRegionCode(regionCode);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
 	}
 
 	@JSON
@@ -261,6 +270,74 @@ public class DistrictModelImpl extends BaseModelImpl<District>
 	@Override
 	public void setDistrictId(long districtId) {
 		_districtId = districtId;
+	}
+
+	@JSON
+	@Override
+	public String getRegionCode() {
+		if (_regionCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _regionCode;
+		}
+	}
+
+	@Override
+	public void setRegionCode(String regionCode) {
+		_columnBitmask |= REGIONCODE_COLUMN_BITMASK;
+
+		if (_originalRegionCode == null) {
+			_originalRegionCode = _regionCode;
+		}
+
+		_regionCode = regionCode;
+	}
+
+	public String getOriginalRegionCode() {
+		return GetterUtil.getString(_originalRegionCode);
+	}
+
+	@JSON
+	@Override
+	public String getDistrictType() {
+		if (_districtType == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _districtType;
+		}
+	}
+
+	@Override
+	public void setDistrictType(String districtType) {
+		_districtType = districtType;
+	}
+
+	@JSON
+	@Override
+	public String getName() {
+		if (_name == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
+		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	@JSON
@@ -344,58 +421,6 @@ public class DistrictModelImpl extends BaseModelImpl<District>
 		_modifiedDate = modifiedDate;
 	}
 
-	@JSON
-	@Override
-	public String getRegionCode() {
-		if (_regionCode == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _regionCode;
-		}
-	}
-
-	@Override
-	public void setRegionCode(String regionCode) {
-		_columnBitmask |= REGIONCODE_COLUMN_BITMASK;
-
-		if (_originalRegionCode == null) {
-			_originalRegionCode = _regionCode;
-		}
-
-		_regionCode = regionCode;
-	}
-
-	public String getOriginalRegionCode() {
-		return GetterUtil.getString(_originalRegionCode);
-	}
-
-	@JSON
-	@Override
-	public String getName() {
-		if (_name == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _name;
-		}
-	}
-
-	@Override
-	public void setName(String name) {
-		_columnBitmask |= NAME_COLUMN_BITMASK;
-
-		if (_originalName == null) {
-			_originalName = _name;
-		}
-
-		_name = name;
-	}
-
-	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
-	}
-
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -428,14 +453,15 @@ public class DistrictModelImpl extends BaseModelImpl<District>
 		DistrictImpl districtImpl = new DistrictImpl();
 
 		districtImpl.setDistrictId(getDistrictId());
+		districtImpl.setRegionCode(getRegionCode());
+		districtImpl.setDistrictType(getDistrictType());
+		districtImpl.setName(getName());
 		districtImpl.setGroupId(getGroupId());
 		districtImpl.setCompanyId(getCompanyId());
 		districtImpl.setUserId(getUserId());
 		districtImpl.setUserName(getUserName());
 		districtImpl.setCreateDate(getCreateDate());
 		districtImpl.setModifiedDate(getModifiedDate());
-		districtImpl.setRegionCode(getRegionCode());
-		districtImpl.setName(getName());
 
 		districtImpl.resetOriginalValues();
 
@@ -501,6 +527,30 @@ public class DistrictModelImpl extends BaseModelImpl<District>
 
 		districtCacheModel.districtId = getDistrictId();
 
+		districtCacheModel.regionCode = getRegionCode();
+
+		String regionCode = districtCacheModel.regionCode;
+
+		if ((regionCode != null) && (regionCode.length() == 0)) {
+			districtCacheModel.regionCode = null;
+		}
+
+		districtCacheModel.districtType = getDistrictType();
+
+		String districtType = districtCacheModel.districtType;
+
+		if ((districtType != null) && (districtType.length() == 0)) {
+			districtCacheModel.districtType = null;
+		}
+
+		districtCacheModel.name = getName();
+
+		String name = districtCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			districtCacheModel.name = null;
+		}
+
 		districtCacheModel.groupId = getGroupId();
 
 		districtCacheModel.companyId = getCompanyId();
@@ -533,31 +583,21 @@ public class DistrictModelImpl extends BaseModelImpl<District>
 			districtCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		districtCacheModel.regionCode = getRegionCode();
-
-		String regionCode = districtCacheModel.regionCode;
-
-		if ((regionCode != null) && (regionCode.length() == 0)) {
-			districtCacheModel.regionCode = null;
-		}
-
-		districtCacheModel.name = getName();
-
-		String name = districtCacheModel.name;
-
-		if ((name != null) && (name.length() == 0)) {
-			districtCacheModel.name = null;
-		}
-
 		return districtCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{districtId=");
 		sb.append(getDistrictId());
+		sb.append(", regionCode=");
+		sb.append(getRegionCode());
+		sb.append(", districtType=");
+		sb.append(getDistrictType());
+		sb.append(", name=");
+		sb.append(getName());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
@@ -570,10 +610,6 @@ public class DistrictModelImpl extends BaseModelImpl<District>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", regionCode=");
-		sb.append(getRegionCode());
-		sb.append(", name=");
-		sb.append(getName());
 		sb.append("}");
 
 		return sb.toString();
@@ -581,7 +617,7 @@ public class DistrictModelImpl extends BaseModelImpl<District>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.District");
@@ -590,6 +626,18 @@ public class DistrictModelImpl extends BaseModelImpl<District>
 		sb.append(
 			"<column><column-name>districtId</column-name><column-value><![CDATA[");
 		sb.append(getDistrictId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>regionCode</column-name><column-value><![CDATA[");
+		sb.append(getRegionCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>districtType</column-name><column-value><![CDATA[");
+		sb.append(getDistrictType());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>name</column-name><column-value><![CDATA[");
+		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -615,14 +663,6 @@ public class DistrictModelImpl extends BaseModelImpl<District>
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>regionCode</column-name><column-value><![CDATA[");
-		sb.append(getRegionCode());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -634,6 +674,11 @@ public class DistrictModelImpl extends BaseModelImpl<District>
 			District.class
 		};
 	private long _districtId;
+	private String _regionCode;
+	private String _originalRegionCode;
+	private String _districtType;
+	private String _name;
+	private String _originalName;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
@@ -641,10 +686,6 @@ public class DistrictModelImpl extends BaseModelImpl<District>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _regionCode;
-	private String _originalRegionCode;
-	private String _name;
-	private String _originalName;
 	private long _columnBitmask;
 	private District _escapedModel;
 }

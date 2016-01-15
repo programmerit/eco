@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -48,8 +49,10 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Address;
+import com.liferay.portal.model.Region;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.AddressLocalServiceUtil;
+import com.liferay.portal.service.RegionServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -62,6 +65,8 @@ public class ImportExportUtils {
 			.getLog(ImportExportUtils.class);
 
 	private static final String DEST_DATETIME_FORMATTER = "dd/MM/yyyy";
+
+	private static final int STRING_CELL_TYPE = 1;
 
 	private ImportExportUtils() {
 
@@ -675,6 +680,37 @@ public class ImportExportUtils {
 	private static String getDistrictNameFromStreet3String(String street3) {
 		return street3.indexOf("-") != -1 ? street3.split("-")[1]
 				: StringUtils.EMPTY;
+	}
+
+	public static List<Region> getAllVNRegions() {
+		try {
+			return RegionServiceUtil.getRegions(17L);
+		} catch (SystemException e) {
+			LogFactoryUtil.getLog(ImportExportUtils.class).info(
+					"Exception on getAllVNRegions()", e);
+		}
+		return new ArrayList<>();
+	}
+
+	public static Region getRegionFromListByName(List<Region> list, String name) {
+		for (Region region : list) {
+			if (region.getName().trim().equalsIgnoreCase(name.trim())) {
+				return region;
+			}
+		}
+		return null;
+	}
+
+	public static boolean isEmptyOrNullStringCell(Cell cell) {
+		if (cell == null)
+			return true;
+		cell.setCellType(STRING_CELL_TYPE);
+		return StringUtils.trimToNull(cell.getStringCellValue()) == null;
+	}
+
+	public static String getReturnValueFromStringCell(Cell cell) {
+		return isEmptyOrNullStringCell(cell) ? StringUtils.EMPTY : cell
+				.getStringCellValue();
 	}
 
 }

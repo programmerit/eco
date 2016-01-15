@@ -58,14 +58,15 @@ create table eco_em_portlet_DevisionGroup (
 
 create table eco_em_portlet_District (
 	districtId LONG not null primary key,
+	regionCode VARCHAR(75) null,
+	districtType VARCHAR(75) null,
+	name VARCHAR(75) null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
-	modifiedDate DATE null,
-	regionCode VARCHAR(75) null,
-	name VARCHAR(75) null
+	modifiedDate DATE null
 );
 
 create table eco_em_portlet_Emp (

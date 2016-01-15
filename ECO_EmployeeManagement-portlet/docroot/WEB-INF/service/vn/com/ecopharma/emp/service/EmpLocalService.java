@@ -381,6 +381,20 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		java.lang.String dependentNames, java.lang.String insurranceCode,
 		java.lang.String healthInsuranceNo);
 
+	public vn.com.ecopharma.emp.model.Emp updateEmpAddresses(
+		java.lang.String empCode, java.lang.String address,
+		vn.com.ecopharma.emp.model.District district,
+		com.liferay.portal.model.Region region, long countryId,
+		boolean isPrimary,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void removeAllExistingEmpAddresses(java.lang.String empCode,
+		long companyId);
+
+	public void removeAllExistingEmpAddresses(long empId, long companyId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.search.Document> searchAllEmpDocs(
 		com.liferay.portal.kernel.search.SearchContext searchContext,

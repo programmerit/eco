@@ -1246,14 +1246,15 @@ public class DistrictPersistenceImpl extends BasePersistenceImpl<District>
 		districtImpl.setPrimaryKey(district.getPrimaryKey());
 
 		districtImpl.setDistrictId(district.getDistrictId());
+		districtImpl.setRegionCode(district.getRegionCode());
+		districtImpl.setDistrictType(district.getDistrictType());
+		districtImpl.setName(district.getName());
 		districtImpl.setGroupId(district.getGroupId());
 		districtImpl.setCompanyId(district.getCompanyId());
 		districtImpl.setUserId(district.getUserId());
 		districtImpl.setUserName(district.getUserName());
 		districtImpl.setCreateDate(district.getCreateDate());
 		districtImpl.setModifiedDate(district.getModifiedDate());
-		districtImpl.setRegionCode(district.getRegionCode());
-		districtImpl.setName(district.getName());
 
 		return districtImpl;
 	}

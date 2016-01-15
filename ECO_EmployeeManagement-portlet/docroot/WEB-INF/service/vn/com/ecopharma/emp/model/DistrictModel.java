@@ -76,6 +76,51 @@ public interface DistrictModel extends BaseModel<District>, GroupedModel {
 	public void setDistrictId(long districtId);
 
 	/**
+	 * Returns the region code of this district.
+	 *
+	 * @return the region code of this district
+	 */
+	@AutoEscape
+	public String getRegionCode();
+
+	/**
+	 * Sets the region code of this district.
+	 *
+	 * @param regionCode the region code of this district
+	 */
+	public void setRegionCode(String regionCode);
+
+	/**
+	 * Returns the district type of this district.
+	 *
+	 * @return the district type of this district
+	 */
+	@AutoEscape
+	public String getDistrictType();
+
+	/**
+	 * Sets the district type of this district.
+	 *
+	 * @param districtType the district type of this district
+	 */
+	public void setDistrictType(String districtType);
+
+	/**
+	 * Returns the name of this district.
+	 *
+	 * @return the name of this district
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this district.
+	 *
+	 * @param name the name of this district
+	 */
+	public void setName(String name);
+
+	/**
 	 * Returns the group ID of this district.
 	 *
 	 * @return the group ID of this district
@@ -188,36 +233,6 @@ public interface DistrictModel extends BaseModel<District>, GroupedModel {
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
-
-	/**
-	 * Returns the region code of this district.
-	 *
-	 * @return the region code of this district
-	 */
-	@AutoEscape
-	public String getRegionCode();
-
-	/**
-	 * Sets the region code of this district.
-	 *
-	 * @param regionCode the region code of this district
-	 */
-	public void setRegionCode(String regionCode);
-
-	/**
-	 * Returns the name of this district.
-	 *
-	 * @return the name of this district
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this district.
-	 *
-	 * @param name the name of this district
-	 */
-	public void setName(String name);
 
 	@Override
 	public boolean isNew();

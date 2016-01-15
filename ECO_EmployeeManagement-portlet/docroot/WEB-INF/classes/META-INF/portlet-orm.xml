@@ -87,6 +87,9 @@
 	<mapped-superclass class="vn.com.ecopharma.emp.model.impl.DistrictModelImpl">
 		<attributes>
 			<id name="districtId" />
+			<basic name="regionCode" />
+			<basic name="districtType" />
+			<basic name="name" />
 			<basic name="groupId" />
 			<basic name="companyId" />
 			<basic name="userId" />
@@ -97,8 +100,6 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="regionCode" />
-			<basic name="name" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

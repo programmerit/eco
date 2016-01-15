@@ -46,14 +46,15 @@
 	</model>
 	<model name="vn.com.ecopharma.emp.model.District">
 		<field name="districtId" type="long" />
+		<field name="regionCode" type="String" />
+		<field name="districtType" type="String" />
+		<field name="name" type="String" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="regionCode" type="String" />
-		<field name="name" type="String" />
 	</model>
 	<model name="vn.com.ecopharma.emp.model.Emp">
 		<field name="empId" type="long" />

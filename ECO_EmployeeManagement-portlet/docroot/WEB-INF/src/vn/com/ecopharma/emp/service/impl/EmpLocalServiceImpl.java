@@ -26,6 +26,7 @@ import org.apache.commons.lang3.StringUtils;
 import vn.com.ecopharma.emp.constant.EMInfo;
 import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
+import vn.com.ecopharma.emp.model.District;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.model.PromotedHistory;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Address;
+import com.liferay.portal.model.Region;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.AddressServiceUtil;
@@ -98,6 +100,8 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			.getLog(EmpLocalServiceImpl.class);
 
 	private static final String MISSING_EMPLOYEE_CODE_CHAR = "9";
+
+	private static final String VN_ZIP_CODE = "084";
 
 	@Override
 	public List<Emp> findAll() {
@@ -418,6 +422,14 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		return result;
 	}
 
+	// public Emp update(Emp emp) throws SearchException, SystemException {
+	// Emp updatedEmp = super.updateEmp(emp);
+	// // index new employee
+	// Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Emp.class);
+	// indexer.reindex(Emp.class.getName(), updatedEmp.getEmpId());
+	// return emp;
+	// }
+
 	public Emp update(Emp employee, long userId, long oldTitlesId,
 			Map<Address, Boolean> addressesMap,
 			Map<String, Boolean> dependentNameMap,
@@ -718,6 +730,79 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		employee.setSocialInsuranceNo(insurranceCode);
 		employee.setHealthInsuranceNo(healthInsuranceNo);
 		return employee;
+	}
+
+	public Emp updateEmpAddresses(String empCode, String address,
+			District district, Region region, long countryId,
+			boolean isPrimary, ServiceContext serviceContext)
+			throws PortalException, SystemException {
+		// first remove all current emp's addresses
+		Emp emp = findByEmpCode(empCode);
+		if (emp != null) {
+			final long empId = emp.getEmpId();
+			final String street3 = region.getRegionCode() + "_"
+					+ district.getName();
+			LOGGER.info("Call add " + emp.getEmpCode() + " address service");
+			Address obj = AddressLocalServiceUtil
+					.createAddress(counterLocalService.increment());
+			String street1 = address;
+			String street2 = StringUtils.EMPTY;
+			if (address.contains(";")) {
+				street1 = address.split(";")[0];
+				street2 = address.split(";")[1];
+			}
+
+			obj.setUserId(serviceContext.getUserId());
+			obj.setCompanyId(serviceContext.getCompanyId());
+			obj.setCreateDate(new Date());
+			obj.setModifiedDate(new Date());
+
+			obj.setClassName(Emp.class.getName());
+			obj.setClassPK(empId);
+			obj.setStreet1(street1);
+			obj.setStreet2(street2);
+			obj.setStreet3(street3);
+			obj.setRegionId(region.getRegionId());
+			obj.setCountryId(countryId);
+			obj.setZip(VN_ZIP_CODE);
+			AddressLocalServiceUtil.addAddress(obj);
+
+			Emp result = empPersistence.update(emp);
+			if (result != null) {
+				resourceLocalService.updateResources(result.getCompanyId(),
+						result.getGroupId(), Emp.class.getName(),
+						result.getEmpId(),
+						serviceContext.getGroupPermissions(),
+						serviceContext.getGuestPermissions());
+
+				// re-index modified employee
+				Indexer indexer = IndexerRegistryUtil
+						.nullSafeGetIndexer(Emp.class);
+				indexer.reindex(result);
+			}
+			return result;
+		}
+		return null;
+	}
+
+	public void removeAllExistingEmpAddresses(String empCode, long companyId) {
+		Emp emp = findByEmpCode(empCode);
+		if (emp != null)
+			removeAllExistingEmpAddresses(emp.getEmpId(), companyId);
+	}
+
+	public void removeAllExistingEmpAddresses(long empId, long companyId) {
+		try {
+			List<Address> empAddresses = AddressLocalServiceUtil.getAddresses(
+					companyId, Emp.class.getName(), empId);
+			for (Address address : empAddresses) {
+				AddressLocalServiceUtil.deleteAddress(address.getAddressId());
+			}
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		} catch (PortalException e) {
+			LOGGER.info(e);
+		}
 	}
 
 	@Override

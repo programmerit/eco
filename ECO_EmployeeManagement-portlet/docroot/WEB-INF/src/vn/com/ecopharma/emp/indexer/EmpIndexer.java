@@ -167,9 +167,12 @@ public class EmpIndexer extends BaseIndexer {
 		document.addText(EmpField.CONTACT_NUMBER, emp.getContactNumber());
 		Address address = EmpLocalServiceUtil.getPresentAddress(emp.getEmpId());
 		document.addText(EmpField.ADDRESS,
-				ImportExportUtils.getFullAddressString(address));
-		document.addText(EmpField.CITY, address != null ? address.getRegion()
-				.getName() : StringUtils.EMPTY);
+				EmployeeUtils.removeDashChar(ImportExportUtils
+						.getFullAddressString(address)));
+		document.addText(
+				EmpField.CITY,
+				address != null ? EmployeeUtils.removeDashChar(address
+						.getRegion().getName()) : StringUtils.EMPTY);
 		document.addText(EmpField.EMAIL,
 				UserLocalServiceUtil.getUser(emp.getEmpUserId())
 						.getEmailAddress());

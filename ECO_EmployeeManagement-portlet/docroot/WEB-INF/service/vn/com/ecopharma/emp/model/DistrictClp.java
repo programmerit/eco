@@ -75,14 +75,15 @@ public class DistrictClp extends BaseModelImpl<District> implements District {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("districtId", getDistrictId());
+		attributes.put("regionCode", getRegionCode());
+		attributes.put("districtType", getDistrictType());
+		attributes.put("name", getName());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("regionCode", getRegionCode());
-		attributes.put("name", getName());
 
 		return attributes;
 	}
@@ -93,6 +94,24 @@ public class DistrictClp extends BaseModelImpl<District> implements District {
 
 		if (districtId != null) {
 			setDistrictId(districtId);
+		}
+
+		String regionCode = (String)attributes.get("regionCode");
+
+		if (regionCode != null) {
+			setRegionCode(regionCode);
+		}
+
+		String districtType = (String)attributes.get("districtType");
+
+		if (districtType != null) {
+			setDistrictType(districtType);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -130,18 +149,6 @@ public class DistrictClp extends BaseModelImpl<District> implements District {
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
 		}
-
-		String regionCode = (String)attributes.get("regionCode");
-
-		if (regionCode != null) {
-			setRegionCode(regionCode);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
 	}
 
 	@Override
@@ -160,6 +167,75 @@ public class DistrictClp extends BaseModelImpl<District> implements District {
 				Method method = clazz.getMethod("setDistrictId", long.class);
 
 				method.invoke(_districtRemoteModel, districtId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getRegionCode() {
+		return _regionCode;
+	}
+
+	@Override
+	public void setRegionCode(String regionCode) {
+		_regionCode = regionCode;
+
+		if (_districtRemoteModel != null) {
+			try {
+				Class<?> clazz = _districtRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setRegionCode", String.class);
+
+				method.invoke(_districtRemoteModel, regionCode);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getDistrictType() {
+		return _districtType;
+	}
+
+	@Override
+	public void setDistrictType(String districtType) {
+		_districtType = districtType;
+
+		if (_districtRemoteModel != null) {
+			try {
+				Class<?> clazz = _districtRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setDistrictType", String.class);
+
+				method.invoke(_districtRemoteModel, districtType);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getName() {
+		return _name;
+	}
+
+	@Override
+	public void setName(String name) {
+		_name = name;
+
+		if (_districtRemoteModel != null) {
+			try {
+				Class<?> clazz = _districtRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setName", String.class);
+
+				method.invoke(_districtRemoteModel, name);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -315,52 +391,6 @@ public class DistrictClp extends BaseModelImpl<District> implements District {
 		}
 	}
 
-	@Override
-	public String getRegionCode() {
-		return _regionCode;
-	}
-
-	@Override
-	public void setRegionCode(String regionCode) {
-		_regionCode = regionCode;
-
-		if (_districtRemoteModel != null) {
-			try {
-				Class<?> clazz = _districtRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setRegionCode", String.class);
-
-				method.invoke(_districtRemoteModel, regionCode);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public String getName() {
-		return _name;
-	}
-
-	@Override
-	public void setName(String name) {
-		_name = name;
-
-		if (_districtRemoteModel != null) {
-			try {
-				Class<?> clazz = _districtRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setName", String.class);
-
-				method.invoke(_districtRemoteModel, name);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
 	public BaseModel<?> getDistrictRemoteModel() {
 		return _districtRemoteModel;
 	}
@@ -431,14 +461,15 @@ public class DistrictClp extends BaseModelImpl<District> implements District {
 		DistrictClp clone = new DistrictClp();
 
 		clone.setDistrictId(getDistrictId());
+		clone.setRegionCode(getRegionCode());
+		clone.setDistrictType(getDistrictType());
+		clone.setName(getName());
 		clone.setGroupId(getGroupId());
 		clone.setCompanyId(getCompanyId());
 		clone.setUserId(getUserId());
 		clone.setUserName(getUserName());
 		clone.setCreateDate(getCreateDate());
 		clone.setModifiedDate(getModifiedDate());
-		clone.setRegionCode(getRegionCode());
-		clone.setName(getName());
 
 		return clone;
 	}
@@ -491,10 +522,16 @@ public class DistrictClp extends BaseModelImpl<District> implements District {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{districtId=");
 		sb.append(getDistrictId());
+		sb.append(", regionCode=");
+		sb.append(getRegionCode());
+		sb.append(", districtType=");
+		sb.append(getDistrictType());
+		sb.append(", name=");
+		sb.append(getName());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
@@ -507,10 +544,6 @@ public class DistrictClp extends BaseModelImpl<District> implements District {
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", regionCode=");
-		sb.append(getRegionCode());
-		sb.append(", name=");
-		sb.append(getName());
 		sb.append("}");
 
 		return sb.toString();
@@ -518,7 +551,7 @@ public class DistrictClp extends BaseModelImpl<District> implements District {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.District");
@@ -527,6 +560,18 @@ public class DistrictClp extends BaseModelImpl<District> implements District {
 		sb.append(
 			"<column><column-name>districtId</column-name><column-value><![CDATA[");
 		sb.append(getDistrictId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>regionCode</column-name><column-value><![CDATA[");
+		sb.append(getRegionCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>districtType</column-name><column-value><![CDATA[");
+		sb.append(getDistrictType());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>name</column-name><column-value><![CDATA[");
+		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -552,14 +597,6 @@ public class DistrictClp extends BaseModelImpl<District> implements District {
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>regionCode</column-name><column-value><![CDATA[");
-		sb.append(getRegionCode());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -567,6 +604,9 @@ public class DistrictClp extends BaseModelImpl<District> implements District {
 	}
 
 	private long _districtId;
+	private String _regionCode;
+	private String _districtType;
+	private String _name;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
@@ -574,8 +614,6 @@ public class DistrictClp extends BaseModelImpl<District> implements District {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _regionCode;
-	private String _name;
 	private BaseModel<?> _districtRemoteModel;
 	private Class<?> _clpSerializerClass = vn.com.ecopharma.emp.service.ClpSerializer.class;
 }

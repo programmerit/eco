@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.service.RegionServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 
 @ManagedBean
@@ -104,17 +105,20 @@ public class CandidateGuestBean implements Serializable {
 				if (candidate == null) { // create new
 					candidate = candidateItem.getCandidate();
 					CandidateLocalServiceUtil.addCandidate(candidate, 0,
-							candidateItem.getVacancy().getVacancyId(),
+							candidateItem.getVacancyItem().getVacancy()
+									.getVacancyId(),
 							candidateItem.getPossibleDesiredVacancies(),
 							fileEntryIds, experienceMap, certificateMap,
 							serviceContext);
 				} else { // update
 
-					CandidateLocalServiceUtil.updateCandidate(candidateItem
-							.getCandidate(), candidateItem.getVacancy()
-							.getVacancyId(), candidateItem
-							.getPossibleDesiredVacancies(), fileEntryIds,
-							experienceMap, certificateMap, serviceContext);
+					CandidateLocalServiceUtil.updateCandidate(
+							candidateItem.getCandidate(), candidateItem
+									.getVacancyItem().getVacancy()
+									.getVacancyId(),
+							candidateItem.getPossibleDesiredVacancies(),
+							fileEntryIds, experienceMap, certificateMap,
+							serviceContext);
 				}
 			} else {
 				message = new FacesMessage("Email Existed",

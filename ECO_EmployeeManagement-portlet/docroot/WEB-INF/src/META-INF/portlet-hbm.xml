@@ -77,14 +77,15 @@
 		<id name="districtId" type="long">
 			<generator class="assigned" />
 		</id>
+		<property name="regionCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="districtType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="regionCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="vn.com.ecopharma.emp.model.impl.EmpImpl" table="eco_em_portlet_Emp">
 		<cache usage="read-write" />
