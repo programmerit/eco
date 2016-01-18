@@ -18,6 +18,7 @@ import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.PromotedHistoryLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.persistence.PromotedHistoryActionableDynamicQuery;
+import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -73,8 +74,9 @@ public class PromotedHistoryIndexer extends BaseIndexer {
 
 		document.addText(PromotedHistoryField.NEW_TITLES, newTitles.getName());
 
-		document.addText(PromotedHistoryField.FULLNAME, UserLocalServiceUtil
-				.fetchUser(employee.getEmpUserId()).getFullName());
+		document.addText(PromotedHistoryField.FULLNAME, EmployeeUtils
+				.getViFullnameFromUser(UserLocalServiceUtil.fetchUser(employee
+						.getEmpUserId())));
 		document.addText(PromotedHistoryField.COMMENT, p.getComment());
 		document.addText(PromotedHistoryField.IS_DELETED,
 				p.isDeleted() ? "true" : "false");

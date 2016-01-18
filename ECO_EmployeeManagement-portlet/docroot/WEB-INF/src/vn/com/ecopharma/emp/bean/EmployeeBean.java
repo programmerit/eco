@@ -25,12 +25,14 @@ import vn.com.ecopharma.emp.dto.EmpInfoItem;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.enumeration.LaborContractType;
 import vn.com.ecopharma.emp.enumeration.LocationType;
+import vn.com.ecopharma.emp.enumeration.ResignationType;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.model.Level;
 import vn.com.ecopharma.emp.model.Location;
+import vn.com.ecopharma.emp.model.ResignationHistory;
 import vn.com.ecopharma.emp.model.Titles;
 import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.model.UnitGroup;
@@ -394,7 +396,11 @@ public class EmployeeBean implements Serializable {
 				.getSelectedEmployeeIndexItem().getEmployeeId();
 		ResignationBean resignationBean = (ResignationBean) BeanUtils
 				.getBackingBeanByName("resignationBean");
+		ResignationHistory resignationHistory = ResignationHistoryLocalServiceUtil
+				.createPrePersisted();
+		resignationHistory.setResignedType(ResignationType.NONE.toString());
 		resignationBean.setEmployeeId(id);
+		resignationBean.setResignationHistory(resignationHistory);
 	}
 
 	public List<String> getAvailableStatuses(String status) {

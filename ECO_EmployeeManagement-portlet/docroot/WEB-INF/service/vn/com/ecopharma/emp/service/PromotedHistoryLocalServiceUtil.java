@@ -311,8 +311,11 @@ public class PromotedHistoryLocalServiceUtil {
 
 	public static vn.com.ecopharma.emp.model.PromotedHistory addPromotedHistory(
 		vn.com.ecopharma.emp.model.PromotedHistory promotedHistory,
+		long unitGroupId, long unitId, long departmentId,
 		com.liferay.portal.service.ServiceContext serviceContext) {
-		return getService().addPromotedHistory(promotedHistory, serviceContext);
+		return getService()
+				   .addPromotedHistory(promotedHistory, unitGroupId, unitId,
+			departmentId, serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.PromotedHistory markDeleted(

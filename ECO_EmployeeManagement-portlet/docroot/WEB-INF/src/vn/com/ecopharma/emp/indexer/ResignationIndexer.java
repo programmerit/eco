@@ -16,6 +16,7 @@ import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.ResignationHistoryLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.persistence.ResignationHistoryActionableDynamicQuery;
+import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -68,8 +69,9 @@ public class ResignationIndexer extends BaseIndexer {
 				r.getResignedDate());
 		document.addText(ResignationHistoryField.RESIGNED_TYPE,
 				r.getResignedType());
-		document.addText(ResignationHistoryField.FULLNAME, UserLocalServiceUtil
-				.fetchUser(employee.getEmpUserId()).getFullName());
+		document.addText(ResignationHistoryField.FULLNAME, EmployeeUtils
+				.getViFullnameFromUser(UserLocalServiceUtil.fetchUser(employee
+						.getEmpUserId())));
 		document.addText(ResignationHistoryField.TITLES, titles.getName());
 		document.addText(ResignationHistoryField.COMMENT, r.getComment());
 		document.addText(ResignationHistoryField.IS_DELETED,
@@ -110,7 +112,7 @@ public class ResignationIndexer extends BaseIndexer {
 
 	protected void reindexResignationHistory(long companyId)
 			throws SystemException, PortalException {
-		final Collection<Document> documents = new ArrayList<Document>();
+		final Collection<Document> documents = new ArrayList<>();
 
 		ActionableDynamicQuery actionableDynamicQuery = new ResignationHistoryActionableDynamicQuery() {
 

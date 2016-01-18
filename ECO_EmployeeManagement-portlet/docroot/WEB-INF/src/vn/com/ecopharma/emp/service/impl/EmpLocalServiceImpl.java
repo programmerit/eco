@@ -367,7 +367,8 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 							|| StringUtils
 									.trimToNull(empBankInfo.getBankName()) != null) {
 						empBankInfo.setEmpId(employee.getEmpId());
-						empBankInfoLocalService.addEmpBankInfo(empBankInfo);
+						empBankInfoLocalService.addEmpBankInfo(empBankInfo,
+								serviceContext);
 					}
 				} else {
 					if (StringUtils.trimToNull(empBankInfo.getBankAccountNo()) == null
@@ -537,7 +538,8 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 								|| StringUtils.trimToNull(empBankInfo
 										.getBankName()) != null) {
 							empBankInfo.setEmpId(employee.getEmpId());
-							empBankInfoLocalService.addEmpBankInfo(empBankInfo);
+							empBankInfoLocalService.addEmpBankInfo(empBankInfo,
+									serviceContext);
 						}
 					} else {
 						if (StringUtils.trimToNull(empBankInfo
@@ -586,6 +588,29 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			LOGGER.info(e);
 		}
 		return null;
+	}
+
+	public Emp updateExistedEmployee(Emp employee, String employeeCode,
+			long titlesId, long unitGroupId, long unitId, long departmentId,
+			long levelId, Date promotedDate, Date joinedDate,
+			Date laborContractSignedDate, Date laborContractExpiredDate,
+			String laborContractType, int laborContractSignedTime, Date dob,
+			String gender, String placeOfBirth, String education,
+			String educationSpecialize, long universityId,
+			String maritalStatus, String identityCardNo, Date issuedDate,
+			String issuedPlace, String contactNumber,
+			String companyEmailAddress, String taxCode, int numberOfDependents,
+			String dependentNames, String insurranceCode,
+			String healthInsuranceNo) {
+		return setInfoToEmp(employee, employeeCode, titlesId, unitGroupId,
+				unitId, departmentId, levelId, promotedDate, joinedDate,
+				laborContractSignedDate, laborContractExpiredDate,
+				laborContractType, laborContractSignedTime, dob, gender,
+				placeOfBirth, education, educationSpecialize, universityId,
+				maritalStatus, identityCardNo, issuedDate, issuedPlace,
+				contactNumber, companyEmailAddress, taxCode,
+				numberOfDependents, dependentNames, insurranceCode,
+				healthInsuranceNo);
 	}
 
 	public Emp addOrUpdateWithExistUser(Emp employee, User user,
@@ -663,29 +688,6 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		}
 		return null;
 
-	}
-
-	public Emp updateExistedEmployee(Emp employee, String employeeCode,
-			long titlesId, long unitGroupId, long unitId, long departmentId,
-			long levelId, Date promotedDate, Date joinedDate,
-			Date laborContractSignedDate, Date laborContractExpiredDate,
-			String laborContractType, int laborContractSignedTime, Date dob,
-			String gender, String placeOfBirth, String education,
-			String educationSpecialize, long universityId,
-			String maritalStatus, String identityCardNo, Date issuedDate,
-			String issuedPlace, String contactNumber,
-			String companyEmailAddress, String taxCode, int numberOfDependents,
-			String dependentNames, String insurranceCode,
-			String healthInsuranceNo) {
-		return setInfoToEmp(employee, employeeCode, titlesId, unitGroupId,
-				unitId, departmentId, levelId, promotedDate, joinedDate,
-				laborContractSignedDate, laborContractExpiredDate,
-				laborContractType, laborContractSignedTime, dob, gender,
-				placeOfBirth, education, educationSpecialize, universityId,
-				maritalStatus, identityCardNo, issuedDate, issuedPlace,
-				contactNumber, companyEmailAddress, taxCode,
-				numberOfDependents, dependentNames, insurranceCode,
-				healthInsuranceNo);
 	}
 
 	private Emp setInfoToEmp(

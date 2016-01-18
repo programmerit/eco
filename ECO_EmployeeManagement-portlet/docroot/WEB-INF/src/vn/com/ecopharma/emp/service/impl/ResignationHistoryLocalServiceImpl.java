@@ -150,7 +150,7 @@ public class ResignationHistoryLocalServiceImpl extends
 				Emp employee = EmpLocalServiceUtil.getEmp(resignationHistory
 						.getEmployeeId());
 				employee.setStatus(EmployeeStatus.RESIGNED.toString());
-				EmpLocalServiceUtil.updateEmp(employee);
+				empLocalService.updateEmp(employee);
 
 			}
 			return resignationHistory;
@@ -174,9 +174,36 @@ public class ResignationHistoryLocalServiceImpl extends
 			resignationHistory.setComment(comment);
 
 			resignationHistory.setModifiedDate(new Date());
-			return super.updateResignationHistory(resignationHistory);
+			resignationHistory = super
+					.updateResignationHistory(resignationHistory);
+			if (resignationHistory != null) {
+				// add permission
+				resourceLocalService.addResources(
+						resignationHistory.getCompanyId(),
+						resignationHistory.getGroupId(),
+						resignationHistory.getUserId(),
+						ResignationHistory.class.getName(),
+						resignationHistory.getResignationHistoryId(), false,
+						true, true);
+
+				// index new resignationHistory
+				Indexer indexer = IndexerRegistryUtil
+						.nullSafeGetIndexer(ResignationHistory.class);
+				indexer.reindex(ResignationHistory.class.getName(),
+						resignationHistory.getResignationHistoryId());
+
+				// update employee status
+				Emp employee = EmpLocalServiceUtil.getEmp(resignationHistory
+						.getEmployeeId());
+				employee.setStatus(EmployeeStatus.RESIGNED.toString());
+				empLocalService.updateEmp(employee);
+
+			}
+			return resignationHistory;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
+		} catch (PortalException e) {
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -244,9 +271,9 @@ public class ResignationHistoryLocalServiceImpl extends
 			return documents;
 
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -337,14 +364,6 @@ public class ResignationHistoryLocalServiceImpl extends
 
 			addResignationHistory(resignationHistory, serviceContext);
 		}
-	}
-
-	private List<Long> empIdsFromResignedEmps(List<Emp> emps) {
-		final List<Long> ids = new ArrayList<>();
-		for (Emp emp : emps) {
-			ids.add(emp.getEmpId());
-		}
-		return ids;
 	}
 
 	private List<Long> empIdsFromResignedResignedHistory(

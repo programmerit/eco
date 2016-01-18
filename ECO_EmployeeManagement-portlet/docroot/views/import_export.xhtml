@@ -130,6 +130,13 @@
 						sizeLimit="10000000" allowTypes="/(\.|\/)(xls|xlsx)$/" />
 				</p:tab>
 
+				<p:tab id="updateBankInfoTab" title="Update Employee Bank Info">
+					<p:fileUpload
+						fileUploadListener="#{updateBankInfoIEBean.handleFileImport}"
+						mode="advanced" dragDropSupport="true" update="messages2"
+						sizeLimit="10000000" allowTypes="/(\.|\/)(xls|xlsx)$/" />
+				</p:tab>
+
 			</p:tabView>
 			<br />
 

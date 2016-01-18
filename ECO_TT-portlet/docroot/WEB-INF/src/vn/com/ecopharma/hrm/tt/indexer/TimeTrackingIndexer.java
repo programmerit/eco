@@ -1,6 +1,8 @@
 package vn.com.ecopharma.hrm.tt.indexer;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
 
@@ -24,14 +26,20 @@ import vn.com.ecopharma.hrm.tt.constant.ECO_TT_Info;
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
 import vn.com.ecopharma.hrm.tt.model.TimeTracking;
 import vn.com.ecopharma.hrm.tt.service.TimeTrackingLocalServiceUtil;
+import vn.com.ecopharma.hrm.tt.service.persistence.TimeTrackingActionableDynamicQuery;
 import vn.com.ecopharma.hrm.tt.utils.TTUtils;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
@@ -143,9 +151,38 @@ public class TimeTrackingIndexer extends BaseIndexer {
 
 	@Override
 	protected void doReindex(String[] ids) throws Exception {
-		for (String id : ids) {
-			doReindex(TimeTracking.class.getName(), Long.valueOf(id));
-		}
+		long companyId = GetterUtil.getLong(ids[0]);
+		reindexEntries(companyId);
+	}
+
+	protected void reindexEntries(long companyId) throws PortalException,
+			SystemException {
+
+		final Collection<Document> documents = new ArrayList<>();
+
+		ActionableDynamicQuery actionableDynamicQuery = new TimeTrackingActionableDynamicQuery() {
+
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+			}
+
+			@Override
+			protected void performAction(Object object) throws PortalException {
+				TimeTracking obj = (TimeTracking) object;
+
+				Document document = getDocument(obj);
+
+				documents.add(document);
+			}
+
+		};
+
+		actionableDynamicQuery.setCompanyId(companyId);
+
+		actionableDynamicQuery.performActions();
+
+		SearchEngineUtil.updateDocuments(getSearchEngineId(), companyId,
+				documents);
 	}
 
 	@Override

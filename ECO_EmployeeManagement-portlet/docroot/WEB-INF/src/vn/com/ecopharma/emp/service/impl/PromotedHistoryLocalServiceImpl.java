@@ -143,6 +143,7 @@ public class PromotedHistoryLocalServiceImpl extends
 	}
 
 	public PromotedHistory addPromotedHistory(PromotedHistory promotedHistory,
+			long unitGroupId, long unitId, long departmentId,
 			ServiceContext serviceContext) {
 		promotedHistory.setCompanyId(serviceContext.getCompanyId());
 		promotedHistory.setGroupId(serviceContext.getScopeGroupId());
@@ -154,6 +155,9 @@ public class PromotedHistoryLocalServiceImpl extends
 			Emp employee = empLocalService.getEmp(promotedHistory
 					.getEmployeeId());
 			employee.setTitlesId(promotedHistory.getNewTitlesId());
+			employee.setUnitGroupId(unitGroupId);
+			employee.setUnitId(unitId);
+			employee.setDepartmentId(departmentId);
 			empLocalService.updateEmp(employee);
 
 			// add permission

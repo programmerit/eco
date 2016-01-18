@@ -276,6 +276,7 @@ public interface PromotedHistoryLocalService extends BaseLocalService,
 
 	public vn.com.ecopharma.emp.model.PromotedHistory addPromotedHistory(
 		vn.com.ecopharma.emp.model.PromotedHistory promotedHistory,
+		long unitGroupId, long unitId, long departmentId,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
 	public vn.com.ecopharma.emp.model.PromotedHistory markDeleted(

@@ -309,6 +309,19 @@ public class EmpBankInfoLocalServiceUtil {
 		return getService().addEmpBankInfo(empBankInfo, serviceContext);
 	}
 
+	public static vn.com.ecopharma.emp.model.EmpBankInfo createAndAddEmpBankInfo(
+		java.lang.String empCode, java.lang.String bankAccountNo,
+		java.lang.String bankName, java.lang.String branchName,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService()
+				   .createAndAddEmpBankInfo(empCode, bankAccountNo, bankName,
+			branchName, serviceContext);
+	}
+
+	public static void removeAllBankInfoByEmpCode(java.lang.String empCode) {
+		getService().removeAllBankInfoByEmpCode(empCode);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

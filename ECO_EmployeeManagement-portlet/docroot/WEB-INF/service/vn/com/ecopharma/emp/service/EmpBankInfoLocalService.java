@@ -273,4 +273,11 @@ public interface EmpBankInfoLocalService extends BaseLocalService,
 	public vn.com.ecopharma.emp.model.EmpBankInfo addEmpBankInfo(
 		vn.com.ecopharma.emp.model.EmpBankInfo empBankInfo,
 		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public vn.com.ecopharma.emp.model.EmpBankInfo createAndAddEmpBankInfo(
+		java.lang.String empCode, java.lang.String bankAccountNo,
+		java.lang.String bankName, java.lang.String branchName,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public void removeAllBankInfoByEmpCode(java.lang.String empCode);
 }

@@ -327,6 +327,20 @@ public class EmpBankInfoLocalServiceWrapper implements EmpBankInfoLocalService,
 			serviceContext);
 	}
 
+	@Override
+	public vn.com.ecopharma.emp.model.EmpBankInfo createAndAddEmpBankInfo(
+		java.lang.String empCode, java.lang.String bankAccountNo,
+		java.lang.String bankName, java.lang.String branchName,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _empBankInfoLocalService.createAndAddEmpBankInfo(empCode,
+			bankAccountNo, bankName, branchName, serviceContext);
+	}
+
+	@Override
+	public void removeAllBankInfoByEmpCode(java.lang.String empCode) {
+		_empBankInfoLocalService.removeAllBankInfoByEmpCode(empCode);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

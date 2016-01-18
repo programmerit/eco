@@ -35,6 +35,7 @@ public class ResignationHistoryIndexedItem implements Serializable {
 				: StringUtils.EMPTY;
 		this.comment = document.getField(ResignationHistoryField.COMMENT) != null ? document
 				.getField(ResignationHistoryField.COMMENT).getValue() : "N/A";
+		System.out.println(this.comment);
 		try {
 			this.resignedDate = document
 					.getDate(ResignationHistoryField.RESIGNED_DATE);

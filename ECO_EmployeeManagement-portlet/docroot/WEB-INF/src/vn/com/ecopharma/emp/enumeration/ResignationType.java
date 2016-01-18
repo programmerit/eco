@@ -1,7 +1,7 @@
 package vn.com.ecopharma.emp.enumeration;
 
 public enum ResignationType {
-	RESIGNED_LETTER, EMPLOYEE_SIDE, COMPANY_SIDE, AGREEMENT, EXPIRED, DISMISSAL, OTHER;
+	RESIGNED_LETTER, EMPLOYEE_SIDE, COMPANY_SIDE, AGREEMENT, EXPIRED, DISMISSAL, OTHER, NONE;
 
 	@Override
 	public String toString() {

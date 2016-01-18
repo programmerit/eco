@@ -40,6 +40,7 @@ import com.liferay.portal.model.Address;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.AddressLocalServiceUtil;
+import com.liferay.portal.service.AddressServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -474,7 +475,8 @@ public class EmployeeUtils {
 
 	public static String getLocalizedResignationType(String r) {
 		return StringUtils.trimToNull(r) != null ? ResignationType.valueOf(r)
-				.getLocalizedString() : StringUtils.EMPTY;
+				.getLocalizedString() : ResignationType.NONE
+				.getLocalizedString();
 	}
 
 	public static String removeDashChar(String s) {
@@ -502,5 +504,24 @@ public class EmployeeUtils {
 		employee.setLevelId(getBaseModelPrimaryKey(empInfoItem.getLevel()));
 		employee.setUniversityId(getBaseModelPrimaryKey(empInfoItem
 				.getUniversity()));
+	}
+	
+	public static List<Address> findAllEmpAddress(long employeeId) {
+		try {
+			return AddressServiceUtil.getAddresses(Emp.class.getName(),
+					employeeId);
+		} catch (PortalException e) {
+			LOGGER.info(e);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return new ArrayList<>();
+	}
+
+	public static Address getPresentAddress(long employeeId) {
+		List<Address> empAddresses = findAllEmpAddress(employeeId);
+		if (empAddresses.isEmpty())
+			return null;
+		return empAddresses.get(0);
 	}
 }

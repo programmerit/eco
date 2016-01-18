@@ -30,7 +30,7 @@
 				<p:dataTable id="resignationHistories" var="r"
 					widgetVar="resignationHistoryTable"
 					value="#{resignationHistoryBean.lazyDataModel}"
-					paginatorAlwaysVisible="true" paginator="true" rows="10"
+					paginatorAlwaysVisible="true" paginator="true" rows="25"
 					paginatorPosition="bottom"
 					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="10,25,50" lazy="true" selectionMode="single"
@@ -41,19 +41,6 @@
 						listener="#{resignationHistoryBean.onRowEdit}" />
 					<p:ajax event="rowEditCancel"
 						listener="#{resignationHistoryBean.onRowEditCancel}" />
-
-					<f:facet name="header">
-						<div class="testClass">
-							<div class="emp-title" style="font-size: 25px;">ECO
-								Employee Resignation List</div>
-							<div class="emp-toggle" style="margin: -24px 0 -10px 1100px;">
-								<p:commandButton type="button" id="toggler"
-									icon="fa fa-calendar Fs16 White" />
-							</div>
-						</div>
-						<p:columnToggler trigger="toggler"
-							datasource="resignationHistories" />
-					</f:facet>
 
 					<p:column headerText="Id">
 						<h:outputText value="#{r.resignationHistoryId}" />
@@ -70,7 +57,9 @@
 					<p:column headerText="Resigned Date">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{r.resignedDate}" />
+								<h:outputText value="#{r.resignedDate}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
 							</f:facet>
 							<f:facet name="input">
 								<p:calendar value="#{r.resignedDate}" pattern="dd/MM/yyyy" />
@@ -88,13 +77,12 @@
 							<f:facet name="input">
 								<p:selectOneMenu value="#{r.resignedType}"
 									converter="resignationTypeConverter" effect="fade">
-									<f:selectItem itemLabel="Resigned Type" itemValue="" />
 									<f:selectItems
-										value="#{resignationHistoryBean.resignationTypes}" var="r"
-										itemLabel="#{i18n[resignationHistoryBean.getLocalizedResignationType(r)]}"
-										itemValue="#{r}" />
+										value="#{resignationHistoryBean.resignationTypes}" var="rt"
+										itemLabel="#{i18n[resignationHistoryBean.getLocalizedResignationType(rt)]}"
+										itemValue="#{rt}" />
 									<p:column>
-					                #{r}
+					                #{i18n[resignationHistoryBean.getLocalizedResignationType(rt)]}
 					            </p:column>
 								</p:selectOneMenu>
 							</f:facet>
@@ -115,7 +103,10 @@
 					<p:column style="width:32px">
 						<p:rowEditor />
 					</p:column>
-
+					<f:facet name="footer">
+		        		In total there are of <h:outputText id="totalFilteredCount"
+							value="#{resignationHistoryBean.lazyDataModel.rowCount}" /> employees.
+		   			 </f:facet>
 				</p:dataTable>
 			</h:form>
 		</h:panelGroup>

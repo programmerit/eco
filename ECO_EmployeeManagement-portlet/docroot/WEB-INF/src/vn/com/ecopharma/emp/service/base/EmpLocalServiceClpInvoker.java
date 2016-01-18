@@ -197,40 +197,9 @@ public class EmpLocalServiceClpInvoker {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName158 = "addOrUpdateWithExistUser";
+		_methodName158 = "updateExistedEmployee";
 
 		_methodParameterTypes158 = new String[] {
-				"vn.com.ecopharma.emp.model.Emp",
-				"com.liferay.portal.model.User", "long", "java.util.Map",
-				"java.util.Map", "java.util.Map", "boolean",
-				"com.liferay.portal.service.ServiceContext"
-			};
-
-		_methodName159 = "addOrUpdateWithExistUser";
-
-		_methodParameterTypes159 = new String[] {
-				"vn.com.ecopharma.emp.model.Emp", "java.lang.String", "long",
-				"java.util.Map", "java.util.Map", "java.util.Map", "boolean",
-				"com.liferay.portal.service.ServiceContext"
-			};
-
-		_methodName160 = "createEmployee";
-
-		_methodParameterTypes160 = new String[] {
-				"java.lang.String", "long", "long", "long", "long", "long",
-				"java.util.Date", "java.util.Date", "java.util.Date",
-				"java.util.Date", "java.lang.String", "int", "java.util.Date",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "long", "java.lang.String",
-				"java.lang.String", "java.util.Date", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"int", "java.lang.String", "java.lang.String",
-				"java.lang.String"
-			};
-
-		_methodName161 = "updateExistedEmployee";
-
-		_methodParameterTypes161 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp", "java.lang.String", "long",
 				"long", "long", "long", "long", "java.util.Date",
 				"java.util.Date", "java.util.Date", "java.util.Date",
@@ -240,6 +209,37 @@ public class EmpLocalServiceClpInvoker {
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "int", "java.lang.String",
 				"java.lang.String", "java.lang.String"
+			};
+
+		_methodName159 = "addOrUpdateWithExistUser";
+
+		_methodParameterTypes159 = new String[] {
+				"vn.com.ecopharma.emp.model.Emp",
+				"com.liferay.portal.model.User", "long", "java.util.Map",
+				"java.util.Map", "java.util.Map", "boolean",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName160 = "addOrUpdateWithExistUser";
+
+		_methodParameterTypes160 = new String[] {
+				"vn.com.ecopharma.emp.model.Emp", "java.lang.String", "long",
+				"java.util.Map", "java.util.Map", "java.util.Map", "boolean",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName161 = "createEmployee";
+
+		_methodParameterTypes161 = new String[] {
+				"java.lang.String", "long", "long", "long", "long", "long",
+				"java.util.Date", "java.util.Date", "java.util.Date",
+				"java.util.Date", "java.lang.String", "int", "java.util.Date",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"java.lang.String", "long", "java.lang.String",
+				"java.lang.String", "java.util.Date", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"int", "java.lang.String", "java.lang.String",
+				"java.lang.String"
 			};
 
 		_methodName163 = "updateEmpAddresses";
@@ -571,57 +571,6 @@ public class EmpLocalServiceClpInvoker {
 
 		if (_methodName158.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
-			return EmpLocalServiceUtil.addOrUpdateWithExistUser((vn.com.ecopharma.emp.model.Emp)arguments[0],
-				(com.liferay.portal.model.User)arguments[1],
-				((Long)arguments[2]).longValue(),
-				(java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean>)arguments[3],
-				(java.util.Map<java.lang.String, java.lang.Boolean>)arguments[4],
-				(java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean>)arguments[5],
-				((Boolean)arguments[6]).booleanValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[7]);
-		}
-
-		if (_methodName159.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
-			return EmpLocalServiceUtil.addOrUpdateWithExistUser((vn.com.ecopharma.emp.model.Emp)arguments[0],
-				(java.lang.String)arguments[1],
-				((Long)arguments[2]).longValue(),
-				(java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean>)arguments[3],
-				(java.util.Map<java.lang.String, java.lang.Boolean>)arguments[4],
-				(java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean>)arguments[5],
-				((Boolean)arguments[6]).booleanValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[7]);
-		}
-
-		if (_methodName160.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
-			return EmpLocalServiceUtil.createEmployee((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue(),
-				((Long)arguments[2]).longValue(),
-				((Long)arguments[3]).longValue(),
-				((Long)arguments[4]).longValue(),
-				((Long)arguments[5]).longValue(), (java.util.Date)arguments[6],
-				(java.util.Date)arguments[7], (java.util.Date)arguments[8],
-				(java.util.Date)arguments[9], (java.lang.String)arguments[10],
-				((Integer)arguments[11]).intValue(),
-				(java.util.Date)arguments[12], (java.lang.String)arguments[13],
-				(java.lang.String)arguments[14],
-				(java.lang.String)arguments[15],
-				(java.lang.String)arguments[16],
-				((Long)arguments[17]).longValue(),
-				(java.lang.String)arguments[18],
-				(java.lang.String)arguments[19], (java.util.Date)arguments[20],
-				(java.lang.String)arguments[21],
-				(java.lang.String)arguments[22],
-				(java.lang.String)arguments[23],
-				(java.lang.String)arguments[24],
-				((Integer)arguments[25]).intValue(),
-				(java.lang.String)arguments[26],
-				(java.lang.String)arguments[27], (java.lang.String)arguments[28]);
-		}
-
-		if (_methodName161.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
 			return EmpLocalServiceUtil.updateExistedEmployee((vn.com.ecopharma.emp.model.Emp)arguments[0],
 				(java.lang.String)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -646,6 +595,57 @@ public class EmpLocalServiceClpInvoker {
 				((Integer)arguments[26]).intValue(),
 				(java.lang.String)arguments[27],
 				(java.lang.String)arguments[28], (java.lang.String)arguments[29]);
+		}
+
+		if (_methodName159.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
+			return EmpLocalServiceUtil.addOrUpdateWithExistUser((vn.com.ecopharma.emp.model.Emp)arguments[0],
+				(com.liferay.portal.model.User)arguments[1],
+				((Long)arguments[2]).longValue(),
+				(java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean>)arguments[3],
+				(java.util.Map<java.lang.String, java.lang.Boolean>)arguments[4],
+				(java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean>)arguments[5],
+				((Boolean)arguments[6]).booleanValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[7]);
+		}
+
+		if (_methodName160.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
+			return EmpLocalServiceUtil.addOrUpdateWithExistUser((vn.com.ecopharma.emp.model.Emp)arguments[0],
+				(java.lang.String)arguments[1],
+				((Long)arguments[2]).longValue(),
+				(java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean>)arguments[3],
+				(java.util.Map<java.lang.String, java.lang.Boolean>)arguments[4],
+				(java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean>)arguments[5],
+				((Boolean)arguments[6]).booleanValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[7]);
+		}
+
+		if (_methodName161.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
+			return EmpLocalServiceUtil.createEmployee((java.lang.String)arguments[0],
+				((Long)arguments[1]).longValue(),
+				((Long)arguments[2]).longValue(),
+				((Long)arguments[3]).longValue(),
+				((Long)arguments[4]).longValue(),
+				((Long)arguments[5]).longValue(), (java.util.Date)arguments[6],
+				(java.util.Date)arguments[7], (java.util.Date)arguments[8],
+				(java.util.Date)arguments[9], (java.lang.String)arguments[10],
+				((Integer)arguments[11]).intValue(),
+				(java.util.Date)arguments[12], (java.lang.String)arguments[13],
+				(java.lang.String)arguments[14],
+				(java.lang.String)arguments[15],
+				(java.lang.String)arguments[16],
+				((Long)arguments[17]).longValue(),
+				(java.lang.String)arguments[18],
+				(java.lang.String)arguments[19], (java.util.Date)arguments[20],
+				(java.lang.String)arguments[21],
+				(java.lang.String)arguments[22],
+				(java.lang.String)arguments[23],
+				(java.lang.String)arguments[24],
+				((Integer)arguments[25]).intValue(),
+				(java.lang.String)arguments[26],
+				(java.lang.String)arguments[27], (java.lang.String)arguments[28]);
 		}
 
 		if (_methodName163.equals(name) &&

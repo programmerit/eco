@@ -20,8 +20,10 @@ public class VacancyIndexItem extends AbstractIndexEntityItem implements
 	}
 
 	public int getNumberOfPosition() {
-		return Integer.valueOf(getDocument().getField(
-				VacancyField.NUMBER_OF_POSITION).getValue());
+		return getDocument().getField(VacancyField.NUMBER_OF_POSITION) != null ? Integer
+				.valueOf(getDocument()
+						.getField(VacancyField.NUMBER_OF_POSITION).getValue())
+				: 0;
 	}
 
 	public String getTitles() {

@@ -146,6 +146,17 @@ public class EmpBankInfoLocalServiceClp implements EmpBankInfoLocalService {
 				"vn.com.ecopharma.emp.model.EmpBankInfo",
 				"com.liferay.portal.service.ServiceContext"
 			};
+
+		_methodName25 = "createAndAddEmpBankInfo";
+
+		_methodParameterTypes25 = new String[] {
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName26 = "removeAllBankInfoByEmpCode";
+
+		_methodParameterTypes26 = new String[] { "java.lang.String" };
 	}
 
 	@Override
@@ -865,6 +876,63 @@ public class EmpBankInfoLocalServiceClp implements EmpBankInfoLocalService {
 		return (vn.com.ecopharma.emp.model.EmpBankInfo)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public vn.com.ecopharma.emp.model.EmpBankInfo createAndAddEmpBankInfo(
+		java.lang.String empCode, java.lang.String bankAccountNo,
+		java.lang.String bankName, java.lang.String branchName,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
+					new Object[] {
+						ClpSerializer.translateInput(empCode),
+						
+					ClpSerializer.translateInput(bankAccountNo),
+						
+					ClpSerializer.translateInput(bankName),
+						
+					ClpSerializer.translateInput(branchName),
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.EmpBankInfo)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public void removeAllBankInfoByEmpCode(java.lang.String empCode) {
+		try {
+			_invokableLocalService.invokeMethod(_methodName26,
+				_methodParameterTypes26,
+				new Object[] { ClpSerializer.translateInput(empCode) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -914,4 +982,8 @@ public class EmpBankInfoLocalServiceClp implements EmpBankInfoLocalService {
 	private String[] _methodParameterTypes23;
 	private String _methodName24;
 	private String[] _methodParameterTypes24;
+	private String _methodName25;
+	private String[] _methodParameterTypes25;
+	private String _methodName26;
+	private String[] _methodParameterTypes26;
 }

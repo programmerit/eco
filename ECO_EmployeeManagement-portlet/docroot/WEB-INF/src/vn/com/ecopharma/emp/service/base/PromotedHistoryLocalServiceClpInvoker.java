@@ -147,8 +147,8 @@ public class PromotedHistoryLocalServiceClpInvoker {
 		_methodName151 = "addPromotedHistory";
 
 		_methodParameterTypes151 = new String[] {
-				"vn.com.ecopharma.emp.model.PromotedHistory",
-				"com.liferay.portal.service.ServiceContext"
+				"vn.com.ecopharma.emp.model.PromotedHistory", "long", "long",
+				"long", "com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName152 = "markDeleted";
@@ -339,7 +339,10 @@ public class PromotedHistoryLocalServiceClpInvoker {
 		if (_methodName151.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
 			return PromotedHistoryLocalServiceUtil.addPromotedHistory((vn.com.ecopharma.emp.model.PromotedHistory)arguments[0],
-				(com.liferay.portal.service.ServiceContext)arguments[1]);
+				((Long)arguments[1]).longValue(),
+				((Long)arguments[2]).longValue(),
+				((Long)arguments[3]).longValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[4]);
 		}
 
 		if (_methodName152.equals(name) &&

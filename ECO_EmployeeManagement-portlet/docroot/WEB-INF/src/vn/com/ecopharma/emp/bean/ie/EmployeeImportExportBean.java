@@ -1,4 +1,4 @@
-package vn.com.ecopharma.emp.bean;
+package vn.com.ecopharma.emp.bean.ie;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,6 +26,7 @@ import org.primefaces.model.SortOrder;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
+import vn.com.ecopharma.emp.bean.EmployeeIndexedBean;
 import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.dto.ImportExportEmployeeDTO;
 import vn.com.ecopharma.emp.enumeration.EmployeeExportType;

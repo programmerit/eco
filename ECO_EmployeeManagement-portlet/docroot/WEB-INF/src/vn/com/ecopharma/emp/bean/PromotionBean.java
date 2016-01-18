@@ -59,12 +59,19 @@ public class PromotionBean implements Serializable {
 		FacesMessage msg = null;
 		EmpIndexedItem employeeIndexedItem = getEmployeeIndexedItem();
 		if (titles.getTitlesId() != employeeIndexedItem.getTitlesId()) {
+			long titlesId = titles.getTitlesId();
+			long unitGroupId = EmployeeUtils.getBaseModelPrimaryKey(unitGroup);
+			long unitId = EmployeeUtils.getBaseModelPrimaryKey(unit);
+			long departmentId = EmployeeUtils
+					.getBaseModelPrimaryKey(department);
+
 			promotedHistory.setOldTitlesId(employeeIndexedItem.getTitlesId());
-			promotedHistory.setNewTitlesId(titles.getTitlesId());
+			promotedHistory.setNewTitlesId(titlesId);
 			promotedHistory.setEmployeeId(employeeIndexedItem.getEmployeeId());
 			PromotedHistory result = PromotedHistoryLocalServiceUtil
-					.addPromotedHistory(promotedHistory, LiferayFacesContext
-							.getInstance().getServiceContext());
+					.addPromotedHistory(promotedHistory, unitGroupId, unitId,
+							departmentId, LiferayFacesContext.getInstance()
+									.getServiceContext());
 			if (result != null) {
 				msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 						"Promotion Info", "Employee "
@@ -126,9 +133,18 @@ public class PromotionBean implements Serializable {
 	}
 
 	public List<Titles> getTitlesList() {
-		return department != null ? TitlesLocalServiceUtil
-				.findByDepartmentOnly(department.getDepartmentId())
-				: new ArrayList<Titles>();
+		if (unit == null) {
+			return department != null ? TitlesLocalServiceUtil
+					.findByDepartmentOnly(department.getDepartmentId())
+					: new ArrayList<Titles>();
+		} else {
+			if (unitGroup != null) {
+				return TitlesLocalServiceUtil.findByUnitGroupOnly(unitGroup
+						.getUnitGroupId());
+			} else {
+				return TitlesLocalServiceUtil.findByUnitOnly(unit.getUnitId());
+			}
+		}
 	}
 
 	public List<UnitGroup> getUnitGroups() {

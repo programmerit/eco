@@ -34,23 +34,6 @@
 					selection="#{promotionHistoryBean.selectedItem}"
 					rowKey="#{p.promotedHistoryId}" emptyMessage="No records found">
 
-
-					<f:facet name="header">
-						<div class="testClass">
-							<div class="emp-title" style="font-size: 25px;">ECO
-								Employee Promoted List</div>
-							<div class="emp-toggle" style="margin: -24px 0 -10px 1100px;">
-								<p:commandButton type="button" id="toggler"
-									icon="fa fa-calendar Fs16 White" />
-							</div>
-						</div>
-						<p:columnToggler trigger="toggler" datasource="promotionHistories" />
-					</f:facet>
-
-					<p:column style="width:16px" exportable="false" toggleable="false">
-						<p:rowToggler />
-					</p:column>
-
 					<p:column headerText="Id">
 						<h:outputText value="#{p.promotedHistoryId}" />
 					</p:column>
@@ -76,10 +59,10 @@
 					<p:column headerText="Comment">
 						<h:outputText value="#{p.comment}" />
 					</p:column>
-
-					<p:rowExpansion>
-						INFORMATION HERE!!!	
-					</p:rowExpansion>
+					<f:facet name="footer">
+		        		In total there are of <h:outputText id="totalFilteredCount"
+							value="#{promotionHistoryBean.lazyDataModel.rowCount}" /> records.
+		   			 </f:facet>
 				</p:dataTable>
 			</h:form>
 		</h:panelGroup>

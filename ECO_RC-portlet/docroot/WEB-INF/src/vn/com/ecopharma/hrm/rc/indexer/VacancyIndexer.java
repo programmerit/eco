@@ -1,5 +1,7 @@
 package vn.com.ecopharma.hrm.rc.indexer;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -12,12 +14,18 @@ import vn.com.ecopharma.hrm.rc.constant.VacancyField;
 import vn.com.ecopharma.hrm.rc.model.Vacancy;
 import vn.com.ecopharma.hrm.rc.permission.VacancyPermission;
 import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
+import vn.com.ecopharma.hrm.rc.service.persistence.VacancyActionableDynamicQuery;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 public class VacancyIndexer extends BaseIndexer {
@@ -86,11 +94,38 @@ public class VacancyIndexer extends BaseIndexer {
 
 	@Override
 	protected void doReindex(String[] ids) throws Exception {
-		for (String id : ids) {
-			final Vacancy vacancy = VacancyLocalServiceUtil.getVacancy(Long
-					.valueOf(id));
-			doReindex(vacancy);
-		}
+		long companyId = GetterUtil.getLong(ids[0]);
+		reindexEntries(companyId);
+	}
+
+	protected void reindexEntries(long companyId) throws PortalException,
+			SystemException {
+
+		final Collection<Document> documents = new ArrayList<Document>();
+
+		ActionableDynamicQuery actionableDynamicQuery = new VacancyActionableDynamicQuery() {
+
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+			}
+
+			@Override
+			protected void performAction(Object object) throws PortalException {
+				Vacancy obj = (Vacancy) object;
+
+				Document document = getDocument(obj);
+
+				documents.add(document);
+			}
+
+		};
+
+		actionableDynamicQuery.setCompanyId(companyId);
+
+		actionableDynamicQuery.performActions();
+
+		SearchEngineUtil.updateDocuments(getSearchEngineId(), companyId,
+				documents);
 	}
 
 	@Override

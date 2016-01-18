@@ -145,6 +145,17 @@ public class EmpBankInfoLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.EmpBankInfo",
 				"com.liferay.portal.service.ServiceContext"
 			};
+
+		_methodName150 = "createAndAddEmpBankInfo";
+
+		_methodParameterTypes150 = new String[] {
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName151 = "removeAllBankInfoByEmpCode";
+
+		_methodParameterTypes151 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -284,6 +295,21 @@ public class EmpBankInfoLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
 
+		if (_methodName150.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
+			return EmpBankInfoLocalServiceUtil.createAndAddEmpBankInfo((java.lang.String)arguments[0],
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				(java.lang.String)arguments[3],
+				(com.liferay.portal.service.ServiceContext)arguments[4]);
+		}
+
+		if (_methodName151.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
+			EmpBankInfoLocalServiceUtil.removeAllBankInfoByEmpCode((java.lang.String)arguments[0]);
+
+			return null;
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -335,4 +361,8 @@ public class EmpBankInfoLocalServiceClpInvoker {
 	private String[] _methodParameterTypes148;
 	private String _methodName149;
 	private String[] _methodParameterTypes149;
+	private String _methodName150;
+	private String[] _methodParameterTypes150;
+	private String _methodName151;
+	private String[] _methodParameterTypes151;
 }

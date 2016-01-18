@@ -14,7 +14,7 @@
 		<h:form id="resignationForm">
 			<p:dialog widgetVar="wResignationDialog" header="Resignation Form"
 				modal="true">
-				<p:outputPanel id="resignationOutputPanel">
+				<p:outputPanel id="resignationOutputPanel" autoUpdate="true">
 					<p:panelGrid columns="2">
 						<h:outputText value="Fullname" />
 						<h:outputText id="rFullName"
@@ -46,9 +46,8 @@
 					</p:panelGrid>
 				</p:outputPanel>
 				<p:commandButton value="Resigned" styleClass="RedButton"
-					action="#{resignationBean.save}"
-					update=":employeesForm:employees :growl"
-					oncomplete="PF('wResignationDialog').hide()" />
+					actionListener="#{resignationBean.save}"
+					oncomplete="refreshEmployees(); PF('wResignationDialog').hide();" />
 				<p:commandButton value="Cancel"
 					onclick="PF('wResignationDialog').hide()">
 					<p:resetInput target="resignationForm" />

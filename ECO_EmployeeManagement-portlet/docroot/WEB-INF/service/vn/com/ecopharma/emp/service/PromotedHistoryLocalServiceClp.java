@@ -149,8 +149,8 @@ public class PromotedHistoryLocalServiceClp
 		_methodName26 = "addPromotedHistory";
 
 		_methodParameterTypes26 = new String[] {
-				"vn.com.ecopharma.emp.model.PromotedHistory",
-				"com.liferay.portal.service.ServiceContext"
+				"vn.com.ecopharma.emp.model.PromotedHistory", "long", "long",
+				"long", "com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName27 = "markDeleted";
@@ -926,6 +926,7 @@ public class PromotedHistoryLocalServiceClp
 	@Override
 	public vn.com.ecopharma.emp.model.PromotedHistory addPromotedHistory(
 		vn.com.ecopharma.emp.model.PromotedHistory promotedHistory,
+		long unitGroupId, long unitId, long departmentId,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
 
@@ -934,6 +935,12 @@ public class PromotedHistoryLocalServiceClp
 					_methodParameterTypes26,
 					new Object[] {
 						ClpSerializer.translateInput(promotedHistory),
+						
+					unitGroupId,
+						
+					unitId,
+						
+					departmentId,
 						
 					ClpSerializer.translateInput(serviceContext)
 					});

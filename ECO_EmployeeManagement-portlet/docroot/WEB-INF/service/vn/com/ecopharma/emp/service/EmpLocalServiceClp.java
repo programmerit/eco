@@ -197,40 +197,9 @@ public class EmpLocalServiceClp implements EmpLocalService {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName33 = "addOrUpdateWithExistUser";
+		_methodName33 = "updateExistedEmployee";
 
 		_methodParameterTypes33 = new String[] {
-				"vn.com.ecopharma.emp.model.Emp",
-				"com.liferay.portal.model.User", "long", "java.util.Map",
-				"java.util.Map", "java.util.Map", "boolean",
-				"com.liferay.portal.service.ServiceContext"
-			};
-
-		_methodName34 = "addOrUpdateWithExistUser";
-
-		_methodParameterTypes34 = new String[] {
-				"vn.com.ecopharma.emp.model.Emp", "java.lang.String", "long",
-				"java.util.Map", "java.util.Map", "java.util.Map", "boolean",
-				"com.liferay.portal.service.ServiceContext"
-			};
-
-		_methodName35 = "createEmployee";
-
-		_methodParameterTypes35 = new String[] {
-				"java.lang.String", "long", "long", "long", "long", "long",
-				"java.util.Date", "java.util.Date", "java.util.Date",
-				"java.util.Date", "java.lang.String", "int", "java.util.Date",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "long", "java.lang.String",
-				"java.lang.String", "java.util.Date", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"int", "java.lang.String", "java.lang.String",
-				"java.lang.String"
-			};
-
-		_methodName36 = "updateExistedEmployee";
-
-		_methodParameterTypes36 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp", "java.lang.String", "long",
 				"long", "long", "long", "long", "java.util.Date",
 				"java.util.Date", "java.util.Date", "java.util.Date",
@@ -240,6 +209,37 @@ public class EmpLocalServiceClp implements EmpLocalService {
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "int", "java.lang.String",
 				"java.lang.String", "java.lang.String"
+			};
+
+		_methodName34 = "addOrUpdateWithExistUser";
+
+		_methodParameterTypes34 = new String[] {
+				"vn.com.ecopharma.emp.model.Emp",
+				"com.liferay.portal.model.User", "long", "java.util.Map",
+				"java.util.Map", "java.util.Map", "boolean",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName35 = "addOrUpdateWithExistUser";
+
+		_methodParameterTypes35 = new String[] {
+				"vn.com.ecopharma.emp.model.Emp", "java.lang.String", "long",
+				"java.util.Map", "java.util.Map", "java.util.Map", "boolean",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName36 = "createEmployee";
+
+		_methodParameterTypes36 = new String[] {
+				"java.lang.String", "long", "long", "long", "long", "long",
+				"java.util.Date", "java.util.Date", "java.util.Date",
+				"java.util.Date", "java.lang.String", "int", "java.util.Date",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"java.lang.String", "long", "java.lang.String",
+				"java.lang.String", "java.util.Date", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"int", "java.lang.String", "java.lang.String",
+				"java.lang.String"
 			};
 
 		_methodName37 = "updateEmpAddresses";
@@ -1417,104 +1417,10 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	}
 
 	@Override
-	public vn.com.ecopharma.emp.model.Emp addOrUpdateWithExistUser(
-		vn.com.ecopharma.emp.model.Emp employee,
-		com.liferay.portal.model.User user, long oldTitlesId,
-		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
-		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
-		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isImportAction,
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33,
-					new Object[] {
-						ClpSerializer.translateInput(employee),
-						
-					ClpSerializer.translateInput(user),
-						
-					oldTitlesId,
-						
-					ClpSerializer.translateInput(addressesMap),
-						
-					ClpSerializer.translateInput(dependentNameMap),
-						
-					ClpSerializer.translateInput(bankInfoMap),
-						
-					isImportAction,
-						
-					ClpSerializer.translateInput(serviceContext)
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (vn.com.ecopharma.emp.model.Emp)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public vn.com.ecopharma.emp.model.Emp addOrUpdateWithExistUser(
-		vn.com.ecopharma.emp.model.Emp employee,
-		java.lang.String userScreenName, long oldTitlesId,
-		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
-		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
-		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isImportAction,
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName34,
-					_methodParameterTypes34,
-					new Object[] {
-						ClpSerializer.translateInput(employee),
-						
-					ClpSerializer.translateInput(userScreenName),
-						
-					oldTitlesId,
-						
-					ClpSerializer.translateInput(addressesMap),
-						
-					ClpSerializer.translateInput(dependentNameMap),
-						
-					ClpSerializer.translateInput(bankInfoMap),
-						
-					isImportAction,
-						
-					ClpSerializer.translateInput(serviceContext)
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (vn.com.ecopharma.emp.model.Emp)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public vn.com.ecopharma.emp.model.Emp createEmployee(
-		java.lang.String employeeCode, long titlesId, long unitGroupId,
-		long unitId, long departmentId, long levelId,
-		java.util.Date promotedDate, java.util.Date joinedDate,
+	public vn.com.ecopharma.emp.model.Emp updateExistedEmployee(
+		vn.com.ecopharma.emp.model.Emp employee, java.lang.String employeeCode,
+		long titlesId, long unitGroupId, long unitId, long departmentId,
+		long levelId, java.util.Date promotedDate, java.util.Date joinedDate,
 		java.util.Date laborContractSignedDate,
 		java.util.Date laborContractExpiredDate,
 		java.lang.String laborContractType, int laborContractSignedTime,
@@ -1530,10 +1436,12 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName35,
-					_methodParameterTypes35,
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
 					new Object[] {
-						ClpSerializer.translateInput(employeeCode),
+						ClpSerializer.translateInput(employee),
+						
+					ClpSerializer.translateInput(employeeCode),
 						
 					titlesId,
 						
@@ -1608,10 +1516,104 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	}
 
 	@Override
-	public vn.com.ecopharma.emp.model.Emp updateExistedEmployee(
-		vn.com.ecopharma.emp.model.Emp employee, java.lang.String employeeCode,
-		long titlesId, long unitGroupId, long unitId, long departmentId,
-		long levelId, java.util.Date promotedDate, java.util.Date joinedDate,
+	public vn.com.ecopharma.emp.model.Emp addOrUpdateWithExistUser(
+		vn.com.ecopharma.emp.model.Emp employee,
+		com.liferay.portal.model.User user, long oldTitlesId,
+		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
+		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		boolean isImportAction,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
+					new Object[] {
+						ClpSerializer.translateInput(employee),
+						
+					ClpSerializer.translateInput(user),
+						
+					oldTitlesId,
+						
+					ClpSerializer.translateInput(addressesMap),
+						
+					ClpSerializer.translateInput(dependentNameMap),
+						
+					ClpSerializer.translateInput(bankInfoMap),
+						
+					isImportAction,
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.Emp)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.Emp addOrUpdateWithExistUser(
+		vn.com.ecopharma.emp.model.Emp employee,
+		java.lang.String userScreenName, long oldTitlesId,
+		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
+		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		boolean isImportAction,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35,
+					new Object[] {
+						ClpSerializer.translateInput(employee),
+						
+					ClpSerializer.translateInput(userScreenName),
+						
+					oldTitlesId,
+						
+					ClpSerializer.translateInput(addressesMap),
+						
+					ClpSerializer.translateInput(dependentNameMap),
+						
+					ClpSerializer.translateInput(bankInfoMap),
+						
+					isImportAction,
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.Emp)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.Emp createEmployee(
+		java.lang.String employeeCode, long titlesId, long unitGroupId,
+		long unitId, long departmentId, long levelId,
+		java.util.Date promotedDate, java.util.Date joinedDate,
 		java.util.Date laborContractSignedDate,
 		java.util.Date laborContractExpiredDate,
 		java.lang.String laborContractType, int laborContractSignedTime,
@@ -1630,9 +1632,7 @@ public class EmpLocalServiceClp implements EmpLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName36,
 					_methodParameterTypes36,
 					new Object[] {
-						ClpSerializer.translateInput(employee),
-						
-					ClpSerializer.translateInput(employeeCode),
+						ClpSerializer.translateInput(employeeCode),
 						
 					titlesId,
 						

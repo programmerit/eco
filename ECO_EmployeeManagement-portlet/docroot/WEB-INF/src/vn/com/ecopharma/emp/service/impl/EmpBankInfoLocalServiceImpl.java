@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import vn.com.ecopharma.emp.NoSuchEmpBankInfoException;
+import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.service.base.EmpBankInfoLocalServiceBaseImpl;
 
@@ -76,7 +78,7 @@ public class EmpBankInfoLocalServiceImpl extends
 	public List<EmpBankInfo> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
-	
+
 	public List<EmpBankInfo> findByEmp(long empId) {
 		try {
 			return empBankInfoPersistence.findByEmp(empId);
@@ -120,5 +122,37 @@ public class EmpBankInfoLocalServiceImpl extends
 		}
 		return null;
 	}
-	
+
+	public EmpBankInfo createAndAddEmpBankInfo(String empCode,
+			String bankAccountNo, String bankName, String branchName,
+			ServiceContext serviceContext) {
+		final Emp emp = empLocalService.findByEmpCode(empCode);
+
+		if (emp == null)
+			return null;
+
+		EmpBankInfo obj = createPrePersistedEntity(emp.getEmpId(),
+				bankAccountNo, bankName, branchName);
+		return addEmpBankInfo(obj, serviceContext);
+	}
+
+	public void removeAllBankInfoByEmpCode(String empCode) {
+		Emp emp = empLocalService.findByEmpCode(empCode);
+		if (emp != null) {
+			final List<EmpBankInfo> deletedList = findByEmp(emp.getEmpId());
+
+			for (EmpBankInfo item : deletedList) {
+				try {
+					empBankInfoPersistence.remove(item.getEmpBankInfoId());
+				} catch (NoSuchEmpBankInfoException e) {
+					LogFactoryUtil.getLog(EmpBankInfoLocalServiceImpl.class)
+							.info(e);
+				} catch (SystemException e) {
+					LogFactoryUtil.getLog(EmpBankInfoLocalServiceImpl.class)
+							.info(e);
+				}
+			}
+		}
+	}
+
 }

@@ -1,4 +1,4 @@
-package vn.com.ecopharma.emp.bean;
+package vn.com.ecopharma.emp.bean.ie;
 
 import java.io.IOException;
 import java.io.InputStream;

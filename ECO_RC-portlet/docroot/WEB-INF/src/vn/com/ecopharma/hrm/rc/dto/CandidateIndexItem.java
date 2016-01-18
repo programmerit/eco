@@ -137,22 +137,23 @@ public class CandidateIndexItem implements Serializable {
 	}
 
 	public int getEvaluationPoint() {
-		try {
-			if (getVacancyId() != 0) {
-				Vacancy vacancy = VacancyLocalServiceUtil
-						.fetchVacancy(getVacancyId());
-				double requiredYearsExperience = vacancy.getExperiences();
-				CandidateCertificateType requiredCertificateType = CandidateCertificateType
-						.valueOf(vacancy.getCertificateType());
-				return EvaluationUtils
-						.calculateFinalEvaluationPointOfCandidate(
-								getCandidateId(), requiredYearsExperience,
-								requiredCertificateType);
-			}
-			return 0;
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
+		// try {
+		// if (getVacancyId() != 0) {
+		// Vacancy vacancy = VacancyLocalServiceUtil
+		// .fetchVacancy(getVacancyId());
+		// double requiredYearsExperience = vacancy.getExperiences();
+		// CandidateCertificateType requiredCertificateType =
+		// CandidateCertificateType
+		// .valueOf(vacancy.getCertificateType());
+		// return EvaluationUtils
+		// .calculateFinalEvaluationPointOfCandidate(
+		// getCandidateId(), requiredYearsExperience,
+		// requiredCertificateType);
+		// }
+		// return 0;
+		// } catch (SystemException e) {
+		// e.printStackTrace();
+		// }
 		return 0;
 	}
 
