@@ -414,7 +414,8 @@
 		<column name="gender" type="String"></column>
 		<column name="placeOfBirth" type="String"></column>
 		<column name="education" type="String"></column>
-		<column name="educationSpecialize" type="String"></column>
+        <column name="educationSpecialize" type="String"></column>
+		<column name="specializeId" type="long"></column>
 		<column name="universityId" type="long"></column>
 		<column name="maritalStatus" type="String"></column>
 		<column name="identityCardNo" type="String"></column>
@@ -529,6 +530,42 @@
 		<finder name="Emp" return-type="Collection">
 			<finder-column name="empId"></finder-column>
 		</finder>
+	</entity>
+	<entity name="Specialized" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="specializedId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+        <column name="specializedCode" type="String"></column>
+        <column name="name" type="String"></column>
+        <column name="level" type="int"></column>
+        <column name="parentId" type="long"></column>
+        <column name="university" type="boolean"></column>
+        <column name="college" type="boolean"></column>
+        <column name="vocationalCollege" type="boolean"></column>
+        <column name="vocational" type="boolean"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+        <finder name="Level" return-type="Collection">
+            <finder-column name="level"></finder-column>
+        </finder>
+        <finder name="LevelAndParent" return-type="Collection">
+            <finder-column name="level"></finder-column>
+            <finder-column name="parentId"></finder-column>
+        </finder>
+        <finder name="Name" return-type="Specialized">
+            <finder-column name="name"></finder-column>
+        </finder>
 	</entity>
 
 </service-builder>

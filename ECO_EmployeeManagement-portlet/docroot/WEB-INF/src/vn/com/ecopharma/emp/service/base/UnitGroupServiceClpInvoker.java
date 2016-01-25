@@ -24,24 +24,24 @@ import java.util.Arrays;
  */
 public class UnitGroupServiceClpInvoker {
 	public UnitGroupServiceClpInvoker() {
-		_methodName122 = "getBeanIdentifier";
+		_methodName128 = "getBeanIdentifier";
 
-		_methodParameterTypes122 = new String[] {  };
+		_methodParameterTypes128 = new String[] {  };
 
-		_methodName123 = "setBeanIdentifier";
+		_methodName129 = "setBeanIdentifier";
 
-		_methodParameterTypes123 = new String[] { "java.lang.String" };
+		_methodParameterTypes129 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName122.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+		if (_methodName128.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
 			return UnitGroupServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName123.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+		if (_methodName129.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
 			UnitGroupServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
@@ -50,8 +50,8 @@ public class UnitGroupServiceClpInvoker {
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName122;
-	private String[] _methodParameterTypes122;
-	private String _methodName123;
-	private String[] _methodParameterTypes123;
+	private String _methodName128;
+	private String[] _methodParameterTypes128;
+	private String _methodName129;
+	private String[] _methodParameterTypes129;
 }

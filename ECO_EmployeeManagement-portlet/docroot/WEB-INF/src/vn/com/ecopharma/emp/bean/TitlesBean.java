@@ -7,8 +7,11 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import org.apache.commons.lang.StringUtils;
+
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Titles;
+import vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup;
 import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.service.TitlesDepartmentUnitUnitGroupLocalServiceUtil;
@@ -34,7 +37,11 @@ public class TitlesBean extends AbstractOrganizationBean {
 
 	private UnitGroup unitGroup;
 
-	private boolean updateTree;
+	private boolean isTitlesExisted;
+
+	private boolean updateTree = false;
+
+	private String updateComponents = StringUtils.EMPTY;
 
 	@PostConstruct
 	public void init() {
@@ -49,21 +56,36 @@ public class TitlesBean extends AbstractOrganizationBean {
 			Titles result;
 			boolean isEdit = false;
 			if (TitlesLocalServiceUtil.fetchTitles(titles.getTitlesId()) == null) {
-				result = TitlesLocalServiceUtil.addTitles(titles,
-						EmployeeUtils.getServiceContext());
-				TitlesDepartmentUnitUnitGroupLocalServiceUtil
-						.addTitlesDepartmentUnitUnitGroup(result, department,
-								unit, unitGroup,
-								EmployeeUtils.getServiceContext());
+				onCheckDuplicateTitles();
+				if (!isTitlesExisted) {
+					result = TitlesLocalServiceUtil.addTitles(titles,
+							EmployeeUtils.getServiceContext());
+
+				} else {
+					result = TitlesLocalServiceUtil.findByName(this.titles
+							.getName());
+					TitlesDepartmentUnitUnitGroup checkedTitlesDepartmentUnitUnitGroup = TitlesDepartmentUnitUnitGroupLocalServiceUtil
+							.findByTitlesDepartmentUnitUnitGroup(result
+									.getTitlesId(), department
+									.getDepartmentId(), EmployeeUtils
+									.getBaseModelPrimaryKey(unit),
+									EmployeeUtils
+											.getBaseModelPrimaryKey(unitGroup));
+					if (checkedTitlesDepartmentUnitUnitGroup == null)
+						TitlesDepartmentUnitUnitGroupLocalServiceUtil
+								.addTitlesDepartmentUnitUnitGroup(result,
+										department, unit, unitGroup,
+										EmployeeUtils.getServiceContext());
+				}
 				msg = getResultMessage(result, "Create Titles successfully",
 						"Titles " + titles.getName() + " has been created");
-
 			} else {
 				isEdit = true;
 				result = TitlesLocalServiceUtil.updateTitles(titles);
 				msg = getResultMessage(result, "Update Titles successfully",
 						"Titles " + titles.getName() + " has been updated");
 			}
+
 			if (updateTree) {
 				if (isEdit) {
 					BeanUtils.getOrganizationTreeViewBean()
@@ -78,6 +100,15 @@ public class TitlesBean extends AbstractOrganizationBean {
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}
+	}
+
+	public void onCheckDuplicateTitles() {
+		Titles checkedTitles = TitlesLocalServiceUtil.findByName(this.titles
+				.getName());
+		if (checkedTitles != null)
+			isTitlesExisted = true;
+		else
+			isTitlesExisted = false;
 	}
 
 	private static FacesMessage getResultMessage(Titles notNullObj,
@@ -129,5 +160,21 @@ public class TitlesBean extends AbstractOrganizationBean {
 
 	public void setUpdateTree(boolean updateTree) {
 		this.updateTree = updateTree;
+	}
+
+	public boolean isTitlesExisted() {
+		return isTitlesExisted;
+	}
+
+	public void setTitlesExisted(boolean isTitlesExisted) {
+		this.isTitlesExisted = isTitlesExisted;
+	}
+
+	public String getUpdateComponents() {
+		return updateComponents;
+	}
+
+	public void setUpdateComponents(String updateComponents) {
+		this.updateComponents = updateComponents;
 	}
 }

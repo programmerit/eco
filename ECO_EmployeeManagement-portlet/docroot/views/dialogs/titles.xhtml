@@ -8,28 +8,37 @@
 	<h:head />
 
 	<h:body>
-		<h:form id="titlesForm">
-			<p:dialog id="titlesDialog" widgetVar="wTitlesDialog" modal="true"
-				closeOnEscape="true" resizable="false" header="Add New Titles"
-				showEffect="fade">
-				<p:ajax event="close" listener="#{titlesBean.onCloseOrSave}"
-					update=":titlesForm">
-					<p:resetInput target=":titlesForm" />
-				</p:ajax>
+		<h:form id="modifyTitlesForm">
+			<p:remoteCommand id="updateOnTitlesNameChanged"
+				update=":modifyTitlesForm:titlesMessage :modifyTitlesForm:saveButton" />
+			<p:dialog id="titlesDialog" widgetVar="wTitlesDialog"
+				header="Add/Modify Titles" closeOnEscape="true" closable="true"
+				modal="true">
+				<p:outputPanel autoUpdate="true">
+					<h:panelGrid columns="3">
+						<h:outputText value="Name" />
+						<p:inputText id="titlesName" value="#{titlesBean.titles.name}"
+							validatorMessage="invalid name">
+							<f:validateLength minimum="4" maximum="30" />
+							<p:ajax update="titlesMessage saveButton"
+								listener="#{titlesBean.onCheckDuplicateTitles}" event="blur" />
+						</p:inputText>
+						<p:message id="titlesMessage" for="titlesName" />
 
-				<p:panelGrid columns="3">
-					<h:outputText value="Name" />
-					<p:inputText id="titlesName" value="#{titlesBean.titles.name}"
-						required="true" />
-					<p:message for="titlesName" id="titlesName_msg" />
-				</p:panelGrid>
-				<p:commandButton value="Save" icon="fa fa-save Fs16 White"
-					action="#{titlesBean.save}" oncomplete="PF('wTitlesDialog').hide()"
-					ajax="true" update=":modifyForm:accordion:titlesSelect :growl" />
-				<p:commandButton value="Cancel" onclick="PF('wTitlesDialog').hide()">
-					<p:resetInput target=":titlesForm" />
-				</p:commandButton>
+						<h:outputText value="Name(En)" />
+						<p:inputText id="titlesNameEn"
+							value="#{titlesBean.titles.name_en}" />
+						<p:message for="titlesNameEn" />
 
+						<p:commandButton
+							value="#{titlesBean.titlesExisted ? 'Link' : 'Save'}"
+							id="saveButton" actionListener="#{titlesBean.onSave}"
+							update="#{titlesBean.updateComponents}"
+							oncomplete="PF('wTitlesDialog').hide();" />
+						<p:commandLink value="Cancel" style="margin-left: 3px"
+							onclick="PF('wTitlesDialog').hide();" />
+					</h:panelGrid>
+				</p:outputPanel>
 			</p:dialog>
 		</h:form>
 	</h:body>

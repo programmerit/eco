@@ -20,6 +20,7 @@ import java.util.List;
 
 import vn.com.ecopharma.emp.NoSuchDepartmentException;
 import vn.com.ecopharma.emp.model.Department;
+import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.service.base.DepartmentLocalServiceBaseImpl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -71,26 +72,6 @@ public class DepartmentLocalServiceImpl extends DepartmentLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<Department> findAll(int start, int end,
-			OrderByComparator orderByComparator) {
-		try {
-			return departmentPersistence.findAll(start, end, orderByComparator);
-		} catch (SystemException e) {
-			LOGGER.info(e);
-		}
-		return new ArrayList<>();
-	}
-
-	public Department createPrePersistedDepartment() {
-		try {
-			return super.createDepartment(counterLocalService.increment());
-		} catch (SystemException e) {
-			LOGGER.info(e);
-		}
-		return null;
-	}
-
-	@Override
 	public Department findByNameAndDevision(String name, long devisionId) {
 		try {
 			return departmentPersistence.fetchByNameAndDevision(name,
@@ -109,6 +90,38 @@ public class DepartmentLocalServiceImpl extends DepartmentLocalServiceBaseImpl {
 			LOGGER.info(e);
 		}
 		return new ArrayList<>();
+	}
+
+	public List<Department> findByDevisions(List<Devision> devisions) {
+		if (devisions == null)
+			return new ArrayList<>();
+		final List<Department> departments = new ArrayList<>();
+		for (Devision devision : devisions) {
+			List<Department> departmentsByDevision = findByDevision(devision
+					.getDevisionId());
+			departments.addAll(departmentsByDevision);
+		}
+		return departments;
+	}
+
+	@Override
+	public List<Department> findAll(int start, int end,
+			OrderByComparator orderByComparator) {
+		try {
+			return departmentPersistence.findAll(start, end, orderByComparator);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return new ArrayList<>();
+	}
+
+	public Department createPrePersistedDepartment() {
+		try {
+			return super.createDepartment(counterLocalService.increment());
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
 	}
 
 	@Override

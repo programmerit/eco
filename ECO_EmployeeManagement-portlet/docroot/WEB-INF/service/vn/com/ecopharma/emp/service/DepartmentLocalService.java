@@ -259,17 +259,20 @@ public interface DepartmentLocalService extends BaseLocalService,
 	public java.util.List<vn.com.ecopharma.emp.model.Department> findAll(
 		int start, int end);
 
-	public java.util.List<vn.com.ecopharma.emp.model.Department> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
-
-	public vn.com.ecopharma.emp.model.Department createPrePersistedDepartment();
-
 	public vn.com.ecopharma.emp.model.Department findByNameAndDevision(
 		java.lang.String name, long devisionId);
 
 	public java.util.List<vn.com.ecopharma.emp.model.Department> findByDevision(
 		long devisionId);
+
+	public java.util.List<vn.com.ecopharma.emp.model.Department> findByDevisions(
+		java.util.List<vn.com.ecopharma.emp.model.Devision> devisions);
+
+	public java.util.List<vn.com.ecopharma.emp.model.Department> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
+
+	public vn.com.ecopharma.emp.model.Department createPrePersistedDepartment();
 
 	public vn.com.ecopharma.emp.model.Department addDepartment(
 		java.lang.String name, long devisionId,

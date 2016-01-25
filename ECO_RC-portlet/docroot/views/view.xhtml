@@ -10,7 +10,7 @@
 	<h:head>
 		<h:outputScript library="js" name="jquery.ba-bbq.min.js" />
 	</h:head>
-	<h:body onload="window.location.hash = '#vCandidate';">
+	<h:body>
 
 		<!-- tricky load primefaces extensions js to avoid include child pages/components can not use <pe> -->
 		<pe:blockUI />
@@ -31,19 +31,19 @@
 					actionListener="#{RCViewBean.updateNav()}" update=":RCPanelGroup" />
 
 				<p:commandLink id="candiatePageLink" value="Candidate"
-					disabled="#{RCViewBean.currentPage==1}"
-					onclick="window.location.hash = '#vCandidate';" /> 
+					actionListener="#{RCViewBean.switchPage(1)}" update=":RCPanelGroup"
+					disabled="#{RCViewBean.currentPage==1}" /> 
 					| 
 				<p:commandLink id="vacancyPageLink" value="Vacancy"
-					disabled="#{RCViewBean.currentPage==2}"
-					onclick="window.location.hash = '#vVacancy';" />
+					actionListener="#{RCViewBean.switchPage(2)}" update=":RCPanelGroup"
+					disabled="#{RCViewBean.currentPage==2}" />
 					| 
 				<p:commandLink id="reportPageLink" value="Report"
-					disabled="#{RCViewBean.currentPage==3}"
-					onclick="window.location.hash = '#vReport';" />
+					actionListener="#{RCViewBean.switchPage(3)}" update=":RCPanelGroup"
+					disabled="#{RCViewBean.currentPage==3}" />
 					| 
 				<p:commandLink id="interviewPageLink" value="Interview"
-					onclick="window.location.hash = '#vInterview';"
+					actionListener="#{RCViewBean.switchPage(4)}" update=":RCPanelGroup"
 					disabled="#{RCViewBean.currentPage==4}" />
 					| 
 				<p:link id="candidateGuestLink" value="Guest Link"
@@ -57,25 +57,6 @@
 
 
 		</h:panelGroup>
-		<script>
-			originUrl = location.href;
-			if (originUrl.indexOf("candidateId") > -1) {
-				urlLength = originUrl.length;
-				start = originUrl.indexOf("=");
-				candidateId = originUrl.substring(start + 1, urlLength);
-				//alert('#vCandidate/candidateId=' + candidateId);
-				window.location.hash = '#vCandidate/candidateId=' + candidateId;
-			}
-
-			$(window).bind('hashchange', function(e) {
-				var url = $.param.fragment();
-				updateNav([ {
-					name : 'currentNav',
-					value : url
-				} ]);
-			});
-			$(window).trigger('hashchange');
-		</script>
 	</h:body>
 
 </f:view>

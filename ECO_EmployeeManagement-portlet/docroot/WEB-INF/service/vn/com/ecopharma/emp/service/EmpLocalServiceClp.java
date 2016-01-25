@@ -158,9 +158,25 @@ public class EmpLocalServiceClp implements EmpLocalService {
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName29 = "addEmp";
+		_methodName29 = "countFilterEmployeeByFields";
 
 		_methodParameterTypes29 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.Map", "java.lang.String",
+				"org.primefaces.model.SortOrder", "long"
+			};
+
+		_methodName30 = "filterEmployeeByFields";
+
+		_methodParameterTypes30 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.Map", "java.lang.String",
+				"org.primefaces.model.SortOrder", "long", "int", "int"
+			};
+
+		_methodName31 = "addEmp";
+
+		_methodParameterTypes31 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp", "boolean", "java.lang.String",
 				"java.lang.String", "boolean", "java.lang.String",
 				"java.lang.String", "long", "java.lang.String",
@@ -171,47 +187,24 @@ public class EmpLocalServiceClp implements EmpLocalService {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName30 = "addEmp";
+		_methodName32 = "addEmp";
 
-		_methodParameterTypes30 = new String[] {
+		_methodParameterTypes32 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp",
 				"com.liferay.portal.model.User", "java.util.Map",
 				"java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName31 = "update";
+		_methodName33 = "update";
 
-		_methodParameterTypes31 = new String[] {
+		_methodParameterTypes33 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp", "long", "long",
 				"java.util.Map", "java.util.Map", "java.util.Map", "boolean",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName32 = "update";
-
-		_methodParameterTypes32 = new String[] {
-				"vn.com.ecopharma.emp.model.Emp",
-				"com.liferay.portal.model.User", "long", "java.util.Map",
-				"java.util.Map", "java.util.Map", "boolean",
-				"com.liferay.portal.service.ServiceContext"
-			};
-
-		_methodName33 = "updateExistedEmployee";
-
-		_methodParameterTypes33 = new String[] {
-				"vn.com.ecopharma.emp.model.Emp", "java.lang.String", "long",
-				"long", "long", "long", "long", "java.util.Date",
-				"java.util.Date", "java.util.Date", "java.util.Date",
-				"java.lang.String", "int", "java.util.Date", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"long", "java.lang.String", "java.lang.String", "java.util.Date",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "int", "java.lang.String",
-				"java.lang.String", "java.lang.String"
-			};
-
-		_methodName34 = "addOrUpdateWithExistUser";
+		_methodName34 = "update";
 
 		_methodParameterTypes34 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp",
@@ -220,128 +213,151 @@ public class EmpLocalServiceClp implements EmpLocalService {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName35 = "addOrUpdateWithExistUser";
+		_methodName35 = "updateExistedEmployee";
 
 		_methodParameterTypes35 = new String[] {
+				"vn.com.ecopharma.emp.model.Emp", "java.lang.String", "long",
+				"long", "long", "long", "long", "java.util.Date",
+				"java.util.Date", "java.util.Date", "java.util.Date",
+				"java.lang.String", "int", "java.util.Date", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"long", "long", "java.lang.String", "java.lang.String",
+				"java.util.Date", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.lang.String", "int",
+				"java.lang.String", "java.lang.String", "java.lang.String"
+			};
+
+		_methodName36 = "addOrUpdateWithExistUser";
+
+		_methodParameterTypes36 = new String[] {
+				"vn.com.ecopharma.emp.model.Emp",
+				"com.liferay.portal.model.User", "long", "java.util.Map",
+				"java.util.Map", "java.util.Map", "boolean",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName37 = "addOrUpdateWithExistUser";
+
+		_methodParameterTypes37 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp", "java.lang.String", "long",
 				"java.util.Map", "java.util.Map", "java.util.Map", "boolean",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName36 = "createEmployee";
+		_methodName38 = "createEmployee";
 
-		_methodParameterTypes36 = new String[] {
+		_methodParameterTypes38 = new String[] {
 				"java.lang.String", "long", "long", "long", "long", "long",
 				"java.util.Date", "java.util.Date", "java.util.Date",
 				"java.util.Date", "java.lang.String", "int", "java.util.Date",
 				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "long", "java.lang.String",
+				"java.lang.String", "long", "long", "java.lang.String",
 				"java.lang.String", "java.util.Date", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"int", "java.lang.String", "java.lang.String",
 				"java.lang.String"
 			};
 
-		_methodName37 = "updateEmpAddresses";
+		_methodName39 = "updateEmpAddresses";
 
-		_methodParameterTypes37 = new String[] {
+		_methodParameterTypes39 = new String[] {
 				"java.lang.String", "java.lang.String",
 				"vn.com.ecopharma.emp.model.District",
 				"com.liferay.portal.model.Region", "long", "boolean",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName38 = "removeAllExistingEmpAddresses";
+		_methodName40 = "removeAllExistingEmpAddresses";
 
-		_methodParameterTypes38 = new String[] { "java.lang.String", "long" };
+		_methodParameterTypes40 = new String[] { "java.lang.String", "long" };
 
-		_methodName39 = "removeAllExistingEmpAddresses";
+		_methodName41 = "removeAllExistingEmpAddresses";
 
-		_methodParameterTypes39 = new String[] { "long", "long" };
+		_methodParameterTypes41 = new String[] { "long", "long" };
 
-		_methodName40 = "searchAllEmpDocs";
+		_methodName42 = "searchAllEmpDocs";
 
-		_methodParameterTypes40 = new String[] {
+		_methodParameterTypes42 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long"
 			};
 
-		_methodName41 = "getIndexedEmp";
+		_methodName43 = "getIndexedEmp";
 
-		_methodParameterTypes41 = new String[] {
+		_methodParameterTypes43 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName42 = "getIndexedEmp";
+		_methodName44 = "getIndexedEmp";
 
-		_methodParameterTypes42 = new String[] {
+		_methodParameterTypes44 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName43 = "markDeletedEmp";
+		_methodName45 = "markDeletedEmp";
 
-		_methodParameterTypes43 = new String[] { "vn.com.ecopharma.emp.model.Emp" };
+		_methodParameterTypes45 = new String[] { "vn.com.ecopharma.emp.model.Emp" };
 
-		_methodName44 = "markDeletedEmp";
+		_methodName46 = "markDeletedEmp";
 
-		_methodParameterTypes44 = new String[] { "long" };
+		_methodParameterTypes46 = new String[] { "long" };
 
-		_methodName45 = "indexAllEmps";
+		_methodName47 = "indexAllEmps";
 
-		_methodParameterTypes45 = new String[] {  };
+		_methodParameterTypes47 = new String[] {  };
 
-		_methodName46 = "indexSomeEmps";
+		_methodName48 = "indexSomeEmps";
 
-		_methodParameterTypes46 = new String[] {  };
+		_methodParameterTypes48 = new String[] {  };
 
-		_methodName47 = "removeAllEmpIndexes";
+		_methodName49 = "removeAllEmpIndexes";
 
-		_methodParameterTypes47 = new String[] {
+		_methodParameterTypes49 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 
-		_methodName48 = "completelyRemoveAllEmp";
+		_methodName50 = "completelyRemoveAllEmp";
 
-		_methodParameterTypes48 = new String[] { "long" };
+		_methodParameterTypes50 = new String[] { "long" };
 
-		_methodName49 = "completelyRemoveAllEmpFromDB";
+		_methodName51 = "completelyRemoveAllEmpFromDB";
 
-		_methodParameterTypes49 = new String[] { "long" };
+		_methodParameterTypes51 = new String[] { "long" };
 
-		_methodName50 = "getUserEmployeeCodeValue";
+		_methodName52 = "getUserEmployeeCodeValue";
 
-		_methodParameterTypes50 = new String[] { "long", "long" };
+		_methodParameterTypes52 = new String[] { "long", "long" };
 
-		_methodName51 = "addOrUpdateUserEmployeeCodeValue";
+		_methodName53 = "addOrUpdateUserEmployeeCodeValue";
 
-		_methodParameterTypes51 = new String[] {
+		_methodParameterTypes53 = new String[] {
 				"java.lang.String", "long", "long"
 			};
 
-		_methodName52 = "isUserExisted";
+		_methodName54 = "isUserExisted";
 
-		_methodParameterTypes52 = new String[] {
+		_methodParameterTypes54 = new String[] {
 				"java.lang.String", "java.lang.String", "java.util.Date", "long"
 			};
 
-		_methodName53 = "isSameOrWrongOrderDoB";
+		_methodName55 = "isSameOrWrongOrderDoB";
 
-		_methodParameterTypes53 = new String[] {
+		_methodParameterTypes55 = new String[] {
 				"java.util.Date", "java.util.Date"
 			};
 
-		_methodName54 = "regenerateDuplicateEmailAddress";
+		_methodName56 = "regenerateDuplicateEmailAddress";
 
-		_methodParameterTypes54 = new String[] { "java.lang.String", "int", "long" };
+		_methodParameterTypes56 = new String[] { "java.lang.String", "int", "long" };
 
-		_methodName55 = "findAllEmpAddress";
+		_methodName57 = "findAllEmpAddress";
 
-		_methodParameterTypes55 = new String[] { "long" };
+		_methodParameterTypes57 = new String[] { "long" };
 
-		_methodName56 = "getPresentAddress";
+		_methodName58 = "getPresentAddress";
 
-		_methodParameterTypes56 = new String[] { "long" };
+		_methodParameterTypes58 = new String[] { "long" };
 	}
 
 	@Override
@@ -1168,6 +1184,106 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	}
 
 	@Override
+	public int countFilterEmployeeByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		java.lang.String sortField, org.primefaces.model.SortOrder sortOrder,
+		long companyId)
+		throws com.liferay.portal.kernel.search.ParseException,
+			java.text.ParseException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
+					new Object[] {
+						ClpSerializer.translateInput(searchContext),
+						
+					ClpSerializer.translateInput(filters),
+						
+					ClpSerializer.translateInput(sortField),
+						
+					ClpSerializer.translateInput(sortOrder),
+						
+					companyId
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.search.ParseException) {
+				throw (com.liferay.portal.kernel.search.ParseException)t;
+			}
+
+			if (t instanceof java.text.ParseException) {
+				throw (java.text.ParseException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Document> filterEmployeeByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		java.lang.String sortField, org.primefaces.model.SortOrder sortOrder,
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.search.ParseException,
+			java.text.ParseException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
+					new Object[] {
+						ClpSerializer.translateInput(searchContext),
+						
+					ClpSerializer.translateInput(filters),
+						
+					ClpSerializer.translateInput(sortField),
+						
+					ClpSerializer.translateInput(sortOrder),
+						
+					companyId,
+						
+					start,
+						
+					end
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.search.ParseException) {
+				throw (com.liferay.portal.kernel.search.ParseException)t;
+			}
+
+			if (t instanceof java.text.ParseException) {
+				throw (java.text.ParseException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.portal.kernel.search.Document>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.Emp addEmp(
 		vn.com.ecopharma.emp.model.Emp employee, boolean autoPassword,
 		java.lang.String password1, java.lang.String password2,
@@ -1188,8 +1304,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] {
 						ClpSerializer.translateInput(employee),
 						
@@ -1284,8 +1400,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] {
 						ClpSerializer.translateInput(employee),
 						
@@ -1334,8 +1450,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
 					new Object[] {
 						ClpSerializer.translateInput(employee),
 						
@@ -1381,8 +1497,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32,
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
 					new Object[] {
 						ClpSerializer.translateInput(employee),
 						
@@ -1426,18 +1542,18 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		java.lang.String laborContractType, int laborContractSignedTime,
 		java.util.Date dob, java.lang.String gender,
 		java.lang.String placeOfBirth, java.lang.String education,
-		java.lang.String educationSpecialize, long universityId,
-		java.lang.String maritalStatus, java.lang.String identityCardNo,
-		java.util.Date issuedDate, java.lang.String issuedPlace,
-		java.lang.String contactNumber, java.lang.String companyEmailAddress,
-		java.lang.String taxCode, int numberOfDependents,
-		java.lang.String dependentNames, java.lang.String insurranceCode,
-		java.lang.String healthInsuranceNo) {
+		java.lang.String educationSpecialize, long specializedId,
+		long universityId, java.lang.String maritalStatus,
+		java.lang.String identityCardNo, java.util.Date issuedDate,
+		java.lang.String issuedPlace, java.lang.String contactNumber,
+		java.lang.String companyEmailAddress, java.lang.String taxCode,
+		int numberOfDependents, java.lang.String dependentNames,
+		java.lang.String insurranceCode, java.lang.String healthInsuranceNo) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33,
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35,
 					new Object[] {
 						ClpSerializer.translateInput(employee),
 						
@@ -1474,6 +1590,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 					ClpSerializer.translateInput(education),
 						
 					ClpSerializer.translateInput(educationSpecialize),
+						
+					specializedId,
 						
 					universityId,
 						
@@ -1527,8 +1645,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName34,
-					_methodParameterTypes34,
+			returnObj = _invokableLocalService.invokeMethod(_methodName36,
+					_methodParameterTypes36,
 					new Object[] {
 						ClpSerializer.translateInput(employee),
 						
@@ -1574,8 +1692,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName35,
-					_methodParameterTypes35,
+			returnObj = _invokableLocalService.invokeMethod(_methodName37,
+					_methodParameterTypes37,
 					new Object[] {
 						ClpSerializer.translateInput(employee),
 						
@@ -1619,18 +1737,18 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		java.lang.String laborContractType, int laborContractSignedTime,
 		java.util.Date dob, java.lang.String gender,
 		java.lang.String placeOfBirth, java.lang.String education,
-		java.lang.String educationSpecialize, long universityId,
-		java.lang.String maritalStatus, java.lang.String identityCardNo,
-		java.util.Date issuedDate, java.lang.String issuedPlace,
-		java.lang.String contactNumber, java.lang.String companyEmailAddress,
-		java.lang.String taxCode, int numberOfDependents,
-		java.lang.String dependentNames, java.lang.String insurranceCode,
-		java.lang.String healthInsuranceNo) {
+		java.lang.String educationSpecialize, long specializedId,
+		long universityId, java.lang.String maritalStatus,
+		java.lang.String identityCardNo, java.util.Date issuedDate,
+		java.lang.String issuedPlace, java.lang.String contactNumber,
+		java.lang.String companyEmailAddress, java.lang.String taxCode,
+		int numberOfDependents, java.lang.String dependentNames,
+		java.lang.String insurranceCode, java.lang.String healthInsuranceNo) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName36,
-					_methodParameterTypes36,
+			returnObj = _invokableLocalService.invokeMethod(_methodName38,
+					_methodParameterTypes38,
 					new Object[] {
 						ClpSerializer.translateInput(employeeCode),
 						
@@ -1665,6 +1783,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 					ClpSerializer.translateInput(education),
 						
 					ClpSerializer.translateInput(educationSpecialize),
+						
+					specializedId,
 						
 					universityId,
 						
@@ -1718,8 +1838,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName37,
-					_methodParameterTypes37,
+			returnObj = _invokableLocalService.invokeMethod(_methodName39,
+					_methodParameterTypes39,
 					new Object[] {
 						ClpSerializer.translateInput(empCode),
 						
@@ -1763,8 +1883,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	public void removeAllExistingEmpAddresses(java.lang.String empCode,
 		long companyId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName38,
-				_methodParameterTypes38,
+			_invokableLocalService.invokeMethod(_methodName40,
+				_methodParameterTypes40,
 				new Object[] { ClpSerializer.translateInput(empCode), companyId });
 		}
 		catch (Throwable t) {
@@ -1783,8 +1903,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	@Override
 	public void removeAllExistingEmpAddresses(long empId, long companyId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName39,
-				_methodParameterTypes39, new Object[] { empId, companyId });
+			_invokableLocalService.invokeMethod(_methodName41,
+				_methodParameterTypes41, new Object[] { empId, companyId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1807,8 +1927,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName40,
-					_methodParameterTypes40,
+			returnObj = _invokableLocalService.invokeMethod(_methodName42,
+					_methodParameterTypes42,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1839,8 +1959,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName41,
-					_methodParameterTypes41,
+			returnObj = _invokableLocalService.invokeMethod(_methodName43,
+					_methodParameterTypes43,
 					new Object[] {
 						ClpSerializer.translateInput(employeeIdString),
 						
@@ -1869,8 +1989,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName42,
-					_methodParameterTypes42,
+			returnObj = _invokableLocalService.invokeMethod(_methodName44,
+					_methodParameterTypes44,
 					new Object[] {
 						employeeId,
 						
@@ -1898,8 +2018,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName43,
-					_methodParameterTypes43,
+			returnObj = _invokableLocalService.invokeMethod(_methodName45,
+					_methodParameterTypes45,
 					new Object[] { ClpSerializer.translateInput(employee) });
 		}
 		catch (Throwable t) {
@@ -1922,8 +2042,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName44,
-					_methodParameterTypes44, new Object[] { employeeId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName46,
+					_methodParameterTypes46, new Object[] { employeeId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1943,8 +2063,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	@Override
 	public void indexAllEmps() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName45,
-				_methodParameterTypes45, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName47,
+				_methodParameterTypes47, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1962,8 +2082,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	@Override
 	public void indexSomeEmps() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName46,
-				_methodParameterTypes46, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName48,
+				_methodParameterTypes48, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1983,8 +2103,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		long companyId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName47,
-				_methodParameterTypes47,
+			_invokableLocalService.invokeMethod(_methodName49,
+				_methodParameterTypes49,
 				new Object[] {
 					ClpSerializer.translateInput(searchContext),
 					
@@ -2007,8 +2127,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	@Override
 	public void completelyRemoveAllEmp(long companyId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName48,
-				_methodParameterTypes48, new Object[] { companyId });
+			_invokableLocalService.invokeMethod(_methodName50,
+				_methodParameterTypes50, new Object[] { companyId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -2026,8 +2146,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	@Override
 	public void completelyRemoveAllEmpFromDB(long companyId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName49,
-				_methodParameterTypes49, new Object[] { companyId });
+			_invokableLocalService.invokeMethod(_methodName51,
+				_methodParameterTypes51, new Object[] { companyId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -2047,8 +2167,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName50,
-					_methodParameterTypes50, new Object[] { userId, companyId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName52,
+					_methodParameterTypes52, new Object[] { userId, companyId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -2069,8 +2189,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	public void addOrUpdateUserEmployeeCodeValue(
 		java.lang.String employeeCode, long userId, long companyId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName51,
-				_methodParameterTypes51,
+			_invokableLocalService.invokeMethod(_methodName53,
+				_methodParameterTypes53,
 				new Object[] {
 					ClpSerializer.translateInput(employeeCode),
 					
@@ -2098,8 +2218,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName52,
-					_methodParameterTypes52,
+			returnObj = _invokableLocalService.invokeMethod(_methodName54,
+					_methodParameterTypes54,
 					new Object[] {
 						ClpSerializer.translateInput(generatedScreenName),
 						
@@ -2131,8 +2251,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName53,
-					_methodParameterTypes53,
+			returnObj = _invokableLocalService.invokeMethod(_methodName55,
+					_methodParameterTypes55,
 					new Object[] {
 						ClpSerializer.translateInput(empDob),
 						
@@ -2161,8 +2281,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName54,
-					_methodParameterTypes54,
+			returnObj = _invokableLocalService.invokeMethod(_methodName56,
+					_methodParameterTypes56,
 					new Object[] {
 						ClpSerializer.translateInput(emailAddress),
 						
@@ -2196,8 +2316,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName55,
-					_methodParameterTypes55, new Object[] { employeeId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName57,
+					_methodParameterTypes57, new Object[] { employeeId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -2219,8 +2339,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName56,
-					_methodParameterTypes56, new Object[] { employeeId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName58,
+					_methodParameterTypes58, new Object[] { employeeId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -2350,4 +2470,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	private String[] _methodParameterTypes55;
 	private String _methodName56;
 	private String[] _methodParameterTypes56;
+	private String _methodName57;
+	private String[] _methodParameterTypes57;
+	private String _methodName58;
+	private String[] _methodParameterTypes58;
 }

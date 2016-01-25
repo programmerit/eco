@@ -69,6 +69,7 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 		attributes.put("placeOfBirth", getPlaceOfBirth());
 		attributes.put("education", getEducation());
 		attributes.put("educationSpecialize", getEducationSpecialize());
+		attributes.put("specializeId", getSpecializeId());
 		attributes.put("universityId", getUniversityId());
 		attributes.put("maritalStatus", getMaritalStatus());
 		attributes.put("identityCardNo", getIdentityCardNo());
@@ -230,6 +231,12 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 
 		if (educationSpecialize != null) {
 			setEducationSpecialize(educationSpecialize);
+		}
+
+		Long specializeId = (Long)attributes.get("specializeId");
+
+		if (specializeId != null) {
+			setSpecializeId(specializeId);
 		}
 
 		Long universityId = (Long)attributes.get("universityId");
@@ -854,6 +861,26 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 	@Override
 	public void setEducationSpecialize(java.lang.String educationSpecialize) {
 		_emp.setEducationSpecialize(educationSpecialize);
+	}
+
+	/**
+	* Returns the specialize ID of this emp.
+	*
+	* @return the specialize ID of this emp
+	*/
+	@Override
+	public long getSpecializeId() {
+		return _emp.getSpecializeId();
+	}
+
+	/**
+	* Sets the specialize ID of this emp.
+	*
+	* @param specializeId the specialize ID of this emp
+	*/
+	@Override
+	public void setSpecializeId(long specializeId) {
+		_emp.setSpecializeId(specializeId);
 	}
 
 	/**

@@ -31,7 +31,6 @@ import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
-import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.search.Query;
@@ -100,21 +99,27 @@ public class EmployeeIndexedBean implements Serializable {
 					String sortField_, SortOrder sortOrder_,
 					Map<String, Object> filters) {
 				final SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-				final EmployeeFilterView filterBean = (EmployeeFilterView) BeanUtils
+				final EmployeeFilterView employeeFilterBean = (EmployeeFilterView) BeanUtils
 						.getBackingBeanByName("empFilterBean");
-				final String dateFromStr = filterBean.getJoinedDateFrom() != null ? sdf
-						.format(filterBean.getJoinedDateFrom())
+				final OrganizationFilterBean organizationFilterBean = BeanUtils
+						.getOrganizationFilterBean();
+
+				final String dateFromStr = employeeFilterBean
+						.getJoinedDateFrom() != null ? sdf
+						.format(employeeFilterBean.getJoinedDateFrom())
 						: StringUtils.EMPTY;
-				final String dateToStr = filterBean.getJoinedDateTo() != null ? sdf
-						.format(filterBean.getJoinedDateTo())
+				final String dateToStr = employeeFilterBean.getJoinedDateTo() != null ? sdf
+						.format(employeeFilterBean.getJoinedDateTo())
 						: StringUtils.EMPTY;
 
-				if (filterBean.getGlobalString() != StringUtils.EMPTY) {
-					filters.put(GLOBAL_STRING, filterBean.getGlobalString());
+				if (employeeFilterBean.getGlobalString() != StringUtils.EMPTY) {
+					filters.put(GLOBAL_STRING,
+							employeeFilterBean.getGlobalString());
 				}
 
-				if (filterBean.getEmployeeCode() != StringUtils.EMPTY) {
-					filters.put(EmpField.EMP_CODE, filterBean.getEmployeeCode());
+				if (employeeFilterBean.getEmployeeCode() != StringUtils.EMPTY) {
+					filters.put(EmpField.EMP_CODE,
+							employeeFilterBean.getEmployeeCode());
 				}
 
 				if (dateFromStr != StringUtils.EMPTY) {
@@ -124,40 +129,57 @@ public class EmployeeIndexedBean implements Serializable {
 					filters.put(JOINED_DATE_TO, dateToStr);
 				}
 
-				if (filterBean.getFullName() != StringUtils.EMPTY) {
-					filters.put(EmpField.VN_FULL_NAME, filterBean.getFullName());
+				if (employeeFilterBean.getFullName() != StringUtils.EMPTY) {
+					filters.put(EmpField.VN_FULL_NAME,
+							employeeFilterBean.getFullName());
 				}
 
-				if (filterBean.getSelectedGenders() != null
-						&& !filterBean.getSelectedGenders().isEmpty()) {
+				if (employeeFilterBean.getSelectedGenders() != null
+						&& !employeeFilterBean.getSelectedGenders().isEmpty()) {
 					filters.put(EmpField.GENDER,
-							filterBean.getSelectedGenders());
+							employeeFilterBean.getSelectedGenders());
 				}
 
-				if (filterBean.getDevision() != null) {
-					filters.put(EmpField.DEVISION, EmployeeUtils
-							.removeDashChar(filterBean.getDevision().getName()));
-				}
-				if (filterBean.getDepartment() != null) {
-					filters.put(EmpField.DEPARTMENT, EmployeeUtils
-							.removeDashChar(filterBean.getDepartment()
-									.getName()));
-				}
-				if (filterBean.getUnit() != null) {
-					filters.put(EmpField.UNIT, EmployeeUtils
-							.removeDashChar(filterBean.getUnit().getName()));
+				// if (organizationFilterBean.getDevision() != null) {
+				// filters.put(EmpField.DEVISION, EmployeeUtils
+				// .removeDashChar(organizationFilterBean
+				// .getDevision().getName()));
+				// }
+
+				if (organizationFilterBean.getSelectedDevisions() != null
+						&& !organizationFilterBean.getSelectedDevisions()
+								.isEmpty()) {
+					filters.put(EmpField.DEVISION,
+							organizationFilterBean.getSelectedDevisions());
 				}
 
-				if (filterBean.getUnitGroup() != null) {
+				if (organizationFilterBean.getSelectedDepartments() != null
+						&& !organizationFilterBean.getSelectedDepartments()
+								.isEmpty()) {
+					filters.put(EmpField.DEPARTMENT,
+							organizationFilterBean.getSelectedDepartments());
+				}
+
+				if (organizationFilterBean.getSelectedUnits() != null
+						&& !organizationFilterBean.getSelectedUnits().isEmpty()) {
+					filters.put(EmpField.UNIT,
+							organizationFilterBean.getSelectedUnits());
+				}
+
+				if (organizationFilterBean.getSelectedUnitGroups() != null
+						&& !organizationFilterBean.getSelectedUnitGroups()
+								.isEmpty()) {
 					filters.put(EmpField.UNIT_GROUP,
-							EmployeeUtils.removeDashChar(filterBean
-									.getUnitGroup().getName()));
+							organizationFilterBean.getSelectedUnitGroups());
 				}
 
-				if (filterBean.getTitles() != null) {
-					filters.put(EmpField.TITLES, EmployeeUtils
-							.removeDashChar(filterBean.getTitles().getName()));
+				if (organizationFilterBean.getSelectedTitlesList() != null
+						&& !organizationFilterBean.getSelectedTitlesList()
+								.isEmpty()) {
+					filters.put(EmpField.TITLES,
+							organizationFilterBean.getSelectedTitlesList());
 				}
+
 				sortField = sortField_;
 				sortOder = sortOrder_;
 				filterMap = filters;

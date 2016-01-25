@@ -38,6 +38,10 @@ create index IX_2ED53758 on eco_em_portlet_ResourceConfig (key_);
 create index IX_12CABF7D on eco_em_portlet_ResourceConfig (key_, type_);
 create index IX_A98F64D1 on eco_em_portlet_ResourceConfig (type_);
 
+create index IX_741AEFD3 on eco_em_portlet_Specialized (level);
+create index IX_2B56E92C on eco_em_portlet_Specialized (level, parentId);
+create index IX_FEA9F140 on eco_em_portlet_Specialized (name);
+
 create index IX_F9B34D5B on eco_em_portlet_SubUnit (name);
 
 create index IX_72E37C70 on eco_em_portlet_Titles (departmentId);

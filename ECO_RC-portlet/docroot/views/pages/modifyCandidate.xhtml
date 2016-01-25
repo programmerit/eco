@@ -47,13 +47,13 @@
 									value="#{candidateBean.candidateItem.candidate.identityCardNo}" />
 
 								<h:outputText value="Vacancy" />
-								<p:selectOneMenu id="cVacancySelect"
-									converter="vacancyConverter" filter="true"
-									value="#{candidateBean.candidateItem.vacancy}" required="true">
-									<p:ajax event="change" />
+								<p:selectOneMenu id="cVacancySelect" 
+									converter="vacancyIndexItemConverter" filter="true"
+									value="#{candidateBean.candidateItem.vacancyIndexItem}">
 									<f:selectItem itemLabel="Select Vacancy" itemValue="" />
-									<f:selectItems value="#{candidateBean.vacancies}" var="v"
-										itemLabel="#{v.name} #{v.status == 'UNPUBLISHED' ? '  [UNPUBLISHED]' : ''} "
+									<f:selectItems value="#{candidateBean.vacancyIndexItems}" 
+										var="v"
+										itemLabel="#{v.titles} #{v.status == 'UNPUBLISHED' ? '  [UNPUBLISHED]' : ''} " 
 										itemValue="#{v}"
 										itemDisabled="#{v.status == 'UNPUBLISHED' || v.status == 'NEW'}" />
 								</p:selectOneMenu>
@@ -63,7 +63,7 @@
 									styleClass="interview-schedule" minQueryLength="2"
 									value="#{candidateBean.candidateItem.desiredVacancies}"
 									completeMethod="#{candidateBean.completeVacancies}" var="v"
-									itemLabel="#{v.name}" itemValue="#{v}"
+									itemLabel="#{v.titles}" itemValue="#{v}"
 									converter="vacancyIndexItemConverter" autoHighlight="true"
 									forceSelection="true" placeholder="Type to show hints...">
 								</p:autoComplete>
@@ -239,7 +239,7 @@
 											<f:selectItems value="#{candidateBean.universities}" var="u"
 												itemLabel="#{u.name}" itemValue="#{u}" />
 											<p:column>
-									                #{u.universityId} - #{u.name}
+									                #{u.name}
 									            </p:column>
 										</p:selectOneMenu>
 
@@ -257,10 +257,13 @@
 				</p:accordionPanel>
 
 				<p:commandButton id="cSave" value="Save"
+					update=":CandidatePanelGroup"
 					action="#{candidateBean.onSave}" /> | 
-				<p:commandLink id="cCancel"
-					onclick="window.location.hash = '#vCandidate';" immediate="true"
-					value="Cancel" style="margin-left:3px;" />
+					
+				<p:commandLink id="cCancel" immediate="true"
+					actionListener="#{candidateBean.onCancel}"
+					update=":CandidatePanelGroup" value="Cancel"
+					style="margin-left:3px;" />
 			</p:outputPanel>
 
 			<!-- DELETE FILE CONFIRMATION DIALOG -->

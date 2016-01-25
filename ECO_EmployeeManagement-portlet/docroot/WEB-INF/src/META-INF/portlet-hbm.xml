@@ -14,6 +14,7 @@
 	<import class="vn.com.ecopharma.emp.model.PromotedHistory" />
 	<import class="vn.com.ecopharma.emp.model.ResignationHistory" />
 	<import class="vn.com.ecopharma.emp.model.ResourceConfig" />
+	<import class="vn.com.ecopharma.emp.model.Specialized" />
 	<import class="vn.com.ecopharma.emp.model.Titles" />
 	<import class="vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup" />
 	<import class="vn.com.ecopharma.emp.model.Unit" />
@@ -111,6 +112,7 @@
 		<property name="placeOfBirth" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="education" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="educationSpecialize" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="specializeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="universityId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="maritalStatus" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="identityCardNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -247,6 +249,26 @@
 		<property name="key" type="com.liferay.portal.dao.orm.hibernate.StringType" column="key_" />
 		<property name="value" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="vn.com.ecopharma.emp.model.impl.SpecializedImpl" table="eco_em_portlet_Specialized">
+		<cache usage="read-write" />
+		<id name="specializedId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="specializedCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="level" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="parentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="university" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="college" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="vocationalCollege" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="vocational" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

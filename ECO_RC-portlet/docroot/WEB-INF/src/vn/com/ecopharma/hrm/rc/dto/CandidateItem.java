@@ -20,6 +20,8 @@ import vn.com.ecopharma.hrm.rc.service.VacancyCandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.util.RCUtils;
 
+import com.liferay.portal.kernel.exception.SystemException;
+
 public class CandidateItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -61,6 +63,10 @@ public class CandidateItem implements Serializable {
 		this.certificates = getCertificateList(candidate.getCandidateId());
 		this.desiredVacancies = getDesireVacanciesList(candidate
 				.getCandidateId());
+	}
+
+	public CandidateItem(long candidateId) throws SystemException {
+		this(CandidateLocalServiceUtil.fetchCandidate(candidateId));
 	}
 
 	private List<DocumentItem> getDocumentList(long candidateId) {

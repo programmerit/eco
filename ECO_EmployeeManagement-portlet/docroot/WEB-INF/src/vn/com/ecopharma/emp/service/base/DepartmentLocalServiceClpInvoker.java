@@ -106,57 +106,61 @@ public class DepartmentLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.Department"
 			};
 
-		_methodName138 = "getBeanIdentifier";
-
-		_methodParameterTypes138 = new String[] {  };
-
-		_methodName139 = "setBeanIdentifier";
-
-		_methodParameterTypes139 = new String[] { "java.lang.String" };
-
-		_methodName144 = "findAll";
+		_methodName144 = "getBeanIdentifier";
 
 		_methodParameterTypes144 = new String[] {  };
 
-		_methodName145 = "findAll";
+		_methodName145 = "setBeanIdentifier";
 
-		_methodParameterTypes145 = new String[] { "int", "int" };
+		_methodParameterTypes145 = new String[] { "java.lang.String" };
 
-		_methodName146 = "findAll";
+		_methodName150 = "findAll";
 
-		_methodParameterTypes146 = new String[] {
+		_methodParameterTypes150 = new String[] {  };
+
+		_methodName151 = "findAll";
+
+		_methodParameterTypes151 = new String[] { "int", "int" };
+
+		_methodName152 = "findByNameAndDevision";
+
+		_methodParameterTypes152 = new String[] { "java.lang.String", "long" };
+
+		_methodName153 = "findByDevision";
+
+		_methodParameterTypes153 = new String[] { "long" };
+
+		_methodName154 = "findByDevisions";
+
+		_methodParameterTypes154 = new String[] { "java.util.List" };
+
+		_methodName155 = "findAll";
+
+		_methodParameterTypes155 = new String[] {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName147 = "createPrePersistedDepartment";
+		_methodName156 = "createPrePersistedDepartment";
 
-		_methodParameterTypes147 = new String[] {  };
+		_methodParameterTypes156 = new String[] {  };
 
-		_methodName148 = "findByNameAndDevision";
+		_methodName157 = "addDepartment";
 
-		_methodParameterTypes148 = new String[] { "java.lang.String", "long" };
-
-		_methodName149 = "findByDevision";
-
-		_methodParameterTypes149 = new String[] { "long" };
-
-		_methodName150 = "addDepartment";
-
-		_methodParameterTypes150 = new String[] {
+		_methodParameterTypes157 = new String[] {
 				"java.lang.String", "long",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName151 = "addDepartment";
+		_methodName158 = "addDepartment";
 
-		_methodParameterTypes151 = new String[] {
+		_methodParameterTypes158 = new String[] {
 				"vn.com.ecopharma.emp.model.Department",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName152 = "completelyRemoveAll";
+		_methodName159 = "completelyRemoveAll";
 
-		_methodParameterTypes152 = new String[] {  };
+		_methodParameterTypes159 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -248,67 +252,72 @@ public class DepartmentLocalServiceClpInvoker {
 			return DepartmentLocalServiceUtil.updateDepartment((vn.com.ecopharma.emp.model.Department)arguments[0]);
 		}
 
-		if (_methodName138.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
+		if (_methodName144.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
 			return DepartmentLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName139.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
+		if (_methodName145.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
 			DepartmentLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName144.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
+		if (_methodName150.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
 			return DepartmentLocalServiceUtil.findAll();
 		}
 
-		if (_methodName145.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
+		if (_methodName151.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
 			return DepartmentLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName146.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
+		if (_methodName152.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
+			return DepartmentLocalServiceUtil.findByNameAndDevision((java.lang.String)arguments[0],
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName153.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
+			return DepartmentLocalServiceUtil.findByDevision(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName154.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
+			return DepartmentLocalServiceUtil.findByDevisions((java.util.List<vn.com.ecopharma.emp.model.Devision>)arguments[0]);
+		}
+
+		if (_methodName155.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
 			return DepartmentLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[2]);
 		}
 
-		if (_methodName147.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
+		if (_methodName156.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
 			return DepartmentLocalServiceUtil.createPrePersistedDepartment();
 		}
 
-		if (_methodName148.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes148, parameterTypes)) {
-			return DepartmentLocalServiceUtil.findByNameAndDevision((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue());
-		}
-
-		if (_methodName149.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes149, parameterTypes)) {
-			return DepartmentLocalServiceUtil.findByDevision(((Long)arguments[0]).longValue());
-		}
-
-		if (_methodName150.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
+		if (_methodName157.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
 			return DepartmentLocalServiceUtil.addDepartment((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
 		}
 
-		if (_methodName151.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
+		if (_methodName158.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
 			return DepartmentLocalServiceUtil.addDepartment((vn.com.ecopharma.emp.model.Department)arguments[0],
 				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
 
-		if (_methodName152.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
+		if (_methodName159.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
 			DepartmentLocalServiceUtil.completelyRemoveAll();
 
 			return null;
@@ -349,26 +358,28 @@ public class DepartmentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName138;
-	private String[] _methodParameterTypes138;
-	private String _methodName139;
-	private String[] _methodParameterTypes139;
 	private String _methodName144;
 	private String[] _methodParameterTypes144;
 	private String _methodName145;
 	private String[] _methodParameterTypes145;
-	private String _methodName146;
-	private String[] _methodParameterTypes146;
-	private String _methodName147;
-	private String[] _methodParameterTypes147;
-	private String _methodName148;
-	private String[] _methodParameterTypes148;
-	private String _methodName149;
-	private String[] _methodParameterTypes149;
 	private String _methodName150;
 	private String[] _methodParameterTypes150;
 	private String _methodName151;
 	private String[] _methodParameterTypes151;
 	private String _methodName152;
 	private String[] _methodParameterTypes152;
+	private String _methodName153;
+	private String[] _methodParameterTypes153;
+	private String _methodName154;
+	private String[] _methodParameterTypes154;
+	private String _methodName155;
+	private String[] _methodParameterTypes155;
+	private String _methodName156;
+	private String[] _methodParameterTypes156;
+	private String _methodName157;
+	private String[] _methodParameterTypes157;
+	private String _methodName158;
+	private String[] _methodParameterTypes158;
+	private String _methodName159;
+	private String[] _methodParameterTypes159;
 }

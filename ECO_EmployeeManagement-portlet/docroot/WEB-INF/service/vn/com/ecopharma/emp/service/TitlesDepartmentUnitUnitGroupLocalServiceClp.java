@@ -134,16 +134,20 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceClp
 
 		_methodParameterTypes22 = new String[] { "long" };
 
-		_methodName23 = "addTitlesDepartmentUnitUnitGroup";
+		_methodName23 = "findByUnit";
 
-		_methodParameterTypes23 = new String[] {
-				"long", "long", "long", "long",
-				"com.liferay.portal.service.ServiceContext"
-			};
+		_methodParameterTypes23 = new String[] { "long" };
 
 		_methodName24 = "addTitlesDepartmentUnitUnitGroup";
 
 		_methodParameterTypes24 = new String[] {
+				"long", "long", "long", "long",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName25 = "addTitlesDepartmentUnitUnitGroup";
+
+		_methodParameterTypes25 = new String[] {
 				"vn.com.ecopharma.emp.model.Titles",
 				"vn.com.ecopharma.emp.model.Department",
 				"vn.com.ecopharma.emp.model.Unit",
@@ -151,38 +155,38 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceClp
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName25 = "findByTitlesDepartmentUnitUnitGroup";
-
-		_methodParameterTypes25 = new String[] { "long", "long", "long", "long" };
-
 		_methodName26 = "findByTitlesDepartmentUnitUnitGroup";
 
-		_methodParameterTypes26 = new String[] {
+		_methodParameterTypes26 = new String[] { "long", "long", "long", "long" };
+
+		_methodName27 = "findByTitlesDepartmentUnitUnitGroup";
+
+		_methodParameterTypes27 = new String[] {
 				"vn.com.ecopharma.emp.model.Titles",
 				"vn.com.ecopharma.emp.model.Department",
 				"vn.com.ecopharma.emp.model.Unit",
 				"vn.com.ecopharma.emp.model.UnitGroup"
 			};
 
-		_methodName27 = "findByDepartmentUnitUnitGroup";
+		_methodName28 = "findByDepartmentUnitUnitGroup";
 
-		_methodParameterTypes27 = new String[] { "long", "long", "long" };
+		_methodParameterTypes28 = new String[] { "long", "long", "long" };
 
-		_methodName28 = "findByUnitUnitGroup";
+		_methodName29 = "findByUnitUnitGroup";
 
-		_methodParameterTypes28 = new String[] { "long", "long" };
+		_methodParameterTypes29 = new String[] { "long", "long" };
 
-		_methodName29 = "findByUnitGroup";
+		_methodName30 = "findByUnitGroup";
 
-		_methodParameterTypes29 = new String[] { "long" };
+		_methodParameterTypes30 = new String[] { "long" };
 
-		_methodName30 = "findByTitlesDepartmentUnitNoneUnitGroup";
+		_methodName31 = "findByTitlesDepartmentUnitNoneUnitGroup";
 
-		_methodParameterTypes30 = new String[] { "long", "long", "long" };
+		_methodParameterTypes31 = new String[] { "long", "long", "long" };
 
-		_methodName31 = "completelyRemoveAll";
+		_methodName32 = "completelyRemoveAll";
 
-		_methodParameterTypes31 = new String[] {  };
+		_methodParameterTypes32 = new String[] {  };
 	}
 
 	@Override
@@ -852,14 +856,38 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceClp
 	}
 
 	@Override
+	public java.util.List<vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup> findByUnit(
+		long unitId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23, new Object[] { unitId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup addTitlesDepartmentUnitUnitGroup(
 		long titlesId, long departmentId, long unitId, long unitGroupId,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23,
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] {
 						titlesId,
 						
@@ -897,8 +925,8 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
 						ClpSerializer.translateInput(titles),
 						
@@ -932,8 +960,8 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] { titlesId, departmentId, unitId, unitGroupId });
 		}
 		catch (Throwable t) {
@@ -960,8 +988,8 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] {
 						ClpSerializer.translateInput(titles),
 						
@@ -993,8 +1021,8 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] { departmentId, unitId, unitGroupId });
 		}
 		catch (Throwable t) {
@@ -1018,8 +1046,8 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28,
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
 					new Object[] { unitId, unitGroupId });
 		}
 		catch (Throwable t) {
@@ -1043,8 +1071,8 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29, new Object[] { unitGroupId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30, new Object[] { unitGroupId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1067,8 +1095,8 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] { titlesId, departmentId, unitId });
 		}
 		catch (Throwable t) {
@@ -1089,8 +1117,8 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceClp
 	@Override
 	public void completelyRemoveAll() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName31,
-				_methodParameterTypes31, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName32,
+				_methodParameterTypes32, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1168,4 +1196,6 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceClp
 	private String[] _methodParameterTypes30;
 	private String _methodName31;
 	private String[] _methodParameterTypes31;
+	private String _methodName32;
+	private String[] _methodParameterTypes32;
 }

@@ -288,6 +288,14 @@ public class TitlesLocalServiceUtil {
 		return getService().findAll(start, end, orderByComparator);
 	}
 
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findFilterListByRelatedFields(
+		java.util.List<vn.com.ecopharma.emp.model.Department> departments,
+		java.util.List<vn.com.ecopharma.emp.model.Unit> units,
+		java.util.List<vn.com.ecopharma.emp.model.UnitGroup> unitGroups) {
+		return getService()
+				   .findFilterListByRelatedFields(departments, units, unitGroups);
+	}
+
 	public static vn.com.ecopharma.emp.model.Titles addTitles(
 		java.lang.String name, java.lang.String name_en, java.lang.String code,
 		com.liferay.portal.service.ServiceContext serviceContext) {
@@ -315,6 +323,11 @@ public class TitlesLocalServiceUtil {
 	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findAllByDepartment(
 		long departmentId) {
 		return getService().findAllByDepartment(departmentId);
+	}
+
+	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findAllByUnit(
+		long unitId) {
+		return getService().findAllByUnit(unitId);
 	}
 
 	public static java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartmentOnly(

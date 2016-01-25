@@ -295,6 +295,11 @@ public class UnitGroupLocalServiceUtil {
 		return getService().findByUnit(unitId);
 	}
 
+	public static java.util.List<vn.com.ecopharma.emp.model.UnitGroup> findByUnits(
+		java.util.List<vn.com.ecopharma.emp.model.Unit> units) {
+		return getService().findByUnits(units);
+	}
+
 	public static vn.com.ecopharma.emp.model.UnitGroup findByNameAndUnit(
 		java.lang.String name, long unitId) {
 		return getService().findByNameAndUnit(name, unitId);

@@ -24,6 +24,8 @@ import vn.com.ecopharma.hrm.rc.util.BeanUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.service.ServiceContext;
 
 @ManagedBean(name = "candidateViewBean")
@@ -31,6 +33,8 @@ import com.liferay.portal.service.ServiceContext;
 public class CandidateViewBean extends EntityViewBean {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static final Log LOGGER = LogFactoryUtil.getLog(CandidateViewBean.class);
 
 	private String currentNav = StringUtils.EMPTY;
 
@@ -127,7 +131,7 @@ public class CandidateViewBean extends EntityViewBean {
 								serviceContext);
 					}
 				} catch (SystemException e) {
-					e.printStackTrace();
+					LOGGER.info(e);
 				}
 				break;
 			case REJECT:
@@ -155,7 +159,7 @@ public class CandidateViewBean extends EntityViewBean {
 			}
 			selectedStatus = StringUtils.EMPTY;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 
 	}

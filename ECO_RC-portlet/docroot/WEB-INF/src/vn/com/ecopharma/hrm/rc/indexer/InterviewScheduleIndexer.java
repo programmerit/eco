@@ -89,7 +89,7 @@ public class InterviewScheduleIndexer extends BaseIndexer {
 				new VacancyIndexItem(VacancyLocalServiceUtil
 						.getIndexVacancyDocument(
 								vacancyCandidate.getVacancyId(), searchContext))
-						.getName());
+						.getTitles());
 
 		doc.addText(
 				InterviewScheduleField.CANDIDATE,

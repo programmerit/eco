@@ -132,31 +132,35 @@ public class UnitGroupLocalServiceClp implements UnitGroupLocalService {
 
 		_methodParameterTypes22 = new String[] { "long" };
 
-		_methodName23 = "findByNameAndUnit";
+		_methodName23 = "findByUnits";
 
-		_methodParameterTypes23 = new String[] { "java.lang.String", "long" };
+		_methodParameterTypes23 = new String[] { "java.util.List" };
 
-		_methodName24 = "createPrePersistedUnitGroup";
+		_methodName24 = "findByNameAndUnit";
 
-		_methodParameterTypes24 = new String[] {  };
+		_methodParameterTypes24 = new String[] { "java.lang.String", "long" };
 
-		_methodName25 = "addUnitGroup";
+		_methodName25 = "createPrePersistedUnitGroup";
 
-		_methodParameterTypes25 = new String[] {
-				"java.lang.String", "long",
-				"com.liferay.portal.service.ServiceContext"
-			};
+		_methodParameterTypes25 = new String[] {  };
 
 		_methodName26 = "addUnitGroup";
 
 		_methodParameterTypes26 = new String[] {
+				"java.lang.String", "long",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName27 = "addUnitGroup";
+
+		_methodParameterTypes27 = new String[] {
 				"vn.com.ecopharma.emp.model.UnitGroup",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName27 = "completelyRemoveAll";
+		_methodName28 = "completelyRemoveAll";
 
-		_methodParameterTypes27 = new String[] {  };
+		_methodParameterTypes28 = new String[] {  };
 	}
 
 	@Override
@@ -811,13 +815,38 @@ public class UnitGroupLocalServiceClp implements UnitGroupLocalService {
 	}
 
 	@Override
-	public vn.com.ecopharma.emp.model.UnitGroup findByNameAndUnit(
-		java.lang.String name, long unitId) {
+	public java.util.List<vn.com.ecopharma.emp.model.UnitGroup> findByUnits(
+		java.util.List<vn.com.ecopharma.emp.model.Unit> units) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName23,
 					_methodParameterTypes23,
+					new Object[] { ClpSerializer.translateInput(units) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<vn.com.ecopharma.emp.model.UnitGroup>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.UnitGroup findByNameAndUnit(
+		java.lang.String name, long unitId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] { ClpSerializer.translateInput(name), unitId });
 		}
 		catch (Throwable t) {
@@ -840,8 +869,8 @@ public class UnitGroupLocalServiceClp implements UnitGroupLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24, new Object[] {  });
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -865,8 +894,8 @@ public class UnitGroupLocalServiceClp implements UnitGroupLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] {
 						ClpSerializer.translateInput(name),
 						
@@ -897,8 +926,8 @@ public class UnitGroupLocalServiceClp implements UnitGroupLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] {
 						ClpSerializer.translateInput(unitGroup),
 						
@@ -923,8 +952,8 @@ public class UnitGroupLocalServiceClp implements UnitGroupLocalService {
 	@Override
 	public void completelyRemoveAll() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName27,
-				_methodParameterTypes27, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName28,
+				_methodParameterTypes28, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -994,4 +1023,6 @@ public class UnitGroupLocalServiceClp implements UnitGroupLocalService {
 	private String[] _methodParameterTypes26;
 	private String _methodName27;
 	private String[] _methodParameterTypes27;
+	private String _methodName28;
+	private String[] _methodParameterTypes28;
 }

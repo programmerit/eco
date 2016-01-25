@@ -284,16 +284,6 @@ public class DepartmentLocalServiceUtil {
 		return getService().findAll(start, end);
 	}
 
-	public static java.util.List<vn.com.ecopharma.emp.model.Department> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
-		return getService().findAll(start, end, orderByComparator);
-	}
-
-	public static vn.com.ecopharma.emp.model.Department createPrePersistedDepartment() {
-		return getService().createPrePersistedDepartment();
-	}
-
 	public static vn.com.ecopharma.emp.model.Department findByNameAndDevision(
 		java.lang.String name, long devisionId) {
 		return getService().findByNameAndDevision(name, devisionId);
@@ -302,6 +292,21 @@ public class DepartmentLocalServiceUtil {
 	public static java.util.List<vn.com.ecopharma.emp.model.Department> findByDevision(
 		long devisionId) {
 		return getService().findByDevision(devisionId);
+	}
+
+	public static java.util.List<vn.com.ecopharma.emp.model.Department> findByDevisions(
+		java.util.List<vn.com.ecopharma.emp.model.Devision> devisions) {
+		return getService().findByDevisions(devisions);
+	}
+
+	public static java.util.List<vn.com.ecopharma.emp.model.Department> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return getService().findAll(start, end, orderByComparator);
+	}
+
+	public static vn.com.ecopharma.emp.model.Department createPrePersistedDepartment() {
+		return getService().createPrePersistedDepartment();
 	}
 
 	public static vn.com.ecopharma.emp.model.Department addDepartment(

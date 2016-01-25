@@ -22,6 +22,7 @@ import vn.com.ecopharma.emp.dto.BankInfoObject;
 import vn.com.ecopharma.emp.dto.DependentName;
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
 import vn.com.ecopharma.emp.dto.EmpInfoItem;
+import vn.com.ecopharma.emp.enumeration.EducationType;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.enumeration.LaborContractType;
 import vn.com.ecopharma.emp.enumeration.LocationType;
@@ -33,6 +34,7 @@ import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.model.Level;
 import vn.com.ecopharma.emp.model.Location;
 import vn.com.ecopharma.emp.model.ResignationHistory;
+import vn.com.ecopharma.emp.model.Specialized;
 import vn.com.ecopharma.emp.model.Titles;
 import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.model.UnitGroup;
@@ -44,6 +46,7 @@ import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LocationLocalServiceUtil;
 import vn.com.ecopharma.emp.service.ResignationHistoryLocalServiceUtil;
+import vn.com.ecopharma.emp.service.SpecializedLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
@@ -58,6 +61,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Country;
+import com.liferay.portal.model.Region;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CountryServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -229,6 +233,23 @@ public class EmployeeBean implements Serializable {
 					.transferBankInfoObjectListToBankInfoMap(modifyEmployeeInfoItem
 							.getBankInfos());
 
+			modifyEmployeeInfoItem.getUser().setFirstName(
+					EmployeeUtils.getFirstName(modifyEmployeeInfoItem
+							.getFullName()));
+			modifyEmployeeInfoItem.getUser().setMiddleName(
+					EmployeeUtils.getMiddleName(modifyEmployeeInfoItem
+							.getFullName()));
+			modifyEmployeeInfoItem.getUser().setLastName(
+					EmployeeUtils.getLastName(modifyEmployeeInfoItem
+							.getFullName()));
+			long specializedId = modifyEmployeeInfoItem.getSpecialized() != null ? modifyEmployeeInfoItem
+					.getSpecialized().getSpecializedId() : 0L;
+			modifyEmployeeInfoItem.getEmp().setSpecializeId(specializedId);
+
+			long workingPlaceId = modifyEmployeeInfoItem.getWorkingPlace() != null ? modifyEmployeeInfoItem
+					.getWorkingPlace().getRegionId() : 0L;
+			modifyEmployeeInfoItem.getEmp().setWorkingPlaceId(workingPlaceId);
+
 			if (showUserTab) {
 				final Emp employee = modifyEmployeeInfoItem.getEmp();
 
@@ -354,9 +375,12 @@ public class EmployeeBean implements Serializable {
 
 	public void addTitles() {
 		TitlesBean titlesBean = BeanUtils.getTitlesBean();
+		titlesBean.setTitles(TitlesLocalServiceUtil.createPrePersistedTitles());
 		titlesBean.setDepartment(modifyEmployeeInfoItem.getDepartment());
 		titlesBean.setUnit(modifyEmployeeInfoItem.getUnit());
 		titlesBean.setUnitGroup(modifyEmployeeInfoItem.getUnitGroup());
+		titlesBean
+				.setUpdateComponents(":modifyForm:accordion:titlesSelect :growl");
 	}
 
 	public void onEditTitles() {
@@ -456,40 +480,51 @@ public class EmployeeBean implements Serializable {
 		}
 	}
 
+	public void onFullNameBlur() {
+		if (showUserTab) {
+			String username = generateUsername();
+			String emailAddress = EmployeeUtils
+					.generateEmailByUsername(username);
+			modifyEmployeeInfoItem.setUserName(username);
+			modifyEmployeeInfoItem.getUser().setEmailAddress(emailAddress);
+		}
+
+	}
+
 	private String generateUsername() {
 		final String defaultUsername = "user" + System.currentTimeMillis();
-		if (modifyEmployeeInfoItem != null
-				&& modifyEmployeeInfoItem.getUser().getFirstName() != null
-				&& modifyEmployeeInfoItem.getUser().getMiddleName() != null
-				&& modifyEmployeeInfoItem.getUser().getLastName() != null) {
-			final String generatedUsername = EmployeeUtils
-					.generateUsername(EmployeeUtils
-							.getFullnameFromUser(modifyEmployeeInfoItem
-									.getUser()));
-			return StringUtils.trimToNull(generatedUsername) != null ? generatedUsername
-					: defaultUsername;
 
-		}
-		return defaultUsername;
+		final String generatedUsername = EmployeeUtils
+				.generateUsername(modifyEmployeeInfoItem.getFullName());
+		return StringUtils.trimToNull(generatedUsername) != null ? generatedUsername
+				: defaultUsername;
+
 	}
 
 	public List<Titles> getTitlesList() {
-		if (modifyEmployeeInfoItem.getUnit() == null) {
-			return modifyEmployeeInfoItem.getDepartment() != null ? TitlesLocalServiceUtil
-					.findByDepartmentOnly(modifyEmployeeInfoItem
-							.getDepartment().getDepartmentId())
-					: new ArrayList<Titles>();
-		} else {
-			if (modifyEmployeeInfoItem.getUnitGroup() != null) {
-				return TitlesLocalServiceUtil
-						.findByUnitGroupOnly(modifyEmployeeInfoItem
-								.getUnitGroup().getUnitGroupId());
-			} else {
-				return TitlesLocalServiceUtil
-						.findByUnitOnly(modifyEmployeeInfoItem.getUnit()
-								.getUnitId());
-			}
+		// if (modifyEmployeeInfoItem.getUnit() == null) {
+		// return modifyEmployeeInfoItem.getDepartment() != null ?
+		// TitlesLocalServiceUtil
+		// .findByDepartmentOnly(modifyEmployeeInfoItem
+		// .getDepartment().getDepartmentId())
+		// : new ArrayList<Titles>();
+		// } else {
+		// if (modifyEmployeeInfoItem.getUnitGroup() != null) {
+		// return TitlesLocalServiceUtil
+		// .findByUnitGroupOnly(modifyEmployeeInfoItem
+		// .getUnitGroup().getUnitGroupId());
+		// } else {
+		// return TitlesLocalServiceUtil
+		// .findByUnitOnly(modifyEmployeeInfoItem.getUnit()
+		// .getUnitId());
+		// }
+		// }
+		if (modifyEmployeeInfoItem.getDepartment() != null) {
+			return TitlesLocalServiceUtil
+					.findAllByDepartment(modifyEmployeeInfoItem.getDepartment()
+							.getDepartmentId());
 		}
+		return new ArrayList<>();
 	}
 
 	public List<UnitGroup> getUnitGroups() {
@@ -529,6 +564,10 @@ public class EmployeeBean implements Serializable {
 		return results;
 	}
 
+	public List<String> getEducationTypes() {
+		return EducationType.getAllVi();
+	}
+
 	public Date getMaxBirthdayDate() {
 		Calendar now = Calendar.getInstance();
 		// backward 18 years
@@ -558,6 +597,19 @@ public class EmployeeBean implements Serializable {
 	public List<Location> getLocations() {
 		return LocationLocalServiceUtil
 				.findByType(LocationType.WORKING_LOCATION.toString());
+	}
+
+	public List<Specialized> getSpecializeds() {
+		return SpecializedLocalServiceUtil.findAll();
+	}
+
+	public List<Region> getWorkingPlaces() {
+		try {
+			return RegionServiceUtil.getRegions(17L);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return new ArrayList<>();
 	}
 
 	public Location getLocation() {

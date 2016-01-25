@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 import vn.com.ecopharma.emp.NoSuchUnitGroupException;
+import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.service.base.UnitGroupLocalServiceBaseImpl;
 
@@ -87,6 +88,15 @@ public class UnitGroupLocalServiceImpl extends UnitGroupLocalServiceBaseImpl {
 			LOGGER.info(e);
 		}
 		return new ArrayList<>();
+	}
+
+	public List<UnitGroup> findByUnits(List<Unit> units) {
+		if (units == null)
+			return new ArrayList<>();
+		final List<UnitGroup> result = new ArrayList<>();
+		for (Unit unit : units)
+			result.addAll(findByUnit(unit.getUnitId()));
+		return result;
 	}
 
 	@Override

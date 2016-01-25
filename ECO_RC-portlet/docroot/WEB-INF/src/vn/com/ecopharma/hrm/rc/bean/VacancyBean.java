@@ -123,7 +123,7 @@ public class VacancyBean extends PersistableBean {
 			BeanUtils.getVacancyViewBean().switchMode(VacancyNavigation.VIEW);
 			;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 	}
 
@@ -145,7 +145,7 @@ public class VacancyBean extends PersistableBean {
 			vacancyItem.getDocumentItems().add(new DocumentItem(fe));
 
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 	}
 
@@ -161,7 +161,7 @@ public class VacancyBean extends PersistableBean {
 			BeanUtils.getVacancyViewBean().switchMode(VacancyNavigation.EDIT);
 			;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 	}
 
@@ -174,9 +174,9 @@ public class VacancyBean extends PersistableBean {
 					LOGGER.info("### sucessfully deleted FILE ENTRY "
 							+ documentItem.getFileEntryId());
 				} catch (PortalException e) {
-					e.printStackTrace();
+					LOGGER.info(e);
 				} catch (SystemException e) {
-					e.printStackTrace();
+					LOGGER.info(e);
 				}
 			}
 		}
@@ -209,7 +209,7 @@ public class VacancyBean extends PersistableBean {
 							.getId()));
 			BeanUtils.getVacancyViewBean().switchMode(VacancyNavigation.EDIT);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 	}
 

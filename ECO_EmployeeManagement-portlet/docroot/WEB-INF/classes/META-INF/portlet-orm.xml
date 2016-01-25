@@ -138,6 +138,7 @@
 			<basic name="placeOfBirth" />
 			<basic name="education" />
 			<basic name="educationSpecialize" />
+			<basic name="specializeId" />
 			<basic name="universityId" />
 			<basic name="maritalStatus" />
 			<basic name="identityCardNo" />
@@ -360,6 +361,33 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.emp.model.impl.SpecializedModelImpl">
+		<attributes>
+			<id name="specializedId" />
+			<basic name="specializedCode" />
+			<basic name="name" />
+			<basic name="level" />
+			<basic name="parentId" />
+			<basic name="university" />
+			<basic name="college" />
+			<basic name="vocationalCollege" />
+			<basic name="vocational" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="vn.com.ecopharma.emp.model.impl.TitlesModelImpl">
 		<attributes>
 			<id name="titlesId" />
@@ -538,6 +566,10 @@
 	</entity>
 	<entity class="vn.com.ecopharma.emp.model.impl.ResourceConfigImpl" name="ResourceConfig">
 		<table name="eco_em_portlet_ResourceConfig" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.emp.model.impl.SpecializedImpl" name="Specialized">
+		<table name="eco_em_portlet_Specialized" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.emp.model.impl.TitlesImpl" name="Titles">

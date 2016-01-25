@@ -42,7 +42,6 @@ import vn.com.ecopharma.hrm.rc.model.Candidate;
 import vn.com.ecopharma.hrm.rc.model.Certificate;
 import vn.com.ecopharma.hrm.rc.model.Experience;
 import vn.com.ecopharma.hrm.rc.model.InterviewSchedule;
-import vn.com.ecopharma.hrm.rc.model.Vacancy;
 import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.CertificateLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.DocumentLocalServiceUtil;
@@ -55,11 +54,11 @@ import vn.com.ecopharma.hrm.rc.util.RCUtils;
 import vn.com.ecopharma.hrm.rc.util.VacancyUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
-import com.liferay.faces.util.logging.Logger;
-import com.liferay.faces.util.logging.LoggerFactory;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -72,23 +71,23 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 
-@ManagedBean
+@ManagedBean(name = "candidateBean")
 @ViewScoped
 public class CandidateBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(CandidateBean.class);
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(CandidateBean.class);
 
 	private CandidateIndexItem selectedItem;
 
-	private List<CandidateIndexItem> selectedItems = new ArrayList<CandidateIndexItem>();
+	private List<CandidateIndexItem> selectedItems;
 
 	private CandidateItem candidateItem;
 
 	private LazyDataModel<CandidateIndexItem> lazyDataModel;
 
-	private List<Vacancy> vacancies;
+	// private List<Vacancy> vacancies;
 
 	private List<VacancyIndexItem> vacancyIndexItems;
 
@@ -108,6 +107,7 @@ public class CandidateBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
+		selectedItems = new ArrayList<>();
 
 		lazyDataModel = new CandidateLazyDM() {
 			private static final long serialVersionUID = 1L;
@@ -175,7 +175,7 @@ public class CandidateBean implements Serializable {
 			}
 		};
 
-		vacancies = VacancyLocalServiceUtil.findAllUnDeleted();
+		// vacancies = VacancyLocalServiceUtil.findAllUnDeleted();
 		final SearchContext searchContext = RCUtils.getCurrentSearchContext();
 		final Sort sort = new Sort(VacancyField.VACANCY_ID, false);
 		vacancyIndexItems = VacancyUtils
@@ -186,7 +186,7 @@ public class CandidateBean implements Serializable {
 								searchContext.getCompanyId(), sort,
 								QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 
-		fileEntryIds = new ArrayList<Long>();
+		fileEntryIds = new ArrayList<>();
 	}
 
 	/**
@@ -216,8 +216,7 @@ public class CandidateBean implements Serializable {
 			if (candidate == null) { // create new
 				candidate = candidateItem.getCandidate();
 				CandidateLocalServiceUtil.addCandidate(candidate, 0,
-						candidateItem.getVacancyItem().getVacancy()
-								.getVacancyId(),
+						candidateItem.getVacancyIndexItem().getId(),
 						candidateItem.getPossibleDesiredVacancies(),
 						fileEntryIds, experienceMap, certificateMap,
 						serviceContext);
@@ -235,23 +234,25 @@ public class CandidateBean implements Serializable {
 			// "window.location.hash = '#vCandidate/first=" + first
 			// + "&pageSize=" + pageSize + "';");
 
-			RequestContext.getCurrentInstance().execute(
-					"window.location.hash = '#vCandidate';");
+			// RequestContext.getCurrentInstance().execute(
+			// "window.location.hash = '#vCandidate';");
+			BeanUtils.getCandidateViewBean().switchMode(
+					CandidateNavigation.VIEW);
 
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 	}
 
 	public List<VacancyIndexItem> completeVacancies(String query) {
-		final List<VacancyIndexItem> filteredItems = new ArrayList<VacancyIndexItem>();
+		final List<VacancyIndexItem> filteredItems = new ArrayList<>();
 		final SearchContext searchContext = RCUtils.getCurrentSearchContext();
 		try {
 			final BooleanQuery nameFilterBooleanQuery = BooleanQueryFactoryUtil
 					.create(searchContext);
-			nameFilterBooleanQuery.addTerm(VacancyField.NAME, query, true,
+			nameFilterBooleanQuery.addTerm(VacancyField.TITLES, query, true,
 					BooleanClauseOccur.MUST);
-			final List<Query> queries = new ArrayList<Query>();
+			final List<Query> queries = new ArrayList<>();
 
 			queries.add(nameFilterBooleanQuery);
 			final Sort sort = new Sort();
@@ -271,43 +272,50 @@ public class CandidateBean implements Serializable {
 			}
 			return filteredItems;
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
 
 	public void addCandidate() {
 		this.candidateItem = new CandidateItem();
-		RequestContext.getCurrentInstance().execute(
-				"window.location.hash = '#vCandidate/addCandidate';");
-		BeanUtils.getCandidateViewBean().switchMode(2);
+		// RequestContext.getCurrentInstance().execute(
+		// "window.location.hash = '#vCandidate/addCandidate';");
+		BeanUtils.getCandidateViewBean().switchMode(CandidateNavigation.CREATE);
 	}
 
 	public void editCandidate(CandidateIndexItem candidateIndexItem) {
 		try {
-			final Candidate candidate = CandidateLocalServiceUtil
-					.getCandidate(candidateIndexItem.getCandidateId());
-			this.candidateItem = new CandidateItem(candidate);
+			this.candidateItem = new CandidateItem(
+					candidateIndexItem.getCandidateId());
 			BeanUtils.getCandidateViewBean().switchMode(
 					CandidateNavigation.EDIT);
 		} catch (SystemException e) {
-			e.printStackTrace();
-		} catch (PortalException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 	}
 
 	public void editCandidate(long candidateId) {
 		try {
-			final Candidate candidate = CandidateLocalServiceUtil
-					.getCandidate(candidateId);
-			this.candidateItem = new CandidateItem(candidate);
+			this.candidateItem = new CandidateItem(candidateId);
 			BeanUtils.getCandidateViewBean().switchMode(
 					CandidateNavigation.EDIT);
 		} catch (SystemException e) {
-			e.printStackTrace();
-		} catch (PortalException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
+		}
+	}
+
+	public void onRowDblSelect(SelectEvent selectEvent) {
+		CandidateIndexItem candidateIndexItem = (CandidateIndexItem) selectEvent
+				.getObject();
+		// candidateIndexItem.getEvaluationItems();
+		try {
+			this.candidateItem = new CandidateItem(
+					candidateIndexItem.getCandidateId());
+			BeanUtils.getCandidateViewBean().switchMode(
+					CandidateNavigation.EDIT);
+		} catch (SystemException e) {
+			LOGGER.info(e);
 		}
 	}
 
@@ -338,29 +346,8 @@ public class CandidateBean implements Serializable {
 			fileEntryIds.add(fe.getFileEntryId());
 
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
-	}
-
-	public void onRowDblSelect(SelectEvent selectEvent) {
-		CandidateIndexItem candidateIndexItem = (CandidateIndexItem) selectEvent
-				.getObject();
-
-		candidateIndexItem.getEvaluationItems();
-		/*
-		 * try { Candidate candidate = CandidateLocalServiceUtil
-		 * .getCandidate(candidateIndexItem.getCandidateId());
-		 * this.candidateItem = new CandidateItem(candidate);
-		 * BeanUtils.getCandidateViewBean().switchMode(
-		 * CandidateNavigation.EDIT);
-		 * 
-		 * } catch (SystemException e) { e.printStackTrace(); } catch
-		 * (PortalException e) { e.printStackTrace(); }
-		 */
-		RequestContext.getCurrentInstance().execute(
-				"window.location.hash = '#vCandidate/candidateId="
-						+ candidateIndexItem.getCandidateId() + "';");
-
 	}
 
 	public void onContextShow(SelectEvent event) {
@@ -380,9 +367,9 @@ public class CandidateBean implements Serializable {
 					LOGGER.info("### sucessfully deleted FILE ENTRY "
 							+ documentItem.getFileEntryId());
 				} catch (PortalException e) {
-					e.printStackTrace();
+					LOGGER.info(e);
 				} catch (SystemException e) {
-					e.printStackTrace();
+					LOGGER.info(e);
 				}
 			}
 		}
@@ -397,9 +384,9 @@ public class CandidateBean implements Serializable {
 	// this.candidateItem = new CandidateItem(candidate);
 	// BeanUtils.getCandidateViewBean().setCurrentMode(3);
 	// } catch (PortalException e) {
-	// e.printStackTrace();
+	// LOGGER.info(e);
 	// } catch (SystemException e) {
-	// e.printStackTrace();
+	// LOGGER.info(e);
 	// }
 	// }
 
@@ -449,7 +436,7 @@ public class CandidateBean implements Serializable {
 
 			ScheduleInterviewForCandidatesBean bean = (ScheduleInterviewForCandidatesBean) BeanUtils
 					.getBackingBeanByName("scheduleInterviewForCandidatesBean");
-			final List<InterviewScheduleItem> interviewScheduleItems = new ArrayList<InterviewScheduleItem>();
+			final List<InterviewScheduleItem> interviewScheduleItems = new ArrayList<>();
 			for (CandidateIndexItem candidateIndexItem : selectedItems) {
 				interviewScheduleItems.add(new InterviewScheduleItem(
 						candidateIndexItem));
@@ -475,7 +462,7 @@ public class CandidateBean implements Serializable {
 					CandidateLocalServiceUtil.changeCandidateStatus(
 							item.getCandidateId(), status, serviceContext);
 				} catch (SystemException e) {
-					e.printStackTrace();
+					LOGGER.info(e);
 				}
 			}
 
@@ -534,9 +521,9 @@ public class CandidateBean implements Serializable {
 						.getCandidateId(), CandidateStatus.REJECT.toString(),
 						LiferayFacesContext.getInstance().getServiceContext());
 			} catch (PortalException e) {
-				e.printStackTrace();
+				LOGGER.info(e);
 			} catch (SystemException e) {
-				e.printStackTrace();
+				LOGGER.info(e);
 			}
 		}
 	}
@@ -561,7 +548,7 @@ public class CandidateBean implements Serializable {
 	}
 
 	private List<CandidateStatus> getCandidateStatusListFromSelectedItems() {
-		final List<CandidateStatus> candidateStatuses = new ArrayList<CandidateStatus>();
+		final List<CandidateStatus> candidateStatuses = new ArrayList<>();
 		for (CandidateIndexItem candidateIndexItem : selectedItems) {
 			candidateStatuses.add(CandidateStatus.valueOf(candidateIndexItem
 					.getStatus()));
@@ -654,9 +641,9 @@ public class CandidateBean implements Serializable {
 		this.candidateItem = candidateItem;
 	}
 
-	public List<Vacancy> getVacancies() {
-		return vacancies;
-	}
+	// public List<Vacancy> getVacancies() {
+	// return vacancies;
+	// }
 
 	public long getDeletedCandidateId() {
 		return deletedCandidateId;
@@ -707,9 +694,9 @@ public class CandidateBean implements Serializable {
 			return UniversityLocalServiceUtil.getUniversity(universityId)
 					.getName();
 		} catch (PortalException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return StringUtils.EMPTY;
 	}

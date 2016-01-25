@@ -10,24 +10,17 @@ import org.apache.commons.lang.StringUtils;
 
 import vn.com.ecopharma.emp.constant.EMInfo;
 import vn.com.ecopharma.emp.constant.EmpField;
-import vn.com.ecopharma.emp.model.Department;
-import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Emp;
-import vn.com.ecopharma.emp.model.Titles;
-import vn.com.ecopharma.emp.model.Unit;
-import vn.com.ecopharma.emp.model.UnitGroup;
+import vn.com.ecopharma.emp.model.Specialized;
 import vn.com.ecopharma.emp.permission.EmpPermission;
-import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
-import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
-import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
-import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
-import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
+import vn.com.ecopharma.emp.service.SpecializedLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
 import vn.com.ecopharma.emp.service.persistence.EmpActionableDynamicQuery;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
 import vn.com.ecopharma.emp.util.ImportExportUtils;
+import vn.com.ecopharma.emp.util.SearchEngineUtils;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -82,20 +75,6 @@ public class EmpIndexer extends BaseIndexer {
 	protected Document doGetDocument(Object obj) throws Exception { // NOSONAR
 		final Emp emp = (Emp) obj;
 		final Document document = getBaseModelDocument(EMInfo.PORTLET_ID, emp);
-		final Titles titles = emp.getTitlesId() != 0 ? TitlesLocalServiceUtil
-				.getTitles(emp.getTitlesId()) : null;
-
-		final Unit unit = emp.getUnitId() != 0 ? UnitLocalServiceUtil
-				.fetchUnit(emp.getUnitId()) : null;
-
-		final UnitGroup unitGroup = emp.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
-				.fetchUnitGroup(emp.getUnitGroupId()) : null;
-
-		final Department department = emp.getDepartmentId() != 0 ? DepartmentLocalServiceUtil
-				.fetchDepartment(emp.getDepartmentId()) : null;
-
-		final Devision devision = department != null ? DevisionLocalServiceUtil
-				.getDevision(department.getDevisionId()) : null;
 
 		document.addNumber(EmpField.EMP_ID, emp.getEmpId());
 		document.addText(Field.TITLE, Emp.class.getName());
@@ -123,28 +102,7 @@ public class EmpIndexer extends BaseIndexer {
 
 		document.addDate(EmpField.JOINED_DATE, emp.getJoinedDate());
 
-		document.addText(EmpField.TITLES,
-				titles != null ? EmployeeUtils.removeDashChar(titles.getName())
-						: StringUtils.EMPTY);
-
-		document.addText(
-				EmpField.UNIT_GROUP,
-				unitGroup != null ? EmployeeUtils.removeDashChar(unitGroup
-						.getName()) : StringUtils.EMPTY);
-
-		document.addText(EmpField.UNIT,
-				unit != null ? EmployeeUtils.removeDashChar(unit.getName())
-						: StringUtils.EMPTY);
-
-		document.addText(
-				EmpField.DEPARTMENT,
-				department != null ? EmployeeUtils.removeDashChar(department
-						.getName()) : StringUtils.EMPTY);
-
-		document.addText(
-				EmpField.DEVISION,
-				devision != null ? EmployeeUtils.removeDashChar(devision
-						.getName()) : StringUtils.EMPTY);
+		SearchEngineUtils.indexOrganizationFields(document, emp);
 
 		document.addText(
 				EmpField.LEVEL,
@@ -157,11 +115,21 @@ public class EmpIndexer extends BaseIndexer {
 				emp.getLaborContractExpiredDate());
 		document.addText(EmpField.LABOR_CONTRACT_TYPE,
 				emp.getLaborContractType());
+		document.addNumber(EmpField.LABOR_CONTRACT_SIGNED_TIME,
+				String.valueOf(emp.getLaborContractSignedTime()));
 		document.addText(EmpField.GENDER, emp.getGender());
 		document.addText(EmpField.PLACE_OF_BIRTH, emp.getPlaceOfBirth());
 		document.addText(EmpField.EDUCATION, emp.getEducation());
-		document.addText(EmpField.EDUCATION_SPECIALIZE,
-				emp.getEducationSpecialize());
+		long specializedId = emp.getSpecializeId();
+		Specialized specialized = SpecializedLocalServiceUtil
+				.fetchSpecialized(specializedId);
+		document.addText(
+				EmpField.EDUCATION_SPECIALIZE,
+				emp.getEducationSpecialize() != null ? emp
+						.getEducationSpecialize() : StringUtils.EMPTY);
+
+		document.addText(EmpField.SPECIALIZED,
+				specialized != null ? specialized.getName() : StringUtils.EMPTY);
 		document.addText(EmpField.UNIVERSITY,
 				emp.getUniversityId() != 0 ? UniversityLocalServiceUtil
 						.getUniversity(emp.getUniversityId()).getName()
@@ -207,12 +175,6 @@ public class EmpIndexer extends BaseIndexer {
 
 		document.addText(EmpField.IS_DELETED, emp.isDeleted() ? "true"
 				: "false");
-
-		document.addNumber(EmpField.DEVISION_ID,
-				devision != null ? devision.getDevisionId() : 0L);
-
-		document.addNumber(EmpField.TITLES_ID,
-				titles != null ? titles.getTitlesId() : 0L);
 
 		document.addNumber(EmpField.LEVEL_ID, emp.getLevelId());
 

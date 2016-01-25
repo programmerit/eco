@@ -11,106 +11,107 @@
 	<h:body>
 		<h:form id="candidateSearchForm"
 			rendered="#{candidateViewBean.currentMode==1}">
+			<h:link value="Show/Hide filter" styleClass="label"
+				onclick="toggle('#{requestScope.filterGrid.clientId}'); return false;" />
+			<h:panelGroup binding="#{requestScope.filterGrid}" id="filterGroup"
+				style="display: none;">
+				<p:panelGrid columns="4" layout="grid" id="filterPanel"
+					style="margin-bottom: 7px!important;">
+					<h:panelGroup>
+						<p:inputText id="filter_globalString"
+							value="#{candidateFilterBean.global}" placeholder="Everything">
+							<p:ajax event="keyup" oncomplete="PF('wCandidates').filter();" />
+						</p:inputText>
+						<p:tooltip for="filter_globalString" value="Filter Everything"
+							showEffect="clip" hideEffect="explode" />
+						<br />
+						<p:selectOneMenu id="filter_cStatusSelect"
+							value="#{candidateFilterBean.status}">
+							<p:ajax event="change" oncomplete="PF('wCandidates').filter()" />
+							<f:selectItem itemLabel="ALL" itemValue="ALL_STATUS" />
+							<f:selectItems value="#{candidateFilterBean.allStatus}"
+								var="status" itemValue="#{status}"
+								itemLabel="#{i18n[candidateViewBean.getLocalizedStatus(status)]}" />
+						</p:selectOneMenu>
+						<p:tooltip for="filter_cStatusSelect" value="Filter [Status]"
+							showEffect="clip" hideEffect="explode" />
+					</h:panelGroup>
 
-			<p:commandLink value="Filter:" styleClass="label"
-				actionListener="#{candidateViewBean.showHideFilterPanel}"
-				update="filterPanel" />
-			<p:panelGrid columns="4" layout="grid" id="filterPanel"
-				style="margin-bottom: 7px!important;">
-				<h:panelGroup>
-					<p:inputText id="filter_globalString"
-						value="#{candidateFilterBean.global}" placeholder="Everything">
-						<p:ajax event="keyup" oncomplete="PF('wCandidates').filter();" />
-					</p:inputText>
-					<p:tooltip for="filter_globalString" value="Filter Everything"
-						showEffect="clip" hideEffect="explode" />
-					<br />
-					<p:selectOneMenu id="filter_cStatusSelect"
-						value="#{candidateFilterBean.status}">
-						<p:ajax event="change" oncomplete="PF('wCandidates').filter()" />
-						<f:selectItem itemLabel="ALL" itemValue="ALL_STATUS" />
-						<f:selectItems value="#{candidateFilterBean.allStatus}"
-							var="status" itemValue="#{status}"
-							itemLabel="#{i18n[candidateViewBean.getLocalizedStatus(status)]}" />
-					</p:selectOneMenu>
-					<p:tooltip for="filter_cStatusSelect" value="Filter [Status]"
-						showEffect="clip" hideEffect="explode" />
-				</h:panelGroup>
+					<h:panelGroup>
+						<p:inputText id="filter_cName"
+							value="#{candidateFilterBean.fullName}" placeholder="Name">
+							<p:ajax event="keyup" oncomplete="PF('wCandidates').filter();" />
+						</p:inputText>
+						<p:tooltip for="filter_cName" value="Filter [Candidate's Name]"
+							showEffect="clip" hideEffect="explode" />
 
-				<h:panelGroup>
-					<p:inputText id="filter_cName"
-						value="#{candidateFilterBean.fullName}" placeholder="Name">
-						<p:ajax event="keyup" oncomplete="PF('wCandidates').filter();" />
-					</p:inputText>
-					<p:tooltip for="filter_cName" value="Filter [Candidate's Name]"
-						showEffect="clip" hideEffect="explode" />
+						<p:inputText id="filter_cEmail"
+							value="#{candidateFilterBean.emailAddress}" placeholder="Email">
+							<p:ajax event="keyup" oncomplete="PF('wCandidates').filter();" />
+						</p:inputText>
+						<p:tooltip for="filter_cEmail" value="Filter [Email]"
+							showEffect="clip" hideEffect="explode" />
+					</h:panelGroup>
 
-					<p:inputText id="filter_cEmail"
-						value="#{candidateFilterBean.emailAddress}" placeholder="Email">
-						<p:ajax event="keyup" oncomplete="PF('wCandidates').filter();" />
-					</p:inputText>
-					<p:tooltip for="filter_cEmail" value="Filter [Email]"
-						showEffect="clip" hideEffect="explode" />
-				</h:panelGroup>
+					<h:panelGroup>
+						<p:inputText id="filter_cContactNumber"
+							value="#{candidateFilterBean.contactNumber}"
+							placeholder="Contact No.">
+							<p:ajax event="keyup" oncomplete="PF('wCandidates').filter();" />
+						</p:inputText>
+						<p:tooltip for="filter_cContactNumber"
+							value="Filter [Contact Number]" showEffect="clip"
+							hideEffect="explode" />
+						<br />
 
-				<h:panelGroup>
-					<p:inputText id="filter_cContactNumber"
-						value="#{candidateFilterBean.contactNumber}"
-						placeholder="Contact No.">
-						<p:ajax event="keyup" oncomplete="PF('wCandidates').filter();" />
-					</p:inputText>
-					<p:tooltip for="filter_cContactNumber"
-						value="Filter [Contact Number]" showEffect="clip"
-						hideEffect="explode" />
-					<br />
+						<p:autoComplete id="filter_cVacancy"
+							completeMethod="#{candidateFilterBean.onCompleteVacancies}"
+							converter="vacancyIndexItemConverter" autoHighlight="true"
+							value="#{candidateFilterBean.vacancyItems}" minQueryLength="2"
+							multiple="true" var="v" itemLabel="#{v.name}" itemValue="#{v}">
+							<p:ajax event="itemSelect"
+								oncomplete="PF('wCandidates').filter();" />
+							<p:ajax event="itemUnselect"
+								oncomplete="PF('wCandidates').filter();" />
+						</p:autoComplete>
+						<p:tooltip for="filter_cVacancy" value="Filter [Vacancy]"
+							showEffect="clip" hideEffect="explode" />
+					</h:panelGroup>
 
-					<p:autoComplete id="filter_cVacancy"
-						completeMethod="#{candidateFilterBean.onCompleteVacancies}"
-						converter="vacancyIndexItemConverter" autoHighlight="true"
-						value="#{candidateFilterBean.vacancyItems}" minQueryLength="2"
-						multiple="true" var="v" itemLabel="#{v.name}" itemValue="#{v}">
-						<p:ajax event="itemSelect"
-							oncomplete="PF('wCandidates').filter();" />
-						<p:ajax event="itemUnselect"
-							oncomplete="PF('wCandidates').filter();" />
-					</p:autoComplete>
-					<p:tooltip for="filter_cVacancy" value="Filter [Vacancy]"
-						showEffect="clip" hideEffect="explode" />
-				</h:panelGroup>
+					<h:panelGroup>
+						<p:calendar id="filter_applyDateFrom" mask="false"
+							widgetVar="wApplyDateFrom"
+							value="#{candidateFilterBean.applyDateFrom}" pattern="dd/MM/yyyy"
+							styleClass="calendarClass" placeholder="From">
+							<p:ajax event="dateSelect"
+								oncomplete="PF('wCandidates').filter();" />
+						</p:calendar>
+						<p:tooltip for="filter_applyDateFrom"
+							value="Filter [Apply Date] From" showEffect="clip"
+							hideEffect="explode" />
+						<p:commandLink value="x"
+							actionListener="#{candidateFilterBean.resetApplyDateFrom}"
+							oncomplete="PF('wCandidates').filter();" ajax="true"
+							update=":candidateSearchForm:filter_applyDateFrom" />
 
-				<h:panelGroup>
-					<p:calendar id="filter_applyDateFrom" mask="false"
-						widgetVar="wApplyDateFrom"
-						value="#{candidateFilterBean.applyDateFrom}" pattern="dd/MM/yyyy"
-						styleClass="calendarClass" placeholder="From">
-						<p:ajax event="dateSelect"
-							oncomplete="PF('wCandidates').filter();" />
-					</p:calendar>
-					<p:tooltip for="filter_applyDateFrom"
-						value="Filter [Apply Date] From" showEffect="clip"
-						hideEffect="explode" />
-					<p:commandLink value="x"
-						actionListener="#{candidateFilterBean.resetApplyDateFrom}"
-						oncomplete="PF('wCandidates').filter();" ajax="true"
-						update=":candidateSearchForm:filter_applyDateFrom" />
+						<br />
 
-					<br />
-
-					<p:calendar id="filter_applyDateTo" mask="false"
-						widgetVar="wApplyDateTo"
-						value="#{candidateFilterBean.applyDateTo}" pattern="dd/MM/yyyy"
-						styleClass="calendarClass" placeholder="To">
-						<p:ajax event="dateSelect"
-							oncomplete="PF('wCandidates').filter();" />
-					</p:calendar>
-					<p:tooltip for="filter_applyDateTo" value="Filter [Apply Date] To"
-						showEffect="clip" hideEffect="explode" />
-					<p:commandLink value="x"
-						actionListener="#{candidateFilterBean.resetApplyDateTo}"
-						oncomplete="PF('wCandidates').filter();" ajax="true"
-						update=":candidateSearchForm:filter_applyDateTo" />
-				</h:panelGroup>
-			</p:panelGrid>
+						<p:calendar id="filter_applyDateTo" mask="false"
+							widgetVar="wApplyDateTo"
+							value="#{candidateFilterBean.applyDateTo}" pattern="dd/MM/yyyy"
+							styleClass="calendarClass" placeholder="To">
+							<p:ajax event="dateSelect"
+								oncomplete="PF('wCandidates').filter();" />
+						</p:calendar>
+						<p:tooltip for="filter_applyDateTo" value="Filter [Apply Date] To"
+							showEffect="clip" hideEffect="explode" />
+						<p:commandLink value="x"
+							actionListener="#{candidateFilterBean.resetApplyDateTo}"
+							oncomplete="PF('wCandidates').filter();" ajax="true"
+							update=":candidateSearchForm:filter_applyDateTo" />
+					</h:panelGroup>
+				</p:panelGrid>
+			</h:panelGroup>
 		</h:form>
 		<h:form id="candidateMainForm"
 			rendered="#{candidateViewBean.currentMode==1}">
@@ -208,8 +209,9 @@
 				selection="#{candidateBean.selectedItems}"
 				rowKey="#{candidate.candidateId}" emptyMessage="No candidates found">
 				<!-- Notice [async] -->
-				<p:ajax event="rowDblselect"
-					listener="#{candidateBean.onRowDblSelect}" />
+				<p:ajax event="rowDblselect" delay="100"
+					listener="#{candidateBean.onRowDblSelect}"
+					update=":CandidatePanelGroup" />
 
 				<p:ajax event="contextMenu"
 					listener="#{candidateBean.onContextShow}" />
@@ -218,18 +220,6 @@
 					async="true" onsuccess="PF('statusDialog').hide()" />
 
 				<p:ajax event="rowToggle" listener="#{candidateBean.onRowToggle}" />
-
-				<f:facet name="header">
-					<div class="testClass">
-						<div class="emp-title" style="font-size: 25px;">ECO
-							Candidate List</div>
-						<div class="emp-toggle" style="float: right; margin-top: -27px;">
-							<p:commandButton type="button" id="toggler"
-								icon="fa fa-calendar Fs16 White" />
-						</div>
-					</div>
-					<p:columnToggler trigger="toggler" datasource="candidates" />
-				</f:facet>
 
 				<p:column style="width:16px" exportable="false" toggleable="false">
 					<p:rowToggler />
@@ -285,19 +275,18 @@
 				</p:column>
 
 				<p:column headerText="Action" width="84">
-					<p:commandButton id="editBtn" icon="fa fa-edit Fs16 White"
-						onclick="window.location.hash = '#vCandidate/candidateId=#{candidate.candidateId}';"
-						rendered="#{candidatePermission.checkPermission(candidate.candidateId, 'UPDATE')}">
-					</p:commandButton>
-
-					<p:commandButton id="deleteBtn" styleClass="RedButton"
-						onclick="PF('wDeleteConfirmDialog').show()"
-						icon="fa fa-remove Fs16 White"
+					<p:commandLink id="editBtn" value="Edit"
+						actionListener="#{candidateBean.editCandidate(candidate)}"
+						update=":CandidatePanelGroup"
+						rendered="#{candidatePermission.checkPermission(candidate.candidateId, 'UPDATE')}" />
+					<h:outputText value="|" />
+					<p:commandLink id="deleteBtn" style="margin-left: 2px"
+						value="Delete" onclick="PF('wDeleteConfirmDialog').show()"
 						rendered="#{candidatePermission.checkPermission(candidate.candidateId, 'DELETE')}">
 						<f:setPropertyActionListener
 							target="#{candidateBean.deletedCandidateId}"
 							value="#{candidate.candidateId}" />
-					</p:commandButton>
+					</p:commandLink>
 				</p:column>
 				<p:rowExpansion>
 					<h:outputText value="Desired Positions  "
@@ -484,10 +473,20 @@
 			</p:dialog>
 		</h:form>
 
-		<ui:include src="/views/dialogs/evaluation.xhtml" />
+		<!-- <ui:include src="/views/dialogs/evaluation.xhtml" /> -->
 
 		<ui:include src="/views/dialogs/import_export.xhtml" />
 	</h:body>
+	<script type="text/javascript">
+		function toggle(id) {
+			var element = document.getElementById(id);
+			if (element.style.display == 'block') {
+				element.style.display = 'none';
+			} else {
+				element.style.display = 'block'
+			}
+		}
+	</script>
 
 	<style type="text/css">
 .ui-autocomplete-multiple-container {

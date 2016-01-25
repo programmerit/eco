@@ -85,7 +85,8 @@ public class ImportExportEmployeeDTO implements Serializable {
 	private String pob;
 	private String education;
 	private String educationSpecialize;
-	private long universityId;
+	private long specializedId = 0L;
+	private long universityId = 0L;
 	private String marritalStatus;
 	private String identityCardNo;
 	private Date issuedDate;
@@ -149,7 +150,7 @@ public class ImportExportEmployeeDTO implements Serializable {
 		employeeCode = getCellValueAsString(r.getCell(1));
 		fullname = getCellValueAsString(r.getCell(2));
 		firstName = EmployeeUtils.getFirstName(fullname);
-		middleName = EmployeeUtils.getMiddleNameFromFullname(fullname);
+		middleName = EmployeeUtils.getMiddleName(fullname);
 		lastName = EmployeeUtils.getLastName(fullname);
 
 		LOGGER.info("============ " + fullname + " =============");
@@ -340,6 +341,11 @@ public class ImportExportEmployeeDTO implements Serializable {
 		pob = getCellValueAsString(r.getCell(17));
 		education = getCellValueAsString(r.getCell(18));
 		educationSpecialize = getCellValueAsString(r.getCell(19));
+		// Specialized specialized = educationSpecializeName
+		// .equals(StringUtils.EMPTY) ? SpecializedLocalServiceUtil
+		// .findByName(educationSpecializeName) : null;
+		// specializedId = specialized.getSpecializedId();
+
 		universityId = r.getCell(20) != null
 				&& r.getCell(20).getCellType() == 1
 				&& StringUtils.trimToNull(r.getCell(19).getStringCellValue()) != null
@@ -397,10 +403,11 @@ public class ImportExportEmployeeDTO implements Serializable {
 				promotedDate, joinedDate, laborContractSignedDate,
 				laborContractExpiredDate, laborContractType,
 				laborContractSignedTime, dob, gender, pob, education,
-				educationSpecialize, universityId, marritalStatus,
-				identityCardNo, issuedDate, issuedPlace, contactNumber,
-				companyEmailAddress, taxCode, numberOfDependents,
-				dependentNames, insurranceCode, healthInsurranceCode);
+				educationSpecialize, specializedId, universityId,
+				marritalStatus, identityCardNo, issuedDate, issuedPlace,
+				contactNumber, companyEmailAddress, taxCode,
+				numberOfDependents, dependentNames, insurranceCode,
+				healthInsurranceCode);
 	}
 
 	public Emp updateExistedEmployee(Emp emp) {
@@ -409,10 +416,11 @@ public class ImportExportEmployeeDTO implements Serializable {
 				levelId, promotedDate, joinedDate, laborContractSignedDate,
 				laborContractExpiredDate, laborContractType,
 				laborContractSignedTime, dob, gender, pob, education,
-				educationSpecialize, universityId, marritalStatus,
-				identityCardNo, issuedDate, issuedPlace, contactNumber,
-				companyEmailAddress, taxCode, numberOfDependents,
-				dependentNames, insurranceCode, healthInsurranceCode);
+				educationSpecialize, specializedId, universityId,
+				marritalStatus, identityCardNo, issuedDate, issuedPlace,
+				contactNumber, companyEmailAddress, taxCode,
+				numberOfDependents, dependentNames, insurranceCode,
+				healthInsurranceCode);
 	}
 
 	private static boolean isNotNullCell(Cell cell) {
@@ -706,14 +714,6 @@ public class ImportExportEmployeeDTO implements Serializable {
 
 	public void setEducation(String education) {
 		this.education = education;
-	}
-
-	public String getEducationSpecialize() {
-		return educationSpecialize;
-	}
-
-	public void setEducationSpecialize(String educationSpecialize) {
-		this.educationSpecialize = educationSpecialize;
 	}
 
 	public String getMarritalStatus() {

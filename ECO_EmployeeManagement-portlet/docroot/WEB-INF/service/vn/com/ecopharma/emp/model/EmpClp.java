@@ -94,6 +94,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		attributes.put("placeOfBirth", getPlaceOfBirth());
 		attributes.put("education", getEducation());
 		attributes.put("educationSpecialize", getEducationSpecialize());
+		attributes.put("specializeId", getSpecializeId());
 		attributes.put("universityId", getUniversityId());
 		attributes.put("maritalStatus", getMaritalStatus());
 		attributes.put("identityCardNo", getIdentityCardNo());
@@ -255,6 +256,12 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 
 		if (educationSpecialize != null) {
 			setEducationSpecialize(educationSpecialize);
+		}
+
+		Long specializeId = (Long)attributes.get("specializeId");
+
+		if (specializeId != null) {
+			setSpecializeId(specializeId);
 		}
 
 		Long universityId = (Long)attributes.get("universityId");
@@ -917,6 +924,29 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 						String.class);
 
 				method.invoke(_empRemoteModel, educationSpecialize);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getSpecializeId() {
+		return _specializeId;
+	}
+
+	@Override
+	public void setSpecializeId(long specializeId) {
+		_specializeId = specializeId;
+
+		if (_empRemoteModel != null) {
+			try {
+				Class<?> clazz = _empRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setSpecializeId", long.class);
+
+				method.invoke(_empRemoteModel, specializeId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -1807,6 +1837,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		clone.setPlaceOfBirth(getPlaceOfBirth());
 		clone.setEducation(getEducation());
 		clone.setEducationSpecialize(getEducationSpecialize());
+		clone.setSpecializeId(getSpecializeId());
 		clone.setUniversityId(getUniversityId());
 		clone.setMaritalStatus(getMaritalStatus());
 		clone.setIdentityCardNo(getIdentityCardNo());
@@ -1892,7 +1923,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(107);
+		StringBundler sb = new StringBundler(109);
 
 		sb.append("{empId=");
 		sb.append(getEmpId());
@@ -1934,6 +1965,8 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		sb.append(getEducation());
 		sb.append(", educationSpecialize=");
 		sb.append(getEducationSpecialize());
+		sb.append(", specializeId=");
+		sb.append(getSpecializeId());
 		sb.append(", universityId=");
 		sb.append(getUniversityId());
 		sb.append(", maritalStatus=");
@@ -2007,7 +2040,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(163);
+		StringBundler sb = new StringBundler(166);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.Emp");
@@ -2092,6 +2125,10 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		sb.append(
 			"<column><column-name>educationSpecialize</column-name><column-value><![CDATA[");
 		sb.append(getEducationSpecialize());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>specializeId</column-name><column-value><![CDATA[");
+		sb.append(getSpecializeId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>universityId</column-name><column-value><![CDATA[");
@@ -2251,6 +2288,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 	private String _placeOfBirth;
 	private String _education;
 	private String _educationSpecialize;
+	private long _specializeId;
 	private long _universityId;
 	private String _maritalStatus;
 	private String _identityCardNo;

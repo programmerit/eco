@@ -45,6 +45,7 @@ import vn.com.ecopharma.emp.service.persistence.LocationPersistence;
 import vn.com.ecopharma.emp.service.persistence.PromotedHistoryPersistence;
 import vn.com.ecopharma.emp.service.persistence.ResignationHistoryPersistence;
 import vn.com.ecopharma.emp.service.persistence.ResourceConfigPersistence;
+import vn.com.ecopharma.emp.service.persistence.SpecializedPersistence;
 import vn.com.ecopharma.emp.service.persistence.TitlesDepartmentUnitUnitGroupPersistence;
 import vn.com.ecopharma.emp.service.persistence.TitlesFinder;
 import vn.com.ecopharma.emp.service.persistence.TitlesPersistence;
@@ -978,6 +979,63 @@ public abstract class PromotedHistoryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the specialized local service.
+	 *
+	 * @return the specialized local service
+	 */
+	public vn.com.ecopharma.emp.service.SpecializedLocalService getSpecializedLocalService() {
+		return specializedLocalService;
+	}
+
+	/**
+	 * Sets the specialized local service.
+	 *
+	 * @param specializedLocalService the specialized local service
+	 */
+	public void setSpecializedLocalService(
+		vn.com.ecopharma.emp.service.SpecializedLocalService specializedLocalService) {
+		this.specializedLocalService = specializedLocalService;
+	}
+
+	/**
+	 * Returns the specialized remote service.
+	 *
+	 * @return the specialized remote service
+	 */
+	public vn.com.ecopharma.emp.service.SpecializedService getSpecializedService() {
+		return specializedService;
+	}
+
+	/**
+	 * Sets the specialized remote service.
+	 *
+	 * @param specializedService the specialized remote service
+	 */
+	public void setSpecializedService(
+		vn.com.ecopharma.emp.service.SpecializedService specializedService) {
+		this.specializedService = specializedService;
+	}
+
+	/**
+	 * Returns the specialized persistence.
+	 *
+	 * @return the specialized persistence
+	 */
+	public SpecializedPersistence getSpecializedPersistence() {
+		return specializedPersistence;
+	}
+
+	/**
+	 * Sets the specialized persistence.
+	 *
+	 * @param specializedPersistence the specialized persistence
+	 */
+	public void setSpecializedPersistence(
+		SpecializedPersistence specializedPersistence) {
+		this.specializedPersistence = specializedPersistence;
+	}
+
+	/**
 	 * Returns the titles local service.
 	 *
 	 * @return the titles local service
@@ -1583,6 +1641,12 @@ public abstract class PromotedHistoryLocalServiceBaseImpl
 	protected vn.com.ecopharma.emp.service.ResourceConfigService resourceConfigService;
 	@BeanReference(type = ResourceConfigPersistence.class)
 	protected ResourceConfigPersistence resourceConfigPersistence;
+	@BeanReference(type = vn.com.ecopharma.emp.service.SpecializedLocalService.class)
+	protected vn.com.ecopharma.emp.service.SpecializedLocalService specializedLocalService;
+	@BeanReference(type = vn.com.ecopharma.emp.service.SpecializedService.class)
+	protected vn.com.ecopharma.emp.service.SpecializedService specializedService;
+	@BeanReference(type = SpecializedPersistence.class)
+	protected SpecializedPersistence specializedPersistence;
 	@BeanReference(type = vn.com.ecopharma.emp.service.TitlesLocalService.class)
 	protected vn.com.ecopharma.emp.service.TitlesLocalService titlesLocalService;
 	@BeanReference(type = vn.com.ecopharma.emp.service.TitlesService.class)

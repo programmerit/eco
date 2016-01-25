@@ -2,6 +2,7 @@ package vn.com.ecopharma.emp.dto;
 
 import java.io.Serializable;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
@@ -20,6 +21,8 @@ public class ResignationHistoryIndexedItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Log LOGGER = LogFactoryUtil
 			.getLog(ResignationHistoryIndexedItem.class);
+
+	private static final String DATETIME_FORMAT = "dd/MM/yyyy";
 
 	private Date resignedDate;
 	private String comment;
@@ -64,6 +67,12 @@ public class ResignationHistoryIndexedItem implements Serializable {
 
 	public Date getResignedDate() {
 		return resignedDate;
+	}
+
+	public String getResignedDateString() {
+		final SimpleDateFormat sdf = new SimpleDateFormat(DATETIME_FORMAT);
+		return resignedDate != null ? sdf.format(resignedDate)
+				: StringUtils.EMPTY;
 	}
 
 	public String getResignedType() {

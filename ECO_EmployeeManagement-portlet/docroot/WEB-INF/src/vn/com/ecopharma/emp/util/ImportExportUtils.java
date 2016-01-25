@@ -28,6 +28,7 @@ import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.District;
 import vn.com.ecopharma.emp.model.Emp;
+import vn.com.ecopharma.emp.model.Specialized;
 import vn.com.ecopharma.emp.model.Titles;
 import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.model.UnitGroup;
@@ -35,6 +36,7 @@ import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DistrictLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
+import vn.com.ecopharma.emp.service.SpecializedLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
@@ -261,6 +263,9 @@ public class ImportExportUtils {
 			final List<BankInfoObject> bankInfos = EmployeeUtils
 					.getBankInfoObjectsFromEmp(employee.getEmpId());
 
+			final Specialized specialized = employee.getSpecializeId() != 0 ? SpecializedLocalServiceUtil
+					.fetchSpecialized(employee.getSpecializeId()) : null;
+
 			String tempAddress = StringUtils.EMPTY;
 			String presentAddress = StringUtils.EMPTY;
 			if (!addresses.isEmpty()) {
@@ -278,7 +283,8 @@ public class ImportExportUtils {
 
 			row.createCell(1).setCellValue(employee.getEmpCode());
 
-			row.createCell(2).setCellValue(employeeUser.getFullName());
+			row.createCell(2).setCellValue(
+					EmployeeUtils.getViFullnameFromUser(employeeUser));
 			row.createCell(3).setCellValue(
 					titles != null ? titles.getName() : StringUtils.EMPTY);
 			row.createCell(4).setCellValue(
@@ -324,7 +330,9 @@ public class ImportExportUtils {
 			row.createCell(16).setCellValue(employee.getGender());
 			row.createCell(17).setCellValue(employee.getPlaceOfBirth());
 			row.createCell(18).setCellValue(employee.getEducation());
-			row.createCell(19).setCellValue(employee.getEducationSpecialize());
+			row.createCell(19).setCellValue(
+					employee.getEducationSpecialize() != null ? employee
+							.getEducationSpecialize() : StringUtils.EMPTY);
 			row.createCell(20)
 					.setCellValue(
 							employee.getUniversityId() != 0 ? UniversityLocalServiceUtil
@@ -414,21 +422,6 @@ public class ImportExportUtils {
 		final ServiceContext serviceContext = LiferayFacesContext.getInstance()
 				.getServiceContext();
 		try {
-			final Titles titles = employee.getTitlesId() != 0 ? TitlesLocalServiceUtil
-					.fetchTitles(employee.getTitlesId()) : null;
-
-			final UnitGroup unitGroup = employee.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
-					.fetchUnitGroup(employee.getUnitGroupId()) : null;
-
-			final Unit unit = employee.getUnitId() != 0 ? UnitLocalServiceUtil
-					.fetchUnit(employee.getUnitId()) : null;
-
-			final Department department = employee.getDepartmentId() != 0 ? DepartmentLocalServiceUtil
-					.fetchDepartment(employee.getDepartmentId()) : null;
-
-			final Devision devision = department != null ? DevisionLocalServiceUtil
-					.getDevision(department.getDevisionId()) : null;
-
 			final Row row = ws.createRow(rowNum);
 			final User employeeUser = UserLocalServiceUtil.getUser(employee
 					.getEmployeeUserId());
@@ -462,9 +455,9 @@ public class ImportExportUtils {
 			cell.setCellType(1);
 			cell.setCellValue(employee.getEmployeeCode());
 
-			row.createCell(2).setCellValue(employeeUser.getFullName());
-			row.createCell(3).setCellValue(
-					titles != null ? titles.getName() : StringUtils.EMPTY);
+			row.createCell(2).setCellValue(
+					EmployeeUtils.getViFullnameFromUser(employeeUser));
+			row.createCell(3).setCellValue(employee.getTitles());
 			row.createCell(4).setCellValue(
 					employee.getLevelId() != 0 ? LevelLocalServiceUtil
 							.getLevel(employee.getLevelId()).getName()
@@ -473,20 +466,13 @@ public class ImportExportUtils {
 					employee.getPromotedDate() != null ? employee
 							.getPromotedDate().toString() : StringUtils.EMPTY);
 
-			row.createCell(6)
-					.setCellValue(
-							unitGroup != null ? unitGroup.getName()
-									: StringUtils.EMPTY);
+			row.createCell(6).setCellValue(employee.getUnitGroup());
 
-			row.createCell(7).setCellValue(
-					unit != null ? unit.getName() : StringUtils.EMPTY);
+			row.createCell(7).setCellValue(employee.getUnit());
 
-			row.createCell(8).setCellValue(
-					department != null ? department.getName()
-							: StringUtils.EMPTY);
+			row.createCell(8).setCellValue(employee.getDepartment());
 
-			row.createCell(9).setCellValue(
-					devision != null ? devision.getName() : StringUtils.EMPTY);
+			row.createCell(9).setCellValue(employee.getDevision());
 
 			row.createCell(10).setCellValue(
 					employee.getJoinedDate() != null ? destSdf.format(employee
@@ -709,8 +695,8 @@ public class ImportExportUtils {
 	}
 
 	public static String getReturnValueFromStringCell(Cell cell) {
-		return isEmptyOrNullStringCell(cell) ? StringUtils.EMPTY : cell
-				.getStringCellValue();
+		return isEmptyOrNullStringCell(cell) ? StringUtils.EMPTY : StringUtils
+				.trimToEmpty(cell.getStringCellValue());
 	}
 
 }

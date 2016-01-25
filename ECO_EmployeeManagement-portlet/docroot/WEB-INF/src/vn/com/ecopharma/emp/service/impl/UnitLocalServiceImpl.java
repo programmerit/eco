@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 import vn.com.ecopharma.emp.NoSuchUnitException;
+import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.service.base.UnitLocalServiceBaseImpl;
 
@@ -99,6 +100,17 @@ public class UnitLocalServiceImpl extends UnitLocalServiceBaseImpl {
 			LOGGER.info(e);
 		}
 		return new ArrayList<>();
+	}
+
+	public List<Unit> findByDepartments(List<Department> departments) {
+		if (departments == null)
+			return new ArrayList<>();
+
+		final List<Unit> result = new ArrayList<>();
+		for (Department department : departments) {
+			result.addAll(findByDepartment(department.getDepartmentId()));
+		}
+		return result;
 	}
 
 	public Unit createPrePersistedUnit() {

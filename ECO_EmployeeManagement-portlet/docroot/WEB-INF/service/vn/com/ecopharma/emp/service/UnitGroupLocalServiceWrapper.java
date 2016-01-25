@@ -309,6 +309,12 @@ public class UnitGroupLocalServiceWrapper implements UnitGroupLocalService,
 	}
 
 	@Override
+	public java.util.List<vn.com.ecopharma.emp.model.UnitGroup> findByUnits(
+		java.util.List<vn.com.ecopharma.emp.model.Unit> units) {
+		return _unitGroupLocalService.findByUnits(units);
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.UnitGroup findByNameAndUnit(
 		java.lang.String name, long unitId) {
 		return _unitGroupLocalService.findByNameAndUnit(name, unitId);

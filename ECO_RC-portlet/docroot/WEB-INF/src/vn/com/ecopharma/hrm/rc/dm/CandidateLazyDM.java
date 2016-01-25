@@ -16,7 +16,6 @@ import vn.com.ecopharma.hrm.rc.dto.CandidateIndexItem;
 import vn.com.ecopharma.hrm.rc.dto.VacancyIndexItem;
 import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
 
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.ParseException;
@@ -116,7 +115,7 @@ public class CandidateLazyDM extends LazyDataModel<CandidateIndexItem> {
 						.get(CandidateField.VACANCY);
 				for (VacancyIndexItem item : items) {
 					vacancyFilterQuery.addExactTerm(CandidateField.VACANCY,
-							item.getName());
+							item.getTitles());
 				}
 				queries.add(vacancyFilterQuery);
 

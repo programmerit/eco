@@ -1,0 +1,74 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:head />
+
+	<h:body>
+		<h:form>
+			<p:dialog widgetVar="specializedDialog" showHeader="false"
+				modal="true">
+				<p:outputPanel>
+					<h:panelGrid columns="2">
+						<h:outputText value="First level" />
+						<p:selectOneMenu id="firstLevelSelect"
+							value="#{specializedBean.firstLevelSpecialized}"
+							converter="specializedConverter" effect="fade" filter="true"
+							filterMatchMode="contains" var="s">
+							<p:ajax update="secondLevelSelect thirdLevelSelect"
+								listener="#{specializedBean.onFirstLevelChanged}" />
+
+							<f:selectItem itemLabel="Specilized" itemValue="" />
+							<f:selectItems value="#{specializedBean.firstLevelSpecializeds}"
+								var="s" itemLabel="#{s.name}" itemValue="#{s}" />
+							<p:column>
+					                #{s.name}
+					            </p:column>
+						</p:selectOneMenu>
+
+						<h:outputText value="Second level" />
+						<p:selectOneMenu id="secondLevelSelect"
+							value="#{specializedBean.secondLevelSpecialized}"
+							converter="specializedConverter" effect="fade" filter="true"
+							filterMatchMode="contains" var="s">
+							<p:ajax update="thirdLevelSelect"
+								listener="#{specializedBean.onSecondLevelChanged}" />
+
+							<f:selectItem itemLabel="Specilized" itemValue="" />
+							<f:selectItems value="#{specializedBean.secondLevelSpecializeds}"
+								var="s" itemLabel="#{s.name}" itemValue="#{s}" />
+							<p:column>
+					                #{s.name}
+					            </p:column>
+						</p:selectOneMenu>
+
+						<h:outputText value="Third level" />
+						<p:selectOneMenu id="thirdLevelSelect"
+							value="#{specializedBean.thirdLevelSpecialized}"
+							converter="specializedConverter" effect="fade" filter="true"
+							filterMatchMode="contains" var="s">
+
+							<f:selectItem itemLabel="Specilized" itemValue="" />
+							<f:selectItems value="#{specializedBean.thirdLevelSpecializeds}"
+								var="s" itemLabel="#{s.name}" itemValue="#{s}" />
+							<p:column>
+					                #{s.name}
+					            </p:column>
+						</p:selectOneMenu>
+					</h:panelGrid>
+				</p:outputPanel>
+				<br />
+				<br />
+				<p:commandLink value="Update Specialized"
+					actionListener="#{specializedBean.onUpdateSpecialized}"
+					update=":modifyForm:accordion:educationSpecializeGroup"
+					oncomplete="PF('specializedDialog').hide();" /> |
+				<p:commandLink value="Cancel" style="margin-left: 2px;"
+					onclick="PF('specializedDialog').hide();" />
+			</p:dialog>
+		</h:form>
+	</h:body>
+</f:view>

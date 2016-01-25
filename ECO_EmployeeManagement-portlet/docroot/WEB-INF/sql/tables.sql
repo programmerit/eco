@@ -90,6 +90,7 @@ create table eco_em_portlet_Emp (
 	placeOfBirth VARCHAR(75) null,
 	education VARCHAR(75) null,
 	educationSpecialize VARCHAR(75) null,
+	specializeId LONG,
 	universityId LONG,
 	maritalStatus VARCHAR(75) null,
 	identityCardNo VARCHAR(75) null,
@@ -220,6 +221,24 @@ create table eco_em_portlet_ResourceConfig (
 	modifiedDate DATE null
 );
 
+
+create table eco_em_portlet_Specialized (
+	specializedId LONG not null primary key,
+	specializedCode VARCHAR(75) null,
+	name VARCHAR(256) null,
+	level INTEGER,
+	parentId LONG,
+	university BOOLEAN,
+	college BOOLEAN,
+	vocationalCollege BOOLEAN,
+	vocational BOOLEAN,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null
+);
 
 create table eco_em_portlet_Titles (
 	titlesId LONG not null primary key,

@@ -12,11 +12,6 @@ import org.apache.commons.lang.StringUtils;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Titles;
@@ -29,6 +24,11 @@ import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 @ManagedBean(name = "organizationTreeViewBean")
 @ViewScoped
@@ -57,9 +57,8 @@ public class OrganizationTreeViewBean implements Serializable {
 		final List<Devision> allDevisions = DevisionLocalServiceUtil.findAll();
 		final List<TreeNode> devisionTreeNodes = new ArrayList<>();
 		for (Devision devision : allDevisions) {
-			TreeNode devisionNode = new DefaultTreeNode(
-					OrgNodeItem.DEVISION_TYPE, new OrgNodeItem(devision),
-					treeRoot);
+			TreeNode devisionNode = new DefaultTreeNode("Devision",
+					new OrgNodeItem(devision), treeRoot);
 			devisionTreeNodes.add(devisionNode);
 		}
 
@@ -72,12 +71,11 @@ public class OrganizationTreeViewBean implements Serializable {
 			if (!departmentsByDevision.isEmpty()) {
 				for (Department department : departmentsByDevision) {
 					OrgNodeItem departmentNodeItem = new OrgNodeItem(department);
-					TreeNode deptNode = new DefaultTreeNode(
-							OrgNodeItem.DEPARTMENT_TYPE, departmentNodeItem,
-							devisionNode);
+					TreeNode deptNode = new DefaultTreeNode("Department",
+							departmentNodeItem, devisionNode);
 					deptTreeNodes.add(deptNode);
 
-					devisionItem.getChildrenModels().add(departmentNodeItem);
+					// devisionItem.getChildrenModels().add(departmentNodeItem);
 				}
 			}
 			// else {
@@ -94,7 +92,7 @@ public class OrganizationTreeViewBean implements Serializable {
 					.findByDepartment(deptItem.getId());
 
 			for (Unit unit : unitsByDept) {
-				TreeNode unitNode = new DefaultTreeNode(OrgNodeItem.UNIT_TYPE,
+				TreeNode unitNode = new DefaultTreeNode("Unit",
 						new OrgNodeItem(unit), deptNode);
 				unitTreeNodes.add(unitNode);
 			}
@@ -107,9 +105,8 @@ public class OrganizationTreeViewBean implements Serializable {
 					.findByUnit(unitItem.getId());
 
 			for (UnitGroup unitGroup : unitGroupsByUnit) {
-				TreeNode unitGroupNode = new DefaultTreeNode(
-						OrgNodeItem.UNITGROUP_TYPE, new OrgNodeItem(unitGroup),
-						unitNode);
+				TreeNode unitGroupNode = new DefaultTreeNode("UnitGroup",
+						new OrgNodeItem(unitGroup), unitNode);
 				unitGroupTreeNodes.add(unitGroupNode);
 			}
 		}
@@ -120,9 +117,8 @@ public class OrganizationTreeViewBean implements Serializable {
 			final List<Titles> titlesListByDept = TitlesLocalServiceUtil
 					.findByDepartmentOnly(deptItem.getId());
 			for (Titles titles : titlesListByDept) {
-				TreeNode titlesNode = new DefaultTreeNode(
-						OrgNodeItem.TITLES_TYPE, new OrgNodeItem(titles),
-						deptNode);
+				TreeNode titlesNode = new DefaultTreeNode("Titles",
+						new OrgNodeItem(titles), deptNode);
 				titlesTreeNodesByDept.add(titlesNode);
 			}
 		}
@@ -133,9 +129,8 @@ public class OrganizationTreeViewBean implements Serializable {
 			final List<Titles> titlesListByUnit = TitlesLocalServiceUtil
 					.findByUnitOnly(unitItem.getId());
 			for (Titles titles : titlesListByUnit) {
-				TreeNode titlesNode = new DefaultTreeNode(
-						OrgNodeItem.TITLES_TYPE, new OrgNodeItem(titles),
-						unitNode);
+				TreeNode titlesNode = new DefaultTreeNode("Titles",
+						new OrgNodeItem(titles), unitNode);
 				titlesTreeNodesByUnit.add(titlesNode);
 			}
 		}
@@ -146,9 +141,8 @@ public class OrganizationTreeViewBean implements Serializable {
 			final List<Titles> titlesListByUnitGroup = TitlesLocalServiceUtil
 					.findByUnitGroupOnly(unitGroupItem.getId());
 			for (Titles titles : titlesListByUnitGroup) {
-				TreeNode titlesNode = new DefaultTreeNode(
-						OrgNodeItem.TITLES_TYPE, new OrgNodeItem(titles),
-						unitGroupNode);
+				TreeNode titlesNode = new DefaultTreeNode("Titles",
+						new OrgNodeItem(titles), unitGroupNode);
 				titlesTreeNodesByUnitGroup.add(titlesNode);
 			}
 		}
@@ -185,6 +179,7 @@ public class OrganizationTreeViewBean implements Serializable {
 		titlesBean.setUnitGroup(unitGroup);
 		titlesBean.setUnit(unit);
 		titlesBean.setDepartment(department);
+		titlesBean.setUpdateComponents(":orgTreeForm:orgTree");
 		titlesBean.setUpdateTree(true);
 	}
 

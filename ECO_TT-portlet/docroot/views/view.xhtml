@@ -22,154 +22,168 @@
 		</p:dialog>
 
 		<h:form id="searchForm">
-			<h:outputText value="Filter:" styleClass="label" />
-			<p:panelGrid columns="5" layout="grid" styleClass="filter-grid"
-				style="margin-bottom: 7px!important; color: black!important;">
-				<h:panelGroup>
-					<p:inputText id="filter_globalString"
-						value="#{timeTrackingFilterBean.globalString}"
-						placeholder="Everything" style="width: 150px;">
-						<p:ajax event="keyup" oncomplete="PF('wReportTable').filter();;" />
-					</p:inputText>
-					<p:tooltip for="filter_globalString" value="Filter Everything"
-						showEffect="clip" hideEffect="explode" />
-					<br />
 
-					<p:inputText id="filter_fullName"
-						value="#{timeTrackingFilterBean.fullName}" placeholder="FullName"
-						style="width: 150px;">
-						<p:ajax event="keyup" oncomplete="PF('wReportTable').filter();;" />
-					</p:inputText>
-					<p:tooltip for="filter_fullName" value="Filter [Fullname]"
-						showEffect="clip" hideEffect="explode" />
-				</h:panelGroup>
+			<p:remoteCommand name="refreshFooter"
+				update=":reportForm:reports:totalFilteredCount" />
 
-				<h:panelGroup>
-					<p:inputText id="filter_empCode"
-						value="#{timeTrackingFilterBean.employeeCode}"
-						placeholder="Employee Code" style="width: 150px">
-						<p:ajax event="keyup" oncomplete="PF('wReportTable').filter();;" />
-					</p:inputText>
-					<p:tooltip for="filter_empCode" value="Filter [Employee Code]"
-						showEffect="clip" hideEffect="explode" />
-				</h:panelGroup>
+			<p:remoteCommand name="refreshReports" update=":reportForm:reports" />
 
-				<h:panelGroup>
-					<p:selectOneMenu id="devisionSelect"
-						value="#{timeTrackingFilterBean.devision}"
-						converter="devisionConverter" effect="fade" filter="true"
-						filterMatchMode="contains" var="d">
-						<p:ajax listener="#{timeTrackingFilterBean.onDevisionChanged}"
-							update="departmentSelect unitSelect"
-							oncomplete="PF('wReportTable').filter();;" />
+			<h:link value="Show/Hide filter" styleClass="label"
+				onmouseover="toggle('#{requestScope.filterGrid.clientId}'); return false;"
+				onclick="toggle('#{requestScope.filterGrid.clientId}'); return false;" />
+			<h:panelGroup binding="#{requestScope.filterGrid}" id="filterGroup"
+				style="display: none;">
+				<p:panelGrid columns="5" layout="grid" styleClass="filter-grid"
+					style="margin-bottom: 7px!important; color: black!important;">
+					<h:panelGroup>
+						<p:inputText id="filter_globalString"
+							value="#{timeTrackingFilterBean.globalString}"
+							placeholder="Everything" style="width: 150px;">
+							<p:ajax event="keyup"
+								oncomplete="refreshReports(); refreshFooter();" />
+						</p:inputText>
+						<p:tooltip for="filter_globalString" value="Filter Everything"
+							showEffect="clip" hideEffect="explode" />
+						<br />
 
-						<f:selectItem itemLabel="ALL DEVISION" itemValue="" />
-						<f:selectItems value="#{timeTrackingFilterBean.devisions}" var="d"
-							itemLabel="#{d.name}" itemValue="#{d}" />
-						<p:column>
-					                #{d.name}
-					            </p:column>
-					</p:selectOneMenu>
-					<p:tooltip for="devisionSelect" value="Filter [Devision]"
-						showEffect="clip" hideEffect="explode" />
-					<br />
+						<p:inputText id="filter_fullName"
+							value="#{timeTrackingFilterBean.fullName}" placeholder="FullName"
+							style="width: 150px;">
+							<p:ajax event="keyup"
+								oncomplete="refreshReports(); refreshFooter();" />
+						</p:inputText>
+						<p:tooltip for="filter_fullName" value="Filter [Fullname]"
+							showEffect="clip" hideEffect="explode" />
+					</h:panelGroup>
 
-					<p:selectOneMenu id="departmentSelect"
-						value="#{timeTrackingFilterBean.department}"
-						converter="departmentConverter" effect="fade" filter="true"
-						filterMatchMode="contains" var="d">
-						<p:ajax listener="#{timeTrackingFilterBean.onDepartmentChanged}"
-							update="unitSelect unitGroupSelect titlesSelect"
-							oncomplete="PF('wReportTable').filter();;" />
+					<h:panelGroup>
+						<p:inputText id="filter_empCode"
+							value="#{timeTrackingFilterBean.employeeCode}"
+							placeholder="Employee Code" style="width: 150px">
+							<p:ajax event="keyup"
+								oncomplete="refreshReports(); refreshFooter();" />
+						</p:inputText>
+						<p:tooltip for="filter_empCode" value="Filter [Employee Code]"
+							showEffect="clip" hideEffect="explode" />
+					</h:panelGroup>
 
-						<f:selectItem itemLabel="ALL DEPARTMENT" itemValue="" />
-						<f:selectItems value="#{timeTrackingFilterBean.departments}"
-							var="d" itemLabel="#{d.name}" itemValue="#{d}" />
-						<p:column>
-					                #{d.name}
-					            </p:column>
-					</p:selectOneMenu>
-					<p:tooltip for="departmentSelect" value="Filter [Department]"
-						showEffect="clip" hideEffect="explode" />
-				</h:panelGroup>
+					<h:panelGroup>
+						<p:selectOneMenu id="devisionSelect"
+							value="#{timeTrackingFilterBean.devision}"
+							converter="devisionConverter" effect="fade" filter="true"
+							filterMatchMode="contains" var="d">
+							<p:ajax listener="#{timeTrackingFilterBean.onDevisionChanged}"
+								update="departmentSelect unitSelect unitGroupSelect titlesSelect"
+								oncomplete="refreshReports(); refreshFooter();" />
 
-				<h:panelGroup>
-					<h:panelGrid columns="2" border="0">
-						<p:selectOneMenu id="unitSelect"
-							value="#{timeTrackingFilterBean.unit}" converter="unitConverter"
-							effect="fade" filter="true" filterMatchMode="contains" var="u">
-							<p:ajax listener="#{timeTrackingFilterBean.onUnitChanged}"
-								update="unitGroupSelect titlesSelect"
-								oncomplete="PF('wReportTable').filter();;" />
-
-							<f:selectItem itemLabel="ALL UNIT" itemValue="" />
-							<f:selectItems value="#{timeTrackingFilterBean.units}" var="u"
-								itemLabel="#{u.name}" itemValue="#{u}" />
+							<f:selectItem itemLabel="ALL DEVISION" itemValue="" />
+							<f:selectItems value="#{timeTrackingFilterBean.devisions}"
+								var="d" itemLabel="#{d.name}" itemValue="#{d}" />
 							<p:column>
-					                #{u.unitId} - #{u.name}
+					                #{d.name}
 					            </p:column>
 						</p:selectOneMenu>
-						<p:tooltip for="unitSelect" value="Filter [Unit]"
+						<p:tooltip for="devisionSelect" value="Filter [Devision]"
 							showEffect="clip" hideEffect="explode" />
+						<br />
 
-						<p:selectOneMenu id="unitGroupSelect"
-							value="#{timeTrackingFilterBean.unitGroup}"
-							converter="unitGroupConverter" effect="fade" filter="true"
+						<p:selectOneMenu id="departmentSelect"
+							value="#{timeTrackingFilterBean.department}"
+							converter="departmentConverter" effect="fade" filter="true"
 							filterMatchMode="contains" var="d">
-							<p:ajax listener="#{timeTrackingFilterBean.onUnitGroupChanged}"
-								update="titlesSelect" oncomplete="PF('wReportTable').filter();;" />
+							<p:ajax listener="#{timeTrackingFilterBean.onDepartmentChanged}"
+								update="unitSelect unitGroupSelect titlesSelect"
+								oncomplete="refreshReports(); refreshFooter();" />
 
-							<f:selectItem itemLabel="ALL GROUP" itemValue="" />
-							<f:selectItems value="#{timeTrackingFilterBean.unitGroups}"
-								var="g" itemLabel="#{g.name}" itemValue="#{g}" />
-
+							<f:selectItem itemLabel="ALL DEPARTMENT" itemValue="" />
+							<f:selectItems value="#{timeTrackingFilterBean.departments}"
+								var="d" itemLabel="#{d.name}" itemValue="#{d}" />
 							<p:column>
+					                #{d.name}
+					            </p:column>
+						</p:selectOneMenu>
+						<p:tooltip for="departmentSelect" value="Filter [Department]"
+							showEffect="clip" hideEffect="explode" />
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<h:panelGrid columns="2" border="0">
+							<p:selectOneMenu id="unitSelect"
+								value="#{timeTrackingFilterBean.unit}" converter="unitConverter"
+								effect="fade" filter="true" filterMatchMode="contains" var="u">
+								<p:ajax listener="#{timeTrackingFilterBean.onUnitChanged}"
+									update="unitGroupSelect titlesSelect"
+									oncomplete="refreshReports(); refreshFooter();" />
+
+								<f:selectItem itemLabel="ALL UNIT" itemValue="" />
+								<f:selectItems value="#{timeTrackingFilterBean.units}" var="u"
+									itemLabel="#{u.name}" itemValue="#{u}" />
+								<p:column>
+					                #{u.name}
+					            </p:column>
+							</p:selectOneMenu>
+							<p:tooltip for="unitSelect" value="Filter [Unit]"
+								showEffect="clip" hideEffect="explode" />
+
+							<p:selectOneMenu id="unitGroupSelect"
+								value="#{timeTrackingFilterBean.unitGroup}"
+								converter="unitGroupConverter" effect="fade" filter="true"
+								filterMatchMode="contains" var="g">
+								<p:ajax listener="#{timeTrackingFilterBean.onUnitGroupChanged}"
+									update="titlesSelect"
+									oncomplete="refreshReports(); refreshFooter();" />
+
+								<f:selectItem itemLabel="ALL GROUP" itemValue="" />
+								<f:selectItems value="#{timeTrackingFilterBean.unitGroups}"
+									var="g" itemLabel="#{g.name}" itemValue="#{g}" />
+
+								<p:column>
 					                #{g.name}
 					            </p:column>
-						</p:selectOneMenu>
-						<p:tooltip for="unitGroupSelect" value="Filter [UnitGroup]"
-							showEffect="clip" hideEffect="explode" />
+							</p:selectOneMenu>
+							<p:tooltip for="unitGroupSelect" value="Filter [UnitGroup]"
+								showEffect="clip" hideEffect="explode" />
 
 
-						<p:selectOneMenu id="titlesSelect"
-							value="#{timeTrackingFilterBean.titles}"
-							converter="titlesConverter" effect="fade" filter="true"
-							filterMatchMode="contains" var="t">
-							<p:ajax oncomplete="PF('wReportTable').filter();;" />
+							<p:selectOneMenu id="titlesSelect"
+								value="#{timeTrackingFilterBean.titles}"
+								converter="titlesConverter" effect="fade" filter="true"
+								filterMatchMode="contains" var="t">
+								<p:ajax oncomplete="refreshReports(); refreshFooter();" />
 
-							<f:selectItem itemLabel="ALL TITLES" itemValue="" />
-							<f:selectItems value="#{timeTrackingFilterBean.titlesList}"
-								var="t" itemLabel="#{t.name}" itemValue="#{t}" />
+								<f:selectItem itemLabel="ALL TITLES" itemValue="" />
+								<f:selectItems value="#{timeTrackingFilterBean.titlesList}"
+									var="t" itemLabel="#{t.name}" itemValue="#{t}" />
 
-							<p:column>
+								<p:column>
 					                #{t.name}
 					            </p:column>
+							</p:selectOneMenu>
+							<p:tooltip for="titlesSelect" value="Filter [Titles]"
+								showEffect="clip" hideEffect="explode" />
+						</h:panelGrid>
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<p:selectOneMenu id="monthSelect"
+							value="#{timeTrackingFilterBean.month}" var="m">
+							<p:ajax oncomplete="refreshReports(); refreshFooter();" />
+							<f:selectItems value="#{timeTrackingFilterBean.months}" var="m"
+								itemLabel="#{timeTrackingFilterBean.getMonthName(m)}"
+								itemValue="#{m}" />
+							<p:ajax update=":reportForm:reports" />
+							<p:column>#{timeTrackingFilterBean.getMonthName(m)}</p:column>
 						</p:selectOneMenu>
-						<p:tooltip for="titlesSelect" value="Filter [Titles]"
-							showEffect="clip" hideEffect="explode" />
-					</h:panelGrid>
-				</h:panelGroup>
 
-				<h:panelGroup>
-					<p:selectOneMenu id="monthSelect"
-						value="#{timeTrackingFilterBean.month}" var="m">
-						<p:ajax oncomplete="PF('wReportTable')" />
-						<f:selectItems value="#{timeTrackingFilterBean.months}" var="m"
-							itemLabel="#{timeTrackingFilterBean.getMonthName(m)}"
-							itemValue="#{m}" />
-						<p:ajax update=":reportForm:reports" />
-						<p:column>#{timeTrackingFilterBean.getMonthName(m)}</p:column>
-					</p:selectOneMenu>
-
-					<p:selectOneMenu id="yearSelect"
-						value="#{timeTrackingFilterBean.year}" var="y">
-						<p:ajax oncomplete="PF('wReportTable')" />
-						<f:selectItems value="#{timeTrackingFilterBean.years}" var="y"
-							itemLabel="#{y}" itemValue="#{y}" />
-						<p:ajax update=":reportForm:reports" />
-						<p:column>#{y}</p:column>
-					</p:selectOneMenu>
-					<!-- 					<br />
+						<p:selectOneMenu id="yearSelect"
+							value="#{timeTrackingFilterBean.year}" var="y">
+							<p:ajax oncomplete="refreshReports(); refreshFooter();" />
+							<f:selectItems value="#{timeTrackingFilterBean.years}" var="y"
+								itemLabel="#{y}" itemValue="#{y}" />
+							<p:ajax update=":reportForm:reports" />
+							<p:column>#{y}</p:column>
+						</p:selectOneMenu>
+						<!-- 					<br />
 					<p:selectOneMenu id="valueFilterSelect"
 						value="#{timeTrackingFilterBean.valueFilter}" var="v">
 						<p:ajax oncomplete="PF('wReportTable')" />
@@ -178,8 +192,9 @@
 						<p:ajax update=":reportForm:reports" />
 						<p:column>#{v}</p:column>
 					</p:selectOneMenu> -->
-				</h:panelGroup>
-			</p:panelGrid>
+					</h:panelGroup>
+				</p:panelGrid>
+			</h:panelGroup>
 		</h:form>
 		<h:form id="reportForm">
 			<p:dataTable id="reports" widgetVar="wReportTable" var="t"
@@ -245,10 +260,25 @@
 					<p:separator style="width: 100px; margin-left: -10px;" />
 					<h:outputText value="#{t.grandTotalMaxOut}" style="color: black;" />
 				</p:column>
+
+				<f:facet name="footer">
+		        		In total there are of <h:outputText id="totalFilteredCount"
+						value="#{timeTrackingReportBean.lazyDataModel.rowCount}" /> employees.
+		   			 </f:facet>
 			</p:dataTable>
 		</h:form>
 
 	</h:body>
+	<script type="text/javascript">
+		function toggle(id) {
+			var element = document.getElementById(id);
+			if (element.style.display == 'block') {
+				element.style.display = 'none';
+			} else {
+				element.style.display = 'block'
+			}
+		}
+	</script>
 
 	<style type="text/css">
 .sunday>span.ui-column-title {

@@ -37,6 +37,7 @@ import vn.com.ecopharma.emp.model.LocationClp;
 import vn.com.ecopharma.emp.model.PromotedHistoryClp;
 import vn.com.ecopharma.emp.model.ResignationHistoryClp;
 import vn.com.ecopharma.emp.model.ResourceConfigClp;
+import vn.com.ecopharma.emp.model.SpecializedClp;
 import vn.com.ecopharma.emp.model.TitlesClp;
 import vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroupClp;
 import vn.com.ecopharma.emp.model.UnitClp;
@@ -165,6 +166,10 @@ public class ClpSerializer {
 
 		if (oldModelClassName.equals(ResourceConfigClp.class.getName())) {
 			return translateInputResourceConfig(oldModel);
+		}
+
+		if (oldModelClassName.equals(SpecializedClp.class.getName())) {
+			return translateInputSpecialized(oldModel);
 		}
 
 		if (oldModelClassName.equals(TitlesClp.class.getName())) {
@@ -322,6 +327,16 @@ public class ClpSerializer {
 		ResourceConfigClp oldClpModel = (ResourceConfigClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getResourceConfigRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputSpecialized(BaseModel<?> oldModel) {
+		SpecializedClp oldClpModel = (SpecializedClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getSpecializedRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -850,6 +865,43 @@ public class ClpSerializer {
 		}
 
 		if (oldModelClassName.equals(
+					"vn.com.ecopharma.emp.model.impl.SpecializedImpl")) {
+			return translateOutputSpecialized(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
 					"vn.com.ecopharma.emp.model.impl.TitlesImpl")) {
 			return translateOutputTitles(oldModel);
 		}
@@ -1202,6 +1254,10 @@ public class ClpSerializer {
 			return new vn.com.ecopharma.emp.NoSuchResourceConfigException();
 		}
 
+		if (className.equals("vn.com.ecopharma.emp.NoSuchSpecializedException")) {
+			return new vn.com.ecopharma.emp.NoSuchSpecializedException();
+		}
+
 		if (className.equals("vn.com.ecopharma.emp.NoSuchTitlesException")) {
 			return new vn.com.ecopharma.emp.NoSuchTitlesException();
 		}
@@ -1349,6 +1405,16 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setResourceConfigRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputSpecialized(BaseModel<?> oldModel) {
+		SpecializedClp newModel = new SpecializedClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setSpecializedRemoteModel(oldModel);
 
 		return newModel;
 	}

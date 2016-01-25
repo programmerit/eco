@@ -301,6 +301,15 @@ public class TitlesLocalServiceWrapper implements TitlesLocalService,
 	}
 
 	@Override
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findFilterListByRelatedFields(
+		java.util.List<vn.com.ecopharma.emp.model.Department> departments,
+		java.util.List<vn.com.ecopharma.emp.model.Unit> units,
+		java.util.List<vn.com.ecopharma.emp.model.UnitGroup> unitGroups) {
+		return _titlesLocalService.findFilterListByRelatedFields(departments,
+			units, unitGroups);
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.Titles addTitles(java.lang.String name,
 		java.lang.String name_en, java.lang.String code,
 		com.liferay.portal.service.ServiceContext serviceContext) {
@@ -331,6 +340,12 @@ public class TitlesLocalServiceWrapper implements TitlesLocalService,
 	public java.util.List<vn.com.ecopharma.emp.model.Titles> findAllByDepartment(
 		long departmentId) {
 		return _titlesLocalService.findAllByDepartment(departmentId);
+	}
+
+	@Override
+	public java.util.List<vn.com.ecopharma.emp.model.Titles> findAllByUnit(
+		long unitId) {
+		return _titlesLocalService.findAllByUnit(unitId);
 	}
 
 	@Override

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import vn.com.ecopharma.emp.enumeration.CertificateType;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.enumeration.LaborContractType;
@@ -13,6 +15,7 @@ import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.Level;
+import vn.com.ecopharma.emp.model.Specialized;
 import vn.com.ecopharma.emp.model.Titles;
 import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.model.UnitGroup;
@@ -21,6 +24,7 @@ import vn.com.ecopharma.emp.service.CertificateLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
+import vn.com.ecopharma.emp.service.SpecializedLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
@@ -33,7 +37,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.model.Region;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.RegionServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
@@ -48,6 +54,7 @@ public class EmpInfoItem implements Serializable {
 	private static final Log LOGGER = LogFactoryUtil.getLog(EmpInfoItem.class);
 
 	private static final String MALE = "Male";
+	private String fullName = StringUtils.EMPTY;
 	private Emp employee;
 	private User user;
 	private University university;
@@ -72,6 +79,10 @@ public class EmpInfoItem implements Serializable {
 	private List<DependentName> dependentNames;
 
 	private List<BankInfoObject> bankInfos;
+
+	private Specialized specialized;
+
+	private Region workingPlace;
 
 	public EmpInfoItem(Emp employee) {
 
@@ -101,6 +112,7 @@ public class EmpInfoItem implements Serializable {
 
 		try {
 			user = UserLocalServiceUtil.fetchUser(employee.getEmpUserId());
+			fullName = EmployeeUtils.getViFullnameFromUser(user);
 			titles = TitlesLocalServiceUtil.getTitles(employee.getTitlesId());
 			unitGroup = employee.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
 					.getUnitGroup(employee.getUnitGroupId()) : null;
@@ -110,6 +122,11 @@ public class EmpInfoItem implements Serializable {
 					.getDepartment(employee.getDepartmentId()) : null;
 			devision = department != null ? DevisionLocalServiceUtil
 					.getDevision(department.getDevisionId()) : null;
+			specialized = employee.getSpecializeId() != 0L ? SpecializedLocalServiceUtil
+					.fetchSpecialized(employee.getSpecializeId()) : null;
+
+			workingPlace = employee.getWorkingPlaceId() != 0L ? RegionServiceUtil
+					.getRegion(employee.getWorkingPlaceId()) : null;
 
 		} catch (PortalException e) {
 			LOGGER.info(e);
@@ -342,6 +359,22 @@ public class EmpInfoItem implements Serializable {
 		this.bankInfos = bankInfos;
 	}
 
+	public Specialized getSpecialized() {
+		return specialized;
+	}
+
+	public void setSpecialized(Specialized specialized) {
+		this.specialized = specialized;
+	}
+
+	public Region getWorkingPlace() {
+		return workingPlace;
+	}
+
+	public void setWorkingPlace(Region workingPlace) {
+		this.workingPlace = workingPlace;
+	}
+
 	public String getLocalizedLaborContractType(String laborContractType) {
 		return LaborContractType.valueOf(laborContractType)
 				.getLocalizedString();
@@ -350,5 +383,13 @@ public class EmpInfoItem implements Serializable {
 	public String getStatusCss() {
 		return EmployeeStatus.getCssClass(EmployeeStatus.valueOf(employee
 				.getStatus()));
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 }

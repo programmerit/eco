@@ -29,12 +29,12 @@
 				update=":searchForm:filterGroup" />
 
 			<h:link value="Show/Hide filter" styleClass="label"
+				onmouseover="toggle('#{requestScope.filterGrid.clientId}'); return false;"
 				onclick="toggle('#{requestScope.filterGrid.clientId}'); return false;" />
 
 			<h:panelGroup binding="#{requestScope.filterGrid}" id="filterGroup"
 				style="display: none;">
-				<p:panelGrid id="filterGrid" columns="5" layout="grid"
-					styleClass="filter-grid"
+				<p:panelGrid id="filterGrid" columns="4" styleClass="filter-grid"
 					style="margin-bottom: 7px!important; color: black!important;">
 					<h:panelGroup>
 						<p:inputText id="filter_globalString"
@@ -80,102 +80,6 @@
 					</h:panelGroup>
 
 					<h:panelGroup>
-						<p:selectOneMenu id="devisionSelect"
-							value="#{empFilterBean.devision}" converter="devisionConverter"
-							effect="fade" filter="true" filterMatchMode="contains" var="d">
-							<p:ajax listener="#{empFilterBean.onDevisionChanged}"
-								update="departmentSelect unitSelect unitGroupSelect titlesSelect"
-								oncomplete="PF('employeeTable').filter(); refreshFooter();" />
-
-							<f:selectItem itemLabel="ALL DEVISION" itemValue="" />
-							<f:selectItems value="#{empFilterBean.devisions}" var="d"
-								itemLabel="#{d.name}" itemValue="#{d}" />
-							<p:column>
-					                #{d.name}
-					            </p:column>
-						</p:selectOneMenu>
-						<p:tooltip for="devisionSelect" value="Filter [Devision]"
-							showEffect="clip" hideEffect="explode" />
-						<br />
-
-						<p:selectOneMenu id="departmentSelect"
-							value="#{empFilterBean.department}"
-							converter="departmentConverter" effect="fade" filter="true"
-							filterMatchMode="contains" var="d">
-							<p:ajax listener="#{empFilterBean.onDepartmentChanged}"
-								update="unitSelect unitGroupSelect titlesSelect"
-								oncomplete="PF('employeeTable').filter(); refreshFooter();" />
-
-							<f:selectItem itemLabel="ALL DEPARTMENT" itemValue="" />
-							<f:selectItems value="#{empFilterBean.departments}" var="d"
-								itemLabel="#{d.name}" itemValue="#{d}" />
-							<p:column>
-					                #{d.name}
-					            </p:column>
-						</p:selectOneMenu>
-						<p:tooltip for="departmentSelect" value="Filter [Department]"
-							showEffect="clip" hideEffect="explode" />
-					</h:panelGroup>
-
-					<h:panelGroup>
-						<h:panelGrid columns="2" border="0">
-							<p:selectOneMenu id="unitSelect" value="#{empFilterBean.unit}"
-								converter="unitConverter" effect="fade" filter="true"
-								filterMatchMode="contains" var="u">
-								<p:ajax listener="#{empFilterBean.onUnitChanged}"
-									update="unitGroupSelect titlesSelect"
-									oncomplete="PF('employeeTable').filter(); refreshFooter();" />
-
-								<f:selectItem itemLabel="ALL UNIT" itemValue="" />
-								<f:selectItems value="#{empFilterBean.units}" var="u"
-									itemLabel="#{u.name}" itemValue="#{u}" />
-								<p:column>
-					                #{u.name}
-					            </p:column>
-							</p:selectOneMenu>
-							<p:tooltip for="unitSelect" value="Filter [Unit]"
-								showEffect="clip" hideEffect="explode" />
-
-							<p:selectOneMenu id="unitGroupSelect"
-								value="#{empFilterBean.unitGroup}"
-								converter="unitGroupConverter" effect="fade" filter="true"
-								filterMatchMode="contains" var="g">
-								<p:ajax listener="#{empFilterBean.onUnitGroupChanged}"
-									update="titlesSelect"
-									oncomplete="PF('employeeTable').filter(); refreshFooter();" />
-
-								<f:selectItem itemLabel="ALL GROUP" itemValue="" />
-								<f:selectItems value="#{empFilterBean.unitGroups}" var="g"
-									itemLabel="#{g.name}" itemValue="#{g}" />
-
-								<p:column>
-					                #{g.name}
-					            </p:column>
-							</p:selectOneMenu>
-							<p:tooltip for="unitGroupSelect" value="Filter [UnitGroup]"
-								showEffect="clip" hideEffect="explode" />
-
-
-							<p:selectOneMenu id="titlesSelect"
-								value="#{empFilterBean.titles}" converter="titlesConverter"
-								effect="fade" filter="true" filterMatchMode="contains" var="t">
-								<p:ajax
-									oncomplete="PF('employeeTable').filter(); refreshFooter();" />
-
-								<f:selectItem itemLabel="ALL TITLES" itemValue="" />
-								<f:selectItems value="#{empFilterBean.titlesList}" var="t"
-									itemLabel="#{t.name}" itemValue="#{t}" />
-
-								<p:column>
-					                #{t.name}
-					            </p:column>
-							</p:selectOneMenu>
-							<p:tooltip for="titlesSelect" value="Filter [Titles]"
-								showEffect="clip" hideEffect="explode" />
-						</h:panelGrid>
-					</h:panelGroup>
-
-					<h:panelGroup>
 						<h:panelGroup>
 							<p:calendar id="calendarJoinedDateFrom" mask="false"
 								widgetVar="wCalendarJoinedDateFrom"
@@ -210,6 +114,11 @@
 								ajax="true" update=":searchForm:calendarJoinedDateTo" />
 						</h:panelGroup>
 					</h:panelGroup>
+
+					<h:panelGroup>
+						<eco:organizationFilterPanel
+							onCompleteUpdate="PF('employeeTable').filter(); refreshFooter();" />
+					</h:panelGroup>
 				</p:panelGrid>
 			</h:panelGroup>
 		</h:form>
@@ -230,7 +139,7 @@
 			</p:contextMenu>
 
 			<h:outputText value="Columns to show:" styleClass="label" />
-			
+
 			<h:panelGrid columns="3" style="margin:10px 0">
 				<p:autoComplete id="columns" multiple="true" scrollHeight="300"
 					value="#{employeeIndexedBean.columnTemplates}"
@@ -254,7 +163,9 @@
 					ajax="true"
 					rendered="#{employeeModelPermission.checkPermission('ADD')}" /> |
 
-			<p:link value="Resignation List" outcome="resignationHistory" /> |
+				<p:link value="Resignation List" outcome="resignationHistory">
+					<f:param name="param1" value="test" />
+				</p:link> |
 
 				<p:link value="Promotion List" outcome="promotionHistory" /> |
 
@@ -269,17 +180,11 @@
 					actionListener="#{employeeIndexedBean.indexAllEmployees}"
 					ajax="true" update="employees" /> |
 					
-				<p:commandLink value="Remove All Employees" rendered="true"
-					actionListener="#{employeeIndexedBean.onCompletelyRemoveAllEmployees}"
-					ajax="true" /> |
-					
-				<p:commandLink value="Remove All Organizations" rendered="true"
-					actionListener="#{employeeIndexedBean.onCompletelyRemoveAllOrganizations}"
-					ajax="true" /> | 
-					
 				<p:link value="Organization Tree" outcome="organizationView" /> | 
 				
-				<p:link value="Location Tree" outcome="locationView" />
+				<p:link value="Location Tree" outcome="locationView" /> | 
+				
+				<p:link value="Specialized Tree" outcome="specializedView" />
 
 			</h:panelGroup>
 			<!-- EMPLOYEE TABLE-->

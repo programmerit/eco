@@ -5,6 +5,7 @@ import javax.faces.context.FacesContext;
 
 import vn.com.ecopharma.emp.bean.EmployeeBean;
 import vn.com.ecopharma.emp.bean.EmployeeIndexedBean;
+import vn.com.ecopharma.emp.bean.OrganizationFilterBean;
 import vn.com.ecopharma.emp.bean.OrganizationTreeViewBean;
 import vn.com.ecopharma.emp.bean.TitlesBean;
 
@@ -17,6 +18,8 @@ public class BeanUtils {
 	private static final String TITLES_BEAN = "titlesBean";
 
 	private static final String ORGANIZATION_TREE_VIEW_BEAN = "organizationTreeViewBean";
+
+	private static final String ORGANIZATION_FILTER_BEAN = "organizationFilterBean";
 
 	private BeanUtils() {
 	}
@@ -45,6 +48,10 @@ public class BeanUtils {
 
 	public static OrganizationTreeViewBean getOrganizationTreeViewBean() {
 		return (OrganizationTreeViewBean) getBackingBeanByName(ORGANIZATION_TREE_VIEW_BEAN);
+	}
+
+	public static OrganizationFilterBean getOrganizationFilterBean() {
+		return (OrganizationFilterBean) getBackingBeanByName(ORGANIZATION_FILTER_BEAN);
 	}
 
 }

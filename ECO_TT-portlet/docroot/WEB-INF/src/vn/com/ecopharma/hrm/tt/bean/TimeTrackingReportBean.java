@@ -58,7 +58,7 @@ public class TimeTrackingReportBean implements Serializable {
 				TTUtils.checkAndAddFilterValue(TimeTrackingField.GLOBAL,
 						filterBean.getGlobalString(), filters);
 
-				TTUtils.checkAndAddFilterValue(TimeTrackingField.FULLNAME,
+				TTUtils.checkAndAddFilterValue(TimeTrackingField.VN_FULLNAME,
 						filterBean.getFullName(), filters);
 
 				TTUtils.checkAndAddFilterValue(TimeTrackingField.EMP_CODE,

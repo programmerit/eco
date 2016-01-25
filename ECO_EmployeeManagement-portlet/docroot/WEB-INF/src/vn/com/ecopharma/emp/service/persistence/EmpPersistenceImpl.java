@@ -1928,6 +1928,7 @@ public class EmpPersistenceImpl extends BasePersistenceImpl<Emp>
 		empImpl.setPlaceOfBirth(emp.getPlaceOfBirth());
 		empImpl.setEducation(emp.getEducation());
 		empImpl.setEducationSpecialize(emp.getEducationSpecialize());
+		empImpl.setSpecializeId(emp.getSpecializeId());
 		empImpl.setUniversityId(emp.getUniversityId());
 		empImpl.setMaritalStatus(emp.getMaritalStatus());
 		empImpl.setIdentityCardNo(emp.getIdentityCardNo());

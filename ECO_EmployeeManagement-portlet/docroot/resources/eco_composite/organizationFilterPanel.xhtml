@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+	<composite:interface>
+		<composite:attribute name="onCompleteUpdate" />
+	</composite:interface>
+
+	<composite:implementation>
+		<h:panelGroup>
+			<h:panelGrid columns="2">
+				<h:panelGroup>
+					<p:selectCheckboxMenu id="devisionSelect" label="Devision"
+						converter="devisionConverter"
+						value="#{organizationFilterBean.selectedDevisions}">
+						<p:ajax listener="#{organizationFilterBean.onDevisionChanged}"
+							update="departmentSelect unitSelect unitGroupSelect titlesSelect"
+							oncomplete="#{cc.attrs.onCompleteUpdate}" />
+						<p:ajax event="toggleSelect"
+							update="departmentSelect unitSelect unitGroupSelect titlesSelect"
+							oncomplete="#{cc.attrs.onCompleteUpdate}" />
+						<f:selectItems value="#{organizationFilterBean.devisions}" var="d"
+							itemLabel="#{d.name}" itemValue="#{d}" />
+						<p:column>
+					                #{d.name}
+					            </p:column>
+					</p:selectCheckboxMenu>
+					<br />
+
+					<p:selectCheckboxMenu id="departmentSelect" label="Department"
+						converter="departmentConverter"
+						value="#{organizationFilterBean.selectedDepartments}">
+						<p:ajax listener="#{organizationFilterBean.onDepartmentChanged}"
+							update="unitSelect unitGroupSelect titlesSelect"
+							oncomplete="#{cc.attrs.onCompleteUpdate}" />
+						<p:ajax event="toggleSelect"
+							update="unitSelect unitGroupSelect titlesSelect"
+							oncomplete="#{cc.attrs.onCompleteUpdate}" />
+						<f:selectItems value="#{organizationFilterBean.departments}"
+							var="d" itemLabel="#{d.name}" itemValue="#{d}" />
+						<p:column>
+					                #{d.name}
+					            </p:column>
+					</p:selectCheckboxMenu>
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<h:panelGrid columns="1" border="0">
+						<p:selectCheckboxMenu id="unitSelect" label="Unit"
+							converter="unitConverter"
+							value="#{organizationFilterBean.selectedUnits}">
+							<p:ajax listener="#{organizationFilterBean.onUnitChanged}"
+								update="unitGroupSelect titlesSelect"
+								oncomplete="#{cc.attrs.onCompleteUpdate}" />
+							<p:ajax event="toggleSelect"
+								update="unitGroupSelect titlesSelect"
+								oncomplete="#{cc.attrs.onCompleteUpdate}" />
+							<f:selectItems value="#{organizationFilterBean.units}" var="u"
+								itemLabel="#{u.name}" itemValue="#{u}" />
+							<p:column>
+					                #{u.name}
+					            </p:column>
+						</p:selectCheckboxMenu>
+
+						<p:selectCheckboxMenu id="unitGroupSelect" label="Unit Group"
+							converter="unitGroupConverter"
+							value="#{organizationFilterBean.selectedUnitGroups}">
+							<p:ajax listener="#{organizationFilterBean.onUnitGroupChanged}"
+								update="titlesSelect" oncomplete="#{cc.attrs.onCompleteUpdate}" />
+							<p:ajax event="toggleSelect" update="titlesSelect"
+								oncomplete="#{cc.attrs.onCompleteUpdate}" />
+							<f:selectItems value="#{organizationFilterBean.unitGroups}"
+								var="u" itemLabel="#{u.name}" itemValue="#{u}" />
+							<p:column>
+					                #{u.name}
+					            </p:column>
+						</p:selectCheckboxMenu>
+
+						<p:selectCheckboxMenu id="titlesSelect" label="Titles"
+							converter="titlesConverter" filter="true"
+							filterMatchMode="startsWith"
+							value="#{organizationFilterBean.selectedTitlesList}">
+							<p:ajax oncomplete="#{cc.attrs.onCompleteUpdate}" />
+							<p:ajax event="toggleSelect"
+								oncomplete="#{cc.attrs.onCompleteUpdate}" />
+							<f:selectItems value="#{organizationFilterBean.titlesList}"
+								var="t" itemLabel="#{t.name}" itemValue="#{t}" />
+							<p:column>
+					                #{t.name}
+					            </p:column>
+						</p:selectCheckboxMenu>
+					</h:panelGrid>
+				</h:panelGroup>
+			</h:panelGrid>
+		</h:panelGroup>
+	</composite:implementation>
+
+
+	<style type="text/css">
+</style>
+</f:view>

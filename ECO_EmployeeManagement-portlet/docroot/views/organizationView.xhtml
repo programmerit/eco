@@ -37,6 +37,11 @@
 					oncomplete="PF('wTitlesDialog').show()"
 					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Titles'}" />
 
+				<p:menuitem value="Add Titles"
+					actionListener="#{organizationTreeViewBean.addTitles}"
+					oncomplete="PF('wTitlesDialog').show()"
+					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Department' || organizationTreeViewBean.currentSelectedLevel eq 'Unit' || organizationTreeViewBean.currentSelectedLevel eq 'UnitGroup' }" />
+
 				<p:menuitem value="Delete Titles"
 					onclick="PF('wDeleteConfirmDialog').show()"
 					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Titles'}" />
@@ -71,41 +76,14 @@
 					<h:outputText value="#{org.name}" />
 				</p:treeNode>
 			</p:tree>
-		</h:form>
-
-		<h:form id="modifyForm">
-			<p:dialog id="titlesDialog" widgetVar="wTitlesDialog"
-				header="Add/Modify Titles" closeOnEscape="true" closable="true"
-				modal="true">
-				<p:outputPanel autoUpdate="true">
-					<h:panelGrid columns="3">
-						<h:outputText value="Name" />
-						<p:inputText id="titlesName" value="#{titlesBean.titles.name}" />
-						<p:message for="titlesName" />
-
-						<h:outputText value="Name(En)" />
-						<p:inputText id="titlesNameEn"
-							value="#{titlesBean.titles.name_en}" />
-						<p:message for="titlesNameEn" />
-
-						<p:commandButton value="Save"
-							actionListener="#{titlesBean.onSave}"
-							update=":orgTreeForm:orgTree"
-							oncomplete="PF('wTitlesDialog').hide();" />
-						<p:commandLink value="Cancel" style="margin-left: 3px"
-							onclick="PF('wTitlesDialog').hide();" />
-					</h:panelGrid>
-				</p:outputPanel>
-			</p:dialog>
 
 			<eco:confirmDialog wDialogVar="wDeleteConfirmDialog"
 				message="Delete this titles?" header="Delete Confirmation"
 				onAction="#{organizationTreeViewBean.deleteTitles}"
 				oncompleteActions="PF('wDeleteConfirmDialog').hide()"
 				update=":orgTreeForm:orgTree" />
-
 		</h:form>
-
+		<ui:include src="/views/dialogs/titles.xhtml" />
 	</h:body>
 </f:view>
 

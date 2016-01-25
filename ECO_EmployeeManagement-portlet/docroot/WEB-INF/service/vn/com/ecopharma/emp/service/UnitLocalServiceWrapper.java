@@ -310,6 +310,12 @@ public class UnitLocalServiceWrapper implements UnitLocalService,
 	}
 
 	@Override
+	public java.util.List<vn.com.ecopharma.emp.model.Unit> findByDepartments(
+		java.util.List<vn.com.ecopharma.emp.model.Department> departments) {
+		return _unitLocalService.findByDepartments(departments);
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.Unit createPrePersistedUnit() {
 		return _unitLocalService.createPrePersistedUnit();
 	}

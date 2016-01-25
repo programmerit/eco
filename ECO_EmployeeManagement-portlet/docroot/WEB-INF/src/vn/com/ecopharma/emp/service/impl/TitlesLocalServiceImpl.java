@@ -16,12 +16,17 @@ package vn.com.ecopharma.emp.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import vn.com.ecopharma.emp.NoSuchTitlesException;
+import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.Titles;
 import vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup;
+import vn.com.ecopharma.emp.model.Unit;
+import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.service.base.TitlesLocalServiceBaseImpl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -81,6 +86,33 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 	public List<Titles> findAll(int start, int end,
 			OrderByComparator orderByComparator) throws SystemException {
 		return titlesPersistence.findAll(start, end, orderByComparator);
+	}
+
+	public List<Titles> findFilterListByRelatedFields(
+			List<Department> departments, List<Unit> units,
+			List<UnitGroup> unitGroups) {
+		if (departments == null || departments.isEmpty())
+			return new ArrayList<>();
+
+		final Set<Titles> resultSet = new LinkedHashSet<>();
+
+		if (units == null || units.isEmpty()) {
+			for (Department department : departments) {
+				resultSet.addAll(this.findAllByDepartment(department
+						.getDepartmentId()));
+			}
+			return new ArrayList<>(resultSet);
+		} else {
+			if (unitGroups == null || unitGroups.isEmpty()) {
+				for (Unit unit : units)
+					resultSet.addAll(this.findAllByUnit(unit.getUnitId()));
+				return new ArrayList<>(resultSet);
+			}
+			for (UnitGroup unitGroup : unitGroups)
+				resultSet.addAll(this.findByUnitGroupOnly(unitGroup
+						.getUnitGroupId()));
+			return new ArrayList<>(resultSet);
+		}
 	}
 
 	public Titles addTitles(String name, String name_en, String code,
@@ -154,6 +186,11 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 	public List<Titles> findAllByDepartment(long departmentId) {
 		return getUniqueTitlesListFromTitlesDepartmentUnitUnitGroups(titlesDepartmentUnitUnitGroupLocalService
 				.findByDepartment(departmentId));
+	}
+
+	public List<Titles> findAllByUnit(long unitId) {
+		return getUniqueTitlesListFromTitlesDepartmentUnitUnitGroups(titlesDepartmentUnitUnitGroupLocalService
+				.findByUnit(unitId));
 	}
 
 	public List<Titles> findByDepartmentOnly(long departmentId) {

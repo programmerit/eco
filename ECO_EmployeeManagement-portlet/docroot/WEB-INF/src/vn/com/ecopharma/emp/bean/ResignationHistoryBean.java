@@ -31,9 +31,12 @@ public class ResignationHistoryBean implements Serializable {
 
 	private LazyDataModel<ResignationHistoryIndexedItem> lazyDataModel;
 
+	private String param1;
+
 	@PostConstruct
 	public void init() {
 		lazyDataModel = new ResignationHistoryIndexLazyDataModel();
+		System.out.println(param1);
 	}
 
 	public void onRowEdit(RowEditEvent event) {
@@ -88,6 +91,14 @@ public class ResignationHistoryBean implements Serializable {
 
 	public void setSelectedItem(ResignationHistoryIndexedItem selectedItem) {
 		this.selectedItem = selectedItem;
+	}
+
+	public String getParam1() {
+		return param1;
+	}
+
+	public void setParam1(String param1) {
+		this.param1 = param1;
 	}
 
 }

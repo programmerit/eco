@@ -85,6 +85,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 			{ "placeOfBirth", Types.VARCHAR },
 			{ "education", Types.VARCHAR },
 			{ "educationSpecialize", Types.VARCHAR },
+			{ "specializeId", Types.BIGINT },
 			{ "universityId", Types.BIGINT },
 			{ "maritalStatus", Types.VARCHAR },
 			{ "identityCardNo", Types.VARCHAR },
@@ -119,7 +120,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 			{ "unitGroupId", Types.BIGINT },
 			{ "departmentId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_Emp (empId LONG not null primary key,groupId LONG,empCode VARCHAR(75) null,contactNumber VARCHAR(75) null,birthday DATE null,ethnic VARCHAR(75) null,nationality VARCHAR(75) null,religion VARCHAR(75) null,joinedDate DATE null,titlesId LONG,levelId LONG,promotedDate DATE null,laborContractSignedDate DATE null,laborContractExpiredDate DATE null,laborContractSignedTime INTEGER,laborContractType VARCHAR(75) null,gender VARCHAR(75) null,placeOfBirth VARCHAR(75) null,education VARCHAR(75) null,educationSpecialize VARCHAR(75) null,universityId LONG,maritalStatus VARCHAR(75) null,identityCardNo VARCHAR(75) null,issuedDate DATE null,issuedPlace VARCHAR(75) null,passport VARCHAR(75) null,addressId LONG,companyEmail VARCHAR(75) null,personalTaxCode VARCHAR(75) null,numberOfDependents INTEGER,dependentNames VARCHAR(75) null,socialInsuranceNo VARCHAR(75) null,healthInsuranceNo VARCHAR(75) null,healthInsurancePlace VARCHAR(75) null,baseWageRates DOUBLE,positionWageRates DOUBLE,capacitySalary DOUBLE,totalSalary DOUBLE,bonus DOUBLE,resignedDate DATE null,empUserId LONG,deleted BOOLEAN,companyEmailAddress VARCHAR(75) null,workingPlaceId LONG,status VARCHAR(75) null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,unitId LONG,unitGroupId LONG,departmentId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_Emp (empId LONG not null primary key,groupId LONG,empCode VARCHAR(75) null,contactNumber VARCHAR(75) null,birthday DATE null,ethnic VARCHAR(75) null,nationality VARCHAR(75) null,religion VARCHAR(75) null,joinedDate DATE null,titlesId LONG,levelId LONG,promotedDate DATE null,laborContractSignedDate DATE null,laborContractExpiredDate DATE null,laborContractSignedTime INTEGER,laborContractType VARCHAR(75) null,gender VARCHAR(75) null,placeOfBirth VARCHAR(75) null,education VARCHAR(75) null,educationSpecialize VARCHAR(75) null,specializeId LONG,universityId LONG,maritalStatus VARCHAR(75) null,identityCardNo VARCHAR(75) null,issuedDate DATE null,issuedPlace VARCHAR(75) null,passport VARCHAR(75) null,addressId LONG,companyEmail VARCHAR(75) null,personalTaxCode VARCHAR(75) null,numberOfDependents INTEGER,dependentNames VARCHAR(75) null,socialInsuranceNo VARCHAR(75) null,healthInsuranceNo VARCHAR(75) null,healthInsurancePlace VARCHAR(75) null,baseWageRates DOUBLE,positionWageRates DOUBLE,capacitySalary DOUBLE,totalSalary DOUBLE,bonus DOUBLE,resignedDate DATE null,empUserId LONG,deleted BOOLEAN,companyEmailAddress VARCHAR(75) null,workingPlaceId LONG,status VARCHAR(75) null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,unitId LONG,unitGroupId LONG,departmentId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table eco_em_portlet_Emp";
 	public static final String ORDER_BY_JPQL = " ORDER BY emp.empId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_em_portlet_Emp.empId ASC";
@@ -174,6 +175,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		model.setPlaceOfBirth(soapModel.getPlaceOfBirth());
 		model.setEducation(soapModel.getEducation());
 		model.setEducationSpecialize(soapModel.getEducationSpecialize());
+		model.setSpecializeId(soapModel.getSpecializeId());
 		model.setUniversityId(soapModel.getUniversityId());
 		model.setMaritalStatus(soapModel.getMaritalStatus());
 		model.setIdentityCardNo(soapModel.getIdentityCardNo());
@@ -291,6 +293,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		attributes.put("placeOfBirth", getPlaceOfBirth());
 		attributes.put("education", getEducation());
 		attributes.put("educationSpecialize", getEducationSpecialize());
+		attributes.put("specializeId", getSpecializeId());
 		attributes.put("universityId", getUniversityId());
 		attributes.put("maritalStatus", getMaritalStatus());
 		attributes.put("identityCardNo", getIdentityCardNo());
@@ -452,6 +455,12 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 
 		if (educationSpecialize != null) {
 			setEducationSpecialize(educationSpecialize);
+		}
+
+		Long specializeId = (Long)attributes.get("specializeId");
+
+		if (specializeId != null) {
+			setSpecializeId(specializeId);
 		}
 
 		Long universityId = (Long)attributes.get("universityId");
@@ -946,6 +955,17 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 	@Override
 	public void setEducationSpecialize(String educationSpecialize) {
 		_educationSpecialize = educationSpecialize;
+	}
+
+	@JSON
+	@Override
+	public long getSpecializeId() {
+		return _specializeId;
+	}
+
+	@Override
+	public void setSpecializeId(long specializeId) {
+		_specializeId = specializeId;
 	}
 
 	@JSON
@@ -1474,6 +1494,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		empImpl.setPlaceOfBirth(getPlaceOfBirth());
 		empImpl.setEducation(getEducation());
 		empImpl.setEducationSpecialize(getEducationSpecialize());
+		empImpl.setSpecializeId(getSpecializeId());
 		empImpl.setUniversityId(getUniversityId());
 		empImpl.setMaritalStatus(getMaritalStatus());
 		empImpl.setIdentityCardNo(getIdentityCardNo());
@@ -1714,6 +1735,8 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 			empCacheModel.educationSpecialize = null;
 		}
 
+		empCacheModel.specializeId = getSpecializeId();
+
 		empCacheModel.universityId = getUniversityId();
 
 		empCacheModel.maritalStatus = getMaritalStatus();
@@ -1893,7 +1916,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(107);
+		StringBundler sb = new StringBundler(109);
 
 		sb.append("{empId=");
 		sb.append(getEmpId());
@@ -1935,6 +1958,8 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		sb.append(getEducation());
 		sb.append(", educationSpecialize=");
 		sb.append(getEducationSpecialize());
+		sb.append(", specializeId=");
+		sb.append(getSpecializeId());
 		sb.append(", universityId=");
 		sb.append(getUniversityId());
 		sb.append(", maritalStatus=");
@@ -2008,7 +2033,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(163);
+		StringBundler sb = new StringBundler(166);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.Emp");
@@ -2093,6 +2118,10 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		sb.append(
 			"<column><column-name>educationSpecialize</column-name><column-value><![CDATA[");
 		sb.append(getEducationSpecialize());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>specializeId</column-name><column-value><![CDATA[");
+		sb.append(getSpecializeId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>universityId</column-name><column-value><![CDATA[");
@@ -2257,6 +2286,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 	private String _placeOfBirth;
 	private String _education;
 	private String _educationSpecialize;
+	private long _specializeId;
 	private long _universityId;
 	private String _maritalStatus;
 	private String _identityCardNo;

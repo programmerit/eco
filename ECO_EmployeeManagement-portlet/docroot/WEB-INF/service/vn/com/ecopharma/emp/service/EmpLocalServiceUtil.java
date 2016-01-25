@@ -329,6 +329,30 @@ public class EmpLocalServiceUtil {
 			filterQueries, companyId, sort, start, end);
 	}
 
+	public static int countFilterEmployeeByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		java.lang.String sortField, org.primefaces.model.SortOrder sortOrder,
+		long companyId)
+		throws com.liferay.portal.kernel.search.ParseException,
+			java.text.ParseException {
+		return getService()
+				   .countFilterEmployeeByFields(searchContext, filters,
+			sortField, sortOrder, companyId);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.search.Document> filterEmployeeByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		java.lang.String sortField, org.primefaces.model.SortOrder sortOrder,
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.search.ParseException,
+			java.text.ParseException {
+		return getService()
+				   .filterEmployeeByFields(searchContext, filters, sortField,
+			sortOrder, companyId, start, end);
+	}
+
 	public static vn.com.ecopharma.emp.model.Emp addEmp(
 		vn.com.ecopharma.emp.model.Emp employee, boolean autoPassword,
 		java.lang.String password1, java.lang.String password2,
@@ -403,22 +427,23 @@ public class EmpLocalServiceUtil {
 		java.lang.String laborContractType, int laborContractSignedTime,
 		java.util.Date dob, java.lang.String gender,
 		java.lang.String placeOfBirth, java.lang.String education,
-		java.lang.String educationSpecialize, long universityId,
-		java.lang.String maritalStatus, java.lang.String identityCardNo,
-		java.util.Date issuedDate, java.lang.String issuedPlace,
-		java.lang.String contactNumber, java.lang.String companyEmailAddress,
-		java.lang.String taxCode, int numberOfDependents,
-		java.lang.String dependentNames, java.lang.String insurranceCode,
-		java.lang.String healthInsuranceNo) {
+		java.lang.String educationSpecialize, long specializedId,
+		long universityId, java.lang.String maritalStatus,
+		java.lang.String identityCardNo, java.util.Date issuedDate,
+		java.lang.String issuedPlace, java.lang.String contactNumber,
+		java.lang.String companyEmailAddress, java.lang.String taxCode,
+		int numberOfDependents, java.lang.String dependentNames,
+		java.lang.String insurranceCode, java.lang.String healthInsuranceNo) {
 		return getService()
 				   .updateExistedEmployee(employee, employeeCode, titlesId,
 			unitGroupId, unitId, departmentId, levelId, promotedDate,
 			joinedDate, laborContractSignedDate, laborContractExpiredDate,
 			laborContractType, laborContractSignedTime, dob, gender,
-			placeOfBirth, education, educationSpecialize, universityId,
-			maritalStatus, identityCardNo, issuedDate, issuedPlace,
-			contactNumber, companyEmailAddress, taxCode, numberOfDependents,
-			dependentNames, insurranceCode, healthInsuranceNo);
+			placeOfBirth, education, educationSpecialize, specializedId,
+			universityId, maritalStatus, identityCardNo, issuedDate,
+			issuedPlace, contactNumber, companyEmailAddress, taxCode,
+			numberOfDependents, dependentNames, insurranceCode,
+			healthInsuranceNo);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp addOrUpdateWithExistUser(
@@ -458,22 +483,23 @@ public class EmpLocalServiceUtil {
 		java.lang.String laborContractType, int laborContractSignedTime,
 		java.util.Date dob, java.lang.String gender,
 		java.lang.String placeOfBirth, java.lang.String education,
-		java.lang.String educationSpecialize, long universityId,
-		java.lang.String maritalStatus, java.lang.String identityCardNo,
-		java.util.Date issuedDate, java.lang.String issuedPlace,
-		java.lang.String contactNumber, java.lang.String companyEmailAddress,
-		java.lang.String taxCode, int numberOfDependents,
-		java.lang.String dependentNames, java.lang.String insurranceCode,
-		java.lang.String healthInsuranceNo) {
+		java.lang.String educationSpecialize, long specializedId,
+		long universityId, java.lang.String maritalStatus,
+		java.lang.String identityCardNo, java.util.Date issuedDate,
+		java.lang.String issuedPlace, java.lang.String contactNumber,
+		java.lang.String companyEmailAddress, java.lang.String taxCode,
+		int numberOfDependents, java.lang.String dependentNames,
+		java.lang.String insurranceCode, java.lang.String healthInsuranceNo) {
 		return getService()
 				   .createEmployee(employeeCode, titlesId, unitGroupId, unitId,
 			departmentId, levelId, promotedDate, joinedDate,
 			laborContractSignedDate, laborContractExpiredDate,
 			laborContractType, laborContractSignedTime, dob, gender,
-			placeOfBirth, education, educationSpecialize, universityId,
-			maritalStatus, identityCardNo, issuedDate, issuedPlace,
-			contactNumber, companyEmailAddress, taxCode, numberOfDependents,
-			dependentNames, insurranceCode, healthInsuranceNo);
+			placeOfBirth, education, educationSpecialize, specializedId,
+			universityId, maritalStatus, identityCardNo, issuedDate,
+			issuedPlace, contactNumber, companyEmailAddress, taxCode,
+			numberOfDependents, dependentNames, insurranceCode,
+			healthInsuranceNo);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp updateEmpAddresses(

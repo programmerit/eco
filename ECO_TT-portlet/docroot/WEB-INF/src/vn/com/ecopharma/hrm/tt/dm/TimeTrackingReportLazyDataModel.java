@@ -117,32 +117,28 @@ public class TimeTrackingReportLazyDataModel extends
 				LOGGER.info(empTimeTrackingIndexedItem.getFullName() + "    "
 						+ timeTrackingIndexItems.size());
 
-				if (!timeTrackingIndexItems.isEmpty()) {
-					final Map<String, Date> minInMap = getMinInMap(timeTrackingIndexItems);
-					final Map<String, Date> maxOutMap = getMaxOutMap(timeTrackingIndexItems);
-					empTimeTrackingIndexedItem.setMinInMap(minInMap);
-					empTimeTrackingIndexedItem.setMaxOutMap(maxOutMap);
-					empTimeTrackingIndexedItem
-							.setGrandTotalMinInTime(getGrandMinIn(minInMap));
-					empTimeTrackingIndexedItem
-							.setGrandTotalMaxOutTime(getGrandMaxOut(maxOutMap));
+				final Map<String, Date> minInMap = getMinInMap(timeTrackingIndexItems);
+				final Map<String, Date> maxOutMap = getMaxOutMap(timeTrackingIndexItems);
+				empTimeTrackingIndexedItem.setMinInMap(minInMap);
+				empTimeTrackingIndexedItem.setMaxOutMap(maxOutMap);
+				empTimeTrackingIndexedItem
+						.setGrandTotalMinInTime(getGrandMinIn(minInMap));
+				empTimeTrackingIndexedItem
+						.setGrandTotalMaxOutTime(getGrandMaxOut(maxOutMap));
 
-					// if (isEmptyIn) {
-					// if (!hasEmptyIn(timeTrackingIndexItems)) {
-					// empTimeTrackingIndexedItems
-					// .add(empTimeTrackingIndexedItem);
-					// }
-					// } else if (isEmptyOut) {
-					// if (!hasEmptyOut(timeTrackingIndexItems)) {
-					// empTimeTrackingIndexedItems
-					// .add(empTimeTrackingIndexedItem);
-					// }
-					// } else {
-					empTimeTrackingIndexedItems.add(empTimeTrackingIndexedItem);
-					// }
-				} else {
-					noTimeTrackingDataEmpCount++;
-				}
+				// if (isEmptyIn) {
+				// if (!hasEmptyIn(timeTrackingIndexItems)) {
+				// empTimeTrackingIndexedItems
+				// .add(empTimeTrackingIndexedItem);
+				// }
+				// } else if (isEmptyOut) {
+				// if (!hasEmptyOut(timeTrackingIndexItems)) {
+				// empTimeTrackingIndexedItems
+				// .add(empTimeTrackingIndexedItem);
+				// }
+				// } else {
+				empTimeTrackingIndexedItems.add(empTimeTrackingIndexedItem);
+				// }
 
 			}
 			int countTotal = EmpLocalServiceUtil
@@ -150,7 +146,7 @@ public class TimeTrackingReportLazyDataModel extends
 							queries, TTUtils.getCompanyId(), new Sort(
 									EmpField.EMP_ID, false));
 			setPageSize(pageSize);
-			setRowCount(countTotal - noTimeTrackingDataEmpCount);
+			setRowCount(countTotal);
 
 			return empTimeTrackingIndexedItems;
 		} catch (ParseException e) {

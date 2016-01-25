@@ -302,6 +302,11 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceUtil {
 		return getService().findByDepartment(departmentId);
 	}
 
+	public static java.util.List<vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup> findByUnit(
+		long unitId) {
+		return getService().findByUnit(unitId);
+	}
+
 	public static vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup addTitlesDepartmentUnitUnitGroup(
 		long titlesId, long departmentId, long unitId, long unitGroupId,
 		com.liferay.portal.service.ServiceContext serviceContext) {

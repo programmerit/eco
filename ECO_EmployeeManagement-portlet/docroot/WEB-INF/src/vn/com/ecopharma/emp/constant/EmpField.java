@@ -53,6 +53,8 @@ public class EmpField {
 
 	public static final String LABOR_CONTRACT_TYPE = "laborContractType";
 
+	public static final String LABOR_CONTRACT_SIGNED_TIME = "laborContractSignedTime";
+
 	public static final String GENDER = "gender";
 
 	public static final String PLACE_OF_BIRTH = "placeOfBirth";
@@ -60,6 +62,8 @@ public class EmpField {
 	public static final String EDUCATION = "education";
 
 	public static final String EDUCATION_SPECIALIZE = "educationSpecialize";
+
+	public static final String SPECIALIZED = "specialized";
 
 	public static final String UNIVERSITY = "university";
 

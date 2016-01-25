@@ -239,7 +239,7 @@ public class EmployeeUtils {
 	 * @param fullname
 	 * @return
 	 */
-	public static String getMiddleNameFromFullname(String fullname) {
+	public static String getMiddleName(String fullname) {
 		if (StringUtils.trimToNull(fullname) == null)
 			return StringUtils.EMPTY;
 
@@ -279,7 +279,7 @@ public class EmployeeUtils {
 		StringBuilder resultBuilder = new StringBuilder();
 		char firstChar = getLastName(fullname).toCharArray()[0];
 
-		String[] middleNameArr = getMiddleNameFromFullname(fullname).split(" ");
+		String[] middleNameArr = getMiddleName(fullname).split(" ");
 		char[] middleNameChars;
 		if (middleNameArr.length > 0 && middleNameArr[0] != StringUtils.EMPTY) {
 			middleNameChars = new char[middleNameArr.length];
@@ -308,7 +308,7 @@ public class EmployeeUtils {
 		StringBuilder resultBuilder = new StringBuilder();
 		char firstChar = getLastName(fullname).toCharArray()[0];
 
-		String[] middleNameArr = getMiddleNameFromFullname(fullname).split(" ");
+		String[] middleNameArr = getMiddleName(fullname).split(" ");
 		char[] middleNameChars;
 		if (middleNameArr.length > 0 && middleNameArr[0] != StringUtils.EMPTY) {
 			middleNameChars = new char[middleNameArr.length];

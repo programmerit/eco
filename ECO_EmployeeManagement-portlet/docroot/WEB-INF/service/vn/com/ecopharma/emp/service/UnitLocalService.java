@@ -264,6 +264,9 @@ public interface UnitLocalService extends BaseLocalService, InvokableLocalServic
 	public java.util.List<vn.com.ecopharma.emp.model.Unit> findByDepartment(
 		long departmentId);
 
+	public java.util.List<vn.com.ecopharma.emp.model.Unit> findByDepartments(
+		java.util.List<vn.com.ecopharma.emp.model.Department> departments);
+
 	public vn.com.ecopharma.emp.model.Unit createPrePersistedUnit();
 
 	@java.lang.Deprecated

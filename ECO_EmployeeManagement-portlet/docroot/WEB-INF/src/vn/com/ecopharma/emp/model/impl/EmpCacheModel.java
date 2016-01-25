@@ -37,7 +37,7 @@ import java.util.Date;
 public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(107);
+		StringBundler sb = new StringBundler(109);
 
 		sb.append("{empId=");
 		sb.append(empId);
@@ -79,6 +79,8 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		sb.append(education);
 		sb.append(", educationSpecialize=");
 		sb.append(educationSpecialize);
+		sb.append(", specializeId=");
+		sb.append(specializeId);
 		sb.append(", universityId=");
 		sb.append(universityId);
 		sb.append(", maritalStatus=");
@@ -268,6 +270,7 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 			empImpl.setEducationSpecialize(educationSpecialize);
 		}
 
+		empImpl.setSpecializeId(specializeId);
 		empImpl.setUniversityId(universityId);
 
 		if (maritalStatus == null) {
@@ -438,6 +441,7 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		placeOfBirth = objectInput.readUTF();
 		education = objectInput.readUTF();
 		educationSpecialize = objectInput.readUTF();
+		specializeId = objectInput.readLong();
 		universityId = objectInput.readLong();
 		maritalStatus = objectInput.readUTF();
 		identityCardNo = objectInput.readUTF();
@@ -559,6 +563,7 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 			objectOutput.writeUTF(educationSpecialize);
 		}
 
+		objectOutput.writeLong(specializeId);
 		objectOutput.writeLong(universityId);
 
 		if (maritalStatus == null) {
@@ -699,6 +704,7 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 	public String placeOfBirth;
 	public String education;
 	public String educationSpecialize;
+	public long specializeId;
 	public long universityId;
 	public String maritalStatus;
 	public String identityCardNo;

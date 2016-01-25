@@ -6,17 +6,17 @@ import vn.com.ecopharma.hrm.rc.constant.VacancyField;
 
 import com.liferay.portal.kernel.search.Document;
 
-public class VacancyIndexItem extends AbstractIndexEntityItem implements
-		Serializable {
+public class VacancyIndexItem extends AbstractIndexEntityItem {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
+	private String titles;
 
 	public VacancyIndexItem(Document document) {
 		super(document);
-	}
-
-	public String getName() {
-		return getDocument().getField(VacancyField.NAME).getValue();
+		this.titles = getDocument().getField(VacancyField.TITLES).getValue();
 	}
 
 	public int getNumberOfPosition() {
@@ -27,7 +27,7 @@ public class VacancyIndexItem extends AbstractIndexEntityItem implements
 	}
 
 	public String getTitles() {
-		return getDocument().getField(VacancyField.TITLES).getValue();
+		return titles;
 	}
 
 	public String getDescription() {

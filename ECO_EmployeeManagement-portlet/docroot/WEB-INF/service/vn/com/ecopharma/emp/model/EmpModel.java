@@ -354,6 +354,20 @@ public interface EmpModel extends BaseModel<Emp>, GroupedModel {
 	public void setEducationSpecialize(String educationSpecialize);
 
 	/**
+	 * Returns the specialize ID of this emp.
+	 *
+	 * @return the specialize ID of this emp
+	 */
+	public long getSpecializeId();
+
+	/**
+	 * Sets the specialize ID of this emp.
+	 *
+	 * @param specializeId the specialize ID of this emp
+	 */
+	public void setSpecializeId(long specializeId);
+
+	/**
 	 * Returns the university ID of this emp.
 	 *
 	 * @return the university ID of this emp

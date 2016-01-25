@@ -296,6 +296,11 @@ public class UnitLocalServiceUtil {
 		return getService().findByDepartment(departmentId);
 	}
 
+	public static java.util.List<vn.com.ecopharma.emp.model.Unit> findByDepartments(
+		java.util.List<vn.com.ecopharma.emp.model.Department> departments) {
+		return getService().findByDepartments(departments);
+	}
+
 	public static vn.com.ecopharma.emp.model.Unit createPrePersistedUnit() {
 		return getService().createPrePersistedUnit();
 	}

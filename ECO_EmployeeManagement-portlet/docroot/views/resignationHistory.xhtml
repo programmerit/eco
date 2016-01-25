@@ -8,6 +8,10 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
+	<f:metadata>
+		<f:viewParam name="param1" value="#{resignationHistoryBean.param1}" />
+		<f:event type="preRenderView" listener="#{resignationHistoryBean.init}" />
+	</f:metadata>
 	<h:head />
 
 	<h:body>
@@ -22,10 +26,7 @@
 				<p:commandLink value="Index All"
 					actionListener="#{resignationHistoryBean.onIndexAll}" /> | 
 				<p:commandLink value="Remove All Index"
-					actionListener="#{resignationHistoryBean.onRemoveAllIndex}" /> |	
-				<p:commandLink value="Add Missing Resigned Emp"
-					actionListener="#{resignationHistoryBean.addMissingResignedEmployee}" />
-
+					actionListener="#{resignationHistoryBean.onRemoveAllIndex}" />
 
 				<p:dataTable id="resignationHistories" var="r"
 					widgetVar="resignationHistoryTable"
@@ -57,9 +58,7 @@
 					<p:column headerText="Resigned Date">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{r.resignedDate}">
-									<f:convertDateTime pattern="dd/MM/yyyy" />
-								</h:outputText>
+								<h:outputText value="#{r.resignedDateString}" />
 							</f:facet>
 							<f:facet name="input">
 								<p:calendar value="#{r.resignedDate}" pattern="dd/MM/yyyy" />

@@ -77,6 +77,7 @@
 		<field name="placeOfBirth" type="String" />
 		<field name="education" type="String" />
 		<field name="educationSpecialize" type="String" />
+		<field name="specializeId" type="long" />
 		<field name="universityId" type="long" />
 		<field name="maritalStatus" type="String" />
 		<field name="identityCardNo" type="String" />
@@ -194,6 +195,25 @@
 			<hint name="max-length">2000</hint>
 		</field>
 		<field name="type" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="vn.com.ecopharma.emp.model.Specialized">
+		<field name="specializedId" type="long" />
+		<field name="specializedCode" type="String" />
+		<field name="name" type="String">
+			<hint name="max-length">256</hint>
+		</field>
+		<field name="level" type="int" />
+		<field name="parentId" type="long" />
+		<field name="university" type="boolean" />
+		<field name="college" type="boolean" />
+		<field name="vocationalCollege" type="boolean" />
+		<field name="vocational" type="boolean" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

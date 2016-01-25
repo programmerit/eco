@@ -264,6 +264,9 @@ public interface UnitGroupLocalService extends BaseLocalService,
 	public java.util.List<vn.com.ecopharma.emp.model.UnitGroup> findByUnit(
 		long unitId);
 
+	public java.util.List<vn.com.ecopharma.emp.model.UnitGroup> findByUnits(
+		java.util.List<vn.com.ecopharma.emp.model.Unit> units);
+
 	public vn.com.ecopharma.emp.model.UnitGroup findByNameAndUnit(
 		java.lang.String name, long unitId);
 

@@ -14,10 +14,10 @@
 
 package vn.com.ecopharma.hrm.rc.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import vn.com.ecopharma.hrm.rc.NoSuchVacancyException;
 import vn.com.ecopharma.hrm.rc.constant.ECO_RCUtils;
 import vn.com.ecopharma.hrm.rc.constant.VacancyField;
 import vn.com.ecopharma.hrm.rc.enumeration.VacancyCandidateType;
@@ -30,6 +30,8 @@ import vn.com.ecopharma.hrm.rc.service.base.VacancyLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
@@ -74,6 +76,9 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 	 * vacancy local service.
 	 */
 
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(VacancyLocalServiceImpl.class);
+
 	public List<Vacancy> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
@@ -87,18 +92,18 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 		try {
 			return vacancyPersistence.findAll(start, end, orderByComparator);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	public List<Vacancy> findAllUnDeleted() {
 		try {
 			return vacancyPersistence.findByUnDeleted(false);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	public int countAllUnDeletedIndexedVacancyDocuments(
@@ -146,11 +151,11 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
 					fullQuery, sort, start, end).toList();
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	public int countAllUnDeletedAndPublishedIndexedVacancyDocuments(
@@ -178,7 +183,7 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 			final long id = counterLocalService.increment();
 			return vacancyPersistence.create(id);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -224,9 +229,9 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 
 			return result;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (PortalException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -255,9 +260,9 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 
 			return vacancy;
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -270,7 +275,7 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 			return vacancyCandidates != null && !vacancyCandidates.isEmpty() ? fetchVacancy(vacancyCandidates
 					.get(0).getVacancyId()) : null;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -289,9 +294,9 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
 			return !hits.toList().isEmpty() ? hits.toList().get(0) : null;
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 
 		return null;
@@ -323,9 +328,9 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
 			return !hits.toList().isEmpty() ? hits.toList().get(0) : null;
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 
 		return null;
@@ -335,7 +340,7 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 		try {
 			return markDeleted(vacancyPersistence.fetchByPrimaryKey(id));
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -349,9 +354,9 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 			indexer.reindex(vacancy);
 			return vacancy;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -365,7 +370,7 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 			try {
 				indexer.reindex(vacancy);
 			} catch (SearchException e) {
-				e.printStackTrace();
+				LOGGER.info(e);
 			}
 		}
 	}
@@ -388,7 +393,7 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 
 			}
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 	}
 }

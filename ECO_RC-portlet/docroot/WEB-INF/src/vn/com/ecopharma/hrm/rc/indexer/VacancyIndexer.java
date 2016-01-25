@@ -53,8 +53,8 @@ public class VacancyIndexer extends BaseIndexer {
 				vacancy);
 		doc.addNumber(VacancyField.VACANCY_ID, vacancy.getVacancyId());
 		// doc.addText(VacancyField.NAME, vacancy.getName());
-		// doc.addNumber(VacancyField.NUMBER_OF_POSITION,
-		// vacancy.getNumberOfPosition());
+		doc.addNumber(VacancyField.NUMBER_OF_POSITION,
+				vacancy.getApprovedNumberOfPosition());
 		doc.addText(
 				VacancyField.TITLES,
 				vacancy.getTitlesId() != 0 ? TitlesLocalServiceUtil.getTitles(

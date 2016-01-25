@@ -31,7 +31,7 @@ public class RCViewBean implements Serializable {
 	 */
 	private int currentPage = 1;
 
-	private String currentNav = "";
+	private String currentNav = "/views/pages/candidate.xhtml";
 
 	private String currentHashTag = StringUtils.EMPTY;
 

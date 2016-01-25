@@ -37,6 +37,9 @@
 	<bean id="vn.com.ecopharma.emp.service.ResourceConfigLocalService" class="vn.com.ecopharma.emp.service.impl.ResourceConfigLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.ResourceConfigService" class="vn.com.ecopharma.emp.service.impl.ResourceConfigServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.persistence.ResourceConfigPersistence" class="vn.com.ecopharma.emp.service.persistence.ResourceConfigPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.emp.service.SpecializedLocalService" class="vn.com.ecopharma.emp.service.impl.SpecializedLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.emp.service.SpecializedService" class="vn.com.ecopharma.emp.service.impl.SpecializedServiceImpl" />
+	<bean id="vn.com.ecopharma.emp.service.persistence.SpecializedPersistence" class="vn.com.ecopharma.emp.service.persistence.SpecializedPersistenceImpl" parent="basePersistence" />
 	<bean id="vn.com.ecopharma.emp.service.TitlesLocalService" class="vn.com.ecopharma.emp.service.impl.TitlesLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.TitlesService" class="vn.com.ecopharma.emp.service.impl.TitlesServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.persistence.TitlesPersistence" class="vn.com.ecopharma.emp.service.persistence.TitlesPersistenceImpl" parent="basePersistence" />

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
+	<h:head />
+
+	<h:body>
+		<h:form id="specializedTreeForm">
+			<p:contextMenu id="specializedTreeContextMenu" for="specializedTree">
+				<p:menuitem value="Add new" />
+			</p:contextMenu>
+
+			<p:tree value="#{specializedTreeViewBean.root}" var="s"
+				id="specializedTree" selectionMode="multiple"
+				selection="#{specializedTreeViewBean.selectedNodes}" animate="true"
+				draggable="true" droppable="true" highlight="true"
+				showUnselectableCheckbox="true">
+
+				<p:treeNode type="First" expandedIcon="ui-icon-folder-open"
+					collapsedIcon="ui-icon-folder-collapsed">
+					<h:outputText value="#{s.name}" />
+				</p:treeNode>
+				<p:treeNode type="Second" expandedIcon="ui-icon-folder-open"
+					collapsedIcon="ui-icon-folder-collapsed">
+					<h:outputText value="#{s.name}" />
+				</p:treeNode>
+
+				<p:treeNode type="Third" icon="ui-icon-document">
+					<h:outputText value="#{s.name}" />
+				</p:treeNode>
+			</p:tree>
+		</h:form>
+	</h:body>
+</f:view>
+

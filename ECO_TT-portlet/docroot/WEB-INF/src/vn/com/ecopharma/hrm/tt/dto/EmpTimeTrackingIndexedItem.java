@@ -54,7 +54,7 @@ public class EmpTimeTrackingIndexedItem implements Serializable {
 	}
 
 	public String getFullName() {
-		return employeeDocument.getField(EmpField.FULL_NAME).getValue();
+		return employeeDocument.getField(EmpField.VN_FULLNAME).getValue();
 	}
 
 	public long getDevisionId() {

@@ -249,6 +249,10 @@ public class EmpIndexedItem implements Serializable {
 		return checkNullFieldAndReturnEmpty(EmpField.LABOR_CONTRACT_TYPE);
 	}
 
+	public String getLaborContractTime() {
+		return checkNullFieldAndReturnEmpty(EmpField.LABOR_CONTRACT_SIGNED_TIME);
+	}
+
 	public String getGender() {
 		return checkNullFieldAndReturnEmpty(EmpField.GENDER);
 	}

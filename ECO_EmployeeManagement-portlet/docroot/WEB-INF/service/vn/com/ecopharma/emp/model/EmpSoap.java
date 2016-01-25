@@ -51,6 +51,7 @@ public class EmpSoap implements Serializable {
 		soapModel.setPlaceOfBirth(model.getPlaceOfBirth());
 		soapModel.setEducation(model.getEducation());
 		soapModel.setEducationSpecialize(model.getEducationSpecialize());
+		soapModel.setSpecializeId(model.getSpecializeId());
 		soapModel.setUniversityId(model.getUniversityId());
 		soapModel.setMaritalStatus(model.getMaritalStatus());
 		soapModel.setIdentityCardNo(model.getIdentityCardNo());
@@ -294,6 +295,14 @@ public class EmpSoap implements Serializable {
 
 	public void setEducationSpecialize(String educationSpecialize) {
 		_educationSpecialize = educationSpecialize;
+	}
+
+	public long getSpecializeId() {
+		return _specializeId;
+	}
+
+	public void setSpecializeId(long specializeId) {
+		_specializeId = specializeId;
 	}
 
 	public long getUniversityId() {
@@ -584,6 +593,7 @@ public class EmpSoap implements Serializable {
 	private String _placeOfBirth;
 	private String _education;
 	private String _educationSpecialize;
+	private long _specializeId;
 	private long _universityId;
 	private String _maritalStatus;
 	private String _identityCardNo;
