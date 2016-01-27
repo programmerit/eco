@@ -7,7 +7,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions"
-	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite"
+	xmlns:liferay-security="http://liferay.com/faces/security">
 	<h:head />
 
 	<h:body>
@@ -48,32 +49,50 @@
 			</p:contextMenu>
 
 			<p:tree value="#{organizationTreeViewBean.root}" var="org"
-				id="orgTree" selectionMode="multiple"
+				orientation="horizontal" id="orgTree" selectionMode="multiple"
 				selection="#{organizationTreeViewBean.selectedNodes}" animate="true"
 				draggable="true" droppable="true" highlight="true"
 				showUnselectableCheckbox="true">
 
 				<p:ajax event="select" update=":orgTreeForm:orgTreeContextMenu" />
 
-				<p:treeNode type="Devision" expandedIcon="ui-icon-folder-open"
+				<p:treeNode type="Root" expandedIcon="ui-icon-folder-open"
 					collapsedIcon="ui-icon-folder-collapsed">
-					<h:outputText value="#{org.name}" />
+					<h:outputText value="Ecopharma JSC" />
+				</p:treeNode>
+
+				<p:treeNode id="devisionNode" type="Devision"
+					expandedIcon="ui-icon-folder-open"
+					collapsedIcon="ui-icon-folder-collapsed">
+					<h:outputText id="devisionName" value="#{org.name}" />
+					<p:tooltip for="devisionName" value="Devision" />
+					<liferay-security:permissionsURL
+						rendered="#{devisionPermission.checkPermission(org.id, 'PERMISSIONS')}"
+						modelResource="vn.com.ecopharma.emp.model.Devision"
+						modelResourceDescription="Permission of #{org.id}"
+						resourcePrimKey="#{org.id}">
+				                Permission
+				    </liferay-security:permissionsURL>
 				</p:treeNode>
 
 				<p:treeNode type="Department" icon="ui-icon-document">
-					<h:outputText value="#{org.name}" />
+					<h:outputText id="departmentName" value="#{org.name}" />
+					<p:tooltip for="departmentName" value="Department" />
 				</p:treeNode>
 
 				<p:treeNode type="Unit" icon="ui-icon-image">
-					<h:outputText value="#{org.name}" />
+					<h:outputText id="unitName" value="#{org.name}" />
+					<p:tooltip for="unitName" value="Unit" />
 				</p:treeNode>
 
 				<p:treeNode type="UnitGroup" icon="ui-icon-comment">
-					<h:outputText value="#{org.name}" />
+					<h:outputText id="unitGroupName" value="#{org.name}" />
+					<p:tooltip for="unitGroupName" value="Unit Group" />
 				</p:treeNode>
 
 				<p:treeNode type="Titles" icon="ui-icon-video">
-					<h:outputText value="#{org.name}" />
+					<h:outputText id="titlesName" value="#{org.name}" />
+					<p:tooltip for="titlesName" value="Titles" />
 				</p:treeNode>
 			</p:tree>
 

@@ -6,7 +6,9 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite"
+	xmlns:liferay-security="http://liferay.com/faces/security">
 	<h:head />
 	<h:body>
 
@@ -18,7 +20,7 @@
 		<p:dialog widgetVar="statusDialog" modal="false" draggable="false"
 			closable="false" resizable="false" showHeader="false"
 			styleClass="eco-ajax-loading">
-			<p:graphicImage name="/images/ajax-loader1.gif" />
+			<p:graphicImage name="/images/ajax-loader2.gif" />
 		</p:dialog>
 
 		<h:form id="searchForm">
@@ -68,103 +70,6 @@
 					</h:panelGroup>
 
 					<h:panelGroup>
-						<p:selectOneMenu id="devisionSelect"
-							value="#{timeTrackingFilterBean.devision}"
-							converter="devisionConverter" effect="fade" filter="true"
-							filterMatchMode="contains" var="d">
-							<p:ajax listener="#{timeTrackingFilterBean.onDevisionChanged}"
-								update="departmentSelect unitSelect unitGroupSelect titlesSelect"
-								oncomplete="refreshReports(); refreshFooter();" />
-
-							<f:selectItem itemLabel="ALL DEVISION" itemValue="" />
-							<f:selectItems value="#{timeTrackingFilterBean.devisions}"
-								var="d" itemLabel="#{d.name}" itemValue="#{d}" />
-							<p:column>
-					                #{d.name}
-					            </p:column>
-						</p:selectOneMenu>
-						<p:tooltip for="devisionSelect" value="Filter [Devision]"
-							showEffect="clip" hideEffect="explode" />
-						<br />
-
-						<p:selectOneMenu id="departmentSelect"
-							value="#{timeTrackingFilterBean.department}"
-							converter="departmentConverter" effect="fade" filter="true"
-							filterMatchMode="contains" var="d">
-							<p:ajax listener="#{timeTrackingFilterBean.onDepartmentChanged}"
-								update="unitSelect unitGroupSelect titlesSelect"
-								oncomplete="refreshReports(); refreshFooter();" />
-
-							<f:selectItem itemLabel="ALL DEPARTMENT" itemValue="" />
-							<f:selectItems value="#{timeTrackingFilterBean.departments}"
-								var="d" itemLabel="#{d.name}" itemValue="#{d}" />
-							<p:column>
-					                #{d.name}
-					            </p:column>
-						</p:selectOneMenu>
-						<p:tooltip for="departmentSelect" value="Filter [Department]"
-							showEffect="clip" hideEffect="explode" />
-					</h:panelGroup>
-
-					<h:panelGroup>
-						<h:panelGrid columns="2" border="0">
-							<p:selectOneMenu id="unitSelect"
-								value="#{timeTrackingFilterBean.unit}" converter="unitConverter"
-								effect="fade" filter="true" filterMatchMode="contains" var="u">
-								<p:ajax listener="#{timeTrackingFilterBean.onUnitChanged}"
-									update="unitGroupSelect titlesSelect"
-									oncomplete="refreshReports(); refreshFooter();" />
-
-								<f:selectItem itemLabel="ALL UNIT" itemValue="" />
-								<f:selectItems value="#{timeTrackingFilterBean.units}" var="u"
-									itemLabel="#{u.name}" itemValue="#{u}" />
-								<p:column>
-					                #{u.name}
-					            </p:column>
-							</p:selectOneMenu>
-							<p:tooltip for="unitSelect" value="Filter [Unit]"
-								showEffect="clip" hideEffect="explode" />
-
-							<p:selectOneMenu id="unitGroupSelect"
-								value="#{timeTrackingFilterBean.unitGroup}"
-								converter="unitGroupConverter" effect="fade" filter="true"
-								filterMatchMode="contains" var="g">
-								<p:ajax listener="#{timeTrackingFilterBean.onUnitGroupChanged}"
-									update="titlesSelect"
-									oncomplete="refreshReports(); refreshFooter();" />
-
-								<f:selectItem itemLabel="ALL GROUP" itemValue="" />
-								<f:selectItems value="#{timeTrackingFilterBean.unitGroups}"
-									var="g" itemLabel="#{g.name}" itemValue="#{g}" />
-
-								<p:column>
-					                #{g.name}
-					            </p:column>
-							</p:selectOneMenu>
-							<p:tooltip for="unitGroupSelect" value="Filter [UnitGroup]"
-								showEffect="clip" hideEffect="explode" />
-
-
-							<p:selectOneMenu id="titlesSelect"
-								value="#{timeTrackingFilterBean.titles}"
-								converter="titlesConverter" effect="fade" filter="true"
-								filterMatchMode="contains" var="t">
-								<p:ajax oncomplete="refreshReports(); refreshFooter();" />
-
-								<f:selectItem itemLabel="ALL TITLES" itemValue="" />
-								<f:selectItems value="#{timeTrackingFilterBean.titlesList}"
-									var="t" itemLabel="#{t.name}" itemValue="#{t}" />
-
-								<p:column>
-					                #{t.name}
-					            </p:column>
-							</p:selectOneMenu>
-							<p:tooltip for="titlesSelect" value="Filter [Titles]"
-								showEffect="clip" hideEffect="explode" />
-						</h:panelGrid>
-					</h:panelGroup>
-
-					<h:panelGroup>
 						<p:selectOneMenu id="monthSelect"
 							value="#{timeTrackingFilterBean.month}" var="m">
 							<p:ajax oncomplete="refreshReports(); refreshFooter();" />
@@ -183,15 +88,22 @@
 							<p:ajax update=":reportForm:reports" />
 							<p:column>#{y}</p:column>
 						</p:selectOneMenu>
+
+						<eco:organizationFilterPanel
+							onCompleteUpdate="refreshReports(); refreshFooter();" />
+
 						<!-- 					<br />
-					<p:selectOneMenu id="valueFilterSelect"
-						value="#{timeTrackingFilterBean.valueFilter}" var="v">
-						<p:ajax oncomplete="PF('wReportTable')" />
-						<f:selectItems value="#{timeTrackingFilterBean.valuesFilter}"
-							var="v" itemLabel="#{v}" itemValue="#{v}" />
-						<p:ajax update=":reportForm:reports" />
-						<p:column>#{v}</p:column>
-					</p:selectOneMenu> -->
+					<p:selectOneMenu id="
+							valueFilterSelect"
+						value="#{timeTrackingFilterBean.valueFilter}"
+							var="v">
+							<p:ajax oncomplete="PF('wReportTable')" />
+							<f:selectItems value="#{timeTrackingFilterBean.valuesFilter}"
+								var="v" itemLabel="#{v}" itemValue="#{v}" />
+							<p:ajax update=":reportForm:reports" />
+							<p:column>#{v}</p:column>
+							</p:selectOneMenu> -->
+
 					</h:panelGroup>
 				</p:panelGrid>
 			</h:panelGroup>

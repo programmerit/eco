@@ -13,6 +13,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
@@ -214,7 +215,6 @@ public class EmployeeBean implements Serializable {
 	}
 
 	public void save() {
-
 		LiferayFacesContext liferayFacesContext = LiferayFacesContext
 				.getInstance();
 		final ServiceContext serviceContext = liferayFacesContext
@@ -279,15 +279,20 @@ public class EmployeeBean implements Serializable {
 				final long[] organizationIds = null;
 				final long[] userGroupIds = null;
 
-				final boolean sendEmail = false;
+				final boolean sendEmail = true;
+				String generatePwd = RandomStringUtils.randomAlphabetic(8);
+				String password1 = !autoPassword ? modifyEmployeeInfoItem
+						.getUserPassword1() : generatePwd;
+				String password2 = !autoPassword ? modifyEmployeeInfoItem
+						.getUserPassword2() : generatePwd;
 
 				Emp result = EmpLocalServiceUtil.addEmp(
 						employee,
 						false,
 						!autoPassword ? modifyEmployeeInfoItem
-								.getUserPassword1() : DEFAULT_PW,
+								.getUserPassword1() : password1,
 						!autoPassword ? modifyEmployeeInfoItem
-								.getUserPassword2() : DEFAULT_PW, false,
+								.getUserPassword2() : password2, false,
 						modifyEmployeeInfoItem.getUserName(), empUser
 								.getEmailAddress(), facebookId,
 						StringUtils.EMPTY, LocaleUtil.getDefault(), empUser

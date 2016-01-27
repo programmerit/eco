@@ -117,9 +117,11 @@ public class EmployeeUtils {
 					.getRegionId() : address.getRegionId();
 			address.setCountryId(countryId);
 			address.setRegionId(regionId);
-			if (StringUtils.trimToNull(address.getStreet3()) == null)
+			// if (StringUtils.trimToNull(address.getStreet3()) == null)
+			if (district != null)
 				address.setStreet3(item.isUIDeleted() ? StringUtils.EMPTY
 						: district.getRegionCode() + "_" + district.getName());
+
 			address.setZip(ZIP_CODE);
 			resultMap.put(address, item.isUIDeleted());
 		}
@@ -505,7 +507,7 @@ public class EmployeeUtils {
 		employee.setUniversityId(getBaseModelPrimaryKey(empInfoItem
 				.getUniversity()));
 	}
-	
+
 	public static List<Address> findAllEmpAddress(long employeeId) {
 		try {
 			return AddressServiceUtil.getAddresses(Emp.class.getName(),

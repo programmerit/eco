@@ -8,6 +8,7 @@
 	<import class="vn.com.ecopharma.emp.model.District" />
 	<import class="vn.com.ecopharma.emp.model.Emp" />
 	<import class="vn.com.ecopharma.emp.model.EmpBankInfo" />
+	<import class="vn.com.ecopharma.emp.model.EmpDiscipline" />
 	<import class="vn.com.ecopharma.emp.model.EmployeeTitlesHistory" />
 	<import class="vn.com.ecopharma.emp.model.Level" />
 	<import class="vn.com.ecopharma.emp.model.Location" />
@@ -156,6 +157,24 @@
 		<property name="bankAccountNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="bankName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="branchName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="vn.com.ecopharma.emp.model.impl.EmpDisciplineImpl" table="eco_em_portlet_EmpDiscipline">
+		<cache usage="read-write" />
+		<id name="empDisciplineId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="empId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="disciplineType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="effectiveDate" type="org.hibernate.type.TimestampType" />
+		<property name="additionalDisciplineType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

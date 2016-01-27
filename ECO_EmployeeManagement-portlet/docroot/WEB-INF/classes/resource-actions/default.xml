@@ -102,61 +102,6 @@
 		</permissions>
 	</model-resource>
 
-
-	<model-resource>
-		<model-name>vn.com.ecopharma.emp.model.ResignationHistory</model-name>
-		<portlet-ref>
-			<portlet-name>ECO_EmployeeManagement</portlet-name>
-		</portlet-ref>
-		<permissions>
-			<supports>
-				<action-key>ADD</action-key>
-				<action-key>DELETE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
-			<guest-unsupported>
-				<action-key>ADD</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>DELETE</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-
-	<model-resource>
-		<model-name>vn.com.ecopharma.emp.model.PromotedHistory</model-name>
-		<portlet-ref>
-			<portlet-name>ECO_EmployeeManagement</portlet-name>
-		</portlet-ref>
-		<permissions>
-			<supports>
-				<action-key>ADD</action-key>
-				<action-key>DELETE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
-			<guest-unsupported>
-				<action-key>ADD</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>DELETE</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-
 	<model-resource>
 		<model-name>vn.com.ecopharma.emp.model.Devision</model-name>
 		<portlet-ref>
@@ -215,6 +160,88 @@
 
 	<model-resource>
 		<model-name>vn.com.ecopharma.emp.model.Unit</model-name>
+		<portlet-ref>
+			<portlet-name>ECO_EmployeeManagement</portlet-name>
+		</portlet-ref>
+		<permissions>
+			<supports>
+				<action-key>ADD</action-key>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>VIEW</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>ADD</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>DELETE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+
+
+	<model-resource>
+		<model-name>vn.com.ecopharma.emp.model.ResignationHistory</model-name>
+		<portlet-ref>
+			<portlet-name>ECO_EmployeeManagement</portlet-name>
+		</portlet-ref>
+		<permissions>
+			<supports>
+				<action-key>ADD</action-key>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>VIEW</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>ADD</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>DELETE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+
+	<model-resource>
+		<model-name>vn.com.ecopharma.emp.model.PromotedHistory</model-name>
+		<portlet-ref>
+			<portlet-name>ECO_EmployeeManagement</portlet-name>
+		</portlet-ref>
+		<permissions>
+			<supports>
+				<action-key>ADD</action-key>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>VIEW</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>ADD</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>DELETE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+
+	<model-resource>
+		<model-name>vn.com.ecopharma.emp.model.EmpDiscipline</model-name>
 		<portlet-ref>
 			<portlet-name>ECO_EmployeeManagement</portlet-name>
 		</portlet-ref>

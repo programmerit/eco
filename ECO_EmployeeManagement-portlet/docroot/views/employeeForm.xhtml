@@ -55,7 +55,9 @@
 								value="#{empView.modifyEmployeeInfoItem.emp.birthday}"
 								maxdate="#{empView.maxBirthdayDate}" mask="true"
 								pattern="dd/MM/yyyy" required="true"
-								validatorMessage="Date of Birth required" />
+								validatorMessage="Date of Birth required">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:calendar>
 							<p:message for="birthday" display="icon" />
 
 							<h:outputText value="Place of Birth" />
@@ -669,56 +671,8 @@
 			</p:outputPanel>
 		</p:dialog>
 
-
-		<eco:organizationDialog wVar="wDevisionDialog" title="New Devision"
-			entityName="#{devisionBean.devision.name}"
-			onSave="#{devisionBean.onSave}"
-			update=":modifyForm:accordion:devisionSelect :growl">
-			<p:panelGrid columns="2">
-				<h:outputText value="Working Location"
-					styleClass="organizationLabel" />
-				<p:selectOneMenu id="workingLocationSelect"
-					value="#{empView.location}" converter="locationConverter"
-					effect="fade" filter="true" filterMatchMode="contains" var="w">
-					<f:selectItem itemLabel="Working Location" itemValue="" />
-					<f:selectItems value="#{empView.locations}" var="w"
-						itemLabel="#{w.name}" itemValue="#{w}" />
-					<p:column>
-					                #{w.name}
-					            </p:column>
-				</p:selectOneMenu>
-			</p:panelGrid>
-		</eco:organizationDialog>
-
-		<eco:organizationDialog wVar="wDepartmentDialog"
-			title="New Department" entityName="#{departmentBean.department.name}"
-			onSave="#{departmentBean.onSave}"
-			update=":modifyForm:accordion:departmentSelect :growl" />
-
-		<eco:organizationDialog wVar="wUnitDialog" title="New Unit"
-			entityName="#{unitBean.unit.name}" onSave="#{unitBean.onSave}"
-			update=":modifyForm:accordion:unitSelect :growl" />
-
-		<eco:organizationDialog wVar="wUnitGroupDialog" title="New Group"
-			entityName="#{unitGroupBean.unitGroup.name}"
-			onSave="#{unitGroupBean.onSave}"
-			update=":modifyForm:accordion:unitGroupSelect :growl" />
-
 		<ui:include src="/views/dialogs/titles.xhtml" />
 
-
-
-		<p:dialog widgetVar="wLevelDialog" header="Level Dialog" modal="true"
-			closeOnEscape="true">
-			<h:panelGrid columns="2">
-				<h:outputText value="Description" />
-				<p:inputText value="#{levelBean.level.name}" />
-			</h:panelGrid>
-			<p:commandButton value="Save" actionListener="#{levelBean.onSave}"
-				oncomplete="PF('wLevelDialog').hide()" ajax="true"
-				update=":modifyForm:accordion:levelSelect :growl" /> |  
-			<p:commandLink value="Cancel" onclick="PF('wLevelDialog').hide()" />
-		</p:dialog>
 
 		<h:form id="bankInfoForm">
 			<p:dialog widgetVar="wBankInfoDialog"

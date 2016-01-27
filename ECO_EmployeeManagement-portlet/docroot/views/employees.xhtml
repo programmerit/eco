@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite"
-	xmlns:portal="http://liferay.com/faces/portal">
+	xmlns:liferay-security="http://liferay.com/faces/security">
 	<h:head />
 
 	<h:body>
@@ -34,7 +34,7 @@
 
 			<h:panelGroup binding="#{requestScope.filterGrid}" id="filterGroup"
 				style="display: none;">
-				<p:panelGrid id="filterGrid" columns="4" styleClass="filter-grid"
+				<p:panelGrid id="filterGrid" columns="5" styleClass="filter-grid"
 					style="margin-bottom: 7px!important; color: black!important;">
 					<h:panelGroup>
 						<p:inputText id="filter_globalString"
@@ -114,6 +114,20 @@
 								ajax="true" update=":searchForm:calendarJoinedDateTo" />
 						</h:panelGroup>
 					</h:panelGroup>
+
+					<!-- <h:panelGroup>
+						<p:selectOneMenu id="statusSelect" value="#{empFilterBean.status}"
+							var="s">
+							<p:ajax event="change"
+								oncomplete="PF('employeeTable').filter(); refreshFooter();" />
+							<f:selectItem itemLabel="Status" itemValue="" />
+							<f:selectItems value="#{empFilterBean.statuses}" var="#{s}"
+								itemValue="#{s}" itemLabel="#{s}" />
+							<p:column>
+								#{s}
+							</p:column>
+						</p:selectOneMenu>
+					</h:panelGroup> -->
 
 					<h:panelGroup>
 						<eco:organizationFilterPanel
@@ -238,13 +252,16 @@
 						<f:setPropertyActionListener target="#{empView.deletedEmployeeId}"
 							value="#{employeeInfo.employeeId}" />
 					</p:commandLink>
-					<!-- <portal:permissionsURL
-						modelResource="vn.com.ecopharma.emp.model.Emp"
-						modelResourceDescription="vn.com.ecopharma.emp.model.Emp"
-						resourcePrimKey="#{employeeInfo.employeeId}" var="permissionsURL" />
-					<pre>#{permissionsURL}</pre>
-					<h:outputText value="gg #{permissionsURL}" /> -->
+				</p:column>
 
+				<p:column headerText="Permissions" toggleable="false"
+					rendered="#{employeeModelPermission.checkPermission('PERMISSIONS')}">
+					<liferay-security:permissionsURL
+						modelResource="vn.com.ecopharma.emp.model.Emp"
+						modelResourceDescription="Permission of #{employeeInfo.employeeId}"
+						resourcePrimKey="#{employeeInfo.employeeId}">
+				                Permission
+				    </liferay-security:permissionsURL>
 				</p:column>
 				<f:facet name="footer">
 		        		In total there are of <h:outputText id="totalFilteredCount"
@@ -260,7 +277,6 @@
 		</h:form>
 		<ui:include src="/views/dialogs/resignedDialog.xhtml" />
 		<ui:include src="/views/dialogs/promotionDialog.xhtml" />
-		<!-- <ui:include src="/views/dialogs/configViewDialog.xhtml" /> -->
 	</h:body>
 	<script type="text/javascript">
 		function toggle(id) {

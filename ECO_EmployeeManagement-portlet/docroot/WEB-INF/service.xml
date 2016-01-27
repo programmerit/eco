@@ -567,5 +567,29 @@
             <finder-column name="name"></finder-column>
         </finder>
 	</entity>
+	<entity name="EmpDiscipline" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="empDisciplineId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+        <column name="empId" type="long"></column>
+        <column name="content" type="String"></column>
+        <column name="disciplineType" type="String"></column>
+        <column name="effectiveDate" type="Date"></column>
+        <column name="additionalDisciplineType" type="String"></column>
+        <column name="description" type="String"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+	</entity>
 
 </service-builder>

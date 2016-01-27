@@ -210,6 +210,33 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.emp.model.impl.EmpDisciplineModelImpl">
+		<attributes>
+			<id name="empDisciplineId" />
+			<basic name="empId" />
+			<basic name="content" />
+			<basic name="disciplineType" />
+			<basic name="effectiveDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="additionalDisciplineType" />
+			<basic name="description" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="vn.com.ecopharma.emp.model.impl.EmployeeTitlesHistoryModelImpl">
 		<attributes>
 			<id name="employeeTitlesHistoryId" />
@@ -542,6 +569,10 @@
 	</entity>
 	<entity class="vn.com.ecopharma.emp.model.impl.EmpBankInfoImpl" name="EmpBankInfo">
 		<table name="eco_em_portlet_EmpBankInfo" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.emp.model.impl.EmpDisciplineImpl" name="EmpDiscipline">
+		<table name="eco_em_portlet_EmpDiscipline" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.emp.model.impl.EmployeeTitlesHistoryImpl" name="EmployeeTitlesHistory">

@@ -22,6 +22,7 @@ import org.primefaces.model.SortOrder;
 import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.dm.EmployeeIndexLazyDataModel;
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
+import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
@@ -90,7 +91,21 @@ public class EmployeeIndexedBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-
+		// try {
+		// JSONObject payloadJSON = JSONFactoryUtil.createJSONObject();
+		// payloadJSON.put("userId", EmployeeUtils.getServiceContext()
+		// .getUserId());
+		// payloadJSON.put("yourCustomEntityId", 123456);
+		// payloadJSON.put("additionalData", "Your notification was added!");
+		// UserNotificationEventLocalServiceUtil.addUserNotificationEvent(
+		// EmployeeUtils.getServiceContext().getUserId(), "Info",
+		// System.currentTimeMillis(), 0, payloadJSON.toString(),
+		// false, EmployeeUtils.getServiceContext());
+		// } catch (PortalException e) {
+		// e.printStackTrace();
+		// } catch (SystemException e) {
+		// e.printStackTrace();
+		// }
 		lazyDataModel = new EmployeeIndexLazyDataModel() {
 			private static final long serialVersionUID = 1L;
 
@@ -138,6 +153,13 @@ public class EmployeeIndexedBean implements Serializable {
 						&& !employeeFilterBean.getSelectedGenders().isEmpty()) {
 					filters.put(EmpField.GENDER,
 							employeeFilterBean.getSelectedGenders());
+				}
+
+				if (!StringUtils.EMPTY.equals(employeeFilterBean.getStatus())) {
+					filters.put(
+							EmpField.STATUS,
+							EmployeeStatus.valueOf(
+									employeeFilterBean.getStatus()).toString());
 				}
 
 				// if (organizationFilterBean.getDevision() != null) {

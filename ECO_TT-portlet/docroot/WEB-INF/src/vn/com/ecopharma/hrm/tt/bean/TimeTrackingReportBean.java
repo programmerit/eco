@@ -12,7 +12,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -55,6 +54,9 @@ public class TimeTrackingReportBean implements Serializable {
 				final TimeTrackingFilterBean filterBean = BeanUtils
 						.getTimeTrackingFilterBean();
 
+				final OrganizationFilterBean organizationFilterBean = BeanUtils
+						.getOrganizationFilterBean();
+
 				TTUtils.checkAndAddFilterValue(TimeTrackingField.GLOBAL,
 						filterBean.getGlobalString(), filters);
 
@@ -64,28 +66,39 @@ public class TimeTrackingReportBean implements Serializable {
 				TTUtils.checkAndAddFilterValue(TimeTrackingField.EMP_CODE,
 						filterBean.getEmployeeCode(), filters);
 
-				TTUtils.checkAndAddFilterValue(TimeTrackingField.DEVISION,
-						filterBean.getDevision() != null ? filterBean
-								.getDevision().getName() : StringUtils.EMPTY,
-						filters);
+				if (organizationFilterBean.getSelectedDevisions() != null
+						&& !organizationFilterBean.getSelectedDevisions()
+								.isEmpty()) {
+					filters.put(TimeTrackingField.DEVISION,
+							organizationFilterBean.getSelectedDevisions());
+				}
 
-				TTUtils.checkAndAddFilterValue(TimeTrackingField.DEPARTMENT,
-						filterBean.getDepartment() != null ? filterBean
-								.getDepartment().getName() : StringUtils.EMPTY,
-						filters);
+				if (organizationFilterBean.getSelectedDepartments() != null
+						&& !organizationFilterBean.getSelectedDepartments()
+								.isEmpty()) {
+					filters.put(TimeTrackingField.DEPARTMENT,
+							organizationFilterBean.getSelectedDepartments());
+				}
 
-				TTUtils.checkAndAddFilterValue(TimeTrackingField.UNIT,
-						filterBean.getUnit() != null ? filterBean.getUnit()
-								.getName() : StringUtils.EMPTY, filters);
+				if (organizationFilterBean.getSelectedUnits() != null
+						&& !organizationFilterBean.getSelectedUnits().isEmpty()) {
+					filters.put(TimeTrackingField.UNIT,
+							organizationFilterBean.getSelectedUnits());
+				}
 
-				TTUtils.checkAndAddFilterValue(TimeTrackingField.UNIT_GROUP,
-						filterBean.getUnitGroup() != null ? filterBean
-								.getUnitGroup().getName() : StringUtils.EMPTY,
-						filters);
+				if (organizationFilterBean.getSelectedUnitGroups() != null
+						&& !organizationFilterBean.getSelectedUnitGroups()
+								.isEmpty()) {
+					filters.put(TimeTrackingField.UNIT_GROUP,
+							organizationFilterBean.getSelectedUnitGroups());
+				}
 
-				TTUtils.checkAndAddFilterValue(TimeTrackingField.TITLES,
-						filterBean.getTitles() != null ? filterBean.getTitles()
-								.getName() : StringUtils.EMPTY, filters);
+				if (organizationFilterBean.getSelectedTitlesList() != null
+						&& !organizationFilterBean.getSelectedTitlesList()
+								.isEmpty()) {
+					filters.put(TimeTrackingField.TITLES,
+							organizationFilterBean.getSelectedTitlesList());
+				}
 
 				// TTUtils.checkAndAddFilterValue(
 				// TimeTrackingField.IS_EMPTY_IN,

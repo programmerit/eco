@@ -8,19 +8,20 @@
 	<info module="portlet_jsf_tmpl" organisation="com.liferay" />
 
 	<dependencies defaultconf="default">
-		<dependency name="jboss-el" org="org.jboss.el" rev="2.0.1.GA" />
+		<dependency org="org.jboss.spec.javax.el" name="jboss-el-api_2.2_spec" rev="1.0.0.Final"/>
 		<dependency name="jsf-api" org="com.sun.faces" rev="2.1.21" />
 		<dependency name="jsf-impl" org="com.sun.faces" rev="2.1.21" />
 		<dependency name="liferay-faces-bridge-api" org="com.liferay.faces" rev="3.2.4-ga5" />
 		<dependency name="liferay-faces-bridge-impl" org="com.liferay.faces" rev="3.2.4-ga5" />
 		<dependency name="liferay-faces-portal" org="com.liferay.faces" rev="3.2.4-ga5" />
 		<dependency name="liferay-faces-util" org="com.liferay.faces" rev="3.2.4-ga5" />
+		<dependency name="liferay-faces-alloy" org="com.liferay.faces" rev="3.2.4-ga5" />
+		
 		<dependency name="primefaces" org="org.primefaces" rev="5.2"/>
 		<dependency name="primefaces-extensions" org="org.primefaces.extensions"  rev="3.2.0"/>
 		<dependency name="commons-lang3" org="org.apache.commons" rev="3.0"/>
 		<dependency name="util-taglib" org="com.liferay.portal" rev="6.2.2"/>
 		<dependency name="util-bridges" org="com.liferay.portal" rev="6.2.2"/>
-		<!-- <dependency name="liferay-faces-alloy" org="com.liferay.faces"  rev="4.2.5-ga6" /> -->
 		
 		<dependency name="gson" org="com.google.code.gson" rev="2.3.1"/>
 		<dependency name="jackson-mapper-asl" org="org.codehaus.jackson" rev="1.9.13"/>

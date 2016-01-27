@@ -125,6 +125,21 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 	</model>
+	<model name="vn.com.ecopharma.emp.model.EmpDiscipline">
+		<field name="empDisciplineId" type="long" />
+		<field name="empId" type="long" />
+		<field name="content" type="String" />
+		<field name="disciplineType" type="String" />
+		<field name="effectiveDate" type="Date" />
+		<field name="additionalDisciplineType" type="String" />
+		<field name="description" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
 	<model name="vn.com.ecopharma.emp.model.EmployeeTitlesHistory">
 		<field name="employeeTitlesHistoryId" type="long" />
 		<field name="employeeId" type="long" />

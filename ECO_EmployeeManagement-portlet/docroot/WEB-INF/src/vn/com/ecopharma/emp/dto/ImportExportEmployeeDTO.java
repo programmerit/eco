@@ -130,11 +130,7 @@ public class ImportExportEmployeeDTO implements Serializable {
 	private Titles titles;
 
 	private String importFailedException;
-
-	private static final String[] HCMC_POSSIBLE_NAMES = new String[] {
-			"TP.HCM", "Tp.HCM", "Tp. HCM", "TpHCM", "TP. HCM", "TPHCM",
-			"TP HCM" };
-
+	
 	public ImportExportEmployeeDTO(XSSFRow r) {
 		this.bindFieldsFromExcelRow(r);
 	}
@@ -146,7 +142,7 @@ public class ImportExportEmployeeDTO implements Serializable {
 		long departmentId = 0;
 		long unitId = 0;
 		long unitGroupId = 0;
-		no = getConvertedIntegerCell(r.getCell(0));
+		// no = getConvertedIntegerCell(r.getCell(0));
 		employeeCode = getCellValueAsString(r.getCell(1));
 		fullname = getCellValueAsString(r.getCell(2));
 		firstName = EmployeeUtils.getFirstName(fullname);
@@ -319,14 +315,10 @@ public class ImportExportEmployeeDTO implements Serializable {
 				&& LevelLocalServiceUtil.findByName(r.getCell(4)
 						.getStringCellValue()) != null ? LevelLocalServiceUtil
 				.findByName(r.getCell(4).getStringCellValue()).getLevelId() : 0;
-		promotedDate = r.getCell(5) != null ? r.getCell(5).getDateCellValue()
-				: null;
-		joinedDate = r.getCell(10) != null ? getConvertedDateStringCell(r
-				.getCell(10)) : null;
-		laborContractSignedDate = r.getCell(11) != null ? r.getCell(11)
-				.getDateCellValue() : null;
-		laborContractExpiredDate = isNotNullCell(r.getCell(12)) ? r.getCell(12)
-				.getDateCellValue() : null;
+		promotedDate = getConvertedDateStringCell(r.getCell(5));
+		joinedDate = getConvertedDateStringCell(r.getCell(10));
+		laborContractSignedDate = getConvertedDateStringCell(r.getCell(11));
+		laborContractExpiredDate = getConvertedDateStringCell(r.getCell(12));
 		laborContractType = getCellValueAsString(r.getCell(13)) != StringUtils.EMPTY ? LaborContractType
 				.convertFromVNeseToLaborContractType(
 						StringUtils.trim(r.getCell(13).getStringCellValue()))
@@ -438,16 +430,7 @@ public class ImportExportEmployeeDTO implements Serializable {
 	}
 
 	public String getCityFromTemporaryAddress() {
-		try {
-			return replaceNameInPosibleArr(
-					getAddressElement(temporaryAddress, 1, 1),
-					HCMC_POSSIBLE_NAMES,
-					RegionServiceUtil.fetchRegion(17L, "VN-65").getName());
-		} catch (SystemException e) {
-			LogFactoryUtil.getLog(ImportExportEmployeeDTO.class).info(
-					"Exception on getCityFromTemporaryAddress()", e);
-		}
-		return StringUtils.EMPTY;
+		return getAddressElement(temporaryAddress, 1, 1);
 	}
 
 	public Country getCountry() {
@@ -462,16 +445,7 @@ public class ImportExportEmployeeDTO implements Serializable {
 	}
 
 	public String getCityFromPresentAddress() {
-		try {
-			return replaceNameInPosibleArr(
-					getAddressElement(presentAddress, 1, 1),
-					HCMC_POSSIBLE_NAMES,
-					RegionServiceUtil.fetchRegion(17L, "VN-65").getName());
-		} catch (SystemException e) {
-			LogFactoryUtil.getLog(ImportExportEmployeeDTO.class).info(
-					"Exception on getCityFromPresentAddress()", e);
-		}
-		return StringUtils.EMPTY;
+		return getAddressElement(presentAddress, 1, 1);
 	}
 
 	public String getDistrictFromTemporaryAddress() {
@@ -571,17 +545,24 @@ public class ImportExportEmployeeDTO implements Serializable {
 		if (cell == null) {
 			return null;
 		}
-		try {
-			final SimpleDateFormat sdf = new SimpleDateFormat(
-					DATE_STRING_CELL_FORMAT);
-			cell.setCellType(STRING_CELL_TYPE);
-			return StringUtils.trimToNull(cell.getStringCellValue()) != null ? sdf
-					.parse(cell.getStringCellValue()) : null;
-		} catch (ParseException e) {
-			LogFactoryUtil.getLog(ImportExportEmployeeDTO.class).info(
-					"Parse Exception on getConvertedDateStringCell", e);
+
+		if (cell.getCellType() == 1) { // String cell type
+			if (StringUtils.trimToNull(cell.getStringCellValue()) == null)
+				return null;
+			try {
+				final SimpleDateFormat sdf = new SimpleDateFormat(
+						DATE_STRING_CELL_FORMAT);
+				cell.setCellType(STRING_CELL_TYPE);
+				return StringUtils.trimToNull(cell.getStringCellValue()) != null ? sdf
+						.parse(cell.getStringCellValue()) : null;
+			} catch (ParseException e) {
+				LogFactoryUtil.getLog(ImportExportEmployeeDTO.class).info(
+						"Parse Exception on getConvertedDateStringCell", e);
+			}
+			return null;
+		} else {
+			return cell.getDateCellValue();
 		}
-		return null;
 	}
 
 	private Integer getConvertedIntegerCell(Cell cell) {

@@ -106,56 +106,56 @@ public class EmpBankInfoLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.EmpBankInfo"
 			};
 
-		_methodName144 = "getBeanIdentifier";
+		_methodName150 = "getBeanIdentifier";
 
-		_methodParameterTypes144 = new String[] {  };
+		_methodParameterTypes150 = new String[] {  };
 
-		_methodName145 = "setBeanIdentifier";
+		_methodName151 = "setBeanIdentifier";
 
-		_methodParameterTypes145 = new String[] { "java.lang.String" };
+		_methodParameterTypes151 = new String[] { "java.lang.String" };
 
-		_methodName150 = "findAll";
+		_methodName156 = "findAll";
 
-		_methodParameterTypes150 = new String[] {
+		_methodParameterTypes156 = new String[] {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName151 = "findAll";
+		_methodName157 = "findAll";
 
-		_methodParameterTypes151 = new String[] { "int", "int" };
+		_methodParameterTypes157 = new String[] { "int", "int" };
 
-		_methodName152 = "findAll";
+		_methodName158 = "findAll";
 
-		_methodParameterTypes152 = new String[] {  };
+		_methodParameterTypes158 = new String[] {  };
 
-		_methodName153 = "findByEmp";
+		_methodName159 = "findByEmp";
 
-		_methodParameterTypes153 = new String[] { "long" };
+		_methodParameterTypes159 = new String[] { "long" };
 
-		_methodName154 = "createPrePersistedEntity";
+		_methodName160 = "createPrePersistedEntity";
 
-		_methodParameterTypes154 = new String[] {
+		_methodParameterTypes160 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String"
 			};
 
-		_methodName155 = "addEmpBankInfo";
+		_methodName161 = "addEmpBankInfo";
 
-		_methodParameterTypes155 = new String[] {
+		_methodParameterTypes161 = new String[] {
 				"vn.com.ecopharma.emp.model.EmpBankInfo",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName156 = "createAndAddEmpBankInfo";
+		_methodName162 = "createAndAddEmpBankInfo";
 
-		_methodParameterTypes156 = new String[] {
+		_methodParameterTypes162 = new String[] {
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName157 = "removeAllBankInfoByEmpCode";
+		_methodName163 = "removeAllBankInfoByEmpCode";
 
-		_methodParameterTypes157 = new String[] { "java.lang.String" };
+		_methodParameterTypes163 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -247,64 +247,64 @@ public class EmpBankInfoLocalServiceClpInvoker {
 			return EmpBankInfoLocalServiceUtil.updateEmpBankInfo((vn.com.ecopharma.emp.model.EmpBankInfo)arguments[0]);
 		}
 
-		if (_methodName144.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
+		if (_methodName150.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
 			return EmpBankInfoLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName145.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
+		if (_methodName151.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
 			EmpBankInfoLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName150.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
+		if (_methodName156.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
 			return EmpBankInfoLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[2]);
 		}
 
-		if (_methodName151.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
+		if (_methodName157.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
 			return EmpBankInfoLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName152.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
+		if (_methodName158.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
 			return EmpBankInfoLocalServiceUtil.findAll();
 		}
 
-		if (_methodName153.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
+		if (_methodName159.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
 			return EmpBankInfoLocalServiceUtil.findByEmp(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName154.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
+		if (_methodName160.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
 			return EmpBankInfoLocalServiceUtil.createPrePersistedEntity(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3]);
 		}
 
-		if (_methodName155.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
+		if (_methodName161.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
 			return EmpBankInfoLocalServiceUtil.addEmpBankInfo((vn.com.ecopharma.emp.model.EmpBankInfo)arguments[0],
 				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
 
-		if (_methodName156.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
+		if (_methodName162.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
 			return EmpBankInfoLocalServiceUtil.createAndAddEmpBankInfo((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3],
 				(com.liferay.portal.service.ServiceContext)arguments[4]);
 		}
 
-		if (_methodName157.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
+		if (_methodName163.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
 			EmpBankInfoLocalServiceUtil.removeAllBankInfoByEmpCode((java.lang.String)arguments[0]);
 
 			return null;
@@ -345,24 +345,24 @@ public class EmpBankInfoLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName144;
-	private String[] _methodParameterTypes144;
-	private String _methodName145;
-	private String[] _methodParameterTypes145;
 	private String _methodName150;
 	private String[] _methodParameterTypes150;
 	private String _methodName151;
 	private String[] _methodParameterTypes151;
-	private String _methodName152;
-	private String[] _methodParameterTypes152;
-	private String _methodName153;
-	private String[] _methodParameterTypes153;
-	private String _methodName154;
-	private String[] _methodParameterTypes154;
-	private String _methodName155;
-	private String[] _methodParameterTypes155;
 	private String _methodName156;
 	private String[] _methodParameterTypes156;
 	private String _methodName157;
 	private String[] _methodParameterTypes157;
+	private String _methodName158;
+	private String[] _methodParameterTypes158;
+	private String _methodName159;
+	private String[] _methodParameterTypes159;
+	private String _methodName160;
+	private String[] _methodParameterTypes160;
+	private String _methodName161;
+	private String[] _methodParameterTypes161;
+	private String _methodName162;
+	private String[] _methodParameterTypes162;
+	private String _methodName163;
+	private String[] _methodParameterTypes163;
 }

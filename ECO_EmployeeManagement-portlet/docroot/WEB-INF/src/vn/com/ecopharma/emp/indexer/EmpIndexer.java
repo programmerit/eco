@@ -66,7 +66,7 @@ public class EmpIndexer extends BaseIndexer {
 
 	@Override
 	protected void doDelete(Object obj) throws Exception {
-		Emp nv = (Emp) obj;
+		final Emp nv = (Emp) obj;
 		deleteDocument(nv.getCompanyId(), nv.getEmpId());
 
 	}
@@ -189,13 +189,13 @@ public class EmpIndexer extends BaseIndexer {
 	protected Summary doGetSummary(Document document, Locale locale,
 			String snippet, PortletURL portletURL) throws Exception {
 		Summary summary = createSummary(document);
-		summary.setMaxContentLength(2000);
+		summary.setMaxContentLength(200);
 		return summary;
 	}
 
 	@Override
 	protected void doReindex(Object obj) throws Exception {
-		Emp emp = (Emp) obj;
+		final Emp emp = (Emp) obj;
 		Document document = getDocument(emp);
 
 		SearchEngineUtil.updateDocument(getSearchEngineId(),
@@ -204,7 +204,7 @@ public class EmpIndexer extends BaseIndexer {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		Emp emp = EmpLocalServiceUtil.fetchEmp(classPK);
+		final Emp emp = EmpLocalServiceUtil.fetchEmp(classPK);
 		doReindex(emp);
 	}
 

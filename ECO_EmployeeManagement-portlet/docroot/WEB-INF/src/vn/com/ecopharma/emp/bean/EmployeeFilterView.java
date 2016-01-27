@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
 
 import vn.com.ecopharma.emp.constant.EmpField;
+import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Titles;
@@ -147,6 +148,17 @@ public class EmployeeFilterView implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public List<String> getStatuses() {
+		return EmployeeStatus.getAll();
+	}
+
+	public String getStatusLocaleKey(String value) {
+		if (value == null || StringUtils.EMPTY.equals(value))
+			return StringUtils.EMPTY;
+		EmployeeStatus s = EmployeeStatus.valueOf(value);
+		return s.getLocalizedString();
 	}
 
 	/* For Order */

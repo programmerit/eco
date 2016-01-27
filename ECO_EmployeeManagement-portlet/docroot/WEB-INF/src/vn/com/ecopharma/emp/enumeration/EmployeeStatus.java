@@ -7,17 +7,24 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 public enum EmployeeStatus {
-	NEWLY_ADDED, RESIGNED;
+	NEWLY_ADDED, RESIGNED, MATERNITY_LEAVE, JOB_WAITING;
 
 	public static List<EmployeeStatus> getAvailableStatus(EmployeeStatus status) {
 		switch (status) {
 		case NEWLY_ADDED:
 			return Arrays.asList(RESIGNED);
 		case RESIGNED:
-			return new ArrayList<EmployeeStatus>();
+			return new ArrayList<>();
 		default:
-			return new ArrayList<EmployeeStatus>();
+			return new ArrayList<>();
 		}
+	}
+
+	public static List<String> getAll() {
+		final List<String> result = new ArrayList<>();
+		for (EmployeeStatus status : values())
+			result.add(status.toString());
+		return result;
 	}
 
 	public List<EmployeeStatus> getAvailableStatus() {

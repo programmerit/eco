@@ -106,46 +106,46 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup"
 			};
 
-		_methodName144 = "getBeanIdentifier";
-
-		_methodParameterTypes144 = new String[] {  };
-
-		_methodName145 = "setBeanIdentifier";
-
-		_methodParameterTypes145 = new String[] { "java.lang.String" };
-
-		_methodName150 = "findAll";
+		_methodName150 = "getBeanIdentifier";
 
 		_methodParameterTypes150 = new String[] {  };
 
-		_methodName151 = "findAll";
+		_methodName151 = "setBeanIdentifier";
 
-		_methodParameterTypes151 = new String[] { "int", "int" };
+		_methodParameterTypes151 = new String[] { "java.lang.String" };
 
-		_methodName152 = "findAll";
+		_methodName156 = "findAll";
 
-		_methodParameterTypes152 = new String[] {
+		_methodParameterTypes156 = new String[] {  };
+
+		_methodName157 = "findAll";
+
+		_methodParameterTypes157 = new String[] { "int", "int" };
+
+		_methodName158 = "findAll";
+
+		_methodParameterTypes158 = new String[] {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName153 = "findByDepartment";
+		_methodName159 = "findByDepartment";
 
-		_methodParameterTypes153 = new String[] { "long" };
+		_methodParameterTypes159 = new String[] { "long" };
 
-		_methodName154 = "findByUnit";
+		_methodName160 = "findByUnit";
 
-		_methodParameterTypes154 = new String[] { "long" };
+		_methodParameterTypes160 = new String[] { "long" };
 
-		_methodName155 = "addTitlesDepartmentUnitUnitGroup";
+		_methodName161 = "addTitlesDepartmentUnitUnitGroup";
 
-		_methodParameterTypes155 = new String[] {
+		_methodParameterTypes161 = new String[] {
 				"long", "long", "long", "long",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName156 = "addTitlesDepartmentUnitUnitGroup";
+		_methodName162 = "addTitlesDepartmentUnitUnitGroup";
 
-		_methodParameterTypes156 = new String[] {
+		_methodParameterTypes162 = new String[] {
 				"vn.com.ecopharma.emp.model.Titles",
 				"vn.com.ecopharma.emp.model.Department",
 				"vn.com.ecopharma.emp.model.Unit",
@@ -153,38 +153,38 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceClpInvoker {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName157 = "findByTitlesDepartmentUnitUnitGroup";
+		_methodName163 = "findByTitlesDepartmentUnitUnitGroup";
 
-		_methodParameterTypes157 = new String[] { "long", "long", "long", "long" };
+		_methodParameterTypes163 = new String[] { "long", "long", "long", "long" };
 
-		_methodName158 = "findByTitlesDepartmentUnitUnitGroup";
+		_methodName164 = "findByTitlesDepartmentUnitUnitGroup";
 
-		_methodParameterTypes158 = new String[] {
+		_methodParameterTypes164 = new String[] {
 				"vn.com.ecopharma.emp.model.Titles",
 				"vn.com.ecopharma.emp.model.Department",
 				"vn.com.ecopharma.emp.model.Unit",
 				"vn.com.ecopharma.emp.model.UnitGroup"
 			};
 
-		_methodName159 = "findByDepartmentUnitUnitGroup";
+		_methodName165 = "findByDepartmentUnitUnitGroup";
 
-		_methodParameterTypes159 = new String[] { "long", "long", "long" };
+		_methodParameterTypes165 = new String[] { "long", "long", "long" };
 
-		_methodName160 = "findByUnitUnitGroup";
+		_methodName166 = "findByUnitUnitGroup";
 
-		_methodParameterTypes160 = new String[] { "long", "long" };
+		_methodParameterTypes166 = new String[] { "long", "long" };
 
-		_methodName161 = "findByUnitGroup";
+		_methodName167 = "findByUnitGroup";
 
-		_methodParameterTypes161 = new String[] { "long" };
+		_methodParameterTypes167 = new String[] { "long" };
 
-		_methodName162 = "findByTitlesDepartmentUnitNoneUnitGroup";
+		_methodName168 = "findByTitlesDepartmentUnitNoneUnitGroup";
 
-		_methodParameterTypes162 = new String[] { "long", "long", "long" };
+		_methodParameterTypes168 = new String[] { "long", "long", "long" };
 
-		_methodName163 = "completelyRemoveAll";
+		_methodName169 = "completelyRemoveAll";
 
-		_methodParameterTypes163 = new String[] {  };
+		_methodParameterTypes169 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -276,48 +276,48 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceClpInvoker {
 			return TitlesDepartmentUnitUnitGroupLocalServiceUtil.updateTitlesDepartmentUnitUnitGroup((vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup)arguments[0]);
 		}
 
-		if (_methodName144.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
+		if (_methodName150.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
 			return TitlesDepartmentUnitUnitGroupLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName145.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
+		if (_methodName151.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
 			TitlesDepartmentUnitUnitGroupLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName150.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
+		if (_methodName156.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
 			return TitlesDepartmentUnitUnitGroupLocalServiceUtil.findAll();
 		}
 
-		if (_methodName151.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
+		if (_methodName157.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
 			return TitlesDepartmentUnitUnitGroupLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName152.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
+		if (_methodName158.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
 			return TitlesDepartmentUnitUnitGroupLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[2]);
 		}
 
-		if (_methodName153.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
+		if (_methodName159.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
 			return TitlesDepartmentUnitUnitGroupLocalServiceUtil.findByDepartment(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName154.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
+		if (_methodName160.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
 			return TitlesDepartmentUnitUnitGroupLocalServiceUtil.findByUnit(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName155.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
+		if (_methodName161.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
 			return TitlesDepartmentUnitUnitGroupLocalServiceUtil.addTitlesDepartmentUnitUnitGroup(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
@@ -325,8 +325,8 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[4]);
 		}
 
-		if (_methodName156.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
+		if (_methodName162.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
 			return TitlesDepartmentUnitUnitGroupLocalServiceUtil.addTitlesDepartmentUnitUnitGroup((vn.com.ecopharma.emp.model.Titles)arguments[0],
 				(vn.com.ecopharma.emp.model.Department)arguments[1],
 				(vn.com.ecopharma.emp.model.Unit)arguments[2],
@@ -334,49 +334,49 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[4]);
 		}
 
-		if (_methodName157.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
+		if (_methodName163.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
 			return TitlesDepartmentUnitUnitGroupLocalServiceUtil.findByTitlesDepartmentUnitUnitGroup(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
 				((Long)arguments[3]).longValue());
 		}
 
-		if (_methodName158.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
+		if (_methodName164.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes164, parameterTypes)) {
 			return TitlesDepartmentUnitUnitGroupLocalServiceUtil.findByTitlesDepartmentUnitUnitGroup((vn.com.ecopharma.emp.model.Titles)arguments[0],
 				(vn.com.ecopharma.emp.model.Department)arguments[1],
 				(vn.com.ecopharma.emp.model.Unit)arguments[2],
 				(vn.com.ecopharma.emp.model.UnitGroup)arguments[3]);
 		}
 
-		if (_methodName159.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
+		if (_methodName165.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes165, parameterTypes)) {
 			return TitlesDepartmentUnitUnitGroupLocalServiceUtil.findByDepartmentUnitUnitGroup(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName160.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
+		if (_methodName166.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
 			return TitlesDepartmentUnitUnitGroupLocalServiceUtil.findByUnitUnitGroup(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName161.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
+		if (_methodName167.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
 			return TitlesDepartmentUnitUnitGroupLocalServiceUtil.findByUnitGroup(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName162.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+		if (_methodName168.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
 			return TitlesDepartmentUnitUnitGroupLocalServiceUtil.findByTitlesDepartmentUnitNoneUnitGroup(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName163.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+		if (_methodName169.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
 			TitlesDepartmentUnitUnitGroupLocalServiceUtil.completelyRemoveAll();
 
 			return null;
@@ -417,22 +417,10 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName144;
-	private String[] _methodParameterTypes144;
-	private String _methodName145;
-	private String[] _methodParameterTypes145;
 	private String _methodName150;
 	private String[] _methodParameterTypes150;
 	private String _methodName151;
 	private String[] _methodParameterTypes151;
-	private String _methodName152;
-	private String[] _methodParameterTypes152;
-	private String _methodName153;
-	private String[] _methodParameterTypes153;
-	private String _methodName154;
-	private String[] _methodParameterTypes154;
-	private String _methodName155;
-	private String[] _methodParameterTypes155;
 	private String _methodName156;
 	private String[] _methodParameterTypes156;
 	private String _methodName157;
@@ -449,4 +437,16 @@ public class TitlesDepartmentUnitUnitGroupLocalServiceClpInvoker {
 	private String[] _methodParameterTypes162;
 	private String _methodName163;
 	private String[] _methodParameterTypes163;
+	private String _methodName164;
+	private String[] _methodParameterTypes164;
+	private String _methodName165;
+	private String[] _methodParameterTypes165;
+	private String _methodName166;
+	private String[] _methodParameterTypes166;
+	private String _methodName167;
+	private String[] _methodParameterTypes167;
+	private String _methodName168;
+	private String[] _methodParameterTypes168;
+	private String _methodName169;
+	private String[] _methodParameterTypes169;
 }

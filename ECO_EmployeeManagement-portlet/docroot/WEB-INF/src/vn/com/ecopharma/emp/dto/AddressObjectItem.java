@@ -146,7 +146,7 @@ public class AddressObjectItem implements Serializable {
 	private final Address createNewAddress(long countryId, long regionId,
 			String district, String street) {
 		final Address a = createNewAddress();
-		if (address != null) {
+		if (a != null) {
 			try {
 				Region r = RegionServiceUtil.getRegion(regionId);
 				a.setRegionId(regionId);
@@ -154,7 +154,7 @@ public class AddressObjectItem implements Serializable {
 				a.setStreet1(street);
 				checkAndCreateDistrict(r.getRegionCode(), district);
 				a.setStreet3(r.getRegionCode() + "_" + district);
-				return address;
+				return a;
 			} catch (PortalException e) {
 				LogFactoryUtil.getLog(AddressObjectItem.class).info(e);
 			} catch (SystemException e) {

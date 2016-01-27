@@ -106,60 +106,60 @@ public class CertificateLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.Certificate"
 			};
 
-		_methodName144 = "getBeanIdentifier";
-
-		_methodParameterTypes144 = new String[] {  };
-
-		_methodName145 = "setBeanIdentifier";
-
-		_methodParameterTypes145 = new String[] { "java.lang.String" };
-
-		_methodName150 = "findAll";
+		_methodName150 = "getBeanIdentifier";
 
 		_methodParameterTypes150 = new String[] {  };
 
-		_methodName151 = "findAll";
+		_methodName151 = "setBeanIdentifier";
 
-		_methodParameterTypes151 = new String[] { "int", "int" };
+		_methodParameterTypes151 = new String[] { "java.lang.String" };
 
-		_methodName152 = "findAll";
+		_methodName156 = "findAll";
 
-		_methodParameterTypes152 = new String[] {
+		_methodParameterTypes156 = new String[] {  };
+
+		_methodName157 = "findAll";
+
+		_methodParameterTypes157 = new String[] { "int", "int" };
+
+		_methodName158 = "findAll";
+
+		_methodParameterTypes158 = new String[] {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName153 = "findByType";
+		_methodName159 = "findByType";
 
-		_methodParameterTypes153 = new String[] { "java.lang.String" };
+		_methodParameterTypes159 = new String[] { "java.lang.String" };
 
-		_methodName154 = "findByClassNameAndClassPK";
+		_methodName160 = "findByClassNameAndClassPK";
 
-		_methodParameterTypes154 = new String[] { "java.lang.String", "long" };
+		_methodParameterTypes160 = new String[] { "java.lang.String", "long" };
 
-		_methodName155 = "findByClassNameClassPKAndType";
+		_methodName161 = "findByClassNameClassPKAndType";
 
-		_methodParameterTypes155 = new String[] {
+		_methodParameterTypes161 = new String[] {
 				"java.lang.String", "long", "java.lang.String"
 			};
 
-		_methodName156 = "createPrePersistedCertificate";
+		_methodName162 = "createPrePersistedCertificate";
 
-		_methodParameterTypes156 = new String[] {
+		_methodParameterTypes162 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName157 = "addCertificate";
+		_methodName163 = "addCertificate";
 
-		_methodParameterTypes157 = new String[] {
+		_methodParameterTypes163 = new String[] {
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"long", "java.util.Date", "java.lang.String", "java.lang.String",
 				"java.util.Date", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName158 = "addCertificate";
+		_methodName164 = "addCertificate";
 
-		_methodParameterTypes158 = new String[] {
+		_methodParameterTypes164 = new String[] {
 				"vn.com.ecopharma.emp.model.Certificate", "java.lang.String",
 				"java.lang.String", "java.lang.String", "long", "java.util.Date",
 				"java.lang.String", "java.lang.String", "java.util.Date",
@@ -167,9 +167,9 @@ public class CertificateLocalServiceClpInvoker {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName159 = "infoLevelLog";
+		_methodName165 = "infoLevelLog";
 
-		_methodParameterTypes159 = new String[] {
+		_methodParameterTypes165 = new String[] {
 				"java.lang.String", "java.lang.Throwable"
 			};
 	}
@@ -263,60 +263,60 @@ public class CertificateLocalServiceClpInvoker {
 			return CertificateLocalServiceUtil.updateCertificate((vn.com.ecopharma.emp.model.Certificate)arguments[0]);
 		}
 
-		if (_methodName144.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
+		if (_methodName150.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
 			return CertificateLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName145.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
+		if (_methodName151.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
 			CertificateLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName150.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
+		if (_methodName156.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
 			return CertificateLocalServiceUtil.findAll();
 		}
 
-		if (_methodName151.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
+		if (_methodName157.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
 			return CertificateLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName152.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
+		if (_methodName158.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
 			return CertificateLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[2]);
 		}
 
-		if (_methodName153.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
+		if (_methodName159.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
 			return CertificateLocalServiceUtil.findByType((java.lang.String)arguments[0]);
 		}
 
-		if (_methodName154.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
+		if (_methodName160.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
 			return CertificateLocalServiceUtil.findByClassNameAndClassPK((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName155.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
+		if (_methodName161.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
 			return CertificateLocalServiceUtil.findByClassNameClassPKAndType((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(), (java.lang.String)arguments[2]);
 		}
 
-		if (_methodName156.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
+		if (_methodName162.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
 			return CertificateLocalServiceUtil.createPrePersistedCertificate((com.liferay.portal.service.ServiceContext)arguments[0]);
 		}
 
-		if (_methodName157.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
+		if (_methodName163.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
 			return CertificateLocalServiceUtil.addCertificate((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				((Long)arguments[3]).longValue(), (java.util.Date)arguments[4],
@@ -326,8 +326,8 @@ public class CertificateLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[10]);
 		}
 
-		if (_methodName158.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
+		if (_methodName164.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes164, parameterTypes)) {
 			return CertificateLocalServiceUtil.addCertificate((vn.com.ecopharma.emp.model.Certificate)arguments[0],
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3],
@@ -338,8 +338,8 @@ public class CertificateLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[11]);
 		}
 
-		if (_methodName159.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
+		if (_methodName165.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes165, parameterTypes)) {
 			CertificateLocalServiceUtil.infoLevelLog((java.lang.String)arguments[0],
 				(java.lang.Throwable)arguments[1]);
 
@@ -381,22 +381,10 @@ public class CertificateLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName144;
-	private String[] _methodParameterTypes144;
-	private String _methodName145;
-	private String[] _methodParameterTypes145;
 	private String _methodName150;
 	private String[] _methodParameterTypes150;
 	private String _methodName151;
 	private String[] _methodParameterTypes151;
-	private String _methodName152;
-	private String[] _methodParameterTypes152;
-	private String _methodName153;
-	private String[] _methodParameterTypes153;
-	private String _methodName154;
-	private String[] _methodParameterTypes154;
-	private String _methodName155;
-	private String[] _methodParameterTypes155;
 	private String _methodName156;
 	private String[] _methodParameterTypes156;
 	private String _methodName157;
@@ -405,4 +393,16 @@ public class CertificateLocalServiceClpInvoker {
 	private String[] _methodParameterTypes158;
 	private String _methodName159;
 	private String[] _methodParameterTypes159;
+	private String _methodName160;
+	private String[] _methodParameterTypes160;
+	private String _methodName161;
+	private String[] _methodParameterTypes161;
+	private String _methodName162;
+	private String[] _methodParameterTypes162;
+	private String _methodName163;
+	private String[] _methodParameterTypes163;
+	private String _methodName164;
+	private String[] _methodParameterTypes164;
+	private String _methodName165;
+	private String[] _methodParameterTypes165;
 }

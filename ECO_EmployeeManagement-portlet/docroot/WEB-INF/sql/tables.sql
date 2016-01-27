@@ -140,6 +140,22 @@ create table eco_em_portlet_EmpBankInfo (
 	modifiedDate DATE null
 );
 
+create table eco_em_portlet_EmpDiscipline (
+	empDisciplineId LONG not null primary key,
+	empId LONG,
+	content VARCHAR(75) null,
+	disciplineType VARCHAR(75) null,
+	effectiveDate DATE null,
+	additionalDisciplineType VARCHAR(75) null,
+	description VARCHAR(75) null,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null
+);
+
 create table eco_em_portlet_EmployeeTitlesHistory (
 	employeeTitlesHistoryId LONG not null primary key,
 	employeeId LONG,

@@ -2,7 +2,6 @@ package vn.com.ecopharma.hrm.tt.bean;
 
 import java.io.Serializable;
 import java.text.DateFormatSymbols;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,16 +13,8 @@ import javax.faces.bean.ViewScoped;
 
 import org.apache.commons.lang3.StringUtils;
 
-import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
-import vn.com.ecopharma.emp.model.Titles;
-import vn.com.ecopharma.emp.model.Unit;
-import vn.com.ecopharma.emp.model.UnitGroup;
-import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
-import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
-import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
-import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.hrm.tt.enumeration.ValueFilterType;
 
 @ManagedBean
@@ -38,12 +29,6 @@ public class TimeTrackingFilterBean implements Serializable {
 	private String globalString = StringUtils.EMPTY;
 	private String employeeCode = StringUtils.EMPTY;
 	private String fullName = StringUtils.EMPTY;
-
-	private Unit unit;
-	private Department department;
-	private Devision devision;
-	private UnitGroup unitGroup;
-	private Titles titles;
 
 	private Date filteredDateFrom;
 	private Date filteredDateTo;
@@ -60,30 +45,6 @@ public class TimeTrackingFilterBean implements Serializable {
 		year = getDefaultYear();
 	}
 
-	public void onDevisionChanged() {
-		this.department = null;
-		this.unitGroup = null;
-		this.titles = null;
-	}
-
-	public void onDepartmentChanged() {
-		this.unit = null;
-		this.unitGroup = null;
-		this.titles = null;
-	}
-
-	public void onUnitChanged() {
-		this.unitGroup = null;
-		this.titles = null;
-	}
-
-	public void onUnitGroupChanged() {
-		this.titles = null;
-	}
-
-	public void onTitlesChanged() {
-	}
-
 	public void resetFilteredDateFrom() {
 		filteredDateFrom = null;
 	}
@@ -92,40 +53,8 @@ public class TimeTrackingFilterBean implements Serializable {
 		filteredDateTo = null;
 	}
 
-	public List<Unit> getUnits() {
-		return department != null ? UnitLocalServiceUtil
-				.findByDepartment(department.getDepartmentId())
-				: new ArrayList<Unit>();
-	}
-
-	public List<UnitGroup> getUnitGroups() {
-		return unit != null ? UnitGroupLocalServiceUtil.findByUnit(unit
-				.getUnitId()) : new ArrayList<UnitGroup>();
-	}
-
-	public List<Department> getDepartments() {
-		return devision != null ? DepartmentLocalServiceUtil
-				.findByDevision(devision.getDevisionId())
-				: new ArrayList<Department>();
-	}
-
 	public List<Devision> getDevisions() {
 		return DevisionLocalServiceUtil.findAll();
-	}
-
-	public List<Titles> getTitlesList() {
-		if (unit == null) {
-			return department != null ? TitlesLocalServiceUtil
-					.findAllByDepartment(department.getDepartmentId())
-					: new ArrayList<Titles>();
-		} else {
-			if (unitGroup != null) {
-				return TitlesLocalServiceUtil.findByUnitGroupOnly(unitGroup
-						.getUnitGroupId());
-			} else {
-				return TitlesLocalServiceUtil.findByUnitOnly(unit.getUnitId());
-			}
-		}
 	}
 
 	public String getGlobalString() {
@@ -142,14 +71,6 @@ public class TimeTrackingFilterBean implements Serializable {
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
-	}
-
-	public Titles getTitles() {
-		return titles;
-	}
-
-	public void setTitles(Titles titles) {
-		this.titles = titles;
 	}
 
 	public Date getFilteredDateFrom() {
@@ -174,38 +95,6 @@ public class TimeTrackingFilterBean implements Serializable {
 
 	public void setEmployeeCode(String employeeCode) {
 		this.employeeCode = employeeCode;
-	}
-
-	public Unit getUnit() {
-		return unit;
-	}
-
-	public void setUnit(Unit unit) {
-		this.unit = unit;
-	}
-
-	public Department getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(Department department) {
-		this.department = department;
-	}
-
-	public Devision getDevision() {
-		return devision;
-	}
-
-	public void setDevision(Devision devision) {
-		this.devision = devision;
-	}
-
-	public UnitGroup getUnitGroup() {
-		return unitGroup;
-	}
-
-	public void setUnitGroup(UnitGroup unitGroup) {
-		this.unitGroup = unitGroup;
 	}
 
 	public int getMonth() {

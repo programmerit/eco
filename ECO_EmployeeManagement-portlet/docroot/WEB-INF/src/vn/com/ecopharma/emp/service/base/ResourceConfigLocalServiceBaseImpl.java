@@ -38,6 +38,7 @@ import vn.com.ecopharma.emp.service.persistence.DepartmentPersistence;
 import vn.com.ecopharma.emp.service.persistence.DevisionPersistence;
 import vn.com.ecopharma.emp.service.persistence.DistrictPersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpBankInfoPersistence;
+import vn.com.ecopharma.emp.service.persistence.EmpDisciplinePersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpPersistence;
 import vn.com.ecopharma.emp.service.persistence.EmployeeTitlesHistoryPersistence;
 import vn.com.ecopharma.emp.service.persistence.LevelPersistence;
@@ -636,6 +637,63 @@ public abstract class ResourceConfigLocalServiceBaseImpl
 	public void setEmpBankInfoPersistence(
 		EmpBankInfoPersistence empBankInfoPersistence) {
 		this.empBankInfoPersistence = empBankInfoPersistence;
+	}
+
+	/**
+	 * Returns the emp discipline local service.
+	 *
+	 * @return the emp discipline local service
+	 */
+	public vn.com.ecopharma.emp.service.EmpDisciplineLocalService getEmpDisciplineLocalService() {
+		return empDisciplineLocalService;
+	}
+
+	/**
+	 * Sets the emp discipline local service.
+	 *
+	 * @param empDisciplineLocalService the emp discipline local service
+	 */
+	public void setEmpDisciplineLocalService(
+		vn.com.ecopharma.emp.service.EmpDisciplineLocalService empDisciplineLocalService) {
+		this.empDisciplineLocalService = empDisciplineLocalService;
+	}
+
+	/**
+	 * Returns the emp discipline remote service.
+	 *
+	 * @return the emp discipline remote service
+	 */
+	public vn.com.ecopharma.emp.service.EmpDisciplineService getEmpDisciplineService() {
+		return empDisciplineService;
+	}
+
+	/**
+	 * Sets the emp discipline remote service.
+	 *
+	 * @param empDisciplineService the emp discipline remote service
+	 */
+	public void setEmpDisciplineService(
+		vn.com.ecopharma.emp.service.EmpDisciplineService empDisciplineService) {
+		this.empDisciplineService = empDisciplineService;
+	}
+
+	/**
+	 * Returns the emp discipline persistence.
+	 *
+	 * @return the emp discipline persistence
+	 */
+	public EmpDisciplinePersistence getEmpDisciplinePersistence() {
+		return empDisciplinePersistence;
+	}
+
+	/**
+	 * Sets the emp discipline persistence.
+	 *
+	 * @param empDisciplinePersistence the emp discipline persistence
+	 */
+	public void setEmpDisciplinePersistence(
+		EmpDisciplinePersistence empDisciplinePersistence) {
+		this.empDisciplinePersistence = empDisciplinePersistence;
 	}
 
 	/**
@@ -1605,6 +1663,12 @@ public abstract class ResourceConfigLocalServiceBaseImpl
 	protected vn.com.ecopharma.emp.service.EmpBankInfoService empBankInfoService;
 	@BeanReference(type = EmpBankInfoPersistence.class)
 	protected EmpBankInfoPersistence empBankInfoPersistence;
+	@BeanReference(type = vn.com.ecopharma.emp.service.EmpDisciplineLocalService.class)
+	protected vn.com.ecopharma.emp.service.EmpDisciplineLocalService empDisciplineLocalService;
+	@BeanReference(type = vn.com.ecopharma.emp.service.EmpDisciplineService.class)
+	protected vn.com.ecopharma.emp.service.EmpDisciplineService empDisciplineService;
+	@BeanReference(type = EmpDisciplinePersistence.class)
+	protected EmpDisciplinePersistence empDisciplinePersistence;
 	@BeanReference(type = vn.com.ecopharma.emp.service.EmployeeTitlesHistoryLocalService.class)
 	protected vn.com.ecopharma.emp.service.EmployeeTitlesHistoryLocalService employeeTitlesHistoryLocalService;
 	@BeanReference(type = vn.com.ecopharma.emp.service.EmployeeTitlesHistoryService.class)

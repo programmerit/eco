@@ -52,7 +52,7 @@ public class OrganizationTreeViewBean implements Serializable {
 	}
 
 	public TreeNode createDocuments() {
-		TreeNode treeRoot = new DefaultTreeNode(new OrgNodeItem(), null);
+		TreeNode treeRoot = new DefaultTreeNode(OrgNodeItem.ROOT, new OrgNodeItem(), null);
 
 		final List<Devision> allDevisions = DevisionLocalServiceUtil.findAll();
 		final List<TreeNode> devisionTreeNodes = new ArrayList<>();
