@@ -263,6 +263,42 @@ public interface EmpDisciplineLocalService extends BaseLocalService,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
+	public int countAllDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.kernel.search.Document> searchAllDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
+		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.search.Document getIndexedDocument(
+		java.lang.String id,
+		com.liferay.portal.kernel.search.SearchContext searchContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.search.Document getIndexedDocument(
+		long id, com.liferay.portal.kernel.search.SearchContext searchContext);
+
 	public vn.com.ecopharma.emp.model.EmpDiscipline createPrePersistedEntity(
 		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public vn.com.ecopharma.emp.model.EmpDiscipline addEmpDiscipline(
+		vn.com.ecopharma.emp.model.EmpDiscipline prePersistedObj,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public void addEmpsDiscipline(java.util.List<java.lang.Long> empIds,
+		java.lang.String content, java.lang.String type,
+		java.util.Date effectiveDate, java.lang.String additionalType,
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public vn.com.ecopharma.emp.model.EmpDiscipline updateEmpDiscipline(
+		long id, java.lang.String type, java.lang.String content,
+		java.util.Date effectiveDate, java.lang.String additionType,
+		java.lang.String desc);
 }

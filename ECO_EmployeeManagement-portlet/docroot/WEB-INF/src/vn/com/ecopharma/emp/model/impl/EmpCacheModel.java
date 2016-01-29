@@ -37,7 +37,7 @@ import java.util.Date;
 public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(109);
+		StringBundler sb = new StringBundler(111);
 
 		sb.append("{empId=");
 		sb.append(empId);
@@ -47,6 +47,8 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		sb.append(empCode);
 		sb.append(", contactNumber=");
 		sb.append(contactNumber);
+		sb.append(", extNumber=");
+		sb.append(extNumber);
 		sb.append(", birthday=");
 		sb.append(birthday);
 		sb.append(", ethnic=");
@@ -171,6 +173,13 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		}
 		else {
 			empImpl.setContactNumber(contactNumber);
+		}
+
+		if (extNumber == null) {
+			empImpl.setExtNumber(StringPool.BLANK);
+		}
+		else {
+			empImpl.setExtNumber(extNumber);
 		}
 
 		if (birthday == Long.MIN_VALUE) {
@@ -425,6 +434,7 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		groupId = objectInput.readLong();
 		empCode = objectInput.readUTF();
 		contactNumber = objectInput.readUTF();
+		extNumber = objectInput.readUTF();
 		birthday = objectInput.readLong();
 		ethnic = objectInput.readUTF();
 		nationality = objectInput.readUTF();
@@ -495,6 +505,13 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		}
 		else {
 			objectOutput.writeUTF(contactNumber);
+		}
+
+		if (extNumber == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(extNumber);
 		}
 
 		objectOutput.writeLong(birthday);
@@ -688,6 +705,7 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 	public long groupId;
 	public String empCode;
 	public String contactNumber;
+	public String extNumber;
 	public long birthday;
 	public String ethnic;
 	public String nationality;

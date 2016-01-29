@@ -122,6 +122,21 @@ public interface EmpModel extends BaseModel<Emp>, GroupedModel {
 	public void setContactNumber(String contactNumber);
 
 	/**
+	 * Returns the ext number of this emp.
+	 *
+	 * @return the ext number of this emp
+	 */
+	@AutoEscape
+	public String getExtNumber();
+
+	/**
+	 * Sets the ext number of this emp.
+	 *
+	 * @param extNumber the ext number of this emp
+	 */
+	public void setExtNumber(String extNumber);
+
+	/**
 	 * Returns the birthday of this emp.
 	 *
 	 * @return the birthday of this emp

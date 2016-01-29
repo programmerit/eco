@@ -38,14 +38,14 @@ public class ResignationBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		
+
 	}
 
 	public void save() {
 		final ServiceContext serviceContext = LiferayFacesContext.getInstance()
 				.getServiceContext();
 		EmpIndexedItem employeeIndexedItem = getEmployeeIndexedItem();
-		resignationHistory.setEmployeeId(employeeIndexedItem.getEmployeeId());
+		resignationHistory.setEmployeeId(employeeIndexedItem.getId());
 		final ResignationHistory result = ResignationHistoryLocalServiceUtil
 				.addResignationHistory(resignationHistory, serviceContext);
 		if (result != null) {

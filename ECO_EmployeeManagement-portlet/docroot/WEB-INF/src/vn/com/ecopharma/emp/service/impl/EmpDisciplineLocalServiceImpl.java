@@ -18,15 +18,34 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import vn.com.ecopharma.emp.constant.EMInfo;
+import vn.com.ecopharma.emp.constant.EmpDisciplineField;
+import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
+import vn.com.ecopharma.emp.model.Emp;
+import vn.com.ecopharma.emp.model.EmpDiscipline;
+import vn.com.ecopharma.emp.service.base.EmpDisciplineLocalServiceBaseImpl;
+
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.ParseException;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
-
-import vn.com.ecopharma.emp.model.EmpDiscipline;
-import vn.com.ecopharma.emp.service.base.EmpDisciplineLocalServiceBaseImpl;
 
 /**
  * The implementation of the emp discipline local service.
@@ -78,6 +97,75 @@ public class EmpDisciplineLocalServiceImpl extends
 		return new ArrayList<>();
 	}
 
+	public int countAllDocuments(SearchContext searchContext,
+			List<Query> filterQueries, long companyId, Sort sort) {
+		return searchAllDocuments(searchContext, filterQueries, companyId,
+				sort, QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
+	}
+
+	public List<Document> searchAllDocuments(SearchContext searchContext,
+			List<Query> filterQueries, long companyId, Sort sort, int start,
+			int end) {
+
+		LOGGER.info("FilterQueries size: " + filterQueries.size());
+		final BooleanQuery fullQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		final BooleanQuery allEntriesBooleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+
+		allEntriesBooleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME,
+				EmpDiscipline.class.getName());
+
+		try {
+			// add filter queries
+			fullQuery.add(allEntriesBooleanQuery, BooleanClauseOccur.MUST);
+			if (filterQueries != null && filterQueries.size() > 0) {
+				for (Query query : filterQueries) {
+					fullQuery.add(query, BooleanClauseOccur.MUST);
+				}
+			}
+
+			final List<Document> documents = SearchEngineUtil.search(
+					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
+					fullQuery, sort, start, end).toList();
+			LOGGER.info("RESULT SIZE: " + documents.size());
+
+			return documents;
+
+		} catch (SearchException e) {
+			LogFactoryUtil.getLog(EmpDisciplineLocalServiceImpl.class).info(e);
+		} catch (ParseException e) {
+			LogFactoryUtil.getLog(EmpDisciplineLocalServiceImpl.class).info(e);
+		}
+		return new ArrayList<>();
+	}
+
+	public Document getIndexedDocument(String id, SearchContext searchContext) {
+		return getIndexedDocument(Long.valueOf(id), searchContext);
+	}
+
+	public Document getIndexedDocument(long id, SearchContext searchContext) {
+		searchContext.setPortletIds(new String[] { EMInfo.PORTLET_ID });
+		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
+		BooleanQuery booleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME,
+				EmpDiscipline.class.getName());
+		booleanQuery.addExactTerm(EmpDisciplineField.ID, id);
+
+		try {
+			fullQuery.add(booleanQuery, BooleanClauseOccur.MUST);
+			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
+			return !hits.toList().isEmpty() ? hits.toList().get(0) : null;
+		} catch (ParseException e) {
+			LogFactoryUtil.getLog(EmpDisciplineLocalServiceImpl.class).info(e);
+		} catch (SearchException e) {
+			LogFactoryUtil.getLog(EmpDisciplineLocalServiceImpl.class).info(e);
+		}
+
+		return null;
+	}
+
 	public EmpDiscipline createPrePersistedEntity(ServiceContext serviceContext) {
 		try {
 			final long id = counterLocalService.increment();
@@ -94,8 +182,84 @@ public class EmpDisciplineLocalServiceImpl extends
 		}
 		return null;
 	}
-	
-	public EmpDiscipline addEmpDiscipline(EmpDiscipline prePersistedObj, ServiceContext serviceContext) {
-		
+
+	public EmpDiscipline addEmpDiscipline(EmpDiscipline prePersistedObj,
+			ServiceContext serviceContext) {
+		try {
+			final EmpDiscipline o = super.addEmpDiscipline(prePersistedObj);
+
+			// add permission
+			resourceLocalService.addResources(o.getCompanyId(), o.getGroupId(),
+					o.getUserId(), EmpDiscipline.class.getName(),
+					o.getEmpDisciplineId(), false, true, true);
+
+			// index new EmpDiscipline
+			Indexer indexer = IndexerRegistryUtil
+					.nullSafeGetIndexer(EmpDiscipline.class);
+			indexer.reindex(EmpDiscipline.class.getName(),
+					o.getEmpDisciplineId());
+
+			final Emp emp = empLocalService.fetchEmp(o.getEmpId());
+			emp.setStatus(EmployeeStatus.DISCIPLINE.toString());
+			empLocalService.updateEmp(emp);
+
+			return o;
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		} catch (SearchException e) {
+			LOGGER.info(e);
+		} catch (PortalException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
+	public void addEmpsDiscipline(List<Long> empIds, String content,
+			String type, Date effectiveDate, String additionalType,
+			String description, ServiceContext serviceContext) {
+		for (long empId : empIds) {
+			EmpDiscipline obj = createPrePersistedEntity(serviceContext);
+			obj.setEmpId(empId);
+			obj.setContent(content);
+			obj.setDisciplineType(type);
+			obj.setEffectiveDate(effectiveDate);
+			obj.setAdditionalDisciplineType(additionalType);
+			obj.setDescription(description);
+			addEmpDiscipline(obj, serviceContext);
+		}
+	}
+
+	public EmpDiscipline updateEmpDiscipline(EmpDiscipline empDiscipline)
+			throws SystemException {
+		try {
+			EmpDiscipline o = super.updateEmpDiscipline(empDiscipline);
+			// index new EmpDiscipline
+			Indexer indexer = IndexerRegistryUtil
+					.nullSafeGetIndexer(EmpDiscipline.class);
+
+			indexer.reindex(EmpDiscipline.class.getName(),
+					o.getEmpDisciplineId());
+			return o;
+		} catch (SearchException e) {
+			LOGGER.info(e);
+		}
+		return null;
+
+	}
+
+	public EmpDiscipline updateEmpDiscipline(long id, String type,
+			String content, Date effectiveDate, String additionType, String desc) {
+		try {
+			final EmpDiscipline obj = super.fetchEmpDiscipline(id);
+			obj.setDisciplineType(type);
+			obj.setContent(content);
+			obj.setEffectiveDate(effectiveDate);
+			obj.setAdditionalDisciplineType(additionType);
+			obj.setDescription(desc);
+			return this.updateEmpDiscipline(obj);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
 	}
 }

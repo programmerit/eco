@@ -84,6 +84,8 @@ public class EmpInfoItem implements Serializable {
 
 	private Region workingPlace;
 
+	private String userImgURL;
+
 	public EmpInfoItem(Emp employee) {
 
 		this.employee = employee;
@@ -392,4 +394,13 @@ public class EmpInfoItem implements Serializable {
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
+
+	public String getUserImgURL() {
+		return userImgURL;
+	}
+
+	public void setUserImgURL(String userImgURL) {
+		this.userImgURL = userImgURL;
+	}
+
 }

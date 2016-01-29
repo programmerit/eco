@@ -1912,6 +1912,7 @@ public class EmpPersistenceImpl extends BasePersistenceImpl<Emp>
 		empImpl.setGroupId(emp.getGroupId());
 		empImpl.setEmpCode(emp.getEmpCode());
 		empImpl.setContactNumber(emp.getContactNumber());
+		empImpl.setExtNumber(emp.getExtNumber());
 		empImpl.setBirthday(emp.getBirthday());
 		empImpl.setEthnic(emp.getEthnic());
 		empImpl.setNationality(emp.getNationality());

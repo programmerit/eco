@@ -129,10 +129,61 @@ public class EmpDisciplineLocalServiceClp implements EmpDisciplineLocalService {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName22 = "createPrePersistedEntity";
+		_methodName22 = "countAllDocuments";
 
 		_methodParameterTypes22 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.List", "long",
+				"com.liferay.portal.kernel.search.Sort"
+			};
+
+		_methodName23 = "searchAllDocuments";
+
+		_methodParameterTypes23 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.List", "long",
+				"com.liferay.portal.kernel.search.Sort", "int", "int"
+			};
+
+		_methodName24 = "getIndexedDocument";
+
+		_methodParameterTypes24 = new String[] {
+				"java.lang.String",
+				"com.liferay.portal.kernel.search.SearchContext"
+			};
+
+		_methodName25 = "getIndexedDocument";
+
+		_methodParameterTypes25 = new String[] {
+				"long", "com.liferay.portal.kernel.search.SearchContext"
+			};
+
+		_methodName26 = "createPrePersistedEntity";
+
+		_methodParameterTypes26 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName27 = "addEmpDiscipline";
+
+		_methodParameterTypes27 = new String[] {
+				"vn.com.ecopharma.emp.model.EmpDiscipline",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName28 = "addEmpsDiscipline";
+
+		_methodParameterTypes28 = new String[] {
+				"java.util.List", "java.lang.String", "java.lang.String",
+				"java.util.Date", "java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName29 = "updateEmpDiscipline";
+
+		_methodParameterTypes29 = new String[] {
+				"long", "java.lang.String", "java.lang.String", "java.util.Date",
+				"java.lang.String", "java.lang.String"
 			};
 	}
 
@@ -766,14 +817,252 @@ public class EmpDisciplineLocalServiceClp implements EmpDisciplineLocalService {
 	}
 
 	@Override
-	public vn.com.ecopharma.emp.model.EmpDiscipline createPrePersistedEntity(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public int countAllDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName22,
 					_methodParameterTypes22,
+					new Object[] {
+						ClpSerializer.translateInput(searchContext),
+						
+					ClpSerializer.translateInput(filterQueries),
+						
+					companyId,
+						
+					ClpSerializer.translateInput(sort)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Document> searchAllDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
+		int end) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
+					new Object[] {
+						ClpSerializer.translateInput(searchContext),
+						
+					ClpSerializer.translateInput(filterQueries),
+						
+					companyId,
+						
+					ClpSerializer.translateInput(sort),
+						
+					start,
+						
+					end
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.portal.kernel.search.Document>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Document getIndexedDocument(
+		java.lang.String id,
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
+					new Object[] {
+						ClpSerializer.translateInput(id),
+						
+					ClpSerializer.translateInput(searchContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portal.kernel.search.Document)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Document getIndexedDocument(
+		long id, com.liferay.portal.kernel.search.SearchContext searchContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
+					new Object[] { id, ClpSerializer.translateInput(
+							searchContext) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portal.kernel.search.Document)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.EmpDiscipline createPrePersistedEntity(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] { ClpSerializer.translateInput(serviceContext) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.EmpDiscipline)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.EmpDiscipline addEmpDiscipline(
+		vn.com.ecopharma.emp.model.EmpDiscipline prePersistedObj,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
+					new Object[] {
+						ClpSerializer.translateInput(prePersistedObj),
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.EmpDiscipline)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public void addEmpsDiscipline(java.util.List<java.lang.Long> empIds,
+		java.lang.String content, java.lang.String type,
+		java.util.Date effectiveDate, java.lang.String additionalType,
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		try {
+			_invokableLocalService.invokeMethod(_methodName28,
+				_methodParameterTypes28,
+				new Object[] {
+					ClpSerializer.translateInput(empIds),
+					
+				ClpSerializer.translateInput(content),
+					
+				ClpSerializer.translateInput(type),
+					
+				ClpSerializer.translateInput(effectiveDate),
+					
+				ClpSerializer.translateInput(additionalType),
+					
+				ClpSerializer.translateInput(description),
+					
+				ClpSerializer.translateInput(serviceContext)
+				});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.EmpDiscipline updateEmpDiscipline(
+		long id, java.lang.String type, java.lang.String content,
+		java.util.Date effectiveDate, java.lang.String additionType,
+		java.lang.String desc) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
+					new Object[] {
+						id,
+						
+					ClpSerializer.translateInput(type),
+						
+					ClpSerializer.translateInput(content),
+						
+					ClpSerializer.translateInput(effectiveDate),
+						
+					ClpSerializer.translateInput(additionType),
+						
+					ClpSerializer.translateInput(desc)
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -835,4 +1124,18 @@ public class EmpDisciplineLocalServiceClp implements EmpDisciplineLocalService {
 	private String[] _methodParameterTypes21;
 	private String _methodName22;
 	private String[] _methodParameterTypes22;
+	private String _methodName23;
+	private String[] _methodParameterTypes23;
+	private String _methodName24;
+	private String[] _methodParameterTypes24;
+	private String _methodName25;
+	private String[] _methodParameterTypes25;
+	private String _methodName26;
+	private String[] _methodParameterTypes26;
+	private String _methodName27;
+	private String[] _methodParameterTypes27;
+	private String _methodName28;
+	private String[] _methodParameterTypes28;
+	private String _methodName29;
+	private String[] _methodParameterTypes29;
 }

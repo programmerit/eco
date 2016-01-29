@@ -38,7 +38,7 @@ public class EmpDisciplineCacheModel implements CacheModel<EmpDiscipline>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{empDisciplineId=");
 		sb.append(empDisciplineId);
@@ -66,6 +66,8 @@ public class EmpDisciplineCacheModel implements CacheModel<EmpDiscipline>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", deleted=");
+		sb.append(deleted);
 		sb.append("}");
 
 		return sb.toString();
@@ -138,6 +140,8 @@ public class EmpDisciplineCacheModel implements CacheModel<EmpDiscipline>,
 			empDisciplineImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		empDisciplineImpl.setDeleted(deleted);
+
 		empDisciplineImpl.resetOriginalValues();
 
 		return empDisciplineImpl;
@@ -158,6 +162,7 @@ public class EmpDisciplineCacheModel implements CacheModel<EmpDiscipline>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		deleted = objectInput.readBoolean();
 	}
 
 	@Override
@@ -209,6 +214,7 @@ public class EmpDisciplineCacheModel implements CacheModel<EmpDiscipline>,
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+		objectOutput.writeBoolean(deleted);
 	}
 
 	public long empDisciplineId;
@@ -224,4 +230,5 @@ public class EmpDisciplineCacheModel implements CacheModel<EmpDiscipline>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public boolean deleted;
 }

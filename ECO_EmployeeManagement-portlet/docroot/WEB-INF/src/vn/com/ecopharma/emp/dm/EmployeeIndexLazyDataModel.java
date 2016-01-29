@@ -41,8 +41,7 @@ public class EmployeeIndexLazyDataModel extends LazyDataModel<EmpIndexedItem> {
 
 	@Override
 	public Object getRowKey(EmpIndexedItem object) {
-		return Long.valueOf(object.getEmployeeDocument()
-				.getField(EmpField.EMP_ID).getValue());
+		return object.getId();
 	}
 
 	@Override
@@ -64,7 +63,8 @@ public class EmployeeIndexLazyDataModel extends LazyDataModel<EmpIndexedItem> {
 		final SearchContext searchContext = EmployeeUtils
 				.getCurrentSearchContext();
 		searchContext.setPortletIds(new String[] { EMInfo.PORTLET_ID });
-		String[] globalSearchableFields = allEmpFields.toArray(new String[allEmpFields.size()]);
+		String[] globalSearchableFields = allEmpFields
+				.toArray(new String[allEmpFields.size()]);
 
 		try {
 			long companyId = EmployeeUtils.getCompanyId();

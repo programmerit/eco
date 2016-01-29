@@ -61,6 +61,7 @@
 		<field name="groupId" type="long" />
 		<field name="empCode" type="String" />
 		<field name="contactNumber" type="String" />
+		<field name="extNumber" type="String" />
 		<field name="birthday" type="Date" />
 		<field name="ethnic" type="String" />
 		<field name="nationality" type="String" />
@@ -128,7 +129,9 @@
 	<model name="vn.com.ecopharma.emp.model.EmpDiscipline">
 		<field name="empDisciplineId" type="long" />
 		<field name="empId" type="long" />
-		<field name="content" type="String" />
+		<field name="content" type="String">
+			<hint name="max-length">1000</hint>
+		</field>
 		<field name="disciplineType" type="String" />
 		<field name="effectiveDate" type="Date" />
 		<field name="additionalDisciplineType" type="String" />
@@ -139,6 +142,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="deleted" type="boolean" />
 	</model>
 	<model name="vn.com.ecopharma.emp.model.EmployeeTitlesHistory">
 		<field name="employeeTitlesHistoryId" type="long" />

@@ -254,25 +254,26 @@ public class EmployeeInfoBean implements Serializable {
 	}
 
 	public void onPromotionNewPosition() {
-		long id = ((EmployeeIndexedBean) BeanUtils
-				.getBackingBeanByName("employeeIndexedBean"))
-				.getSelectedEmployeeIndexItem().getEmployeeId();
-		PromotionBean promotionBean = (PromotionBean) BeanUtils
-				.getBackingBeanByName("promotionBean");
-		promotionBean.setEmployeeId(id);
+		// long id = ((EmployeeIndexedBean) BeanUtils
+		// .getBackingBeanByName("employeeIndexedBean"))
+		// .getSelectedEmployeeIndexItem().getEmployeeId();
+		// PromotionBean promotionBean = (PromotionBean) BeanUtils
+		// .getBackingBeanByName("promotionBean");
+		// promotionBean.setEmployeeId(id);
 	}
 
 	public void onResignedEmployee() {
-		long id = ((EmployeeIndexedBean) BeanUtils
-				.getBackingBeanByName("employeeIndexedBean"))
-				.getSelectedEmployeeIndexItem().getEmployeeId();
-		ResignationBean resignationBean = (ResignationBean) BeanUtils
-				.getBackingBeanByName("resignationBean");
-		ResignationHistory resignationHistory = ResignationHistoryLocalServiceUtil
-				.createPrePersisted();
-		resignationHistory.setResignedType(ResignationType.NONE.toString());
-		resignationBean.setEmployeeId(id);
-		resignationBean.setResignationHistory(resignationHistory);
+		// long id = ((EmployeeIndexedBean) BeanUtils
+		// .getBackingBeanByName("employeeIndexedBean"))
+		// .getSelectedEmployeeIndexItem().getEmployeeId();
+		// ResignationBean resignationBean = (ResignationBean) BeanUtils
+		// .getBackingBeanByName("resignationBean");
+		// ResignationHistory resignationHistory =
+		// ResignationHistoryLocalServiceUtil
+		// .createPrePersisted();
+		// resignationHistory.setResignedType(ResignationType.NONE.toString());
+		// resignationBean.setEmployeeId(id);
+		// resignationBean.setResignationHistory(resignationHistory);
 	}
 
 	public List<String> getAvailableStatuses(String status) {

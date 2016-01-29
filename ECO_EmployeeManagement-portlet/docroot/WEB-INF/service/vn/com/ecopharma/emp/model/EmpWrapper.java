@@ -53,6 +53,7 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 		attributes.put("groupId", getGroupId());
 		attributes.put("empCode", getEmpCode());
 		attributes.put("contactNumber", getContactNumber());
+		attributes.put("extNumber", getExtNumber());
 		attributes.put("birthday", getBirthday());
 		attributes.put("ethnic", getEthnic());
 		attributes.put("nationality", getNationality());
@@ -131,6 +132,12 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 
 		if (contactNumber != null) {
 			setContactNumber(contactNumber);
+		}
+
+		String extNumber = (String)attributes.get("extNumber");
+
+		if (extNumber != null) {
+			setExtNumber(extNumber);
 		}
 
 		Date birthday = (Date)attributes.get("birthday");
@@ -539,6 +546,26 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 	@Override
 	public void setContactNumber(java.lang.String contactNumber) {
 		_emp.setContactNumber(contactNumber);
+	}
+
+	/**
+	* Returns the ext number of this emp.
+	*
+	* @return the ext number of this emp
+	*/
+	@Override
+	public java.lang.String getExtNumber() {
+		return _emp.getExtNumber();
+	}
+
+	/**
+	* Sets the ext number of this emp.
+	*
+	* @param extNumber the ext number of this emp
+	*/
+	@Override
+	public void setExtNumber(java.lang.String extNumber) {
+		_emp.setExtNumber(extNumber);
 	}
 
 	/**

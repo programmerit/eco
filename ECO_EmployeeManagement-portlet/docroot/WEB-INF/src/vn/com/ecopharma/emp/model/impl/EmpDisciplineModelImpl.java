@@ -78,9 +78,10 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP }
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "deleted", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_EmpDiscipline (empDisciplineId LONG not null primary key,empId LONG,content VARCHAR(75) null,disciplineType VARCHAR(75) null,effectiveDate DATE null,additionalDisciplineType VARCHAR(75) null,description VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_EmpDiscipline (empDisciplineId LONG not null primary key,empId LONG,content VARCHAR(1000) null,disciplineType VARCHAR(75) null,effectiveDate DATE null,additionalDisciplineType VARCHAR(75) null,description VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,deleted BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table eco_em_portlet_EmpDiscipline";
 	public static final String ORDER_BY_JPQL = " ORDER BY empDiscipline.empDisciplineId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_em_portlet_EmpDiscipline.empDisciplineId ASC";
@@ -121,6 +122,7 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setDeleted(soapModel.getDeleted());
 
 		return model;
 	}
@@ -198,6 +200,7 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("deleted", getDeleted());
 
 		return attributes;
 	}
@@ -281,6 +284,12 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Boolean deleted = (Boolean)attributes.get("deleted");
+
+		if (deleted != null) {
+			setDeleted(deleted);
 		}
 	}
 
@@ -462,6 +471,22 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
+	@Override
+	public boolean getDeleted() {
+		return _deleted;
+	}
+
+	@Override
+	public boolean isDeleted() {
+		return _deleted;
+	}
+
+	@Override
+	public void setDeleted(boolean deleted) {
+		_deleted = deleted;
+	}
+
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
@@ -502,6 +527,7 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 		empDisciplineImpl.setUserName(getUserName());
 		empDisciplineImpl.setCreateDate(getCreateDate());
 		empDisciplineImpl.setModifiedDate(getModifiedDate());
+		empDisciplineImpl.setDeleted(getDeleted());
 
 		empDisciplineImpl.resetOriginalValues();
 
@@ -636,12 +662,14 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 			empDisciplineCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		empDisciplineCacheModel.deleted = getDeleted();
+
 		return empDisciplineCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{empDisciplineId=");
 		sb.append(getEmpDisciplineId());
@@ -669,6 +697,8 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", deleted=");
+		sb.append(getDeleted());
 		sb.append("}");
 
 		return sb.toString();
@@ -676,7 +706,7 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.EmpDiscipline");
@@ -734,6 +764,10 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>deleted</column-name><column-value><![CDATA[");
+		sb.append(getDeleted());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -758,5 +792,6 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _deleted;
 	private EmpDiscipline _escapedModel;
 }

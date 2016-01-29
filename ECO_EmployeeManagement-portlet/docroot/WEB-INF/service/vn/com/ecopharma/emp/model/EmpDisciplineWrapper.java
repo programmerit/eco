@@ -63,6 +63,7 @@ public class EmpDisciplineWrapper implements EmpDiscipline,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("deleted", getDeleted());
 
 		return attributes;
 	}
@@ -146,6 +147,12 @@ public class EmpDisciplineWrapper implements EmpDiscipline,
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Boolean deleted = (Boolean)attributes.get("deleted");
+
+		if (deleted != null) {
+			setDeleted(deleted);
 		}
 	}
 
@@ -450,6 +457,36 @@ public class EmpDisciplineWrapper implements EmpDiscipline,
 	@Override
 	public void setModifiedDate(java.util.Date modifiedDate) {
 		_empDiscipline.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Returns the deleted of this emp discipline.
+	*
+	* @return the deleted of this emp discipline
+	*/
+	@Override
+	public boolean getDeleted() {
+		return _empDiscipline.getDeleted();
+	}
+
+	/**
+	* Returns <code>true</code> if this emp discipline is deleted.
+	*
+	* @return <code>true</code> if this emp discipline is deleted; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDeleted() {
+		return _empDiscipline.isDeleted();
+	}
+
+	/**
+	* Sets whether this emp discipline is deleted.
+	*
+	* @param deleted the deleted of this emp discipline
+	*/
+	@Override
+	public void setDeleted(boolean deleted) {
+		_empDiscipline.setDeleted(deleted);
 	}
 
 	@Override

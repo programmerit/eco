@@ -88,6 +88,7 @@ public class EmpDisciplineClp extends BaseModelImpl<EmpDiscipline>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("deleted", getDeleted());
 
 		return attributes;
 	}
@@ -171,6 +172,12 @@ public class EmpDisciplineClp extends BaseModelImpl<EmpDiscipline>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Boolean deleted = (Boolean)attributes.get("deleted");
+
+		if (deleted != null) {
+			setDeleted(deleted);
 		}
 	}
 
@@ -486,6 +493,34 @@ public class EmpDisciplineClp extends BaseModelImpl<EmpDiscipline>
 		}
 	}
 
+	@Override
+	public boolean getDeleted() {
+		return _deleted;
+	}
+
+	@Override
+	public boolean isDeleted() {
+		return _deleted;
+	}
+
+	@Override
+	public void setDeleted(boolean deleted) {
+		_deleted = deleted;
+
+		if (_empDisciplineRemoteModel != null) {
+			try {
+				Class<?> clazz = _empDisciplineRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setDeleted", boolean.class);
+
+				method.invoke(_empDisciplineRemoteModel, deleted);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getEmpDisciplineRemoteModel() {
 		return _empDisciplineRemoteModel;
 	}
@@ -569,6 +604,7 @@ public class EmpDisciplineClp extends BaseModelImpl<EmpDiscipline>
 		clone.setUserName(getUserName());
 		clone.setCreateDate(getCreateDate());
 		clone.setModifiedDate(getModifiedDate());
+		clone.setDeleted(getDeleted());
 
 		return clone;
 	}
@@ -621,7 +657,7 @@ public class EmpDisciplineClp extends BaseModelImpl<EmpDiscipline>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{empDisciplineId=");
 		sb.append(getEmpDisciplineId());
@@ -649,6 +685,8 @@ public class EmpDisciplineClp extends BaseModelImpl<EmpDiscipline>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", deleted=");
+		sb.append(getDeleted());
 		sb.append("}");
 
 		return sb.toString();
@@ -656,7 +694,7 @@ public class EmpDisciplineClp extends BaseModelImpl<EmpDiscipline>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.EmpDiscipline");
@@ -714,6 +752,10 @@ public class EmpDisciplineClp extends BaseModelImpl<EmpDiscipline>
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>deleted</column-name><column-value><![CDATA[");
+		sb.append(getDeleted());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -734,6 +776,7 @@ public class EmpDisciplineClp extends BaseModelImpl<EmpDiscipline>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _deleted;
 	private BaseModel<?> _empDisciplineRemoteModel;
 	private Class<?> _clpSerializerClass = vn.com.ecopharma.emp.service.ClpSerializer.class;
 }

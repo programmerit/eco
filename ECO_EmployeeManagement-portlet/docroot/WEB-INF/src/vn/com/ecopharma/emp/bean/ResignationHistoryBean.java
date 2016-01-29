@@ -44,8 +44,8 @@ public class ResignationHistoryBean implements Serializable {
 				.getObject();
 
 		ResignationHistoryLocalServiceUtil.updateResignationHistory(
-				item.getResignationHistoryId(), item.getResignedDate(),
-				item.getResignedType(), item.getComment());
+				item.getId(), item.getResignedDate(), item.getResignedType(),
+				item.getComment());
 	}
 
 	public void onRowEditCancel(RowEditEvent event) {

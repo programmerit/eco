@@ -305,11 +305,12 @@ public class ResignationHistoryLocalServiceImpl extends
 	}
 
 	public void indexAll() {
-		final Indexer indexer = IndexerRegistryUtil
-				.nullSafeGetIndexer(ResignationHistory.class.getName());
 		final List<ResignationHistory> all = findAll();
+		// re-index modified employee
+		Indexer indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(ResignationHistory.class.getName());
 		for (ResignationHistory item : all) {
-			// index employee
+			// re-index
 			try {
 				indexer.reindex(item);
 			} catch (SearchException e) {

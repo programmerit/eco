@@ -73,7 +73,7 @@ public class EmployeeIndexedBean implements Serializable {
 	private static final String JOINED_DATE_TO = "joined_dateTo";
 
 	private LazyDataModel<EmpIndexedItem> lazyDataModel;
-	private EmpIndexedItem selectedEmployeeIndexItem;
+	private List<EmpIndexedItem> selectedEmployeeIndexItems;
 
 	private List<EmpIndexedItem> empIndexedItems;
 
@@ -106,6 +106,7 @@ public class EmployeeIndexedBean implements Serializable {
 		// } catch (SystemException e) {
 		// e.printStackTrace();
 		// }
+		selectedEmployeeIndexItems = new ArrayList<>();
 		lazyDataModel = new EmployeeIndexLazyDataModel() {
 			private static final long serialVersionUID = 1L;
 
@@ -303,6 +304,18 @@ public class EmployeeIndexedBean implements Serializable {
 		TitlesDepartmentUnitUnitGroupLocalServiceUtil.completelyRemoveAll();
 	}
 
+	public boolean isDisciplineValid() {
+		if (selectedEmployeeIndexItems.isEmpty())
+			return false;
+		for (EmpIndexedItem item : selectedEmployeeIndexItems)
+			if (item.getStatus().equalsIgnoreCase(
+					EmployeeStatus.RESIGNED.toString())
+					|| item.getStatus().equalsIgnoreCase(
+							EmployeeStatus.DISCIPLINE.toString()))
+				return false;
+		return true;
+	}
+
 	public String getHeaderi18nKey(String header) {
 		return "employee.info." + header;
 	}
@@ -313,15 +326,6 @@ public class EmployeeIndexedBean implements Serializable {
 
 	public void setLazyDataModel(LazyDataModel<EmpIndexedItem> lazyDataModel) {
 		this.lazyDataModel = lazyDataModel;
-	}
-
-	public EmpIndexedItem getSelectedEmployeeIndexItem() {
-		return selectedEmployeeIndexItem;
-	}
-
-	public void setSelectedEmployeeIndexItem(
-			EmpIndexedItem selectedEmployeeIndexItem) {
-		this.selectedEmployeeIndexItem = selectedEmployeeIndexItem;
 	}
 
 	public List<EmpIndexedItem> getEmpIndexedItems() {
@@ -378,6 +382,15 @@ public class EmployeeIndexedBean implements Serializable {
 
 	public void setColumnTemplates(List<String> columnTemplates) {
 		this.columnTemplates = columnTemplates;
+	}
+
+	public List<EmpIndexedItem> getSelectedEmployeeIndexItems() {
+		return selectedEmployeeIndexItems;
+	}
+
+	public void setSelectedEmployeeIndexItems(
+			List<EmpIndexedItem> selectedEmployeeIndexItems) {
+		this.selectedEmployeeIndexItems = selectedEmployeeIndexItems;
 	}
 
 	public int getFirst() {

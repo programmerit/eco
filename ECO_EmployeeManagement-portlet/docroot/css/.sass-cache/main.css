@@ -110,3 +110,6 @@ span.currentStatus {
 .black-font-color {
   color: black; }
 
+select.ui-helper-hidden {
+  display: none; }
+

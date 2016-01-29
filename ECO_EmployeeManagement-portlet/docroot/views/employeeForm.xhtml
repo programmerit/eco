@@ -38,6 +38,13 @@
 					<p:panelGrid columns="3" layout="grid"
 						styleClass="personal-information-grid">
 						<h:panelGrid columns="3" styleClass="personal-information-grid">
+							<h:outputText></h:outputText>
+							<h:panelGroup>
+								<img style="margin-left: 60px"
+									src="#{empView.modifyEmployeeInfoItem.userImgURL}" />
+							</h:panelGroup>
+							<h:outputText></h:outputText>
+
 							<h:outputText value="Fullname" />
 							<p:inputText id="fullname" placeholder="Full Name"
 								value="#{empView.modifyEmployeeInfoItem.fullName}"
@@ -146,7 +153,6 @@
 									style="width: 70px;" />
 							</h:panelGroup>
 						</h:panelGrid>
-
 					</p:panelGrid>
 				</p:tab>
 				<p:tab id="contactInfo" title="Contact Information">

@@ -427,10 +427,10 @@ public class ImportExportUtils {
 					.getEmployeeUserId());
 			final List<Address> addresses = AddressLocalServiceUtil
 					.getAddresses(serviceContext.getCompanyId(),
-							Emp.class.getName(), employee.getEmployeeId());
+							Emp.class.getName(), employee.getId());
 
 			final List<BankInfoObject> bankInfos = EmployeeUtils
-					.getBankInfoObjectsFromEmp(employee.getEmployeeId());
+					.getBankInfoObjectsFromEmp(employee.getId());
 
 			String tempAddress = StringUtils.EMPTY;
 			String presentAddress = StringUtils.EMPTY;

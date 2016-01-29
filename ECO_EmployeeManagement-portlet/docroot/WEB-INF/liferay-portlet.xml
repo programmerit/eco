@@ -5,6 +5,7 @@
 	<portlet>
 		<portlet-name>ECO_EmployeeManagement</portlet-name>
 		<icon>/icon.png</icon>
+		<indexer-class>vn.com.ecopharma.emp.indexer.EmpDisciplineIndexer</indexer-class>
 		<indexer-class>vn.com.ecopharma.emp.indexer.PromotedHistoryIndexer</indexer-class>
 		<indexer-class>vn.com.ecopharma.emp.indexer.ResignationIndexer</indexer-class>
 		<indexer-class>vn.com.ecopharma.emp.indexer.EmpIndexer</indexer-class>

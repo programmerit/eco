@@ -44,6 +44,7 @@ public class EmpDisciplineSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setDeleted(model.getDeleted());
 
 		return soapModel;
 	}
@@ -200,6 +201,18 @@ public class EmpDisciplineSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public boolean getDeleted() {
+		return _deleted;
+	}
+
+	public boolean isDeleted() {
+		return _deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		_deleted = deleted;
+	}
+
 	private long _empDisciplineId;
 	private long _empId;
 	private String _content;
@@ -213,4 +226,5 @@ public class EmpDisciplineSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _deleted;
 }

@@ -35,6 +35,7 @@ public class EmpSoap implements Serializable {
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setEmpCode(model.getEmpCode());
 		soapModel.setContactNumber(model.getContactNumber());
+		soapModel.setExtNumber(model.getExtNumber());
 		soapModel.setBirthday(model.getBirthday());
 		soapModel.setEthnic(model.getEthnic());
 		soapModel.setNationality(model.getNationality());
@@ -167,6 +168,14 @@ public class EmpSoap implements Serializable {
 
 	public void setContactNumber(String contactNumber) {
 		_contactNumber = contactNumber;
+	}
+
+	public String getExtNumber() {
+		return _extNumber;
+	}
+
+	public void setExtNumber(String extNumber) {
+		_extNumber = extNumber;
 	}
 
 	public Date getBirthday() {
@@ -577,6 +586,7 @@ public class EmpSoap implements Serializable {
 	private long _groupId;
 	private String _empCode;
 	private String _contactNumber;
+	private String _extNumber;
 	private Date _birthday;
 	private String _ethnic;
 	private String _nationality;

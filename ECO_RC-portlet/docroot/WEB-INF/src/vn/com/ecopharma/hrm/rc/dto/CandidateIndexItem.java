@@ -12,7 +12,6 @@ import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.constant.CandidateField;
 import vn.com.ecopharma.hrm.rc.dto.EvaluationItem.EvaluationKeyValueItem;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
-import vn.com.ecopharma.hrm.rc.enumeration.CandidateCertificateType;
 import vn.com.ecopharma.hrm.rc.enumeration.VacancyCandidateType;
 import vn.com.ecopharma.hrm.rc.model.CandidateEvaluation;
 import vn.com.ecopharma.hrm.rc.model.Certificate;
@@ -23,7 +22,6 @@ import vn.com.ecopharma.hrm.rc.service.CandidateEvaluationLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.EvaluationCriteriaLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.VacancyCandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
-import vn.com.ecopharma.hrm.rc.util.EvaluationUtils;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;

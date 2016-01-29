@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
+	<h:head />
+
+	<h:body>
+
+		<p:growl id="growl" showDetail="true" sticky="false" life="4000" />
+		<h:panelGroup id="disciplinePanelGroup">
+			<h:form id="disciplineViewForm">
+
+				<p:link ajax="true" value="Back" outcome="view"
+					rendered="#{employeeModelPermission.checkPermission('VIEW')}" />
+
+				<p:commandLink value="Index All"
+					actionListener="#{disciplineViewBean.onIndexAll}" /> | 
+				<p:commandLink value="Remove All Index"
+					actionListener="#{disciplineViewBean.onRemoveAllIndex}" />
+
+				<p:dataTable id="disciplines" var="d" widgetVar="disciplineTable"
+					value="#{disciplineViewBean.lazyDataModel}"
+					paginatorAlwaysVisible="true" paginator="true" rows="25"
+					paginatorPosition="bottom"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,25,50" lazy="true" selectionMode="single"
+					selection="#{disciplineViewBean.selectedItem}" rowKey="#{d.id}"
+					emptyMessage="No records found" editable="true">
+					<p:ajax event="rowEdit" listener="#{disciplineViewBean.onRowEdit}"
+						update=":growl" />
+					<p:ajax event="rowEditCancel"
+						listener="#{disciplineViewBean.onRowEditCancel}" update=":growl" />
+
+					<p:column headerText="Employee Name">
+						<h:outputText value="#{d.fullNameVi}" />
+					</p:column>
+
+					<p:column headerText="Employee Code">
+						<h:outputText value="#{d.employeeCode}" />
+					</p:column>
+
+					<p:column headerText="Titles">
+						<h:outputText value="#{d.titles}" />
+					</p:column>
+
+					<p:column headerText="Discipline Type">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText
+									value="#{i18n[localeKeyBean.getDisciplineTypeKey(d.type)]}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu id="disciplineTypeSelect" required="true"
+									requiredMessage="Discipline Type required" value="#{d.type}"
+									var="t">
+									<f:selectItem itemLabel="Select Discipline Type" itemValue="" />
+									<f:selectItems value="#{disciplineBean.disciplineTypes}"
+										var="t"
+										itemLabel="#{i18n[localeKeyBean.getDisciplineTypeKey(t)]}"
+										itemValue="#{t}">
+										<p:column>#{localeKeyBean.getDisciplineTypeKey(t)}</p:column>
+									</f:selectItems>
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Discipline Content">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{d.content}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputTextarea value="#{d.content}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Effective Date">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{d.effectiveDateString}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar value="#{d.effectiveDate}" pattern="dd/MM/yyyy" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Additional discipline">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{d.additionalType}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{d.additionalType}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column style="width:32px">
+						<p:rowEditor />
+					</p:column>
+					<f:facet name="footer">
+		        		In total there are of <h:outputText id="totalFilteredCount"
+							value="#{disciplineViewBean.lazyDataModel.rowCount}" /> employees.
+		   			 </f:facet>
+				</p:dataTable>
+			</h:form>
+		</h:panelGroup>
+
+	</h:body>
+</f:view>
+

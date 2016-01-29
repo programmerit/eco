@@ -97,6 +97,7 @@
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="empCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="contactNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="extNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="birthday" type="org.hibernate.type.TimestampType" />
 		<property name="ethnic" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="nationality" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -181,6 +182,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="deleted" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="vn.com.ecopharma.emp.model.impl.EmployeeTitlesHistoryImpl" table="eco_em_portlet_EmployeeTitlesHistory">
 		<cache usage="read-write" />

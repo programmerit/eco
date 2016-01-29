@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:head />
+
+	<h:body>
+
+		<h:form id="disciplineForm">
+			<p:dialog widgetVar="wDisciplineDialog"
+				header="Employee Discipline Form" modal="true">
+
+				<p:outputPanel id="disciplineOutputPanel" autoUpdate="false">
+					<p:panelGrid columns="2">
+						<h:outputText value="Employee" />
+						<p:autoComplete id="disciplineEmployees" multiple="true"
+							styleClass="interview-schedule" scrollHeight="300"
+							minQueryLength="2" value="#{disciplineBean.emps}"
+							completeMethod="#{disciplineBean.completeEmps}" var="e"
+							itemLabel="#{e.fullNameVi}" itemValue="#{e}" required="true"
+							converter="empIndexedConverter" autoHighlight="true"
+							forceSelection="true" placeholder="Type 2 words...">
+							<f:facet name="itemTip">
+								#{e.titles}
+							</f:facet>
+						</p:autoComplete>
+
+						<h:outputText value="Discipline content:" />
+						<p:inputTextarea id="disciplineContent"
+							value="#{disciplineBean.empDisciplineItem.content}" />
+
+						<h:outputText value="Discipline Type" />
+						<p:selectOneMenu id="disciplineTypeSelect" required="true"
+							requiredMessage="Discipline Type required"
+							value="#{disciplineBean.empDisciplineItem.type}" var="d">
+							<f:selectItem itemLabel="Select Discipline Type" itemValue="" />
+							<f:selectItems value="#{disciplineBean.disciplineTypes}" var="d"
+								itemLabel="#{i18n[localeKeyBean.getDisciplineTypeKey(d)]}"
+								itemValue="#{d}">
+								<p:column>#{localeKeyBean.getDisciplineTypeKey(d)}</p:column>
+							</f:selectItems>
+						</p:selectOneMenu>
+
+
+						<h:outputText value="Effective Date" />
+						<p:calendar id="effectiveDate" required="true"
+							value="#{disciplineBean.empDisciplineItem.effectiveDate}"
+							pattern="dd/MM/yyyy" />
+
+						<h:outputText value="Additional Discipline: " />
+						<p:inputText
+							value="#{disciplineBean.empDisciplineItem.additionalType}" />
+
+						<h:outputText value="Description" />
+						<p:inputText
+							value="#{disciplineBean.empDisciplineItem.description}" />
+
+					</p:panelGrid>
+				</p:outputPanel>
+				<p:commandButton value="Save" styleClass="RedButton" ajax="true"
+					actionListener="#{disciplineBean.onSave}" update=":growl"
+					oncomplete="refreshEmployees();" />
+					
+				| 	
+
+				<p:commandLink value="Cancel and Reset all"
+					style="margin-left: 3px;"
+					actionListener="#{disciplineBean.onCancelAndReset}"
+					onclick="PF('wDisciplineDialog').hide()">
+					<p:resetInput target="disciplineForm" />
+				</p:commandLink>
+				
+				|
+				
+				<p:commandLink value="Cancel" style="margin-left: 3px;"
+					actionListener="#{disciplineBean.onCancel}"
+					onclick="PF('wDisciplineDialog').hide()">
+					<p:resetInput target="disciplineForm" />
+				</p:commandLink>
+
+			</p:dialog>
+		</h:form>
+
+	</h:body>
+</f:view>

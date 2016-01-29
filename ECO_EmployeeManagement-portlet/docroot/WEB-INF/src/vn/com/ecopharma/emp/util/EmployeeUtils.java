@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 
+import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.dto.AddressObjectItem;
 import vn.com.ecopharma.emp.dto.BankInfoObject;
 import vn.com.ecopharma.emp.dto.DependentName;
@@ -29,13 +30,20 @@ import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmployeeLocalServiceUtil;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.ParseException;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.User;
@@ -525,5 +533,38 @@ public class EmployeeUtils {
 		if (empAddresses.isEmpty())
 			return null;
 		return empAddresses.get(0);
+	}
+
+	/**
+	 * Provide at least 2 employee's name characters to search employee
+	 * 
+	 * @param query
+	 * @return
+	 */
+	public static List<EmpIndexedItem> searchEmpByName(String query) {
+		final List<EmpIndexedItem> filteredItems = new ArrayList<>();
+		final SearchContext searchContext = getCurrentSearchContext();
+		try {
+			final BooleanQuery fullNameFilterBooleanQuery = BooleanQueryFactoryUtil
+					.create(searchContext);
+			fullNameFilterBooleanQuery.addTerm(EmpField.VN_FULL_NAME, query,
+					true, BooleanClauseOccur.MUST);
+			final List<Query> queries = new ArrayList<>();
+
+			queries.add(fullNameFilterBooleanQuery);
+			Sort sort = new Sort();
+			sort.setFieldName(EmpField.EMP_ID);
+			final List<Document> docs = EmpLocalServiceUtil
+					.searchAllUnDeletedEmpIndexedDocument(searchContext,
+							queries, searchContext.getCompanyId(), sort,
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			for (Document doc : docs) {
+				filteredItems.add(new EmpIndexedItem(doc));
+			}
+			return filteredItems;
+		} catch (ParseException e) {
+			LogFactoryUtil.getLog(EmployeeUtils.class).info(e);
+		}
+		return filteredItems;
 	}
 }

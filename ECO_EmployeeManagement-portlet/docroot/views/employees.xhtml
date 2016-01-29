@@ -143,13 +143,19 @@
 					update=":promotionForm:promotionOutputPanel"
 					actionListener="#{empView.onPromotionNewPosition}"
 					oncomplete="PF('wPromotionDialog').show()"
-					disabled="#{employeeIndexedBean.selectedEmployeeIndexItem.status eq 'RESIGNED'}" />
+					disabled="#{employeeIndexedBean.selectedEmployeeIndexItems.size() > 1 or employeeIndexedBean.selectedEmployeeIndexItems[0].status eq 'RESIGNED'}" />
 
 				<p:menuitem value="Resign"
 					actionListener="#{empView.onResignedEmployee}"
 					update=":resignationForm:resignationOutputPanel"
 					oncomplete="PF('wResignationDialog').show()"
-					disabled="#{employeeIndexedBean.selectedEmployeeIndexItem.status eq 'RESIGNED'}" />
+					disabled="#{employeeIndexedBean.selectedEmployeeIndexItems.size() > 1 or employeeIndexedBean.selectedEmployeeIndexItems[0].status eq 'RESIGNED'}" />
+
+				<p:menuitem value="Add Discipline"
+					actionListener="#{empView.onAddingDiscipline}"
+					update=":disciplineForm:disciplineOutputPanel"
+					oncomplete="PF('wDisciplineDialog').show()"
+					disabled="#{not employeeIndexedBean.disciplineValid}" />
 			</p:contextMenu>
 
 			<h:outputText value="Columns to show:" styleClass="label" />
@@ -182,6 +188,8 @@
 				</p:link> |
 
 				<p:link value="Promotion List" outcome="promotionHistory" /> |
+				
+				<p:link value="Discipline List" outcome="empDiscipline" /> |	
 
 				<p:commandLink value="Import/Export"
 					actionListener="#{empView.importExportEmployee}"
@@ -208,10 +216,10 @@
 				paginatorAlwaysVisible="true" paginator="true" rows="50"
 				paginatorPosition="bottom"
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="10,25,50" lazy="true" selectionMode="single"
-				selection="#{employeeIndexedBean.selectedEmployeeIndexItem}"
-				rowKey="#{employeeInfo.employeeId}"
-				emptyMessage="No employees found" scrollable="true" scrollRows="7">
+				rowsPerPageTemplate="10,25,50" lazy="true" selectionMode="multiple"
+				selection="#{employeeIndexedBean.selectedEmployeeIndexItems}"
+				rowKey="#{employeeInfo.id}" emptyMessage="No employees found"
+				scrollable="true" scrollRows="7">
 
 				<p:ajax event="rowDblselect" listener="#{empView.onRowDblSelect}"
 					update=":empPanelGroup" />
@@ -241,16 +249,16 @@
 				<p:column headerText="Actions" toggleable="false" width="100"
 					exportable="false">
 					<p:commandLink id="editBtn" value="Edit"
-						action="#{empView.editEmployee(employeeInfo.employeeId)}"
+						action="#{empView.editEmployee(employeeInfo.id)}"
 						update=":empPanelGroup"
-						rendered="#{empPermission.checkPermission(employeeInfo.employeeId, 'UPDATE')}" /> 
+						rendered="#{empPermission.checkPermission(employeeInfo.id, 'UPDATE')}" /> 
 					| 
 					<p:commandLink id="deleteBtn" value="Remove"
 						onclick="PF('wDeleteConfirmDialog').show()"
 						icon="fa fa-remove Fs16 White"
-						rendered="#{empPermission.checkPermission(employeeInfo.employeeId, 'DELETE')}">
+						rendered="#{empPermission.checkPermission(employeeInfo.id, 'DELETE')}">
 						<f:setPropertyActionListener target="#{empView.deletedEmployeeId}"
-							value="#{employeeInfo.employeeId}" />
+							value="#{employeeInfo.id}" />
 					</p:commandLink>
 				</p:column>
 
@@ -258,8 +266,8 @@
 					rendered="#{employeeModelPermission.checkPermission('PERMISSIONS')}">
 					<liferay-security:permissionsURL
 						modelResource="vn.com.ecopharma.emp.model.Emp"
-						modelResourceDescription="Permission of #{employeeInfo.employeeId}"
-						resourcePrimKey="#{employeeInfo.employeeId}">
+						modelResourceDescription="Permission of #{employeeInfo.id}"
+						resourcePrimKey="#{employeeInfo.id}">
 				                Permission
 				    </liferay-security:permissionsURL>
 				</p:column>
@@ -277,6 +285,7 @@
 		</h:form>
 		<ui:include src="/views/dialogs/resignedDialog.xhtml" />
 		<ui:include src="/views/dialogs/promotionDialog.xhtml" />
+		<ui:include src="/views/dialogs/empDisciplineDialog.xhtml" />
 	</h:body>
 	<script type="text/javascript">
 		function toggle(id) {

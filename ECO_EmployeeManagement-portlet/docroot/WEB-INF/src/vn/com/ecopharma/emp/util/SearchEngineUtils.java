@@ -1,8 +1,12 @@
 package vn.com.ecopharma.emp.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 
 import vn.com.ecopharma.emp.constant.EmpField;
+import vn.com.ecopharma.emp.dto.EmpIndexedItem;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Emp;
@@ -18,6 +22,7 @@ import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 public class SearchEngineUtils {
 
@@ -79,5 +84,26 @@ public class SearchEngineUtils {
 		document.addNumber(EmpField.TITLES_ID,
 				EmployeeUtils.getBaseModelPrimaryKey(titles));
 
+	}
+
+	public static void indexEmpInfo(Document document, Emp emp)
+			throws PortalException, SystemException {
+		document.addNumber(EmpField.EMP_ID, emp.getEmpId());
+		document.addNumber(EmpField.EMPLOYEE_USER_ID, emp.getEmpUserId());
+		document.addText(EmpField.FULL_NAME,
+				UserLocalServiceUtil.getUser(emp.getEmpUserId()).getFullName());
+		document.addText(EmpField.VN_FULL_NAME, EmployeeUtils
+				.getViFullnameFromUser(UserLocalServiceUtil.getUser(emp
+						.getEmpUserId())));
+
+		document.addText(EmpField.EMP_CODE, emp.getEmpCode());
+	}
+
+	public static List<Long> getIdsFromEmpIndexedItems(
+			List<EmpIndexedItem> items) {
+		final List<Long> result = new ArrayList<>();
+		for (EmpIndexedItem item : items)
+			result.add(item.getId());
+		return result;
 	}
 }

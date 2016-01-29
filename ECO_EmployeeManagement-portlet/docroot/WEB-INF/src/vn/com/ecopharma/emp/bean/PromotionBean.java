@@ -67,7 +67,7 @@ public class PromotionBean implements Serializable {
 
 			promotedHistory.setOldTitlesId(employeeIndexedItem.getTitlesId());
 			promotedHistory.setNewTitlesId(titlesId);
-			promotedHistory.setEmployeeId(employeeIndexedItem.getEmployeeId());
+			promotedHistory.setEmployeeId(employeeIndexedItem.getId());
 			PromotedHistory result = PromotedHistoryLocalServiceUtil
 					.addPromotedHistory(promotedHistory, unitGroupId, unitId,
 							departmentId, LiferayFacesContext.getInstance()

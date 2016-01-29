@@ -290,9 +290,64 @@ public class EmpDisciplineLocalServiceUtil {
 		return getService().findAll(start, end, orderByComparator);
 	}
 
+	public static int countAllDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort) {
+		return getService()
+				   .countAllDocuments(searchContext, filterQueries, companyId,
+			sort);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.search.Document> searchAllDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
+		int end) {
+		return getService()
+				   .searchAllDocuments(searchContext, filterQueries, companyId,
+			sort, start, end);
+	}
+
+	public static com.liferay.portal.kernel.search.Document getIndexedDocument(
+		java.lang.String id,
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().getIndexedDocument(id, searchContext);
+	}
+
+	public static com.liferay.portal.kernel.search.Document getIndexedDocument(
+		long id, com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().getIndexedDocument(id, searchContext);
+	}
+
 	public static vn.com.ecopharma.emp.model.EmpDiscipline createPrePersistedEntity(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService().createPrePersistedEntity(serviceContext);
+	}
+
+	public static vn.com.ecopharma.emp.model.EmpDiscipline addEmpDiscipline(
+		vn.com.ecopharma.emp.model.EmpDiscipline prePersistedObj,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService().addEmpDiscipline(prePersistedObj, serviceContext);
+	}
+
+	public static void addEmpsDiscipline(
+		java.util.List<java.lang.Long> empIds, java.lang.String content,
+		java.lang.String type, java.util.Date effectiveDate,
+		java.lang.String additionalType, java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		getService()
+			.addEmpsDiscipline(empIds, content, type, effectiveDate,
+			additionalType, description, serviceContext);
+	}
+
+	public static vn.com.ecopharma.emp.model.EmpDiscipline updateEmpDiscipline(
+		long id, java.lang.String type, java.lang.String content,
+		java.util.Date effectiveDate, java.lang.String additionType,
+		java.lang.String desc) {
+		return getService()
+				   .updateEmpDiscipline(id, type, content, effectiveDate,
+			additionType, desc);
 	}
 
 	public static void clearService() {

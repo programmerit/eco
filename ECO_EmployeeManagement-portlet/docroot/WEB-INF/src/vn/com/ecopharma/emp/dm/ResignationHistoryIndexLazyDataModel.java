@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import vn.com.ecopharma.emp.constant.ResignationHistoryField;
@@ -18,7 +17,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 
 public class ResignationHistoryIndexLazyDataModel extends
-		LazyDataModel<ResignationHistoryIndexedItem> {
+		AbstractIndexedLazyDataModel<ResignationHistoryIndexedItem> {
 
 	/**
 	 * 
@@ -30,11 +29,6 @@ public class ResignationHistoryIndexLazyDataModel extends
 		return new ResignationHistoryIndexedItem(
 				ResignationHistoryLocalServiceUtil.getIndexedDocument(rowKey,
 						EmployeeUtils.getCurrentSearchContext()));
-	}
-
-	@Override
-	public Object getRowKey(ResignationHistoryIndexedItem object) {
-		return object.getResignationHistoryId();
 	}
 
 	@Override

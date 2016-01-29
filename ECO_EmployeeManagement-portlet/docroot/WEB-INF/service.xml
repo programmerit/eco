@@ -399,6 +399,7 @@
 
 		<column name="empCode" type="String"></column>
 		<column name="contactNumber" type="String"></column>
+        <column name="extNumber" type="String"></column>
 		<column name="birthday" type="Date"></column>
 		<column name="ethnic" type="String"></column>
 		<column name="nationality" type="String"></column>
@@ -590,6 +591,7 @@
 		<column name="userName" type="String"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
+        <column name="deleted" type="boolean"></column>
 	</entity>
 
 </service-builder>

@@ -1,7 +1,5 @@
 package vn.com.ecopharma.hrm.rc.dto;
 
-import java.io.Serializable;
-
 import vn.com.ecopharma.hrm.rc.constant.VacancyField;
 
 import com.liferay.portal.kernel.search.Document;

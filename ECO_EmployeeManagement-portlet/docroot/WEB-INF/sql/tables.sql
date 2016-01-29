@@ -74,6 +74,7 @@ create table eco_em_portlet_Emp (
 	groupId LONG,
 	empCode VARCHAR(75) null,
 	contactNumber VARCHAR(75) null,
+	extNumber VARCHAR(75) null,
 	birthday DATE null,
 	ethnic VARCHAR(75) null,
 	nationality VARCHAR(75) null,
@@ -143,7 +144,7 @@ create table eco_em_portlet_EmpBankInfo (
 create table eco_em_portlet_EmpDiscipline (
 	empDisciplineId LONG not null primary key,
 	empId LONG,
-	content VARCHAR(75) null,
+	content VARCHAR(1000) null,
 	disciplineType VARCHAR(75) null,
 	effectiveDate DATE null,
 	additionalDisciplineType VARCHAR(75) null,
@@ -153,7 +154,8 @@ create table eco_em_portlet_EmpDiscipline (
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
-	modifiedDate DATE null
+	modifiedDate DATE null,
+	deleted BOOLEAN
 );
 
 create table eco_em_portlet_EmployeeTitlesHistory (

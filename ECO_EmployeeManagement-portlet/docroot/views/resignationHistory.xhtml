@@ -10,7 +10,8 @@
 	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
 	<f:metadata>
 		<f:viewParam name="param1" value="#{resignationHistoryBean.param1}" />
-		<f:event type="preRenderView" listener="#{resignationHistoryBean.init}" />
+		<f:event type="preRenderView"
+			listener="#{resignationHistoryBean.init}" />
 	</f:metadata>
 	<h:head />
 
@@ -35,16 +36,15 @@
 					paginatorPosition="bottom"
 					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="10,25,50" lazy="true" selectionMode="single"
-					selection="#{resignationHistoryBean.selectedItem}"
-					rowKey="#{r.resignationHistoryId}" emptyMessage="No records found"
-					editable="true">
+					selection="#{resignationHistoryBean.selectedItem}" rowKey="#{r.id}"
+					emptyMessage="No records found" editable="true">
 					<p:ajax event="rowEdit"
 						listener="#{resignationHistoryBean.onRowEdit}" />
 					<p:ajax event="rowEditCancel"
 						listener="#{resignationHistoryBean.onRowEditCancel}" />
 
-					<p:column headerText="Id">
-						<h:outputText value="#{r.resignationHistoryId}" />
+					<p:column headerText="Employee Code">
+						<h:outputText value="#{r.employeeCode}" />
 					</p:column>
 
 					<p:column headerText="Employee Name">

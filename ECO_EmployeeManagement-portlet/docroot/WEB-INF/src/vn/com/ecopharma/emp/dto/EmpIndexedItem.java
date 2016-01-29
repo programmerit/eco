@@ -1,391 +1,185 @@
 package vn.com.ecopharma.emp.dto;
 
-import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import org.apache.commons.lang3.StringUtils;
 
 import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 
-public class EmpIndexedItem implements Serializable {
+public class EmpIndexedItem extends BaseEmpInfoIndexedItem {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String SOURCE_DATETIME_FORMAT = "yyyyMMddhhmmss";
-	private static final String DESTINATION_DATETIME_FORMAT = "dd/MM/yyyy";
-
-	private Document employeeDocument;
-
-	public EmpIndexedItem(Document employeeDocument) {
-		this.employeeDocument = employeeDocument;
-	}
-
-	public Document getEmployeeDocument() {
-		return employeeDocument;
-	}
-
-	public void setEmployeeDocument(Document employeeDocument) {
-		this.employeeDocument = employeeDocument;
+	public EmpIndexedItem(Document document) {
+		super(document);
 	}
 
 	public String getJoinedDateString() {
-		try {
-			SimpleDateFormat srcSdf = new SimpleDateFormat(
-					SOURCE_DATETIME_FORMAT);
-			SimpleDateFormat desSdf = new SimpleDateFormat(
-					DESTINATION_DATETIME_FORMAT);
-
-			return employeeDocument.getField(EmpField.JOINED_DATE) != null ? desSdf
-					.format(srcSdf.parse(employeeDocument.getField(
-							EmpField.JOINED_DATE).getValue()))
-					: StringUtils.EMPTY;
-		} catch (ParseException e) {
-			LogFactoryUtil.getLog(EmpIndexedItem.class).info(e);
-		}
-		return StringUtils.EMPTY;
+		return getParseDateString(getJoinedDate());
 	}
 
 	public Date getJoinedDate() {
-		if (employeeDocument.getField(EmpField.JOINED_DATE) == null)
-			return null;
-		final SimpleDateFormat sdf = new SimpleDateFormat(
-				SOURCE_DATETIME_FORMAT);
-		try {
-			return sdf.parse(employeeDocument.getField(EmpField.JOINED_DATE)
-					.getValue());
-		} catch (ParseException e) {
-			LogFactoryUtil.getLog(EmpIndexedItem.class).info(e);
-		}
-		return null;
+		return checkNullFieldAndReturnNullDate(EmpField.JOINED_DATE);
 	}
 
 	/** GETTER & SETTER **/
 
-	public long getEmployeeId() {
-		return Long.valueOf(this.employeeDocument.getField(EmpField.EMP_ID)
-				.getValue());
-	}
-
-	public String getEmployeeCode() {
-		return employeeDocument.getField(EmpField.EMP_CODE) != null ? employeeDocument
-				.getField(EmpField.EMP_CODE).getValue() : StringUtils.EMPTY;
-	}
-
-	public String getFullName() {
-		return employeeDocument.getField(EmpField.FULL_NAME).getValue();
-	}
-
-	public String getFullNameVi() {
-		return employeeDocument.getField(EmpField.VN_FULL_NAME).getValue();
-	}
-
 	public String getContactNumber() {
-		return employeeDocument.getField(EmpField.CONTACT_NUMBER) != null ? employeeDocument
-				.getField(EmpField.CONTACT_NUMBER).getValue()
-				: StringUtils.EMPTY;
+		return checkNullFieldAndReturnEmptyString(EmpField.CONTACT_NUMBER);
 	}
 
 	public Date getBirthday() {
-		final SimpleDateFormat sdf = new SimpleDateFormat(
-				SOURCE_DATETIME_FORMAT);
-		try {
-			return employeeDocument.getField(EmpField.BIRTHDAY) != null ? sdf
-					.parse(employeeDocument.getField(EmpField.BIRTHDAY)
-							.getValue()) : null;
-		} catch (ParseException e) {
-			LogFactoryUtil.getLog(EmpIndexedItem.class).info(e);
-		}
-		return null;
+		return checkNullFieldAndReturnNullDate(EmpField.BIRTHDAY);
 	}
 
 	public String getBirthdayString() {
-		final SimpleDateFormat sdf = new SimpleDateFormat(
-				DESTINATION_DATETIME_FORMAT);
-		return getBirthday() != null ? sdf.format(getBirthday())
-				: StringUtils.EMPTY;
-	}
-
-	public long getDevisionId() {
-		return Long.valueOf(employeeDocument.getField(EmpField.DEVISION_ID)
-				.getValue());
-	}
-
-	public long getTitlesId() {
-		return Long.valueOf(employeeDocument.getField(EmpField.TITLES_ID)
-				.getValue());
-	}
-
-	public long getUnitGroupId() {
-		return employeeDocument.getField(EmpField.UNITGROUP_ID) != null ? Long
-				.valueOf(employeeDocument.getField(EmpField.UNITGROUP_ID)
-						.getValue()) : 0L;
-	}
-
-	public long getUnitId() {
-		return employeeDocument.getField(EmpField.UNIT_ID) != null ? Long
-				.valueOf(employeeDocument.getField(EmpField.UNIT_ID).getValue())
-				: 0L;
-	}
-
-	public long getDepartmentId() {
-		return employeeDocument.getField(EmpField.DEPARTMENT_ID) != null ? Long
-				.valueOf(employeeDocument.getField(EmpField.DEPARTMENT_ID)
-						.getValue()) : 0L;
-	}
-
-	public long getLevelId() {
-		return Long.valueOf(employeeDocument.getField(EmpField.LEVEL_ID)
-				.getValue());
+		return getParseDateString(getBirthday());
 	}
 
 	public long getUniversityId() {
-		return Long.valueOf(employeeDocument.getField(EmpField.UNIVERSITY_ID)
-				.getValue());
-	}
-
-	public String getUnit() {
-		return employeeDocument.getField(EmpField.UNIT) != null ? employeeDocument
-				.getField(EmpField.UNIT).getValue() : StringUtils.EMPTY;
-	}
-
-	public String getDepartment() {
-		return employeeDocument.getField(EmpField.DEPARTMENT) != null ? employeeDocument
-				.getField(EmpField.DEPARTMENT).getValue() : StringUtils.EMPTY;
-	}
-
-	public String getDevision() {
-		return employeeDocument.getField(EmpField.DEVISION) != null ? employeeDocument
-				.getField(EmpField.DEVISION).getValue() : StringUtils.EMPTY;
-	}
-
-	public String getUnitGroup() {
-		return employeeDocument.getField(EmpField.UNIT_GROUP) != null ? employeeDocument
-				.getField(EmpField.UNIT_GROUP).getValue() : StringUtils.EMPTY;
-	}
-
-	public String getTitles() {
-		return employeeDocument.getField(EmpField.TITLES).getValue();
-	}
-
-	public String getLevel() {
-		return employeeDocument.getField(EmpField.LEVEL) != null ? employeeDocument
-				.getField(EmpField.LEVEL).getValue() : StringUtils.EMPTY;
+		return checkNullFieldAndReturnLongValue(EmpField.UNIVERSITY_ID);
 	}
 
 	public String getUniversity() {
-		return employeeDocument.getField(EmpField.UNIVERSITY).getValue();
+		return checkNullFieldAndReturnEmptyString(EmpField.UNIVERSITY);
 	}
 
 	public Date getPromotedDate() {
-		final SimpleDateFormat sdf = new SimpleDateFormat(
-				SOURCE_DATETIME_FORMAT);
-		try {
-			return employeeDocument.getField(EmpField.PROMOTED_DATE) != null ? sdf
-					.parse(employeeDocument.getField(EmpField.PROMOTED_DATE)
-							.getValue()) : null;
-		} catch (ParseException e) {
-			LogFactoryUtil.getLog(EmpIndexedItem.class).info(e);
-		}
-		return null;
+		return checkNullFieldAndReturnNullDate(EmpField.PROMOTED_DATE);
 	}
 
 	public String getPromotedDateString() {
-		final SimpleDateFormat sdf = new SimpleDateFormat(
-				DESTINATION_DATETIME_FORMAT);
-
-		return getPromotedDate() != null ? sdf.format(getPromotedDate())
-				: StringUtils.EMPTY;
+		return getParseDateString(getPromotedDate());
 	}
 
 	public Date getLaborContractSignedDate() {
-		final SimpleDateFormat sdf = new SimpleDateFormat(
-				SOURCE_DATETIME_FORMAT);
-		try {
-			if (employeeDocument.getField(EmpField.LABOR_CONTRACT_SIGNED_DATE) != null)
-				return sdf.parse(employeeDocument.getField(
-						EmpField.LABOR_CONTRACT_SIGNED_DATE).getValue());
-		} catch (ParseException e) {
-			LogFactoryUtil.getLog(EmpIndexedItem.class).info(e);
-		}
-		return null;
+		return checkNullFieldAndReturnNullDate(EmpField.LABOR_CONTRACT_SIGNED_DATE);
 	}
 
 	public String getLaborContractSignedDateString() {
-		final SimpleDateFormat sdf = new SimpleDateFormat(
-				DESTINATION_DATETIME_FORMAT);
-
-		return getLaborContractSignedDate() != null ? sdf
-				.format(getLaborContractSignedDate()) : StringUtils.EMPTY;
+		return getParseDateString(getLaborContractSignedDate());
 	}
 
 	public Date getLaborContractExpiredDate() {
-		final SimpleDateFormat sdf = new SimpleDateFormat(
-				SOURCE_DATETIME_FORMAT);
-		try {
-			if (employeeDocument.getField(EmpField.LABOR_CONTRACT_EXPIRED_DATE) != null)
-				return sdf.parse(employeeDocument.getField(
-						EmpField.LABOR_CONTRACT_EXPIRED_DATE).getValue());
-		} catch (ParseException e) {
-			LogFactoryUtil.getLog(EmpIndexedItem.class).info(e);
-		}
-		return null;
+		return checkNullFieldAndReturnNullDate(EmpField.LABOR_CONTRACT_EXPIRED_DATE);
 	}
 
 	public String getLaborContractExpiredDateString() {
-		final SimpleDateFormat sdf = new SimpleDateFormat(
-				DESTINATION_DATETIME_FORMAT);
-
-		return getLaborContractExpiredDate() != null ? sdf
-				.format(getLaborContractExpiredDate()) : StringUtils.EMPTY;
+		return getParseDateString(getLaborContractExpiredDate());
 	}
 
 	public String getLaborContractType() {
-		return checkNullFieldAndReturnEmpty(EmpField.LABOR_CONTRACT_TYPE);
+		return checkNullFieldAndReturnEmptyString(EmpField.LABOR_CONTRACT_TYPE);
 	}
 
 	public String getLaborContractTime() {
-		return checkNullFieldAndReturnEmpty(EmpField.LABOR_CONTRACT_SIGNED_TIME);
+		return checkNullFieldAndReturnEmptyString(EmpField.LABOR_CONTRACT_SIGNED_TIME);
 	}
 
 	public String getGender() {
-		return checkNullFieldAndReturnEmpty(EmpField.GENDER);
+		return checkNullFieldAndReturnEmptyString(EmpField.GENDER);
 	}
 
 	public String getPlaceOfBirth() {
-		return checkNullFieldAndReturnEmpty(EmpField.PLACE_OF_BIRTH);
+		return checkNullFieldAndReturnEmptyString(EmpField.PLACE_OF_BIRTH);
 	}
 
 	public String getEducation() {
-		return checkNullFieldAndReturnEmpty(EmpField.EDUCATION);
+		return checkNullFieldAndReturnEmptyString(EmpField.EDUCATION);
 	}
 
 	public String getEducationSpecialize() {
-		return checkNullFieldAndReturnEmpty(EmpField.EDUCATION_SPECIALIZE);
+		return checkNullFieldAndReturnEmptyString(EmpField.EDUCATION_SPECIALIZE);
 	}
 
 	public String getMaritalStatus() {
-		return checkNullFieldAndReturnEmpty(EmpField.MARITAL_STATUS);
+		return checkNullFieldAndReturnEmptyString(EmpField.MARITAL_STATUS);
 	}
 
 	public String getIdentityCardNo() {
-		return checkNullFieldAndReturnEmpty(EmpField.IDENTITY_CARD_NO);
+		return checkNullFieldAndReturnEmptyString(EmpField.IDENTITY_CARD_NO);
 	}
 
 	public Date getIssuedDate() {
-		final SimpleDateFormat sdf = new SimpleDateFormat(
-				SOURCE_DATETIME_FORMAT);
-		try {
-			return employeeDocument.getField(EmpField.ISSUED_DATE) != null ? sdf
-					.parse(employeeDocument.getField(EmpField.ISSUED_DATE)
-							.getValue()) : null;
-		} catch (ParseException e) {
-			LogFactoryUtil.getLog(EmpIndexedItem.class).info(e);
-		}
-		return null;
+		return checkNullFieldAndReturnNullDate(EmpField.ISSUED_DATE);
 	}
 
 	public String getIssuedPlace() {
-		return checkNullFieldAndReturnEmpty(EmpField.ISSUED_PLACE);
+		return checkNullFieldAndReturnEmptyString(EmpField.ISSUED_PLACE);
 	}
 
 	public String getCompanyEmail() {
-		return checkNullFieldAndReturnEmpty(EmpField.COMPANY_EMAIL_ADDRESS);
+		return checkNullFieldAndReturnEmptyString(EmpField.COMPANY_EMAIL_ADDRESS);
 	}
 
 	public String getPersonalTaxCode() {
-		return checkNullFieldAndReturnEmpty(EmpField.TAX_CODE);
+		return checkNullFieldAndReturnEmptyString(EmpField.TAX_CODE);
 	}
 
 	public int getNumberOfDependents() {
-		return Integer.valueOf(employeeDocument.getField(
-				EmpField.NUMBER_OF_DEPENDENTS).getValue());
+		return checkNullFieldAndReturnIntegerValue(EmpField.NUMBER_OF_DEPENDENTS);
 	}
 
 	public String getDependentNames() {
-		return checkNullFieldAndReturnEmpty(EmpField.DEPENDENT_NAMES);
+		return checkNullFieldAndReturnEmptyString(EmpField.DEPENDENT_NAMES);
 	}
 
 	public String getSocialInsuranceNo() {
-		return checkNullFieldAndReturnEmpty(EmpField.SOCIAL_INSURANCE_NO);
+		return checkNullFieldAndReturnEmptyString(EmpField.SOCIAL_INSURANCE_NO);
 	}
 
 	public String getHealthInsuranceNo() {
-		return checkNullFieldAndReturnEmpty(EmpField.HEALTH_INSURANCE_NO);
+		return checkNullFieldAndReturnEmptyString(EmpField.HEALTH_INSURANCE_NO);
 	}
 
 	public String getBankAccountNo() {
-		return checkNullFieldAndReturnEmpty(EmpField.BANK_ACCOUNT_NO);
+		return checkNullFieldAndReturnEmptyString(EmpField.BANK_ACCOUNT_NO);
 	}
 
 	public String getBankBranchName() {
-		return checkNullFieldAndReturnEmpty(EmpField.BANK_BRANCH_NAME);
+		return checkNullFieldAndReturnEmptyString(EmpField.BANK_BRANCH_NAME);
 	}
 
 	public double getBaseWageRates() {
-		return Double.valueOf(employeeDocument.getField(
-				EmpField.BASE_WAGE_RATES).getValue());
+		return checkNullFieldAndReturnDoubleValue(EmpField.BASE_WAGE_RATES);
 	}
 
 	public double getPositionWageRates() {
-		return Double.valueOf(employeeDocument.getField(
-				EmpField.POSITION_WAGE_RATES).getValue());
+		return checkNullFieldAndReturnDoubleValue(EmpField.POSITION_WAGE_RATES);
 	}
 
 	public double getCapacitySalary() {
-		return Double.valueOf(employeeDocument.getField(
-				EmpField.CAPACITY_SALARY).getValue());
+		return checkNullFieldAndReturnDoubleValue(EmpField.CAPACITY_SALARY);
 	}
 
 	public double getTotalSalary() {
-		return Double.valueOf(employeeDocument.getField(EmpField.TOTAL_SALARY)
-				.getValue());
+		return checkNullFieldAndReturnDoubleValue(EmpField.TOTAL_SALARY);
 	}
 
 	public double getBonus() {
-		return Double.valueOf(employeeDocument.getField(EmpField.BONUS)
-				.getValue());
+		return checkNullFieldAndReturnDoubleValue(EmpField.BONUS);
 	}
 
 	public Date getResignedDate() {
-		final SimpleDateFormat sdf = new SimpleDateFormat(
-				SOURCE_DATETIME_FORMAT);
-		try {
-			return employeeDocument.getField(EmpField.RESIGNED_DATE) != null ? sdf
-					.parse(employeeDocument.getField(EmpField.RESIGNED_DATE)
-							.getValue()) : null;
-		} catch (ParseException e) {
-			LogFactoryUtil.getLog(EmpIndexedItem.class).info(e);
-		}
-		return null;
+		return checkNullFieldAndReturnNullDate(EmpField.RESIGNED_DATE);
 	}
 
 	public String getStatus() {
-		return employeeDocument.getField(EmpField.STATUS).getValue();
+		return checkNullFieldAndReturnEmptyString(EmpField.STATUS);
 	}
 
 	public long getEmployeeUserId() {
-		return Long.valueOf(employeeDocument
-				.getField(EmpField.EMPLOYEE_USER_ID).getValue());
+		return checkNullFieldAndReturnLongValue(EmpField.EMPLOYEE_USER_ID);
 	}
 
 	public boolean isDeleted() {
-		return Boolean.valueOf(employeeDocument.getField(EmpField.IS_DELETED)
+		return Boolean.valueOf(getDocument().getField(EmpField.IS_DELETED)
 				.getValue());
 	}
 
 	public String getCompanyEmailAddress() {
-		return checkNullFieldAndReturnEmpty(EmpField.COMPANY_EMAIL_ADDRESS);
-	}
-
-	private String checkNullFieldAndReturnEmpty(String EmpField) {
-		return employeeDocument.getField(EmpField) != null ? employeeDocument
-				.getField(EmpField).getValue() : StringUtils.EMPTY;
+		return checkNullFieldAndReturnEmptyString(EmpField.COMPANY_EMAIL_ADDRESS);
 	}
 
 	public String getStatusCss() {
@@ -396,9 +190,8 @@ public class EmpIndexedItem implements Serializable {
 		return EmployeeStatus.valueOf(getStatus()).getLocalizedString();
 	}
 
-	public String getUnitName() {
-		return employeeDocument.getField(EmpField.UNIT) != null ? employeeDocument
-				.getField(EmpField.UNIT).getValue() : StringUtils.EMPTY;
+	@Override
+	protected String getIdFieldName() {
+		return EmpField.EMP_ID;
 	}
-
 }

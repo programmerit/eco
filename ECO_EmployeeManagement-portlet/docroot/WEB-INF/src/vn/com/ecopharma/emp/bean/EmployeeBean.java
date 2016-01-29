@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
+import vn.com.ecopharma.emp.bean.DisciplineBean.EmpDisciplineItem;
 import vn.com.ecopharma.emp.dto.AddressObjectItem;
 import vn.com.ecopharma.emp.dto.BankInfoObject;
 import vn.com.ecopharma.emp.dto.DependentName;
@@ -56,10 +57,12 @@ import vn.com.ecopharma.emp.util.BeanUtils;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.model.Region;
@@ -69,6 +72,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RegionServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.theme.ThemeDisplay;
 
 @ManagedBean(name = "empView")
 @ViewScoped
@@ -175,6 +179,26 @@ public class EmployeeBean implements Serializable {
 		modifyEmployeeInfoItem = new EmpInfoItem(Long.valueOf(employeeId));
 		showUserTab = false;
 		updateString = StringUtils.EMPTY;
+
+		long portraitId = modifyEmployeeInfoItem.getUser().getPortraitId();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) FacesContext
+				.getCurrentInstance().getExternalContext().getRequestMap()
+				.get(WebKeys.THEME_DISPLAY);
+
+		try {
+			String url = modifyEmployeeInfoItem.getUser().getPortraitURL(
+					themeDisplay);
+			System.out.println("Portrait URL: " + url);
+
+			modifyEmployeeInfoItem.setUserImgURL(url);
+		} catch (SystemException e) {
+			e.printStackTrace();
+		} catch (PortalException e) {
+			e.printStackTrace();
+		}
+		// Image image = ImageLocalServiceUtil.getImage(portraitId);
+		// image.get
 		switchPage(3);
 	}
 
@@ -211,7 +235,7 @@ public class EmployeeBean implements Serializable {
 
 	public void onRowDblSelect(SelectEvent event) {
 		editEmployee(String.valueOf(((EmpIndexedItem) event.getObject())
-				.getEmployeeId()));
+				.getId()));
 	}
 
 	public void save() {
@@ -413,7 +437,7 @@ public class EmployeeBean implements Serializable {
 	public void onPromotionNewPosition() {
 		long id = ((EmployeeIndexedBean) BeanUtils
 				.getBackingBeanByName("employeeIndexedBean"))
-				.getSelectedEmployeeIndexItem().getEmployeeId();
+				.getSelectedEmployeeIndexItems().get(0).getId();
 		PromotionBean promotionBean = (PromotionBean) BeanUtils
 				.getBackingBeanByName("promotionBean");
 		promotionBean.setEmployeeId(id);
@@ -422,7 +446,7 @@ public class EmployeeBean implements Serializable {
 	public void onResignedEmployee() {
 		long id = ((EmployeeIndexedBean) BeanUtils
 				.getBackingBeanByName("employeeIndexedBean"))
-				.getSelectedEmployeeIndexItem().getEmployeeId();
+				.getSelectedEmployeeIndexItems().get(0).getId();
 		ResignationBean resignationBean = (ResignationBean) BeanUtils
 				.getBackingBeanByName("resignationBean");
 		ResignationHistory resignationHistory = ResignationHistoryLocalServiceUtil
@@ -430,6 +454,16 @@ public class EmployeeBean implements Serializable {
 		resignationHistory.setResignedType(ResignationType.NONE.toString());
 		resignationBean.setEmployeeId(id);
 		resignationBean.setResignationHistory(resignationHistory);
+	}
+
+	public void onAddingDiscipline() {
+		DisciplineBean disciplineBean = (DisciplineBean) BeanUtils
+				.getBackingBeanByName("disciplineBean");
+		List<EmpIndexedItem> empIndexedItems = BeanUtils
+				.getEmployeeIndexedBean().getSelectedEmployeeIndexItems();
+		if (disciplineBean.getEmpDisciplineItem() == null)
+			disciplineBean.setEmpDisciplineItem(new EmpDisciplineItem());
+		disciplineBean.getEmps().addAll(empIndexedItems);
 	}
 
 	public List<String> getAvailableStatuses(String status) {
@@ -608,6 +642,11 @@ public class EmployeeBean implements Serializable {
 		return SpecializedLocalServiceUtil.findAll();
 	}
 
+	/**
+	 * Default working place in VN
+	 * 
+	 * @return all regions of VN
+	 */
 	public List<Region> getWorkingPlaces() {
 		try {
 			return RegionServiceUtil.getRegions(17L);

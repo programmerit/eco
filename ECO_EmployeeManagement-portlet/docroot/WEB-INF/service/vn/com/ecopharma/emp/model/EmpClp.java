@@ -78,6 +78,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		attributes.put("groupId", getGroupId());
 		attributes.put("empCode", getEmpCode());
 		attributes.put("contactNumber", getContactNumber());
+		attributes.put("extNumber", getExtNumber());
 		attributes.put("birthday", getBirthday());
 		attributes.put("ethnic", getEthnic());
 		attributes.put("nationality", getNationality());
@@ -156,6 +157,12 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 
 		if (contactNumber != null) {
 			setContactNumber(contactNumber);
+		}
+
+		String extNumber = (String)attributes.get("extNumber");
+
+		if (extNumber != null) {
+			setExtNumber(extNumber);
 		}
 
 		Date birthday = (Date)attributes.get("birthday");
@@ -551,6 +558,29 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 				Method method = clazz.getMethod("setContactNumber", String.class);
 
 				method.invoke(_empRemoteModel, contactNumber);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getExtNumber() {
+		return _extNumber;
+	}
+
+	@Override
+	public void setExtNumber(String extNumber) {
+		_extNumber = extNumber;
+
+		if (_empRemoteModel != null) {
+			try {
+				Class<?> clazz = _empRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setExtNumber", String.class);
+
+				method.invoke(_empRemoteModel, extNumber);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -1821,6 +1851,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		clone.setGroupId(getGroupId());
 		clone.setEmpCode(getEmpCode());
 		clone.setContactNumber(getContactNumber());
+		clone.setExtNumber(getExtNumber());
 		clone.setBirthday(getBirthday());
 		clone.setEthnic(getEthnic());
 		clone.setNationality(getNationality());
@@ -1923,7 +1954,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(109);
+		StringBundler sb = new StringBundler(111);
 
 		sb.append("{empId=");
 		sb.append(getEmpId());
@@ -1933,6 +1964,8 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		sb.append(getEmpCode());
 		sb.append(", contactNumber=");
 		sb.append(getContactNumber());
+		sb.append(", extNumber=");
+		sb.append(getExtNumber());
 		sb.append(", birthday=");
 		sb.append(getBirthday());
 		sb.append(", ethnic=");
@@ -2040,7 +2073,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(166);
+		StringBundler sb = new StringBundler(169);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.Emp");
@@ -2061,6 +2094,10 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		sb.append(
 			"<column><column-name>contactNumber</column-name><column-value><![CDATA[");
 		sb.append(getContactNumber());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>extNumber</column-name><column-value><![CDATA[");
+		sb.append(getExtNumber());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>birthday</column-name><column-value><![CDATA[");
@@ -2272,6 +2309,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 	private long _groupId;
 	private String _empCode;
 	private String _contactNumber;
+	private String _extNumber;
 	private Date _birthday;
 	private String _ethnic;
 	private String _nationality;

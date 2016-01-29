@@ -77,10 +77,6 @@ public class EmpIndexer extends BaseIndexer {
 		final Document document = getBaseModelDocument(EMInfo.PORTLET_ID, emp);
 
 		document.addNumber(EmpField.EMP_ID, emp.getEmpId());
-		document.addText(Field.TITLE, Emp.class.getName());
-		document.addDate(Field.CREATE_DATE, emp.getCreateDate());
-		document.addDate(Field.MODIFIED_DATE, emp.getModifiedDate());
-
 		document.addNumber(EmpField.EMPLOYEE_USER_ID, emp.getEmpUserId());
 		document.addText(EmpField.FULL_NAME,
 				UserLocalServiceUtil.getUser(emp.getEmpUserId()).getFullName());
@@ -180,6 +176,9 @@ public class EmpIndexer extends BaseIndexer {
 
 		document.addNumber(EmpField.UNIVERSITY_ID, emp.getUniversityId());
 
+		document.addText(Field.TITLE, Emp.class.getName());
+		document.addDate(Field.CREATE_DATE, emp.getCreateDate());
+		document.addDate(Field.MODIFIED_DATE, emp.getModifiedDate());
 		document.addKeyword(Field.GROUP_ID, getSiteGroupId(emp.getGroupId()));
 		document.addKeyword(Field.SCOPE_GROUP_ID, emp.getGroupId());
 		return document;

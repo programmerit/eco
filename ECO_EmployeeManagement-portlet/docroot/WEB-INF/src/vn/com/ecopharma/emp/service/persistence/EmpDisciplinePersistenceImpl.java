@@ -336,6 +336,7 @@ public class EmpDisciplinePersistenceImpl extends BasePersistenceImpl<EmpDiscipl
 		empDisciplineImpl.setUserName(empDiscipline.getUserName());
 		empDisciplineImpl.setCreateDate(empDiscipline.getCreateDate());
 		empDisciplineImpl.setModifiedDate(empDiscipline.getModifiedDate());
+		empDisciplineImpl.setDeleted(empDiscipline.isDeleted());
 
 		return empDisciplineImpl;
 	}

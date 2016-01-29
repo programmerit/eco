@@ -278,6 +278,27 @@ public interface EmpDisciplineModel extends BaseModel<EmpDiscipline>,
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the deleted of this emp discipline.
+	 *
+	 * @return the deleted of this emp discipline
+	 */
+	public boolean getDeleted();
+
+	/**
+	 * Returns <code>true</code> if this emp discipline is deleted.
+	 *
+	 * @return <code>true</code> if this emp discipline is deleted; <code>false</code> otherwise
+	 */
+	public boolean isDeleted();
+
+	/**
+	 * Sets whether this emp discipline is deleted.
+	 *
+	 * @param deleted the deleted of this emp discipline
+	 */
+	public void setDeleted(boolean deleted);
+
 	@Override
 	public boolean isNew();
 
