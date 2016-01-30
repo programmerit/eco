@@ -11,9 +11,38 @@
 	<h:head />
 
 	<h:body>
-
+		<eco:ajaxIndicator />
 		<p:growl id="growl" showDetail="true" sticky="false" life="4000" />
 		<h:panelGroup id="disciplinePanelGroup">
+			<h:form id="searchForm">
+				<h:link value="Show/Hide filter" styleClass="label"
+					onmouseover="toggle('#{requestScope.filterGrid.clientId}'); return false;"
+					onclick="toggle('#{requestScope.filterGrid.clientId}'); return false;" />
+
+				<h:panelGroup binding="#{requestScope.filterGrid}" id="filterGroup"
+					style="display: none;">
+					<p:panelGrid id="filterGrid" columns="3" styleClass="filter-grid"
+						style="margin-bottom: 7px!important; color: black!important;">
+
+						<h:panelGroup>
+							<p:inputText id="filter_fullName"
+								value="#{disciplineFilterBean.fullName}" placeholder="FullName"
+								style="width: 150px;">
+								<p:ajax event="keyup" delay="1000"
+									oncomplete="PF('disciplineTable').filter();" />
+							</p:inputText>
+							<p:tooltip for="filter_fullName" value="Filter [Fullname]"
+								showEffect="clip" hideEffect="explode" />
+						</h:panelGroup>
+
+						<h:panelGroup>
+							<eco:organizationFilterPanel orgBean="#{disciplineFilterBean}"
+								onCompleteUpdate="PF('disciplineTable').filter();" />
+						</h:panelGroup>
+					</p:panelGrid>
+				</h:panelGroup>
+			</h:form>
+
 			<h:form id="disciplineViewForm">
 
 				<p:link ajax="true" value="Back" outcome="view"
@@ -23,6 +52,7 @@
 					actionListener="#{disciplineViewBean.onIndexAll}" /> | 
 				<p:commandLink value="Remove All Index"
 					actionListener="#{disciplineViewBean.onRemoveAllIndex}" />
+
 
 				<p:dataTable id="disciplines" var="d" widgetVar="disciplineTable"
 					value="#{disciplineViewBean.lazyDataModel}"
@@ -116,5 +146,21 @@
 		</h:panelGroup>
 
 	</h:body>
+	<script type="text/javascript">
+		function toggle(id) {
+			var element = document.getElementById(id);
+			if (element.style.display == 'block') {
+				element.style.display = 'none';
+			} else {
+				element.style.display = 'block'
+			}
+		}
+	</script>
+	<style type="text/css">
+.ui-panelgrid tbody tr td {
+	border: none !important;
+}
+</style>
 </f:view>
+
 

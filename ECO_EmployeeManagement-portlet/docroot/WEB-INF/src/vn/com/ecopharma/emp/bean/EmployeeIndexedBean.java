@@ -19,6 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import vn.com.ecopharma.emp.bean.filter.EmployeeFilterView;
 import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.dm.EmployeeIndexLazyDataModel;
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
@@ -32,6 +33,7 @@ import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
+import vn.com.ecopharma.emp.util.FilterUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.search.Query;
@@ -117,8 +119,6 @@ public class EmployeeIndexedBean implements Serializable {
 				final SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 				final EmployeeFilterView employeeFilterBean = (EmployeeFilterView) BeanUtils
 						.getBackingBeanByName("empFilterBean");
-				final OrganizationFilterBean organizationFilterBean = BeanUtils
-						.getOrganizationFilterBean();
 
 				final String dateFromStr = employeeFilterBean
 						.getJoinedDateFrom() != null ? sdf
@@ -163,45 +163,7 @@ public class EmployeeIndexedBean implements Serializable {
 									employeeFilterBean.getStatus()).toString());
 				}
 
-				// if (organizationFilterBean.getDevision() != null) {
-				// filters.put(EmpField.DEVISION, EmployeeUtils
-				// .removeDashChar(organizationFilterBean
-				// .getDevision().getName()));
-				// }
-
-				if (organizationFilterBean.getSelectedDevisions() != null
-						&& !organizationFilterBean.getSelectedDevisions()
-								.isEmpty()) {
-					filters.put(EmpField.DEVISION,
-							organizationFilterBean.getSelectedDevisions());
-				}
-
-				if (organizationFilterBean.getSelectedDepartments() != null
-						&& !organizationFilterBean.getSelectedDepartments()
-								.isEmpty()) {
-					filters.put(EmpField.DEPARTMENT,
-							organizationFilterBean.getSelectedDepartments());
-				}
-
-				if (organizationFilterBean.getSelectedUnits() != null
-						&& !organizationFilterBean.getSelectedUnits().isEmpty()) {
-					filters.put(EmpField.UNIT,
-							organizationFilterBean.getSelectedUnits());
-				}
-
-				if (organizationFilterBean.getSelectedUnitGroups() != null
-						&& !organizationFilterBean.getSelectedUnitGroups()
-								.isEmpty()) {
-					filters.put(EmpField.UNIT_GROUP,
-							organizationFilterBean.getSelectedUnitGroups());
-				}
-
-				if (organizationFilterBean.getSelectedTitlesList() != null
-						&& !organizationFilterBean.getSelectedTitlesList()
-								.isEmpty()) {
-					filters.put(EmpField.TITLES,
-							organizationFilterBean.getSelectedTitlesList());
-				}
+				FilterUtils.bindOrgFilters(employeeFilterBean, filters);
 
 				sortField = sortField_;
 				sortOder = sortOrder_;

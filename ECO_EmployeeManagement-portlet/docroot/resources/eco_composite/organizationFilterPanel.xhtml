@@ -11,6 +11,9 @@
 
 	<composite:interface>
 		<composite:attribute name="onCompleteUpdate" />
+		<composite:attribute name="orgBean"
+			type="vn.com.ecopharma.emp.bean.filter.OrganizationFilter"
+			required="true" />
 	</composite:interface>
 
 	<composite:implementation>
@@ -19,14 +22,14 @@
 				<h:panelGroup>
 					<p:selectCheckboxMenu id="devisionSelect" label="Devision"
 						converter="devisionConverter"
-						value="#{organizationFilterBean.selectedDevisions}">
-						<p:ajax listener="#{organizationFilterBean.onDevisionChanged}"
+						value="#{cc.attrs.orgBean.selectedDevisions}">
+						<p:ajax listener="#{cc.attrs.orgBean.onDevisionChanged}"
 							update="departmentSelect unitSelect unitGroupSelect titlesSelect"
 							oncomplete="#{cc.attrs.onCompleteUpdate}" />
 						<p:ajax event="toggleSelect"
 							update="departmentSelect unitSelect unitGroupSelect titlesSelect"
 							oncomplete="#{cc.attrs.onCompleteUpdate}" />
-						<f:selectItems value="#{organizationFilterBean.devisions}" var="d"
+						<f:selectItems value="#{cc.attrs.orgBean.devisions}" var="d"
 							itemLabel="#{d.name}" itemValue="#{d}"
 							itemDisabled="#{not devisionPermission.checkPermission(d.devisionId, 'VIEW')}" />
 						<p:column>
@@ -37,15 +40,15 @@
 
 					<p:selectCheckboxMenu id="departmentSelect" label="Department"
 						converter="departmentConverter"
-						value="#{organizationFilterBean.selectedDepartments}">
-						<p:ajax listener="#{organizationFilterBean.onDepartmentChanged}"
+						value="#{cc.attrs.orgBean.selectedDepartments}">
+						<p:ajax listener="#{cc.attrs.orgBean.onDepartmentChanged}"
 							update="unitSelect unitGroupSelect titlesSelect"
 							oncomplete="#{cc.attrs.onCompleteUpdate}" />
 						<p:ajax event="toggleSelect"
 							update="unitSelect unitGroupSelect titlesSelect"
 							oncomplete="#{cc.attrs.onCompleteUpdate}" />
-						<f:selectItems value="#{organizationFilterBean.departments}"
-							var="d" itemLabel="#{d.name}" itemValue="#{d}" />
+						<f:selectItems value="#{cc.attrs.orgBean.departments}" var="d"
+							itemLabel="#{d.name}" itemValue="#{d}" />
 						<p:column>
 					                #{d.name}
 					            </p:column>
@@ -56,14 +59,14 @@
 					<h:panelGrid columns="1" border="0">
 						<p:selectCheckboxMenu id="unitSelect" label="Unit"
 							converter="unitConverter"
-							value="#{organizationFilterBean.selectedUnits}">
-							<p:ajax listener="#{organizationFilterBean.onUnitChanged}"
+							value="#{cc.attrs.orgBean.selectedUnits}">
+							<p:ajax listener="#{cc.attrs.orgBean.onUnitChanged}"
 								update="unitGroupSelect titlesSelect"
 								oncomplete="#{cc.attrs.onCompleteUpdate}" />
 							<p:ajax event="toggleSelect"
 								update="unitGroupSelect titlesSelect"
 								oncomplete="#{cc.attrs.onCompleteUpdate}" />
-							<f:selectItems value="#{organizationFilterBean.units}" var="u"
+							<f:selectItems value="#{cc.attrs.orgBean.units}" var="u"
 								itemLabel="#{u.name}" itemValue="#{u}" />
 							<p:column>
 					                #{u.name}
@@ -72,13 +75,13 @@
 
 						<p:selectCheckboxMenu id="unitGroupSelect" label="Unit Group"
 							converter="unitGroupConverter"
-							value="#{organizationFilterBean.selectedUnitGroups}">
-							<p:ajax listener="#{organizationFilterBean.onUnitGroupChanged}"
+							value="#{cc.attrs.orgBean.selectedUnitGroups}">
+							<p:ajax listener="#{cc.attrs.orgBean.onUnitGroupChanged}"
 								update="titlesSelect" oncomplete="#{cc.attrs.onCompleteUpdate}" />
 							<p:ajax event="toggleSelect" update="titlesSelect"
 								oncomplete="#{cc.attrs.onCompleteUpdate}" />
-							<f:selectItems value="#{organizationFilterBean.unitGroups}"
-								var="u" itemLabel="#{u.name}" itemValue="#{u}" />
+							<f:selectItems value="#{cc.attrs.orgBean.unitGroups}" var="u"
+								itemLabel="#{u.name}" itemValue="#{u}" />
 							<p:column>
 					                #{u.name}
 					            </p:column>
@@ -87,12 +90,12 @@
 						<p:selectCheckboxMenu id="titlesSelect" label="Titles"
 							converter="titlesConverter" filter="true"
 							filterMatchMode="startsWith"
-							value="#{organizationFilterBean.selectedTitlesList}">
+							value="#{cc.attrs.orgBean.selectedTitlesList}">
 							<p:ajax oncomplete="#{cc.attrs.onCompleteUpdate}" />
 							<p:ajax event="toggleSelect"
 								oncomplete="#{cc.attrs.onCompleteUpdate}" />
-							<f:selectItems value="#{organizationFilterBean.titlesList}"
-								var="t" itemLabel="#{t.name}" itemValue="#{t}" />
+							<f:selectItems value="#{cc.attrs.orgBean.titlesList}" var="t"
+								itemLabel="#{t.name}" itemValue="#{t}" />
 							<p:column>
 					                #{t.name}
 					            </p:column>

@@ -2,6 +2,7 @@ package vn.com.ecopharma.emp.bean;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -9,13 +10,19 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.lang3.StringUtils;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.model.SortOrder;
 
+import vn.com.ecopharma.emp.bean.filter.EmpDisciplineFilterBean;
+import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.dm.AbstractIndexedLazyDataModel;
 import vn.com.ecopharma.emp.dm.EmpDisciplineIndexLazyDataModel;
 import vn.com.ecopharma.emp.dto.EmpDisciplineIndexedItem;
 import vn.com.ecopharma.emp.enumeration.DisciplineType;
 import vn.com.ecopharma.emp.service.EmpDisciplineLocalServiceUtil;
+import vn.com.ecopharma.emp.util.BeanUtils;
+import vn.com.ecopharma.emp.util.FilterUtils;
 
 @ManagedBean(name = "disciplineViewBean")
 @ViewScoped
@@ -32,7 +39,26 @@ public class EmpDisciplineViewBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		lazyDataModel = new EmpDisciplineIndexLazyDataModel();
+		lazyDataModel = new EmpDisciplineIndexLazyDataModel() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public List<EmpDisciplineIndexedItem> load(int first, int pageSize,
+					String sortField, SortOrder sortOrder,
+					Map<String, Object> filters) {
+				final EmpDisciplineFilterBean filterBean = BeanUtils
+						.getDisciplineFilterBean();
+
+				if (!StringUtils.EMPTY.equals(filterBean.getFullName())) {
+					filters.put(EmpField.VN_FULL_NAME, filterBean.getFullName());
+				}
+
+				FilterUtils.bindOrgFilters(filterBean, filters);
+				return super.load(first, pageSize, sortField, sortOrder,
+						filters);
+			}
+		};
 	}
 
 	public void onRowEdit(RowEditEvent event) {

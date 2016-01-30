@@ -25,9 +25,6 @@
 			<p:remoteCommand name="delayGlobalFilter"
 				oncomplete="PF('employeeTable').filter(); refreshFooter();" />
 
-			<p:remoteCommand name="showHideFilterPanel"
-				update=":searchForm:filterGroup" />
-
 			<h:link value="Show/Hide filter" styleClass="label"
 				onmouseover="toggle('#{requestScope.filterGrid.clientId}'); return false;"
 				onclick="toggle('#{requestScope.filterGrid.clientId}'); return false;" />
@@ -130,7 +127,7 @@
 					</h:panelGroup> -->
 
 					<h:panelGroup>
-						<eco:organizationFilterPanel
+						<eco:organizationFilterPanel orgBean="#{empFilterBean}"
 							onCompleteUpdate="PF('employeeTable').filter(); refreshFooter();" />
 					</h:panelGroup>
 				</p:panelGrid>

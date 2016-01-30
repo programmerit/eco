@@ -1,10 +1,7 @@
-package vn.com.ecopharma.emp.bean;
+package vn.com.ecopharma.emp.bean.filter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
@@ -17,9 +14,12 @@ import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 
-@ManagedBean(name = "organizationFilterBean")
-@ViewScoped
-public class OrganizationFilterBean {
+public class OrganizationFilterBean implements OrganizationFilter {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private List<Devision> selectedDevisions = new ArrayList<>();
 	private List<Department> selectedDepartments = new ArrayList<>();
 	private List<Unit> selectedUnits = new ArrayList<>();

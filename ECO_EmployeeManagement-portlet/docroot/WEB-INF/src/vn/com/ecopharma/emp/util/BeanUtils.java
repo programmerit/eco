@@ -5,9 +5,11 @@ import javax.faces.context.FacesContext;
 
 import vn.com.ecopharma.emp.bean.EmployeeBean;
 import vn.com.ecopharma.emp.bean.EmployeeIndexedBean;
-import vn.com.ecopharma.emp.bean.OrganizationFilterBean;
 import vn.com.ecopharma.emp.bean.OrganizationTreeViewBean;
 import vn.com.ecopharma.emp.bean.TitlesBean;
+import vn.com.ecopharma.emp.bean.filter.EmpDisciplineFilterBean;
+import vn.com.ecopharma.emp.bean.filter.OrganizationFilterBean;
+import vn.com.ecopharma.emp.bean.filter.ResignationFilterBean;
 
 public class BeanUtils {
 
@@ -20,6 +22,10 @@ public class BeanUtils {
 	private static final String ORGANIZATION_TREE_VIEW_BEAN = "organizationTreeViewBean";
 
 	private static final String ORGANIZATION_FILTER_BEAN = "organizationFilterBean";
+
+	private static final String DISCIPLINE_FILTER_BEAN = "disciplineFilterBean";
+
+	private static final String RESIGNATION_FILTER_BEAN = "resignationFilterBean";
 
 	private BeanUtils() {
 	}
@@ -54,4 +60,11 @@ public class BeanUtils {
 		return (OrganizationFilterBean) getBackingBeanByName(ORGANIZATION_FILTER_BEAN);
 	}
 
+	public static EmpDisciplineFilterBean getDisciplineFilterBean() {
+		return (EmpDisciplineFilterBean) getBackingBeanByName(DISCIPLINE_FILTER_BEAN);
+	}
+
+	public static ResignationFilterBean getResignationFilterBean() {
+		return (ResignationFilterBean) getBackingBeanByName(RESIGNATION_FILTER_BEAN);
+	}
 }

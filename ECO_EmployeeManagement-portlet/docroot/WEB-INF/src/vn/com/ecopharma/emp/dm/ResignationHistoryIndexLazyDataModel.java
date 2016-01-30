@@ -6,10 +6,13 @@ import java.util.Map;
 
 import org.primefaces.model.SortOrder;
 
+import vn.com.ecopharma.emp.bean.filter.ResignationFilterBean;
 import vn.com.ecopharma.emp.constant.ResignationHistoryField;
 import vn.com.ecopharma.emp.dto.ResignationHistoryIndexedItem;
 import vn.com.ecopharma.emp.service.ResignationHistoryLocalServiceUtil;
+import vn.com.ecopharma.emp.util.BeanUtils;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
+import vn.com.ecopharma.emp.util.FilterUtils;
 
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Query;
@@ -17,7 +20,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 
 public class ResignationHistoryIndexLazyDataModel extends
-		AbstractIndexedLazyDataModel<ResignationHistoryIndexedItem> {
+		AbstractBaseOrganizationLazyDataModel<ResignationHistoryIndexedItem> {
 
 	/**
 	 * 
@@ -35,6 +38,13 @@ public class ResignationHistoryIndexLazyDataModel extends
 	public List<ResignationHistoryIndexedItem> load(int first, int pageSize,
 			String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 		final List<ResignationHistoryIndexedItem> results = new ArrayList<>();
+		final List<Query> queries = new ArrayList<>();
+		
+		super.bindOrganizationFilterFields(filters, queries);
+
+		final ResignationFilterBean filterBean = BeanUtils
+				.getResignationFilterBean();
+
 		final SearchContext searchContext = EmployeeUtils
 				.getCurrentSearchContext();
 
