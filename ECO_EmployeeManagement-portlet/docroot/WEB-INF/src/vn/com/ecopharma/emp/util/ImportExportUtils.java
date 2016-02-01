@@ -513,7 +513,7 @@ public class ImportExportUtils {
 			row.createCell(26).setCellValue(tempAddress);
 			row.createCell(27).setCellValue(employee.getContactNumber());
 			row.createCell(28).setCellValue(employeeUser.getEmailAddress());
-			row.createCell(29).setCellValue(employee.getCompanyEmailAddress());
+			row.createCell(29).setCellValue(employee.getPersonalEmail());
 			row.createCell(30).setCellValue(employee.getPersonalTaxCode());
 			row.createCell(31).setCellValue(employee.getNumberOfDependents());
 			row.createCell(32).setCellValue(employee.getDependentNames());

@@ -112,7 +112,7 @@
 			<basic name="groupId" />
 			<basic name="empCode" />
 			<basic name="contactNumber" />
-			<basic name="extNumber" />
+			<basic name="internalNumber" />
 			<basic name="birthday">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
@@ -149,7 +149,7 @@
 			<basic name="issuedPlace" />
 			<basic name="passport" />
 			<basic name="addressId" />
-			<basic name="companyEmail" />
+			<basic name="personalEmail" />
 			<basic name="personalTaxCode" />
 			<basic name="numberOfDependents" />
 			<basic name="dependentNames" />
@@ -215,6 +215,7 @@
 		<attributes>
 			<id name="empDisciplineId" />
 			<basic name="empId" />
+			<basic name="decisionNo" />
 			<basic name="content" />
 			<basic name="disciplineType" />
 			<basic name="effectiveDate">

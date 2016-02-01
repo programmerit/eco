@@ -11,14 +11,7 @@
 	<h:head />
 
 	<h:body>
-		<p:ajaxStatus onstart="PF('statusDialog').show()"
-			onsuccess="PF('statusDialog').hide()" />
-
-		<p:dialog widgetVar="statusDialog" modal="false" draggable="false"
-			closable="false" resizable="false" showHeader="false"
-			styleClass="eco-ajax-loading">
-			<p:graphicImage name="/images/ajax-loader2.gif" />
-		</p:dialog>
+		<eco:ajaxIndicator />
 		<p:growl id="growl" showSummary="false" showDetail="true"
 			sticky="false" life="4000" />
 		<h:panelGroup id="empPanelGroup">

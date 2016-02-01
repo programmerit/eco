@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
@@ -528,8 +527,9 @@ public class EmployeeUtils {
 		return new ArrayList<>();
 	}
 
-	public static Address getPresentAddress(long employeeId) {
-		List<Address> empAddresses = findAllEmpAddress(employeeId);
+	public static Address getPresentAddress(long companyId, long employeeId) {
+		List<Address> empAddresses = EmpLocalServiceUtil.findAllEmpAddress(
+				companyId, employeeId);
 		if (empAddresses.isEmpty())
 			return null;
 		return empAddresses.get(0);
@@ -545,15 +545,14 @@ public class EmployeeUtils {
 		final List<EmpIndexedItem> filteredItems = new ArrayList<>();
 		final SearchContext searchContext = getCurrentSearchContext();
 		try {
-			final BooleanQuery fullNameFilterBooleanQuery = BooleanQueryFactoryUtil
-					.create(searchContext);
-			fullNameFilterBooleanQuery.addTerm(EmpField.VN_FULL_NAME, query,
-					true, BooleanClauseOccur.MUST);
 			final List<Query> queries = new ArrayList<>();
-
-			queries.add(fullNameFilterBooleanQuery);
+			final BooleanQuery filterBooleanQuery = BooleanQueryFactoryUtil
+					.create(searchContext);
+			filterBooleanQuery.addTerms(new String[] { EmpField.FULL_NAME,
+					EmpField.VN_FULL_NAME, EmpField.EMP_CODE }, query, true);
 			Sort sort = new Sort();
 			sort.setFieldName(EmpField.EMP_ID);
+			queries.add(filterBooleanQuery);
 			final List<Document> docs = EmpLocalServiceUtil
 					.searchAllUnDeletedEmpIndexedDocument(searchContext,
 							queries, searchContext.getCompanyId(), sort,

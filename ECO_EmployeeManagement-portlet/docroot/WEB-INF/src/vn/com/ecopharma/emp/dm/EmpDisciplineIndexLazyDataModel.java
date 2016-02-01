@@ -7,7 +7,6 @@ import java.util.Map;
 import org.primefaces.model.SortOrder;
 
 import vn.com.ecopharma.emp.constant.EmpDisciplineField;
-import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.dto.EmpDisciplineIndexedItem;
 import vn.com.ecopharma.emp.service.EmpDisciplineLocalServiceUtil;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
@@ -15,9 +14,6 @@ import vn.com.ecopharma.emp.util.EmployeeUtils;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
@@ -25,7 +21,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 
 public class EmpDisciplineIndexLazyDataModel extends
-		AbstractBaseOrganizationLazyDataModel<EmpDisciplineIndexedItem> {
+		AbstractEmpBaseLazyDataModel<EmpDisciplineIndexedItem> {
 
 	/**
 	 * 
@@ -42,15 +38,6 @@ public class EmpDisciplineIndexLazyDataModel extends
 		try {
 			super.bindOrganizationFilterFields(filters, queries);
 
-			if (filters.get(EmpField.VN_FULL_NAME) != null) {
-				BooleanQuery fullNameQuery = BooleanQueryFactoryUtil
-						.create(getSearchContext());
-				fullNameQuery.addTerm(EmpField.VN_FULL_NAME,
-						(String) filters.get(EmpField.VN_FULL_NAME), true,
-						BooleanClauseOccur.MUST);
-				queries.add(fullNameQuery);
-			}
-
 			final SearchContext searchContext = EmployeeUtils
 					.getCurrentSearchContext();
 
@@ -64,8 +51,7 @@ public class EmpDisciplineIndexLazyDataModel extends
 			}
 			setPageSize(pageSize);
 			setRowCount(EmpDisciplineLocalServiceUtil.countAllDocuments(
-					searchContext, new ArrayList<Query>(),
-					searchContext.getCompanyId(), sort));
+					searchContext, queries, searchContext.getCompanyId(), sort));
 
 			return results;
 		} catch (ParseException e) {

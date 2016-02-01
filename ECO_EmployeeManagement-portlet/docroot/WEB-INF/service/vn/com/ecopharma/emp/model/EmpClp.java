@@ -78,7 +78,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		attributes.put("groupId", getGroupId());
 		attributes.put("empCode", getEmpCode());
 		attributes.put("contactNumber", getContactNumber());
-		attributes.put("extNumber", getExtNumber());
+		attributes.put("internalNumber", getInternalNumber());
 		attributes.put("birthday", getBirthday());
 		attributes.put("ethnic", getEthnic());
 		attributes.put("nationality", getNationality());
@@ -103,7 +103,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		attributes.put("issuedPlace", getIssuedPlace());
 		attributes.put("passport", getPassport());
 		attributes.put("addressId", getAddressId());
-		attributes.put("companyEmail", getCompanyEmail());
+		attributes.put("personalEmail", getPersonalEmail());
 		attributes.put("personalTaxCode", getPersonalTaxCode());
 		attributes.put("numberOfDependents", getNumberOfDependents());
 		attributes.put("dependentNames", getDependentNames());
@@ -159,10 +159,10 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 			setContactNumber(contactNumber);
 		}
 
-		String extNumber = (String)attributes.get("extNumber");
+		String internalNumber = (String)attributes.get("internalNumber");
 
-		if (extNumber != null) {
-			setExtNumber(extNumber);
+		if (internalNumber != null) {
+			setInternalNumber(internalNumber);
 		}
 
 		Date birthday = (Date)attributes.get("birthday");
@@ -313,10 +313,10 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 			setAddressId(addressId);
 		}
 
-		String companyEmail = (String)attributes.get("companyEmail");
+		String personalEmail = (String)attributes.get("personalEmail");
 
-		if (companyEmail != null) {
-			setCompanyEmail(companyEmail);
+		if (personalEmail != null) {
+			setPersonalEmail(personalEmail);
 		}
 
 		String personalTaxCode = (String)attributes.get("personalTaxCode");
@@ -566,21 +566,22 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 	}
 
 	@Override
-	public String getExtNumber() {
-		return _extNumber;
+	public String getInternalNumber() {
+		return _internalNumber;
 	}
 
 	@Override
-	public void setExtNumber(String extNumber) {
-		_extNumber = extNumber;
+	public void setInternalNumber(String internalNumber) {
+		_internalNumber = internalNumber;
 
 		if (_empRemoteModel != null) {
 			try {
 				Class<?> clazz = _empRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setExtNumber", String.class);
+				Method method = clazz.getMethod("setInternalNumber",
+						String.class);
 
-				method.invoke(_empRemoteModel, extNumber);
+				method.invoke(_empRemoteModel, internalNumber);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -1147,21 +1148,21 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 	}
 
 	@Override
-	public String getCompanyEmail() {
-		return _companyEmail;
+	public String getPersonalEmail() {
+		return _personalEmail;
 	}
 
 	@Override
-	public void setCompanyEmail(String companyEmail) {
-		_companyEmail = companyEmail;
+	public void setPersonalEmail(String personalEmail) {
+		_personalEmail = personalEmail;
 
 		if (_empRemoteModel != null) {
 			try {
 				Class<?> clazz = _empRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setCompanyEmail", String.class);
+				Method method = clazz.getMethod("setPersonalEmail", String.class);
 
-				method.invoke(_empRemoteModel, companyEmail);
+				method.invoke(_empRemoteModel, personalEmail);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -1851,7 +1852,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		clone.setGroupId(getGroupId());
 		clone.setEmpCode(getEmpCode());
 		clone.setContactNumber(getContactNumber());
-		clone.setExtNumber(getExtNumber());
+		clone.setInternalNumber(getInternalNumber());
 		clone.setBirthday(getBirthday());
 		clone.setEthnic(getEthnic());
 		clone.setNationality(getNationality());
@@ -1876,7 +1877,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		clone.setIssuedPlace(getIssuedPlace());
 		clone.setPassport(getPassport());
 		clone.setAddressId(getAddressId());
-		clone.setCompanyEmail(getCompanyEmail());
+		clone.setPersonalEmail(getPersonalEmail());
 		clone.setPersonalTaxCode(getPersonalTaxCode());
 		clone.setNumberOfDependents(getNumberOfDependents());
 		clone.setDependentNames(getDependentNames());
@@ -1964,8 +1965,8 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		sb.append(getEmpCode());
 		sb.append(", contactNumber=");
 		sb.append(getContactNumber());
-		sb.append(", extNumber=");
-		sb.append(getExtNumber());
+		sb.append(", internalNumber=");
+		sb.append(getInternalNumber());
 		sb.append(", birthday=");
 		sb.append(getBirthday());
 		sb.append(", ethnic=");
@@ -2014,8 +2015,8 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		sb.append(getPassport());
 		sb.append(", addressId=");
 		sb.append(getAddressId());
-		sb.append(", companyEmail=");
-		sb.append(getCompanyEmail());
+		sb.append(", personalEmail=");
+		sb.append(getPersonalEmail());
 		sb.append(", personalTaxCode=");
 		sb.append(getPersonalTaxCode());
 		sb.append(", numberOfDependents=");
@@ -2096,8 +2097,8 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		sb.append(getContactNumber());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>extNumber</column-name><column-value><![CDATA[");
-		sb.append(getExtNumber());
+			"<column><column-name>internalNumber</column-name><column-value><![CDATA[");
+		sb.append(getInternalNumber());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>birthday</column-name><column-value><![CDATA[");
@@ -2196,8 +2197,8 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 		sb.append(getAddressId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>companyEmail</column-name><column-value><![CDATA[");
-		sb.append(getCompanyEmail());
+			"<column><column-name>personalEmail</column-name><column-value><![CDATA[");
+		sb.append(getPersonalEmail());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>personalTaxCode</column-name><column-value><![CDATA[");
@@ -2309,7 +2310,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 	private long _groupId;
 	private String _empCode;
 	private String _contactNumber;
-	private String _extNumber;
+	private String _internalNumber;
 	private Date _birthday;
 	private String _ethnic;
 	private String _nationality;
@@ -2334,7 +2335,7 @@ public class EmpClp extends BaseModelImpl<Emp> implements Emp {
 	private String _issuedPlace;
 	private String _passport;
 	private long _addressId;
-	private String _companyEmail;
+	private String _personalEmail;
 	private String _personalTaxCode;
 	private int _numberOfDependents;
 	private String _dependentNames;

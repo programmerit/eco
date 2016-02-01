@@ -640,13 +640,14 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 
 	@Override
 	public java.util.List<com.liferay.portal.model.Address> findAllEmpAddress(
-		long employeeId) {
-		return _empLocalService.findAllEmpAddress(employeeId);
+		long companyId, long employeeId) {
+		return _empLocalService.findAllEmpAddress(companyId, employeeId);
 	}
 
 	@Override
-	public com.liferay.portal.model.Address getPresentAddress(long employeeId) {
-		return _empLocalService.getPresentAddress(employeeId);
+	public com.liferay.portal.model.Address getPresentAddress(long companyId,
+		long employeeId) {
+		return _empLocalService.getPresentAddress(companyId, employeeId);
 	}
 
 	/**

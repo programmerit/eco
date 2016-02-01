@@ -354,21 +354,27 @@ public class EmpDisciplineLocalServiceWrapper
 
 	@Override
 	public void addEmpsDiscipline(java.util.List<java.lang.Long> empIds,
-		java.lang.String content, java.lang.String type,
-		java.util.Date effectiveDate, java.lang.String additionalType,
-		java.lang.String description,
+		java.lang.String decisionNo, java.lang.String content,
+		java.lang.String type, java.util.Date effectiveDate,
+		java.lang.String additionalType, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext) {
-		_empDisciplineLocalService.addEmpsDiscipline(empIds, content, type,
-			effectiveDate, additionalType, description, serviceContext);
+		_empDisciplineLocalService.addEmpsDiscipline(empIds, decisionNo,
+			content, type, effectiveDate, additionalType, description,
+			serviceContext);
 	}
 
 	@Override
 	public vn.com.ecopharma.emp.model.EmpDiscipline updateEmpDiscipline(
-		long id, java.lang.String type, java.lang.String content,
-		java.util.Date effectiveDate, java.lang.String additionType,
-		java.lang.String desc) {
-		return _empDisciplineLocalService.updateEmpDiscipline(id, type,
-			content, effectiveDate, additionType, desc);
+		long id, java.lang.String decisionNo, java.lang.String type,
+		java.lang.String content, java.util.Date effectiveDate,
+		java.lang.String additionType, java.lang.String desc) {
+		return _empDisciplineLocalService.updateEmpDiscipline(id, decisionNo,
+			type, content, effectiveDate, additionType, desc);
+	}
+
+	@Override
+	public void indexAll() {
+		_empDisciplineLocalService.indexAll();
 	}
 
 	/**

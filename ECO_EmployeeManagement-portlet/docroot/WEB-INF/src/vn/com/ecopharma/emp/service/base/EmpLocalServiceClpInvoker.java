@@ -355,11 +355,11 @@ public class EmpLocalServiceClpInvoker {
 
 		_methodName201 = "findAllEmpAddress";
 
-		_methodParameterTypes201 = new String[] { "long" };
+		_methodParameterTypes201 = new String[] { "long", "long" };
 
 		_methodName202 = "getPresentAddress";
 
-		_methodParameterTypes202 = new String[] { "long" };
+		_methodParameterTypes202 = new String[] { "long", "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -815,12 +815,14 @@ public class EmpLocalServiceClpInvoker {
 
 		if (_methodName201.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes201, parameterTypes)) {
-			return EmpLocalServiceUtil.findAllEmpAddress(((Long)arguments[0]).longValue());
+			return EmpLocalServiceUtil.findAllEmpAddress(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName202.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes202, parameterTypes)) {
-			return EmpLocalServiceUtil.getPresentAddress(((Long)arguments[0]).longValue());
+			return EmpLocalServiceUtil.getPresentAddress(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
 		}
 
 		throw new UnsupportedOperationException();

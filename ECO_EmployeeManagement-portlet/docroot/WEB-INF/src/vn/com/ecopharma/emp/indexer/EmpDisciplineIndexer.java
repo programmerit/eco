@@ -45,6 +45,7 @@ public class EmpDisciplineIndexer extends
 		SearchEngineUtils.indexOrganizationFields(document, emp);
 		SearchEngineUtils.indexEmpInfo(document, emp);
 		document.addNumber(EmpDisciplineField.ID, o.getEmpDisciplineId());
+		document.addText(EmpDisciplineField.DECISION_NO, o.getDecisionNo());
 		document.addText(EmpDisciplineField.CONTENT, o.getContent());
 		document.addText(EmpDisciplineField.TYPE, o.getDisciplineType());
 		document.addDate(EmpDisciplineField.EFFECTIVE_DATE,

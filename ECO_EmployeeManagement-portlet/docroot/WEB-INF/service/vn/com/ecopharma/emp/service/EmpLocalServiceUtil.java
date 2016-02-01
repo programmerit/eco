@@ -606,13 +606,13 @@ public class EmpLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.Address> findAllEmpAddress(
-		long employeeId) {
-		return getService().findAllEmpAddress(employeeId);
+		long companyId, long employeeId) {
+		return getService().findAllEmpAddress(companyId, employeeId);
 	}
 
 	public static com.liferay.portal.model.Address getPresentAddress(
-		long employeeId) {
-		return getService().getPresentAddress(employeeId);
+		long companyId, long employeeId) {
+		return getService().getPresentAddress(companyId, employeeId);
 	}
 
 	public static void clearService() {

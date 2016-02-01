@@ -52,6 +52,7 @@ public class DisciplineBean implements Serializable {
 		} else {
 			EmpDisciplineLocalServiceUtil.addEmpsDiscipline(
 					SearchEngineUtils.getIdsFromEmpIndexedItems(emps),
+					empDisciplineItem.getDecisionNo(),
 					empDisciplineItem.getContent(),
 					empDisciplineItem.getType(),
 					empDisciplineItem.getEffectiveDate(),
@@ -111,8 +112,13 @@ public class DisciplineBean implements Serializable {
 		this.updateOnCompleteComponents = updateOnCompleteComponents;
 	}
 
-	public static class EmpDisciplineItem {
+	public static class EmpDisciplineItem implements Serializable {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private String decisionNo;
 		private String content;
 		private String type;
 		private Date effectiveDate;
@@ -120,11 +126,20 @@ public class DisciplineBean implements Serializable {
 		private String description;
 
 		public EmpDisciplineItem() {
+			this.decisionNo = StringUtils.EMPTY;
 			this.content = StringUtils.EMPTY;
 			this.type = StringUtils.EMPTY;
 			this.effectiveDate = new Date();
 			this.additionalType = StringUtils.EMPTY;
 			this.description = StringUtils.EMPTY;
+		}
+
+		public String getDecisionNo() {
+			return decisionNo;
+		}
+
+		public void setDecisionNo(String decisionNo) {
+			this.decisionNo = decisionNo;
 		}
 
 		public String getContent() {

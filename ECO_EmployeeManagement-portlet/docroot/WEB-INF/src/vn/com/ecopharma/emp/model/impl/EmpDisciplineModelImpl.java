@@ -68,6 +68,7 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "empDisciplineId", Types.BIGINT },
 			{ "empId", Types.BIGINT },
+			{ "decisionNo", Types.VARCHAR },
 			{ "content", Types.VARCHAR },
 			{ "disciplineType", Types.VARCHAR },
 			{ "effectiveDate", Types.TIMESTAMP },
@@ -81,7 +82,7 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "deleted", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_EmpDiscipline (empDisciplineId LONG not null primary key,empId LONG,content VARCHAR(1000) null,disciplineType VARCHAR(75) null,effectiveDate DATE null,additionalDisciplineType VARCHAR(75) null,description VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,deleted BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_EmpDiscipline (empDisciplineId LONG not null primary key,empId LONG,decisionNo VARCHAR(75) null,content VARCHAR(1000) null,disciplineType VARCHAR(75) null,effectiveDate DATE null,additionalDisciplineType VARCHAR(75) null,description VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,deleted BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table eco_em_portlet_EmpDiscipline";
 	public static final String ORDER_BY_JPQL = " ORDER BY empDiscipline.empDisciplineId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_em_portlet_EmpDiscipline.empDisciplineId ASC";
@@ -111,6 +112,7 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 
 		model.setEmpDisciplineId(soapModel.getEmpDisciplineId());
 		model.setEmpId(soapModel.getEmpId());
+		model.setDecisionNo(soapModel.getDecisionNo());
 		model.setContent(soapModel.getContent());
 		model.setDisciplineType(soapModel.getDisciplineType());
 		model.setEffectiveDate(soapModel.getEffectiveDate());
@@ -189,6 +191,7 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 
 		attributes.put("empDisciplineId", getEmpDisciplineId());
 		attributes.put("empId", getEmpId());
+		attributes.put("decisionNo", getDecisionNo());
 		attributes.put("content", getContent());
 		attributes.put("disciplineType", getDisciplineType());
 		attributes.put("effectiveDate", getEffectiveDate());
@@ -217,6 +220,12 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 
 		if (empId != null) {
 			setEmpId(empId);
+		}
+
+		String decisionNo = (String)attributes.get("decisionNo");
+
+		if (decisionNo != null) {
+			setDecisionNo(decisionNo);
 		}
 
 		String content = (String)attributes.get("content");
@@ -313,6 +322,22 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 	@Override
 	public void setEmpId(long empId) {
 		_empId = empId;
+	}
+
+	@JSON
+	@Override
+	public String getDecisionNo() {
+		if (_decisionNo == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _decisionNo;
+		}
+	}
+
+	@Override
+	public void setDecisionNo(String decisionNo) {
+		_decisionNo = decisionNo;
 	}
 
 	@JSON
@@ -516,6 +541,7 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 
 		empDisciplineImpl.setEmpDisciplineId(getEmpDisciplineId());
 		empDisciplineImpl.setEmpId(getEmpId());
+		empDisciplineImpl.setDecisionNo(getDecisionNo());
 		empDisciplineImpl.setContent(getContent());
 		empDisciplineImpl.setDisciplineType(getDisciplineType());
 		empDisciplineImpl.setEffectiveDate(getEffectiveDate());
@@ -587,6 +613,14 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 		empDisciplineCacheModel.empDisciplineId = getEmpDisciplineId();
 
 		empDisciplineCacheModel.empId = getEmpId();
+
+		empDisciplineCacheModel.decisionNo = getDecisionNo();
+
+		String decisionNo = empDisciplineCacheModel.decisionNo;
+
+		if ((decisionNo != null) && (decisionNo.length() == 0)) {
+			empDisciplineCacheModel.decisionNo = null;
+		}
 
 		empDisciplineCacheModel.content = getContent();
 
@@ -669,12 +703,14 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{empDisciplineId=");
 		sb.append(getEmpDisciplineId());
 		sb.append(", empId=");
 		sb.append(getEmpId());
+		sb.append(", decisionNo=");
+		sb.append(getDecisionNo());
 		sb.append(", content=");
 		sb.append(getContent());
 		sb.append(", disciplineType=");
@@ -706,7 +742,7 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.EmpDiscipline");
@@ -719,6 +755,10 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 		sb.append(
 			"<column><column-name>empId</column-name><column-value><![CDATA[");
 		sb.append(getEmpId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>decisionNo</column-name><column-value><![CDATA[");
+		sb.append(getDecisionNo());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>content</column-name><column-value><![CDATA[");
@@ -780,6 +820,7 @@ public class EmpDisciplineModelImpl extends BaseModelImpl<EmpDiscipline>
 		};
 	private long _empDisciplineId;
 	private long _empId;
+	private String _decisionNo;
 	private String _content;
 	private String _disciplineType;
 	private Date _effectiveDate;

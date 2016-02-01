@@ -38,13 +38,6 @@
 					<p:panelGrid columns="3" layout="grid"
 						styleClass="personal-information-grid">
 						<h:panelGrid columns="3" styleClass="personal-information-grid">
-							<h:outputText></h:outputText>
-							<h:panelGroup>
-								<img style="margin-left: 60px"
-									src="#{empView.modifyEmployeeInfoItem.userImgURL}" />
-							</h:panelGroup>
-							<h:outputText></h:outputText>
-
 							<h:outputText value="Fullname" />
 							<p:inputText id="fullname" placeholder="Full Name"
 								value="#{empView.modifyEmployeeInfoItem.fullName}"
@@ -75,7 +68,8 @@
 							<p:message for="placeOfBirth" display="icon" />
 
 							<h:outputText value="Identity Card No" />
-							<p:inputText id="identityCardNo"
+							<p:inputText id="identityCardNo" required="true"
+								requiredMessage="Identity Card No is required"
 								value="#{empView.modifyEmployeeInfoItem.emp.identityCardNo}"
 								placeholder="Identity Card No">
 							</p:inputText>
@@ -127,30 +121,33 @@
 									style="margin-left: 10px;"
 									value="#{empView.modifyEmployeeInfoItem.user.screenName}" />
 								<h:outputText rendered="#{not empView.showUserTab}" />
-							</h:panelGrid>
-						</h:panelGrid>
 
-						<h:panelGrid columns="3">
-							<h:panelGroup>
 								<h:outputText value="Ethnic " />
-								<br />
 								<p:inputText
 									value="#{empView.modifyEmployeeInfoItem.emp.ethnic}"
 									style="width: 70px;" />
-							</h:panelGroup>
-							<h:panelGroup>
+								<h:outputText />
+
 								<h:outputText value="Religion " />
-								<br />
 								<p:inputText
 									value="#{empView.modifyEmployeeInfoItem.emp.religion}"
 									style="width: 70px;" />
-							</h:panelGroup>
-							<h:panelGroup>
+								<h:outputText />
+
 								<h:outputText value="Nationality " />
-								<br />
 								<p:inputText
 									value="#{empView.modifyEmployeeInfoItem.emp.nationality}"
 									style="width: 70px;" />
+								<h:outputText />
+							</h:panelGrid>
+						</h:panelGrid>
+
+						<h:panelGrid columns="1">
+							<img width="100" height="100" style="margin-left: 5px;"
+								src="#{empView.modifyEmployeeInfoItem.userImgURL}" />
+							<h:panelGroup>
+								<p:commandLink value="Change" style="margin-right: 3px;" /> |
+								<p:commandLink value="Delete" style="margin-left: 3px;" />
 							</h:panelGroup>
 						</h:panelGrid>
 					</p:panelGrid>
@@ -194,15 +191,22 @@
 								value="#{empView.modifyEmployeeInfoItem.user.screenName}" />
 							<h:outputText rendered="#{not empView.showUserTab}" />
 
-							<h:outputText value="Company Email" />
-							<p:inputText id="companyEmailAddress" type="email"
-								placeholder="#{i18n['empForm.personal_information_companyEmail']}"
-								value="#{empView.modifyEmployeeInfoItem.emp.companyEmailAddress}"
-								label="#{i18n['empForm.personal_information_companyEmail']}">
+							<h:outputText value="Personal Email" />
+							<p:inputText id="personalEmailAddress" type="email"
+								placeholder="#{i18n['empForm.personal_information_personalEmail']}"
+								value="#{empView.modifyEmployeeInfoItem.emp.personalEmail}"
+								label="#{i18n['empForm.personal_information_personalEmail']}">
 								<f:validator validatorId="emailValidator" />
-								<p:ajax event="keyup" update="companyEmailAddressMsg" />
+								<p:ajax event="keyup" update="personalEmailAddressMsg" />
 							</p:inputText>
-							<p:message for="companyEmailAddress" id="companyEmailAddressMsg"
+							<p:message for="personalEmailAddress"
+								id="personalEmailAddressMsg" display="icon" />
+
+							<h:outputText value="Internal Number" />
+							<p:inputText id="internalNumber" placeholder="Internal Number"
+								value="#{empView.modifyEmployeeInfoItem.emp.internalNumber}"
+								label="Internal Number" />
+							<p:message for="internalNumber" id="internalNumberMsg"
 								display="icon" />
 						</p:panelGrid>
 

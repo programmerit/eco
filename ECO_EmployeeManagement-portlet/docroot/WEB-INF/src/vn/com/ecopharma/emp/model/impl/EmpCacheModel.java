@@ -47,8 +47,8 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		sb.append(empCode);
 		sb.append(", contactNumber=");
 		sb.append(contactNumber);
-		sb.append(", extNumber=");
-		sb.append(extNumber);
+		sb.append(", internalNumber=");
+		sb.append(internalNumber);
 		sb.append(", birthday=");
 		sb.append(birthday);
 		sb.append(", ethnic=");
@@ -97,8 +97,8 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		sb.append(passport);
 		sb.append(", addressId=");
 		sb.append(addressId);
-		sb.append(", companyEmail=");
-		sb.append(companyEmail);
+		sb.append(", personalEmail=");
+		sb.append(personalEmail);
 		sb.append(", personalTaxCode=");
 		sb.append(personalTaxCode);
 		sb.append(", numberOfDependents=");
@@ -175,11 +175,11 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 			empImpl.setContactNumber(contactNumber);
 		}
 
-		if (extNumber == null) {
-			empImpl.setExtNumber(StringPool.BLANK);
+		if (internalNumber == null) {
+			empImpl.setInternalNumber(StringPool.BLANK);
 		}
 		else {
-			empImpl.setExtNumber(extNumber);
+			empImpl.setInternalNumber(internalNumber);
 		}
 
 		if (birthday == Long.MIN_VALUE) {
@@ -319,11 +319,11 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 
 		empImpl.setAddressId(addressId);
 
-		if (companyEmail == null) {
-			empImpl.setCompanyEmail(StringPool.BLANK);
+		if (personalEmail == null) {
+			empImpl.setPersonalEmail(StringPool.BLANK);
 		}
 		else {
-			empImpl.setCompanyEmail(companyEmail);
+			empImpl.setPersonalEmail(personalEmail);
 		}
 
 		if (personalTaxCode == null) {
@@ -434,7 +434,7 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		groupId = objectInput.readLong();
 		empCode = objectInput.readUTF();
 		contactNumber = objectInput.readUTF();
-		extNumber = objectInput.readUTF();
+		internalNumber = objectInput.readUTF();
 		birthday = objectInput.readLong();
 		ethnic = objectInput.readUTF();
 		nationality = objectInput.readUTF();
@@ -459,7 +459,7 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		issuedPlace = objectInput.readUTF();
 		passport = objectInput.readUTF();
 		addressId = objectInput.readLong();
-		companyEmail = objectInput.readUTF();
+		personalEmail = objectInput.readUTF();
 		personalTaxCode = objectInput.readUTF();
 		numberOfDependents = objectInput.readInt();
 		dependentNames = objectInput.readUTF();
@@ -507,11 +507,11 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 			objectOutput.writeUTF(contactNumber);
 		}
 
-		if (extNumber == null) {
+		if (internalNumber == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(extNumber);
+			objectOutput.writeUTF(internalNumber);
 		}
 
 		objectOutput.writeLong(birthday);
@@ -615,11 +615,11 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 
 		objectOutput.writeLong(addressId);
 
-		if (companyEmail == null) {
+		if (personalEmail == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(companyEmail);
+			objectOutput.writeUTF(personalEmail);
 		}
 
 		if (personalTaxCode == null) {
@@ -705,7 +705,7 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 	public long groupId;
 	public String empCode;
 	public String contactNumber;
-	public String extNumber;
+	public String internalNumber;
 	public long birthday;
 	public String ethnic;
 	public String nationality;
@@ -730,7 +730,7 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 	public String issuedPlace;
 	public String passport;
 	public long addressId;
-	public String companyEmail;
+	public String personalEmail;
 	public String personalTaxCode;
 	public int numberOfDependents;
 	public String dependentNames;

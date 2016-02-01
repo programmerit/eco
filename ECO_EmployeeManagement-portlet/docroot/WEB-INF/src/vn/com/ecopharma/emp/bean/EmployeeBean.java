@@ -116,6 +116,10 @@ public class EmployeeBean implements Serializable {
 
 	private String currentNav = StringUtils.EMPTY;
 
+	private String includedDialog = StringUtils.EMPTY;
+
+	private String includedDialogOutputPanel = StringUtils.EMPTY;
+
 	/**
 	 * 1: Employees View; 2: Create new; 3: Edit
 	 */
@@ -179,8 +183,6 @@ public class EmployeeBean implements Serializable {
 		modifyEmployeeInfoItem = new EmpInfoItem(Long.valueOf(employeeId));
 		showUserTab = false;
 		updateString = StringUtils.EMPTY;
-
-		long portraitId = modifyEmployeeInfoItem.getUser().getPortraitId();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) FacesContext
 				.getCurrentInstance().getExternalContext().getRequestMap()
@@ -429,11 +431,6 @@ public class EmployeeBean implements Serializable {
 		selectedStatus = null;
 	}
 
-	public void onResignationEmployee(long employeeId) {
-		selectedStatus = EmployeeStatus.RESIGNED.toString();
-		onStatusChange(employeeId);
-	}
-
 	public void onPromotionNewPosition() {
 		long id = ((EmployeeIndexedBean) BeanUtils
 				.getBackingBeanByName("employeeIndexedBean"))
@@ -441,6 +438,8 @@ public class EmployeeBean implements Serializable {
 		PromotionBean promotionBean = (PromotionBean) BeanUtils
 				.getBackingBeanByName("promotionBean");
 		promotionBean.setEmployeeId(id);
+		this.includedDialog = "/views/dialogs/promotionDialog.xhtml";
+		this.includedDialogOutputPanel = ":promotionForm:promotionOutputPanel";
 	}
 
 	public void onResignedEmployee() {
@@ -454,6 +453,8 @@ public class EmployeeBean implements Serializable {
 		resignationHistory.setResignedType(ResignationType.NONE.toString());
 		resignationBean.setEmployeeId(id);
 		resignationBean.setResignationHistory(resignationHistory);
+		this.includedDialog = "/views/dialogs/resignedDialog.xhtml";
+		this.includedDialogOutputPanel = ":resignationForm:resignationOutputPanel";
 	}
 
 	public void onAddingDiscipline() {
@@ -464,6 +465,8 @@ public class EmployeeBean implements Serializable {
 		if (disciplineBean.getEmpDisciplineItem() == null)
 			disciplineBean.setEmpDisciplineItem(new EmpDisciplineItem());
 		disciplineBean.getEmps().addAll(empIndexedItems);
+		this.includedDialog = "/views/dialogs/empDisciplineDialog.xhtml";
+		this.includedDialogOutputPanel = ":disciplineForm:disciplineOutputPanel";
 	}
 
 	public List<String> getAvailableStatuses(String status) {
@@ -769,4 +772,19 @@ public class EmployeeBean implements Serializable {
 		this.currentPage = currentPage;
 	}
 
+	public String getIncludedDialog() {
+		return includedDialog;
+	}
+
+	public void setIncludedDialog(String includedDialog) {
+		this.includedDialog = includedDialog;
+	}
+
+	public String getIncludedDialogOutputPanel() {
+		return includedDialogOutputPanel;
+	}
+
+	public void setIncludedDialogOutputPanel(String includedDialogOutputPanel) {
+		this.includedDialogOutputPanel = includedDialogOutputPanel;
+	}
 }

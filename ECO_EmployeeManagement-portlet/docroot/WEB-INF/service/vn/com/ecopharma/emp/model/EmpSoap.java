@@ -35,7 +35,7 @@ public class EmpSoap implements Serializable {
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setEmpCode(model.getEmpCode());
 		soapModel.setContactNumber(model.getContactNumber());
-		soapModel.setExtNumber(model.getExtNumber());
+		soapModel.setInternalNumber(model.getInternalNumber());
 		soapModel.setBirthday(model.getBirthday());
 		soapModel.setEthnic(model.getEthnic());
 		soapModel.setNationality(model.getNationality());
@@ -60,7 +60,7 @@ public class EmpSoap implements Serializable {
 		soapModel.setIssuedPlace(model.getIssuedPlace());
 		soapModel.setPassport(model.getPassport());
 		soapModel.setAddressId(model.getAddressId());
-		soapModel.setCompanyEmail(model.getCompanyEmail());
+		soapModel.setPersonalEmail(model.getPersonalEmail());
 		soapModel.setPersonalTaxCode(model.getPersonalTaxCode());
 		soapModel.setNumberOfDependents(model.getNumberOfDependents());
 		soapModel.setDependentNames(model.getDependentNames());
@@ -170,12 +170,12 @@ public class EmpSoap implements Serializable {
 		_contactNumber = contactNumber;
 	}
 
-	public String getExtNumber() {
-		return _extNumber;
+	public String getInternalNumber() {
+		return _internalNumber;
 	}
 
-	public void setExtNumber(String extNumber) {
-		_extNumber = extNumber;
+	public void setInternalNumber(String internalNumber) {
+		_internalNumber = internalNumber;
 	}
 
 	public Date getBirthday() {
@@ -370,12 +370,12 @@ public class EmpSoap implements Serializable {
 		_addressId = addressId;
 	}
 
-	public String getCompanyEmail() {
-		return _companyEmail;
+	public String getPersonalEmail() {
+		return _personalEmail;
 	}
 
-	public void setCompanyEmail(String companyEmail) {
-		_companyEmail = companyEmail;
+	public void setPersonalEmail(String personalEmail) {
+		_personalEmail = personalEmail;
 	}
 
 	public String getPersonalTaxCode() {
@@ -586,7 +586,7 @@ public class EmpSoap implements Serializable {
 	private long _groupId;
 	private String _empCode;
 	private String _contactNumber;
-	private String _extNumber;
+	private String _internalNumber;
 	private Date _birthday;
 	private String _ethnic;
 	private String _nationality;
@@ -611,7 +611,7 @@ public class EmpSoap implements Serializable {
 	private String _issuedPlace;
 	private String _passport;
 	private long _addressId;
-	private String _companyEmail;
+	private String _personalEmail;
 	private String _personalTaxCode;
 	private int _numberOfDependents;
 	private String _dependentNames;

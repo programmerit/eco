@@ -70,7 +70,6 @@ import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Region;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.AddressLocalServiceUtil;
-import com.liferay.portal.service.AddressServiceUtil;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -1519,20 +1518,18 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 				companyId);
 	}
 
-	public List<Address> findAllEmpAddress(long employeeId) {
+	public List<Address> findAllEmpAddress(long companyId, long employeeId) {
 		try {
-			return AddressServiceUtil.getAddresses(Emp.class.getName(),
-					employeeId);
-		} catch (PortalException e) {
-			LOGGER.info(e);
+			return AddressLocalServiceUtil.getAddresses(companyId,
+					Emp.class.getName(), employeeId);
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}
 		return new ArrayList<>();
 	}
 
-	public Address getPresentAddress(long employeeId) {
-		List<Address> empAddresses = findAllEmpAddress(employeeId);
+	public Address getPresentAddress(long companyId, long employeeId) {
+		List<Address> empAddresses = findAllEmpAddress(companyId, employeeId);
 		if (empAddresses.isEmpty())
 			return null;
 		return empAddresses.get(0);

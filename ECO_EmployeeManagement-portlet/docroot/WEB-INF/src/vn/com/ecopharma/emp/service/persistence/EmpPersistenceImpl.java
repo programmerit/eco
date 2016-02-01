@@ -1912,7 +1912,7 @@ public class EmpPersistenceImpl extends BasePersistenceImpl<Emp>
 		empImpl.setGroupId(emp.getGroupId());
 		empImpl.setEmpCode(emp.getEmpCode());
 		empImpl.setContactNumber(emp.getContactNumber());
-		empImpl.setExtNumber(emp.getExtNumber());
+		empImpl.setInternalNumber(emp.getInternalNumber());
 		empImpl.setBirthday(emp.getBirthday());
 		empImpl.setEthnic(emp.getEthnic());
 		empImpl.setNationality(emp.getNationality());
@@ -1937,7 +1937,7 @@ public class EmpPersistenceImpl extends BasePersistenceImpl<Emp>
 		empImpl.setIssuedPlace(emp.getIssuedPlace());
 		empImpl.setPassport(emp.getPassport());
 		empImpl.setAddressId(emp.getAddressId());
-		empImpl.setCompanyEmail(emp.getCompanyEmail());
+		empImpl.setPersonalEmail(emp.getPersonalEmail());
 		empImpl.setPersonalTaxCode(emp.getPersonalTaxCode());
 		empImpl.setNumberOfDependents(emp.getNumberOfDependents());
 		empImpl.setDependentNames(emp.getDependentNames());

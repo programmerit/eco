@@ -53,7 +53,7 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 		attributes.put("groupId", getGroupId());
 		attributes.put("empCode", getEmpCode());
 		attributes.put("contactNumber", getContactNumber());
-		attributes.put("extNumber", getExtNumber());
+		attributes.put("internalNumber", getInternalNumber());
 		attributes.put("birthday", getBirthday());
 		attributes.put("ethnic", getEthnic());
 		attributes.put("nationality", getNationality());
@@ -78,7 +78,7 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 		attributes.put("issuedPlace", getIssuedPlace());
 		attributes.put("passport", getPassport());
 		attributes.put("addressId", getAddressId());
-		attributes.put("companyEmail", getCompanyEmail());
+		attributes.put("personalEmail", getPersonalEmail());
 		attributes.put("personalTaxCode", getPersonalTaxCode());
 		attributes.put("numberOfDependents", getNumberOfDependents());
 		attributes.put("dependentNames", getDependentNames());
@@ -134,10 +134,10 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 			setContactNumber(contactNumber);
 		}
 
-		String extNumber = (String)attributes.get("extNumber");
+		String internalNumber = (String)attributes.get("internalNumber");
 
-		if (extNumber != null) {
-			setExtNumber(extNumber);
+		if (internalNumber != null) {
+			setInternalNumber(internalNumber);
 		}
 
 		Date birthday = (Date)attributes.get("birthday");
@@ -288,10 +288,10 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 			setAddressId(addressId);
 		}
 
-		String companyEmail = (String)attributes.get("companyEmail");
+		String personalEmail = (String)attributes.get("personalEmail");
 
-		if (companyEmail != null) {
-			setCompanyEmail(companyEmail);
+		if (personalEmail != null) {
+			setPersonalEmail(personalEmail);
 		}
 
 		String personalTaxCode = (String)attributes.get("personalTaxCode");
@@ -549,23 +549,23 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 	}
 
 	/**
-	* Returns the ext number of this emp.
+	* Returns the internal number of this emp.
 	*
-	* @return the ext number of this emp
+	* @return the internal number of this emp
 	*/
 	@Override
-	public java.lang.String getExtNumber() {
-		return _emp.getExtNumber();
+	public java.lang.String getInternalNumber() {
+		return _emp.getInternalNumber();
 	}
 
 	/**
-	* Sets the ext number of this emp.
+	* Sets the internal number of this emp.
 	*
-	* @param extNumber the ext number of this emp
+	* @param internalNumber the internal number of this emp
 	*/
 	@Override
-	public void setExtNumber(java.lang.String extNumber) {
-		_emp.setExtNumber(extNumber);
+	public void setInternalNumber(java.lang.String internalNumber) {
+		_emp.setInternalNumber(internalNumber);
 	}
 
 	/**
@@ -1051,23 +1051,23 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 	}
 
 	/**
-	* Returns the company email of this emp.
+	* Returns the personal email of this emp.
 	*
-	* @return the company email of this emp
+	* @return the personal email of this emp
 	*/
 	@Override
-	public java.lang.String getCompanyEmail() {
-		return _emp.getCompanyEmail();
+	public java.lang.String getPersonalEmail() {
+		return _emp.getPersonalEmail();
 	}
 
 	/**
-	* Sets the company email of this emp.
+	* Sets the personal email of this emp.
 	*
-	* @param companyEmail the company email of this emp
+	* @param personalEmail the personal email of this emp
 	*/
 	@Override
-	public void setCompanyEmail(java.lang.String companyEmail) {
-		_emp.setCompanyEmail(companyEmail);
+	public void setPersonalEmail(java.lang.String personalEmail) {
+		_emp.setPersonalEmail(personalEmail);
 	}
 
 	/**

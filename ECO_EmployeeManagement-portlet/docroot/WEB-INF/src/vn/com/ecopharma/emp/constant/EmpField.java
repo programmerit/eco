@@ -81,7 +81,7 @@ public class EmpField {
 
 	public static final String EMAIL = "emailAddress";
 
-	public static final String COMPANY_EMAIL_ADDRESS = "companyEmailAddress";
+	public static final String PERSONAL_EMAIL_ADDRESS = "personalEmailAddress";
 
 	public static final String TAX_CODE = "personalTaxCode";
 

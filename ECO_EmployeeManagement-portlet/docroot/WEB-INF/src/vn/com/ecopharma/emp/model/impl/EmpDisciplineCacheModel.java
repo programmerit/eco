@@ -38,12 +38,14 @@ public class EmpDisciplineCacheModel implements CacheModel<EmpDiscipline>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{empDisciplineId=");
 		sb.append(empDisciplineId);
 		sb.append(", empId=");
 		sb.append(empId);
+		sb.append(", decisionNo=");
+		sb.append(decisionNo);
 		sb.append(", content=");
 		sb.append(content);
 		sb.append(", disciplineType=");
@@ -79,6 +81,13 @@ public class EmpDisciplineCacheModel implements CacheModel<EmpDiscipline>,
 
 		empDisciplineImpl.setEmpDisciplineId(empDisciplineId);
 		empDisciplineImpl.setEmpId(empId);
+
+		if (decisionNo == null) {
+			empDisciplineImpl.setDecisionNo(StringPool.BLANK);
+		}
+		else {
+			empDisciplineImpl.setDecisionNo(decisionNo);
+		}
 
 		if (content == null) {
 			empDisciplineImpl.setContent(StringPool.BLANK);
@@ -151,6 +160,7 @@ public class EmpDisciplineCacheModel implements CacheModel<EmpDiscipline>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		empDisciplineId = objectInput.readLong();
 		empId = objectInput.readLong();
+		decisionNo = objectInput.readUTF();
 		content = objectInput.readUTF();
 		disciplineType = objectInput.readUTF();
 		effectiveDate = objectInput.readLong();
@@ -170,6 +180,13 @@ public class EmpDisciplineCacheModel implements CacheModel<EmpDiscipline>,
 		throws IOException {
 		objectOutput.writeLong(empDisciplineId);
 		objectOutput.writeLong(empId);
+
+		if (decisionNo == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(decisionNo);
+		}
 
 		if (content == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -219,6 +236,7 @@ public class EmpDisciplineCacheModel implements CacheModel<EmpDiscipline>,
 
 	public long empDisciplineId;
 	public long empId;
+	public String decisionNo;
 	public String content;
 	public String disciplineType;
 	public long effectiveDate;

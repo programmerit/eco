@@ -13,6 +13,7 @@ public class EmpDisciplineIndexedItem extends BaseEmpInfoIndexedItem {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private String decisionNo;
 	private String content;
 	private String type;
 	private Date effectiveDate;
@@ -21,11 +22,20 @@ public class EmpDisciplineIndexedItem extends BaseEmpInfoIndexedItem {
 
 	public EmpDisciplineIndexedItem(Document document) {
 		super(document);
+		this.decisionNo = checkNullFieldAndReturnEmptyString(EmpDisciplineField.DECISION_NO);
 		this.content = checkNullFieldAndReturnEmptyString(EmpDisciplineField.CONTENT);
 		this.type = checkNullFieldAndReturnEmptyString(EmpDisciplineField.TYPE);
 		this.effectiveDate = checkNullFieldAndReturnNullDate(EmpDisciplineField.EFFECTIVE_DATE);
 		this.additionalType = checkNullFieldAndReturnEmptyString(EmpDisciplineField.ADDITIONAL_DISCIPLINE);
 		this.desc = checkNullFieldAndReturnEmptyString(EmpDisciplineField.DESC);
+	}
+
+	public String getDecisionNo() {
+		return decisionNo;
+	}
+
+	public void setDecisionNo(String decisionNo) {
+		this.decisionNo = decisionNo;
 	}
 
 	@Override

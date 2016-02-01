@@ -33,6 +33,7 @@ public class EmpDisciplineSoap implements Serializable {
 
 		soapModel.setEmpDisciplineId(model.getEmpDisciplineId());
 		soapModel.setEmpId(model.getEmpId());
+		soapModel.setDecisionNo(model.getDecisionNo());
 		soapModel.setContent(model.getContent());
 		soapModel.setDisciplineType(model.getDisciplineType());
 		soapModel.setEffectiveDate(model.getEffectiveDate());
@@ -111,6 +112,14 @@ public class EmpDisciplineSoap implements Serializable {
 
 	public void setEmpId(long empId) {
 		_empId = empId;
+	}
+
+	public String getDecisionNo() {
+		return _decisionNo;
+	}
+
+	public void setDecisionNo(String decisionNo) {
+		_decisionNo = decisionNo;
 	}
 
 	public String getContent() {
@@ -215,6 +224,7 @@ public class EmpDisciplineSoap implements Serializable {
 
 	private long _empDisciplineId;
 	private long _empId;
+	private String _decisionNo;
 	private String _content;
 	private String _disciplineType;
 	private Date _effectiveDate;

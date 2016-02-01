@@ -109,8 +109,8 @@ public class EmpIndexedItem extends BaseEmpInfoIndexedItem {
 		return checkNullFieldAndReturnEmptyString(EmpField.ISSUED_PLACE);
 	}
 
-	public String getCompanyEmail() {
-		return checkNullFieldAndReturnEmptyString(EmpField.COMPANY_EMAIL_ADDRESS);
+	public String getPersonalEmail() {
+		return checkNullFieldAndReturnEmptyString(EmpField.PERSONAL_EMAIL_ADDRESS);
 	}
 
 	public String getPersonalTaxCode() {
@@ -178,8 +178,8 @@ public class EmpIndexedItem extends BaseEmpInfoIndexedItem {
 				.getValue());
 	}
 
-	public String getCompanyEmailAddress() {
-		return checkNullFieldAndReturnEmptyString(EmpField.COMPANY_EMAIL_ADDRESS);
+	public String getPersonalEmailAddress() {
+		return checkNullFieldAndReturnEmptyString(EmpField.PERSONAL_EMAIL_ADDRESS);
 	}
 
 	public String getStatusCss() {

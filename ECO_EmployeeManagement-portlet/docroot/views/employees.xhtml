@@ -137,20 +137,20 @@
 		<h:form id="employeesForm">
 			<p:contextMenu id="employeeContext" for="employees">
 				<p:menuitem value="Promote New Position"
-					update=":promotionForm:promotionOutputPanel"
+					update=":includedDialogPanelGroup #{empView.includedDialogOutputPanel}"
 					actionListener="#{empView.onPromotionNewPosition}"
 					oncomplete="PF('wPromotionDialog').show()"
 					disabled="#{employeeIndexedBean.selectedEmployeeIndexItems.size() > 1 or employeeIndexedBean.selectedEmployeeIndexItems[0].status eq 'RESIGNED'}" />
 
 				<p:menuitem value="Resign"
 					actionListener="#{empView.onResignedEmployee}"
-					update=":resignationForm:resignationOutputPanel"
+					update=":includedDialogPanelGroup #{empView.includedDialogOutputPanel}"
 					oncomplete="PF('wResignationDialog').show()"
 					disabled="#{employeeIndexedBean.selectedEmployeeIndexItems.size() > 1 or employeeIndexedBean.selectedEmployeeIndexItems[0].status eq 'RESIGNED'}" />
 
 				<p:menuitem value="Add Discipline"
 					actionListener="#{empView.onAddingDiscipline}"
-					update=":disciplineForm:disciplineOutputPanel"
+					update=":includedDialogPanelGroup #{empView.includedDialogOutputPanel}"
 					oncomplete="PF('wDisciplineDialog').show()"
 					disabled="#{not employeeIndexedBean.disciplineValid}" />
 			</p:contextMenu>
@@ -280,9 +280,10 @@
 				oncompleteActions="PF('wDeleteConfirmDialog').hide(); PF('employeeTable').filter();"
 				update=":employeesForm:employees" />
 		</h:form>
-		<ui:include src="/views/dialogs/resignedDialog.xhtml" />
-		<ui:include src="/views/dialogs/promotionDialog.xhtml" />
-		<ui:include src="/views/dialogs/empDisciplineDialog.xhtml" />
+		<h:panelGroup id="includedDialogPanelGroup">
+			<ui:include src="#{empView.includedDialog}" />
+		</h:panelGroup>
+
 	</h:body>
 	<script type="text/javascript">
 		function toggle(id) {

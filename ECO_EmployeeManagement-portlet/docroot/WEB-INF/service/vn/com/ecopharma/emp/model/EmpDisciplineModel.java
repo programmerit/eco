@@ -91,6 +91,21 @@ public interface EmpDisciplineModel extends BaseModel<EmpDiscipline>,
 	public void setEmpId(long empId);
 
 	/**
+	 * Returns the decision no of this emp discipline.
+	 *
+	 * @return the decision no of this emp discipline
+	 */
+	@AutoEscape
+	public String getDecisionNo();
+
+	/**
+	 * Sets the decision no of this emp discipline.
+	 *
+	 * @param decisionNo the decision no of this emp discipline
+	 */
+	public void setDecisionNo(String decisionNo);
+
+	/**
 	 * Returns the content of this emp discipline.
 	 *
 	 * @return the content of this emp discipline

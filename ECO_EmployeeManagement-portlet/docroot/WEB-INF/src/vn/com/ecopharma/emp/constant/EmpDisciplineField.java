@@ -4,6 +4,8 @@ public class EmpDisciplineField {
 
 	public static final String ID = "empDisciplineId";
 
+	public static final String DECISION_NO = "decisionNo";
+
 	public static final String CONTENT = "content";
 
 	public static final String TYPE = "type";

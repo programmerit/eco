@@ -345,8 +345,6 @@ public class ResignationHistoryLocalServiceImpl extends
 	// fix
 
 	public void addMissingResignedEmployee(ServiceContext serviceContext) {
-		// List<Long> resignedEmps =
-		// empIdsFromResignedEmps(empLocalService.findResignedEmp());
 		List<Emp> resignedEmps = empLocalService.findResignedEmp();
 		List<Long> currentResignedList = empIdsFromResignedResignedHistory(findAll());
 

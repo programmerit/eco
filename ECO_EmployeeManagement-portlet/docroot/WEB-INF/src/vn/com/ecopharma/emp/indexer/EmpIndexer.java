@@ -137,7 +137,8 @@ public class EmpIndexer extends BaseIndexer {
 		document.addText(EmpField.PASSPORT, emp.getPassport());
 
 		document.addText(EmpField.CONTACT_NUMBER, emp.getContactNumber());
-		Address address = EmployeeUtils.getPresentAddress(emp.getEmpId());
+		Address address = EmpLocalServiceUtil.getPresentAddress(
+				emp.getCompanyId(), emp.getEmpId());
 		document.addText(EmpField.ADDRESS,
 				EmployeeUtils.removeDashChar(ImportExportUtils
 						.getFullAddressString(address)));
@@ -148,8 +149,8 @@ public class EmpIndexer extends BaseIndexer {
 		document.addText(EmpField.EMAIL,
 				UserLocalServiceUtil.getUser(emp.getEmpUserId())
 						.getEmailAddress());
-		document.addText(EmpField.COMPANY_EMAIL_ADDRESS,
-				emp.getCompanyEmailAddress());
+		document.addText(EmpField.PERSONAL_EMAIL_ADDRESS,
+				emp.getPersonalEmail());
 		document.addText(EmpField.TAX_CODE, emp.getPersonalTaxCode());
 		document.addNumber(EmpField.NUMBER_OF_DEPENDENTS,
 				emp.getNumberOfDependents());

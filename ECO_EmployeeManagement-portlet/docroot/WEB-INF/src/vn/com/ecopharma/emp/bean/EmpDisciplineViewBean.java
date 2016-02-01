@@ -54,6 +54,10 @@ public class EmpDisciplineViewBean implements Serializable {
 					filters.put(EmpField.VN_FULL_NAME, filterBean.getFullName());
 				}
 
+				if (!StringUtils.EMPTY.equals(filterBean.getEmpCode())) {
+					filters.put(EmpField.EMP_CODE, filterBean.getEmpCode());
+				}
+
 				FilterUtils.bindOrgFilters(filterBean, filters);
 				return super.load(first, pageSize, sortField, sortOrder,
 						filters);
@@ -66,8 +70,9 @@ public class EmpDisciplineViewBean implements Serializable {
 				.getObject();
 
 		EmpDisciplineLocalServiceUtil.updateEmpDiscipline(item.getId(),
-				item.getType(), item.getContent(), item.getEffectiveDate(),
-				item.getAdditionalType(), item.getDesc());
+				item.getDecisionNo(), item.getType(), item.getContent(),
+				item.getEffectiveDate(), item.getAdditionalType(),
+				item.getDesc());
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage("Update Notice!",
@@ -80,7 +85,7 @@ public class EmpDisciplineViewBean implements Serializable {
 	}
 
 	public void onIndexAll() {
-
+		EmpDisciplineLocalServiceUtil.indexAll();
 	}
 
 	public void onRemoveAllIndex() {

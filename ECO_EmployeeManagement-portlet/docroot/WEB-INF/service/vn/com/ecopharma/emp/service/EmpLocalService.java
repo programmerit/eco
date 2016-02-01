@@ -463,8 +463,9 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portal.model.Address> findAllEmpAddress(
-		long employeeId);
+		long companyId, long employeeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Address getPresentAddress(long employeeId);
+	public com.liferay.portal.model.Address getPresentAddress(long companyId,
+		long employeeId);
 }

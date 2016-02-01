@@ -325,6 +325,7 @@ public class EmpDisciplinePersistenceImpl extends BasePersistenceImpl<EmpDiscipl
 
 		empDisciplineImpl.setEmpDisciplineId(empDiscipline.getEmpDisciplineId());
 		empDisciplineImpl.setEmpId(empDiscipline.getEmpId());
+		empDisciplineImpl.setDecisionNo(empDiscipline.getDecisionNo());
 		empDisciplineImpl.setContent(empDiscipline.getContent());
 		empDisciplineImpl.setDisciplineType(empDiscipline.getDisciplineType());
 		empDisciplineImpl.setEffectiveDate(empDiscipline.getEffectiveDate());

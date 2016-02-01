@@ -69,7 +69,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 			{ "groupId", Types.BIGINT },
 			{ "empCode", Types.VARCHAR },
 			{ "contactNumber", Types.VARCHAR },
-			{ "extNumber", Types.VARCHAR },
+			{ "internalNumber", Types.VARCHAR },
 			{ "birthday", Types.TIMESTAMP },
 			{ "ethnic", Types.VARCHAR },
 			{ "nationality", Types.VARCHAR },
@@ -94,7 +94,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 			{ "issuedPlace", Types.VARCHAR },
 			{ "passport", Types.VARCHAR },
 			{ "addressId", Types.BIGINT },
-			{ "companyEmail", Types.VARCHAR },
+			{ "personalEmail", Types.VARCHAR },
 			{ "personalTaxCode", Types.VARCHAR },
 			{ "numberOfDependents", Types.INTEGER },
 			{ "dependentNames", Types.VARCHAR },
@@ -121,7 +121,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 			{ "unitGroupId", Types.BIGINT },
 			{ "departmentId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_Emp (empId LONG not null primary key,groupId LONG,empCode VARCHAR(75) null,contactNumber VARCHAR(75) null,extNumber VARCHAR(75) null,birthday DATE null,ethnic VARCHAR(75) null,nationality VARCHAR(75) null,religion VARCHAR(75) null,joinedDate DATE null,titlesId LONG,levelId LONG,promotedDate DATE null,laborContractSignedDate DATE null,laborContractExpiredDate DATE null,laborContractSignedTime INTEGER,laborContractType VARCHAR(75) null,gender VARCHAR(75) null,placeOfBirth VARCHAR(75) null,education VARCHAR(75) null,educationSpecialize VARCHAR(75) null,specializeId LONG,universityId LONG,maritalStatus VARCHAR(75) null,identityCardNo VARCHAR(75) null,issuedDate DATE null,issuedPlace VARCHAR(75) null,passport VARCHAR(75) null,addressId LONG,companyEmail VARCHAR(75) null,personalTaxCode VARCHAR(75) null,numberOfDependents INTEGER,dependentNames VARCHAR(75) null,socialInsuranceNo VARCHAR(75) null,healthInsuranceNo VARCHAR(75) null,healthInsurancePlace VARCHAR(75) null,baseWageRates DOUBLE,positionWageRates DOUBLE,capacitySalary DOUBLE,totalSalary DOUBLE,bonus DOUBLE,resignedDate DATE null,empUserId LONG,deleted BOOLEAN,companyEmailAddress VARCHAR(75) null,workingPlaceId LONG,status VARCHAR(75) null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,unitId LONG,unitGroupId LONG,departmentId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_Emp (empId LONG not null primary key,groupId LONG,empCode VARCHAR(75) null,contactNumber VARCHAR(75) null,internalNumber VARCHAR(75) null,birthday DATE null,ethnic VARCHAR(75) null,nationality VARCHAR(75) null,religion VARCHAR(75) null,joinedDate DATE null,titlesId LONG,levelId LONG,promotedDate DATE null,laborContractSignedDate DATE null,laborContractExpiredDate DATE null,laborContractSignedTime INTEGER,laborContractType VARCHAR(75) null,gender VARCHAR(75) null,placeOfBirth VARCHAR(75) null,education VARCHAR(75) null,educationSpecialize VARCHAR(75) null,specializeId LONG,universityId LONG,maritalStatus VARCHAR(75) null,identityCardNo VARCHAR(75) null,issuedDate DATE null,issuedPlace VARCHAR(75) null,passport VARCHAR(75) null,addressId LONG,personalEmail VARCHAR(75) null,personalTaxCode VARCHAR(75) null,numberOfDependents INTEGER,dependentNames VARCHAR(75) null,socialInsuranceNo VARCHAR(75) null,healthInsuranceNo VARCHAR(75) null,healthInsurancePlace VARCHAR(75) null,baseWageRates DOUBLE,positionWageRates DOUBLE,capacitySalary DOUBLE,totalSalary DOUBLE,bonus DOUBLE,resignedDate DATE null,empUserId LONG,deleted BOOLEAN,companyEmailAddress VARCHAR(75) null,workingPlaceId LONG,status VARCHAR(75) null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,unitId LONG,unitGroupId LONG,departmentId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table eco_em_portlet_Emp";
 	public static final String ORDER_BY_JPQL = " ORDER BY emp.empId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_em_portlet_Emp.empId ASC";
@@ -160,7 +160,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		model.setGroupId(soapModel.getGroupId());
 		model.setEmpCode(soapModel.getEmpCode());
 		model.setContactNumber(soapModel.getContactNumber());
-		model.setExtNumber(soapModel.getExtNumber());
+		model.setInternalNumber(soapModel.getInternalNumber());
 		model.setBirthday(soapModel.getBirthday());
 		model.setEthnic(soapModel.getEthnic());
 		model.setNationality(soapModel.getNationality());
@@ -185,7 +185,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		model.setIssuedPlace(soapModel.getIssuedPlace());
 		model.setPassport(soapModel.getPassport());
 		model.setAddressId(soapModel.getAddressId());
-		model.setCompanyEmail(soapModel.getCompanyEmail());
+		model.setPersonalEmail(soapModel.getPersonalEmail());
 		model.setPersonalTaxCode(soapModel.getPersonalTaxCode());
 		model.setNumberOfDependents(soapModel.getNumberOfDependents());
 		model.setDependentNames(soapModel.getDependentNames());
@@ -279,7 +279,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		attributes.put("groupId", getGroupId());
 		attributes.put("empCode", getEmpCode());
 		attributes.put("contactNumber", getContactNumber());
-		attributes.put("extNumber", getExtNumber());
+		attributes.put("internalNumber", getInternalNumber());
 		attributes.put("birthday", getBirthday());
 		attributes.put("ethnic", getEthnic());
 		attributes.put("nationality", getNationality());
@@ -304,7 +304,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		attributes.put("issuedPlace", getIssuedPlace());
 		attributes.put("passport", getPassport());
 		attributes.put("addressId", getAddressId());
-		attributes.put("companyEmail", getCompanyEmail());
+		attributes.put("personalEmail", getPersonalEmail());
 		attributes.put("personalTaxCode", getPersonalTaxCode());
 		attributes.put("numberOfDependents", getNumberOfDependents());
 		attributes.put("dependentNames", getDependentNames());
@@ -360,10 +360,10 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 			setContactNumber(contactNumber);
 		}
 
-		String extNumber = (String)attributes.get("extNumber");
+		String internalNumber = (String)attributes.get("internalNumber");
 
-		if (extNumber != null) {
-			setExtNumber(extNumber);
+		if (internalNumber != null) {
+			setInternalNumber(internalNumber);
 		}
 
 		Date birthday = (Date)attributes.get("birthday");
@@ -514,10 +514,10 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 			setAddressId(addressId);
 		}
 
-		String companyEmail = (String)attributes.get("companyEmail");
+		String personalEmail = (String)attributes.get("personalEmail");
 
-		if (companyEmail != null) {
-			setCompanyEmail(companyEmail);
+		if (personalEmail != null) {
+			setPersonalEmail(personalEmail);
 		}
 
 		String personalTaxCode = (String)attributes.get("personalTaxCode");
@@ -740,18 +740,18 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 
 	@JSON
 	@Override
-	public String getExtNumber() {
-		if (_extNumber == null) {
+	public String getInternalNumber() {
+		if (_internalNumber == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _extNumber;
+			return _internalNumber;
 		}
 	}
 
 	@Override
-	public void setExtNumber(String extNumber) {
-		_extNumber = extNumber;
+	public void setInternalNumber(String internalNumber) {
+		_internalNumber = internalNumber;
 	}
 
 	@JSON
@@ -1092,18 +1092,18 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 
 	@JSON
 	@Override
-	public String getCompanyEmail() {
-		if (_companyEmail == null) {
+	public String getPersonalEmail() {
+		if (_personalEmail == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _companyEmail;
+			return _personalEmail;
 		}
 	}
 
 	@Override
-	public void setCompanyEmail(String companyEmail) {
-		_companyEmail = companyEmail;
+	public void setPersonalEmail(String personalEmail) {
+		_personalEmail = personalEmail;
 	}
 
 	@JSON
@@ -1503,7 +1503,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		empImpl.setGroupId(getGroupId());
 		empImpl.setEmpCode(getEmpCode());
 		empImpl.setContactNumber(getContactNumber());
-		empImpl.setExtNumber(getExtNumber());
+		empImpl.setInternalNumber(getInternalNumber());
 		empImpl.setBirthday(getBirthday());
 		empImpl.setEthnic(getEthnic());
 		empImpl.setNationality(getNationality());
@@ -1528,7 +1528,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		empImpl.setIssuedPlace(getIssuedPlace());
 		empImpl.setPassport(getPassport());
 		empImpl.setAddressId(getAddressId());
-		empImpl.setCompanyEmail(getCompanyEmail());
+		empImpl.setPersonalEmail(getPersonalEmail());
 		empImpl.setPersonalTaxCode(getPersonalTaxCode());
 		empImpl.setNumberOfDependents(getNumberOfDependents());
 		empImpl.setDependentNames(getDependentNames());
@@ -1645,12 +1645,12 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 			empCacheModel.contactNumber = null;
 		}
 
-		empCacheModel.extNumber = getExtNumber();
+		empCacheModel.internalNumber = getInternalNumber();
 
-		String extNumber = empCacheModel.extNumber;
+		String internalNumber = empCacheModel.internalNumber;
 
-		if ((extNumber != null) && (extNumber.length() == 0)) {
-			empCacheModel.extNumber = null;
+		if ((internalNumber != null) && (internalNumber.length() == 0)) {
+			empCacheModel.internalNumber = null;
 		}
 
 		Date birthday = getBirthday();
@@ -1816,12 +1816,12 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 
 		empCacheModel.addressId = getAddressId();
 
-		empCacheModel.companyEmail = getCompanyEmail();
+		empCacheModel.personalEmail = getPersonalEmail();
 
-		String companyEmail = empCacheModel.companyEmail;
+		String personalEmail = empCacheModel.personalEmail;
 
-		if ((companyEmail != null) && (companyEmail.length() == 0)) {
-			empCacheModel.companyEmail = null;
+		if ((personalEmail != null) && (personalEmail.length() == 0)) {
+			empCacheModel.personalEmail = null;
 		}
 
 		empCacheModel.personalTaxCode = getPersonalTaxCode();
@@ -1960,8 +1960,8 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		sb.append(getEmpCode());
 		sb.append(", contactNumber=");
 		sb.append(getContactNumber());
-		sb.append(", extNumber=");
-		sb.append(getExtNumber());
+		sb.append(", internalNumber=");
+		sb.append(getInternalNumber());
 		sb.append(", birthday=");
 		sb.append(getBirthday());
 		sb.append(", ethnic=");
@@ -2010,8 +2010,8 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		sb.append(getPassport());
 		sb.append(", addressId=");
 		sb.append(getAddressId());
-		sb.append(", companyEmail=");
-		sb.append(getCompanyEmail());
+		sb.append(", personalEmail=");
+		sb.append(getPersonalEmail());
 		sb.append(", personalTaxCode=");
 		sb.append(getPersonalTaxCode());
 		sb.append(", numberOfDependents=");
@@ -2092,8 +2092,8 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		sb.append(getContactNumber());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>extNumber</column-name><column-value><![CDATA[");
-		sb.append(getExtNumber());
+			"<column><column-name>internalNumber</column-name><column-value><![CDATA[");
+		sb.append(getInternalNumber());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>birthday</column-name><column-value><![CDATA[");
@@ -2192,8 +2192,8 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		sb.append(getAddressId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>companyEmail</column-name><column-value><![CDATA[");
-		sb.append(getCompanyEmail());
+			"<column><column-name>personalEmail</column-name><column-value><![CDATA[");
+		sb.append(getPersonalEmail());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>personalTaxCode</column-name><column-value><![CDATA[");
@@ -2308,7 +2308,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 	private String _empCode;
 	private String _originalEmpCode;
 	private String _contactNumber;
-	private String _extNumber;
+	private String _internalNumber;
 	private Date _birthday;
 	private String _ethnic;
 	private String _nationality;
@@ -2335,7 +2335,7 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 	private String _issuedPlace;
 	private String _passport;
 	private long _addressId;
-	private String _companyEmail;
+	private String _personalEmail;
 	private String _personalTaxCode;
 	private int _numberOfDependents;
 	private String _dependentNames;

@@ -332,22 +332,27 @@ public class EmpDisciplineLocalServiceUtil {
 	}
 
 	public static void addEmpsDiscipline(
-		java.util.List<java.lang.Long> empIds, java.lang.String content,
-		java.lang.String type, java.util.Date effectiveDate,
-		java.lang.String additionalType, java.lang.String description,
+		java.util.List<java.lang.Long> empIds, java.lang.String decisionNo,
+		java.lang.String content, java.lang.String type,
+		java.util.Date effectiveDate, java.lang.String additionalType,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		getService()
-			.addEmpsDiscipline(empIds, content, type, effectiveDate,
-			additionalType, description, serviceContext);
+			.addEmpsDiscipline(empIds, decisionNo, content, type,
+			effectiveDate, additionalType, description, serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.EmpDiscipline updateEmpDiscipline(
-		long id, java.lang.String type, java.lang.String content,
-		java.util.Date effectiveDate, java.lang.String additionType,
-		java.lang.String desc) {
+		long id, java.lang.String decisionNo, java.lang.String type,
+		java.lang.String content, java.util.Date effectiveDate,
+		java.lang.String additionType, java.lang.String desc) {
 		return getService()
-				   .updateEmpDiscipline(id, type, content, effectiveDate,
-			additionType, desc);
+				   .updateEmpDiscipline(id, decisionNo, type, content,
+			effectiveDate, additionType, desc);
+	}
+
+	public static void indexAll() {
+		getService().indexAll();
 	}
 
 	public static void clearService() {

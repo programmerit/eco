@@ -97,7 +97,7 @@
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="empCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="contactNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="extNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="internalNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="birthday" type="org.hibernate.type.TimestampType" />
 		<property name="ethnic" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="nationality" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -122,7 +122,7 @@
 		<property name="issuedPlace" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="passport" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="addressId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyEmail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="personalEmail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="personalTaxCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="numberOfDependents" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="dependentNames" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -171,6 +171,7 @@
 			<generator class="assigned" />
 		</id>
 		<property name="empId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="decisionNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="disciplineType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="effectiveDate" type="org.hibernate.type.TimestampType" />

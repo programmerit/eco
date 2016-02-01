@@ -61,7 +61,7 @@
 		<field name="groupId" type="long" />
 		<field name="empCode" type="String" />
 		<field name="contactNumber" type="String" />
-		<field name="extNumber" type="String" />
+		<field name="internalNumber" type="String" />
 		<field name="birthday" type="Date" />
 		<field name="ethnic" type="String" />
 		<field name="nationality" type="String" />
@@ -86,7 +86,7 @@
 		<field name="issuedPlace" type="String" />
 		<field name="passport" type="String" />
 		<field name="addressId" type="long" />
-		<field name="companyEmail" type="String" />
+		<field name="personalEmail" type="String" />
 		<field name="personalTaxCode" type="String" />
 		<field name="numberOfDependents" type="int" />
 		<field name="dependentNames" type="String" />
@@ -129,6 +129,7 @@
 	<model name="vn.com.ecopharma.emp.model.EmpDiscipline">
 		<field name="empDisciplineId" type="long" />
 		<field name="empId" type="long" />
+		<field name="decisionNo" type="String" />
 		<field name="content" type="String">
 			<hint name="max-length">1000</hint>
 		</field>

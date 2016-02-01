@@ -353,11 +353,11 @@ public class EmpLocalServiceClp implements EmpLocalService {
 
 		_methodName57 = "findAllEmpAddress";
 
-		_methodParameterTypes57 = new String[] { "long" };
+		_methodParameterTypes57 = new String[] { "long", "long" };
 
 		_methodName58 = "getPresentAddress";
 
-		_methodParameterTypes58 = new String[] { "long" };
+		_methodParameterTypes58 = new String[] { "long", "long" };
 	}
 
 	@Override
@@ -2312,12 +2312,13 @@ public class EmpLocalServiceClp implements EmpLocalService {
 
 	@Override
 	public java.util.List<com.liferay.portal.model.Address> findAllEmpAddress(
-		long employeeId) {
+		long companyId, long employeeId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName57,
-					_methodParameterTypes57, new Object[] { employeeId });
+					_methodParameterTypes57,
+					new Object[] { companyId, employeeId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -2335,12 +2336,14 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	}
 
 	@Override
-	public com.liferay.portal.model.Address getPresentAddress(long employeeId) {
+	public com.liferay.portal.model.Address getPresentAddress(long companyId,
+		long employeeId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName58,
-					_methodParameterTypes58, new Object[] { employeeId });
+					_methodParameterTypes58,
+					new Object[] { companyId, employeeId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

@@ -17,16 +17,23 @@
 
 				<p:outputPanel id="disciplineOutputPanel" autoUpdate="false">
 					<p:panelGrid columns="2">
+						<h:outputText value="Decision No.:" />
+						<p:inputText id="decisionNo" required="true"
+							requiredMessage="Decision No is required"
+							value="#{disciplineBean.empDisciplineItem.decisionNo}" />
+
+
 						<h:outputText value="Employee" />
 						<p:autoComplete id="disciplineEmployees" multiple="true"
 							styleClass="interview-schedule" scrollHeight="300"
 							minQueryLength="2" value="#{disciplineBean.emps}"
 							completeMethod="#{disciplineBean.completeEmps}" var="e"
-							itemLabel="#{e.fullNameVi}" itemValue="#{e}" required="true"
-							converter="empIndexedConverter" autoHighlight="true"
-							forceSelection="true" placeholder="Type 2 words...">
+							itemLabel="#{e.fullNameVi}(#{e.employeeCode})" itemValue="#{e}"
+							required="true" converter="empIndexedConverter"
+							autoHighlight="true" forceSelection="true"
+							placeholder="Type 2 words..." alt="#{e.employeeCode}">
 							<f:facet name="itemTip">
-								#{e.titles}
+								#{e.titles} 
 							</f:facet>
 						</p:autoComplete>
 
@@ -63,8 +70,9 @@
 					</p:panelGrid>
 				</p:outputPanel>
 				<p:commandButton value="Save" styleClass="RedButton" ajax="true"
-					actionListener="#{disciplineBean.onSave}" update=":growl"
-					oncomplete="refreshEmployees();" />
+					actionListener="#{disciplineBean.onSave}"
+					update=":employeesForm:employees :growl"
+					oncomplete="refreshEmployees(); refreshFooter();" />
 					
 				| 	
 

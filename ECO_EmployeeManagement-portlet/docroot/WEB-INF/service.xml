@@ -399,7 +399,7 @@
 
 		<column name="empCode" type="String"></column>
 		<column name="contactNumber" type="String"></column>
-        <column name="extNumber" type="String"></column>
+        <column name="internalNumber" type="String"></column>
 		<column name="birthday" type="Date"></column>
 		<column name="ethnic" type="String"></column>
 		<column name="nationality" type="String"></column>
@@ -424,7 +424,7 @@
 		<column name="issuedPlace" type="String"></column>
 		<column name="passport" type="String"></column>
 		<column name="addressId" type="long"></column>
-		<column name="companyEmail" type="String"></column>
+		<column name="personalEmail" type="String"></column>
 		<column name="personalTaxCode" type="String"></column>
 		<column name="numberOfDependents" type="int"></column>
 		<column name="dependentNames" type="String"></column>
@@ -576,6 +576,7 @@
 
 		<!-- Group instance -->
         <column name="empId" type="long"></column>
+        <column name="decisionNo" type="String"></column>
         <column name="content" type="String"></column>
         <column name="disciplineType" type="String"></column>
         <column name="effectiveDate" type="Date"></column>

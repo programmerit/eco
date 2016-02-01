@@ -77,6 +77,7 @@ public class EmpDisciplineClp extends BaseModelImpl<EmpDiscipline>
 
 		attributes.put("empDisciplineId", getEmpDisciplineId());
 		attributes.put("empId", getEmpId());
+		attributes.put("decisionNo", getDecisionNo());
 		attributes.put("content", getContent());
 		attributes.put("disciplineType", getDisciplineType());
 		attributes.put("effectiveDate", getEffectiveDate());
@@ -105,6 +106,12 @@ public class EmpDisciplineClp extends BaseModelImpl<EmpDiscipline>
 
 		if (empId != null) {
 			setEmpId(empId);
+		}
+
+		String decisionNo = (String)attributes.get("decisionNo");
+
+		if (decisionNo != null) {
+			setDecisionNo(decisionNo);
 		}
 
 		String content = (String)attributes.get("content");
@@ -220,6 +227,29 @@ public class EmpDisciplineClp extends BaseModelImpl<EmpDiscipline>
 				Method method = clazz.getMethod("setEmpId", long.class);
 
 				method.invoke(_empDisciplineRemoteModel, empId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getDecisionNo() {
+		return _decisionNo;
+	}
+
+	@Override
+	public void setDecisionNo(String decisionNo) {
+		_decisionNo = decisionNo;
+
+		if (_empDisciplineRemoteModel != null) {
+			try {
+				Class<?> clazz = _empDisciplineRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setDecisionNo", String.class);
+
+				method.invoke(_empDisciplineRemoteModel, decisionNo);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -593,6 +623,7 @@ public class EmpDisciplineClp extends BaseModelImpl<EmpDiscipline>
 
 		clone.setEmpDisciplineId(getEmpDisciplineId());
 		clone.setEmpId(getEmpId());
+		clone.setDecisionNo(getDecisionNo());
 		clone.setContent(getContent());
 		clone.setDisciplineType(getDisciplineType());
 		clone.setEffectiveDate(getEffectiveDate());
@@ -657,12 +688,14 @@ public class EmpDisciplineClp extends BaseModelImpl<EmpDiscipline>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{empDisciplineId=");
 		sb.append(getEmpDisciplineId());
 		sb.append(", empId=");
 		sb.append(getEmpId());
+		sb.append(", decisionNo=");
+		sb.append(getDecisionNo());
 		sb.append(", content=");
 		sb.append(getContent());
 		sb.append(", disciplineType=");
@@ -694,7 +727,7 @@ public class EmpDisciplineClp extends BaseModelImpl<EmpDiscipline>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.EmpDiscipline");
@@ -707,6 +740,10 @@ public class EmpDisciplineClp extends BaseModelImpl<EmpDiscipline>
 		sb.append(
 			"<column><column-name>empId</column-name><column-value><![CDATA[");
 		sb.append(getEmpId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>decisionNo</column-name><column-value><![CDATA[");
+		sb.append(getDecisionNo());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>content</column-name><column-value><![CDATA[");
@@ -764,6 +801,7 @@ public class EmpDisciplineClp extends BaseModelImpl<EmpDiscipline>
 
 	private long _empDisciplineId;
 	private long _empId;
+	private String _decisionNo;
 	private String _content;
 	private String _disciplineType;
 	private Date _effectiveDate;

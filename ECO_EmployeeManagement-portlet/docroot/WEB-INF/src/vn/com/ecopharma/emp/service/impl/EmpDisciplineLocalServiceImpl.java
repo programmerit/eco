@@ -214,18 +214,20 @@ public class EmpDisciplineLocalServiceImpl extends
 		return null;
 	}
 
-	public void addEmpsDiscipline(List<Long> empIds, String content,
-			String type, Date effectiveDate, String additionalType,
-			String description, ServiceContext serviceContext) {
+	public void addEmpsDiscipline(List<Long> empIds, String decisionNo,
+			String content, String type, Date effectiveDate,
+			String additionalType, String description,
+			ServiceContext serviceContext) {
 		for (long empId : empIds) {
 			EmpDiscipline obj = createPrePersistedEntity(serviceContext);
 			obj.setEmpId(empId);
+			obj.setDecisionNo(decisionNo);
 			obj.setContent(content);
 			obj.setDisciplineType(type);
 			obj.setEffectiveDate(effectiveDate);
 			obj.setAdditionalDisciplineType(additionalType);
 			obj.setDescription(description);
-			addEmpDiscipline(obj, serviceContext);
+			this.addEmpDiscipline(obj, serviceContext);
 		}
 	}
 
@@ -247,10 +249,12 @@ public class EmpDisciplineLocalServiceImpl extends
 
 	}
 
-	public EmpDiscipline updateEmpDiscipline(long id, String type,
-			String content, Date effectiveDate, String additionType, String desc) {
+	public EmpDiscipline updateEmpDiscipline(long id, String decisionNo,
+			String type, String content, Date effectiveDate,
+			String additionType, String desc) {
 		try {
 			final EmpDiscipline obj = super.fetchEmpDiscipline(id);
+			obj.setDecisionNo(decisionNo);
 			obj.setDisciplineType(type);
 			obj.setContent(content);
 			obj.setEffectiveDate(effectiveDate);
@@ -261,5 +265,20 @@ public class EmpDisciplineLocalServiceImpl extends
 			LOGGER.info(e);
 		}
 		return null;
+	}
+
+	public void indexAll() {
+		final List<EmpDiscipline> all = findAll();
+		// re-index modified employee
+		Indexer indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(EmpDiscipline.class.getName());
+		for (EmpDiscipline item : all) {
+			// re-index
+			try {
+				indexer.reindex(item);
+			} catch (SearchException e) {
+				LOGGER.info(e);
+			}
+		}
 	}
 }

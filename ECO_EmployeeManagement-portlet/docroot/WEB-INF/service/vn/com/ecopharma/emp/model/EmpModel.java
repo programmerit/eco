@@ -122,19 +122,19 @@ public interface EmpModel extends BaseModel<Emp>, GroupedModel {
 	public void setContactNumber(String contactNumber);
 
 	/**
-	 * Returns the ext number of this emp.
+	 * Returns the internal number of this emp.
 	 *
-	 * @return the ext number of this emp
+	 * @return the internal number of this emp
 	 */
 	@AutoEscape
-	public String getExtNumber();
+	public String getInternalNumber();
 
 	/**
-	 * Sets the ext number of this emp.
+	 * Sets the internal number of this emp.
 	 *
-	 * @param extNumber the ext number of this emp
+	 * @param internalNumber the internal number of this emp
 	 */
-	public void setExtNumber(String extNumber);
+	public void setInternalNumber(String internalNumber);
 
 	/**
 	 * Returns the birthday of this emp.
@@ -485,19 +485,19 @@ public interface EmpModel extends BaseModel<Emp>, GroupedModel {
 	public void setAddressId(long addressId);
 
 	/**
-	 * Returns the company email of this emp.
+	 * Returns the personal email of this emp.
 	 *
-	 * @return the company email of this emp
+	 * @return the personal email of this emp
 	 */
 	@AutoEscape
-	public String getCompanyEmail();
+	public String getPersonalEmail();
 
 	/**
-	 * Sets the company email of this emp.
+	 * Sets the personal email of this emp.
 	 *
-	 * @param companyEmail the company email of this emp
+	 * @param personalEmail the personal email of this emp
 	 */
-	public void setCompanyEmail(String companyEmail);
+	public void setPersonalEmail(String personalEmail);
 
 	/**
 	 * Returns the personal tax code of this emp.

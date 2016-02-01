@@ -52,6 +52,7 @@ public class EmpDisciplineWrapper implements EmpDiscipline,
 
 		attributes.put("empDisciplineId", getEmpDisciplineId());
 		attributes.put("empId", getEmpId());
+		attributes.put("decisionNo", getDecisionNo());
 		attributes.put("content", getContent());
 		attributes.put("disciplineType", getDisciplineType());
 		attributes.put("effectiveDate", getEffectiveDate());
@@ -80,6 +81,12 @@ public class EmpDisciplineWrapper implements EmpDiscipline,
 
 		if (empId != null) {
 			setEmpId(empId);
+		}
+
+		String decisionNo = (String)attributes.get("decisionNo");
+
+		if (decisionNo != null) {
+			setDecisionNo(decisionNo);
 		}
 
 		String content = (String)attributes.get("content");
@@ -214,6 +221,26 @@ public class EmpDisciplineWrapper implements EmpDiscipline,
 	@Override
 	public void setEmpId(long empId) {
 		_empDiscipline.setEmpId(empId);
+	}
+
+	/**
+	* Returns the decision no of this emp discipline.
+	*
+	* @return the decision no of this emp discipline
+	*/
+	@Override
+	public java.lang.String getDecisionNo() {
+		return _empDiscipline.getDecisionNo();
+	}
+
+	/**
+	* Sets the decision no of this emp discipline.
+	*
+	* @param decisionNo the decision no of this emp discipline
+	*/
+	@Override
+	public void setDecisionNo(java.lang.String decisionNo) {
+		_empDiscipline.setDecisionNo(decisionNo);
 	}
 
 	/**
