@@ -39,6 +39,8 @@ import vn.com.ecopharma.emp.service.persistence.DevisionPersistence;
 import vn.com.ecopharma.emp.service.persistence.DistrictPersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpBankInfoPersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpDisciplinePersistence;
+import vn.com.ecopharma.emp.service.persistence.EmpNotifyEmailPersistence;
+import vn.com.ecopharma.emp.service.persistence.EmpOrgRelationshipPersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpPersistence;
 import vn.com.ecopharma.emp.service.persistence.EmployeeTitlesHistoryPersistence;
 import vn.com.ecopharma.emp.service.persistence.LevelPersistence;
@@ -745,6 +747,120 @@ public abstract class DistrictLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setEmployeeTitlesHistoryPersistence(
 		EmployeeTitlesHistoryPersistence employeeTitlesHistoryPersistence) {
 		this.employeeTitlesHistoryPersistence = employeeTitlesHistoryPersistence;
+	}
+
+	/**
+	 * Returns the emp notify email local service.
+	 *
+	 * @return the emp notify email local service
+	 */
+	public vn.com.ecopharma.emp.service.EmpNotifyEmailLocalService getEmpNotifyEmailLocalService() {
+		return empNotifyEmailLocalService;
+	}
+
+	/**
+	 * Sets the emp notify email local service.
+	 *
+	 * @param empNotifyEmailLocalService the emp notify email local service
+	 */
+	public void setEmpNotifyEmailLocalService(
+		vn.com.ecopharma.emp.service.EmpNotifyEmailLocalService empNotifyEmailLocalService) {
+		this.empNotifyEmailLocalService = empNotifyEmailLocalService;
+	}
+
+	/**
+	 * Returns the emp notify email remote service.
+	 *
+	 * @return the emp notify email remote service
+	 */
+	public vn.com.ecopharma.emp.service.EmpNotifyEmailService getEmpNotifyEmailService() {
+		return empNotifyEmailService;
+	}
+
+	/**
+	 * Sets the emp notify email remote service.
+	 *
+	 * @param empNotifyEmailService the emp notify email remote service
+	 */
+	public void setEmpNotifyEmailService(
+		vn.com.ecopharma.emp.service.EmpNotifyEmailService empNotifyEmailService) {
+		this.empNotifyEmailService = empNotifyEmailService;
+	}
+
+	/**
+	 * Returns the emp notify email persistence.
+	 *
+	 * @return the emp notify email persistence
+	 */
+	public EmpNotifyEmailPersistence getEmpNotifyEmailPersistence() {
+		return empNotifyEmailPersistence;
+	}
+
+	/**
+	 * Sets the emp notify email persistence.
+	 *
+	 * @param empNotifyEmailPersistence the emp notify email persistence
+	 */
+	public void setEmpNotifyEmailPersistence(
+		EmpNotifyEmailPersistence empNotifyEmailPersistence) {
+		this.empNotifyEmailPersistence = empNotifyEmailPersistence;
+	}
+
+	/**
+	 * Returns the emp org relationship local service.
+	 *
+	 * @return the emp org relationship local service
+	 */
+	public vn.com.ecopharma.emp.service.EmpOrgRelationshipLocalService getEmpOrgRelationshipLocalService() {
+		return empOrgRelationshipLocalService;
+	}
+
+	/**
+	 * Sets the emp org relationship local service.
+	 *
+	 * @param empOrgRelationshipLocalService the emp org relationship local service
+	 */
+	public void setEmpOrgRelationshipLocalService(
+		vn.com.ecopharma.emp.service.EmpOrgRelationshipLocalService empOrgRelationshipLocalService) {
+		this.empOrgRelationshipLocalService = empOrgRelationshipLocalService;
+	}
+
+	/**
+	 * Returns the emp org relationship remote service.
+	 *
+	 * @return the emp org relationship remote service
+	 */
+	public vn.com.ecopharma.emp.service.EmpOrgRelationshipService getEmpOrgRelationshipService() {
+		return empOrgRelationshipService;
+	}
+
+	/**
+	 * Sets the emp org relationship remote service.
+	 *
+	 * @param empOrgRelationshipService the emp org relationship remote service
+	 */
+	public void setEmpOrgRelationshipService(
+		vn.com.ecopharma.emp.service.EmpOrgRelationshipService empOrgRelationshipService) {
+		this.empOrgRelationshipService = empOrgRelationshipService;
+	}
+
+	/**
+	 * Returns the emp org relationship persistence.
+	 *
+	 * @return the emp org relationship persistence
+	 */
+	public EmpOrgRelationshipPersistence getEmpOrgRelationshipPersistence() {
+		return empOrgRelationshipPersistence;
+	}
+
+	/**
+	 * Sets the emp org relationship persistence.
+	 *
+	 * @param empOrgRelationshipPersistence the emp org relationship persistence
+	 */
+	public void setEmpOrgRelationshipPersistence(
+		EmpOrgRelationshipPersistence empOrgRelationshipPersistence) {
+		this.empOrgRelationshipPersistence = empOrgRelationshipPersistence;
 	}
 
 	/**
@@ -1669,6 +1785,18 @@ public abstract class DistrictLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected vn.com.ecopharma.emp.service.EmployeeTitlesHistoryService employeeTitlesHistoryService;
 	@BeanReference(type = EmployeeTitlesHistoryPersistence.class)
 	protected EmployeeTitlesHistoryPersistence employeeTitlesHistoryPersistence;
+	@BeanReference(type = vn.com.ecopharma.emp.service.EmpNotifyEmailLocalService.class)
+	protected vn.com.ecopharma.emp.service.EmpNotifyEmailLocalService empNotifyEmailLocalService;
+	@BeanReference(type = vn.com.ecopharma.emp.service.EmpNotifyEmailService.class)
+	protected vn.com.ecopharma.emp.service.EmpNotifyEmailService empNotifyEmailService;
+	@BeanReference(type = EmpNotifyEmailPersistence.class)
+	protected EmpNotifyEmailPersistence empNotifyEmailPersistence;
+	@BeanReference(type = vn.com.ecopharma.emp.service.EmpOrgRelationshipLocalService.class)
+	protected vn.com.ecopharma.emp.service.EmpOrgRelationshipLocalService empOrgRelationshipLocalService;
+	@BeanReference(type = vn.com.ecopharma.emp.service.EmpOrgRelationshipService.class)
+	protected vn.com.ecopharma.emp.service.EmpOrgRelationshipService empOrgRelationshipService;
+	@BeanReference(type = EmpOrgRelationshipPersistence.class)
+	protected EmpOrgRelationshipPersistence empOrgRelationshipPersistence;
 	@BeanReference(type = vn.com.ecopharma.emp.service.LevelLocalService.class)
 	protected vn.com.ecopharma.emp.service.LevelLocalService levelLocalService;
 	@BeanReference(type = vn.com.ecopharma.emp.service.LevelService.class)

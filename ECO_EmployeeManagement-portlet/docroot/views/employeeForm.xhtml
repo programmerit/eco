@@ -256,28 +256,40 @@
 											</p:selectOneMenu>
 										</h:panelGrid>
 									</h:panelGrid>
-									<h:panelGrid columns="2">
-										<h:outputText value="Country" />
-										<p:selectOneMenu id="countrySelect" value="#{a.country}"
-											converter="countryConverter" effect="fade" filter="true"
-											filterMatchMode="contains" var="c">
-											<p:ajax update="regionSelect"
-												listener="#{empView.onCountryChange(status.index)}" />
-											<f:selectItem itemLabel="Select Country" itemValue="" />
-											<f:selectItems value="#{empView.countries}" var="c"
-												itemLabel="#{c.name}" itemValue="#{c}" />
-											<p:column>
+									<p:panelGrid columns="2" layout="grid">
+										<h:panelGroup>
+											<h:outputText value="Country" />
+											<p:selectOneMenu id="countrySelect" value="#{a.country}"
+												converter="countryConverter" effect="fade" filter="true"
+												filterMatchMode="contains" var="c">
+												<p:ajax update="regionSelect"
+													listener="#{empView.onCountryChange(status.index)}" />
+												<f:selectItem itemLabel="Select Country" itemValue="" />
+												<f:selectItems value="#{empView.countries}" var="c"
+													itemLabel="#{c.name}" itemValue="#{c}" />
+												<p:column>
 					               					#{c.name}
 					            			</p:column>
-										</p:selectOneMenu>
-									</h:panelGrid>
+											</p:selectOneMenu>
+										</h:panelGroup>
+
+										<p:selectBooleanCheckbox value="#{a.address.primary}"
+											itemLabel="Primary">
+											<p:ajax event="change" listener="#{empView.onPrimaryChanged}"
+												update=":modifyForm:accordion:addressesPanelGrid"
+												process="@this,:modifyForm:accordion:addressesPanelGrid"
+												oncomplete="refreshAddresses();">
+											</p:ajax>
+										</p:selectBooleanCheckbox>
+									</p:panelGrid>
 									<p:separator />
 								</h:panelGroup>
 							</ui:repeat>
 
 							<p:commandLink actionListener="#{empView.addOneAddress}"
 								value="Add Address" immediate="true" ajax="true"
-								process="@this,addressesPanelGrid" update="addressesPanelGrid" />
+								process="@this,addressesPanelGrid"
+								oncomplete="refreshAddresses();" />
 						</h:panelGrid>
 					</p:panelGrid>
 				</p:tab>
@@ -321,20 +333,29 @@
 
 
 							<h:outputText value="Department" />
-							<p:selectOneMenu id="departmentSelect"
-								value="#{empView.modifyEmployeeInfoItem.department}"
-								converter="departmentConverter" effect="fade" filter="true"
-								filterMatchMode="contains" var="d">
-								<p:ajax update="unitSelect unitGroupSelect titlesSelect"
-									listener="#{empView.onDepartmentChanged}" />
+							<h:panelGroup>
+								<p:selectOneMenu id="departmentSelect"
+									value="#{empView.modifyEmployeeInfoItem.department}"
+									converter="departmentConverter" effect="fade" filter="true"
+									filterMatchMode="contains" var="d">
+									<p:ajax
+										update="unitSelect unitGroupSelect titlesSelect managerCheckbox"
+										listener="#{empView.onDepartmentChanged}" />
 
-								<f:selectItem itemLabel="Department" itemValue="" />
-								<f:selectItems value="#{empView.departments}" var="d"
-									itemLabel="#{d.name}" itemValue="#{d}" />
-								<p:column>
+									<f:selectItem itemLabel="Department" itemValue="" />
+									<f:selectItems value="#{empView.departments}" var="d"
+										itemLabel="#{d.name}" itemValue="#{d}" />
+									<p:column>
 					                #{d.name}
 					            </p:column>
-							</p:selectOneMenu>
+								</p:selectOneMenu>
+								<p:selectBooleanCheckbox
+									value="#{empView.modifyEmployeeInfoItem.manager}"
+									disabled="#{not departmentPermission.checkPermission(empView.modifyEmployeeInfoItem.department.departmentId, 'PERMISSIONS')}"
+									id="managerCheckbox" />
+								<p:tooltip for="managerCheckbox"
+									value="Check to set this employee as Manager of this Department" />
+							</h:panelGroup>
 
 							<h:outputText value="Unit" />
 							<p:selectOneMenu id="unitSelect"
@@ -674,7 +695,7 @@
 				update=":empPanelGroup" />
 		</h:form>
 
-		<p:dialog id="modifyCertificateDialog" header="Modify Certificate">
+		<p:dialog id="modifyCertificateDialog" header="Modify Cvertificate">
 			<p:outputPanel autoUpdate="true">
 				<h:outputText value="Type" />
 
@@ -682,7 +703,6 @@
 		</p:dialog>
 
 		<ui:include src="/views/dialogs/titles.xhtml" />
-
 
 		<h:form id="bankInfoForm">
 			<p:dialog widgetVar="wBankInfoDialog"

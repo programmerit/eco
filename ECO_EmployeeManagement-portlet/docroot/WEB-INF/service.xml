@@ -406,6 +406,9 @@
 		<column name="religion" type="String"></column>
 		<column name="joinedDate" type="Date"></column>
 		<column name="titlesId" type="long"></column>
+        <column name="unitGroupId" type="long"></column>
+        <column name="unitId" type="long"></column>
+        <column name="departmentId" type="long"></column>
 		<column name="levelId" type="long"></column>
 		<column name="promotedDate" type="Date"></column>
 		<column name="laborContractSignedDate" type="Date"></column>
@@ -448,9 +451,6 @@
 		<column name="userName" type="String"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
-		<column name="unitId" type="long"></column>
-		<column name="unitGroupId" type="long"></column>
-        <column name="departmentId" type="long"></column>
 		<finder name="EmpCode" return-type="Emp">
 			<finder-column name="empCode"></finder-column>
 		</finder>
@@ -593,6 +593,64 @@
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
         <column name="deleted" type="boolean"></column>
+	</entity>
+	<entity name="EmpOrgRelationship" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="empOrgRelationshipId" type="long"
+			primary="true">
+		</column>
+
+		<!-- Group instance -->
+        <column name="empId" type="long"></column>
+        <column name="orgClassName" type="String"></column>
+        <column name="orgClassPK" type="long"></column>
+        <column name="headOfOrg" type="boolean"></column>
+        <column name="deputyOfOrg" type="boolean"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+        <finder name="Emp" return-type="Collection">
+            <finder-column name="empId"></finder-column>
+        </finder>
+        <finder name="ClassNameClassPK" return-type="Collection">
+            <finder-column name="orgClassName"></finder-column>
+            <finder-column name="orgClassPK"></finder-column>
+        </finder>
+        <finder name="ClassNameClassPKHeadOfOrg" return-type="EmpOrgRelationship">
+            <finder-column name="orgClassName"></finder-column>
+            <finder-column name="orgClassPK"></finder-column>
+            <finder-column name="headOfOrg"></finder-column>
+        </finder>
+        <finder name="ClassNameClassPKDeputyOfOrg" return-type="EmpOrgRelationship">
+            <finder-column name="orgClassName"></finder-column>
+            <finder-column name="orgClassPK"></finder-column>
+            <finder-column name="deputyOfOrg"></finder-column>
+        </finder>
+	</entity>
+	<entity name="EmpNotifyEmail" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="empNotifyEmailId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+
+		<!-- Audit fields -->
+        <column name="empId" type="long"></column>
+        <column name="notifyType" type="String"></column>
+        <column name="status" type="String"></column>
+        <finder name="Status" return-type="Collection">
+            <finder-column name="status"></finder-column>
+        </finder>
 	</entity>
 
 </service-builder>

@@ -195,7 +195,7 @@ public class EmployeeInfoBean implements Serializable {
 								.getGender().equalsIgnoreCase(MALE) ? true
 								: false, month, day, year, groups,
 						organizationIds, roles, userGroupIds, sendEmail,
-						addressMap, dependentMap, bankInfoMap, serviceContext);
+						addressMap, dependentMap, bankInfoMap, false, serviceContext);
 
 				if (result != null) {
 					msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -217,8 +217,8 @@ public class EmployeeInfoBean implements Serializable {
 						modifyEmployeeInfoItem);
 				EmpLocalServiceUtil.update(employee,
 						modifyEmployeeInfoItem.getUser(), oldTitlesId,
-						addressMap, dependentMap, bankInfoMap, Boolean.FALSE,
-						serviceContext);
+						addressMap, dependentMap, bankInfoMap, false,
+						Boolean.FALSE, serviceContext);
 
 				msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 						"Update employee successfully", "Employee "

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
+	<h:head />
+
+	<h:body>
+		<h:form id="notifyDialog">
+			<p:dialog widgetVar="wNotifyDialog" header="Employee Notify Dialog"
+				showHeader="true" modal="true" height="500" draggable="true">
+				<p:outputPanel autoUpdate="true" id="empNotifyOutputPanel">
+
+					<h:outputText value="There are " />
+					<h:outputText value="#{empNotifyBean.empNotifyEmails.size()}" />
+					<h:outputText
+						value=" employees created recently which havent been sent notification to related Dept yet." />
+					<br />
+					<h:outputText value="Choose properly actions below" />
+
+					<p:commandButton value="Send Notification Email"
+						actionListener="#{empNotifyBean.onSendNotificationEmail}" /> 
+					|
+					<p:commandLink value="Ignore and send later"
+						onclick="PF('wNotifyDialog').hide()" />
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</h:body>
+</f:view>

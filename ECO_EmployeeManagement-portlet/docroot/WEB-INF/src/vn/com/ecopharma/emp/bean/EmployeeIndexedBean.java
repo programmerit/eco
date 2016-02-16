@@ -12,6 +12,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,12 +36,15 @@ import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
 import vn.com.ecopharma.emp.util.FilterUtils;
+import vn.com.ecopharma.emp.util.MailServiceUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.util.mail.MailEngine;
+import com.liferay.util.mail.MailEngineException;
 
 @ManagedBean
 @ViewScoped
@@ -93,21 +98,6 @@ public class EmployeeIndexedBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		// try {
-		// JSONObject payloadJSON = JSONFactoryUtil.createJSONObject();
-		// payloadJSON.put("userId", EmployeeUtils.getServiceContext()
-		// .getUserId());
-		// payloadJSON.put("yourCustomEntityId", 123456);
-		// payloadJSON.put("additionalData", "Your notification was added!");
-		// UserNotificationEventLocalServiceUtil.addUserNotificationEvent(
-		// EmployeeUtils.getServiceContext().getUserId(), "Info",
-		// System.currentTimeMillis(), 0, payloadJSON.toString(),
-		// false, EmployeeUtils.getServiceContext());
-		// } catch (PortalException e) {
-		// e.printStackTrace();
-		// } catch (SystemException e) {
-		// e.printStackTrace();
-		// }
 		selectedEmployeeIndexItems = new ArrayList<>();
 		lazyDataModel = new EmployeeIndexLazyDataModel() {
 			private static final long serialVersionUID = 1L;
@@ -266,14 +256,16 @@ public class EmployeeIndexedBean implements Serializable {
 		TitlesDepartmentUnitUnitGroupLocalServiceUtil.completelyRemoveAll();
 	}
 
+	public void onTestSendMail() {
+
+	}
+
 	public boolean isDisciplineValid() {
 		if (selectedEmployeeIndexItems.isEmpty())
 			return false;
 		for (EmpIndexedItem item : selectedEmployeeIndexItems)
 			if (item.getStatus().equalsIgnoreCase(
-					EmployeeStatus.RESIGNED.toString())
-					|| item.getStatus().equalsIgnoreCase(
-							EmployeeStatus.DISCIPLINE.toString()))
+					EmployeeStatus.RESIGNED.toString()))
 				return false;
 		return true;
 	}

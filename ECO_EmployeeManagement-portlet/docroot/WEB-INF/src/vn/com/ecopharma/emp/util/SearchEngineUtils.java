@@ -1,6 +1,8 @@
 package vn.com.ecopharma.emp.util;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -22,8 +24,16 @@ import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.TermRangeQuery;
+import com.liferay.portal.kernel.search.TermRangeQueryFactoryUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
+/**
+ * @author TaoTran
+ * @version 1.0
+ */
 public class SearchEngineUtils {
 
 	public static void indexOrganizationFields(Document document, Emp emp)
@@ -106,4 +116,48 @@ public class SearchEngineUtils {
 			result.add(item.getId());
 		return result;
 	}
+
+	// UTILS FOR QUERIES
+	/**
+	 * @param queries
+	 * @param dateFrom
+	 * @param dateTo
+	 * @param searchField
+	 * @param searchContext
+	 * @throws java.text.ParseException
+	 */
+	public static void createAndAddDateTermRangeQuery(List<Query> queries,
+			Date dateFrom, Date dateTo, String searchField,
+			SearchContext searchContext) throws java.text.ParseException {
+		final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
+		final String defaultDateFromString = "19700101000000";
+		final String currentDateString = sdf.format(new Date(System
+				.currentTimeMillis()));// example:
+										// 19700101000000
+		int nextYear = Integer.valueOf(currentDateString.substring(0, 4)) + 1;
+		final String nextYearString = nextYear
+				+ currentDateString.substring(4, currentDateString.length());
+
+		final String defaultDateToString = nextYearString;
+
+		final String filterDateFrom = dateFrom != null ? sdf.format(dateFrom)
+				: defaultDateFromString;
+
+		final String filterDateTo = dateTo != null ? sdf.format(dateTo)
+				: defaultDateToString;
+
+		final boolean isDefaultJDSearch = filterDateFrom
+				.equals(defaultDateFromString)
+				&& filterDateTo.equals(defaultDateToString);
+
+		final TermRangeQuery joinedDateTermRangeQuery = TermRangeQueryFactoryUtil
+				.create(searchContext, searchField, filterDateFrom,
+						filterDateTo, true, true);
+
+		// not include null joined date
+		if (!isDefaultJDSearch) {
+			queries.add(joinedDateTermRangeQuery);
+		}
+	}
+
 }

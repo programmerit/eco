@@ -566,4 +566,17 @@ public class EmployeeUtils {
 		}
 		return filteredItems;
 	}
+
+	public static String getShortenDisplayFullName(String fullName) {
+		fullName = fullName.replaceAll("\\s+", " ");
+		String[] fullNameArr = fullName.split(" ");
+		String namePart = fullNameArr[fullNameArr.length - 1];
+		StringBuilder result = new StringBuilder();
+		for (int i = 0; i < fullNameArr.length - 1; i++) {
+			String separatedChar = fullNameArr[i].substring(0, 1);
+			result.append(separatedChar + ".");
+		}
+		result.append(namePart);
+		return result.toString();
+	}
 }

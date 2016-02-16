@@ -61,6 +61,12 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		sb.append(joinedDate);
 		sb.append(", titlesId=");
 		sb.append(titlesId);
+		sb.append(", unitGroupId=");
+		sb.append(unitGroupId);
+		sb.append(", unitId=");
+		sb.append(unitId);
+		sb.append(", departmentId=");
+		sb.append(departmentId);
 		sb.append(", levelId=");
 		sb.append(levelId);
 		sb.append(", promotedDate=");
@@ -143,12 +149,6 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", unitId=");
-		sb.append(unitId);
-		sb.append(", unitGroupId=");
-		sb.append(unitGroupId);
-		sb.append(", departmentId=");
-		sb.append(departmentId);
 		sb.append("}");
 
 		return sb.toString();
@@ -218,6 +218,9 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		}
 
 		empImpl.setTitlesId(titlesId);
+		empImpl.setUnitGroupId(unitGroupId);
+		empImpl.setUnitId(unitId);
+		empImpl.setDepartmentId(departmentId);
 		empImpl.setLevelId(levelId);
 
 		if (promotedDate == Long.MIN_VALUE) {
@@ -419,10 +422,6 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 			empImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		empImpl.setUnitId(unitId);
-		empImpl.setUnitGroupId(unitGroupId);
-		empImpl.setDepartmentId(departmentId);
-
 		empImpl.resetOriginalValues();
 
 		return empImpl;
@@ -441,6 +440,9 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		religion = objectInput.readUTF();
 		joinedDate = objectInput.readLong();
 		titlesId = objectInput.readLong();
+		unitGroupId = objectInput.readLong();
+		unitId = objectInput.readLong();
+		departmentId = objectInput.readLong();
 		levelId = objectInput.readLong();
 		promotedDate = objectInput.readLong();
 		laborContractSignedDate = objectInput.readLong();
@@ -482,9 +484,6 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		unitId = objectInput.readLong();
-		unitGroupId = objectInput.readLong();
-		departmentId = objectInput.readLong();
 	}
 
 	@Override
@@ -539,6 +538,9 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 
 		objectOutput.writeLong(joinedDate);
 		objectOutput.writeLong(titlesId);
+		objectOutput.writeLong(unitGroupId);
+		objectOutput.writeLong(unitId);
+		objectOutput.writeLong(departmentId);
 		objectOutput.writeLong(levelId);
 		objectOutput.writeLong(promotedDate);
 		objectOutput.writeLong(laborContractSignedDate);
@@ -696,9 +698,6 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
-		objectOutput.writeLong(unitId);
-		objectOutput.writeLong(unitGroupId);
-		objectOutput.writeLong(departmentId);
 	}
 
 	public long empId;
@@ -712,6 +711,9 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 	public String religion;
 	public long joinedDate;
 	public long titlesId;
+	public long unitGroupId;
+	public long unitId;
+	public long departmentId;
 	public long levelId;
 	public long promotedDate;
 	public long laborContractSignedDate;
@@ -753,7 +755,4 @@ public class EmpCacheModel implements CacheModel<Emp>, Externalizable {
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long unitId;
-	public long unitGroupId;
-	public long departmentId;
 }

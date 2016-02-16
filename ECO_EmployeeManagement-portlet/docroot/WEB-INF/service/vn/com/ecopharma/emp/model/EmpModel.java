@@ -224,6 +224,48 @@ public interface EmpModel extends BaseModel<Emp>, GroupedModel {
 	public void setTitlesId(long titlesId);
 
 	/**
+	 * Returns the unit group ID of this emp.
+	 *
+	 * @return the unit group ID of this emp
+	 */
+	public long getUnitGroupId();
+
+	/**
+	 * Sets the unit group ID of this emp.
+	 *
+	 * @param unitGroupId the unit group ID of this emp
+	 */
+	public void setUnitGroupId(long unitGroupId);
+
+	/**
+	 * Returns the unit ID of this emp.
+	 *
+	 * @return the unit ID of this emp
+	 */
+	public long getUnitId();
+
+	/**
+	 * Sets the unit ID of this emp.
+	 *
+	 * @param unitId the unit ID of this emp
+	 */
+	public void setUnitId(long unitId);
+
+	/**
+	 * Returns the department ID of this emp.
+	 *
+	 * @return the department ID of this emp
+	 */
+	public long getDepartmentId();
+
+	/**
+	 * Sets the department ID of this emp.
+	 *
+	 * @param departmentId the department ID of this emp
+	 */
+	public void setDepartmentId(long departmentId);
+
+	/**
 	 * Returns the level ID of this emp.
 	 *
 	 * @return the level ID of this emp
@@ -863,48 +905,6 @@ public interface EmpModel extends BaseModel<Emp>, GroupedModel {
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
-
-	/**
-	 * Returns the unit ID of this emp.
-	 *
-	 * @return the unit ID of this emp
-	 */
-	public long getUnitId();
-
-	/**
-	 * Sets the unit ID of this emp.
-	 *
-	 * @param unitId the unit ID of this emp
-	 */
-	public void setUnitId(long unitId);
-
-	/**
-	 * Returns the unit group ID of this emp.
-	 *
-	 * @return the unit group ID of this emp
-	 */
-	public long getUnitGroupId();
-
-	/**
-	 * Sets the unit group ID of this emp.
-	 *
-	 * @param unitGroupId the unit group ID of this emp
-	 */
-	public void setUnitGroupId(long unitGroupId);
-
-	/**
-	 * Returns the department ID of this emp.
-	 *
-	 * @return the department ID of this emp
-	 */
-	public long getDepartmentId();
-
-	/**
-	 * Sets the department ID of this emp.
-	 *
-	 * @param departmentId the department ID of this emp
-	 */
-	public void setDepartmentId(long departmentId);
 
 	@Override
 	public boolean isNew();

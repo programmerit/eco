@@ -1,7 +1,12 @@
 package vn.com.ecopharma.emp.bean.filter;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -18,10 +23,11 @@ public class EmployeeFilterView extends OrganizationFilterBean {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy";
+
 	private String globalString = StringUtils.EMPTY;
 	private String employeeCode = StringUtils.EMPTY;
 	private String fullName = StringUtils.EMPTY;
-	private String gender = StringUtils.EMPTY;
 	private String status = StringUtils.EMPTY;
 	private Date joinedDateFrom;
 	private Date joinedDateTo;
@@ -36,12 +42,87 @@ public class EmployeeFilterView extends OrganizationFilterBean {
 		}
 	}
 
+	public void onDeleteFilterBadges(int index) {
+		String removeValue = getFilterBadges().get(index);
+		if (globalString.equalsIgnoreCase(removeValue)) {
+			globalString = StringUtils.EMPTY;
+		} else if (fullName.equalsIgnoreCase(removeValue)) {
+			fullName = StringUtils.EMPTY;
+		} else if (employeeCode.equalsIgnoreCase(removeValue)) {
+			employeeCode = StringUtils.EMPTY;
+		}
+
+		// for date
+		if (removeValue.contains("-")) {
+			joinedDateFrom = null;
+			joinedDateTo = null;
+		}
+
+		getFilterBadges().remove(index);
+	}
+
 	public void resetJoinedDateFrom() {
 		joinedDateFrom = null;
 	}
 
 	public void resetJoinedDateTo() {
 		joinedDateTo = null;
+	}
+
+	public List<String> getFilterBadges() {
+		final Set<String> badges = new HashSet<>();
+		checkAndAddFilterBadge(globalString, badges);
+		checkAndAddFilterBadge(employeeCode, badges);
+		checkAndAddFilterBadge(fullName, badges);
+		checkAndAddFilterBadge(joinedDateFrom, badges);
+		checkAndAddFilterBadge(joinedDateTo, badges);
+
+		checkAndAddJoinedDateFilterBadge(badges);
+
+		if (selectedGenders != null && !selectedGenders.isEmpty()) {
+			badges.addAll(selectedGenders);
+		}
+
+		return new ArrayList<>(badges);
+	}
+
+	private void checkAndAddFilterBadge(Object filterValue,
+			Collection<String> badges) {
+		if (filterValue instanceof String) {
+			checkAndAddStringFilterBadge((String) filterValue, badges);
+		}
+	}
+
+	private void checkAndAddStringFilterBadge(String filterValue,
+			Collection<String> badges) {
+		if (StringUtils.trimToNull(filterValue) != null)
+			badges.add(filterValue);
+	}
+
+	private void checkAndAddJoinedDateFilterBadge(Collection<String> badges) {
+		if (joinedDateFrom == null && joinedDateTo == null)
+			return;
+
+		final SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
+		StringBuilder resultBuilder = new StringBuilder();
+		if (joinedDateFrom == null) {
+			resultBuilder.append("Past-");
+			resultBuilder.append(sdf.format(joinedDateTo));
+			badges.add(resultBuilder.toString());
+			return;
+		}
+
+		if (joinedDateTo == null) {
+			resultBuilder.append(sdf.format(joinedDateFrom));
+			resultBuilder.append("-Now");
+			badges.add(resultBuilder.toString());
+			return;
+		}
+
+		resultBuilder.append(sdf.format(joinedDateFrom));
+		resultBuilder.append("-");
+		resultBuilder.append(sdf.format(joinedDateTo));
+		badges.add(resultBuilder.toString());
 	}
 
 	public String getGlobalString() {
@@ -58,14 +139,6 @@ public class EmployeeFilterView extends OrganizationFilterBean {
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
 	}
 
 	public String getEmployeeCode() {

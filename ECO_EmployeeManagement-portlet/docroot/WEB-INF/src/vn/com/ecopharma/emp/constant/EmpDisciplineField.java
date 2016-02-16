@@ -16,6 +16,10 @@ public class EmpDisciplineField {
 
 	public static final String DESC = "description";
 
+	public static final String EFFECTIVE_DATE_FROM = "effectiveDateFrom";
+
+	public static final String EFFECTIVE_DATE_TO = "effectiveDateTo";
+
 	private EmpDisciplineField() {
 	}
 

@@ -60,6 +60,9 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 		attributes.put("religion", getReligion());
 		attributes.put("joinedDate", getJoinedDate());
 		attributes.put("titlesId", getTitlesId());
+		attributes.put("unitGroupId", getUnitGroupId());
+		attributes.put("unitId", getUnitId());
+		attributes.put("departmentId", getDepartmentId());
 		attributes.put("levelId", getLevelId());
 		attributes.put("promotedDate", getPromotedDate());
 		attributes.put("laborContractSignedDate", getLaborContractSignedDate());
@@ -101,9 +104,6 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("unitId", getUnitId());
-		attributes.put("unitGroupId", getUnitGroupId());
-		attributes.put("departmentId", getDepartmentId());
 
 		return attributes;
 	}
@@ -174,6 +174,24 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 
 		if (titlesId != null) {
 			setTitlesId(titlesId);
+		}
+
+		Long unitGroupId = (Long)attributes.get("unitGroupId");
+
+		if (unitGroupId != null) {
+			setUnitGroupId(unitGroupId);
+		}
+
+		Long unitId = (Long)attributes.get("unitId");
+
+		if (unitId != null) {
+			setUnitId(unitId);
+		}
+
+		Long departmentId = (Long)attributes.get("departmentId");
+
+		if (departmentId != null) {
+			setDepartmentId(departmentId);
 		}
 
 		Long levelId = (Long)attributes.get("levelId");
@@ -428,24 +446,6 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
 		}
-
-		Long unitId = (Long)attributes.get("unitId");
-
-		if (unitId != null) {
-			setUnitId(unitId);
-		}
-
-		Long unitGroupId = (Long)attributes.get("unitGroupId");
-
-		if (unitGroupId != null) {
-			setUnitGroupId(unitGroupId);
-		}
-
-		Long departmentId = (Long)attributes.get("departmentId");
-
-		if (departmentId != null) {
-			setDepartmentId(departmentId);
-		}
 	}
 
 	/**
@@ -686,6 +686,66 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 	@Override
 	public void setTitlesId(long titlesId) {
 		_emp.setTitlesId(titlesId);
+	}
+
+	/**
+	* Returns the unit group ID of this emp.
+	*
+	* @return the unit group ID of this emp
+	*/
+	@Override
+	public long getUnitGroupId() {
+		return _emp.getUnitGroupId();
+	}
+
+	/**
+	* Sets the unit group ID of this emp.
+	*
+	* @param unitGroupId the unit group ID of this emp
+	*/
+	@Override
+	public void setUnitGroupId(long unitGroupId) {
+		_emp.setUnitGroupId(unitGroupId);
+	}
+
+	/**
+	* Returns the unit ID of this emp.
+	*
+	* @return the unit ID of this emp
+	*/
+	@Override
+	public long getUnitId() {
+		return _emp.getUnitId();
+	}
+
+	/**
+	* Sets the unit ID of this emp.
+	*
+	* @param unitId the unit ID of this emp
+	*/
+	@Override
+	public void setUnitId(long unitId) {
+		_emp.setUnitId(unitId);
+	}
+
+	/**
+	* Returns the department ID of this emp.
+	*
+	* @return the department ID of this emp
+	*/
+	@Override
+	public long getDepartmentId() {
+		return _emp.getDepartmentId();
+	}
+
+	/**
+	* Sets the department ID of this emp.
+	*
+	* @param departmentId the department ID of this emp
+	*/
+	@Override
+	public void setDepartmentId(long departmentId) {
+		_emp.setDepartmentId(departmentId);
 	}
 
 	/**
@@ -1562,66 +1622,6 @@ public class EmpWrapper implements Emp, ModelWrapper<Emp> {
 	@Override
 	public void setModifiedDate(java.util.Date modifiedDate) {
 		_emp.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Returns the unit ID of this emp.
-	*
-	* @return the unit ID of this emp
-	*/
-	@Override
-	public long getUnitId() {
-		return _emp.getUnitId();
-	}
-
-	/**
-	* Sets the unit ID of this emp.
-	*
-	* @param unitId the unit ID of this emp
-	*/
-	@Override
-	public void setUnitId(long unitId) {
-		_emp.setUnitId(unitId);
-	}
-
-	/**
-	* Returns the unit group ID of this emp.
-	*
-	* @return the unit group ID of this emp
-	*/
-	@Override
-	public long getUnitGroupId() {
-		return _emp.getUnitGroupId();
-	}
-
-	/**
-	* Sets the unit group ID of this emp.
-	*
-	* @param unitGroupId the unit group ID of this emp
-	*/
-	@Override
-	public void setUnitGroupId(long unitGroupId) {
-		_emp.setUnitGroupId(unitGroupId);
-	}
-
-	/**
-	* Returns the department ID of this emp.
-	*
-	* @return the department ID of this emp
-	*/
-	@Override
-	public long getDepartmentId() {
-		return _emp.getDepartmentId();
-	}
-
-	/**
-	* Sets the department ID of this emp.
-	*
-	* @param departmentId the department ID of this emp
-	*/
-	@Override
-	public void setDepartmentId(long departmentId) {
-		_emp.setDepartmentId(departmentId);
 	}
 
 	@Override

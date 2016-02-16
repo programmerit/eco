@@ -42,9 +42,15 @@ public class OrganizationTreeViewBean implements Serializable {
 	private static final Log LOGGER = LogFactoryUtil
 			.getLog(OrganizationTreeViewBean.class);
 
+	private static final String TITLES_DIALOG = "/views/dialogs/titles.xhtml";
+	private static final String SET_MANAGER_DIALOG = "/views/dialogs/setManager.xhtml";
+
 	private TreeNode root;
 
 	private TreeNode[] selectedNodes;
+
+	private String dialog;
+	private String dialogOutputPanel;
 
 	@PostConstruct
 	public void init() {
@@ -52,7 +58,8 @@ public class OrganizationTreeViewBean implements Serializable {
 	}
 
 	public TreeNode createDocuments() {
-		TreeNode treeRoot = new DefaultTreeNode(OrgNodeItem.ROOT, new OrgNodeItem(), null);
+		TreeNode treeRoot = new DefaultTreeNode(OrgNodeItem.ROOT,
+				new OrgNodeItem(), null);
 
 		final List<Devision> allDevisions = DevisionLocalServiceUtil.findAll();
 		final List<TreeNode> devisionTreeNodes = new ArrayList<>();
@@ -150,7 +157,24 @@ public class OrganizationTreeViewBean implements Serializable {
 		return treeRoot;
 	}
 
+	public void onSetDeptManager() {
+		dialog = SET_MANAGER_DIALOG;
+		// dialogOutputPanel = "setManagerOutputPanel";
+		Department selectedDepartment;
+		try {
+			selectedDepartment = isSelectOnlyOneItem() ? DepartmentLocalServiceUtil
+					.fetchDepartment(((OrgNodeItem) selectedNodes[0].getData())
+							.getId()) : null;
+			((SetManagerBean) BeanUtils.getBackingBeanByName("setManagerBean"))
+					.setDepartment(selectedDepartment);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+
+	}
+
 	public void addTitles() {
+		dialog = TITLES_DIALOG;
 		TreeNode firstParentNode = selectedNodes[0];
 		OrgNodeItem firstParentItem = (OrgNodeItem) firstParentNode.getData();
 		TitlesBean titlesBean = BeanUtils.getTitlesBean();
@@ -184,7 +208,7 @@ public class OrganizationTreeViewBean implements Serializable {
 	}
 
 	public void editTitles() {
-
+		dialog = TITLES_DIALOG;
 		OrgNodeItem item = (OrgNodeItem) selectedNodes[0].getData();
 		TitlesBean titlesBean = BeanUtils.getTitlesBean();
 		if (item.getType().equalsIgnoreCase(OrgNodeItem.TITLES_TYPE)) {
@@ -254,4 +278,23 @@ public class OrganizationTreeViewBean implements Serializable {
 						titles), parent));
 	}
 
+	public boolean isSelectOnlyOneItem() {
+		return selectedNodes != null && selectedNodes.length == 1;
+	}
+
+	public String getDialog() {
+		return dialog;
+	}
+
+	public void setDialog(String dialog) {
+		this.dialog = dialog;
+	}
+
+	public String getDialogOutputPanel() {
+		return dialogOutputPanel;
+	}
+
+	public void setDialogOutputPanel(String dialogOutputPanel) {
+		this.dialogOutputPanel = dialogOutputPanel;
+	}
 }

@@ -16,24 +16,34 @@ package vn.com.ecopharma.emp.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.model.SortOrder;
 
 import vn.com.ecopharma.emp.constant.EMInfo;
 import vn.com.ecopharma.emp.constant.EmpField;
+import vn.com.ecopharma.emp.enumeration.EmployeeNotifyType;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.District;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
+import vn.com.ecopharma.emp.model.EmpNotifyEmail;
+import vn.com.ecopharma.emp.model.EmpOrgRelationship;
 import vn.com.ecopharma.emp.model.PromotedHistory;
 import vn.com.ecopharma.emp.model.ResignationHistory;
 import vn.com.ecopharma.emp.model.Titles;
@@ -79,6 +89,8 @@ import com.liferay.portlet.expando.model.ExpandoValue;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
+import com.liferay.util.mail.MailEngine;
+import com.liferay.util.mail.MailEngineException;
 
 /**
  * The implementation of the emp local service.
@@ -109,6 +121,8 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 
 	private static final Log LOGGER = LogFactoryUtil
 			.getLog(EmpLocalServiceImpl.class);
+
+	private static final String COMMON_DATE_FORMAT = "dd/MM/yyyy";
 
 	private static final String GLOBAL_FILTER = "globalString";
 	private static final String JOINED_DATE_FROM = "joined_dateFrom";
@@ -590,19 +604,57 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		return titlesQuery;
 	}
 
+	/**
+	 * @param employee
+	 * @param autoPassword
+	 * @param password1
+	 * @param password2
+	 * @param autoScreenName
+	 * @param screenName
+	 * @param emailAddress
+	 * @param facebookId
+	 * @param openId
+	 * @param locale
+	 * @param firstName
+	 * @param middleName
+	 * @param lastName
+	 * @param prefixId
+	 * @param suffixId
+	 * @param male
+	 * @param birthdayMonth
+	 * @param birthdayDay
+	 * @param birthdayYear
+	 * @param groupIds
+	 * @param organizationIds
+	 * @param roleIds
+	 * @param userGroupIds
+	 * @param sendEmail
+	 * @param addresses
+	 * @param dependentNameMap
+	 * @param bankInfoMap
+	 * @param isImportAction
+	 *            use to determine wherether emp is imported or create. (For
+	 *            notify)
+	 * @param serviceContext
+	 * @return
+	 * @throws SystemException
+	 * @throws PortalException
+	 */
 	public Emp addEmp(Emp employee, boolean autoPassword, String password1,
 			String password2, boolean autoScreenName, String screenName,
 			String emailAddress, long facebookId, String openId, Locale locale,
 			String firstName, String middleName, String lastName, int prefixId,
 			int suffixId, boolean male, int birthdayMonth, int birthdayDay,
-			int birthdayYear, long[] groupIds, long[] organizationIds,
+			int birthdayYear, long[] groupIds,
+			long[] organizationIds,
 			long[] roleIds,
 			long[] userGroupIds,
 			boolean sendEmail, // End user part
 			Map<Address, Boolean> addresses,
 			Map<String, Boolean> dependentNameMap,
-			Map<EmpBankInfo, Boolean> bankInfoMap, ServiceContext serviceContext)
-			throws SystemException, PortalException {
+			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isImportAction,
+			ServiceContext serviceContext) throws SystemException,
+			PortalException {
 		// Add User Part
 		if (userLocalService.fetchUserByEmailAddress(
 				serviceContext.getCompanyId(), emailAddress) != null) {
@@ -683,6 +735,12 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		// index new employee
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Emp.class);
 		indexer.reindex(Emp.class.getName(), result.getEmpId());
+
+		// add to notify (if isImportAction false)
+		if (!isImportAction) {
+			empNotifyEmailLocalService.createEmpNotifyEmail(result.getEmpId(),
+					StringUtils.EMPTY, EmployeeNotifyType.WAITING.toString());
+		}
 		return result;
 	}
 
@@ -791,12 +849,12 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	public Emp update(Emp employee, long userId, long oldTitlesId,
 			Map<Address, Boolean> addressesMap,
 			Map<String, Boolean> dependentNameMap,
-			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isImportAction,
-			ServiceContext serviceContext) {
+			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isManager,
+			boolean isImportAction, ServiceContext serviceContext) {
 		try {
 			User user = userLocalService.fetchUser(userId);
 			return update(employee, user, oldTitlesId, addressesMap,
-					dependentNameMap, bankInfoMap, isImportAction,
+					dependentNameMap, bankInfoMap, isManager, isImportAction,
 					serviceContext);
 		} catch (SystemException e) {
 			LOGGER.info(e);
@@ -807,9 +865,10 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	public Emp update(Emp employee, User user, long oldTitlesId,
 			Map<Address, Boolean> addressesMap,
 			Map<String, Boolean> dependentNameMap,
-			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isImportAction,
-			ServiceContext serviceContext) {
+			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isManager,
+			boolean isImportAction, ServiceContext serviceContext) {
 		try {
+			final long empId = employee.getEmpId();
 			boolean isPositionChanged = false;
 			isPositionChanged = employee.getTitlesId() != oldTitlesId;
 			employee.setModifiedDate(new Date(System.currentTimeMillis()));
@@ -825,7 +884,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			// Insert log (history) in case Employee is promoted to new position
 			if (isPositionChanged) {
 				employeeTitlesHistoryLocalService.addEmployeeTitlesHistory(
-						employee.getEmpId(), employee.getTitlesId(),
+						empId, employee.getTitlesId(),
 						"PROMOTED TO NEW TITLES",
 						new Date(System.currentTimeMillis()), serviceContext);
 			}
@@ -833,7 +892,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			if (isImportAction) {
 				final List<Address> addresses = AddressLocalServiceUtil
 						.getAddresses(serviceContext.getCompanyId(),
-								Emp.class.getName(), employee.getEmpId());
+								Emp.class.getName(), empId);
 				// to ensure that the address will not be DUPLICATE while update
 				// -> remove all
 				for (Address address : addresses) {
@@ -842,7 +901,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 				}
 
 				final List<EmpBankInfo> bankInfos = empBankInfoLocalService
-						.findByEmp(employee.getEmpId());
+						.findByEmp(empId);
 
 				for (EmpBankInfo bankInfo : bankInfos) {
 					empBankInfoLocalService.deleteEmpBankInfo(bankInfo
@@ -863,7 +922,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 						address.setCompanyId(serviceContext.getCompanyId());
 						address.setUserId(serviceContext.getUserId());
 						address.setClassName(Emp.class.getName());
-						address.setClassPK(employee.getEmpId()); // NOSONAR
+						address.setClassPK(empId); // NOSONAR
 						AddressLocalServiceUtil.updateAddress(address);
 					}
 				} else {
@@ -882,6 +941,42 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 					namesBuilder.append(";");
 					dependentNamesCount++;
 				}
+			}
+
+			// Is Manager ?
+			if (!isImportAction) {
+				boolean isCurrentlyManager = empOrgRelationshipLocalService
+						.isHeadOfDepartment(empId, employee.getDepartmentId());
+				EmpOrgRelationship currentManagerOfDept = empOrgRelationshipLocalService
+						.fetchByClassNameClassPKHeadOfOrg(
+								Department.class.getName(),
+								employee.getDepartmentId(), true);
+				if (isCurrentlyManager) {
+					// de-select current employee as manager
+					if (!isManager) {
+						// remove relationship
+						currentManagerOfDept.setEmpId(0L);
+						empOrgRelationshipLocalService
+								.updateEmpOrgRelationship(currentManagerOfDept);
+					}
+				} else {
+					if (isManager) {
+						if (currentManagerOfDept != null) {
+							currentManagerOfDept.setEmpId(empId);
+							currentManagerOfDept.setModifiedDate(new Date());
+							empOrgRelationshipLocalService
+									.updateEmpOrgRelationship(currentManagerOfDept);
+						} else {
+							empOrgRelationshipLocalService
+									.addEmpOrgRelationship(empId,
+											Department.class.getName(),
+											employee.getDepartmentId(), true,
+											false, serviceContext);
+
+						}
+					}
+				}
+
 			}
 
 			// Add employee's banking info
@@ -973,13 +1068,13 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	public Emp addOrUpdateWithExistUser(Emp employee, User user,
 			long oldTitlesId, Map<Address, Boolean> addressesMap,
 			Map<String, Boolean> dependentNameMap,
-			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isImportAction,
-			ServiceContext serviceContext) {
+			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isManager,
+			boolean isImportAction, ServiceContext serviceContext) {
 		try {
 			if (super.fetchEmp(employee.getEmpId()) != null) { // call update
 				return update(employee, user, oldTitlesId, addressesMap,
-						dependentNameMap, bankInfoMap, isImportAction,
-						serviceContext);
+						dependentNameMap, bankInfoMap, isManager,
+						isImportAction, serviceContext);
 			} else {
 				return addEmp(employee, user, addressesMap, dependentNameMap,
 						bankInfoMap, serviceContext);
@@ -995,16 +1090,16 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	public Emp addOrUpdateWithExistUser(Emp employee, String userScreenName,
 			long oldTitlesId, Map<Address, Boolean> addressesMap,
 			Map<String, Boolean> dependentNameMap,
-			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isImportAction,
-			ServiceContext serviceContext) {
+			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isManager,
+			boolean isImportAction, ServiceContext serviceContext) {
 		try {
 			User user = userLocalService.getUserByScreenName(
 					serviceContext.getCompanyId(), userScreenName);
 
 			if (super.fetchEmp(employee.getEmpId()) != null) { // call update
 				return update(employee, user, oldTitlesId, addressesMap,
-						dependentNameMap, bankInfoMap, isImportAction,
-						serviceContext);
+						dependentNameMap, bankInfoMap, isManager,
+						isImportAction, serviceContext);
 			} else {
 				return addEmp(employee, user, addressesMap, dependentNameMap,
 						bankInfoMap, serviceContext);
@@ -1090,6 +1185,12 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		employee.setSocialInsuranceNo(insurranceCode);
 		employee.setHealthInsuranceNo(healthInsuranceNo);
 		return employee;
+	}
+
+	public String getViFullnameFromUser(User user) {
+		return StringUtils.trimToEmpty(user.getLastName()) + " "
+				+ StringUtils.trimToEmpty(user.getMiddleName()) + " "
+				+ StringUtils.trimToEmpty(user.getFirstName());
 	}
 
 	public Emp updateEmpAddresses(String empCode, String address,
@@ -1533,5 +1634,201 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		if (empAddresses.isEmpty())
 			return null;
 		return empAddresses.get(0);
+	}
+
+	public List<Emp> getEmpsFromEmpNotifyEmails(
+			List<EmpNotifyEmail> empNotifyEmails) throws SystemException {
+		final List<Emp> emps = new ArrayList<>();
+		for (EmpNotifyEmail item : empNotifyEmails)
+			emps.add(fetchEmp(item.getEmpId()));
+		return emps;
+	}
+
+	public Set<Department> getUniqueDepartmentsFromEmps(List<Emp> emps)
+			throws SystemException {
+		Set<Department> departments = new HashSet<>();
+		for (Emp item : emps)
+			departments.add(departmentLocalService.fetchDepartment(item
+					.getDepartmentId()));
+		return departments;
+	}
+
+	public Set<String> getAllManagerEmailsFromDepartments(
+			Collection<Department> departments) throws SystemException {
+		final List<EmpOrgRelationship> empManagers = new ArrayList<>();
+		for (Department department : departments) {
+			EmpOrgRelationship obj = empOrgRelationshipLocalService
+					.fetchByClassNameClassPKHeadOfOrg(
+							Department.class.getName(),
+							department.getDepartmentId(), true);
+			if (obj != null)
+				empManagers.add(obj);
+		}
+
+		Set<Emp> uniqueManagers = getEmpsByEmpOrgRelationships(empManagers);
+		Set<User> uniqueManagerUsers = getUsersByEmps(uniqueManagers);
+		return getEmailsFromUsers(uniqueManagerUsers);
+	}
+
+	public Set<User> getUsersByEmps(Collection<Emp> emps)
+			throws SystemException {
+		Set<User> users = new HashSet<>();
+
+		for (Emp emp : emps) {
+			users.add(userLocalService.fetchUser(emp.getEmpUserId()));
+		}
+		return users;
+	}
+
+	public Set<String> getEmailsFromUsers(Collection<User> users) {
+		Set<String> emails = new HashSet<>();
+		for (User u : users)
+			emails.add(u.getEmailAddress());
+		return emails;
+	}
+
+	public Set<String> getEmailsFromEmps(Collection<Emp> emps)
+			throws SystemException {
+		Set<User> users = getUsersByEmps(emps);
+		return getEmailsFromUsers(users);
+	}
+
+	public Set<Emp> getEmpsByEmpOrgRelationships(
+			List<EmpOrgRelationship> empManagers) throws SystemException {
+		Set<Emp> managers = new HashSet<>();
+		for (EmpOrgRelationship item : empManagers)
+			managers.add(fetchEmp(item.getEmpId()));
+		return managers;
+	}
+
+	public Set<String> getManagerEmailsForNewEmpsNotification(List<Emp> emps)
+			throws SystemException {
+		Set<Department> departmentsByEmps = getUniqueDepartmentsFromEmps(emps);
+		return getAllManagerEmailsFromDepartments(departmentsByEmps);
+	}
+
+	public String getNewEmployeesHtmlTable(List<Emp> emps) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("<table border='1' cellpadding='0' cellspacing='0' width='1200px' style='border-collapse:collapse; font-family: arial; font-size: 14px;'>");
+		builder.append("	<tr style='height: 50px; text-align: center; color: #0027C2; font-weight: bold; background-color: yellow;'>");
+		builder.append("		<td>Stt</td>");
+		builder.append("		<td>MSNV</td>");
+		builder.append("		<td>Họ và tên</td>");
+		builder.append("		<td>Chức danh</td>");
+		builder.append("		<td>Phòng ban</td>");
+		builder.append("		<td>Ngày nhận việc</td>");
+		builder.append("		<td>Nơi làm việc</td>");
+		builder.append("		<td>Điện thoại</td>");
+		builder.append("		<td>Email</td>");
+		builder.append("		<td>Ghi chú</td>");
+		builder.append("	</tr>");
+		int count = 0;
+		String empCode = StringUtils.EMPTY;
+		String fullName = StringUtils.EMPTY;
+		String titles = StringUtils.EMPTY;
+		String dept = StringUtils.EMPTY;
+		String joinedDate = StringUtils.EMPTY;
+		String workingPlace = StringUtils.EMPTY;
+		String contactNumber = StringUtils.EMPTY;
+		String email = StringUtils.EMPTY;
+		String note = StringUtils.EMPTY;
+		SimpleDateFormat sdf = new SimpleDateFormat(COMMON_DATE_FORMAT);
+		for (Emp emp : emps) {
+			try {
+				User userByEmp = userLocalService.fetchUser(emp.getEmpUserId());
+				count++;
+				empCode = emp.getEmpCode();
+				fullName = getViFullnameFromUser(userByEmp);
+				titles = titlesLocalService.fetchTitles(emp.getTitlesId())
+						.getName();
+				dept = departmentLocalService.fetchDepartment(
+						emp.getDepartmentId()).getName();
+				joinedDate = sdf.format(emp.getJoinedDate());
+				contactNumber = emp.getContactNumber();
+				email = userByEmp.getEmailAddress();
+				builder.append("	<tr style='height: 40px; text-align: center;'>");
+				builder.append("		<td>" + count + "</td>");
+				builder.append("		<td>" + empCode + "</td>");
+				builder.append("		<td>" + fullName + "</td>");
+				builder.append("		<td>" + titles + "</td>");
+				builder.append("		<td>" + dept + "</td>");
+				builder.append("		<td>" + joinedDate + "</td>");
+				builder.append("		<td>" + workingPlace + "</td>");
+				builder.append("		<td>" + contactNumber + "</td>");
+				builder.append("		<td>" + email + "</td>");
+				builder.append("		<td>" + note + "</td>");
+				builder.append("	</tr>");
+			} catch (SystemException e) {
+				LOGGER.info(e);
+			}
+		}
+
+		builder.append("</table>");
+
+		return builder.toString();
+	}
+
+	public String getEntireNewEmployeesHtmlMailContent(List<Emp> emps) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("<body style='font-family: arial; font-size: 14px;'>");
+		builder.append("<p>Phòng HCNS trân trọng thông báo thông tin nhân sự sắp nhận việc đến các Đơn vị/Bộ phận có liên quan như sau:</p>");
+		builder.append(getNewEmployeesHtmlTable(emps));
+		builder.append("<p>Đề nghị các đơn vị có liên quan thực hiện công tác  chuẩn bị thật chu đáo và hoàn tất trước ngày nhân sự nhận việc ít nhất 3 ngày ");
+		builder.append("(trừ trường hợp nhận việc ngay) để thể hiện sự chuyên nghiệp, thân thiện của Công ty và sự tôn trọng đối với nhân sự mới.</p>");
+		builder.append("Trân trọng,<br />");
+		builder.append("Phòng HCNS");
+		builder.append("</body>");
+		return builder.toString();
+	}
+
+	public void sendNewEmpsNotificationEmail(List<Emp> emps) {
+		try {
+			Set<String> managerEmails = getManagerEmailsForNewEmpsNotification(emps);
+			LOGGER.info("Managers : " + managerEmails);
+			List<String> receivers = new ArrayList<>();
+
+			receivers.addAll(Arrays.asList("tvphuc@ecopharma.com.vn",
+					"htanh@ecopharma.com.vn", "vttinh@ecopharma.com.vn",
+					"dtkthu@ecopharma.com.vn", "nty@ecopharma.com.vn",
+					"ltmtrang@ecopharma.com.vn", "htnhoa@ecopharma.com.vn",
+					"ntthuy@ecopharma.com.vn", "nvanchung@ecopharma.com.vn"));
+			receivers.addAll(managerEmails);
+
+			InternetAddress[] to = new InternetAddress[receivers.size()];
+			int i = 0;
+			for (String s : receivers) {
+				to[i] = new InternetAddress(s);
+				i++;
+			}
+			// if (LOGGER.isDebugEnabled())
+			LOGGER.info(to);
+
+			InternetAddress[] cc = new InternetAddress[] {
+					new InternetAddress("pcnhan@ecopharma.com.vn"),
+					new InternetAddress("hvvinh@ecopharma.com.vn"),
+					new InternetAddress("vtvtan@ecopharma.com.vn"),
+					new InternetAddress("ntttien@ecopharma.com.vn"),
+					new InternetAddress("ltovy@ecopharma.com.vn") };
+
+			InternetAddress from = new InternetAddress("tvtao@ecopharma.com.vn");
+			InternetAddress[] toTest = new InternetAddress[] {
+					new InternetAddress("tao.tranv@gmail.com"),
+					new InternetAddress("tvtao@ecopharma.com.vn") };
+
+			String emailContent = getEntireNewEmployeesHtmlMailContent(emps);
+
+			MailEngine.send(from, toTest, null,
+					"Thông tin nhân sự sắp nhận việc", emailContent, true);
+		} catch (AddressException e) {
+			LOGGER.info(e);
+		} catch (MailEngineException e) {
+			LOGGER.info(e);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+	}
+
+	public void getNewEmpsAndSendNotifyEmail() {
+
 	}
 }

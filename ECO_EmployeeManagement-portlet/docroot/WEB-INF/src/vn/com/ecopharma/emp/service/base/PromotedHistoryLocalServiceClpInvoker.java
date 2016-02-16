@@ -106,93 +106,93 @@ public class PromotedHistoryLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.PromotedHistory"
 			};
 
-		_methodName150 = "getBeanIdentifier";
-
-		_methodParameterTypes150 = new String[] {  };
-
-		_methodName151 = "setBeanIdentifier";
-
-		_methodParameterTypes151 = new String[] { "java.lang.String" };
-
-		_methodName156 = "findAll";
-
-		_methodParameterTypes156 = new String[] {  };
-
-		_methodName157 = "findAll";
-
-		_methodParameterTypes157 = new String[] { "int", "int" };
-
-		_methodName158 = "findAll";
-
-		_methodParameterTypes158 = new String[] {
-				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
-			};
-
-		_methodName159 = "findByEmployee";
-
-		_methodParameterTypes159 = new String[] { "long" };
-
-		_methodName160 = "findByOldTitles";
-
-		_methodParameterTypes160 = new String[] { "long" };
-
-		_methodName161 = "findByNewTitles";
-
-		_methodParameterTypes161 = new String[] { "long" };
-
-		_methodName162 = "createPrePersisted";
+		_methodName162 = "getBeanIdentifier";
 
 		_methodParameterTypes162 = new String[] {  };
 
-		_methodName163 = "addPromotedHistory";
+		_methodName163 = "setBeanIdentifier";
 
-		_methodParameterTypes163 = new String[] {
+		_methodParameterTypes163 = new String[] { "java.lang.String" };
+
+		_methodName168 = "findAll";
+
+		_methodParameterTypes168 = new String[] {  };
+
+		_methodName169 = "findAll";
+
+		_methodParameterTypes169 = new String[] { "int", "int" };
+
+		_methodName170 = "findAll";
+
+		_methodParameterTypes170 = new String[] {
+				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
+			};
+
+		_methodName171 = "findByEmployee";
+
+		_methodParameterTypes171 = new String[] { "long" };
+
+		_methodName172 = "findByOldTitles";
+
+		_methodParameterTypes172 = new String[] { "long" };
+
+		_methodName173 = "findByNewTitles";
+
+		_methodParameterTypes173 = new String[] { "long" };
+
+		_methodName174 = "createPrePersisted";
+
+		_methodParameterTypes174 = new String[] {  };
+
+		_methodName175 = "addPromotedHistory";
+
+		_methodParameterTypes175 = new String[] {
 				"vn.com.ecopharma.emp.model.PromotedHistory", "long", "long",
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName164 = "markDeleted";
+		_methodName176 = "markDeleted";
 
-		_methodParameterTypes164 = new String[] {
+		_methodParameterTypes176 = new String[] {
 				"vn.com.ecopharma.emp.model.PromotedHistory"
 			};
 
-		_methodName165 = "countAllUnDeletedDocuments";
+		_methodName177 = "countAllUnDeletedDocuments";
 
-		_methodParameterTypes165 = new String[] {
+		_methodParameterTypes177 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort"
 			};
 
-		_methodName166 = "searchAllUnDeletedDocuments";
+		_methodName178 = "searchAllUnDeletedDocuments";
 
-		_methodParameterTypes166 = new String[] {
+		_methodParameterTypes178 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName167 = "getIndexedDocument";
+		_methodName179 = "getIndexedDocument";
 
-		_methodParameterTypes167 = new String[] {
+		_methodParameterTypes179 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName168 = "getIndexedDocument";
+		_methodName180 = "getIndexedDocument";
 
-		_methodParameterTypes168 = new String[] {
+		_methodParameterTypes180 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName169 = "indexAll";
+		_methodName181 = "indexAll";
 
-		_methodParameterTypes169 = new String[] {  };
+		_methodParameterTypes181 = new String[] {  };
 
-		_methodName170 = "removeAllIndexes";
+		_methodName182 = "removeAllIndexes";
 
-		_methodParameterTypes170 = new String[] {
+		_methodParameterTypes182 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 	}
@@ -286,58 +286,58 @@ public class PromotedHistoryLocalServiceClpInvoker {
 			return PromotedHistoryLocalServiceUtil.updatePromotedHistory((vn.com.ecopharma.emp.model.PromotedHistory)arguments[0]);
 		}
 
-		if (_methodName150.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
+		if (_methodName162.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
 			return PromotedHistoryLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName151.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
+		if (_methodName163.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
 			PromotedHistoryLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName156.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
+		if (_methodName168.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
 			return PromotedHistoryLocalServiceUtil.findAll();
 		}
 
-		if (_methodName157.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
+		if (_methodName169.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
 			return PromotedHistoryLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName158.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
+		if (_methodName170.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
 			return PromotedHistoryLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[2]);
 		}
 
-		if (_methodName159.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
+		if (_methodName171.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes171, parameterTypes)) {
 			return PromotedHistoryLocalServiceUtil.findByEmployee(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName160.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
+		if (_methodName172.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
 			return PromotedHistoryLocalServiceUtil.findByOldTitles(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName161.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
+		if (_methodName173.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
 			return PromotedHistoryLocalServiceUtil.findByNewTitles(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName162.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+		if (_methodName174.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
 			return PromotedHistoryLocalServiceUtil.createPrePersisted();
 		}
 
-		if (_methodName163.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+		if (_methodName175.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
 			return PromotedHistoryLocalServiceUtil.addPromotedHistory((vn.com.ecopharma.emp.model.PromotedHistory)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
@@ -345,21 +345,21 @@ public class PromotedHistoryLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[4]);
 		}
 
-		if (_methodName164.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes164, parameterTypes)) {
+		if (_methodName176.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
 			return PromotedHistoryLocalServiceUtil.markDeleted((vn.com.ecopharma.emp.model.PromotedHistory)arguments[0]);
 		}
 
-		if (_methodName165.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes165, parameterTypes)) {
+		if (_methodName177.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes177, parameterTypes)) {
 			return PromotedHistoryLocalServiceUtil.countAllUnDeletedDocuments((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
 				((Long)arguments[2]).longValue(),
 				(com.liferay.portal.kernel.search.Sort)arguments[3]);
 		}
 
-		if (_methodName166.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
+		if (_methodName178.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes178, parameterTypes)) {
 			return PromotedHistoryLocalServiceUtil.searchAllUnDeletedDocuments((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -368,27 +368,27 @@ public class PromotedHistoryLocalServiceClpInvoker {
 				((Integer)arguments[5]).intValue());
 		}
 
-		if (_methodName167.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
+		if (_methodName179.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes179, parameterTypes)) {
 			return PromotedHistoryLocalServiceUtil.getIndexedDocument((java.lang.String)arguments[0],
 				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
 		}
 
-		if (_methodName168.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
+		if (_methodName180.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes180, parameterTypes)) {
 			return PromotedHistoryLocalServiceUtil.getIndexedDocument(((Long)arguments[0]).longValue(),
 				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
 		}
 
-		if (_methodName169.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
+		if (_methodName181.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes181, parameterTypes)) {
 			PromotedHistoryLocalServiceUtil.indexAll();
 
 			return null;
 		}
 
-		if (_methodName170.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
+		if (_methodName182.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes182, parameterTypes)) {
 			PromotedHistoryLocalServiceUtil.removeAllIndexes((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				((Long)arguments[1]).longValue());
 
@@ -430,38 +430,38 @@ public class PromotedHistoryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName150;
-	private String[] _methodParameterTypes150;
-	private String _methodName151;
-	private String[] _methodParameterTypes151;
-	private String _methodName156;
-	private String[] _methodParameterTypes156;
-	private String _methodName157;
-	private String[] _methodParameterTypes157;
-	private String _methodName158;
-	private String[] _methodParameterTypes158;
-	private String _methodName159;
-	private String[] _methodParameterTypes159;
-	private String _methodName160;
-	private String[] _methodParameterTypes160;
-	private String _methodName161;
-	private String[] _methodParameterTypes161;
 	private String _methodName162;
 	private String[] _methodParameterTypes162;
 	private String _methodName163;
 	private String[] _methodParameterTypes163;
-	private String _methodName164;
-	private String[] _methodParameterTypes164;
-	private String _methodName165;
-	private String[] _methodParameterTypes165;
-	private String _methodName166;
-	private String[] _methodParameterTypes166;
-	private String _methodName167;
-	private String[] _methodParameterTypes167;
 	private String _methodName168;
 	private String[] _methodParameterTypes168;
 	private String _methodName169;
 	private String[] _methodParameterTypes169;
 	private String _methodName170;
 	private String[] _methodParameterTypes170;
+	private String _methodName171;
+	private String[] _methodParameterTypes171;
+	private String _methodName172;
+	private String[] _methodParameterTypes172;
+	private String _methodName173;
+	private String[] _methodParameterTypes173;
+	private String _methodName174;
+	private String[] _methodParameterTypes174;
+	private String _methodName175;
+	private String[] _methodParameterTypes175;
+	private String _methodName176;
+	private String[] _methodParameterTypes176;
+	private String _methodName177;
+	private String[] _methodParameterTypes177;
+	private String _methodName178;
+	private String[] _methodParameterTypes178;
+	private String _methodName179;
+	private String[] _methodParameterTypes179;
+	private String _methodName180;
+	private String[] _methodParameterTypes180;
+	private String _methodName181;
+	private String[] _methodParameterTypes181;
+	private String _methodName182;
+	private String[] _methodParameterTypes182;
 }

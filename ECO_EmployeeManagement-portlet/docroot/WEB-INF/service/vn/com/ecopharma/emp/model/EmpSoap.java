@@ -42,6 +42,9 @@ public class EmpSoap implements Serializable {
 		soapModel.setReligion(model.getReligion());
 		soapModel.setJoinedDate(model.getJoinedDate());
 		soapModel.setTitlesId(model.getTitlesId());
+		soapModel.setUnitGroupId(model.getUnitGroupId());
+		soapModel.setUnitId(model.getUnitId());
+		soapModel.setDepartmentId(model.getDepartmentId());
 		soapModel.setLevelId(model.getLevelId());
 		soapModel.setPromotedDate(model.getPromotedDate());
 		soapModel.setLaborContractSignedDate(model.getLaborContractSignedDate());
@@ -83,9 +86,6 @@ public class EmpSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setUnitId(model.getUnitId());
-		soapModel.setUnitGroupId(model.getUnitGroupId());
-		soapModel.setDepartmentId(model.getDepartmentId());
 
 		return soapModel;
 	}
@@ -224,6 +224,30 @@ public class EmpSoap implements Serializable {
 
 	public void setTitlesId(long titlesId) {
 		_titlesId = titlesId;
+	}
+
+	public long getUnitGroupId() {
+		return _unitGroupId;
+	}
+
+	public void setUnitGroupId(long unitGroupId) {
+		_unitGroupId = unitGroupId;
+	}
+
+	public long getUnitId() {
+		return _unitId;
+	}
+
+	public void setUnitId(long unitId) {
+		_unitId = unitId;
+	}
+
+	public long getDepartmentId() {
+		return _departmentId;
+	}
+
+	public void setDepartmentId(long departmentId) {
+		_departmentId = departmentId;
 	}
 
 	public long getLevelId() {
@@ -558,30 +582,6 @@ public class EmpSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public long getUnitId() {
-		return _unitId;
-	}
-
-	public void setUnitId(long unitId) {
-		_unitId = unitId;
-	}
-
-	public long getUnitGroupId() {
-		return _unitGroupId;
-	}
-
-	public void setUnitGroupId(long unitGroupId) {
-		_unitGroupId = unitGroupId;
-	}
-
-	public long getDepartmentId() {
-		return _departmentId;
-	}
-
-	public void setDepartmentId(long departmentId) {
-		_departmentId = departmentId;
-	}
-
 	private long _empId;
 	private long _groupId;
 	private String _empCode;
@@ -593,6 +593,9 @@ public class EmpSoap implements Serializable {
 	private String _religion;
 	private Date _joinedDate;
 	private long _titlesId;
+	private long _unitGroupId;
+	private long _unitId;
+	private long _departmentId;
 	private long _levelId;
 	private Date _promotedDate;
 	private Date _laborContractSignedDate;
@@ -634,7 +637,4 @@ public class EmpSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _unitId;
-	private long _unitGroupId;
-	private long _departmentId;
 }

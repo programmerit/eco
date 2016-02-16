@@ -81,6 +81,9 @@ create table eco_em_portlet_Emp (
 	religion VARCHAR(75) null,
 	joinedDate DATE null,
 	titlesId LONG,
+	unitGroupId LONG,
+	unitId LONG,
+	departmentId LONG,
 	levelId LONG,
 	promotedDate DATE null,
 	laborContractSignedDate DATE null,
@@ -121,10 +124,7 @@ create table eco_em_portlet_Emp (
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
-	modifiedDate DATE null,
-	unitId LONG,
-	unitGroupId LONG,
-	departmentId LONG
+	modifiedDate DATE null
 );
 
 create table eco_em_portlet_EmpBankInfo (
@@ -157,6 +157,28 @@ create table eco_em_portlet_EmpDiscipline (
 	createDate DATE null,
 	modifiedDate DATE null,
 	deleted BOOLEAN
+);
+
+create table eco_em_portlet_EmpNotifyEmail (
+	empNotifyEmailId LONG not null primary key,
+	empId LONG,
+	notifyType VARCHAR(75) null,
+	status VARCHAR(75) null
+);
+
+create table eco_em_portlet_EmpOrgRelationship (
+	empOrgRelationshipId LONG not null primary key,
+	empId LONG,
+	orgClassName VARCHAR(75) null,
+	orgClassPK LONG,
+	headOfOrg BOOLEAN,
+	deputyOfOrg BOOLEAN,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null
 );
 
 create table eco_em_portlet_EmployeeTitlesHistory (

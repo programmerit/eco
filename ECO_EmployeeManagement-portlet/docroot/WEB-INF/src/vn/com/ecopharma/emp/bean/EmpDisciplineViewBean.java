@@ -15,6 +15,7 @@ import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.SortOrder;
 
 import vn.com.ecopharma.emp.bean.filter.EmpDisciplineFilterBean;
+import vn.com.ecopharma.emp.constant.EmpDisciplineField;
 import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.dm.AbstractIndexedLazyDataModel;
 import vn.com.ecopharma.emp.dm.EmpDisciplineIndexLazyDataModel;
@@ -49,6 +50,16 @@ public class EmpDisciplineViewBean implements Serializable {
 					Map<String, Object> filters) {
 				final EmpDisciplineFilterBean filterBean = BeanUtils
 						.getDisciplineFilterBean();
+
+				if (filterBean.getEffectiveDateFrom() != null) {
+					filters.put(EmpDisciplineField.EFFECTIVE_DATE_FROM,
+							filterBean.getEffectiveDateFrom());
+				}
+
+				if (filterBean.getEffectiveDateTo() != null) {
+					filters.put(EmpDisciplineField.EFFECTIVE_DATE_TO,
+							filterBean.getEffectiveDateTo());
+				}
 
 				if (!StringUtils.EMPTY.equals(filterBean.getFullName())) {
 					filters.put(EmpField.VN_FULL_NAME, filterBean.getFullName());

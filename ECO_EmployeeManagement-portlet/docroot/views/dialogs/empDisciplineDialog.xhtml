@@ -12,7 +12,7 @@
 	<h:body>
 
 		<h:form id="disciplineForm">
-			<p:dialog widgetVar="wDisciplineDialog"
+			<p:dialog widgetVar="wDisciplineDialog" 
 				header="Employee Discipline Form" modal="true">
 
 				<p:outputPanel id="disciplineOutputPanel" autoUpdate="false">
@@ -28,8 +28,8 @@
 							styleClass="interview-schedule" scrollHeight="300"
 							minQueryLength="2" value="#{disciplineBean.emps}"
 							completeMethod="#{disciplineBean.completeEmps}" var="e"
-							itemLabel="#{e.fullNameVi}(#{e.employeeCode})" itemValue="#{e}"
-							required="true" converter="empIndexedConverter"
+							itemLabel="#{disciplineBean.getShortenEmpName(e.fullNameVi)}(#{e.employeeCode})"
+							itemValue="#{e}" required="true" converter="empIndexedConverter"
 							autoHighlight="true" forceSelection="true"
 							placeholder="Type 2 words..." alt="#{e.employeeCode}">
 							<f:facet name="itemTip">

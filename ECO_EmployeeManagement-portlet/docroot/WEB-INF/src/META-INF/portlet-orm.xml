@@ -123,6 +123,9 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="titlesId" />
+			<basic name="unitGroupId" />
+			<basic name="unitId" />
+			<basic name="departmentId" />
 			<basic name="levelId" />
 			<basic name="promotedDate">
 				<temporal>TIMESTAMP</temporal>
@@ -178,9 +181,6 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="unitId" />
-			<basic name="unitGroupId" />
-			<basic name="departmentId" />
 			<transient name="empUserUuid" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
@@ -252,6 +252,41 @@
 			<basic name="groupId" />
 			<basic name="companyId" />
 			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.emp.model.impl.EmpNotifyEmailModelImpl">
+		<attributes>
+			<id name="empNotifyEmailId" />
+			<basic name="empId" />
+			<basic name="notifyType" />
+			<basic name="status" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.emp.model.impl.EmpOrgRelationshipModelImpl">
+		<attributes>
+			<id name="empOrgRelationshipId" />
+			<basic name="empId" />
+			<basic name="orgClassName" />
+			<basic name="orgClassPK" />
+			<basic name="headOfOrg" />
+			<basic name="deputyOfOrg" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
 			<basic name="createDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
@@ -580,6 +615,14 @@
 	</entity>
 	<entity class="vn.com.ecopharma.emp.model.impl.EmployeeTitlesHistoryImpl" name="EmployeeTitlesHistory">
 		<table name="eco_em_portlet_EmployeeTitlesHistory" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.emp.model.impl.EmpNotifyEmailImpl" name="EmpNotifyEmail">
+		<table name="eco_em_portlet_EmpNotifyEmail" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.emp.model.impl.EmpOrgRelationshipImpl" name="EmpOrgRelationship">
+		<table name="eco_em_portlet_EmpOrgRelationship" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.emp.model.impl.LevelImpl" name="Level">

@@ -300,6 +300,42 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		throws com.liferay.portal.kernel.search.ParseException,
 			java.text.ParseException;
 
+	/**
+	* @param employee
+	* @param autoPassword
+	* @param password1
+	* @param password2
+	* @param autoScreenName
+	* @param screenName
+	* @param emailAddress
+	* @param facebookId
+	* @param openId
+	* @param locale
+	* @param firstName
+	* @param middleName
+	* @param lastName
+	* @param prefixId
+	* @param suffixId
+	* @param male
+	* @param birthdayMonth
+	* @param birthdayDay
+	* @param birthdayYear
+	* @param groupIds
+	* @param organizationIds
+	* @param roleIds
+	* @param userGroupIds
+	* @param sendEmail
+	* @param addresses
+	* @param dependentNameMap
+	* @param bankInfoMap
+	* @param isImportAction
+	use to determine wherether emp is imported or create. (For
+	notify)
+	* @param serviceContext
+	* @return
+	* @throws SystemException
+	* @throws PortalException
+	*/
 	public vn.com.ecopharma.emp.model.Emp addEmp(
 		vn.com.ecopharma.emp.model.Emp employee, boolean autoPassword,
 		java.lang.String password1, java.lang.String password2,
@@ -314,6 +350,7 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addresses,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -333,7 +370,7 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isImportAction,
+		boolean isManager, boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
 	public vn.com.ecopharma.emp.model.Emp update(
@@ -342,7 +379,7 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isImportAction,
+		boolean isManager, boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
 	public vn.com.ecopharma.emp.model.Emp updateExistedEmployee(
@@ -368,7 +405,7 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isImportAction,
+		boolean isManager, boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
 	public vn.com.ecopharma.emp.model.Emp addOrUpdateWithExistUser(
@@ -377,7 +414,7 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isImportAction,
+		boolean isManager, boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
 	public vn.com.ecopharma.emp.model.Emp createEmployee(
@@ -396,6 +433,10 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		java.lang.String companyEmailAddress, java.lang.String taxCode,
 		int numberOfDependents, java.lang.String dependentNames,
 		java.lang.String insurranceCode, java.lang.String healthInsuranceNo);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getViFullnameFromUser(
+		com.liferay.portal.model.User user);
 
 	public vn.com.ecopharma.emp.model.Emp updateEmpAddresses(
 		java.lang.String empCode, java.lang.String address,
@@ -468,4 +509,57 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Address getPresentAddress(long companyId,
 		long employeeId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<vn.com.ecopharma.emp.model.Emp> getEmpsFromEmpNotifyEmails(
+		java.util.List<vn.com.ecopharma.emp.model.EmpNotifyEmail> empNotifyEmails)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Set<vn.com.ecopharma.emp.model.Department> getUniqueDepartmentsFromEmps(
+		java.util.List<vn.com.ecopharma.emp.model.Emp> emps)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Set<java.lang.String> getAllManagerEmailsFromDepartments(
+		java.util.Collection<vn.com.ecopharma.emp.model.Department> departments)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Set<com.liferay.portal.model.User> getUsersByEmps(
+		java.util.Collection<vn.com.ecopharma.emp.model.Emp> emps)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Set<java.lang.String> getEmailsFromUsers(
+		java.util.Collection<com.liferay.portal.model.User> users);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Set<java.lang.String> getEmailsFromEmps(
+		java.util.Collection<vn.com.ecopharma.emp.model.Emp> emps)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Set<vn.com.ecopharma.emp.model.Emp> getEmpsByEmpOrgRelationships(
+		java.util.List<vn.com.ecopharma.emp.model.EmpOrgRelationship> empManagers)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Set<java.lang.String> getManagerEmailsForNewEmpsNotification(
+		java.util.List<vn.com.ecopharma.emp.model.Emp> emps)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getNewEmployeesHtmlTable(
+		java.util.List<vn.com.ecopharma.emp.model.Emp> emps);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getEntireNewEmployeesHtmlMailContent(
+		java.util.List<vn.com.ecopharma.emp.model.Emp> emps);
+
+	public void sendNewEmpsNotificationEmail(
+		java.util.List<vn.com.ecopharma.emp.model.Emp> emps);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public void getNewEmpsAndSendNotifyEmail();
 }

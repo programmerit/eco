@@ -76,6 +76,9 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 			{ "religion", Types.VARCHAR },
 			{ "joinedDate", Types.TIMESTAMP },
 			{ "titlesId", Types.BIGINT },
+			{ "unitGroupId", Types.BIGINT },
+			{ "unitId", Types.BIGINT },
+			{ "departmentId", Types.BIGINT },
 			{ "levelId", Types.BIGINT },
 			{ "promotedDate", Types.TIMESTAMP },
 			{ "laborContractSignedDate", Types.TIMESTAMP },
@@ -116,12 +119,9 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "unitId", Types.BIGINT },
-			{ "unitGroupId", Types.BIGINT },
-			{ "departmentId", Types.BIGINT }
+			{ "modifiedDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_Emp (empId LONG not null primary key,groupId LONG,empCode VARCHAR(75) null,contactNumber VARCHAR(75) null,internalNumber VARCHAR(75) null,birthday DATE null,ethnic VARCHAR(75) null,nationality VARCHAR(75) null,religion VARCHAR(75) null,joinedDate DATE null,titlesId LONG,levelId LONG,promotedDate DATE null,laborContractSignedDate DATE null,laborContractExpiredDate DATE null,laborContractSignedTime INTEGER,laborContractType VARCHAR(75) null,gender VARCHAR(75) null,placeOfBirth VARCHAR(75) null,education VARCHAR(75) null,educationSpecialize VARCHAR(75) null,specializeId LONG,universityId LONG,maritalStatus VARCHAR(75) null,identityCardNo VARCHAR(75) null,issuedDate DATE null,issuedPlace VARCHAR(75) null,passport VARCHAR(75) null,addressId LONG,personalEmail VARCHAR(75) null,personalTaxCode VARCHAR(75) null,numberOfDependents INTEGER,dependentNames VARCHAR(75) null,socialInsuranceNo VARCHAR(75) null,healthInsuranceNo VARCHAR(75) null,healthInsurancePlace VARCHAR(75) null,baseWageRates DOUBLE,positionWageRates DOUBLE,capacitySalary DOUBLE,totalSalary DOUBLE,bonus DOUBLE,resignedDate DATE null,empUserId LONG,deleted BOOLEAN,companyEmailAddress VARCHAR(75) null,workingPlaceId LONG,status VARCHAR(75) null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,unitId LONG,unitGroupId LONG,departmentId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_Emp (empId LONG not null primary key,groupId LONG,empCode VARCHAR(75) null,contactNumber VARCHAR(75) null,internalNumber VARCHAR(75) null,birthday DATE null,ethnic VARCHAR(75) null,nationality VARCHAR(75) null,religion VARCHAR(75) null,joinedDate DATE null,titlesId LONG,unitGroupId LONG,unitId LONG,departmentId LONG,levelId LONG,promotedDate DATE null,laborContractSignedDate DATE null,laborContractExpiredDate DATE null,laborContractSignedTime INTEGER,laborContractType VARCHAR(75) null,gender VARCHAR(75) null,placeOfBirth VARCHAR(75) null,education VARCHAR(75) null,educationSpecialize VARCHAR(75) null,specializeId LONG,universityId LONG,maritalStatus VARCHAR(75) null,identityCardNo VARCHAR(75) null,issuedDate DATE null,issuedPlace VARCHAR(75) null,passport VARCHAR(75) null,addressId LONG,personalEmail VARCHAR(75) null,personalTaxCode VARCHAR(75) null,numberOfDependents INTEGER,dependentNames VARCHAR(75) null,socialInsuranceNo VARCHAR(75) null,healthInsuranceNo VARCHAR(75) null,healthInsurancePlace VARCHAR(75) null,baseWageRates DOUBLE,positionWageRates DOUBLE,capacitySalary DOUBLE,totalSalary DOUBLE,bonus DOUBLE,resignedDate DATE null,empUserId LONG,deleted BOOLEAN,companyEmailAddress VARCHAR(75) null,workingPlaceId LONG,status VARCHAR(75) null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table eco_em_portlet_Emp";
 	public static final String ORDER_BY_JPQL = " ORDER BY emp.empId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_em_portlet_Emp.empId ASC";
@@ -167,6 +167,9 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		model.setReligion(soapModel.getReligion());
 		model.setJoinedDate(soapModel.getJoinedDate());
 		model.setTitlesId(soapModel.getTitlesId());
+		model.setUnitGroupId(soapModel.getUnitGroupId());
+		model.setUnitId(soapModel.getUnitId());
+		model.setDepartmentId(soapModel.getDepartmentId());
 		model.setLevelId(soapModel.getLevelId());
 		model.setPromotedDate(soapModel.getPromotedDate());
 		model.setLaborContractSignedDate(soapModel.getLaborContractSignedDate());
@@ -208,9 +211,6 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setUnitId(soapModel.getUnitId());
-		model.setUnitGroupId(soapModel.getUnitGroupId());
-		model.setDepartmentId(soapModel.getDepartmentId());
 
 		return model;
 	}
@@ -286,6 +286,9 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		attributes.put("religion", getReligion());
 		attributes.put("joinedDate", getJoinedDate());
 		attributes.put("titlesId", getTitlesId());
+		attributes.put("unitGroupId", getUnitGroupId());
+		attributes.put("unitId", getUnitId());
+		attributes.put("departmentId", getDepartmentId());
 		attributes.put("levelId", getLevelId());
 		attributes.put("promotedDate", getPromotedDate());
 		attributes.put("laborContractSignedDate", getLaborContractSignedDate());
@@ -327,9 +330,6 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("unitId", getUnitId());
-		attributes.put("unitGroupId", getUnitGroupId());
-		attributes.put("departmentId", getDepartmentId());
 
 		return attributes;
 	}
@@ -400,6 +400,24 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 
 		if (titlesId != null) {
 			setTitlesId(titlesId);
+		}
+
+		Long unitGroupId = (Long)attributes.get("unitGroupId");
+
+		if (unitGroupId != null) {
+			setUnitGroupId(unitGroupId);
+		}
+
+		Long unitId = (Long)attributes.get("unitId");
+
+		if (unitId != null) {
+			setUnitId(unitId);
+		}
+
+		Long departmentId = (Long)attributes.get("departmentId");
+
+		if (departmentId != null) {
+			setDepartmentId(departmentId);
 		}
 
 		Long levelId = (Long)attributes.get("levelId");
@@ -654,24 +672,6 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
 		}
-
-		Long unitId = (Long)attributes.get("unitId");
-
-		if (unitId != null) {
-			setUnitId(unitId);
-		}
-
-		Long unitGroupId = (Long)attributes.get("unitGroupId");
-
-		if (unitGroupId != null) {
-			setUnitGroupId(unitGroupId);
-		}
-
-		Long departmentId = (Long)attributes.get("departmentId");
-
-		if (departmentId != null) {
-			setDepartmentId(departmentId);
-		}
 	}
 
 	@JSON
@@ -845,6 +845,39 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 
 	public long getOriginalTitlesId() {
 		return _originalTitlesId;
+	}
+
+	@JSON
+	@Override
+	public long getUnitGroupId() {
+		return _unitGroupId;
+	}
+
+	@Override
+	public void setUnitGroupId(long unitGroupId) {
+		_unitGroupId = unitGroupId;
+	}
+
+	@JSON
+	@Override
+	public long getUnitId() {
+		return _unitId;
+	}
+
+	@Override
+	public void setUnitId(long unitId) {
+		_unitId = unitId;
+	}
+
+	@JSON
+	@Override
+	public long getDepartmentId() {
+		return _departmentId;
+	}
+
+	@Override
+	public void setDepartmentId(long departmentId) {
+		_departmentId = departmentId;
 	}
 
 	@JSON
@@ -1435,39 +1468,6 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		_modifiedDate = modifiedDate;
 	}
 
-	@JSON
-	@Override
-	public long getUnitId() {
-		return _unitId;
-	}
-
-	@Override
-	public void setUnitId(long unitId) {
-		_unitId = unitId;
-	}
-
-	@JSON
-	@Override
-	public long getUnitGroupId() {
-		return _unitGroupId;
-	}
-
-	@Override
-	public void setUnitGroupId(long unitGroupId) {
-		_unitGroupId = unitGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getDepartmentId() {
-		return _departmentId;
-	}
-
-	@Override
-	public void setDepartmentId(long departmentId) {
-		_departmentId = departmentId;
-	}
-
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -1510,6 +1510,9 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		empImpl.setReligion(getReligion());
 		empImpl.setJoinedDate(getJoinedDate());
 		empImpl.setTitlesId(getTitlesId());
+		empImpl.setUnitGroupId(getUnitGroupId());
+		empImpl.setUnitId(getUnitId());
+		empImpl.setDepartmentId(getDepartmentId());
 		empImpl.setLevelId(getLevelId());
 		empImpl.setPromotedDate(getPromotedDate());
 		empImpl.setLaborContractSignedDate(getLaborContractSignedDate());
@@ -1551,9 +1554,6 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		empImpl.setUserName(getUserName());
 		empImpl.setCreateDate(getCreateDate());
 		empImpl.setModifiedDate(getModifiedDate());
-		empImpl.setUnitId(getUnitId());
-		empImpl.setUnitGroupId(getUnitGroupId());
-		empImpl.setDepartmentId(getDepartmentId());
 
 		empImpl.resetOriginalValues();
 
@@ -1696,6 +1696,12 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		}
 
 		empCacheModel.titlesId = getTitlesId();
+
+		empCacheModel.unitGroupId = getUnitGroupId();
+
+		empCacheModel.unitId = getUnitId();
+
+		empCacheModel.departmentId = getDepartmentId();
 
 		empCacheModel.levelId = getLevelId();
 
@@ -1939,12 +1945,6 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 			empCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		empCacheModel.unitId = getUnitId();
-
-		empCacheModel.unitGroupId = getUnitGroupId();
-
-		empCacheModel.departmentId = getDepartmentId();
-
 		return empCacheModel;
 	}
 
@@ -1974,6 +1974,12 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		sb.append(getJoinedDate());
 		sb.append(", titlesId=");
 		sb.append(getTitlesId());
+		sb.append(", unitGroupId=");
+		sb.append(getUnitGroupId());
+		sb.append(", unitId=");
+		sb.append(getUnitId());
+		sb.append(", departmentId=");
+		sb.append(getDepartmentId());
 		sb.append(", levelId=");
 		sb.append(getLevelId());
 		sb.append(", promotedDate=");
@@ -2056,12 +2062,6 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", unitId=");
-		sb.append(getUnitId());
-		sb.append(", unitGroupId=");
-		sb.append(getUnitGroupId());
-		sb.append(", departmentId=");
-		sb.append(getDepartmentId());
 		sb.append("}");
 
 		return sb.toString();
@@ -2118,6 +2118,18 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 		sb.append(
 			"<column><column-name>titlesId</column-name><column-value><![CDATA[");
 		sb.append(getTitlesId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>unitGroupId</column-name><column-value><![CDATA[");
+		sb.append(getUnitGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>unitId</column-name><column-value><![CDATA[");
+		sb.append(getUnitId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>departmentId</column-name><column-value><![CDATA[");
+		sb.append(getDepartmentId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>levelId</column-name><column-value><![CDATA[");
@@ -2283,18 +2295,6 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>unitId</column-name><column-value><![CDATA[");
-		sb.append(getUnitId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>unitGroupId</column-name><column-value><![CDATA[");
-		sb.append(getUnitGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>departmentId</column-name><column-value><![CDATA[");
-		sb.append(getDepartmentId());
-		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -2317,6 +2317,9 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 	private long _titlesId;
 	private long _originalTitlesId;
 	private boolean _setOriginalTitlesId;
+	private long _unitGroupId;
+	private long _unitId;
+	private long _departmentId;
 	private long _levelId;
 	private Date _promotedDate;
 	private Date _laborContractSignedDate;
@@ -2363,9 +2366,6 @@ public class EmpModelImpl extends BaseModelImpl<Emp> implements EmpModel {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _unitId;
-	private long _unitGroupId;
-	private long _departmentId;
 	private long _columnBitmask;
 	private Emp _escapedModel;
 }

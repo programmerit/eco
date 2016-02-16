@@ -3,6 +3,7 @@ package vn.com.ecopharma.emp.dto;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +25,7 @@ import vn.com.ecopharma.emp.service.CertificateLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
+import vn.com.ecopharma.emp.service.EmpOrgRelationshipLocalServiceUtil;
 import vn.com.ecopharma.emp.service.SpecializedLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
@@ -86,6 +88,8 @@ public class EmpInfoItem implements Serializable {
 
 	private String userImgURL;
 
+	private boolean isManager;
+
 	public EmpInfoItem(Emp employee) {
 
 		this.employee = employee;
@@ -127,6 +131,9 @@ public class EmpInfoItem implements Serializable {
 			specialized = employee.getSpecializeId() != 0L ? SpecializedLocalServiceUtil
 					.fetchSpecialized(employee.getSpecializeId()) : null;
 
+			isManager = EmpOrgRelationshipLocalServiceUtil.isHeadOfDepartment(
+					employee.getEmpId(), department.getDepartmentId());
+
 			workingPlace = employee.getWorkingPlaceId() != 0L ? RegionServiceUtil
 					.getRegion(employee.getWorkingPlaceId()) : null;
 
@@ -149,6 +156,24 @@ public class EmpInfoItem implements Serializable {
 	public EmpInfoItem() {
 		this.user = createNewUser();
 		this.employee = createNewEmp();
+	}
+
+	public void setTestDataForEmp() {
+		try {
+			this.devision = DevisionLocalServiceUtil.fetchDevision(185315L);
+			this.department = DepartmentLocalServiceUtil
+					.fetchDepartment(185316);
+			this.titles = TitlesLocalServiceUtil.fetchTitles(185322);
+
+			this.employee.setJoinedDate(new Date());
+			this.employee.setIdentityCardNo("024374362");
+			this.user.setFirstName("Tao");
+			this.user.setMiddleName("Van");
+			this.user.setLastName("Tran");
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	private Emp createNewEmp() {
@@ -259,6 +284,14 @@ public class EmpInfoItem implements Serializable {
 
 	public long getUniversityId() {
 		return university != null ? university.getUniversityId() : 0;
+	}
+
+	public boolean isManager() {
+		return isManager;
+	}
+
+	public void setManager(boolean isManager) {
+		this.isManager = isManager;
 	}
 
 	public List<AddressObjectItem> getAddresses() {

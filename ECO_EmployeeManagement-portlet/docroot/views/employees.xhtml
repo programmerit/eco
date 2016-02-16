@@ -19,11 +19,14 @@
 			<p:remoteCommand name="refreshEmployees"
 				update=":employeesForm:employees" />
 
+			<p:remoteCommand name="refreshFilterBadges"
+				update=":employeesForm:filterBadges" />
+
 			<p:remoteCommand name="filterEmployees"
 				oncomplete="PF('employeeTable').filter();" />
 
-			<p:remoteCommand name="delayGlobalFilter"
-				oncomplete="PF('employeeTable').filter(); refreshFooter();" />
+			<p:remoteCommand name="updateFilterRelatedComponents"
+				oncomplete="PF('employeeTable').filter(); refreshFooter(); refreshFilterBadges();" />
 
 			<h:link value="Show/Hide filter" styleClass="label"
 				onmouseover="toggle('#{requestScope.filterGrid.clientId}'); return false;"
@@ -38,7 +41,9 @@
 							value="#{empFilterBean.globalString}" placeholder="Everything"
 							style="width: 150px;">
 							<p:ajax event="keyup" delay="1000"
-								oncomplete="PF('employeeTable').filter(); refreshFooter();" />
+								oncomplete="updateFilterRelatedComponents();" />
+							<p:ajax event="blur"
+								oncomplete="updateFilterRelatedComponents();" />
 						</p:inputText>
 						<p:tooltip for="filter_globalString" value="Filter Everything"
 							showEffect="clip" hideEffect="explode" />
@@ -48,7 +53,9 @@
 							value="#{empFilterBean.fullName}" placeholder="FullName"
 							style="width: 150px;">
 							<p:ajax event="keyup" delay="1000"
-								oncomplete="PF('employeeTable').filter(); refreshFooter();" />
+								oncomplete="updateFilterRelatedComponents();" />
+							<p:ajax event="blur"
+								oncomplete="updateFilterRelatedComponents();" />
 						</p:inputText>
 						<p:tooltip for="filter_fullName" value="Filter [Fullname]"
 							showEffect="clip" hideEffect="explode" />
@@ -59,7 +66,9 @@
 							value="#{empFilterBean.employeeCode}" placeholder="Employee Code"
 							style="width: 150px">
 							<p:ajax event="keyup" delay="1000"
-								oncomplete="PF('employeeTable').filter(); refreshFooter();" />
+								oncomplete="updateFilterRelatedComponents();" />
+							<p:ajax event="blur"
+								oncomplete="updateFilterRelatedComponents();" />
 						</p:inputText>
 						<p:tooltip for="filter_empCode" value="Filter [Employee Code]"
 							showEffect="clip" hideEffect="explode" />
@@ -70,7 +79,7 @@
 							<f:selectItem itemLabel="Male" itemValue="Male" />
 							<f:selectItem itemLabel="Female" itemValue="Female" />
 							<p:ajax event="change"
-								oncomplete="PF('employeeTable').filter(); refreshFooter();" />
+								oncomplete="updateFilterRelatedComponents();" />
 						</p:selectManyButton>
 						<p:tooltip for="filter_empGender" value="Filter [Gender]"
 							showEffect="clip" hideEffect="explode" />
@@ -203,9 +212,36 @@
 				
 				<p:link value="Location Tree" outcome="locationView" /> | 
 				
-				<p:link value="Specialized Tree" outcome="specializedView" />
+				<p:link value="Specialized Tree" outcome="specializedView" /> |
+				
+				<p:commandLink value="Test send mail"
+					actionListener="#{empView.onTestSendMail}"
+					update=":includedDialogPanelGroup"
+					oncomplete="PF('wNotifyDialog').show();" />
 
 			</h:panelGroup>
+
+			<br />
+			<p:outputPanel autoUpdate="true">
+				<h:panelGroup id="filterBadges" styleClass="filter-panel"
+					rendered="#{empFilterBean.filterBadges.size() gt 0}">
+					<h6>ACTIVE FILTER:</h6>
+
+					<ui:repeat var="b" value="#{empFilterBean.filterBadges}"
+						varStatus="status">
+						<span class="badge js-tooltip"> <h:outputText value="#{b}" />
+							<p:commandLink value="x" title="delete"
+								actionListener="#{empFilterBean.onDeleteFilterBadges(status.index)}"
+								update=":searchForm:filter_globalString :searchForm:filter_fullName :searchForm:calendarJoinedDateFrom :searchForm:calendarJoinedDateTo :searchForm:filter_empGender"
+								oncomplete="updateFilterRelatedComponents();"
+								style="color: grey !important; margin-left: 4px; font-weight: bolder;" />
+						</span>
+					</ui:repeat>
+				</h:panelGroup>
+			</p:outputPanel>
+
+
+
 			<!-- EMPLOYEE TABLE-->
 			<p:dataTable id="employees" var="employeeInfo" reflow="true"
 				widgetVar="employeeTable"
@@ -280,6 +316,8 @@
 				oncompleteActions="PF('wDeleteConfirmDialog').hide(); PF('employeeTable').filter();"
 				update=":employeesForm:employees" />
 		</h:form>
+
+		<!-- Dialog -->
 		<h:panelGroup id="includedDialogPanelGroup">
 			<ui:include src="#{empView.includedDialog}" />
 		</h:panelGroup>
@@ -307,6 +345,33 @@
 
 .ui-panelgrid tbody tr td {
 	border: none !important;
+}
+
+.filter-panel {
+	padding: 0 1px 3px;
+	clear: both;
+}
+
+.filter-panel .badge {
+	max-width: 180px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	position: relative;
+	cursor: default;
+	padding-right: 9px;
+}
+
+.filter-panel .badge, .filter-panel h6 {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.aui h6 {
+	font-size: 11px;
+	color: #999;
+	text-transform: uppercase;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
 }
 </style>
 </f:view>

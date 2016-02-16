@@ -24,6 +24,13 @@ create index IX_F272A48A on eco_em_portlet_Emp (titlesId);
 
 create index IX_90AA9689 on eco_em_portlet_EmpBankInfo (empId);
 
+create index IX_9FE130A5 on eco_em_portlet_EmpNotifyEmail (status);
+
+create index IX_574F6C0B on eco_em_portlet_EmpOrgRelationship (empId);
+create index IX_B7C33EDE on eco_em_portlet_EmpOrgRelationship (orgClassName, orgClassPK);
+create index IX_5971BA94 on eco_em_portlet_EmpOrgRelationship (orgClassName, orgClassPK, deputyOfOrg);
+create index IX_33B3165F on eco_em_portlet_EmpOrgRelationship (orgClassName, orgClassPK, headOfOrg);
+
 create index IX_88F3517B on eco_em_portlet_Level (name);
 
 create index IX_E1D2C12C on eco_em_portlet_Location (type_);

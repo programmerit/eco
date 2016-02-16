@@ -21,13 +21,53 @@
 
 				<h:panelGroup binding="#{requestScope.filterGrid}" id="filterGroup"
 					style="display: none;">
-					<p:panelGrid id="filterGrid" columns="3" styleClass="filter-grid"
+					<p:panelGrid id="filterGrid" columns="2" styleClass="filter-grid"
 						style="margin-bottom: 7px!important; color: black!important;">
 						<h:panelGroup>
 							<eco:baseEmpFilterPanel empBean="#{disciplineFilterBean}"
 								onCompleteUpdate="PF('disciplineTable').filter();" />
 						</h:panelGroup>
+
+
+						<h:panelGroup>
+							<h:panelGroup>
+								<p:calendar id="calendarEffectiveDateFrom" mask="false"
+									widgetVar="wcalendarEffectiveDateFrom"
+									value="#{disciplineFilterBean.effectiveDateFrom}"
+									pattern="dd/MM/yyyy" styleClass="calendarClass"
+									placeholder="From" navigator="true">
+									<p:ajax event="dateSelect"
+										oncomplete="PF('disciplineTable').filter();" />
+								</p:calendar>
+								<p:tooltip for="calendarEffectiveDateFrom"
+									value="Filter [Effective Date] From" showEffect="clip"
+									hideEffect="explode" />
+								<p:commandLink value="x"
+									actionListener="#{disciplineFilterBean.resetEffectiveDateFrom}"
+									oncomplete="PF('disciplineTable').filter();" ajax="true"
+									update=":searchForm:calendarEffectiveDateFrom" />
+							</h:panelGroup>
+							<br />
+							<h:panelGroup>
+								<p:calendar id="calendarEffectiveDateTo" mask="false"
+									widgetVar="wcalendarEffectiveDateTo"
+									value="#{disciplineFilterBean.effectiveDateTo}"
+									pattern="dd/MM/yyyy" styleClass="calendarClass"
+									placeholder="To" navigator="true">
+									<p:ajax event="dateSelect"
+										oncomplete="PF('disciplineTable').filter();" />
+								</p:calendar>
+								<p:tooltip for="calendarEffectiveDateTo"
+									value="Filter [Effective Date] To" showEffect="clip"
+									hideEffect="explode" />
+								<p:commandLink value="x"
+									actionListener="#{disciplineFilterBean.resetEffectiveDateTo}"
+									oncomplete="PF('disciplineTable').filter();" ajax="true"
+									update=":searchForm:calendarEffectiveDateTo" />
+							</h:panelGroup>
+						</h:panelGroup>
 					</p:panelGrid>
+
 				</h:panelGroup>
 			</h:form>
 

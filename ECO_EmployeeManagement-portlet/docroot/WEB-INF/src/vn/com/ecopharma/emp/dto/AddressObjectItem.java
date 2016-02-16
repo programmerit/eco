@@ -27,6 +27,7 @@ import com.liferay.portal.service.RegionServiceUtil;
 public class AddressObjectItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private long id;
 	private Region selectedRegion;
 	private Region region;
 	private List<Region> regions;
@@ -43,6 +44,7 @@ public class AddressObjectItem implements Serializable {
 		this.UIDeleted = false;
 		this.regions = getRegionByCountryId();
 		this.address = createNewAddress();
+		this.id = address.getAddressId();
 	}
 
 	public AddressObjectItem(Address address) {
@@ -53,6 +55,7 @@ public class AddressObjectItem implements Serializable {
 		this.UIDeleted = false;
 		this.regions = getRegionByCountryId();
 		this.districts = getDistrictsByRegionCode(this.region.getRegionCode());
+		this.id = address.getAddressId();
 	}
 
 	/**
@@ -78,12 +81,37 @@ public class AddressObjectItem implements Serializable {
 		return null;
 	}
 
+	@Override
+	public int hashCode() {
+		int prime = 31;
+		int result = 1;
+		result = prime
+				* result
+				* (this.getId() == 0 ? 0 : Long.valueOf(this.getId())
+						.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		final AddressObjectItem that = (AddressObjectItem) obj;
+		return this.id == that.getId();
+	}
+
 	public Address getAddress() {
 		return address;
 	}
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public Country getCountry() {

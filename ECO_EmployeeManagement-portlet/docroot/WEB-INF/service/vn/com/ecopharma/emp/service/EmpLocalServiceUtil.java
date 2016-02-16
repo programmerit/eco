@@ -353,6 +353,42 @@ public class EmpLocalServiceUtil {
 			sortOrder, companyId, start, end);
 	}
 
+	/**
+	* @param employee
+	* @param autoPassword
+	* @param password1
+	* @param password2
+	* @param autoScreenName
+	* @param screenName
+	* @param emailAddress
+	* @param facebookId
+	* @param openId
+	* @param locale
+	* @param firstName
+	* @param middleName
+	* @param lastName
+	* @param prefixId
+	* @param suffixId
+	* @param male
+	* @param birthdayMonth
+	* @param birthdayDay
+	* @param birthdayYear
+	* @param groupIds
+	* @param organizationIds
+	* @param roleIds
+	* @param userGroupIds
+	* @param sendEmail
+	* @param addresses
+	* @param dependentNameMap
+	* @param bankInfoMap
+	* @param isImportAction
+	use to determine wherether emp is imported or create. (For
+	notify)
+	* @param serviceContext
+	* @return
+	* @throws SystemException
+	* @throws PortalException
+	*/
 	public static vn.com.ecopharma.emp.model.Emp addEmp(
 		vn.com.ecopharma.emp.model.Emp employee, boolean autoPassword,
 		java.lang.String password1, java.lang.String password2,
@@ -367,6 +403,7 @@ public class EmpLocalServiceUtil {
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addresses,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -376,7 +413,7 @@ public class EmpLocalServiceUtil {
 			locale, firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, addresses,
-			dependentNameMap, bankInfoMap, serviceContext);
+			dependentNameMap, bankInfoMap, isImportAction, serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp addEmp(
@@ -398,11 +435,12 @@ public class EmpLocalServiceUtil {
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isImportAction,
+		boolean isManager, boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
 				   .update(employee, userId, oldTitlesId, addressesMap,
-			dependentNameMap, bankInfoMap, isImportAction, serviceContext);
+			dependentNameMap, bankInfoMap, isManager, isImportAction,
+			serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp update(
@@ -411,11 +449,12 @@ public class EmpLocalServiceUtil {
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isImportAction,
+		boolean isManager, boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
 				   .update(employee, user, oldTitlesId, addressesMap,
-			dependentNameMap, bankInfoMap, isImportAction, serviceContext);
+			dependentNameMap, bankInfoMap, isManager, isImportAction,
+			serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp updateExistedEmployee(
@@ -452,12 +491,12 @@ public class EmpLocalServiceUtil {
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isImportAction,
+		boolean isManager, boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
 				   .addOrUpdateWithExistUser(employee, user, oldTitlesId,
-			addressesMap, dependentNameMap, bankInfoMap, isImportAction,
-			serviceContext);
+			addressesMap, dependentNameMap, bankInfoMap, isManager,
+			isImportAction, serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp addOrUpdateWithExistUser(
@@ -466,12 +505,12 @@ public class EmpLocalServiceUtil {
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isImportAction,
+		boolean isManager, boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
 				   .addOrUpdateWithExistUser(employee, userScreenName,
 			oldTitlesId, addressesMap, dependentNameMap, bankInfoMap,
-			isImportAction, serviceContext);
+			isManager, isImportAction, serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp createEmployee(
@@ -500,6 +539,11 @@ public class EmpLocalServiceUtil {
 			issuedPlace, contactNumber, companyEmailAddress, taxCode,
 			numberOfDependents, dependentNames, insurranceCode,
 			healthInsuranceNo);
+	}
+
+	public static java.lang.String getViFullnameFromUser(
+		com.liferay.portal.model.User user) {
+		return getService().getViFullnameFromUser(user);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp updateEmpAddresses(
@@ -613,6 +657,72 @@ public class EmpLocalServiceUtil {
 	public static com.liferay.portal.model.Address getPresentAddress(
 		long companyId, long employeeId) {
 		return getService().getPresentAddress(companyId, employeeId);
+	}
+
+	public static java.util.List<vn.com.ecopharma.emp.model.Emp> getEmpsFromEmpNotifyEmails(
+		java.util.List<vn.com.ecopharma.emp.model.EmpNotifyEmail> empNotifyEmails)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getEmpsFromEmpNotifyEmails(empNotifyEmails);
+	}
+
+	public static java.util.Set<vn.com.ecopharma.emp.model.Department> getUniqueDepartmentsFromEmps(
+		java.util.List<vn.com.ecopharma.emp.model.Emp> emps)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUniqueDepartmentsFromEmps(emps);
+	}
+
+	public static java.util.Set<java.lang.String> getAllManagerEmailsFromDepartments(
+		java.util.Collection<vn.com.ecopharma.emp.model.Department> departments)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getAllManagerEmailsFromDepartments(departments);
+	}
+
+	public static java.util.Set<com.liferay.portal.model.User> getUsersByEmps(
+		java.util.Collection<vn.com.ecopharma.emp.model.Emp> emps)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUsersByEmps(emps);
+	}
+
+	public static java.util.Set<java.lang.String> getEmailsFromUsers(
+		java.util.Collection<com.liferay.portal.model.User> users) {
+		return getService().getEmailsFromUsers(users);
+	}
+
+	public static java.util.Set<java.lang.String> getEmailsFromEmps(
+		java.util.Collection<vn.com.ecopharma.emp.model.Emp> emps)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getEmailsFromEmps(emps);
+	}
+
+	public static java.util.Set<vn.com.ecopharma.emp.model.Emp> getEmpsByEmpOrgRelationships(
+		java.util.List<vn.com.ecopharma.emp.model.EmpOrgRelationship> empManagers)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getEmpsByEmpOrgRelationships(empManagers);
+	}
+
+	public static java.util.Set<java.lang.String> getManagerEmailsForNewEmpsNotification(
+		java.util.List<vn.com.ecopharma.emp.model.Emp> emps)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getManagerEmailsForNewEmpsNotification(emps);
+	}
+
+	public static java.lang.String getNewEmployeesHtmlTable(
+		java.util.List<vn.com.ecopharma.emp.model.Emp> emps) {
+		return getService().getNewEmployeesHtmlTable(emps);
+	}
+
+	public static java.lang.String getEntireNewEmployeesHtmlMailContent(
+		java.util.List<vn.com.ecopharma.emp.model.Emp> emps) {
+		return getService().getEntireNewEmployeesHtmlMailContent(emps);
+	}
+
+	public static void sendNewEmpsNotificationEmail(
+		java.util.List<vn.com.ecopharma.emp.model.Emp> emps) {
+		getService().sendNewEmpsNotificationEmail(emps);
+	}
+
+	public static void getNewEmpsAndSendNotifyEmail() {
+		getService().getNewEmpsAndSendNotifyEmail();
 	}
 
 	public static void clearService() {

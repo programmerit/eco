@@ -80,7 +80,7 @@ public class EmpIndexer extends BaseIndexer {
 		document.addNumber(EmpField.EMPLOYEE_USER_ID, emp.getEmpUserId());
 		document.addText(EmpField.FULL_NAME,
 				UserLocalServiceUtil.getUser(emp.getEmpUserId()).getFullName());
-		document.addText(EmpField.VN_FULL_NAME, EmployeeUtils
+		document.addText(EmpField.VN_FULL_NAME, EmpLocalServiceUtil
 				.getViFullnameFromUser(UserLocalServiceUtil.getUser(emp
 						.getEmpUserId())));
 

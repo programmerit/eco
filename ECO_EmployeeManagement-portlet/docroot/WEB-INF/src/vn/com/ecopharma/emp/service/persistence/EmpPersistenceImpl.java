@@ -1919,6 +1919,9 @@ public class EmpPersistenceImpl extends BasePersistenceImpl<Emp>
 		empImpl.setReligion(emp.getReligion());
 		empImpl.setJoinedDate(emp.getJoinedDate());
 		empImpl.setTitlesId(emp.getTitlesId());
+		empImpl.setUnitGroupId(emp.getUnitGroupId());
+		empImpl.setUnitId(emp.getUnitId());
+		empImpl.setDepartmentId(emp.getDepartmentId());
 		empImpl.setLevelId(emp.getLevelId());
 		empImpl.setPromotedDate(emp.getPromotedDate());
 		empImpl.setLaborContractSignedDate(emp.getLaborContractSignedDate());
@@ -1960,9 +1963,6 @@ public class EmpPersistenceImpl extends BasePersistenceImpl<Emp>
 		empImpl.setUserName(emp.getUserName());
 		empImpl.setCreateDate(emp.getCreateDate());
 		empImpl.setModifiedDate(emp.getModifiedDate());
-		empImpl.setUnitId(emp.getUnitId());
-		empImpl.setUnitGroupId(emp.getUnitGroupId());
-		empImpl.setDepartmentId(emp.getDepartmentId());
 
 		return empImpl;
 	}

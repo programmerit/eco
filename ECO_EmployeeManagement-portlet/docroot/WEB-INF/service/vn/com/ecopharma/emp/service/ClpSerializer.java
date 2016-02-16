@@ -32,6 +32,8 @@ import vn.com.ecopharma.emp.model.DistrictClp;
 import vn.com.ecopharma.emp.model.EmpBankInfoClp;
 import vn.com.ecopharma.emp.model.EmpClp;
 import vn.com.ecopharma.emp.model.EmpDisciplineClp;
+import vn.com.ecopharma.emp.model.EmpNotifyEmailClp;
+import vn.com.ecopharma.emp.model.EmpOrgRelationshipClp;
 import vn.com.ecopharma.emp.model.EmployeeTitlesHistoryClp;
 import vn.com.ecopharma.emp.model.LevelClp;
 import vn.com.ecopharma.emp.model.LocationClp;
@@ -151,6 +153,14 @@ public class ClpSerializer {
 
 		if (oldModelClassName.equals(EmployeeTitlesHistoryClp.class.getName())) {
 			return translateInputEmployeeTitlesHistory(oldModel);
+		}
+
+		if (oldModelClassName.equals(EmpNotifyEmailClp.class.getName())) {
+			return translateInputEmpNotifyEmail(oldModel);
+		}
+
+		if (oldModelClassName.equals(EmpOrgRelationshipClp.class.getName())) {
+			return translateInputEmpOrgRelationship(oldModel);
 		}
 
 		if (oldModelClassName.equals(LevelClp.class.getName())) {
@@ -292,6 +302,26 @@ public class ClpSerializer {
 		EmployeeTitlesHistoryClp oldClpModel = (EmployeeTitlesHistoryClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getEmployeeTitlesHistoryRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputEmpNotifyEmail(BaseModel<?> oldModel) {
+		EmpNotifyEmailClp oldClpModel = (EmpNotifyEmailClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getEmpNotifyEmailRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputEmpOrgRelationship(BaseModel<?> oldModel) {
+		EmpOrgRelationshipClp oldClpModel = (EmpOrgRelationshipClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getEmpOrgRelationshipRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -697,6 +727,80 @@ public class ClpSerializer {
 		if (oldModelClassName.equals(
 					"vn.com.ecopharma.emp.model.impl.EmployeeTitlesHistoryImpl")) {
 			return translateOutputEmployeeTitlesHistory(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"vn.com.ecopharma.emp.model.impl.EmpNotifyEmailImpl")) {
+			return translateOutputEmpNotifyEmail(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"vn.com.ecopharma.emp.model.impl.EmpOrgRelationshipImpl")) {
+			return translateOutputEmpOrgRelationship(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -1288,6 +1392,16 @@ public class ClpSerializer {
 			return new vn.com.ecopharma.emp.NoSuchEmployeeTitlesHistoryException();
 		}
 
+		if (className.equals(
+					"vn.com.ecopharma.emp.NoSuchEmpNotifyEmailException")) {
+			return new vn.com.ecopharma.emp.NoSuchEmpNotifyEmailException();
+		}
+
+		if (className.equals(
+					"vn.com.ecopharma.emp.NoSuchEmpOrgRelationshipException")) {
+			return new vn.com.ecopharma.emp.NoSuchEmpOrgRelationshipException();
+		}
+
 		if (className.equals("vn.com.ecopharma.emp.NoSuchLevelException")) {
 			return new vn.com.ecopharma.emp.NoSuchLevelException();
 		}
@@ -1421,6 +1535,27 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setEmployeeTitlesHistoryRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputEmpNotifyEmail(BaseModel<?> oldModel) {
+		EmpNotifyEmailClp newModel = new EmpNotifyEmailClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setEmpNotifyEmailRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputEmpOrgRelationship(
+		BaseModel<?> oldModel) {
+		EmpOrgRelationshipClp newModel = new EmpOrgRelationshipClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setEmpOrgRelationshipRemoteModel(oldModel);
 
 		return newModel;
 	}

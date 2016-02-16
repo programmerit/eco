@@ -25,6 +25,12 @@
 	<bean id="vn.com.ecopharma.emp.service.EmployeeTitlesHistoryLocalService" class="vn.com.ecopharma.emp.service.impl.EmployeeTitlesHistoryLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.EmployeeTitlesHistoryService" class="vn.com.ecopharma.emp.service.impl.EmployeeTitlesHistoryServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.persistence.EmployeeTitlesHistoryPersistence" class="vn.com.ecopharma.emp.service.persistence.EmployeeTitlesHistoryPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.emp.service.EmpNotifyEmailLocalService" class="vn.com.ecopharma.emp.service.impl.EmpNotifyEmailLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.emp.service.EmpNotifyEmailService" class="vn.com.ecopharma.emp.service.impl.EmpNotifyEmailServiceImpl" />
+	<bean id="vn.com.ecopharma.emp.service.persistence.EmpNotifyEmailPersistence" class="vn.com.ecopharma.emp.service.persistence.EmpNotifyEmailPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.emp.service.EmpOrgRelationshipLocalService" class="vn.com.ecopharma.emp.service.impl.EmpOrgRelationshipLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.emp.service.EmpOrgRelationshipService" class="vn.com.ecopharma.emp.service.impl.EmpOrgRelationshipServiceImpl" />
+	<bean id="vn.com.ecopharma.emp.service.persistence.EmpOrgRelationshipPersistence" class="vn.com.ecopharma.emp.service.persistence.EmpOrgRelationshipPersistenceImpl" parent="basePersistence" />
 	<bean id="vn.com.ecopharma.emp.service.LevelLocalService" class="vn.com.ecopharma.emp.service.impl.LevelLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.LevelService" class="vn.com.ecopharma.emp.service.impl.LevelServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.persistence.LevelPersistence" class="vn.com.ecopharma.emp.service.persistence.LevelPersistenceImpl" parent="basePersistence" />

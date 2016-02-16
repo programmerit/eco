@@ -12,6 +12,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -88,8 +89,6 @@ public class EmployeeBean implements Serializable {
 
 	private static final String IMPORT_EXPORT_PAGE = "/views/import_export.xhtml";
 
-	private static final String DEFAULT_PW = "123";
-
 	private static final String MALE = "male";
 
 	private EmpInfoItem modifyEmployeeInfoItem;
@@ -159,12 +158,23 @@ public class EmployeeBean implements Serializable {
 		}
 	}
 
+	public void onTestSendMail() {
+		this.includedDialog = "/views/dialogs/notifyDialog.xhtml";
+	}
+
 	public void addOneAddress() {
 		modifyEmployeeInfoItem.getAddresses().add(new AddressObjectItem());
 	}
 
 	public void removeOneAddress(int index) {
 		modifyEmployeeInfoItem.getAddresses().get(index).setUIDeleted(true);
+	}
+
+	public void onPrimaryChanged(AjaxBehaviorEvent event) {
+		// for (AddressObjectItem item : modifyEmployeeInfoItem.getAddresses())
+		// {
+		// item.getAddress().setPrimary(false);
+		// }
 	}
 
 	public void addOneBankInfo() {
@@ -210,6 +220,7 @@ public class EmployeeBean implements Serializable {
 	public void addNewEmployee() {
 		showUserTab = true;
 		modifyEmployeeInfoItem = new EmpInfoItem();
+		modifyEmployeeInfoItem.setTestDataForEmp();
 		updateString = StringUtils.EMPTY;
 		switchPage(2);
 	}
@@ -276,6 +287,8 @@ public class EmployeeBean implements Serializable {
 					.getWorkingPlace().getRegionId() : 0L;
 			modifyEmployeeInfoItem.getEmp().setWorkingPlaceId(workingPlaceId);
 
+			boolean isManager = modifyEmployeeInfoItem.isManager();
+
 			if (showUserTab) {
 				final Emp employee = modifyEmployeeInfoItem.getEmp();
 
@@ -327,7 +340,8 @@ public class EmployeeBean implements Serializable {
 								.getGender().equalsIgnoreCase(MALE) ? true
 								: false, month, day, year, groups,
 						organizationIds, roles, userGroupIds, sendEmail,
-						addressMap, dependentMap, bankInfoMap, serviceContext);
+						addressMap, dependentMap, bankInfoMap, false,
+						serviceContext);
 
 				if (result != null) {
 					msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -350,8 +364,8 @@ public class EmployeeBean implements Serializable {
 						modifyEmployeeInfoItem);
 				EmpLocalServiceUtil.update(employee,
 						modifyEmployeeInfoItem.getUser(), oldTitlesId,
-						addressMap, dependentMap, bankInfoMap, Boolean.FALSE,
-						serviceContext);
+						addressMap, dependentMap, bankInfoMap, isManager,
+						Boolean.FALSE, serviceContext);
 
 				msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 						"Update employee successfully", "Employee "
@@ -368,9 +382,19 @@ public class EmployeeBean implements Serializable {
 		if (isSuccessfulModified) {// NOSONAR
 			modifyEmployeeInfoItem = null;
 			updateString = "refreshEmployees();";
+			this.includedDialog = showUserTab ? "/views/dialogs/notifyDialog.xhtml"
+					: StringUtils.EMPTY;
 			switchPage(1);
+			if (showUserTab)
+				RequestContext.getCurrentInstance().execute(
+						"PF('wNotifyDialog').show();");
 		}
 
+	}
+
+	public void onCallNotifyDialog() {
+		RequestContext.getCurrentInstance().execute(
+				"PF('wNotifyDialog').show();");
 	}
 
 	/**
