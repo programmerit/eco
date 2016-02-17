@@ -153,8 +153,10 @@ public class EmployeeUtils {
 		final List<BankInfoObject> result = new ArrayList<>();
 		final List<EmpBankInfo> empBankInfos = EmpBankInfoLocalServiceUtil
 				.findByEmp(empId);
-		if (empBankInfos.isEmpty())
+		if (empBankInfos.isEmpty()) {
 			result.add(new BankInfoObject());
+			return result;
+		}
 
 		for (EmpBankInfo item : empBankInfos) {
 			result.add(new BankInfoObject(item));

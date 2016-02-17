@@ -307,6 +307,14 @@ public class EmpOrgRelationshipLocalServiceUtil {
 			isHeadOfOrg);
 	}
 
+	public static vn.com.ecopharma.emp.model.EmpOrgRelationship fetchByEmpClassNameClassPKHeadOfOrg(
+		long empId, java.lang.String className, long classPK,
+		boolean isHeadOfOrg) {
+		return getService()
+				   .fetchByEmpClassNameClassPKHeadOfOrg(empId, className,
+			classPK, isHeadOfOrg);
+	}
+
 	public static vn.com.ecopharma.emp.model.EmpOrgRelationship fetchByClassNameClassPKDeputyOfOrg(
 		java.lang.String className, long classPK, boolean isDeputyOfOrg) {
 		return getService()

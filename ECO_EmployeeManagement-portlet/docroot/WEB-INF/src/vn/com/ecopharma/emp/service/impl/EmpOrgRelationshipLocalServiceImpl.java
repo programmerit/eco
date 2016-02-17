@@ -112,6 +112,18 @@ public class EmpOrgRelationshipLocalServiceImpl extends
 		return null;
 	}
 
+	public EmpOrgRelationship fetchByEmpClassNameClassPKHeadOfOrg(long empId,
+			String className, long classPK, boolean isHeadOfOrg) {
+		try {
+			return empOrgRelationshipPersistence
+					.fetchByEmpClassNameClassPKHeadOfOrg(empId, className,
+							classPK, isHeadOfOrg);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
 	public EmpOrgRelationship fetchByClassNameClassPKDeputyOfOrg(
 			String className, long classPK, boolean isDeputyOfOrg) {
 		try {
@@ -125,8 +137,8 @@ public class EmpOrgRelationshipLocalServiceImpl extends
 	}
 
 	public boolean isHeadOfDepartment(long empId, long departmentId) {
-		return fetchByClassNameClassPKHeadOfOrg(Department.class.getName(),
-				departmentId, true) != null;
+		return fetchByEmpClassNameClassPKHeadOfOrg(empId,
+				Department.class.getName(), departmentId, true) != null;
 	}
 
 	public EmpOrgRelationship createPrepersistedEntity(

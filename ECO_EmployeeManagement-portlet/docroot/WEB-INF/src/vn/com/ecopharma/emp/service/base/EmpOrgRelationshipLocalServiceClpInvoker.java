@@ -142,38 +142,44 @@ public class EmpOrgRelationshipLocalServiceClpInvoker {
 				"java.lang.String", "long", "boolean"
 			};
 
-		_methodName174 = "fetchByClassNameClassPKDeputyOfOrg";
+		_methodName174 = "fetchByEmpClassNameClassPKHeadOfOrg";
 
 		_methodParameterTypes174 = new String[] {
+				"long", "java.lang.String", "long", "boolean"
+			};
+
+		_methodName175 = "fetchByClassNameClassPKDeputyOfOrg";
+
+		_methodParameterTypes175 = new String[] {
 				"java.lang.String", "long", "boolean"
 			};
 
-		_methodName175 = "isHeadOfDepartment";
+		_methodName176 = "isHeadOfDepartment";
 
-		_methodParameterTypes175 = new String[] { "long", "long" };
+		_methodParameterTypes176 = new String[] { "long", "long" };
 
-		_methodName176 = "createPrepersistedEntity";
-
-		_methodParameterTypes176 = new String[] {
-				"com.liferay.portal.service.ServiceContext"
-			};
-
-		_methodName177 = "addEmpOrgRelationship";
+		_methodName177 = "createPrepersistedEntity";
 
 		_methodParameterTypes177 = new String[] {
-				"long", "java.lang.String", "long", "boolean", "boolean",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName178 = "updateEmpOrgRelationship";
+		_methodName178 = "addEmpOrgRelationship";
 
 		_methodParameterTypes178 = new String[] {
-				"long", "long", "com.liferay.portal.service.ServiceContext"
+				"long", "java.lang.String", "long", "boolean", "boolean",
+				"com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName179 = "updateEmpOrgRelationship";
 
 		_methodParameterTypes179 = new String[] {
+				"long", "long", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName180 = "updateEmpOrgRelationship";
+
+		_methodParameterTypes180 = new String[] {
 				"vn.com.ecopharma.emp.model.EmpOrgRelationship", "long",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -318,24 +324,32 @@ public class EmpOrgRelationshipLocalServiceClpInvoker {
 
 		if (_methodName174.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
+			return EmpOrgRelationshipLocalServiceUtil.fetchByEmpClassNameClassPKHeadOfOrg(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1],
+				((Long)arguments[2]).longValue(),
+				((Boolean)arguments[3]).booleanValue());
+		}
+
+		if (_methodName175.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.fetchByClassNameClassPKDeputyOfOrg((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Boolean)arguments[2]).booleanValue());
 		}
 
-		if (_methodName175.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
+		if (_methodName176.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.isHeadOfDepartment(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName176.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
+		if (_methodName177.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes177, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.createPrepersistedEntity((com.liferay.portal.service.ServiceContext)arguments[0]);
 		}
 
-		if (_methodName177.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes177, parameterTypes)) {
+		if (_methodName178.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes178, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.addEmpOrgRelationship(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -344,15 +358,15 @@ public class EmpOrgRelationshipLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[5]);
 		}
 
-		if (_methodName178.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes178, parameterTypes)) {
+		if (_methodName179.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes179, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.updateEmpOrgRelationship(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
 		}
 
-		if (_methodName179.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes179, parameterTypes)) {
+		if (_methodName180.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes180, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.updateEmpOrgRelationship((vn.com.ecopharma.emp.model.EmpOrgRelationship)arguments[0],
 				((Long)arguments[1]).longValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
@@ -421,4 +435,6 @@ public class EmpOrgRelationshipLocalServiceClpInvoker {
 	private String[] _methodParameterTypes178;
 	private String _methodName179;
 	private String[] _methodParameterTypes179;
+	private String _methodName180;
+	private String[] _methodParameterTypes180;
 }

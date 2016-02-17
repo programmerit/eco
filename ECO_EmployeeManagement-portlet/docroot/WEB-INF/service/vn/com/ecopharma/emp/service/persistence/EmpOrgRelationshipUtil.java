@@ -635,6 +635,104 @@ public class EmpOrgRelationshipUtil {
 	}
 
 	/**
+	* Returns the emp org relationship where empId = &#63; and orgClassName = &#63; and orgClassPK = &#63; and headOfOrg = &#63; or throws a {@link vn.com.ecopharma.emp.NoSuchEmpOrgRelationshipException} if it could not be found.
+	*
+	* @param empId the emp ID
+	* @param orgClassName the org class name
+	* @param orgClassPK the org class p k
+	* @param headOfOrg the head of org
+	* @return the matching emp org relationship
+	* @throws vn.com.ecopharma.emp.NoSuchEmpOrgRelationshipException if a matching emp org relationship could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.EmpOrgRelationship findByEmpClassNameClassPKHeadOfOrg(
+		long empId, java.lang.String orgClassName, long orgClassPK,
+		boolean headOfOrg)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.emp.NoSuchEmpOrgRelationshipException {
+		return getPersistence()
+				   .findByEmpClassNameClassPKHeadOfOrg(empId, orgClassName,
+			orgClassPK, headOfOrg);
+	}
+
+	/**
+	* Returns the emp org relationship where empId = &#63; and orgClassName = &#63; and orgClassPK = &#63; and headOfOrg = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param empId the emp ID
+	* @param orgClassName the org class name
+	* @param orgClassPK the org class p k
+	* @param headOfOrg the head of org
+	* @return the matching emp org relationship, or <code>null</code> if a matching emp org relationship could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.EmpOrgRelationship fetchByEmpClassNameClassPKHeadOfOrg(
+		long empId, java.lang.String orgClassName, long orgClassPK,
+		boolean headOfOrg)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByEmpClassNameClassPKHeadOfOrg(empId, orgClassName,
+			orgClassPK, headOfOrg);
+	}
+
+	/**
+	* Returns the emp org relationship where empId = &#63; and orgClassName = &#63; and orgClassPK = &#63; and headOfOrg = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param empId the emp ID
+	* @param orgClassName the org class name
+	* @param orgClassPK the org class p k
+	* @param headOfOrg the head of org
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching emp org relationship, or <code>null</code> if a matching emp org relationship could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.EmpOrgRelationship fetchByEmpClassNameClassPKHeadOfOrg(
+		long empId, java.lang.String orgClassName, long orgClassPK,
+		boolean headOfOrg, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByEmpClassNameClassPKHeadOfOrg(empId, orgClassName,
+			orgClassPK, headOfOrg, retrieveFromCache);
+	}
+
+	/**
+	* Removes the emp org relationship where empId = &#63; and orgClassName = &#63; and orgClassPK = &#63; and headOfOrg = &#63; from the database.
+	*
+	* @param empId the emp ID
+	* @param orgClassName the org class name
+	* @param orgClassPK the org class p k
+	* @param headOfOrg the head of org
+	* @return the emp org relationship that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.EmpOrgRelationship removeByEmpClassNameClassPKHeadOfOrg(
+		long empId, java.lang.String orgClassName, long orgClassPK,
+		boolean headOfOrg)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.emp.NoSuchEmpOrgRelationshipException {
+		return getPersistence()
+				   .removeByEmpClassNameClassPKHeadOfOrg(empId, orgClassName,
+			orgClassPK, headOfOrg);
+	}
+
+	/**
+	* Returns the number of emp org relationships where empId = &#63; and orgClassName = &#63; and orgClassPK = &#63; and headOfOrg = &#63;.
+	*
+	* @param empId the emp ID
+	* @param orgClassName the org class name
+	* @param orgClassPK the org class p k
+	* @param headOfOrg the head of org
+	* @return the number of matching emp org relationships
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByEmpClassNameClassPKHeadOfOrg(long empId,
+		java.lang.String orgClassName, long orgClassPK, boolean headOfOrg)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countByEmpClassNameClassPKHeadOfOrg(empId, orgClassName,
+			orgClassPK, headOfOrg);
+	}
+
+	/**
 	* Caches the emp org relationship in the entity cache if it is enabled.
 	*
 	* @param empOrgRelationship the emp org relationship

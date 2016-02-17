@@ -42,8 +42,7 @@
 							style="width: 150px;">
 							<p:ajax event="keyup" delay="1000"
 								oncomplete="updateFilterRelatedComponents();" />
-							<p:ajax event="blur"
-								oncomplete="updateFilterRelatedComponents();" />
+
 						</p:inputText>
 						<p:tooltip for="filter_globalString" value="Filter Everything"
 							showEffect="clip" hideEffect="explode" />
@@ -53,8 +52,6 @@
 							value="#{empFilterBean.fullName}" placeholder="FullName"
 							style="width: 150px;">
 							<p:ajax event="keyup" delay="1000"
-								oncomplete="updateFilterRelatedComponents();" />
-							<p:ajax event="blur"
 								oncomplete="updateFilterRelatedComponents();" />
 						</p:inputText>
 						<p:tooltip for="filter_fullName" value="Filter [Fullname]"
@@ -66,8 +63,6 @@
 							value="#{empFilterBean.employeeCode}" placeholder="Employee Code"
 							style="width: 150px">
 							<p:ajax event="keyup" delay="1000"
-								oncomplete="updateFilterRelatedComponents();" />
-							<p:ajax event="blur"
 								oncomplete="updateFilterRelatedComponents();" />
 						</p:inputText>
 						<p:tooltip for="filter_empCode" value="Filter [Employee Code]"
@@ -232,7 +227,10 @@
 						<span class="badge js-tooltip"> <h:outputText value="#{b}" />
 							<p:commandLink value="x" title="delete"
 								actionListener="#{empFilterBean.onDeleteFilterBadges(status.index)}"
-								update=":searchForm:filter_globalString :searchForm:filter_fullName :searchForm:calendarJoinedDateFrom :searchForm:calendarJoinedDateTo :searchForm:filter_empGender"
+								update=":searchForm:filter_globalString :searchForm:filter_fullName 
+								:searchForm:filter_empCode :searchForm:calendarJoinedDateFrom 
+								:searchForm:calendarJoinedDateTo :searchForm:filter_empGender 
+								:searchForm:devisionSelect :searchForm:departmentSelect "
 								oncomplete="updateFilterRelatedComponents();"
 								style="color: grey !important; margin-left: 4px; font-weight: bolder;" />
 						</span>

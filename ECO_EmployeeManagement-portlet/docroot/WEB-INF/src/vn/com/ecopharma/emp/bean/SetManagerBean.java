@@ -2,8 +2,10 @@ package vn.com.ecopharma.emp.bean;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
 import vn.com.ecopharma.emp.model.Department;
@@ -33,6 +35,7 @@ public class SetManagerBean {
 			return;
 
 		final ServiceContext serviceContext = EmployeeUtils.getServiceContext();
+		FacesMessage message = null;
 
 		EmpOrgRelationship currentManagerRelationship = getCurrentManagerRelationship();
 		if (currentManagerRelationship != null) {
@@ -51,6 +54,10 @@ public class SetManagerBean {
 					Department.class.getName(), department.getDepartmentId(),
 					true, false, serviceContext);
 		}
+		message = new FacesMessage("Information",
+				"Successfully set manager for " + department.getName());
+
+		FacesContext.getCurrentInstance().addMessage(null, message);
 		// reset selected value
 		currentSelectedManager = null;
 	}
@@ -81,9 +88,10 @@ public class SetManagerBean {
 		EmpOrgRelationship currentManagerRelationship = getCurrentManagerRelationship();
 		if (currentManagerRelationship == null)
 			return null;
-		return new EmpIndexedItem(EmpLocalServiceUtil.getIndexedEmp(
-				currentManagerRelationship.getEmpId(),
-				EmployeeUtils.getCurrentSearchContext()));
+		return currentManagerRelationship.getEmpId() != 0 ? new EmpIndexedItem(
+				EmpLocalServiceUtil.getIndexedEmp(
+						currentManagerRelationship.getEmpId(),
+						EmployeeUtils.getCurrentSearchContext())) : null;
 	}
 
 	private EmpOrgRelationship getCurrentManagerRelationship() {

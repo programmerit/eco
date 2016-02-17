@@ -1792,6 +1792,346 @@ public class EmpOrgRelationshipPersistenceImpl extends BasePersistenceImpl<EmpOr
 		"empOrgRelationship.orgClassPK = ? AND ";
 	private static final String _FINDER_COLUMN_CLASSNAMECLASSPKDEPUTYOFORG_DEPUTYOFORG_2 =
 		"empOrgRelationship.deputyOfOrg = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_EMPCLASSNAMECLASSPKHEADOFORG =
+		new FinderPath(EmpOrgRelationshipModelImpl.ENTITY_CACHE_ENABLED,
+			EmpOrgRelationshipModelImpl.FINDER_CACHE_ENABLED,
+			EmpOrgRelationshipImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByEmpClassNameClassPKHeadOfOrg",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), Boolean.class.getName()
+			},
+			EmpOrgRelationshipModelImpl.EMPID_COLUMN_BITMASK |
+			EmpOrgRelationshipModelImpl.ORGCLASSNAME_COLUMN_BITMASK |
+			EmpOrgRelationshipModelImpl.ORGCLASSPK_COLUMN_BITMASK |
+			EmpOrgRelationshipModelImpl.HEADOFORG_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_EMPCLASSNAMECLASSPKHEADOFORG =
+		new FinderPath(EmpOrgRelationshipModelImpl.ENTITY_CACHE_ENABLED,
+			EmpOrgRelationshipModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByEmpClassNameClassPKHeadOfOrg",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), Boolean.class.getName()
+			});
+
+	/**
+	 * Returns the emp org relationship where empId = &#63; and orgClassName = &#63; and orgClassPK = &#63; and headOfOrg = &#63; or throws a {@link vn.com.ecopharma.emp.NoSuchEmpOrgRelationshipException} if it could not be found.
+	 *
+	 * @param empId the emp ID
+	 * @param orgClassName the org class name
+	 * @param orgClassPK the org class p k
+	 * @param headOfOrg the head of org
+	 * @return the matching emp org relationship
+	 * @throws vn.com.ecopharma.emp.NoSuchEmpOrgRelationshipException if a matching emp org relationship could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public EmpOrgRelationship findByEmpClassNameClassPKHeadOfOrg(long empId,
+		String orgClassName, long orgClassPK, boolean headOfOrg)
+		throws NoSuchEmpOrgRelationshipException, SystemException {
+		EmpOrgRelationship empOrgRelationship = fetchByEmpClassNameClassPKHeadOfOrg(empId,
+				orgClassName, orgClassPK, headOfOrg);
+
+		if (empOrgRelationship == null) {
+			StringBundler msg = new StringBundler(10);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("empId=");
+			msg.append(empId);
+
+			msg.append(", orgClassName=");
+			msg.append(orgClassName);
+
+			msg.append(", orgClassPK=");
+			msg.append(orgClassPK);
+
+			msg.append(", headOfOrg=");
+			msg.append(headOfOrg);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchEmpOrgRelationshipException(msg.toString());
+		}
+
+		return empOrgRelationship;
+	}
+
+	/**
+	 * Returns the emp org relationship where empId = &#63; and orgClassName = &#63; and orgClassPK = &#63; and headOfOrg = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param empId the emp ID
+	 * @param orgClassName the org class name
+	 * @param orgClassPK the org class p k
+	 * @param headOfOrg the head of org
+	 * @return the matching emp org relationship, or <code>null</code> if a matching emp org relationship could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public EmpOrgRelationship fetchByEmpClassNameClassPKHeadOfOrg(long empId,
+		String orgClassName, long orgClassPK, boolean headOfOrg)
+		throws SystemException {
+		return fetchByEmpClassNameClassPKHeadOfOrg(empId, orgClassName,
+			orgClassPK, headOfOrg, true);
+	}
+
+	/**
+	 * Returns the emp org relationship where empId = &#63; and orgClassName = &#63; and orgClassPK = &#63; and headOfOrg = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param empId the emp ID
+	 * @param orgClassName the org class name
+	 * @param orgClassPK the org class p k
+	 * @param headOfOrg the head of org
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching emp org relationship, or <code>null</code> if a matching emp org relationship could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public EmpOrgRelationship fetchByEmpClassNameClassPKHeadOfOrg(long empId,
+		String orgClassName, long orgClassPK, boolean headOfOrg,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] {
+				empId, orgClassName, orgClassPK, headOfOrg
+			};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_EMPCLASSNAMECLASSPKHEADOFORG,
+					finderArgs, this);
+		}
+
+		if (result instanceof EmpOrgRelationship) {
+			EmpOrgRelationship empOrgRelationship = (EmpOrgRelationship)result;
+
+			if ((empId != empOrgRelationship.getEmpId()) ||
+					!Validator.equals(orgClassName,
+						empOrgRelationship.getOrgClassName()) ||
+					(orgClassPK != empOrgRelationship.getOrgClassPK()) ||
+					(headOfOrg != empOrgRelationship.getHeadOfOrg())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(6);
+
+			query.append(_SQL_SELECT_EMPORGRELATIONSHIP_WHERE);
+
+			query.append(_FINDER_COLUMN_EMPCLASSNAMECLASSPKHEADOFORG_EMPID_2);
+
+			boolean bindOrgClassName = false;
+
+			if (orgClassName == null) {
+				query.append(_FINDER_COLUMN_EMPCLASSNAMECLASSPKHEADOFORG_ORGCLASSNAME_1);
+			}
+			else if (orgClassName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_EMPCLASSNAMECLASSPKHEADOFORG_ORGCLASSNAME_3);
+			}
+			else {
+				bindOrgClassName = true;
+
+				query.append(_FINDER_COLUMN_EMPCLASSNAMECLASSPKHEADOFORG_ORGCLASSNAME_2);
+			}
+
+			query.append(_FINDER_COLUMN_EMPCLASSNAMECLASSPKHEADOFORG_ORGCLASSPK_2);
+
+			query.append(_FINDER_COLUMN_EMPCLASSNAMECLASSPKHEADOFORG_HEADOFORG_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(empId);
+
+				if (bindOrgClassName) {
+					qPos.add(orgClassName);
+				}
+
+				qPos.add(orgClassPK);
+
+				qPos.add(headOfOrg);
+
+				List<EmpOrgRelationship> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_EMPCLASSNAMECLASSPKHEADOFORG,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"EmpOrgRelationshipPersistenceImpl.fetchByEmpClassNameClassPKHeadOfOrg(long, String, long, boolean, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					EmpOrgRelationship empOrgRelationship = list.get(0);
+
+					result = empOrgRelationship;
+
+					cacheResult(empOrgRelationship);
+
+					if ((empOrgRelationship.getEmpId() != empId) ||
+							(empOrgRelationship.getOrgClassName() == null) ||
+							!empOrgRelationship.getOrgClassName()
+												   .equals(orgClassName) ||
+							(empOrgRelationship.getOrgClassPK() != orgClassPK) ||
+							(empOrgRelationship.getHeadOfOrg() != headOfOrg)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_EMPCLASSNAMECLASSPKHEADOFORG,
+							finderArgs, empOrgRelationship);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_EMPCLASSNAMECLASSPKHEADOFORG,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (EmpOrgRelationship)result;
+		}
+	}
+
+	/**
+	 * Removes the emp org relationship where empId = &#63; and orgClassName = &#63; and orgClassPK = &#63; and headOfOrg = &#63; from the database.
+	 *
+	 * @param empId the emp ID
+	 * @param orgClassName the org class name
+	 * @param orgClassPK the org class p k
+	 * @param headOfOrg the head of org
+	 * @return the emp org relationship that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public EmpOrgRelationship removeByEmpClassNameClassPKHeadOfOrg(long empId,
+		String orgClassName, long orgClassPK, boolean headOfOrg)
+		throws NoSuchEmpOrgRelationshipException, SystemException {
+		EmpOrgRelationship empOrgRelationship = findByEmpClassNameClassPKHeadOfOrg(empId,
+				orgClassName, orgClassPK, headOfOrg);
+
+		return remove(empOrgRelationship);
+	}
+
+	/**
+	 * Returns the number of emp org relationships where empId = &#63; and orgClassName = &#63; and orgClassPK = &#63; and headOfOrg = &#63;.
+	 *
+	 * @param empId the emp ID
+	 * @param orgClassName the org class name
+	 * @param orgClassPK the org class p k
+	 * @param headOfOrg the head of org
+	 * @return the number of matching emp org relationships
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByEmpClassNameClassPKHeadOfOrg(long empId,
+		String orgClassName, long orgClassPK, boolean headOfOrg)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_EMPCLASSNAMECLASSPKHEADOFORG;
+
+		Object[] finderArgs = new Object[] {
+				empId, orgClassName, orgClassPK, headOfOrg
+			};
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_EMPORGRELATIONSHIP_WHERE);
+
+			query.append(_FINDER_COLUMN_EMPCLASSNAMECLASSPKHEADOFORG_EMPID_2);
+
+			boolean bindOrgClassName = false;
+
+			if (orgClassName == null) {
+				query.append(_FINDER_COLUMN_EMPCLASSNAMECLASSPKHEADOFORG_ORGCLASSNAME_1);
+			}
+			else if (orgClassName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_EMPCLASSNAMECLASSPKHEADOFORG_ORGCLASSNAME_3);
+			}
+			else {
+				bindOrgClassName = true;
+
+				query.append(_FINDER_COLUMN_EMPCLASSNAMECLASSPKHEADOFORG_ORGCLASSNAME_2);
+			}
+
+			query.append(_FINDER_COLUMN_EMPCLASSNAMECLASSPKHEADOFORG_ORGCLASSPK_2);
+
+			query.append(_FINDER_COLUMN_EMPCLASSNAMECLASSPKHEADOFORG_HEADOFORG_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(empId);
+
+				if (bindOrgClassName) {
+					qPos.add(orgClassName);
+				}
+
+				qPos.add(orgClassPK);
+
+				qPos.add(headOfOrg);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_EMPCLASSNAMECLASSPKHEADOFORG_EMPID_2 =
+		"empOrgRelationship.empId = ? AND ";
+	private static final String _FINDER_COLUMN_EMPCLASSNAMECLASSPKHEADOFORG_ORGCLASSNAME_1 =
+		"empOrgRelationship.orgClassName IS NULL AND ";
+	private static final String _FINDER_COLUMN_EMPCLASSNAMECLASSPKHEADOFORG_ORGCLASSNAME_2 =
+		"empOrgRelationship.orgClassName = ? AND ";
+	private static final String _FINDER_COLUMN_EMPCLASSNAMECLASSPKHEADOFORG_ORGCLASSNAME_3 =
+		"(empOrgRelationship.orgClassName IS NULL OR empOrgRelationship.orgClassName = '') AND ";
+	private static final String _FINDER_COLUMN_EMPCLASSNAMECLASSPKHEADOFORG_ORGCLASSPK_2 =
+		"empOrgRelationship.orgClassPK = ? AND ";
+	private static final String _FINDER_COLUMN_EMPCLASSNAMECLASSPKHEADOFORG_HEADOFORG_2 =
+		"empOrgRelationship.headOfOrg = ?";
 
 	public EmpOrgRelationshipPersistenceImpl() {
 		setModelClass(EmpOrgRelationship.class);
@@ -1820,6 +2160,14 @@ public class EmpOrgRelationshipPersistenceImpl extends BasePersistenceImpl<EmpOr
 				empOrgRelationship.getOrgClassName(),
 				empOrgRelationship.getOrgClassPK(),
 				empOrgRelationship.getDeputyOfOrg()
+			}, empOrgRelationship);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_EMPCLASSNAMECLASSPKHEADOFORG,
+			new Object[] {
+				empOrgRelationship.getEmpId(),
+				empOrgRelationship.getOrgClassName(),
+				empOrgRelationship.getOrgClassPK(),
+				empOrgRelationship.getHeadOfOrg()
 			}, empOrgRelationship);
 
 		empOrgRelationship.resetOriginalValues();
@@ -1920,6 +2268,18 @@ public class EmpOrgRelationshipPersistenceImpl extends BasePersistenceImpl<EmpOr
 				args, Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CLASSNAMECLASSPKDEPUTYOFORG,
 				args, empOrgRelationship);
+
+			args = new Object[] {
+					empOrgRelationship.getEmpId(),
+					empOrgRelationship.getOrgClassName(),
+					empOrgRelationship.getOrgClassPK(),
+					empOrgRelationship.getHeadOfOrg()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_EMPCLASSNAMECLASSPKHEADOFORG,
+				args, Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_EMPCLASSNAMECLASSPKHEADOFORG,
+				args, empOrgRelationship);
 		}
 		else {
 			EmpOrgRelationshipModelImpl empOrgRelationshipModelImpl = (EmpOrgRelationshipModelImpl)empOrgRelationship;
@@ -1949,6 +2309,21 @@ public class EmpOrgRelationshipPersistenceImpl extends BasePersistenceImpl<EmpOr
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CLASSNAMECLASSPKDEPUTYOFORG,
 					args, Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CLASSNAMECLASSPKDEPUTYOFORG,
+					args, empOrgRelationship);
+			}
+
+			if ((empOrgRelationshipModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_EMPCLASSNAMECLASSPKHEADOFORG.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						empOrgRelationship.getEmpId(),
+						empOrgRelationship.getOrgClassName(),
+						empOrgRelationship.getOrgClassPK(),
+						empOrgRelationship.getHeadOfOrg()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_EMPCLASSNAMECLASSPKHEADOFORG,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_EMPCLASSNAMECLASSPKHEADOFORG,
 					args, empOrgRelationship);
 			}
 		}
@@ -2005,6 +2380,33 @@ public class EmpOrgRelationshipPersistenceImpl extends BasePersistenceImpl<EmpOr
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMECLASSPKDEPUTYOFORG,
 				args);
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CLASSNAMECLASSPKDEPUTYOFORG,
+				args);
+		}
+
+		args = new Object[] {
+				empOrgRelationship.getEmpId(),
+				empOrgRelationship.getOrgClassName(),
+				empOrgRelationship.getOrgClassPK(),
+				empOrgRelationship.getHeadOfOrg()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_EMPCLASSNAMECLASSPKHEADOFORG,
+			args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_EMPCLASSNAMECLASSPKHEADOFORG,
+			args);
+
+		if ((empOrgRelationshipModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_EMPCLASSNAMECLASSPKHEADOFORG.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					empOrgRelationshipModelImpl.getOriginalEmpId(),
+					empOrgRelationshipModelImpl.getOriginalOrgClassName(),
+					empOrgRelationshipModelImpl.getOriginalOrgClassPK(),
+					empOrgRelationshipModelImpl.getOriginalHeadOfOrg()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_EMPCLASSNAMECLASSPKHEADOFORG,
+				args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_EMPCLASSNAMECLASSPKHEADOFORG,
 				args);
 		}
 	}

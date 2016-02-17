@@ -274,6 +274,11 @@ public interface EmpOrgRelationshipLocalService extends BaseLocalService,
 		java.lang.String className, long classPK, boolean isHeadOfOrg);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public vn.com.ecopharma.emp.model.EmpOrgRelationship fetchByEmpClassNameClassPKHeadOfOrg(
+		long empId, java.lang.String className, long classPK,
+		boolean isHeadOfOrg);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public vn.com.ecopharma.emp.model.EmpOrgRelationship fetchByClassNameClassPKDeputyOfOrg(
 		java.lang.String className, long classPK, boolean isDeputyOfOrg);
 

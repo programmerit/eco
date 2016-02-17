@@ -329,6 +329,14 @@ public class EmpOrgRelationshipLocalServiceWrapper
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.EmpOrgRelationship fetchByEmpClassNameClassPKHeadOfOrg(
+		long empId, java.lang.String className, long classPK,
+		boolean isHeadOfOrg) {
+		return _empOrgRelationshipLocalService.fetchByEmpClassNameClassPKHeadOfOrg(empId,
+			className, classPK, isHeadOfOrg);
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.EmpOrgRelationship fetchByClassNameClassPKDeputyOfOrg(
 		java.lang.String className, long classPK, boolean isDeputyOfOrg) {
 		return _empOrgRelationshipLocalService.fetchByClassNameClassPKDeputyOfOrg(className,

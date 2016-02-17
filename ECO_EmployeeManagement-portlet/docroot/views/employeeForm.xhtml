@@ -146,8 +146,10 @@
 							<img width="100" height="100" style="margin-left: 5px;"
 								src="#{empView.modifyEmployeeInfoItem.userImgURL}" />
 							<h:panelGroup>
-								<p:commandLink value="Change" style="margin-right: 3px;" /> |
-								<p:commandLink value="Delete" style="margin-left: 3px;" />
+								<p:commandLink value="Change" style="margin-right: 3px;"
+									disabled="true" /> |
+								<p:commandLink value="Delete" style="margin-left: 3px;"
+									disabled="true" />
 							</h:panelGroup>
 						</h:panelGrid>
 					</p:panelGrid>
@@ -709,7 +711,8 @@
 				header="Bank Information Dialog" showHeader="false" modal="true"
 				height="500" draggable="true">
 				<p:outputPanel autoUpdate="true" id="bankInfosOutputPanel">
-					<h:panelGrid id="bankInfosPanelGrid">
+					<h:panelGrid id="bankInfosPanelGrid"
+						rendered="#{empView.modifyEmployeeInfoItem.bankInfos.size() gt 0}">
 						<ui:repeat var="b" id="bankInfos"
 							value="#{empView.modifyEmployeeInfoItem.bankInfos}"
 							varStatus="status">

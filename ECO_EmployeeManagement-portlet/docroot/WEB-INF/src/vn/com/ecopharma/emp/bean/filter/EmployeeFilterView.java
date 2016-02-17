@@ -42,7 +42,9 @@ public class EmployeeFilterView extends OrganizationFilterBean {
 		}
 	}
 
+	@Override
 	public void onDeleteFilterBadges(int index) {
+		super.onDeleteFilterBadges(index);
 		String removeValue = getFilterBadges().get(index);
 		if (globalString.equalsIgnoreCase(removeValue)) {
 			globalString = StringUtils.EMPTY;
@@ -50,6 +52,8 @@ public class EmployeeFilterView extends OrganizationFilterBean {
 			fullName = StringUtils.EMPTY;
 		} else if (employeeCode.equalsIgnoreCase(removeValue)) {
 			employeeCode = StringUtils.EMPTY;
+		} else if (selectedGenders.contains(removeValue)) {
+			selectedGenders.remove(removeValue);
 		}
 
 		// for date
@@ -70,7 +74,7 @@ public class EmployeeFilterView extends OrganizationFilterBean {
 	}
 
 	public List<String> getFilterBadges() {
-		final Set<String> badges = new HashSet<>();
+		final Set<String> badges = new HashSet<String>(super.getFilterBadges());
 		checkAndAddFilterBadge(globalString, badges);
 		checkAndAddFilterBadge(employeeCode, badges);
 		checkAndAddFilterBadge(fullName, badges);
