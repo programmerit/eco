@@ -19,12 +19,14 @@ import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.dto.AddressObjectItem;
 import vn.com.ecopharma.emp.dto.BankInfoObject;
 import vn.com.ecopharma.emp.dto.DependentName;
+import vn.com.ecopharma.emp.dto.DocumentItem;
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
 import vn.com.ecopharma.emp.dto.EmpInfoItem;
 import vn.com.ecopharma.emp.enumeration.ResignationType;
 import vn.com.ecopharma.emp.model.District;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
+import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpBankInfoLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmployeeLocalServiceUtil;
@@ -161,6 +163,15 @@ public class EmployeeUtils {
 		for (EmpBankInfo item : empBankInfos) {
 			result.add(new BankInfoObject(item));
 		}
+		return result;
+	}
+
+	public static List<DocumentItem> getDocumentItemsFromEmp(long empId) {
+		final List<DocumentItem> result = new ArrayList<>();
+		final List<vn.com.ecopharma.emp.model.Document> documents = DocumentLocalServiceUtil
+				.findByClassNameAndClassPK(Emp.class.getName(), empId);
+		for (vn.com.ecopharma.emp.model.Document document : documents)
+			result.add(new DocumentItem(document));
 		return result;
 	}
 

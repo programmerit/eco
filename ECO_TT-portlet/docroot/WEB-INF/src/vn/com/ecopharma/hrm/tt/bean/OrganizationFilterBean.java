@@ -1,10 +1,10 @@
 package vn.com.ecopharma.hrm.tt.bean;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
-
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import java.util.Set;
 
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
@@ -17,9 +17,12 @@ import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 
-@ManagedBean(name = "organizationFilterBean")
-@ViewScoped
-public class OrganizationFilterBean {
+public class OrganizationFilterBean implements OrganizationFilter {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private List<Devision> selectedDevisions = new ArrayList<>();
 	private List<Department> selectedDepartments = new ArrayList<>();
 	private List<Unit> selectedUnits = new ArrayList<>();
@@ -107,5 +110,55 @@ public class OrganizationFilterBean {
 
 	public void setSelectedTitlesList(List<Titles> selectedTitlesList) {
 		this.selectedTitlesList = selectedTitlesList;
+	}
+
+	public List<String> getFilterBadges() {
+		final Set<String> badges = new HashSet<>();
+		checkAndAddOrganizationBadges(selectedDevisions, badges);
+		checkAndAddOrganizationBadges(selectedDepartments, badges);
+		checkAndAddOrganizationBadges(selectedUnits, badges);
+		checkAndAddOrganizationBadges(selectedUnitGroups, badges);
+		checkAndAddOrganizationBadges(selectedTitlesList, badges);
+		return new ArrayList<>(badges);
+	}
+
+	public void checkAndAddOrganizationBadges(List<?> orgFilters,
+			Collection<String> badges) {
+		if (orgFilters != null && !orgFilters.isEmpty()) {
+			Object value = orgFilters.get(0);
+			if (value instanceof Devision) {
+				badges.add("Devision");
+				return;
+			} else if (value instanceof Department) {
+				badges.add("Department");
+				return;
+			} else if (value instanceof Unit) {
+				badges.add("Unit");
+				return;
+			} else if (value instanceof UnitGroup) {
+				badges.add("UnitGroup");
+				return;
+			} else if (value instanceof Titles) {
+				badges.add("Titles");
+				return;
+			}
+		}
+	}
+
+	public void onDeleteFilterBadges(int index) {
+		String removeValue = getFilterBadges().get(index);
+		if ("Devision".equalsIgnoreCase(removeValue)) {
+			setSelectedDevisions(new ArrayList<Devision>());
+		} else if ("Department".equalsIgnoreCase(removeValue)) {
+			setSelectedDepartments(new ArrayList<Department>());
+		} else if ("Unit".equalsIgnoreCase(removeValue)) {
+			setSelectedUnits(new ArrayList<Unit>());
+		} else if ("UnitGroup".equalsIgnoreCase(removeValue)) {
+			setSelectedUnitGroups(new ArrayList<UnitGroup>());
+		} else if ("Titles".equalsIgnoreCase(removeValue)) {
+			setSelectedTitlesList(new ArrayList<Titles>());
+		}
+
+		// getFilterBadges().remove(index);
 	}
 }

@@ -12,8 +12,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 
@@ -36,15 +34,12 @@ import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
 import vn.com.ecopharma.emp.util.FilterUtils;
-import vn.com.ecopharma.emp.util.MailServiceUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.util.mail.MailEngine;
-import com.liferay.util.mail.MailEngineException;
 
 @ManagedBean
 @ViewScoped
@@ -146,7 +141,8 @@ public class EmployeeIndexedBean implements Serializable {
 							employeeFilterBean.getSelectedGenders());
 				}
 
-				if (!StringUtils.EMPTY.equals(employeeFilterBean.getStatus())) {
+				if (!employeeFilterBean.getStatus().equals(
+						EmployeeStatus.ALL.toString())) {
 					filters.put(
 							EmpField.STATUS,
 							EmployeeStatus.valueOf(

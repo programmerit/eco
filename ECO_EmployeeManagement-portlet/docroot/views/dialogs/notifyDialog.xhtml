@@ -13,15 +13,16 @@
 	<h:body>
 		<h:form id="notifyDialog">
 			<p:dialog widgetVar="wNotifyDialog" header="Employee Notify Dialog"
-				showHeader="true" modal="true" height="500" draggable="true">
+				showHeader="true" modal="true" draggable="true" width="390">
 				<p:outputPanel autoUpdate="true" id="empNotifyOutputPanel">
-
-					<h:outputText value="There are " />
-					<h:outputText value="#{empNotifyBean.empNotifyEmails.size()}" />
-					<h:outputText
-						value=" employees created recently which havent been sent notification to related Dept yet." />
-					<br />
-					<h:outputText value="Choose properly actions below" />
+					<h:panelGroup style="display: block;">
+						<h:outputText value="There are " />
+						<h:outputText value="#{empNotifyBean.empNotifyEmails.size()}" />
+						<h:outputText
+							value=" employees created recently which havent been sent notification to related Dept yet." />
+						<br />
+						<h:outputText value="Choose properly actions below" />
+					</h:panelGroup>
 
 					<p:commandButton value="Send Notification Email"
 						actionListener="#{empNotifyBean.onSendNotificationEmail}" /> 

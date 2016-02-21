@@ -69,6 +69,20 @@ create table eco_em_portlet_District (
 	modifiedDate DATE null
 );
 
+create table eco_em_portlet_Document (
+	documentId LONG not null primary key,
+	className VARCHAR(75) null,
+	classPK LONG,
+	fileEntryId LONG,
+	documentType VARCHAR(75) null,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null
+);
+
 create table eco_em_portlet_Emp (
 	empId LONG not null primary key,
 	groupId LONG,

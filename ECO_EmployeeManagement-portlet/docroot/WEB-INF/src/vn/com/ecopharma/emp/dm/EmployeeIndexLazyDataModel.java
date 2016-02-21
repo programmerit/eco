@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 
 /**
  * @author TaoTran
@@ -68,16 +69,18 @@ public class EmployeeIndexLazyDataModel extends LazyDataModel<EmpIndexedItem> {
 
 		try {
 			long companyId = EmployeeUtils.getCompanyId();
-
+			final Sort sort = sortField != null ? new Sort(sortField,
+					sortOrder.equals(SortOrder.ASCENDING) ? true : false)
+					: null;
 			List<Document> docs = EmpLocalServiceUtil.filterEmployeeByFields(
-					searchContext, filters, sortField, sortOrder, companyId,
-					first, first + pageSize);
+					searchContext, filters, sort, companyId, first, first
+							+ pageSize);
 			final List<EmpIndexedItem> emps = EmployeeUtils
 					.getEmployeeIndexedItemsFromIndexedDocuments(docs);
 
 			int totalRowCount = EmpLocalServiceUtil
-					.countFilterEmployeeByFields(searchContext, filters,
-							sortField, sortOrder, companyId);
+					.countFilterEmployeeByFields(searchContext, filters, sort,
+							companyId);
 
 			setPageSize(pageSize);
 			setRowCount(totalRowCount);

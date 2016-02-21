@@ -17,6 +17,11 @@ create index IX_4414EAE5 on eco_em_portlet_DevisionGroup (name, devisionId);
 create index IX_2E4AB057 on eco_em_portlet_District (regionCode);
 create index IX_765F22D6 on eco_em_portlet_District (regionCode, name);
 
+create index IX_2E18E11F on eco_em_portlet_Document (className, classPK);
+create index IX_E7D74E88 on eco_em_portlet_Document (className, classPK, documentType);
+create index IX_F26BFDD8 on eco_em_portlet_Document (documentType);
+create index IX_1BF70BF2 on eco_em_portlet_Document (fileEntryId);
+
 create index IX_D6092545 on eco_em_portlet_Emp (empCode);
 create index IX_9C3E31DE on eco_em_portlet_Emp (empUserId);
 create index IX_D6D1DE66 on eco_em_portlet_Emp (status);

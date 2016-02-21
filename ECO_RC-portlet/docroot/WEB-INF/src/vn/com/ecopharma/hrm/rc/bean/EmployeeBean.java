@@ -19,7 +19,6 @@ import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.model.Level;
 import vn.com.ecopharma.emp.model.University;
-import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
@@ -45,7 +44,6 @@ import vn.com.ecopharma.hrm.rc.util.EmployeeUtils;
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.model.User;
@@ -204,37 +202,37 @@ public class EmployeeBean implements Serializable {
 
 			final boolean sendEmail = false;
 
-			Emp result = EmpLocalServiceUtil.addEmp(employee, false,
-					!autoPassword ? modifyEmployeeInfoItem.getUserPassword1()
-							: DEFAULT_PW,
-					!autoPassword ? modifyEmployeeInfoItem.getUserPassword2()
-							: DEFAULT_PW, false, modifyEmployeeInfoItem
-							.getUserName(), empUser.getEmailAddress(),
-					facebookId, StringUtils.EMPTY, LocaleUtil.getDefault(),
-					empUser.getFirstName(), empUser.getMiddleName(), empUser
-							.getLastName(), prefixId, suffixId, employee
-							.getGender().equalsIgnoreCase(MALE) ? true : false,
-					month, day, year, groups, organizationIds, roles,
-					userGroupIds, sendEmail, addressMap, dependentMap,
-					bankInfoMap, serviceContext);
+			// Emp result = EmpLocalServiceUtil.addEmp(employee, false,
+			// !autoPassword ? modifyEmployeeInfoItem.getUserPassword1()
+			// : DEFAULT_PW,
+			// !autoPassword ? modifyEmployeeInfoItem.getUserPassword2()
+			// : DEFAULT_PW, false, modifyEmployeeInfoItem
+			// .getUserName(), empUser.getEmailAddress(),
+			// facebookId, StringUtils.EMPTY, LocaleUtil.getDefault(),
+			// empUser.getFirstName(), empUser.getMiddleName(), empUser
+			// .getLastName(), prefixId, suffixId, employee
+			// .getGender().equalsIgnoreCase(MALE) ? true : false,
+			// month, day, year, groups, organizationIds, roles,
+			// userGroupIds, sendEmail, addressMap, dependentMap,
+			// bankInfoMap, serviceContext);
 
-			if (result != null) {
-				candidate.setStatus(CandidateStatus.HIRE.toString());
-				CandidateLocalServiceUtil.updateCandidate(candidate);
+			// if (result != null) {
+			candidate.setStatus(CandidateStatus.HIRE.toString());
+			CandidateLocalServiceUtil.updateCandidate(candidate);
 
-				msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Create employee successfully", "Employee "
-								+ modifyEmployeeInfoItem.getUser()
-										.getFullName() + " has been created");
-				FacesContext.getCurrentInstance().addMessage(null, msg);
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Create employee successfully", "Employee "
+							+ modifyEmployeeInfoItem.getUser().getFullName()
+							+ " has been created");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
 
-				RequestContext.getCurrentInstance().execute(
-						"window.location.hash = '#vCandidate';");
+			RequestContext.getCurrentInstance().execute(
+					"window.location.hash = '#vCandidate';");
 
-				CandidateViewBean candidateViewBean = BeanUtils
-						.getCandidateViewBean();
-				candidateViewBean.switchMode(1);
-			}
+			CandidateViewBean candidateViewBean = BeanUtils
+					.getCandidateViewBean();
+			candidateViewBean.switchMode(1);
+			// }
 
 		} catch (Exception e) {
 			LogFactoryUtil.getLog(EmployeeBean.class).info(e);

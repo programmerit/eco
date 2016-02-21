@@ -34,7 +34,7 @@
 
 			<h:panelGroup binding="#{requestScope.filterGrid}" id="filterGroup"
 				style="display: none;">
-				<p:panelGrid id="filterGrid" columns="5" styleClass="filter-grid"
+				<p:panelGrid id="filterGrid" columns="6" styleClass="filter-grid"
 					style="margin-bottom: 7px!important; color: black!important;">
 					<h:panelGroup>
 						<p:inputText id="filter_globalString"
@@ -116,23 +116,17 @@
 						</h:panelGroup>
 					</h:panelGroup>
 
-					<!-- <h:panelGroup>
-						<p:selectOneMenu id="statusSelect" value="#{empFilterBean.status}"
-							var="s">
-							<p:ajax event="change"
-								oncomplete="PF('employeeTable').filter(); refreshFooter();" />
-							<f:selectItem itemLabel="Status" itemValue="" />
-							<f:selectItems value="#{empFilterBean.statuses}" var="#{s}"
-								itemValue="#{s}" itemLabel="#{s}" />
-							<p:column>
-								#{s}
-							</p:column>
-						</p:selectOneMenu>
-					</h:panelGroup> -->
-
 					<h:panelGroup>
 						<eco:organizationFilterPanel orgBean="#{empFilterBean}"
 							onCompleteUpdate="PF('employeeTable').filter(); refreshFooter();" />
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<p:selectOneMenu id="filter_status" var="s"
+							value="#{empFilterBean.status}">
+							<f:selectItems value="#{empFilterBean.statuses}" var="s"
+								itemLabel="#{s}" itemValue="#{s}" />
+						</p:selectOneMenu>
 					</h:panelGroup>
 				</p:panelGrid>
 			</h:panelGroup>
@@ -227,10 +221,7 @@
 						<span class="badge js-tooltip"> <h:outputText value="#{b}" />
 							<p:commandLink value="x" title="delete"
 								actionListener="#{empFilterBean.onDeleteFilterBadges(status.index)}"
-								update=":searchForm:filter_globalString :searchForm:filter_fullName 
-								:searchForm:filter_empCode :searchForm:calendarJoinedDateFrom 
-								:searchForm:calendarJoinedDateTo :searchForm:filter_empGender 
-								:searchForm:devisionSelect :searchForm:departmentSelect "
+								update=":searchForm:filterGroup"
 								oncomplete="updateFilterRelatedComponents();"
 								style="color: grey !important; margin-left: 4px; font-weight: bolder;" />
 						</span>

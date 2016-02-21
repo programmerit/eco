@@ -349,24 +349,23 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 	public int countFilterEmployeeByFields(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.Map<java.lang.String, java.lang.Object> filters,
-		java.lang.String sortField, org.primefaces.model.SortOrder sortOrder,
-		long companyId)
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
 		throws com.liferay.portal.kernel.search.ParseException,
 			java.text.ParseException {
 		return _empLocalService.countFilterEmployeeByFields(searchContext,
-			filters, sortField, sortOrder, companyId);
+			filters, sort, companyId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.search.Document> filterEmployeeByFields(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.Map<java.lang.String, java.lang.Object> filters,
-		java.lang.String sortField, org.primefaces.model.SortOrder sortOrder,
-		long companyId, int start, int end)
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end)
 		throws com.liferay.portal.kernel.search.ParseException,
 			java.text.ParseException {
 		return _empLocalService.filterEmployeeByFields(searchContext, filters,
-			sortField, sortOrder, companyId, start, end);
+			sort, companyId, start, end);
 	}
 
 	/**

@@ -10,9 +10,9 @@ import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
+import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
-import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -41,8 +41,7 @@ public class DepartmentBean extends AbstractOrganizationBean {
 		if (selectedDevision != null) {
 			department.setDevisionId(selectedDevision.getDevisionId());
 			Department result = DepartmentLocalServiceUtil.addDepartment(
-					department, LiferayFacesContext.getInstance()
-							.getServiceContext());
+					department, EmployeeUtils.getServiceContext());
 			if (result != null) {
 				employeeViewBean.getModifyEmployeeInfoItem().setDepartment(
 						result);

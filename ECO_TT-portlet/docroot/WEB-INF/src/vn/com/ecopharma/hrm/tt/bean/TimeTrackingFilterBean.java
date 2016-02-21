@@ -1,6 +1,5 @@
 package vn.com.ecopharma.hrm.tt.bean;
 
-import java.io.Serializable;
 import java.text.DateFormatSymbols;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -19,7 +18,7 @@ import vn.com.ecopharma.hrm.tt.enumeration.ValueFilterType;
 
 @ManagedBean
 @ViewScoped
-public class TimeTrackingFilterBean implements Serializable {
+public class TimeTrackingFilterBean extends OrganizationFilterBean {
 
 	/**
 	 * 

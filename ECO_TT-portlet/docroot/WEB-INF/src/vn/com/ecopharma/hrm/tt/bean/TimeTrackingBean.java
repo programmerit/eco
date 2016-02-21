@@ -23,6 +23,7 @@ import vn.com.ecopharma.hrm.tt.dm.TimeTrackingLazyDataModel;
 import vn.com.ecopharma.hrm.tt.dto.TimeTrackingIndexItem;
 import vn.com.ecopharma.hrm.tt.service.TimeTrackingLocalServiceUtil;
 import vn.com.ecopharma.hrm.tt.utils.BeanUtils;
+import vn.com.ecopharma.hrm.tt.utils.FilterUtils;
 import vn.com.ecopharma.hrm.tt.utils.TTUtils;
 
 @ManagedBean
@@ -79,28 +80,7 @@ public class TimeTrackingBean implements Serializable {
 				TTUtils.checkAndAddFilterValue(TimeTrackingField.EMP_CODE,
 						filterBean.getEmployeeCode(), filters);
 
-				TTUtils.checkAndAddFilterValue(TimeTrackingField.DEVISION,
-						filterBean.getDevision() != null ? filterBean
-								.getDevision().getName() : StringUtils.EMPTY,
-						filters);
-
-				TTUtils.checkAndAddFilterValue(TimeTrackingField.DEPARTMENT,
-						filterBean.getDepartment() != null ? filterBean
-								.getDepartment().getName() : StringUtils.EMPTY,
-						filters);
-
-				TTUtils.checkAndAddFilterValue(TimeTrackingField.UNIT,
-						filterBean.getUnit() != null ? filterBean.getUnit()
-								.getName() : StringUtils.EMPTY, filters);
-
-				TTUtils.checkAndAddFilterValue(TimeTrackingField.UNIT_GROUP,
-						filterBean.getUnitGroup() != null ? filterBean
-								.getUnitGroup().getName() : StringUtils.EMPTY,
-						filters);
-
-				TTUtils.checkAndAddFilterValue(TimeTrackingField.TITLES,
-						filterBean.getTitles() != null ? filterBean.getTitles()
-								.getName() : StringUtils.EMPTY, filters);
+				FilterUtils.bindOrgFilters(filterBean, filters);
 
 				/* check and add Tracking Date Range */
 

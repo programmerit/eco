@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import org.apache.commons.lang3.StringUtils;
+import org.primefaces.component.link.Link;
 import org.primefaces.context.RequestContext;
 
 import vn.com.ecopharma.emp.constant.EmpField;
@@ -28,7 +29,7 @@ public class EmployeeFilterView extends OrganizationFilterBean {
 	private String globalString = StringUtils.EMPTY;
 	private String employeeCode = StringUtils.EMPTY;
 	private String fullName = StringUtils.EMPTY;
-	private String status = StringUtils.EMPTY;
+	private String status = EmployeeStatus.ALL.toString();
 	private Date joinedDateFrom;
 	private Date joinedDateTo;
 
@@ -61,7 +62,6 @@ public class EmployeeFilterView extends OrganizationFilterBean {
 			joinedDateFrom = null;
 			joinedDateTo = null;
 		}
-
 		getFilterBadges().remove(index);
 	}
 

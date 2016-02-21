@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+	<composite:interface>
+		<composite:attribute name="manageBean" type="java.lang.Object"
+			required="true" />
+		<composite:attribute name="documents"/>
+	</composite:interface>
+
+	<composite:implementation>
+		<p:outputPanel autoUpdate="true">
+			<h:panelGroup id="noDocsPanelGroup" styleClass="panel-message"
+				rendered="#{manageBean.documents.size() eq 0}">
+				<h:outputText styleClass="no-item-label" value="No Documents" />
+				<br />
+				<p:fileUpload fileUploadListener="#{empView.handleDocumentUpload}"
+					dragDropSupport="false" multiple="false" id="documentUploader"
+					sizeLimit="1000000" allowTypes="/(\.|\/)(doc|docx|pdf)$/" />
+			</h:panelGroup>
+			<h:panelGroup
+				rendered="#{empView.modifyEmployeeInfoItem.documents.size() > 0}">
+				<ui:repeat var="doc"
+					value="#{empView.modifyEmployeeInfoItem.documents}"
+					varStatus="status">
+					<h:panelGroup rendered="#{not doc.UIDeleted}">
+
+						<p:commandLink value="#{doc.fileEntry.title}"
+							onclick="window.location = '#{doc.fileURL}'" />
+						<p:commandLink value="[X]" style="margin-left: 5px;" />
+					</h:panelGroup>
+				</ui:repeat>
+			</h:panelGroup>
+		</p:outputPanel>
+	</composite:implementation>
+
+
+	<style type="text/css">
+</style>
+</f:view>

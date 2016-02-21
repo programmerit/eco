@@ -6,6 +6,7 @@
 	<import class="vn.com.ecopharma.emp.model.Department" />
 	<import class="vn.com.ecopharma.emp.model.Devision" />
 	<import class="vn.com.ecopharma.emp.model.District" />
+	<import class="vn.com.ecopharma.emp.model.Document" />
 	<import class="vn.com.ecopharma.emp.model.Emp" />
 	<import class="vn.com.ecopharma.emp.model.EmpBankInfo" />
 	<import class="vn.com.ecopharma.emp.model.EmpDiscipline" />
@@ -84,6 +85,22 @@
 		<property name="regionCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="districtType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="vn.com.ecopharma.emp.model.impl.DocumentImpl" table="eco_em_portlet_Document">
+		<cache usage="read-write" />
+		<id name="documentId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="className" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="fileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="documentType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

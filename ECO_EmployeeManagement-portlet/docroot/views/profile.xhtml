@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<f:view encoding="UTF-8" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
+	<h:head />
+	<h:body>
+		<f:metadata>
+			<f:viewParam name="empId" value="#{profileViewBean.empId}"
+				required="true"
+				requiredMessage="Invalid page access. Please use a link from within the system." />
+			<f:event type="preRenderView" listener="#{profileViewBean.onload}" />
+		</f:metadata>
+
+		<eco:ajaxIndicator />
+
+		<h:form id="modifyForm">
+			<p:accordionPanel id="accordion" multiple="true"
+				style="margin-bottom:20px;" activeIndex="0">
+				<p:tab id="personal_info"
+					title="#{i18n['empForm.personal_information_tab']}">
+					<eco:employeeBasicInformation empBean="#{profileViewBean}"
+						empEntity="#{profileViewBean.emp}" fullNameChangeUpdate="" />
+				</p:tab>
+			</p:accordionPanel>
+		</h:form>
+	</h:body>
+	<style type="text/css">
+.personal-information-grid.ui-panelgrid>*>tr, .personal-information-grid.ui-panelgrid .ui-panelgrid-cell
+	{
+	border: none;
+}
+</style>
+</f:view>
+

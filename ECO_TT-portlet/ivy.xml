@@ -15,7 +15,8 @@
 		<dependency name="liferay-faces-bridge-impl" org="com.liferay.faces" rev="3.2.4-ga5" />
 		<dependency name="liferay-faces-portal" org="com.liferay.faces" rev="3.2.4-ga5" />
 		<dependency name="liferay-faces-util" org="com.liferay.faces" rev="3.2.4-ga5" />
-		<dependency name="primefaces" org="org.primefaces" rev="5.3.RC2"/>
+		
+		<dependency name="primefaces" org="org.primefaces" rev="5.3"/>
 		<dependency name="primefaces-extensions" org="org.primefaces.extensions"  rev="3.2.0"/>
 		<dependency name="commons-lang3" org="org.apache.commons" rev="3.0"/>
 		<dependency org="joda-time" name="joda-time" rev="2.3"/>

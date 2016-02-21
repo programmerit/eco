@@ -19,6 +19,7 @@ import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
 import vn.com.ecopharma.hrm.tt.dm.TimeTrackingReportLazyDataModel;
 import vn.com.ecopharma.hrm.tt.dto.EmpTimeTrackingIndexedItem;
 import vn.com.ecopharma.hrm.tt.utils.BeanUtils;
+import vn.com.ecopharma.hrm.tt.utils.FilterUtils;
 import vn.com.ecopharma.hrm.tt.utils.TTUtils;
 
 @ManagedBean
@@ -54,9 +55,6 @@ public class TimeTrackingReportBean implements Serializable {
 				final TimeTrackingFilterBean filterBean = BeanUtils
 						.getTimeTrackingFilterBean();
 
-				final OrganizationFilterBean organizationFilterBean = BeanUtils
-						.getOrganizationFilterBean();
-
 				TTUtils.checkAndAddFilterValue(TimeTrackingField.GLOBAL,
 						filterBean.getGlobalString(), filters);
 
@@ -66,39 +64,7 @@ public class TimeTrackingReportBean implements Serializable {
 				TTUtils.checkAndAddFilterValue(TimeTrackingField.EMP_CODE,
 						filterBean.getEmployeeCode(), filters);
 
-				if (organizationFilterBean.getSelectedDevisions() != null
-						&& !organizationFilterBean.getSelectedDevisions()
-								.isEmpty()) {
-					filters.put(TimeTrackingField.DEVISION,
-							organizationFilterBean.getSelectedDevisions());
-				}
-
-				if (organizationFilterBean.getSelectedDepartments() != null
-						&& !organizationFilterBean.getSelectedDepartments()
-								.isEmpty()) {
-					filters.put(TimeTrackingField.DEPARTMENT,
-							organizationFilterBean.getSelectedDepartments());
-				}
-
-				if (organizationFilterBean.getSelectedUnits() != null
-						&& !organizationFilterBean.getSelectedUnits().isEmpty()) {
-					filters.put(TimeTrackingField.UNIT,
-							organizationFilterBean.getSelectedUnits());
-				}
-
-				if (organizationFilterBean.getSelectedUnitGroups() != null
-						&& !organizationFilterBean.getSelectedUnitGroups()
-								.isEmpty()) {
-					filters.put(TimeTrackingField.UNIT_GROUP,
-							organizationFilterBean.getSelectedUnitGroups());
-				}
-
-				if (organizationFilterBean.getSelectedTitlesList() != null
-						&& !organizationFilterBean.getSelectedTitlesList()
-								.isEmpty()) {
-					filters.put(TimeTrackingField.TITLES,
-							organizationFilterBean.getSelectedTitlesList());
-				}
+				FilterUtils.bindOrgFilters(filterBean, filters);
 
 				// TTUtils.checkAndAddFilterValue(
 				// TimeTrackingField.IS_EMPTY_IN,

@@ -162,16 +162,15 @@ public class EmpLocalServiceClp implements EmpLocalService {
 
 		_methodParameterTypes29 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
-				"java.util.Map", "java.lang.String",
-				"org.primefaces.model.SortOrder", "long"
+				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long"
 			};
 
 		_methodName30 = "filterEmployeeByFields";
 
 		_methodParameterTypes30 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
-				"java.util.Map", "java.lang.String",
-				"org.primefaces.model.SortOrder", "long", "int", "int"
+				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long",
+				"int", "int"
 			};
 
 		_methodName31 = "addEmp";
@@ -1239,8 +1238,7 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	public int countFilterEmployeeByFields(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.Map<java.lang.String, java.lang.Object> filters,
-		java.lang.String sortField, org.primefaces.model.SortOrder sortOrder,
-		long companyId)
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
 		throws com.liferay.portal.kernel.search.ParseException,
 			java.text.ParseException {
 		Object returnObj = null;
@@ -1253,9 +1251,7 @@ public class EmpLocalServiceClp implements EmpLocalService {
 						
 					ClpSerializer.translateInput(filters),
 						
-					ClpSerializer.translateInput(sortField),
-						
-					ClpSerializer.translateInput(sortOrder),
+					ClpSerializer.translateInput(sort),
 						
 					companyId
 					});
@@ -1287,8 +1283,8 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	public java.util.List<com.liferay.portal.kernel.search.Document> filterEmployeeByFields(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.Map<java.lang.String, java.lang.Object> filters,
-		java.lang.String sortField, org.primefaces.model.SortOrder sortOrder,
-		long companyId, int start, int end)
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end)
 		throws com.liferay.portal.kernel.search.ParseException,
 			java.text.ParseException {
 		Object returnObj = null;
@@ -1301,9 +1297,7 @@ public class EmpLocalServiceClp implements EmpLocalService {
 						
 					ClpSerializer.translateInput(filters),
 						
-					ClpSerializer.translateInput(sortField),
-						
-					ClpSerializer.translateInput(sortOrder),
+					ClpSerializer.translateInput(sort),
 						
 					companyId,
 						

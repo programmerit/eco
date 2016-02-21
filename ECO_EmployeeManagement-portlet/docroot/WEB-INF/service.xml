@@ -658,5 +658,42 @@
             <finder-column name="status"></finder-column>
         </finder>
 	</entity>
+	<entity name="Document" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="documentId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+        <column name="className" type="String"></column>
+        <column name="classPK" type="long"></column>
+        <column name="fileEntryId" type="long"></column>
+        <column name="documentType" type="String"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+        <finder name="ClassNameClassPKAndType" return-type="Collection">
+            <finder-column name="className"></finder-column>
+            <finder-column name="classPK"></finder-column>
+            <finder-column name="documentType"></finder-column>
+        </finder>
+        <finder name="ClassNameAndClassPK" return-type="Collection">
+            <finder-column name="className"></finder-column>
+            <finder-column name="classPK"></finder-column>
+        </finder>
+        <finder name="Type" return-type="Collection">
+            <finder-column name="documentType"></finder-column>
+        </finder>
+        <finder name="FileEntry" return-type="Collection">
+            <finder-column name="fileEntryId"></finder-column>
+        </finder>
+	</entity>
 
 </service-builder>

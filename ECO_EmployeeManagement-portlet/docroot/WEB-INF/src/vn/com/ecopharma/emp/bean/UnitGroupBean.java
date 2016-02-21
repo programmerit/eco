@@ -10,6 +10,7 @@ import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
+import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -38,25 +39,19 @@ public class UnitGroupBean extends AbstractOrganizationBean {
 
 	@Override
 	public void onSave(ActionEvent event) {
-		try {
-			final EmployeeBean employeeViewBean = BeanUtils
-					.getEmployeeViewBean();
-			final Unit unit = employeeViewBean.getModifyEmployeeInfoItem()
-					.getUnit();
-			if (unit != null) {
-				unitGroup.setUnitId(unit.getUnitId());
-				UnitGroup result = UnitGroupLocalServiceUtil
-						.addUnitGroup(unitGroup);
-				if (result != null) {
-					FacesMessage msg = new FacesMessage(
-							FacesMessage.SEVERITY_INFO,
-							"Create Unit Group successfully", "Unit group "
-									+ result.getName() + " has been created");
-					FacesContext.getCurrentInstance().addMessage(null, msg);
-				}
+		final EmployeeBean employeeViewBean = BeanUtils.getEmployeeViewBean();
+		final Unit unit = employeeViewBean.getModifyEmployeeInfoItem()
+				.getUnit();
+		if (unit != null) {
+			unitGroup.setUnitId(unit.getUnitId());
+			UnitGroup result = UnitGroupLocalServiceUtil.addUnitGroup(
+					unitGroup, EmployeeUtils.getServiceContext());
+			if (result != null) {
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+						"Create Unit Group successfully", "Unit group "
+								+ result.getName() + " has been created");
+				FacesContext.getCurrentInstance().addMessage(null, msg);
 			}
-		} catch (SystemException e) {
-			LOGGER.info(e);
 		}
 	}
 

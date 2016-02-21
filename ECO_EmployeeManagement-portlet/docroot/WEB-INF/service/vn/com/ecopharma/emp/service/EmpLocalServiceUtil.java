@@ -332,25 +332,24 @@ public class EmpLocalServiceUtil {
 	public static int countFilterEmployeeByFields(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.Map<java.lang.String, java.lang.Object> filters,
-		java.lang.String sortField, org.primefaces.model.SortOrder sortOrder,
-		long companyId)
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
 		throws com.liferay.portal.kernel.search.ParseException,
 			java.text.ParseException {
 		return getService()
-				   .countFilterEmployeeByFields(searchContext, filters,
-			sortField, sortOrder, companyId);
+				   .countFilterEmployeeByFields(searchContext, filters, sort,
+			companyId);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.search.Document> filterEmployeeByFields(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.Map<java.lang.String, java.lang.Object> filters,
-		java.lang.String sortField, org.primefaces.model.SortOrder sortOrder,
-		long companyId, int start, int end)
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end)
 		throws com.liferay.portal.kernel.search.ParseException,
 			java.text.ParseException {
 		return getService()
-				   .filterEmployeeByFields(searchContext, filters, sortField,
-			sortOrder, companyId, start, end);
+				   .filterEmployeeByFields(searchContext, filters, sort,
+			companyId, start, end);
 	}
 
 	/**

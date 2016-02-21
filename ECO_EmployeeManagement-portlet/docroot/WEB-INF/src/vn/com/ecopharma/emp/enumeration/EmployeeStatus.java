@@ -7,7 +7,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 public enum EmployeeStatus {
-	NEWLY_ADDED, RESIGNED, MATERNITY_LEAVE, JOB_WAITING, DISCIPLINE;
+	NEWLY_ADDED, RESIGNED, MATERNITY_LEAVE, JOB_WAITING, DISCIPLINE, ALL;
 
 	public static List<EmployeeStatus> getAvailableStatus(EmployeeStatus status) {
 		switch (status) {

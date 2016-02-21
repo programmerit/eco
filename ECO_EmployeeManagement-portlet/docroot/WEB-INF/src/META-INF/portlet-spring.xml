@@ -13,6 +13,9 @@
 	<bean id="vn.com.ecopharma.emp.service.DistrictLocalService" class="vn.com.ecopharma.emp.service.impl.DistrictLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.DistrictService" class="vn.com.ecopharma.emp.service.impl.DistrictServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.persistence.DistrictPersistence" class="vn.com.ecopharma.emp.service.persistence.DistrictPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.emp.service.DocumentLocalService" class="vn.com.ecopharma.emp.service.impl.DocumentLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.emp.service.DocumentService" class="vn.com.ecopharma.emp.service.impl.DocumentServiceImpl" />
+	<bean id="vn.com.ecopharma.emp.service.persistence.DocumentPersistence" class="vn.com.ecopharma.emp.service.persistence.DocumentPersistenceImpl" parent="basePersistence" />
 	<bean id="vn.com.ecopharma.emp.service.EmpLocalService" class="vn.com.ecopharma.emp.service.impl.EmpLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.EmpService" class="vn.com.ecopharma.emp.service.impl.EmpServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.persistence.EmpPersistence" class="vn.com.ecopharma.emp.service.persistence.EmpPersistenceImpl" parent="basePersistence" />

@@ -88,11 +88,16 @@ public class TimeTrackingReportLazyDataModel extends
 			}
 
 			// execute search
+			// final List<Document> empDocs = EmpLocalServiceUtil
+			// .searchAllUnDeletedEmpIndexedDocument(TTUtils
+			// .getCurrentSearchContext(), queries, TTUtils
+			// .getCompanyId(), new Sort(EmpField.EMP_ID, false),
+			// first, first + pageSize);
+
 			final List<Document> empDocs = EmpLocalServiceUtil
-					.searchAllUnDeletedEmpIndexedDocument(TTUtils
-							.getCurrentSearchContext(), queries, TTUtils
-							.getCompanyId(), new Sort(EmpField.EMP_ID, false),
-							first, first + pageSize);
+					.filterEmployeeByFields(TTUtils.getCurrentSearchContext(),
+							filters, null, TTUtils.getCompanyId(), first, first
+									+ pageSize);
 			final List<EmpTimeTrackingIndexedItem> empTimeTrackingIndexedItems = new ArrayList<>();
 
 			// iterate to bind results to DTOs
@@ -150,8 +155,9 @@ public class TimeTrackingReportLazyDataModel extends
 
 			return empTimeTrackingIndexedItems;
 		} catch (ParseException e) {
-			LogFactoryUtil.getLog(EmpField.class).info(
-					"Exception while fetching all time tracking index", e);
+			LOGGER.info(e);
+		} catch (java.text.ParseException e) {
+			LOGGER.info(e);
 		}
 		return new ArrayList<>();
 	}

@@ -56,6 +56,19 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 	</model>
+	<model name="vn.com.ecopharma.emp.model.Document">
+		<field name="documentId" type="long" />
+		<field name="className" type="String" />
+		<field name="classPK" type="long" />
+		<field name="fileEntryId" type="long" />
+		<field name="documentType" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
 	<model name="vn.com.ecopharma.emp.model.Emp">
 		<field name="empId" type="long" />
 		<field name="groupId" type="long" />

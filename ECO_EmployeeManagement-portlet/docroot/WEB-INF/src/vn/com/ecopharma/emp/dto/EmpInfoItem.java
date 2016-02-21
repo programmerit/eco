@@ -21,6 +21,7 @@ import vn.com.ecopharma.emp.model.Titles;
 import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.model.University;
+import vn.com.ecopharma.emp.permission.EmpPermission;
 import vn.com.ecopharma.emp.service.CertificateLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
@@ -31,6 +32,7 @@ import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
+import vn.com.ecopharma.emp.util.BeanUtils;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
@@ -82,6 +84,8 @@ public class EmpInfoItem implements Serializable {
 
 	private List<BankInfoObject> bankInfos;
 
+	private List<DocumentItem> documents;
+
 	private Specialized specialized;
 
 	private Region workingPlace;
@@ -93,6 +97,7 @@ public class EmpInfoItem implements Serializable {
 	public EmpInfoItem(Emp employee) {
 
 		this.employee = employee;
+		long empId = employee.getEmpId();
 		LiferayFacesContext liferayFacesContext = LiferayFacesContext
 				.getInstance();
 		final ServiceContext serviceContext = liferayFacesContext
@@ -100,21 +105,20 @@ public class EmpInfoItem implements Serializable {
 
 		this.dependentNames = new ArrayList<>();
 		addresses = EmployeeUtils.getAddressObjectItemsFromClassNameAndPK(
-				Emp.class.getName(), employee.getEmpId(),
-				serviceContext.getCompanyId());
+				Emp.class.getName(), empId, serviceContext.getCompanyId());
 
 		dependentNames = EmployeeUtils.getDependentNamesFromString(employee
 				.getDependentNames());
 
 		majorCertificates = CertificateLocalServiceUtil
-				.findByClassNameClassPKAndType(Emp.class.getName(),
-						employee.getEmpId(), CertificateType.MAJOR.toString());
+				.findByClassNameClassPKAndType(Emp.class.getName(), empId,
+						CertificateType.MAJOR.toString());
 		vocationalCertificates = CertificateLocalServiceUtil
-				.findByClassNameClassPKAndType(Emp.class.getName(),
-						employee.getEmpId(),
+				.findByClassNameClassPKAndType(Emp.class.getName(), empId,
 						CertificateType.VOCATIONAL.toString());
-		bankInfos = EmployeeUtils
-				.getBankInfoObjectsFromEmp(employee.getEmpId());
+		bankInfos = EmployeeUtils.getBankInfoObjectsFromEmp(empId);
+
+		documents = EmployeeUtils.getDocumentItemsFromEmp(empId);
 
 		try {
 			user = UserLocalServiceUtil.fetchUser(employee.getEmpUserId());
@@ -132,7 +136,7 @@ public class EmpInfoItem implements Serializable {
 					.fetchSpecialized(employee.getSpecializeId()) : null;
 
 			isManager = EmpOrgRelationshipLocalServiceUtil.isHeadOfDepartment(
-					employee.getEmpId(), department.getDepartmentId());
+					empId, department.getDepartmentId());
 
 			workingPlace = employee.getWorkingPlaceId() != 0L ? RegionServiceUtil
 					.getRegion(employee.getWorkingPlaceId()) : null;
@@ -190,6 +194,7 @@ public class EmpInfoItem implements Serializable {
 			this.vocationalCertificates = new ArrayList<>();
 			this.bankInfos = new ArrayList<>(
 					Arrays.asList(new BankInfoObject()));
+			this.documents = new ArrayList<DocumentItem>();
 
 		} catch (SystemException e) {
 			LOGGER.info(e);
@@ -436,4 +441,20 @@ public class EmpInfoItem implements Serializable {
 		this.userImgURL = userImgURL;
 	}
 
+	public List<DocumentItem> getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(List<DocumentItem> documents) {
+		this.documents = documents;
+	}
+
+	public boolean isUpdatingAuthorized() {
+		final EmpPermission permissionBean = BeanUtils.getEmpPermissionBean();
+		return permissionBean.checkPermission(employee.getEmpId(), "UPDATE")
+				|| (employee.getLaborContractType().equals(
+						LaborContractType.PROBATION_CONTRACT.toString()) && permissionBean
+						.checkPermission(employee.getEmpId(),
+								"PROBATION_UPDATE"));
+	}
 }

@@ -46,33 +46,6 @@
 		</permissions>
 	</model-resource>
 
-	<model-resource>
-		<model-name>vn.com.ecopharma.emp.model.Employee</model-name>
-		<portlet-ref>
-			<portlet-name>ECO_EmployeeManagement</portlet-name>
-		</portlet-ref>
-		<permissions>
-			<supports>
-				<action-key>ADD</action-key>
-				<action-key>DELETE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>VIEW</action-key>
-				<action-key>VIEW_BENEFIT</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
-			<guest-unsupported>
-				<action-key>ADD</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>DELETE</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
 
 	<model-resource>
 		<model-name>vn.com.ecopharma.emp.model.Emp</model-name>
@@ -85,6 +58,7 @@
 				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
+				<action-key>PROBATION_UPDATE</action-key>
 				<action-key>VIEW</action-key>
 				<action-key>VIEW_BENEFIT</action-key>
 			</supports>
@@ -97,6 +71,7 @@
 			<guest-unsupported>
 				<action-key>ADD</action-key>
 				<action-key>UPDATE</action-key>
+				<action-key>PROBATION_UPDATE</action-key>
 				<action-key>DELETE</action-key>
 			</guest-unsupported>
 		</permissions>
@@ -242,6 +217,31 @@
 
 	<model-resource>
 		<model-name>vn.com.ecopharma.emp.model.EmpDiscipline</model-name>
+		<portlet-ref>
+			<portlet-name>ECO_EmployeeManagement</portlet-name>
+		</portlet-ref>
+		<permissions>
+			<supports>
+				<action-key>ADD</action-key>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+			</site-member-defaults>
+			<guest-defaults>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>ADD</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>DELETE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+
+	<model-resource>
+		<model-name>vn.com.ecopharma.emp.model.Document</model-name>
 		<portlet-ref>
 			<portlet-name>ECO_EmployeeManagement</portlet-name>
 		</portlet-ref>

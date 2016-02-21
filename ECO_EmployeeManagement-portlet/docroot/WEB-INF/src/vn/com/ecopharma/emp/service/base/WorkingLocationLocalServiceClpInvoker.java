@@ -106,25 +106,25 @@ public class WorkingLocationLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.WorkingLocation"
 			};
 
-		_methodName162 = "getBeanIdentifier";
-
-		_methodParameterTypes162 = new String[] {  };
-
-		_methodName163 = "setBeanIdentifier";
-
-		_methodParameterTypes163 = new String[] { "java.lang.String" };
-
-		_methodName168 = "findAll";
+		_methodName168 = "getBeanIdentifier";
 
 		_methodParameterTypes168 = new String[] {  };
 
-		_methodName169 = "findAll";
+		_methodName169 = "setBeanIdentifier";
 
-		_methodParameterTypes169 = new String[] { "int", "int" };
+		_methodParameterTypes169 = new String[] { "java.lang.String" };
 
-		_methodName170 = "findAll";
+		_methodName174 = "findAll";
 
-		_methodParameterTypes170 = new String[] {
+		_methodParameterTypes174 = new String[] {  };
+
+		_methodName175 = "findAll";
+
+		_methodParameterTypes175 = new String[] { "int", "int" };
+
+		_methodName176 = "findAll";
+
+		_methodParameterTypes176 = new String[] {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 	}
@@ -218,31 +218,31 @@ public class WorkingLocationLocalServiceClpInvoker {
 			return WorkingLocationLocalServiceUtil.updateWorkingLocation((vn.com.ecopharma.emp.model.WorkingLocation)arguments[0]);
 		}
 
-		if (_methodName162.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+		if (_methodName168.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
 			return WorkingLocationLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName163.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+		if (_methodName169.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
 			WorkingLocationLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName168.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
+		if (_methodName174.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
 			return WorkingLocationLocalServiceUtil.findAll();
 		}
 
-		if (_methodName169.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
+		if (_methodName175.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
 			return WorkingLocationLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName170.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
+		if (_methodName176.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
 			return WorkingLocationLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[2]);
@@ -283,14 +283,14 @@ public class WorkingLocationLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName162;
-	private String[] _methodParameterTypes162;
-	private String _methodName163;
-	private String[] _methodParameterTypes163;
 	private String _methodName168;
 	private String[] _methodParameterTypes168;
 	private String _methodName169;
 	private String[] _methodParameterTypes169;
-	private String _methodName170;
-	private String[] _methodParameterTypes170;
+	private String _methodName174;
+	private String[] _methodParameterTypes174;
+	private String _methodName175;
+	private String[] _methodParameterTypes175;
+	private String _methodName176;
+	private String[] _methodParameterTypes176;
 }

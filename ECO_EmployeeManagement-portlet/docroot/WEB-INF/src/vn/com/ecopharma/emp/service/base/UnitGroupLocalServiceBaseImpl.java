@@ -37,6 +37,7 @@ import vn.com.ecopharma.emp.service.persistence.CertificatePersistence;
 import vn.com.ecopharma.emp.service.persistence.DepartmentPersistence;
 import vn.com.ecopharma.emp.service.persistence.DevisionPersistence;
 import vn.com.ecopharma.emp.service.persistence.DistrictPersistence;
+import vn.com.ecopharma.emp.service.persistence.DocumentPersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpBankInfoPersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpDisciplinePersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpNotifyEmailPersistence;
@@ -524,6 +525,62 @@ public abstract class UnitGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setDistrictPersistence(DistrictPersistence districtPersistence) {
 		this.districtPersistence = districtPersistence;
+	}
+
+	/**
+	 * Returns the document local service.
+	 *
+	 * @return the document local service
+	 */
+	public vn.com.ecopharma.emp.service.DocumentLocalService getDocumentLocalService() {
+		return documentLocalService;
+	}
+
+	/**
+	 * Sets the document local service.
+	 *
+	 * @param documentLocalService the document local service
+	 */
+	public void setDocumentLocalService(
+		vn.com.ecopharma.emp.service.DocumentLocalService documentLocalService) {
+		this.documentLocalService = documentLocalService;
+	}
+
+	/**
+	 * Returns the document remote service.
+	 *
+	 * @return the document remote service
+	 */
+	public vn.com.ecopharma.emp.service.DocumentService getDocumentService() {
+		return documentService;
+	}
+
+	/**
+	 * Sets the document remote service.
+	 *
+	 * @param documentService the document remote service
+	 */
+	public void setDocumentService(
+		vn.com.ecopharma.emp.service.DocumentService documentService) {
+		this.documentService = documentService;
+	}
+
+	/**
+	 * Returns the document persistence.
+	 *
+	 * @return the document persistence
+	 */
+	public DocumentPersistence getDocumentPersistence() {
+		return documentPersistence;
+	}
+
+	/**
+	 * Sets the document persistence.
+	 *
+	 * @param documentPersistence the document persistence
+	 */
+	public void setDocumentPersistence(DocumentPersistence documentPersistence) {
+		this.documentPersistence = documentPersistence;
 	}
 
 	/**
@@ -1765,6 +1822,12 @@ public abstract class UnitGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected vn.com.ecopharma.emp.service.DistrictService districtService;
 	@BeanReference(type = DistrictPersistence.class)
 	protected DistrictPersistence districtPersistence;
+	@BeanReference(type = vn.com.ecopharma.emp.service.DocumentLocalService.class)
+	protected vn.com.ecopharma.emp.service.DocumentLocalService documentLocalService;
+	@BeanReference(type = vn.com.ecopharma.emp.service.DocumentService.class)
+	protected vn.com.ecopharma.emp.service.DocumentService documentService;
+	@BeanReference(type = DocumentPersistence.class)
+	protected DocumentPersistence documentPersistence;
 	@BeanReference(type = vn.com.ecopharma.emp.service.EmpLocalService.class)
 	protected vn.com.ecopharma.emp.service.EmpLocalService empLocalService;
 	@BeanReference(type = vn.com.ecopharma.emp.service.EmpService.class)

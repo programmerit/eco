@@ -265,22 +265,19 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	}
 
 	public int countFilterEmployeeByFields(SearchContext searchContext,
-			Map<String, Object> filters, String sortField, SortOrder sortOrder,
-			long companyId) throws ParseException, java.text.ParseException {
-		return filterEmployeeByFields(searchContext, filters, sortField,
-				sortOrder, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS)
-				.size();
+			Map<String, Object> filters, Sort sort, long companyId)
+			throws ParseException, java.text.ParseException {
+		return filterEmployeeByFields(searchContext, filters, sort, companyId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Document> filterEmployeeByFields(SearchContext searchContext,
-			Map<String, Object> filters, String sortField, SortOrder sortOrder,
-			long companyId, int start, int end)
-			throws java.text.ParseException, ParseException {
+			Map<String, Object> filters, Sort sort, long companyId, int start,
+			int end) throws java.text.ParseException, ParseException {
 		final List<Query> queries = new ArrayList<>();
 		String joinedDateFrom = StringUtils.EMPTY;
 		String joinedDateTo = StringUtils.EMPTY;
-		Sort sort = null;
 		final List<String> genders = new ArrayList<>();
 		if (filters != null) {
 			joinedDateFrom = filters.get(JOINED_DATE_FROM) != null ? (String) filters
@@ -485,10 +482,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			// }
 
 			/* SORT */
-			if (sortField != null) {
-				sort = new Sort(sortField,
-						sortOrder.equals(SortOrder.ASCENDING) ? false : true);
-			} else {
+			if (sort == null) {
 				sort = new Sort(EmpField.EMP_ID, false);
 			}
 		}
@@ -837,14 +831,6 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		indexer.reindex(Emp.class.getName(), result.getEmpId());
 		return result;
 	}
-
-	// public Emp update(Emp emp) throws SearchException, SystemException {
-	// Emp updatedEmp = super.updateEmp(emp);
-	// // index new employee
-	// Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Emp.class);
-	// indexer.reindex(Emp.class.getName(), updatedEmp.getEmpId());
-	// return emp;
-	// }
 
 	public Emp update(Emp employee, long userId, long oldTitlesId,
 			Map<Address, Boolean> addressesMap,

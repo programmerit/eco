@@ -106,6 +106,29 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.emp.model.impl.DocumentModelImpl">
+		<attributes>
+			<id name="documentId" />
+			<basic name="className" />
+			<basic name="classPK" />
+			<basic name="fileEntryId" />
+			<basic name="documentType" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="vn.com.ecopharma.emp.model.impl.EmpModelImpl">
 		<attributes>
 			<id name="empId" />
@@ -599,6 +622,10 @@
 	</entity>
 	<entity class="vn.com.ecopharma.emp.model.impl.DistrictImpl" name="District">
 		<table name="eco_em_portlet_District" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.emp.model.impl.DocumentImpl" name="Document">
+		<table name="eco_em_portlet_Document" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.emp.model.impl.EmpImpl" name="Emp">

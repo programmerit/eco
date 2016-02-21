@@ -106,61 +106,61 @@ public class UnitGroupLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.UnitGroup"
 			};
 
-		_methodName162 = "getBeanIdentifier";
-
-		_methodParameterTypes162 = new String[] {  };
-
-		_methodName163 = "setBeanIdentifier";
-
-		_methodParameterTypes163 = new String[] { "java.lang.String" };
-
-		_methodName168 = "findAll";
+		_methodName168 = "getBeanIdentifier";
 
 		_methodParameterTypes168 = new String[] {  };
 
-		_methodName169 = "findAll";
+		_methodName169 = "setBeanIdentifier";
 
-		_methodParameterTypes169 = new String[] { "int", "int" };
+		_methodParameterTypes169 = new String[] { "java.lang.String" };
 
-		_methodName170 = "findAll";
-
-		_methodParameterTypes170 = new String[] {
-				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
-			};
-
-		_methodName171 = "findByUnit";
-
-		_methodParameterTypes171 = new String[] { "long" };
-
-		_methodName172 = "findByUnits";
-
-		_methodParameterTypes172 = new String[] { "java.util.List" };
-
-		_methodName173 = "findByNameAndUnit";
-
-		_methodParameterTypes173 = new String[] { "java.lang.String", "long" };
-
-		_methodName174 = "createPrePersistedUnitGroup";
+		_methodName174 = "findAll";
 
 		_methodParameterTypes174 = new String[] {  };
 
-		_methodName175 = "addUnitGroup";
+		_methodName175 = "findAll";
 
-		_methodParameterTypes175 = new String[] {
+		_methodParameterTypes175 = new String[] { "int", "int" };
+
+		_methodName176 = "findAll";
+
+		_methodParameterTypes176 = new String[] {
+				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
+			};
+
+		_methodName177 = "findByUnit";
+
+		_methodParameterTypes177 = new String[] { "long" };
+
+		_methodName178 = "findByUnits";
+
+		_methodParameterTypes178 = new String[] { "java.util.List" };
+
+		_methodName179 = "findByNameAndUnit";
+
+		_methodParameterTypes179 = new String[] { "java.lang.String", "long" };
+
+		_methodName180 = "createPrePersistedUnitGroup";
+
+		_methodParameterTypes180 = new String[] {  };
+
+		_methodName181 = "addUnitGroup";
+
+		_methodParameterTypes181 = new String[] {
 				"java.lang.String", "long",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName176 = "addUnitGroup";
+		_methodName182 = "addUnitGroup";
 
-		_methodParameterTypes176 = new String[] {
+		_methodParameterTypes182 = new String[] {
 				"vn.com.ecopharma.emp.model.UnitGroup",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName177 = "completelyRemoveAll";
+		_methodName183 = "completelyRemoveAll";
 
-		_methodParameterTypes177 = new String[] {  };
+		_methodParameterTypes183 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -252,72 +252,72 @@ public class UnitGroupLocalServiceClpInvoker {
 			return UnitGroupLocalServiceUtil.updateUnitGroup((vn.com.ecopharma.emp.model.UnitGroup)arguments[0]);
 		}
 
-		if (_methodName162.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
+		if (_methodName168.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
 			return UnitGroupLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName163.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
+		if (_methodName169.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
 			UnitGroupLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName168.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
+		if (_methodName174.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
 			return UnitGroupLocalServiceUtil.findAll();
 		}
 
-		if (_methodName169.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
+		if (_methodName175.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
 			return UnitGroupLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName170.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
+		if (_methodName176.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
 			return UnitGroupLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[2]);
 		}
 
-		if (_methodName171.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes171, parameterTypes)) {
+		if (_methodName177.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes177, parameterTypes)) {
 			return UnitGroupLocalServiceUtil.findByUnit(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName172.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
+		if (_methodName178.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes178, parameterTypes)) {
 			return UnitGroupLocalServiceUtil.findByUnits((java.util.List<vn.com.ecopharma.emp.model.Unit>)arguments[0]);
 		}
 
-		if (_methodName173.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
+		if (_methodName179.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes179, parameterTypes)) {
 			return UnitGroupLocalServiceUtil.findByNameAndUnit((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName174.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
+		if (_methodName180.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes180, parameterTypes)) {
 			return UnitGroupLocalServiceUtil.createPrePersistedUnitGroup();
 		}
 
-		if (_methodName175.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
+		if (_methodName181.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes181, parameterTypes)) {
 			return UnitGroupLocalServiceUtil.addUnitGroup((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
 		}
 
-		if (_methodName176.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
+		if (_methodName182.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes182, parameterTypes)) {
 			return UnitGroupLocalServiceUtil.addUnitGroup((vn.com.ecopharma.emp.model.UnitGroup)arguments[0],
 				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
 
-		if (_methodName177.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes177, parameterTypes)) {
+		if (_methodName183.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes183, parameterTypes)) {
 			UnitGroupLocalServiceUtil.completelyRemoveAll();
 
 			return null;
@@ -358,22 +358,10 @@ public class UnitGroupLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName162;
-	private String[] _methodParameterTypes162;
-	private String _methodName163;
-	private String[] _methodParameterTypes163;
 	private String _methodName168;
 	private String[] _methodParameterTypes168;
 	private String _methodName169;
 	private String[] _methodParameterTypes169;
-	private String _methodName170;
-	private String[] _methodParameterTypes170;
-	private String _methodName171;
-	private String[] _methodParameterTypes171;
-	private String _methodName172;
-	private String[] _methodParameterTypes172;
-	private String _methodName173;
-	private String[] _methodParameterTypes173;
 	private String _methodName174;
 	private String[] _methodParameterTypes174;
 	private String _methodName175;
@@ -382,4 +370,16 @@ public class UnitGroupLocalServiceClpInvoker {
 	private String[] _methodParameterTypes176;
 	private String _methodName177;
 	private String[] _methodParameterTypes177;
+	private String _methodName178;
+	private String[] _methodParameterTypes178;
+	private String _methodName179;
+	private String[] _methodParameterTypes179;
+	private String _methodName180;
+	private String[] _methodParameterTypes180;
+	private String _methodName181;
+	private String[] _methodParameterTypes181;
+	private String _methodName182;
+	private String[] _methodParameterTypes182;
+	private String _methodName183;
+	private String[] _methodParameterTypes183;
 }

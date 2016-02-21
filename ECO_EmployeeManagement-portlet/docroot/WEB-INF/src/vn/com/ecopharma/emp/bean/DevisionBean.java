@@ -9,9 +9,9 @@ import javax.faces.event.ActionEvent;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Location;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
+import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
-import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.SystemException;
 
 @ManagedBean
@@ -34,7 +34,7 @@ public class DevisionBean extends AbstractOrganizationBean {
 	@Override
 	public void onSave(ActionEvent event) {
 		final Devision result = DevisionLocalServiceUtil.addDevision(devision,
-				LiferayFacesContext.getInstance().getServiceContext());
+				EmployeeUtils.getServiceContext());
 		if (result != null) {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"Create Devision successfully", "Devision "

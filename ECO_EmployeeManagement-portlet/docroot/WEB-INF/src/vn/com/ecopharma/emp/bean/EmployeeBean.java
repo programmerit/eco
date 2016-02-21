@@ -17,14 +17,17 @@ import javax.faces.event.AjaxBehaviorEvent;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 
 import vn.com.ecopharma.emp.bean.DisciplineBean.EmpDisciplineItem;
 import vn.com.ecopharma.emp.dto.AddressObjectItem;
 import vn.com.ecopharma.emp.dto.BankInfoObject;
 import vn.com.ecopharma.emp.dto.DependentName;
+import vn.com.ecopharma.emp.dto.DocumentItem;
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
 import vn.com.ecopharma.emp.dto.EmpInfoItem;
+import vn.com.ecopharma.emp.enumeration.DocumentType;
 import vn.com.ecopharma.emp.enumeration.EducationType;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.enumeration.LaborContractType;
@@ -32,6 +35,7 @@ import vn.com.ecopharma.emp.enumeration.LocationType;
 import vn.com.ecopharma.emp.enumeration.ResignationType;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
+import vn.com.ecopharma.emp.model.Document;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.model.Level;
@@ -42,10 +46,13 @@ import vn.com.ecopharma.emp.model.Titles;
 import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.model.University;
+import vn.com.ecopharma.emp.permission.EmpPermission;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DistrictLocalServiceUtil;
+import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
+import vn.com.ecopharma.emp.service.EmpOrgRelationshipLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LocationLocalServiceUtil;
 import vn.com.ecopharma.emp.service.ResignationHistoryLocalServiceUtil;
@@ -105,7 +112,7 @@ public class EmployeeBean implements Serializable {
 
 	private boolean showFilterPanel = false;
 
-	private String filterPanelIncluded = "";
+	private String filterPanelIncluded = StringUtils.EMPTY;
 
 	private String deletedEmployeeId;
 
@@ -118,6 +125,11 @@ public class EmployeeBean implements Serializable {
 	private String includedDialog = StringUtils.EMPTY;
 
 	private String includedDialogOutputPanel = StringUtils.EMPTY;
+
+	// DOCUMENT PART
+	private int deletedDocumentIndex = -1;
+	private String selectedDocumentType = DocumentType.LABOR_CONTRACT
+			.toString(); // default
 
 	/**
 	 * 1: Employees View; 2: Create new; 3: Edit
@@ -209,8 +221,6 @@ public class EmployeeBean implements Serializable {
 		} catch (PortalException e) {
 			e.printStackTrace();
 		}
-		// Image image = ImageLocalServiceUtil.getImage(portraitId);
-		// image.get
 		switchPage(3);
 	}
 
@@ -240,15 +250,26 @@ public class EmployeeBean implements Serializable {
 		switchPage(1);
 	}
 
-	/* */
-	public void onShowHideFilterPanel() {
-		showFilterPanel = !showFilterPanel;
-		filterPanelIncluded = showFilterPanel ? "filterPanel.xhtml" : "";
-	}
-
 	public void onRowDblSelect(SelectEvent event) {
-		editEmployee(String.valueOf(((EmpIndexedItem) event.getObject())
-				.getId()));
+		EmpIndexedItem emp = (EmpIndexedItem) event.getObject();
+		boolean hasViewAuthorized = false;
+		EmpPermission permission = BeanUtils.getEmpPermissionBean();
+
+		if (permission.checkPermission(emp.getEmpId(), "VIEW")) {
+			hasViewAuthorized = true;
+		} else {
+			// current viewing user
+			long userId = EmployeeUtils.getServiceContext().getUserId();
+			Emp viewerEmp = EmpLocalServiceUtil.findByUser(userId);
+			if (viewerEmp != null) {
+				// check if current user is manager of emp's department
+				long departmentId = emp.getDepartmentId();
+				hasViewAuthorized = EmpOrgRelationshipLocalServiceUtil
+						.isHeadOfDepartment(viewerEmp.getEmpId(), departmentId);
+			}
+		}
+		if (hasViewAuthorized)
+			editEmployee(String.valueOf(emp.getId()));
 	}
 
 	public void save() {
@@ -404,6 +425,31 @@ public class EmployeeBean implements Serializable {
 	 */
 	public void setDeleteEmployee() {
 		EmpLocalServiceUtil.markDeletedEmp(Long.valueOf(deletedEmployeeId));
+	}
+
+	public void handleDocumentUpload(FileUploadEvent event) {
+		final Document uploadDocument = DocumentLocalServiceUtil
+				.uploadAndLinkEntity(modifyEmployeeInfoItem.getEmp(),
+						event.getFile(), "EmployeeDocuments",
+						DocumentType.LABOR_CONTRACT.toString(), true,
+						EmployeeUtils.getServiceContext());
+		if (uploadDocument != null)
+			modifyEmployeeInfoItem.getDocuments().add(
+					new DocumentItem(uploadDocument));
+	}
+
+	public void deleteDocument() {
+		if (deletedDocumentIndex != -1) {
+			DocumentItem item = modifyEmployeeInfoItem.getDocuments().get(
+					deletedDocumentIndex);
+			DocumentLocalServiceUtil.completelyDeleteDocuments(item
+					.getFileEntry().getFileEntryId());
+			modifyEmployeeInfoItem.getDocuments().remove(deletedDocumentIndex);
+		}
+	}
+
+	public List<String> getAllDocumentType() {
+		return DocumentType.getAll();
 	}
 
 	public void onDevisionChanged() {
@@ -811,4 +857,21 @@ public class EmployeeBean implements Serializable {
 	public void setIncludedDialogOutputPanel(String includedDialogOutputPanel) {
 		this.includedDialogOutputPanel = includedDialogOutputPanel;
 	}
+
+	public int getDeletedDocumentIndex() {
+		return deletedDocumentIndex;
+	}
+
+	public void setDeletedDocumentIndex(int deletedDocumentIndex) {
+		this.deletedDocumentIndex = deletedDocumentIndex;
+	}
+
+	public String getSelectedDocumentType() {
+		return selectedDocumentType;
+	}
+
+	public void setSelectedDocumentType(String selectedDocumentType) {
+		this.selectedDocumentType = selectedDocumentType;
+	}
+
 }

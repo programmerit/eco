@@ -10,6 +10,7 @@ import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
+import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -33,19 +34,16 @@ public class UnitBean extends AbstractOrganizationBean {
 	}
 
 	public void onSave(ActionEvent event) {
-		try {
-			Department department = BeanUtils.getEmployeeViewBean()
-					.getModifyEmployeeInfoItem().getDepartment();
-			unit.setDepartmentId(department.getDepartmentId());
-			Unit result = UnitLocalServiceUtil.addUnit(unit);
-			if (result != null) {
-				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Create Unit successfully", "Unit " + unit.getName()
-								+ " has been created");
-				FacesContext.getCurrentInstance().addMessage(null, msg);
-			}
-		} catch (SystemException e) {
-			e.printStackTrace();
+		Department department = BeanUtils.getEmployeeViewBean()
+				.getModifyEmployeeInfoItem().getDepartment();
+		unit.setDepartmentId(department.getDepartmentId());
+		Unit result = UnitLocalServiceUtil.addUnit(unit,
+				EmployeeUtils.getServiceContext());
+		if (result != null) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Create Unit successfully", "Unit " + unit.getName()
+							+ " has been created");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 	}
 

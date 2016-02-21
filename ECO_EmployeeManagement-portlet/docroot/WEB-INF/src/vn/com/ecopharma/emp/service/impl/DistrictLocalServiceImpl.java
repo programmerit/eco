@@ -14,6 +14,7 @@
 
 package vn.com.ecopharma.emp.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -70,18 +71,18 @@ public class DistrictLocalServiceImpl extends DistrictLocalServiceBaseImpl {
 		try {
 			return districtPersistence.findAll(start, end, orderByComparator);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	public List<District> findByRegionCode(String regionCode) {
 		try {
 			return districtPersistence.findByRegionCode(regionCode);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	public District addDistrict(String name, String regionCode,
