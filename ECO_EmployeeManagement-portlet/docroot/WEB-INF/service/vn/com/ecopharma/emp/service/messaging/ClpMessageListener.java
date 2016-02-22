@@ -62,6 +62,8 @@ import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityServiceUtil;
+import vn.com.ecopharma.emp.service.VacationLeaveLocalServiceUtil;
+import vn.com.ecopharma.emp.service.VacationLeaveServiceUtil;
 import vn.com.ecopharma.emp.service.WorkingLocationLocalServiceUtil;
 import vn.com.ecopharma.emp.service.WorkingLocationServiceUtil;
 
@@ -146,6 +148,9 @@ public class ClpMessageListener extends BaseMessageListener {
 			UniversityLocalServiceUtil.clearService();
 
 			UniversityServiceUtil.clearService();
+			VacationLeaveLocalServiceUtil.clearService();
+
+			VacationLeaveServiceUtil.clearService();
 			WorkingLocationLocalServiceUtil.clearService();
 
 			WorkingLocationServiceUtil.clearService();

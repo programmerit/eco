@@ -2,6 +2,8 @@ package vn.com.ecopharma.emp.dto;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+
 import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 
@@ -183,11 +185,15 @@ public class EmpIndexedItem extends BaseEmpInfoIndexedItem {
 	}
 
 	public String getStatusCss() {
-		return EmployeeStatus.getCssClass(EmployeeStatus.valueOf(getStatus()));
+		return !getStatus().equals(StringUtils.EMPTY) ? EmployeeStatus
+				.getCssClass(EmployeeStatus.valueOf(getStatus()))
+				: StringUtils.EMPTY;
 	}
 
 	public String getStatusLocalized() {
-		return EmployeeStatus.valueOf(getStatus()).getLocalizedString();
+		return !getStatus().equals(StringUtils.EMPTY) ? EmployeeStatus
+				.getIndexedActualEnum(getStatus()).getLocalizedString()
+				: StringUtils.EMPTY;
 	}
 
 	@Override

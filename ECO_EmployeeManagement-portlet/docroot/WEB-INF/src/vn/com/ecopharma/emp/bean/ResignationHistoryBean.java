@@ -18,12 +18,16 @@ import vn.com.ecopharma.emp.bean.filter.ResignationFilterBean;
 import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.dm.ResignationHistoryIndexLazyDataModel;
 import vn.com.ecopharma.emp.dto.ResignationHistoryIndexedItem;
+import vn.com.ecopharma.emp.model.Emp;
+import vn.com.ecopharma.emp.model.ResignationHistory;
+import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.ResignationHistoryLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
 import vn.com.ecopharma.emp.util.FilterUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
+import com.liferay.portal.kernel.exception.SystemException;
 
 @ManagedBean
 @ViewScoped
@@ -99,6 +103,21 @@ public class ResignationHistoryBean implements Serializable {
 
 	public void onIndexAll(ActionEvent event) {
 		ResignationHistoryLocalServiceUtil.indexAll();
+	}
+
+	public void reUpdateEmp() {
+		for (ResignationHistory o : ResignationHistoryLocalServiceUtil
+				.findAll()) {
+			try {
+				Emp emp = EmpLocalServiceUtil.fetchEmp(o.getEmployeeId());
+				if (emp != null) {
+					EmpLocalServiceUtil.updateEmp(emp);
+				}
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+
+		}
 	}
 
 	public List<String> getResignationTypes() {

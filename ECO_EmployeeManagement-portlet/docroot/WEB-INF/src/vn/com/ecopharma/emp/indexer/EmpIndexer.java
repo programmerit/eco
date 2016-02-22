@@ -168,7 +168,8 @@ public class EmpIndexer extends BaseIndexer {
 		document.addNumber(EmpField.BONUS, emp.getBonus());
 		document.addDate(EmpField.RESIGNED_DATE, emp.getResignedDate());
 
-		document.addText(EmpField.STATUS, emp.getStatus());
+		document.addText(EmpField.STATUS,
+				EmployeeUtils.removeDashChar(emp.getStatus()));
 
 		document.addText(EmpField.IS_DELETED, emp.isDeleted() ? "true"
 				: "false");

@@ -587,6 +587,38 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.emp.model.impl.VacationLeaveModelImpl">
+		<attributes>
+			<id name="vacationLeaveId" />
+			<basic name="empId" />
+			<basic name="leaveType" />
+			<basic name="leaveFrom">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="leaveTo">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="actualTo">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="reason" />
+			<basic name="description" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="vn.com.ecopharma.emp.model.impl.WorkingLocationModelImpl">
 		<attributes>
 			<id name="workingLocationId" />
@@ -694,6 +726,10 @@
 	</entity>
 	<entity class="vn.com.ecopharma.emp.model.impl.UniversityImpl" name="University">
 		<table name="eco_em_portlet_University" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.emp.model.impl.VacationLeaveImpl" name="VacationLeave">
+		<table name="eco_em_portlet_VacationLeave" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.emp.model.impl.WorkingLocationImpl" name="WorkingLocation">

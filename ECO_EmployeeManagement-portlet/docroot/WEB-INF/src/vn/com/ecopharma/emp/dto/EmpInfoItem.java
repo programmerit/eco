@@ -22,6 +22,7 @@ import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.model.University;
 import vn.com.ecopharma.emp.permission.EmpPermission;
+import vn.com.ecopharma.emp.permission.EmployeeModelPermission;
 import vn.com.ecopharma.emp.service.CertificateLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
@@ -94,6 +95,8 @@ public class EmpInfoItem implements Serializable {
 
 	private boolean isManager;
 
+	private boolean isEdit = false;
+
 	public EmpInfoItem(Emp employee) {
 
 		this.employee = employee;
@@ -146,7 +149,7 @@ public class EmpInfoItem implements Serializable {
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}
-
+		isEdit = true;
 	}
 
 	public EmpInfoItem(long employeeId) {
@@ -160,6 +163,7 @@ public class EmpInfoItem implements Serializable {
 	public EmpInfoItem() {
 		this.user = createNewUser();
 		this.employee = createNewEmp();
+		this.isEdit = false;
 	}
 
 	public void setTestDataForEmp() {
@@ -181,24 +185,19 @@ public class EmpInfoItem implements Serializable {
 	}
 
 	private Emp createNewEmp() {
-		try {
-			this.employee = EmpLocalServiceUtil
-					.createEmp(CounterLocalServiceUtil.increment());
-			// set default "Male" for employee
-			employee.setGender(MALE);
-			employee.setLaborContractType(LaborContractType.INDEFINITE_TERMS
-					.toString());
-			this.addresses = new ArrayList<>();
-			this.dependentNames = new ArrayList<>();
-			this.majorCertificates = new ArrayList<>();
-			this.vocationalCertificates = new ArrayList<>();
-			this.bankInfos = new ArrayList<>(
-					Arrays.asList(new BankInfoObject()));
-			this.documents = new ArrayList<DocumentItem>();
+		this.employee = EmpLocalServiceUtil
+				.createPrePersistedEntity(EmployeeUtils.getServiceContext());
+		// set default "Male" for employee
+		employee.setGender(MALE);
+		employee.setLaborContractType(LaborContractType.INDEFINITE_TERMS
+				.toString());
+		this.addresses = new ArrayList<>();
+		this.dependentNames = new ArrayList<>();
+		this.majorCertificates = new ArrayList<>();
+		this.vocationalCertificates = new ArrayList<>();
+		this.bankInfos = new ArrayList<>(Arrays.asList(new BankInfoObject()));
+		this.documents = new ArrayList<DocumentItem>();
 
-		} catch (SystemException e) {
-			LOGGER.info(e);
-		}
 		return employee;
 	}
 
@@ -441,6 +440,14 @@ public class EmpInfoItem implements Serializable {
 		this.userImgURL = userImgURL;
 	}
 
+	public boolean isEdit() {
+		return isEdit;
+	}
+
+	public void setEdit(boolean isEdit) {
+		this.isEdit = isEdit;
+	}
+
 	public List<DocumentItem> getDocuments() {
 		return documents;
 	}
@@ -450,11 +457,21 @@ public class EmpInfoItem implements Serializable {
 	}
 
 	public boolean isUpdatingAuthorized() {
-		final EmpPermission permissionBean = BeanUtils.getEmpPermissionBean();
-		return permissionBean.checkPermission(employee.getEmpId(), "UPDATE")
-				|| (employee.getLaborContractType().equals(
-						LaborContractType.PROBATION_CONTRACT.toString()) && permissionBean
-						.checkPermission(employee.getEmpId(),
-								"PROBATION_UPDATE"));
+
+		if (isEdit) {
+			final EmpPermission permissionBean = BeanUtils
+					.getEmpPermissionBean();
+			return permissionBean
+					.checkPermission(employee.getEmpId(), "UPDATE")
+					|| (employee.getLaborContractType().equals(
+							LaborContractType.PROBATION_CONTRACT.toString()) && permissionBean
+							.checkPermission(employee.getEmpId(),
+									"PROBATION_UPDATE"));
+		} else {
+			final EmployeeModelPermission permissionBean = BeanUtils
+					.getEmpModelPermission();
+			return permissionBean.checkPermission("ADD");
+		}
+
 	}
 }

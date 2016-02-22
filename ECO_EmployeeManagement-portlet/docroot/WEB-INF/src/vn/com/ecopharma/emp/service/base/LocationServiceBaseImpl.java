@@ -47,6 +47,7 @@ import vn.com.ecopharma.emp.service.persistence.TitlesPersistence;
 import vn.com.ecopharma.emp.service.persistence.UnitGroupPersistence;
 import vn.com.ecopharma.emp.service.persistence.UnitPersistence;
 import vn.com.ecopharma.emp.service.persistence.UniversityPersistence;
+import vn.com.ecopharma.emp.service.persistence.VacationLeavePersistence;
 import vn.com.ecopharma.emp.service.persistence.WorkingLocationPersistence;
 
 import javax.sql.DataSource;
@@ -1336,6 +1337,63 @@ public abstract class LocationServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the vacation leave local service.
+	 *
+	 * @return the vacation leave local service
+	 */
+	public vn.com.ecopharma.emp.service.VacationLeaveLocalService getVacationLeaveLocalService() {
+		return vacationLeaveLocalService;
+	}
+
+	/**
+	 * Sets the vacation leave local service.
+	 *
+	 * @param vacationLeaveLocalService the vacation leave local service
+	 */
+	public void setVacationLeaveLocalService(
+		vn.com.ecopharma.emp.service.VacationLeaveLocalService vacationLeaveLocalService) {
+		this.vacationLeaveLocalService = vacationLeaveLocalService;
+	}
+
+	/**
+	 * Returns the vacation leave remote service.
+	 *
+	 * @return the vacation leave remote service
+	 */
+	public vn.com.ecopharma.emp.service.VacationLeaveService getVacationLeaveService() {
+		return vacationLeaveService;
+	}
+
+	/**
+	 * Sets the vacation leave remote service.
+	 *
+	 * @param vacationLeaveService the vacation leave remote service
+	 */
+	public void setVacationLeaveService(
+		vn.com.ecopharma.emp.service.VacationLeaveService vacationLeaveService) {
+		this.vacationLeaveService = vacationLeaveService;
+	}
+
+	/**
+	 * Returns the vacation leave persistence.
+	 *
+	 * @return the vacation leave persistence
+	 */
+	public VacationLeavePersistence getVacationLeavePersistence() {
+		return vacationLeavePersistence;
+	}
+
+	/**
+	 * Sets the vacation leave persistence.
+	 *
+	 * @param vacationLeavePersistence the vacation leave persistence
+	 */
+	public void setVacationLeavePersistence(
+		VacationLeavePersistence vacationLeavePersistence) {
+		this.vacationLeavePersistence = vacationLeavePersistence;
+	}
+
+	/**
 	 * Returns the working location local service.
 	 *
 	 * @return the working location local service
@@ -1697,6 +1755,12 @@ public abstract class LocationServiceBaseImpl extends BaseServiceImpl
 	protected vn.com.ecopharma.emp.service.UniversityService universityService;
 	@BeanReference(type = UniversityPersistence.class)
 	protected UniversityPersistence universityPersistence;
+	@BeanReference(type = vn.com.ecopharma.emp.service.VacationLeaveLocalService.class)
+	protected vn.com.ecopharma.emp.service.VacationLeaveLocalService vacationLeaveLocalService;
+	@BeanReference(type = vn.com.ecopharma.emp.service.VacationLeaveService.class)
+	protected vn.com.ecopharma.emp.service.VacationLeaveService vacationLeaveService;
+	@BeanReference(type = VacationLeavePersistence.class)
+	protected VacationLeavePersistence vacationLeavePersistence;
 	@BeanReference(type = vn.com.ecopharma.emp.service.WorkingLocationLocalService.class)
 	protected vn.com.ecopharma.emp.service.WorkingLocationLocalService workingLocationLocalService;
 	@BeanReference(type = vn.com.ecopharma.emp.service.WorkingLocationService.class)

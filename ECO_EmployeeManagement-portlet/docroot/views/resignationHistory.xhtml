@@ -46,6 +46,9 @@
 					actionListener="#{resignationHistoryBean.onIndexAll}" /> | 
 				<p:commandLink value="Remove All Index"
 					actionListener="#{resignationHistoryBean.onRemoveAllIndex}" />
+				|
+				<p:commandLink value="Re-Update Discipline Employee"
+					actionListener="#{resignationHistoryBean.reUpdateEmp}" />
 
 				<p:dataTable id="resignationHistories" var="r"
 					widgetVar="resignationHistoryTable"

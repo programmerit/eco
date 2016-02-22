@@ -31,14 +31,15 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 import org.apache.commons.lang3.StringUtils;
-import org.primefaces.model.SortOrder;
 
 import vn.com.ecopharma.emp.constant.EMInfo;
 import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.enumeration.EmployeeNotifyType;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.model.Department;
+import vn.com.ecopharma.emp.model.DepartmentClp;
 import vn.com.ecopharma.emp.model.Devision;
+import vn.com.ecopharma.emp.model.DevisionClp;
 import vn.com.ecopharma.emp.model.District;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
@@ -47,8 +48,11 @@ import vn.com.ecopharma.emp.model.EmpOrgRelationship;
 import vn.com.ecopharma.emp.model.PromotedHistory;
 import vn.com.ecopharma.emp.model.ResignationHistory;
 import vn.com.ecopharma.emp.model.Titles;
+import vn.com.ecopharma.emp.model.TitlesClp;
 import vn.com.ecopharma.emp.model.Unit;
+import vn.com.ecopharma.emp.model.UnitClp;
 import vn.com.ecopharma.emp.model.UnitGroup;
+import vn.com.ecopharma.emp.model.UnitGroupClp;
 import vn.com.ecopharma.emp.service.base.EmpLocalServiceBaseImpl;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
@@ -369,6 +373,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 
 						createAndAddJoinedDateTermRangeQuery(queries,
 								joinedDateFrom, joinedDateTo, searchContext);
+
 					} else {
 						// TODO
 						BooleanQuery stringFilterQuery = BooleanQueryFactoryUtil
@@ -382,19 +387,19 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 						&& filterProperty.equalsIgnoreCase(EmpField.GENDER)) {
 					isGenderFiltered = true;
 				} else if (filterProperty.equalsIgnoreCase(EmpField.DEVISION)) {
-					queries.add(createDevisionQuery(
-							(List<Devision>) filterValue, searchContext));
+					queries.add(createDevisionQuery((List<?>) filterValue,
+							searchContext));
 				} else if (filterProperty.equalsIgnoreCase(EmpField.DEPARTMENT)) {
-					queries.add(createDepartmentQuery(
-							(List<Department>) filterValue, searchContext));
+					queries.add(createDepartmentQuery((List<?>) filterValue,
+							searchContext));
 				} else if (filterProperty.equalsIgnoreCase(EmpField.UNIT)) {
-					queries.add(createUnitQuery((List<Unit>) filterValue,
+					queries.add(createUnitQuery((List<?>) filterValue,
 							searchContext));
 				} else if (filterProperty.equalsIgnoreCase(EmpField.UNIT_GROUP)) {
-					queries.add(createUnitGroupQuery(
-							(List<UnitGroup>) filterValue, searchContext));
+					queries.add(createUnitGroupQuery((List<?>) filterValue,
+							searchContext));
 				} else if (filterProperty.equalsIgnoreCase(EmpField.TITLES)) {
-					queries.add(createTitlesQuery((List<Titles>) filterValue,
+					queries.add(createTitlesQuery((List<?>) filterValue,
 							searchContext));
 				}
 			}
@@ -528,74 +533,146 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		}
 	}
 
-	private Query createDevisionQuery(List<Devision> devisions,
+	@SuppressWarnings("unchecked")
+	private Query createDevisionQuery(List<?> devisions,
 			SearchContext searchContext) throws ParseException {
 		final BooleanQuery devisionQuery = BooleanQueryFactoryUtil
 				.create(searchContext);
 
-		for (Devision devision : devisions) {
-			TermQuery devisionTermQuery = TermQueryFactoryUtil.create(
-					searchContext, EmpField.DEVISION,
-					StringUtils.trimToEmpty(devision.getName()));
-			devisionQuery.add(devisionTermQuery, BooleanClauseOccur.SHOULD);
+		final Object devObj = devisions.get(0);
+
+		if (devObj instanceof Devision) {
+			for (Devision devision : (List<Devision>) devisions) {
+				TermQuery devisionTermQuery = TermQueryFactoryUtil.create(
+						searchContext, EmpField.DEVISION,
+						StringUtils.trimToEmpty(devision.getName()));
+				devisionQuery.add(devisionTermQuery, BooleanClauseOccur.SHOULD);
+			}
+		} else if (devObj instanceof DevisionClp) {
+			for (DevisionClp devision : (List<DevisionClp>) devisions) {
+				TermQuery devisionTermQuery = TermQueryFactoryUtil.create(
+						searchContext, EmpField.DEVISION, StringUtils
+								.trimToEmpty(devision.toEscapedModel()
+										.getName()));
+				devisionQuery.add(devisionTermQuery, BooleanClauseOccur.SHOULD);
+			}
 		}
 		return devisionQuery;
 	}
 
-	private Query createDepartmentQuery(List<Department> departments,
+	@SuppressWarnings("unchecked")
+	private Query createDepartmentQuery(List<?> departments,
 			SearchContext searchContext) throws ParseException {
 		final BooleanQuery deptQuery = BooleanQueryFactoryUtil
 				.create(searchContext);
-
-		for (Department dept : departments) {
-			TermQuery deptTermQuery = TermQueryFactoryUtil.create(
-					searchContext, EmpField.DEPARTMENT,
-					StringUtils.trimToEmpty(dept.getName()));
-			deptQuery.add(deptTermQuery, BooleanClauseOccur.SHOULD);
+		final Object deptObj = departments.get(0);
+		if (deptObj instanceof Department) {
+			for (Department dept : (List<Department>) departments) {
+				TermQuery deptTermQuery = TermQueryFactoryUtil.create(
+						searchContext, EmpField.DEPARTMENT,
+						StringUtils.trimToEmpty(dept.getName()));
+				deptQuery.add(deptTermQuery, BooleanClauseOccur.SHOULD);
+			}
+		} else if (deptObj instanceof DepartmentClp) {
+			for (DepartmentClp dept : (List<DepartmentClp>) departments) {
+				TermQuery deptTermQuery = TermQueryFactoryUtil.create(
+						searchContext, EmpField.DEPARTMENT, StringUtils
+								.trimToEmpty(dept.toEscapedModel().getName()));
+				deptQuery.add(deptTermQuery, BooleanClauseOccur.SHOULD);
+			}
 		}
 		return deptQuery;
 	}
 
-	private Query createUnitQuery(List<Unit> units, SearchContext searchContext)
+	@SuppressWarnings("unchecked")
+	private Query createUnitQuery(List<?> units, SearchContext searchContext)
 			throws ParseException {
 		final BooleanQuery unitQuery = BooleanQueryFactoryUtil
 				.create(searchContext);
 
-		for (Unit unit : units) {
-			TermQuery unitTermQuery = TermQueryFactoryUtil.create(
-					searchContext, EmpField.UNIT,
-					StringUtils.trimToEmpty(unit.getName()));
-			unitQuery.add(unitTermQuery, BooleanClauseOccur.SHOULD);
+		final Object unitObj = units.get(0);
+		if (unitObj instanceof Unit) {
+			for (Unit unit : (List<Unit>) units) {
+				TermQuery unitTermQuery = TermQueryFactoryUtil.create(
+						searchContext, EmpField.UNIT,
+						StringUtils.trimToEmpty(unit.getName()));
+				unitQuery.add(unitTermQuery, BooleanClauseOccur.SHOULD);
+			}
+		} else if (unitObj instanceof UnitClp) {
+			for (UnitClp unit : (List<UnitClp>) units) {
+				TermQuery unitTermQuery = TermQueryFactoryUtil.create(
+						searchContext, EmpField.UNIT, StringUtils
+								.trimToEmpty(unit.toEscapedModel().getName()));
+				unitQuery.add(unitTermQuery, BooleanClauseOccur.SHOULD);
+			}
 		}
+
 		return unitQuery;
 	}
 
-	private Query createUnitGroupQuery(List<UnitGroup> unitGroups,
+	@SuppressWarnings("unchecked")
+	private Query createUnitGroupQuery(List<?> unitGroups,
 			SearchContext searchContext) throws ParseException {
 		final BooleanQuery unitGroupQuery = BooleanQueryFactoryUtil
 				.create(searchContext);
-
-		for (UnitGroup unitGroup : unitGroups) {
-			TermQuery titlesTermQuery = TermQueryFactoryUtil.create(
-					searchContext, EmpField.UNIT_GROUP,
-					StringUtils.trimToEmpty(unitGroup.getName()));
-			unitGroupQuery.add(titlesTermQuery, BooleanClauseOccur.SHOULD);
+		final Object unitGroupObj = unitGroups.get(0);
+		if (unitGroupObj instanceof UnitGroup) {
+			for (UnitGroup unitGroup : (List<UnitGroup>) unitGroups) {
+				TermQuery titlesTermQuery = TermQueryFactoryUtil.create(
+						searchContext, EmpField.UNIT_GROUP,
+						StringUtils.trimToEmpty(unitGroup.getName()));
+				unitGroupQuery.add(titlesTermQuery, BooleanClauseOccur.SHOULD);
+			}
+		} else if (unitGroupObj instanceof UnitGroupClp) {
+			for (UnitGroupClp unitGroup : (List<UnitGroupClp>) unitGroups) {
+				TermQuery titlesTermQuery = TermQueryFactoryUtil.create(
+						searchContext, EmpField.UNIT_GROUP, StringUtils
+								.trimToEmpty(unitGroup.toEscapedModel()
+										.getName()));
+				unitGroupQuery.add(titlesTermQuery, BooleanClauseOccur.SHOULD);
+			}
 		}
 		return unitGroupQuery;
 	}
 
-	private Query createTitlesQuery(List<Titles> titlesList,
+	@SuppressWarnings("unchecked")
+	private Query createTitlesQuery(List<?> titlesList,
 			SearchContext searchContext) throws ParseException {
 		final BooleanQuery titlesQuery = BooleanQueryFactoryUtil
 				.create(searchContext);
-
-		for (Titles titles : titlesList) {
-			TermQuery titlesTermQuery = TermQueryFactoryUtil.create(
-					searchContext, EmpField.TITLES,
-					StringUtils.trimToEmpty(titles.getName()));
-			titlesQuery.add(titlesTermQuery, BooleanClauseOccur.SHOULD);
+		final Object titlesObj = titlesList.get(0);
+		if (titlesObj instanceof Titles) {
+			for (Titles titles : (List<Titles>) titlesList) {
+				TermQuery titlesTermQuery = TermQueryFactoryUtil.create(
+						searchContext, EmpField.TITLES,
+						StringUtils.trimToEmpty(titles.getName()));
+				titlesQuery.add(titlesTermQuery, BooleanClauseOccur.SHOULD);
+			}
+		} else if (titlesObj instanceof TitlesClp) {
+			for (TitlesClp titles : (List<TitlesClp>) titlesList) {
+				TermQuery titlesTermQuery = TermQueryFactoryUtil
+						.create(searchContext, EmpField.TITLES, StringUtils
+								.trimToEmpty(titles.toEscapedModel().getName()));
+				titlesQuery.add(titlesTermQuery, BooleanClauseOccur.SHOULD);
+			}
 		}
 		return titlesQuery;
+	}
+
+	public Emp createPrePersistedEntity(ServiceContext serviceContext) {
+		try {
+			long empId = counterLocalService.increment();
+			Emp emp = empPersistence.create(empId);
+
+			emp.setCompanyId(serviceContext.getCompanyId());
+			emp.setGroupId(serviceContext.getScopeGroupId());
+			emp.setUserId(serviceContext.getUserId());
+			emp.setCreateDate(new Date());
+			return emp;
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
 	}
 
 	/**

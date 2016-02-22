@@ -312,8 +312,11 @@ public class ResignationHistoryLocalServiceImpl extends
 		for (ResignationHistory item : all) {
 			// re-index
 			try {
-				indexer.reindex(item);
+				if (empLocalService.fetchEmp(item.getEmployeeId()) != null)
+					indexer.reindex(item);
 			} catch (SearchException e) {
+				LOGGER.info(e);
+			} catch (SystemException e) {
 				LOGGER.info(e);
 			}
 		}

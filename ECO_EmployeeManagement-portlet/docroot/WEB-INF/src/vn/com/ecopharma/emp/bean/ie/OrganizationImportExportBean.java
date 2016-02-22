@@ -51,7 +51,7 @@ public class OrganizationImportExportBean implements Serializable {
 		try {
 			final XSSFWorkbook wb = new XSSFWorkbook(
 					uploadedFile.getInputstream());
-			final XSSFSheet sheet = wb.getSheetAt(3);
+			final XSSFSheet sheet = wb.getSheetAt(0);
 			List<OrganizationItem> items = new ArrayList<>();
 			for (int i = 4; i <= sheet.getLastRowNum(); i++) {
 				Row row = sheet.getRow(i);

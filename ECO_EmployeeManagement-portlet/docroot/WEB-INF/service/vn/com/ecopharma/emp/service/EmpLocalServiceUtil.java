@@ -352,6 +352,11 @@ public class EmpLocalServiceUtil {
 			companyId, start, end);
 	}
 
+	public static vn.com.ecopharma.emp.model.Emp createPrePersistedEntity(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService().createPrePersistedEntity(serviceContext);
+	}
+
 	/**
 	* @param employee
 	* @param autoPassword

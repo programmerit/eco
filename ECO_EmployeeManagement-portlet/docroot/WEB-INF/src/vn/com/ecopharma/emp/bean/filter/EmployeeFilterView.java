@@ -55,6 +55,8 @@ public class EmployeeFilterView extends OrganizationFilterBean {
 			employeeCode = StringUtils.EMPTY;
 		} else if (selectedGenders.contains(removeValue)) {
 			selectedGenders.remove(removeValue);
+		} else if (status.equals(removeValue)) {
+			status = EmployeeStatus.ALL.toString();
 		}
 
 		// for date
@@ -80,8 +82,9 @@ public class EmployeeFilterView extends OrganizationFilterBean {
 		checkAndAddFilterBadge(fullName, badges);
 		checkAndAddFilterBadge(joinedDateFrom, badges);
 		checkAndAddFilterBadge(joinedDateTo, badges);
-
 		checkAndAddJoinedDateFilterBadge(badges);
+		if (!status.equalsIgnoreCase(EmployeeStatus.ALL.toString()))
+			checkAndAddFilterBadge(status, badges);
 
 		if (selectedGenders != null && !selectedGenders.isEmpty()) {
 			badges.addAll(selectedGenders);

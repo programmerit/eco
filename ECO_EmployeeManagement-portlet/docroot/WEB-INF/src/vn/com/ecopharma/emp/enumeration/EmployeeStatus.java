@@ -50,6 +50,11 @@ public enum EmployeeStatus {
 		return this.name().toUpperCase();
 	}
 
+	public static EmployeeStatus getIndexedActualEnum(String indexedValue) {
+		indexedValue = indexedValue.replaceAll(" ", "_");
+		return EmployeeStatus.valueOf(indexedValue);
+	}
+
 	public String getLocalizedString() {
 		return "employeeInfo.status." + this.name().toUpperCase();
 	}

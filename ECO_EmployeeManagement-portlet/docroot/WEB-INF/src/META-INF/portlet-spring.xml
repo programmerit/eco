@@ -68,6 +68,9 @@
 	<bean id="vn.com.ecopharma.emp.service.UniversityLocalService" class="vn.com.ecopharma.emp.service.impl.UniversityLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.UniversityService" class="vn.com.ecopharma.emp.service.impl.UniversityServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.persistence.UniversityPersistence" class="vn.com.ecopharma.emp.service.persistence.UniversityPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.emp.service.VacationLeaveLocalService" class="vn.com.ecopharma.emp.service.impl.VacationLeaveLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.emp.service.VacationLeaveService" class="vn.com.ecopharma.emp.service.impl.VacationLeaveServiceImpl" />
+	<bean id="vn.com.ecopharma.emp.service.persistence.VacationLeavePersistence" class="vn.com.ecopharma.emp.service.persistence.VacationLeavePersistenceImpl" parent="basePersistence" />
 	<bean id="vn.com.ecopharma.emp.service.WorkingLocationLocalService" class="vn.com.ecopharma.emp.service.impl.WorkingLocationLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.WorkingLocationService" class="vn.com.ecopharma.emp.service.impl.WorkingLocationServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.persistence.WorkingLocationPersistence" class="vn.com.ecopharma.emp.service.persistence.WorkingLocationPersistenceImpl" parent="basePersistence" />

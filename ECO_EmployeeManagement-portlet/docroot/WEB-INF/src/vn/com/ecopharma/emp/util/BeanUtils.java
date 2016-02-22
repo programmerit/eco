@@ -11,6 +11,7 @@ import vn.com.ecopharma.emp.bean.filter.EmpDisciplineFilterBean;
 import vn.com.ecopharma.emp.bean.filter.OrganizationFilterBean;
 import vn.com.ecopharma.emp.bean.filter.ResignationFilterBean;
 import vn.com.ecopharma.emp.permission.EmpPermission;
+import vn.com.ecopharma.emp.permission.EmployeeModelPermission;
 
 public class BeanUtils {
 
@@ -29,6 +30,8 @@ public class BeanUtils {
 	private static final String RESIGNATION_FILTER_BEAN = "resignationFilterBean";
 
 	private static final String EMP_PERMISSION_BEAN = "empPermission";
+
+	private static final String EMP_MODEL_PERMISSION_BEAN = "employeeModelPermission";
 
 	private BeanUtils() {
 	}
@@ -73,5 +76,9 @@ public class BeanUtils {
 
 	public static EmpPermission getEmpPermissionBean() {
 		return (EmpPermission) getBackingBeanByName(EMP_PERMISSION_BEAN);
+	}
+
+	public static EmployeeModelPermission getEmpModelPermission() {
+		return (EmployeeModelPermission) getBackingBeanByName(EMP_MODEL_PERMISSION_BEAN);
 	}
 }

@@ -21,6 +21,7 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 
 import vn.com.ecopharma.emp.bean.DisciplineBean.EmpDisciplineItem;
+import vn.com.ecopharma.emp.bean.VacationLeaveBean.VacationItem;
 import vn.com.ecopharma.emp.dto.AddressObjectItem;
 import vn.com.ecopharma.emp.dto.BankInfoObject;
 import vn.com.ecopharma.emp.dto.DependentName;
@@ -537,6 +538,17 @@ public class EmployeeBean implements Serializable {
 		disciplineBean.getEmps().addAll(empIndexedItems);
 		this.includedDialog = "/views/dialogs/empDisciplineDialog.xhtml";
 		this.includedDialogOutputPanel = ":disciplineForm:disciplineOutputPanel";
+	}
+
+	public void onSetMaternityLeave() {
+		VacationLeaveBean vacationLeaveBean = (VacationLeaveBean) BeanUtils
+				.getBackingBeanByName("leaveBean");
+		List<EmpIndexedItem> empIndexedItems = BeanUtils
+				.getEmployeeIndexedBean().getSelectedEmployeeIndexItems();
+		vacationLeaveBean.setLeave(new VacationItem(empIndexedItems.get(0)));
+
+		this.includedDialog = "/views/dialogs/vacationLeaveDialog.xhtml";
+		this.includedDialogOutputPanel = ":leaveForm:leaveOutputPanel";
 	}
 
 	public List<String> getAvailableStatuses(String status) {

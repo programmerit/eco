@@ -80,7 +80,9 @@
 					actionListener="#{disciplineViewBean.onIndexAll}" /> | 
 				<p:commandLink value="Remove All Index"
 					actionListener="#{disciplineViewBean.onRemoveAllIndex}" />
-
+					|
+				<p:commandLink value="Re-Update Discipline Employee"
+					actionListener="#{disciplineViewBean.reUpdateEmp}" />
 
 				<p:dataTable id="disciplines" var="d" widgetVar="disciplineTable"
 					value="#{disciplineViewBean.lazyDataModel}"

@@ -333,6 +333,22 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 	</model>
+	<model name="vn.com.ecopharma.emp.model.VacationLeave">
+		<field name="vacationLeaveId" type="long" />
+		<field name="empId" type="long" />
+		<field name="leaveType" type="String" />
+		<field name="leaveFrom" type="Date" />
+		<field name="leaveTo" type="Date" />
+		<field name="actualTo" type="Date" />
+		<field name="reason" type="String" />
+		<field name="description" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
 	<model name="vn.com.ecopharma.emp.model.WorkingLocation">
 		<field name="workingLocationId" type="long" />
 		<field name="name" type="String" />

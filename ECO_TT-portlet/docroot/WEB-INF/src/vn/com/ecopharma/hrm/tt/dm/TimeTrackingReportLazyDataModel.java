@@ -55,28 +55,28 @@ public class TimeTrackingReportLazyDataModel extends
 			final List<Query> queries = new ArrayList<>();
 
 			// add Filtered values
-			for (Map.Entry<String, Object> entry : filters.entrySet()) {
-				if (!entry.getKey().equalsIgnoreCase(
-						TimeTrackingField.FILTERED_DATE_FROM)
-						&& !entry.getKey().equalsIgnoreCase(
-								TimeTrackingField.FILTERED_DATE_TO)
-						&& !entry.getKey().equalsIgnoreCase(
-								TimeTrackingField.GLOBAL)
-						&& !entry.getKey().equalsIgnoreCase(
-								TimeTrackingField.MONTH)
-						&& !entry.getKey().equalsIgnoreCase(
-								TimeTrackingField.YEAR)
-						&& !entry.getKey().equalsIgnoreCase(
-								TimeTrackingField.IS_EMPTY_IN)
-						&& !entry.getKey().equalsIgnoreCase(
-								TimeTrackingField.IS_EMPTY_OUT)) {
-					BooleanQuery query = BooleanQueryFactoryUtil
-							.create(searchContext);
-					query.addTerm(entry.getKey(), (String) entry.getValue(),
-							true, BooleanClauseOccur.MUST);
-					queries.add(query);
-				}
-			}
+//			for (Map.Entry<String, Object> entry : filters.entrySet()) {
+//				if (!entry.getKey().equalsIgnoreCase(
+//						TimeTrackingField.FILTERED_DATE_FROM)
+//						&& !entry.getKey().equalsIgnoreCase(
+//								TimeTrackingField.FILTERED_DATE_TO)
+//						&& !entry.getKey().equalsIgnoreCase(
+//								TimeTrackingField.GLOBAL)
+//						&& !entry.getKey().equalsIgnoreCase(
+//								TimeTrackingField.MONTH)
+//						&& !entry.getKey().equalsIgnoreCase(
+//								TimeTrackingField.YEAR)
+//						&& !entry.getKey().equalsIgnoreCase(
+//								TimeTrackingField.IS_EMPTY_IN)
+//						&& !entry.getKey().equalsIgnoreCase(
+//								TimeTrackingField.IS_EMPTY_OUT)) {
+//					BooleanQuery query = BooleanQueryFactoryUtil
+//							.create(searchContext);
+//					query.addTerm(entry.getKey(), (String) entry.getValue(),
+//							true, BooleanClauseOccur.MUST);
+//					queries.add(query);
+//				}
+//			}
 
 			// add global filter
 			if (filters.get(TimeTrackingField.GLOBAL) != null) {

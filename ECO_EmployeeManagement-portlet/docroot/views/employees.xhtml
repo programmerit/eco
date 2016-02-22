@@ -124,6 +124,8 @@
 					<h:panelGroup>
 						<p:selectOneMenu id="filter_status" var="s"
 							value="#{empFilterBean.status}">
+							<p:ajax event="change"
+								oncomplete="PF('employeeTable').filter(); refreshFooter();" />
 							<f:selectItems value="#{empFilterBean.statuses}" var="s"
 								itemLabel="#{s}" itemValue="#{s}" />
 						</p:selectOneMenu>
@@ -151,6 +153,12 @@
 					update=":includedDialogPanelGroup #{empView.includedDialogOutputPanel}"
 					oncomplete="PF('wDisciplineDialog').show()"
 					disabled="#{not employeeIndexedBean.disciplineValid}" />
+
+				<p:menuitem value="Maternity Leave"
+					actionListener="#{empView.onSetMaternityLeave}"
+					update=":includedDialogPanelGroup #{empView.includedDialogOutputPanel}"
+					oncomplete="PF('wLeaveDialog').show()"
+					disabled="#{not employeeIndexedBean.maternityLeaveValid}" />
 			</p:contextMenu>
 
 			<h:outputText value="Columns to show:" styleClass="label" />

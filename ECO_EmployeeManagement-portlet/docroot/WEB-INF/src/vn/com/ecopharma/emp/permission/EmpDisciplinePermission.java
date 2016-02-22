@@ -2,6 +2,8 @@ package vn.com.ecopharma.emp.permission;
 
 import java.io.Serializable;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.portlet.PortletRequest;
 
@@ -19,6 +21,8 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 
+@ManagedBean
+@ViewScoped
 public class EmpDisciplinePermission implements Serializable {
 	private static final long serialVersionUID = 1L;
 

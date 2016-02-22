@@ -33,6 +33,7 @@ import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
+import vn.com.ecopharma.emp.util.EmployeeUtils;
 import vn.com.ecopharma.emp.util.FilterUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
@@ -143,10 +144,9 @@ public class EmployeeIndexedBean implements Serializable {
 
 				if (!employeeFilterBean.getStatus().equals(
 						EmployeeStatus.ALL.toString())) {
-					filters.put(
-							EmpField.STATUS,
-							EmployeeStatus.valueOf(
-									employeeFilterBean.getStatus()).toString());
+					filters.put(EmpField.STATUS, EmployeeUtils
+							.removeDashChar(EmployeeStatus.valueOf(
+									employeeFilterBean.getStatus()).toString()));
 				}
 
 				FilterUtils.bindOrgFilters(employeeFilterBean, filters);
@@ -264,6 +264,21 @@ public class EmployeeIndexedBean implements Serializable {
 					EmployeeStatus.RESIGNED.toString()))
 				return false;
 		return true;
+	}
+
+	public boolean isMaternityLeaveValid() {
+		if (selectedEmployeeIndexItems.isEmpty()
+				|| selectedEmployeeIndexItems.size() > 1)
+			return false;
+		EmpIndexedItem singleItem = selectedEmployeeIndexItems.get(0);
+
+		return singleItem.getGender().equalsIgnoreCase("FEMALE")
+				&& !(singleItem.getStatus().equalsIgnoreCase(
+						EmployeeStatus.MATERNITY_LEAVE.toString())
+						|| singleItem.getStatus().equalsIgnoreCase(
+								EmployeeStatus.MATERNITY_LEAVE.toString()) || singleItem
+						.getStatus().equalsIgnoreCase(
+								EmployeeStatus.RESIGNED.toString()));
 	}
 
 	public String getHeaderi18nKey(String header) {

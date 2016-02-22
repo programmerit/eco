@@ -107,7 +107,7 @@ public class EmpField {
 
 	public static final String BONUS = "bonus";
 
-	public static final String STATUS = "status";
+	public static final String STATUS = "empStatus";
 
 	public static final String RESIGNED_DATE = "resignedDate";
 

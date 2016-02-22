@@ -21,9 +21,14 @@ import vn.com.ecopharma.emp.dm.AbstractIndexedLazyDataModel;
 import vn.com.ecopharma.emp.dm.EmpDisciplineIndexLazyDataModel;
 import vn.com.ecopharma.emp.dto.EmpDisciplineIndexedItem;
 import vn.com.ecopharma.emp.enumeration.DisciplineType;
+import vn.com.ecopharma.emp.model.Emp;
+import vn.com.ecopharma.emp.model.EmpDiscipline;
 import vn.com.ecopharma.emp.service.EmpDisciplineLocalServiceUtil;
+import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
 import vn.com.ecopharma.emp.util.FilterUtils;
+
+import com.liferay.portal.kernel.exception.SystemException;
 
 @ManagedBean(name = "disciplineViewBean")
 @ViewScoped
@@ -101,6 +106,20 @@ public class EmpDisciplineViewBean implements Serializable {
 
 	public void onRemoveAllIndex() {
 
+	}
+
+	public void reUpdateEmp() {
+		for (EmpDiscipline empDiscipline : EmpDisciplineLocalServiceUtil
+				.findAll()) {
+			try {
+				Emp emp = EmpLocalServiceUtil
+						.fetchEmp(empDiscipline.getEmpId());
+				EmpLocalServiceUtil.updateEmp(emp);
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+
+		}
 	}
 
 	public List<String> getDisciplineTypes() {

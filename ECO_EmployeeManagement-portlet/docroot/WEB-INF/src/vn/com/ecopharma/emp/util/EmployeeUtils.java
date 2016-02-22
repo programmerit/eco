@@ -502,7 +502,7 @@ public class EmployeeUtils {
 	}
 
 	public static String removeDashChar(String s) {
-		final String[] dashChars = new String[] { "-" };
+		final String[] dashChars = new String[] { "-", "_" };
 
 		for (String dashChar : dashChars)
 			if (s.contains(dashChar)) {

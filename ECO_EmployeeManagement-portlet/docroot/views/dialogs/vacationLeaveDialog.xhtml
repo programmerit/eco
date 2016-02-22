@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:head />
+	<h:body>
+		<h:form id="leaveForm">
+			<p:dialog widgetVar="wLeaveDialog"
+				header="Employee Vacation Leave Form" modal="true">
+
+				<p:outputPanel id="leaveOutputPanel" autoUpdate="false">
+					<p:panelGrid columns="2">
+						<h:outputText value="Employee:" />
+						<h:outputText value="#{leaveBean.leave.emp.fullNameVi}" />
+
+						<h:outputText value="Leave Type" />
+						<p:selectOneMenu id="leaveTypeSelect" required="true"
+							requiredMessage="Leave Type required"
+							value="#{leaveBean.leave.leaveType}" var="l">
+							<p:ajax event="change" update="leaveTo actualTo" />
+							<f:selectItem itemLabel="Select Discipline Type" itemValue="" />
+							<f:selectItems value="#{leaveBean.leaveTypes}" var="l"
+								itemLabel="#{l}" itemValue="#{l}">
+								<p:column>#{l}</p:column>
+							</f:selectItems>
+						</p:selectOneMenu>
+
+
+						<h:outputText value="Leave Date From" />
+						<p:calendar id="leaveFrom" required="true"
+							value="#{leaveBean.leave.leaveFrom}" pattern="dd/MM/yyyy">
+							<p:ajax event="dateSelect" update="leaveTo actualTo" />
+						</p:calendar>
+
+						<h:outputText value="Leave Date To" />
+						<p:calendar id="leaveTo" required="true"
+							value="#{leaveBean.leave.leaveTo}" pattern="dd/MM/yyyy" />
+
+						<h:outputText value="Actual Leave Date To" />
+						<p:calendar id="actualTo" required="true"
+							value="#{leaveBean.leave.actualTo}" pattern="dd/MM/yyyy" />
+
+						<h:outputText value="Reason: " />
+						<p:inputText value="#{leaveBean.leave.reason}" />
+
+						<h:outputText value="Description" />
+						<p:inputText value="#{leaveBean.leave.description}" />
+					</p:panelGrid>
+				</p:outputPanel>
+
+				<p:commandButton value="Save" styleClass="RedButton" ajax="true"
+					actionListener="#{leaveBean.onSave}"
+					update=":employeesForm:employees :growl"
+					oncomplete="refreshEmployees(); refreshFooter();" />
+				| 	
+				<p:commandLink value="Cancel" style="margin-left: 3px;"
+					actionListener="#{leaveBean.onCancel}"
+					onclick="PF('wLeaveDialog').hide()">
+					<p:resetInput target="leaveForm" />
+				</p:commandLink>
+			</p:dialog>
+		</h:form>
+
+	</h:body>
+</f:view>

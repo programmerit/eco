@@ -370,6 +370,23 @@ create table eco_em_portlet_University (
 	modifiedDate DATE null
 );
 
+create table eco_em_portlet_VacationLeave (
+	vacationLeaveId LONG not null primary key,
+	empId LONG,
+	leaveType VARCHAR(75) null,
+	leaveFrom DATE null,
+	leaveTo DATE null,
+	actualTo DATE null,
+	reason VARCHAR(75) null,
+	description VARCHAR(75) null,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null
+);
+
 create table eco_em_portlet_WorkingLocation (
 	workingLocationId LONG not null primary key,
 	name VARCHAR(75) null,

@@ -101,3 +101,6 @@ create index IX_B0BFE46 on eco_em_portlet_UnitGroup (unitId);
 
 create index IX_D75F6660 on eco_em_portlet_University (code_);
 create index IX_31BCD7E1 on eco_em_portlet_University (name);
+
+create index IX_F5C38821 on eco_em_portlet_VacationLeave (empId);
+create index IX_F2222F40 on eco_em_portlet_VacationLeave (empId, leaveType);

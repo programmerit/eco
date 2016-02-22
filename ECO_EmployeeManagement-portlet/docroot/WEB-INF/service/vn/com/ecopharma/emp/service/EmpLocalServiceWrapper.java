@@ -368,6 +368,12 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 			sort, companyId, start, end);
 	}
 
+	@Override
+	public vn.com.ecopharma.emp.model.Emp createPrePersistedEntity(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _empLocalService.createPrePersistedEntity(serviceContext);
+	}
+
 	/**
 	* @param employee
 	* @param autoPassword

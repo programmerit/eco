@@ -299,6 +299,9 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		throws com.liferay.portal.kernel.search.ParseException,
 			java.text.ParseException;
 
+	public vn.com.ecopharma.emp.model.Emp createPrePersistedEntity(
+		com.liferay.portal.service.ServiceContext serviceContext);
+
 	/**
 	* @param employee
 	* @param autoPassword
