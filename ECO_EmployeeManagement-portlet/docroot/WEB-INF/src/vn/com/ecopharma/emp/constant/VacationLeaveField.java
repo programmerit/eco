@@ -2,6 +2,8 @@ package vn.com.ecopharma.emp.constant;
 
 public class VacationLeaveField {
 
+	public static final String ID = "vacationLeaveId";
+
 	public static final String LEAVE_TYPE = "leaveType";
 
 	public static final String LEAVE_FROM = "leaveFrom";
@@ -13,6 +15,8 @@ public class VacationLeaveField {
 	public static final String REASON = "reason";
 
 	public static final String DESCRIPTION = "description";
+
+	public static final String IS_DELETED = "isDeleted";
 
 	private VacationLeaveField() {
 

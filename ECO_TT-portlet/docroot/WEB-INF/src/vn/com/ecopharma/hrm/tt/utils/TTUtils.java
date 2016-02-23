@@ -190,10 +190,18 @@ public class TTUtils {
 		if (StringUtils.trimToNull(unformattedEmpCode) == null) {
 			return StringUtils.EMPTY;
 		}
+		String actualEmpCode = null;
+		if (unformattedEmpCode.length() == 5) {
+			actualEmpCode = "9"
+					+ unformattedEmpCode.substring(1,
+							unformattedEmpCode.length());
+		} else if (unformattedEmpCode.length() == 4) {
+			actualEmpCode = "9" + unformattedEmpCode;
+		} else {
+			actualEmpCode = unformattedEmpCode;
+		}
 
-		return unformattedEmpCode.length() == 5 ? "9"
-				+ unformattedEmpCode.substring(1, unformattedEmpCode.length())
-				: unformattedEmpCode;
+		return actualEmpCode;
 	}
 
 	/**

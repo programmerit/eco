@@ -17,7 +17,18 @@
 			<basic name="dateOfBirth">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="placeOfBirth" />
+			<basic name="gender" />
 			<basic name="identityCardNo" />
+			<basic name="issuedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="issuedPlace" />
+			<basic name="maritalStatus" />
+			<basic name="numberOfChild" />
+			<basic name="nationality" />
+			<basic name="ethnic" />
+			<basic name="religion" />
 			<basic name="applicationDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
@@ -117,32 +128,6 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="courseTimeTo">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-			<transient name="userUuid" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="vn.com.ecopharma.hrm.rc.model.impl.DocumentModelImpl">
-		<attributes>
-			<id name="documentId" />
-			<basic name="className" />
-			<basic name="classPK" />
-			<basic name="type">
-				<column name="TYPE_" />
-			</basic>
-			<basic name="fileEntryId" />
-			<basic name="deleted" />
-			<basic name="groupId" />
-			<basic name="companyId" />
-			<basic name="userId" />
-			<basic name="userName" />
-			<basic name="createDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<transient name="modelAttributes" />
@@ -444,10 +429,6 @@
 	</entity>
 	<entity class="vn.com.ecopharma.hrm.rc.model.impl.CertificateImpl" name="Certificate">
 		<table name="eco_rcp_Certificate" />
-		<attributes />
-	</entity>
-	<entity class="vn.com.ecopharma.hrm.rc.model.impl.DocumentImpl" name="Document">
-		<table name="eco_rcp_Document" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.hrm.rc.model.impl.EmployeeInterviewScheduleImpl" name="EmployeeInterviewSchedule">

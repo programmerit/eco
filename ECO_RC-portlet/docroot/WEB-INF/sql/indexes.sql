@@ -13,7 +13,6 @@ create index IX_9FD2B71F on eco_rcp_Certificate (className, classPK);
 
 create index IX_E663793F on eco_rcp_Document (className, classPK);
 create index IX_33EC8122 on eco_rcp_Document (className, classPK, fileEntryId);
-create index IX_360DBF4F on eco_rcp_Document (classNameId, classNamePK);
 create index IX_669957D2 on eco_rcp_Document (fileEntryId);
 
 create index IX_D36F4E61 on eco_rcp_EmployeeInterviewSchedule (interviewScheduleId);

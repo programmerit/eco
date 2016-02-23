@@ -6,6 +6,7 @@ import javax.faces.bean.RequestScoped;
 import org.apache.commons.lang3.StringUtils;
 
 import vn.com.ecopharma.emp.enumeration.DisciplineType;
+import vn.com.ecopharma.emp.enumeration.VacationLeaveType;
 
 /**
  * @author TaoTran
@@ -20,5 +21,12 @@ public class LocaleKeyBean {
 			return StringUtils.EMPTY;
 		DisciplineType disciplineType = DisciplineType.valueOf(type);
 		return disciplineType.getLocalizedString();
+	}
+
+	public String getLeaveTypeKey(String type) {
+		if (StringUtils.EMPTY.equals(type))
+			return StringUtils.EMPTY;
+		VacationLeaveType typeEnum = VacationLeaveType.valueOf(type);
+		return typeEnum.getLocalizedString();
 	}
 }

@@ -89,6 +89,7 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("deleted", getDeleted());
 
 		return attributes;
 	}
@@ -177,6 +178,12 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Boolean deleted = (Boolean)attributes.get("deleted");
+
+		if (deleted != null) {
+			setDeleted(deleted);
 		}
 	}
 
@@ -512,6 +519,34 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 		}
 	}
 
+	@Override
+	public boolean getDeleted() {
+		return _deleted;
+	}
+
+	@Override
+	public boolean isDeleted() {
+		return _deleted;
+	}
+
+	@Override
+	public void setDeleted(boolean deleted) {
+		_deleted = deleted;
+
+		if (_vacationLeaveRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacationLeaveRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setDeleted", boolean.class);
+
+				method.invoke(_vacationLeaveRemoteModel, deleted);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getVacationLeaveRemoteModel() {
 		return _vacationLeaveRemoteModel;
 	}
@@ -596,6 +631,7 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 		clone.setUserName(getUserName());
 		clone.setCreateDate(getCreateDate());
 		clone.setModifiedDate(getModifiedDate());
+		clone.setDeleted(getDeleted());
 
 		return clone;
 	}
@@ -648,7 +684,7 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{vacationLeaveId=");
 		sb.append(getVacationLeaveId());
@@ -678,6 +714,8 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", deleted=");
+		sb.append(getDeleted());
 		sb.append("}");
 
 		return sb.toString();
@@ -685,7 +723,7 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.VacationLeave");
@@ -747,6 +785,10 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>deleted</column-name><column-value><![CDATA[");
+		sb.append(getDeleted());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -768,6 +810,7 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _deleted;
 	private BaseModel<?> _vacationLeaveRemoteModel;
 	private Class<?> _clpSerializerClass = vn.com.ecopharma.emp.service.ClpSerializer.class;
 }

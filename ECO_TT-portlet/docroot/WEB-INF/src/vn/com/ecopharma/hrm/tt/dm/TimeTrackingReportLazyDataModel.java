@@ -10,7 +10,6 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
-import vn.com.ecopharma.hrm.tt.constant.EmpField;
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
 import vn.com.ecopharma.hrm.tt.dto.EmpTimeTrackingIndexedItem;
 import vn.com.ecopharma.hrm.tt.dto.TimeTrackingIndexItem;
@@ -18,14 +17,9 @@ import vn.com.ecopharma.hrm.tt.utils.TTUtils;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.ParseException;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.Sort;
 
 public class TimeTrackingReportLazyDataModel extends
 		LazyDataModel<EmpTimeTrackingIndexedItem> {
@@ -40,59 +34,37 @@ public class TimeTrackingReportLazyDataModel extends
 
 	private static final long YEAR_MONTH_DATE_CONS = 86400000L; // 24*60*60*1000L
 
-	private static final String[] GLOBAL_FILTER_FIELDS = new String[] {
-			TimeTrackingField.EMP_CODE, TimeTrackingField.FULLNAME,
-			TimeTrackingField.DEVISION, TimeTrackingField.DEPARTMENT,
-			TimeTrackingField.UNIT, TimeTrackingField.UNIT_GROUP,
-			TimeTrackingField.TITLES };
-
 	@Override
 	public List<EmpTimeTrackingIndexedItem> load(int first, int pageSize,
 			String sortField, SortOrder sortOrder, Map<String, Object> filters) {
 		try {
 			final SearchContext searchContext = TTUtils
 					.getCurrentSearchContext();
-			final List<Query> queries = new ArrayList<>();
+			// final List<Query> queries = new ArrayList<>();
 
 			// add Filtered values
-//			for (Map.Entry<String, Object> entry : filters.entrySet()) {
-//				if (!entry.getKey().equalsIgnoreCase(
-//						TimeTrackingField.FILTERED_DATE_FROM)
-//						&& !entry.getKey().equalsIgnoreCase(
-//								TimeTrackingField.FILTERED_DATE_TO)
-//						&& !entry.getKey().equalsIgnoreCase(
-//								TimeTrackingField.GLOBAL)
-//						&& !entry.getKey().equalsIgnoreCase(
-//								TimeTrackingField.MONTH)
-//						&& !entry.getKey().equalsIgnoreCase(
-//								TimeTrackingField.YEAR)
-//						&& !entry.getKey().equalsIgnoreCase(
-//								TimeTrackingField.IS_EMPTY_IN)
-//						&& !entry.getKey().equalsIgnoreCase(
-//								TimeTrackingField.IS_EMPTY_OUT)) {
-//					BooleanQuery query = BooleanQueryFactoryUtil
-//							.create(searchContext);
-//					query.addTerm(entry.getKey(), (String) entry.getValue(),
-//							true, BooleanClauseOccur.MUST);
-//					queries.add(query);
-//				}
-//			}
-
-			// add global filter
-			if (filters.get(TimeTrackingField.GLOBAL) != null) {
-				final BooleanQuery globalFilterQuery = BooleanQueryFactoryUtil
-						.create(searchContext);
-				globalFilterQuery.addTerms(GLOBAL_FILTER_FIELDS,
-						(String) filters.get(TimeTrackingField.GLOBAL), true);
-				queries.add(globalFilterQuery);
-			}
-
-			// execute search
-			// final List<Document> empDocs = EmpLocalServiceUtil
-			// .searchAllUnDeletedEmpIndexedDocument(TTUtils
-			// .getCurrentSearchContext(), queries, TTUtils
-			// .getCompanyId(), new Sort(EmpField.EMP_ID, false),
-			// first, first + pageSize);
+			// for (Map.Entry<String, Object> entry : filters.entrySet()) {
+			// if (!entry.getKey().equalsIgnoreCase(
+			// TimeTrackingField.FILTERED_DATE_FROM)
+			// && !entry.getKey().equalsIgnoreCase(
+			// TimeTrackingField.FILTERED_DATE_TO)
+			// && !entry.getKey().equalsIgnoreCase(
+			// TimeTrackingField.GLOBAL)
+			// && !entry.getKey().equalsIgnoreCase(
+			// TimeTrackingField.MONTH)
+			// && !entry.getKey().equalsIgnoreCase(
+			// TimeTrackingField.YEAR)
+			// && !entry.getKey().equalsIgnoreCase(
+			// TimeTrackingField.IS_EMPTY_IN)
+			// && !entry.getKey().equalsIgnoreCase(
+			// TimeTrackingField.IS_EMPTY_OUT)) {
+			// BooleanQuery query = BooleanQueryFactoryUtil
+			// .create(searchContext);
+			// query.addTerm(entry.getKey(), (String) entry.getValue(),
+			// true, BooleanClauseOccur.MUST);
+			// queries.add(query);
+			// }
+			// }
 
 			final List<Document> empDocs = EmpLocalServiceUtil
 					.filterEmployeeByFields(TTUtils.getCurrentSearchContext(),
@@ -100,8 +72,6 @@ public class TimeTrackingReportLazyDataModel extends
 									+ pageSize);
 			final List<EmpTimeTrackingIndexedItem> empTimeTrackingIndexedItems = new ArrayList<>();
 
-			// iterate to bind results to DTOs
-			int noTimeTrackingDataEmpCount = 0;
 			for (Document document : empDocs) {
 				final EmpTimeTrackingIndexedItem empTimeTrackingIndexedItem = new EmpTimeTrackingIndexedItem(
 						document);
@@ -109,10 +79,6 @@ public class TimeTrackingReportLazyDataModel extends
 						.get(TimeTrackingField.MONTH);
 
 				final int year = (Integer) filters.get(TimeTrackingField.YEAR);
-				// final boolean isEmptyIn = (Boolean) filters
-				// .get(TimeTrackingField.IS_EMPTY_IN);
-				// final boolean isEmptyOut = (Boolean) filters
-				// .get(TimeTrackingField.IS_EMPTY_OUT);
 
 				final List<TimeTrackingIndexItem> timeTrackingIndexItems = TTUtils
 						.getTimeTrackingIndexItems(
@@ -130,26 +96,10 @@ public class TimeTrackingReportLazyDataModel extends
 						.setGrandTotalMinInTime(getGrandMinIn(minInMap));
 				empTimeTrackingIndexedItem
 						.setGrandTotalMaxOutTime(getGrandMaxOut(maxOutMap));
-
-				// if (isEmptyIn) {
-				// if (!hasEmptyIn(timeTrackingIndexItems)) {
-				// empTimeTrackingIndexedItems
-				// .add(empTimeTrackingIndexedItem);
-				// }
-				// } else if (isEmptyOut) {
-				// if (!hasEmptyOut(timeTrackingIndexItems)) {
-				// empTimeTrackingIndexedItems
-				// .add(empTimeTrackingIndexedItem);
-				// }
-				// } else {
 				empTimeTrackingIndexedItems.add(empTimeTrackingIndexedItem);
-				// }
-
 			}
-			int countTotal = EmpLocalServiceUtil
-					.countAllUnDeletedIndexedEmpDocuments(getSearchContext(),
-							queries, TTUtils.getCompanyId(), new Sort(
-									EmpField.EMP_ID, false));
+			int countTotal = EmpLocalServiceUtil.countFilterEmployeeByFields(
+					searchContext, filters, null, TTUtils.getCompanyId());
 			setPageSize(pageSize);
 			setRowCount(countTotal);
 
@@ -162,25 +112,25 @@ public class TimeTrackingReportLazyDataModel extends
 		return new ArrayList<>();
 	}
 
-	private static boolean hasEmptyIn(
-			List<TimeTrackingIndexItem> timeTrackingIndexItems) {
-		for (TimeTrackingIndexItem item : timeTrackingIndexItems) {
-			if ("true".equalsIgnoreCase(item.getEmptyIn())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private static boolean hasEmptyOut(
-			List<TimeTrackingIndexItem> timeTrackingIndexItems) {
-		for (TimeTrackingIndexItem item : timeTrackingIndexItems) {
-			if ("true".equalsIgnoreCase(item.getEmptyOut())) {
-				return true;
-			}
-		}
-		return false;
-	}
+	// private static boolean hasEmptyIn(
+	// List<TimeTrackingIndexItem> timeTrackingIndexItems) {
+	// for (TimeTrackingIndexItem item : timeTrackingIndexItems) {
+	// if ("true".equalsIgnoreCase(item.getEmptyIn())) {
+	// return true;
+	// }
+	// }
+	// return false;
+	// }
+	//
+	// private static boolean hasEmptyOut(
+	// List<TimeTrackingIndexItem> timeTrackingIndexItems) {
+	// for (TimeTrackingIndexItem item : timeTrackingIndexItems) {
+	// if ("true".equalsIgnoreCase(item.getEmptyOut())) {
+	// return true;
+	// }
+	// }
+	// return false;
+	// }
 
 	@Override
 	public EmpTimeTrackingIndexedItem getRowData(String rowKey) {

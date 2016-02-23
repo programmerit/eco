@@ -306,6 +306,13 @@ public class DocumentLocalServiceUtil {
 		return getService().findByFileEntry(fileEntryId);
 	}
 
+	public static vn.com.ecopharma.emp.model.Document fetchByClassNameClassPKAndFileEntry(
+		java.lang.String className, long classPK, long fileEntryId) {
+		return getService()
+				   .fetchByClassNameClassPKAndFileEntry(className, classPK,
+			fileEntryId);
+	}
+
 	public static vn.com.ecopharma.emp.model.Document createPrePersistedEntity(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService().createPrePersistedEntity(serviceContext);

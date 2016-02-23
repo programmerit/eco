@@ -225,36 +225,36 @@
 					<p:rowToggler />
 				</p:column>
 
-				<p:column headerText="NAME" sortBy="#{candidateFilterBean.fullName}">
+				<p:column headerText="Name" sortBy="#{candidateFilterBean.fullName}">
 					<h:outputText value="#{candidate.fullName}" />
 				</p:column>
 
-				<p:column headerText="EMAIL"
+				<p:column headerText="Email"
 					sortBy="#{candidateFilterBean.emailAddress}">
 					<h:outputText value="#{candidate.emailAddress}" />
 				</p:column>
 
-				<p:column headerText="CONTACT NUMBER"
+				<p:column headerText="Contact number"
 					sortBy="#{candidateFilterBean.contactNumber}">
 					<h:outputText value="#{candidate.contactNumber}" />
 				</p:column>
 
-				<p:column headerText="VACANCY"
+				<p:column headerText="Vacancy"
 					sortBy="#{candidateFilterBean.vacancy}">
 					<h:outputText value="#{candidate.vacancy}" />
 				</p:column>
 
-				<p:column headerText="APPLY DATE"
+				<p:column headerText="Apply Date"
 					sortBy="#{candidateFilterBean.applyDate}">
 					<h:outputText value="#{candidate.formattedApplicationDate}" />
 				</p:column>
 
-				<p:column headerText="PROFILE MATCHING" width="110">
+				<p:column headerText="Profile Matching" width="110">
 					<p:rating value="#{candidate.evaluationPoint}" readonly="true"
 						cancel="false" styleClass="candidate-rating" />
 				</p:column>
 
-				<p:column headerText="STATUS" sortBy="#{candidateFilterBean.status}">
+				<p:column headerText="Status" sortBy="#{candidateFilterBean.status}">
 					<h:outputText id="candidateStatus"
 						styleClass="currentStatus #{candidateViewBean.currentStatusCSS(candidate.status)}"
 						value="#{i18n[candidate.localizedStatus]}" />

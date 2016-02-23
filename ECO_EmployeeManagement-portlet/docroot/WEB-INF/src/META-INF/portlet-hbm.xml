@@ -434,6 +434,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="deleted" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="vn.com.ecopharma.emp.model.impl.WorkingLocationImpl" table="eco_em_portlet_WorkingLocation">
 		<cache usage="read-write" />

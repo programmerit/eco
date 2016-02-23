@@ -106,42 +106,42 @@ public class EmployeeInterviewScheduleLocalServiceClpInvoker {
 				"vn.com.ecopharma.hrm.rc.model.EmployeeInterviewSchedule"
 			};
 
-		_methodName116 = "getBeanIdentifier";
+		_methodName110 = "getBeanIdentifier";
+
+		_methodParameterTypes110 = new String[] {  };
+
+		_methodName111 = "setBeanIdentifier";
+
+		_methodParameterTypes111 = new String[] { "java.lang.String" };
+
+		_methodName116 = "findAll";
 
 		_methodParameterTypes116 = new String[] {  };
 
-		_methodName117 = "setBeanIdentifier";
+		_methodName117 = "findAll";
 
-		_methodParameterTypes117 = new String[] { "java.lang.String" };
+		_methodParameterTypes117 = new String[] { "int", "int" };
 
-		_methodName122 = "findAll";
+		_methodName118 = "findAll";
 
-		_methodParameterTypes122 = new String[] {  };
-
-		_methodName123 = "findAll";
-
-		_methodParameterTypes123 = new String[] { "int", "int" };
-
-		_methodName124 = "findAll";
-
-		_methodParameterTypes124 = new String[] {
+		_methodParameterTypes118 = new String[] {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName125 = "addEmployeeInterviewSchedule";
+		_methodName119 = "addEmployeeInterviewSchedule";
 
-		_methodParameterTypes125 = new String[] {
+		_methodParameterTypes119 = new String[] {
 				"vn.com.ecopharma.hrm.rc.model.EmployeeInterviewSchedule",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName126 = "createPrePersitedEntity";
+		_methodName120 = "createPrePersitedEntity";
 
-		_methodParameterTypes126 = new String[] {  };
+		_methodParameterTypes120 = new String[] {  };
 
-		_methodName127 = "findByInterviewSchedule";
+		_methodName121 = "findByInterviewSchedule";
 
-		_methodParameterTypes127 = new String[] { "long" };
+		_methodParameterTypes121 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -233,49 +233,49 @@ public class EmployeeInterviewScheduleLocalServiceClpInvoker {
 			return EmployeeInterviewScheduleLocalServiceUtil.updateEmployeeInterviewSchedule((vn.com.ecopharma.hrm.rc.model.EmployeeInterviewSchedule)arguments[0]);
 		}
 
-		if (_methodName116.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
+		if (_methodName110.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
 			return EmployeeInterviewScheduleLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName117.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
+		if (_methodName111.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
 			EmployeeInterviewScheduleLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName122.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+		if (_methodName116.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
 			return EmployeeInterviewScheduleLocalServiceUtil.findAll();
 		}
 
-		if (_methodName123.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+		if (_methodName117.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
 			return EmployeeInterviewScheduleLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName124.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+		if (_methodName118.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
 			return EmployeeInterviewScheduleLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[2]);
 		}
 
-		if (_methodName125.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+		if (_methodName119.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
 			return EmployeeInterviewScheduleLocalServiceUtil.addEmployeeInterviewSchedule((vn.com.ecopharma.hrm.rc.model.EmployeeInterviewSchedule)arguments[0],
 				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
 
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
+		if (_methodName120.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
 			return EmployeeInterviewScheduleLocalServiceUtil.createPrePersitedEntity();
 		}
 
-		if (_methodName127.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
+		if (_methodName121.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
 			return EmployeeInterviewScheduleLocalServiceUtil.findByInterviewSchedule(((Long)arguments[0]).longValue());
 		}
 
@@ -314,20 +314,20 @@ public class EmployeeInterviewScheduleLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
+	private String _methodName110;
+	private String[] _methodParameterTypes110;
+	private String _methodName111;
+	private String[] _methodParameterTypes111;
 	private String _methodName116;
 	private String[] _methodParameterTypes116;
 	private String _methodName117;
 	private String[] _methodParameterTypes117;
-	private String _methodName122;
-	private String[] _methodParameterTypes122;
-	private String _methodName123;
-	private String[] _methodParameterTypes123;
-	private String _methodName124;
-	private String[] _methodParameterTypes124;
-	private String _methodName125;
-	private String[] _methodParameterTypes125;
-	private String _methodName126;
-	private String[] _methodParameterTypes126;
-	private String _methodName127;
-	private String[] _methodParameterTypes127;
+	private String _methodName118;
+	private String[] _methodParameterTypes118;
+	private String _methodName119;
+	private String[] _methodParameterTypes119;
+	private String _methodName120;
+	private String[] _methodParameterTypes120;
+	private String _methodName121;
+	private String[] _methodParameterTypes121;
 }

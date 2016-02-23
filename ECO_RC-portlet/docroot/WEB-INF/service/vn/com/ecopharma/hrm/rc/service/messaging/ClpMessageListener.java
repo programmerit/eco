@@ -26,8 +26,6 @@ import vn.com.ecopharma.hrm.rc.service.CandidateServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.CertificateLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.CertificateServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.ClpSerializer;
-import vn.com.ecopharma.hrm.rc.service.DocumentLocalServiceUtil;
-import vn.com.ecopharma.hrm.rc.service.DocumentServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.EmployeeInterviewScheduleLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.EmployeeInterviewScheduleServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.EvaluationCriteriaKeyValueLocalServiceUtil;
@@ -75,9 +73,6 @@ public class ClpMessageListener extends BaseMessageListener {
 			CertificateLocalServiceUtil.clearService();
 
 			CertificateServiceUtil.clearService();
-			DocumentLocalServiceUtil.clearService();
-
-			DocumentServiceUtil.clearService();
 			EmployeeInterviewScheduleLocalServiceUtil.clearService();
 
 			EmployeeInterviewScheduleServiceUtil.clearService();

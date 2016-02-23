@@ -1447,6 +1447,7 @@ public class VacationLeavePersistenceImpl extends BasePersistenceImpl<VacationLe
 		vacationLeaveImpl.setUserName(vacationLeave.getUserName());
 		vacationLeaveImpl.setCreateDate(vacationLeave.getCreateDate());
 		vacationLeaveImpl.setModifiedDate(vacationLeave.getModifiedDate());
+		vacationLeaveImpl.setDeleted(vacationLeave.isDeleted());
 
 		return vacationLeaveImpl;
 	}

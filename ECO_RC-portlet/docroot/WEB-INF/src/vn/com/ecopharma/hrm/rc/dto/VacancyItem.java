@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import vn.com.ecopharma.emp.model.Document;
 import vn.com.ecopharma.emp.model.Titles;
+import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.enumeration.VacancyStatus;
-import vn.com.ecopharma.hrm.rc.model.Document;
 import vn.com.ecopharma.hrm.rc.model.Vacancy;
-import vn.com.ecopharma.hrm.rc.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
 
 import com.liferay.portal.kernel.exception.SystemException;
@@ -39,7 +39,7 @@ public class VacancyItem implements Serializable {
 	public VacancyItem(Vacancy vacancy) {
 		this.vacancy = vacancy;
 		List<Document> documents = DocumentLocalServiceUtil
-				.findByClassAndClassPK(Vacancy.class.getName(),
+				.findByClassNameAndClassPK(Vacancy.class.getName(),
 						vacancy.getVacancyId());
 		this.documentItems = new ArrayList<>();
 		for (Document doc : documents) {

@@ -826,6 +826,96 @@ public class DocumentUtil {
 	}
 
 	/**
+	* Returns the document where className = &#63; and classPK = &#63; and fileEntryId = &#63; or throws a {@link vn.com.ecopharma.emp.NoSuchDocumentException} if it could not be found.
+	*
+	* @param className the class name
+	* @param classPK the class p k
+	* @param fileEntryId the file entry ID
+	* @return the matching document
+	* @throws vn.com.ecopharma.emp.NoSuchDocumentException if a matching document could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.Document findByClassNameClassPKAndFileEntry(
+		java.lang.String className, long classPK, long fileEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.emp.NoSuchDocumentException {
+		return getPersistence()
+				   .findByClassNameClassPKAndFileEntry(className, classPK,
+			fileEntryId);
+	}
+
+	/**
+	* Returns the document where className = &#63; and classPK = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param className the class name
+	* @param classPK the class p k
+	* @param fileEntryId the file entry ID
+	* @return the matching document, or <code>null</code> if a matching document could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.Document fetchByClassNameClassPKAndFileEntry(
+		java.lang.String className, long classPK, long fileEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByClassNameClassPKAndFileEntry(className, classPK,
+			fileEntryId);
+	}
+
+	/**
+	* Returns the document where className = &#63; and classPK = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param className the class name
+	* @param classPK the class p k
+	* @param fileEntryId the file entry ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching document, or <code>null</code> if a matching document could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.Document fetchByClassNameClassPKAndFileEntry(
+		java.lang.String className, long classPK, long fileEntryId,
+		boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByClassNameClassPKAndFileEntry(className, classPK,
+			fileEntryId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the document where className = &#63; and classPK = &#63; and fileEntryId = &#63; from the database.
+	*
+	* @param className the class name
+	* @param classPK the class p k
+	* @param fileEntryId the file entry ID
+	* @return the document that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.Document removeByClassNameClassPKAndFileEntry(
+		java.lang.String className, long classPK, long fileEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.emp.NoSuchDocumentException {
+		return getPersistence()
+				   .removeByClassNameClassPKAndFileEntry(className, classPK,
+			fileEntryId);
+	}
+
+	/**
+	* Returns the number of documents where className = &#63; and classPK = &#63; and fileEntryId = &#63;.
+	*
+	* @param className the class name
+	* @param classPK the class p k
+	* @param fileEntryId the file entry ID
+	* @return the number of matching documents
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByClassNameClassPKAndFileEntry(
+		java.lang.String className, long classPK, long fileEntryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countByClassNameClassPKAndFileEntry(className, classPK,
+			fileEntryId);
+	}
+
+	/**
 	* Caches the document in the entity cache if it is enabled.
 	*
 	* @param document the document

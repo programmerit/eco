@@ -384,7 +384,8 @@ create table eco_em_portlet_VacationLeave (
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
-	modifiedDate DATE null
+	modifiedDate DATE null,
+	deleted BOOLEAN
 );
 
 create table eco_em_portlet_WorkingLocation (

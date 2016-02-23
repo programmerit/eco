@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.primefaces.model.SortOrder;
 
 import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.dto.AbstractIndexedItem;
@@ -16,13 +17,20 @@ import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 
-public class AbstractEmpBaseLazyDataModel<T extends AbstractIndexedItem>
+public abstract class AbstractEmpBaseLazyDataModel<T extends AbstractIndexedItem>
 		extends AbstractBaseOrganizationLazyDataModel<T> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	@Override
+	public abstract List<T> load(int first, int pageSize, String sortField,
+			SortOrder sortOrder, Map<String, Object> filters);
+
+	@Override
+	public abstract T getRowData(String rowKey);
 
 	@Override
 	protected void bindOrganizationFilterFields(Map<String, Object> filters,

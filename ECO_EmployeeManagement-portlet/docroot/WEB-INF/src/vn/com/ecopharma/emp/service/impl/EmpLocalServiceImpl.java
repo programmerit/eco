@@ -37,9 +37,6 @@ import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.enumeration.EmployeeNotifyType;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.model.Department;
-import vn.com.ecopharma.emp.model.DepartmentClp;
-import vn.com.ecopharma.emp.model.Devision;
-import vn.com.ecopharma.emp.model.DevisionClp;
 import vn.com.ecopharma.emp.model.District;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
@@ -47,13 +44,8 @@ import vn.com.ecopharma.emp.model.EmpNotifyEmail;
 import vn.com.ecopharma.emp.model.EmpOrgRelationship;
 import vn.com.ecopharma.emp.model.PromotedHistory;
 import vn.com.ecopharma.emp.model.ResignationHistory;
-import vn.com.ecopharma.emp.model.Titles;
-import vn.com.ecopharma.emp.model.TitlesClp;
-import vn.com.ecopharma.emp.model.Unit;
-import vn.com.ecopharma.emp.model.UnitClp;
-import vn.com.ecopharma.emp.model.UnitGroup;
-import vn.com.ecopharma.emp.model.UnitGroupClp;
 import vn.com.ecopharma.emp.service.base.EmpLocalServiceBaseImpl;
+import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -325,52 +317,6 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 					} else if (filterProperty
 							.equalsIgnoreCase(JOINED_DATE_FROM)
 							|| filterProperty.equalsIgnoreCase(JOINED_DATE_TO)) {
-						// final SimpleDateFormat sdf = new SimpleDateFormat(
-						// "yyyyMMddhhmmss");
-						// final SimpleDateFormat sdf1 = new SimpleDateFormat(
-						// "dd/MM/yyyy");
-						// final String defaultDateFromString =
-						// "19700101000000";
-						// final String currentDateString = sdf.format(new Date(
-						// System.currentTimeMillis()));// example:
-						// // 19700101000000
-						// int nextYear = Integer.valueOf(currentDateString
-						// .substring(0, 4)) + 1;
-						// final String nextYearString = nextYear
-						// + currentDateString.substring(4,
-						// currentDateString.length());
-						//
-						// final String defaultDateToString = nextYearString;
-						//
-						// final String filterJoinedDateFrom = joinedDateFrom !=
-						// null
-						// && joinedDateFrom != StringUtils.EMPTY ? sdf
-						// .format(sdf1.parse(joinedDateFrom))
-						// : defaultDateFromString;
-						//
-						// final String filterJoinedDateTo = joinedDateTo !=
-						// null
-						// && joinedDateTo != StringUtils.EMPTY ? sdf
-						// .format(sdf1.parse(joinedDateTo))
-						// : defaultDateToString;
-						//
-						// final boolean isDefaultJDSearch =
-						// filterJoinedDateFrom
-						// .equals(defaultDateFromString)
-						// && filterJoinedDateTo
-						// .equals(defaultDateToString);
-						//
-						// final TermRangeQuery joinedDateTermRangeQuery =
-						// TermRangeQueryFactoryUtil
-						// .create(searchContext, EmpField.JOINED_DATE,
-						// filterJoinedDateFrom,
-						// filterJoinedDateTo, true, true);
-						//
-						// // not include null joined date
-						// if (!isDefaultJDSearch) {
-						// queries.add(joinedDateTermRangeQuery);
-						// }
-
 						createAndAddJoinedDateTermRangeQuery(queries,
 								joinedDateFrom, joinedDateTo, searchContext);
 
@@ -384,108 +330,19 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 						queries.add(stringFilterQuery);
 					}
 				} else if (filterValue instanceof List<?>
-						&& filterProperty.equalsIgnoreCase(EmpField.GENDER)) {
-					isGenderFiltered = true;
-				} else if (filterProperty.equalsIgnoreCase(EmpField.DEVISION)) {
-					queries.add(createDevisionQuery((List<?>) filterValue,
-							searchContext));
-				} else if (filterProperty.equalsIgnoreCase(EmpField.DEPARTMENT)) {
-					queries.add(createDepartmentQuery((List<?>) filterValue,
-							searchContext));
-				} else if (filterProperty.equalsIgnoreCase(EmpField.UNIT)) {
-					queries.add(createUnitQuery((List<?>) filterValue,
-							searchContext));
-				} else if (filterProperty.equalsIgnoreCase(EmpField.UNIT_GROUP)) {
-					queries.add(createUnitGroupQuery((List<?>) filterValue,
-							searchContext));
-				} else if (filterProperty.equalsIgnoreCase(EmpField.TITLES)) {
-					queries.add(createTitlesQuery((List<?>) filterValue,
-							searchContext));
+						&& (filterProperty.equalsIgnoreCase(EmpField.GENDER))
+						|| filterProperty.equalsIgnoreCase(EmpField.STATUS)) {
+					queries.add(createStringListQuery(filterProperty,
+							(List<String>) filterValue, searchContext));
+				} else if (isOrganizationFilter(filterProperty)) {
+					queries.add(createOrganizationFilterQuery(filterProperty,
+							(List<String>) filterValue, searchContext));
 				}
 			}
 
 			if (isGenderFiltered) {
 				genders.addAll((List<String>) filters.get(EmpField.GENDER));
 			}
-
-			// final BooleanQuery globalFilterBooleanQuery =
-			// BooleanQueryFactoryUtil
-			// .create(searchContext);
-			//
-			// final BooleanQuery empCodeFilterBooleanQuery =
-			// BooleanQueryFactoryUtil
-			// .create(searchContext);
-			//
-			// final BooleanQuery fullNameFilterBooleanQuery =
-			// BooleanQueryFactoryUtil
-			// .create(searchContext);
-			//
-			// final BooleanQuery genderFilterBooleanQuery =
-			// BooleanQueryFactoryUtil
-			// .create(searchContext);
-			//
-			// final SimpleDateFormat sdf = new
-			// SimpleDateFormat("yyyyMMddhhmmss");
-			// final SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
-			// final String defaultDateFromString = "19700101000000";
-			// final String currentDateString = sdf.format(new Date(System
-			// .currentTimeMillis()));// example: 19700101000000
-			// int nextYear = Integer.valueOf(currentDateString.substring(0, 4))
-			// + 1;
-			// final String nextYearString = nextYear
-			// + currentDateString
-			// .substring(4, currentDateString.length());
-			//
-			// final String defaultDateToString = nextYearString;
-			//
-			// final String filterJoinedDateFrom = joinedDateFrom != null
-			// && joinedDateFrom != StringUtils.EMPTY ? sdf.format(sdf1
-			// .parse(joinedDateFrom)) : defaultDateFromString;
-			//
-			// final String filterJoinedDateTo = joinedDateTo != null
-			// && joinedDateTo != StringUtils.EMPTY ? sdf.format(sdf1
-			// .parse(joinedDateTo)) : defaultDateToString;
-			//
-			// final boolean isDefaultJDSearch = filterJoinedDateFrom
-			// .equals(defaultDateFromString)
-			// && filterJoinedDateTo.equals(defaultDateToString);
-			//
-			// final TermRangeQuery joinedDateTermRangeQuery =
-			// TermRangeQueryFactoryUtil
-			// .create(searchContext, EmpField.JOINED_DATE,
-			// filterJoinedDateFrom, filterJoinedDateTo, true,
-			// true);
-			//
-			// // not include null joined date
-			// if (!isDefaultJDSearch) {
-			// queries.add(joinedDateTermRangeQuery);
-			// }
-			//
-			// if (StringUtils.trimToNull(globalFilter) != null) {
-			// globalFilterBooleanQuery.addTerms(fields, globalFilter, true);
-			// queries.add(globalFilterBooleanQuery);
-			// }
-			//
-			// if (StringUtils.trimToNull(empCode) != null) {
-			// empCodeFilterBooleanQuery.addTerm(EmpField.EMP_CODE, empCode,
-			// true, BooleanClauseOccur.MUST);
-			// queries.add(empCodeFilterBooleanQuery);
-			// }
-			//
-			// if (StringUtils.trimToNull(fullName) != null) {
-			// fullNameFilterBooleanQuery.addTerm(EmpField.VN_FULL_NAME,
-			// fullName, true, BooleanClauseOccur.MUST);
-			// queries.add(fullNameFilterBooleanQuery);
-			// }
-			//
-			// if (!genders.isEmpty()) {
-			// for (String gender : genders) {
-			// genderFilterBooleanQuery.addExactTerm(EmpField.GENDER,
-			// gender);
-			// }
-			// queries.add(genderFilterBooleanQuery);
-			// }
-
 			/* SORT */
 			if (sort == null) {
 				sort = new Sort(EmpField.EMP_ID, false);
@@ -494,6 +351,14 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 
 		return searchAllUnDeletedEmpIndexedDocument(searchContext, queries,
 				companyId, sort, start, end);
+	}
+
+	private boolean isOrganizationFilter(String filterProperty) {
+		return filterProperty.equalsIgnoreCase(EmpField.DEVISION)
+				|| filterProperty.equalsIgnoreCase(EmpField.DEPARTMENT)
+				|| filterProperty.equalsIgnoreCase(EmpField.UNIT)
+				|| filterProperty.equalsIgnoreCase(EmpField.UNIT_GROUP)
+				|| filterProperty.equalsIgnoreCase(EmpField.TITLES);
 	}
 
 	private void createAndAddJoinedDateTermRangeQuery(List<Query> queries,
@@ -533,130 +398,32 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	private Query createDevisionQuery(List<?> devisions,
+	private Query createStringListQuery(String property, List<String> values,
 			SearchContext searchContext) throws ParseException {
-		final BooleanQuery devisionQuery = BooleanQueryFactoryUtil
+		final BooleanQuery query = BooleanQueryFactoryUtil
 				.create(searchContext);
-
-		final Object devObj = devisions.get(0);
-
-		if (devObj instanceof Devision) {
-			for (Devision devision : (List<Devision>) devisions) {
-				TermQuery devisionTermQuery = TermQueryFactoryUtil.create(
-						searchContext, EmpField.DEVISION,
-						StringUtils.trimToEmpty(devision.getName()));
-				devisionQuery.add(devisionTermQuery, BooleanClauseOccur.SHOULD);
-			}
-		} else if (devObj instanceof DevisionClp) {
-			for (DevisionClp devision : (List<DevisionClp>) devisions) {
-				TermQuery devisionTermQuery = TermQueryFactoryUtil.create(
-						searchContext, EmpField.DEVISION, StringUtils
-								.trimToEmpty(devision.toEscapedModel()
-										.getName()));
-				devisionQuery.add(devisionTermQuery, BooleanClauseOccur.SHOULD);
-			}
+		for (String value : values) {
+			TermQuery termQuery = TermQueryFactoryUtil.create(searchContext,
+					property, StringUtils.trimToEmpty(EmployeeUtils
+							.removeDashChar(value)));
+			query.add(termQuery, BooleanClauseOccur.SHOULD);
 		}
-		return devisionQuery;
+
+		return query;
 	}
 
-	@SuppressWarnings("unchecked")
-	private Query createDepartmentQuery(List<?> departments,
-			SearchContext searchContext) throws ParseException {
-		final BooleanQuery deptQuery = BooleanQueryFactoryUtil
-				.create(searchContext);
-		final Object deptObj = departments.get(0);
-		if (deptObj instanceof Department) {
-			for (Department dept : (List<Department>) departments) {
-				TermQuery deptTermQuery = TermQueryFactoryUtil.create(
-						searchContext, EmpField.DEPARTMENT,
-						StringUtils.trimToEmpty(dept.getName()));
-				deptQuery.add(deptTermQuery, BooleanClauseOccur.SHOULD);
-			}
-		} else if (deptObj instanceof DepartmentClp) {
-			for (DepartmentClp dept : (List<DepartmentClp>) departments) {
-				TermQuery deptTermQuery = TermQueryFactoryUtil.create(
-						searchContext, EmpField.DEPARTMENT, StringUtils
-								.trimToEmpty(dept.toEscapedModel().getName()));
-				deptQuery.add(deptTermQuery, BooleanClauseOccur.SHOULD);
-			}
-		}
-		return deptQuery;
-	}
-
-	@SuppressWarnings("unchecked")
-	private Query createUnitQuery(List<?> units, SearchContext searchContext)
+	private Query createOrganizationFilterQuery(String property,
+			List<String> values, SearchContext searchContext)
 			throws ParseException {
-		final BooleanQuery unitQuery = BooleanQueryFactoryUtil
+		final BooleanQuery query = BooleanQueryFactoryUtil
 				.create(searchContext);
 
-		final Object unitObj = units.get(0);
-		if (unitObj instanceof Unit) {
-			for (Unit unit : (List<Unit>) units) {
-				TermQuery unitTermQuery = TermQueryFactoryUtil.create(
-						searchContext, EmpField.UNIT,
-						StringUtils.trimToEmpty(unit.getName()));
-				unitQuery.add(unitTermQuery, BooleanClauseOccur.SHOULD);
-			}
-		} else if (unitObj instanceof UnitClp) {
-			for (UnitClp unit : (List<UnitClp>) units) {
-				TermQuery unitTermQuery = TermQueryFactoryUtil.create(
-						searchContext, EmpField.UNIT, StringUtils
-								.trimToEmpty(unit.toEscapedModel().getName()));
-				unitQuery.add(unitTermQuery, BooleanClauseOccur.SHOULD);
-			}
+		for (String value : values) {
+			TermQuery termQuery = TermQueryFactoryUtil.create(searchContext,
+					property, StringUtils.trimToEmpty(value));
+			query.add(termQuery, BooleanClauseOccur.SHOULD);
 		}
-
-		return unitQuery;
-	}
-
-	@SuppressWarnings("unchecked")
-	private Query createUnitGroupQuery(List<?> unitGroups,
-			SearchContext searchContext) throws ParseException {
-		final BooleanQuery unitGroupQuery = BooleanQueryFactoryUtil
-				.create(searchContext);
-		final Object unitGroupObj = unitGroups.get(0);
-		if (unitGroupObj instanceof UnitGroup) {
-			for (UnitGroup unitGroup : (List<UnitGroup>) unitGroups) {
-				TermQuery titlesTermQuery = TermQueryFactoryUtil.create(
-						searchContext, EmpField.UNIT_GROUP,
-						StringUtils.trimToEmpty(unitGroup.getName()));
-				unitGroupQuery.add(titlesTermQuery, BooleanClauseOccur.SHOULD);
-			}
-		} else if (unitGroupObj instanceof UnitGroupClp) {
-			for (UnitGroupClp unitGroup : (List<UnitGroupClp>) unitGroups) {
-				TermQuery titlesTermQuery = TermQueryFactoryUtil.create(
-						searchContext, EmpField.UNIT_GROUP, StringUtils
-								.trimToEmpty(unitGroup.toEscapedModel()
-										.getName()));
-				unitGroupQuery.add(titlesTermQuery, BooleanClauseOccur.SHOULD);
-			}
-		}
-		return unitGroupQuery;
-	}
-
-	@SuppressWarnings("unchecked")
-	private Query createTitlesQuery(List<?> titlesList,
-			SearchContext searchContext) throws ParseException {
-		final BooleanQuery titlesQuery = BooleanQueryFactoryUtil
-				.create(searchContext);
-		final Object titlesObj = titlesList.get(0);
-		if (titlesObj instanceof Titles) {
-			for (Titles titles : (List<Titles>) titlesList) {
-				TermQuery titlesTermQuery = TermQueryFactoryUtil.create(
-						searchContext, EmpField.TITLES,
-						StringUtils.trimToEmpty(titles.getName()));
-				titlesQuery.add(titlesTermQuery, BooleanClauseOccur.SHOULD);
-			}
-		} else if (titlesObj instanceof TitlesClp) {
-			for (TitlesClp titles : (List<TitlesClp>) titlesList) {
-				TermQuery titlesTermQuery = TermQueryFactoryUtil
-						.create(searchContext, EmpField.TITLES, StringUtils
-								.trimToEmpty(titles.toEscapedModel().getName()));
-				titlesQuery.add(titlesTermQuery, BooleanClauseOccur.SHOULD);
-			}
-		}
-		return titlesQuery;
+		return query;
 	}
 
 	public Emp createPrePersistedEntity(ServiceContext serviceContext) {

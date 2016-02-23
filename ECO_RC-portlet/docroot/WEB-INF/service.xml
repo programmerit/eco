@@ -15,7 +15,16 @@
         <column name="emailAddress" type="String"></column>
         <column name="contactNumber" type="String"></column>
         <column name="dateOfBirth" type="Date"></column>
+        <column name="placeOfBirth" type="String"></column>
+        <column name="gender" type="String"></column>
         <column name="identityCardNo" type="String"></column>
+        <column name="issuedDate" type="Date"></column>
+        <column name="issuedPlace" type="String"></column>
+        <column name="maritalStatus" type="String"></column>
+        <column name="numberOfChild" type="int"></column>
+        <column name="nationality" type="String"></column>
+        <column name="ethnic" type="String"></column>
+        <column name="religion" type="String"></column>
         <column name="applicationDate" type="Date"></column>
         <column name="status" type="String"></column>
         <column name="locationId" type="long"></column>
@@ -217,41 +226,6 @@
 		<column name="modifiedDate" type="Date"></column>
         <finder name="InterviewSchedule" return-type="Collection">
             <finder-column name="interviewScheduleId"></finder-column>
-        </finder>
-	</entity>
-	<entity name="Document" local-service="true">
-		<column name="documentId" type="long" primary="true"></column>
-		<column name="className" type="String"></column>
-		<column name="classPK" type="long"></column>
-		<column name="type" type="String"></column>
-		<column name="fileEntryId" type="long"></column>
-
-
-		<!-- PK fields -->
-
-		<!-- Group instance -->
-        <column name="deleted" type="boolean"></column>
-
-		<column name="groupId" type="long"></column>
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long"></column>
-		<column name="userId" type="long"></column>
-		<column name="userName" type="String"></column>
-		<column name="createDate" type="Date"></column>
-		<column name="modifiedDate" type="Date"></column>
-        <finder name="ClassNameIdAndClassNamePK" return-type="Collection">
-            <finder-column name="className"></finder-column>
-            <finder-column name="classPK"></finder-column>
-        </finder>
-        <finder name="ClassNameAndClassPKAndFileEntryId" return-type="Document">
-            <finder-column name="className"></finder-column>
-            <finder-column name="classPK"></finder-column>
-            <finder-column name="fileEntryId"></finder-column>
-        </finder>
-        <finder name="FileEntryId" return-type="Collection">
-            <finder-column name="fileEntryId"></finder-column>
         </finder>
 	</entity>
 	<entity name="CandidateActionHistory" local-service="true">

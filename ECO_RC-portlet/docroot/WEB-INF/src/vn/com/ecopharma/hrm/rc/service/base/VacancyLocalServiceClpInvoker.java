@@ -106,130 +106,130 @@ public class VacancyLocalServiceClpInvoker {
 				"vn.com.ecopharma.hrm.rc.model.Vacancy"
 			};
 
-		_methodName116 = "getBeanIdentifier";
+		_methodName110 = "getBeanIdentifier";
+
+		_methodParameterTypes110 = new String[] {  };
+
+		_methodName111 = "setBeanIdentifier";
+
+		_methodParameterTypes111 = new String[] { "java.lang.String" };
+
+		_methodName116 = "findAll";
 
 		_methodParameterTypes116 = new String[] {  };
 
-		_methodName117 = "setBeanIdentifier";
+		_methodName117 = "findAll";
 
-		_methodParameterTypes117 = new String[] { "java.lang.String" };
+		_methodParameterTypes117 = new String[] { "int", "int" };
 
-		_methodName122 = "findAll";
+		_methodName118 = "findAll";
 
-		_methodParameterTypes122 = new String[] {  };
-
-		_methodName123 = "findAll";
-
-		_methodParameterTypes123 = new String[] { "int", "int" };
-
-		_methodName124 = "findAll";
-
-		_methodParameterTypes124 = new String[] {
+		_methodParameterTypes118 = new String[] {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName125 = "findAllUnDeleted";
+		_methodName119 = "findAllUnDeleted";
 
-		_methodParameterTypes125 = new String[] {  };
+		_methodParameterTypes119 = new String[] {  };
 
-		_methodName126 = "countAllUnDeletedIndexedVacancyDocuments";
+		_methodName120 = "countAllUnDeletedIndexedVacancyDocuments";
 
-		_methodParameterTypes126 = new String[] {
+		_methodParameterTypes120 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort"
 			};
 
-		_methodName127 = "searchAllUnDeletedVacanciesIndexedDocument";
+		_methodName121 = "searchAllUnDeletedVacanciesIndexedDocument";
 
-		_methodParameterTypes127 = new String[] {
+		_methodParameterTypes121 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName128 = "countAllUnDeletedAndPublishedIndexedVacancyDocuments";
+		_methodName122 = "countAllUnDeletedAndPublishedIndexedVacancyDocuments";
 
-		_methodParameterTypes128 = new String[] {
+		_methodParameterTypes122 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort"
 			};
 
-		_methodName129 = "searchAllUnDeletedAndPublishedVacanciesIndexedDocument";
+		_methodName123 = "searchAllUnDeletedAndPublishedVacanciesIndexedDocument";
 
-		_methodParameterTypes129 = new String[] {
+		_methodParameterTypes123 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName130 = "createPrePersistedVacancy";
+		_methodName124 = "createPrePersistedVacancy";
 
-		_methodParameterTypes130 = new String[] {  };
+		_methodParameterTypes124 = new String[] {  };
 
-		_methodName131 = "createPrePersistedVacancy";
+		_methodName125 = "createPrePersistedVacancy";
 
-		_methodParameterTypes131 = new String[] {
+		_methodParameterTypes125 = new String[] {
 				"java.lang.String", "java.lang.String", "int", "long",
 				"java.lang.String", "java.util.Date", "java.util.Date",
 				"java.lang.String"
 			};
 
-		_methodName132 = "addVacancy";
+		_methodName126 = "addVacancy";
 
-		_methodParameterTypes132 = new String[] {
+		_methodParameterTypes126 = new String[] {
 				"vn.com.ecopharma.hrm.rc.model.Vacancy", "long",
 				"java.util.List", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName133 = "updateVacancy";
+		_methodName127 = "updateVacancy";
 
-		_methodParameterTypes133 = new String[] {
+		_methodParameterTypes127 = new String[] {
 				"vn.com.ecopharma.hrm.rc.model.Vacancy", "java.util.List",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName134 = "getVacancyByCandidateId";
+		_methodName128 = "getVacancyByCandidateId";
 
-		_methodParameterTypes134 = new String[] { "long" };
+		_methodParameterTypes128 = new String[] { "long" };
 
-		_methodName135 = "getIndexVacancyDocument";
+		_methodName129 = "getIndexVacancyDocument";
 
-		_methodParameterTypes135 = new String[] {
+		_methodParameterTypes129 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName136 = "getIndexVacancyDocument";
+		_methodName130 = "getIndexVacancyDocument";
 
-		_methodParameterTypes136 = new String[] {
+		_methodParameterTypes130 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName137 = "getUndeletedIndexVacancyDocument";
+		_methodName131 = "getUndeletedIndexVacancyDocument";
 
-		_methodParameterTypes137 = new String[] {
+		_methodParameterTypes131 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName138 = "markDeleted";
+		_methodName132 = "markDeleted";
 
-		_methodParameterTypes138 = new String[] { "long" };
+		_methodParameterTypes132 = new String[] { "long" };
 
-		_methodName139 = "markDeleted";
+		_methodName133 = "markDeleted";
 
-		_methodParameterTypes139 = new String[] {
+		_methodParameterTypes133 = new String[] {
 				"vn.com.ecopharma.hrm.rc.model.Vacancy"
 			};
 
-		_methodName140 = "indexAllVacancies";
+		_methodName134 = "indexAllVacancies";
 
-		_methodParameterTypes140 = new String[] {  };
+		_methodParameterTypes134 = new String[] {  };
 
-		_methodName141 = "removeAllVacanciesIndexes";
+		_methodName135 = "removeAllVacanciesIndexes";
 
-		_methodParameterTypes141 = new String[] {
+		_methodParameterTypes135 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 	}
@@ -323,51 +323,51 @@ public class VacancyLocalServiceClpInvoker {
 			return VacancyLocalServiceUtil.updateVacancy((vn.com.ecopharma.hrm.rc.model.Vacancy)arguments[0]);
 		}
 
-		if (_methodName116.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
+		if (_methodName110.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
 			return VacancyLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName117.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
+		if (_methodName111.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
 			VacancyLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName122.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+		if (_methodName116.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
 			return VacancyLocalServiceUtil.findAll();
 		}
 
-		if (_methodName123.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+		if (_methodName117.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
 			return VacancyLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName124.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+		if (_methodName118.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
 			return VacancyLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[2]);
 		}
 
-		if (_methodName125.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+		if (_methodName119.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
 			return VacancyLocalServiceUtil.findAllUnDeleted();
 		}
 
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
+		if (_methodName120.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
 			return VacancyLocalServiceUtil.countAllUnDeletedIndexedVacancyDocuments((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
 				((Long)arguments[2]).longValue(),
 				(com.liferay.portal.kernel.search.Sort)arguments[3]);
 		}
 
-		if (_methodName127.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
+		if (_methodName121.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
 			return VacancyLocalServiceUtil.searchAllUnDeletedVacanciesIndexedDocument((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -376,16 +376,16 @@ public class VacancyLocalServiceClpInvoker {
 				((Integer)arguments[5]).intValue());
 		}
 
-		if (_methodName128.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
+		if (_methodName122.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
 			return VacancyLocalServiceUtil.countAllUnDeletedAndPublishedIndexedVacancyDocuments((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
 				((Long)arguments[2]).longValue(),
 				(com.liferay.portal.kernel.search.Sort)arguments[3]);
 		}
 
-		if (_methodName129.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
+		if (_methodName123.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
 			return VacancyLocalServiceUtil.searchAllUnDeletedAndPublishedVacanciesIndexedDocument((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -394,13 +394,13 @@ public class VacancyLocalServiceClpInvoker {
 				((Integer)arguments[5]).intValue());
 		}
 
-		if (_methodName130.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
+		if (_methodName124.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
 			return VacancyLocalServiceUtil.createPrePersistedVacancy();
 		}
 
-		if (_methodName131.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
+		if (_methodName125.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
 			return VacancyLocalServiceUtil.createPrePersistedVacancy((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1],
 				((Integer)arguments[2]).intValue(),
@@ -409,63 +409,63 @@ public class VacancyLocalServiceClpInvoker {
 				(java.util.Date)arguments[6], (java.lang.String)arguments[7]);
 		}
 
-		if (_methodName132.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
+		if (_methodName126.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
 			return VacancyLocalServiceUtil.addVacancy((vn.com.ecopharma.hrm.rc.model.Vacancy)arguments[0],
 				((Long)arguments[1]).longValue(),
 				(java.util.List<java.lang.Long>)arguments[2],
 				(com.liferay.portal.service.ServiceContext)arguments[3]);
 		}
 
-		if (_methodName133.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
+		if (_methodName127.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
 			return VacancyLocalServiceUtil.updateVacancy((vn.com.ecopharma.hrm.rc.model.Vacancy)arguments[0],
 				(java.util.List<java.lang.Long>)arguments[1],
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
 		}
 
-		if (_methodName134.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
+		if (_methodName128.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
 			return VacancyLocalServiceUtil.getVacancyByCandidateId(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName135.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
+		if (_methodName129.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
 			return VacancyLocalServiceUtil.getIndexVacancyDocument(((Long)arguments[0]).longValue(),
 				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
 		}
 
-		if (_methodName136.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
+		if (_methodName130.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
 			return VacancyLocalServiceUtil.getIndexVacancyDocument((java.lang.String)arguments[0],
 				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
 		}
 
-		if (_methodName137.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
+		if (_methodName131.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
 			return VacancyLocalServiceUtil.getUndeletedIndexVacancyDocument(((Long)arguments[0]).longValue(),
 				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
 		}
 
-		if (_methodName138.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
+		if (_methodName132.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
 			return VacancyLocalServiceUtil.markDeleted(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName139.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
+		if (_methodName133.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
 			return VacancyLocalServiceUtil.markDeleted((vn.com.ecopharma.hrm.rc.model.Vacancy)arguments[0]);
 		}
 
-		if (_methodName140.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
+		if (_methodName134.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
 			VacancyLocalServiceUtil.indexAllVacancies();
 
 			return null;
 		}
 
-		if (_methodName141.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
+		if (_methodName135.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
 			VacancyLocalServiceUtil.removeAllVacanciesIndexes((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				((Long)arguments[1]).longValue());
 
@@ -507,10 +507,22 @@ public class VacancyLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
+	private String _methodName110;
+	private String[] _methodParameterTypes110;
+	private String _methodName111;
+	private String[] _methodParameterTypes111;
 	private String _methodName116;
 	private String[] _methodParameterTypes116;
 	private String _methodName117;
 	private String[] _methodParameterTypes117;
+	private String _methodName118;
+	private String[] _methodParameterTypes118;
+	private String _methodName119;
+	private String[] _methodParameterTypes119;
+	private String _methodName120;
+	private String[] _methodParameterTypes120;
+	private String _methodName121;
+	private String[] _methodParameterTypes121;
 	private String _methodName122;
 	private String[] _methodParameterTypes122;
 	private String _methodName123;
@@ -539,16 +551,4 @@ public class VacancyLocalServiceClpInvoker {
 	private String[] _methodParameterTypes134;
 	private String _methodName135;
 	private String[] _methodParameterTypes135;
-	private String _methodName136;
-	private String[] _methodParameterTypes136;
-	private String _methodName137;
-	private String[] _methodParameterTypes137;
-	private String _methodName138;
-	private String[] _methodParameterTypes138;
-	private String _methodName139;
-	private String[] _methodParameterTypes139;
-	private String _methodName140;
-	private String[] _methodParameterTypes140;
-	private String _methodName141;
-	private String[] _methodParameterTypes141;
 }

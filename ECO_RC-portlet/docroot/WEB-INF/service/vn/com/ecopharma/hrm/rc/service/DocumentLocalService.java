@@ -251,19 +251,4 @@ public interface DocumentLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
-
-	public java.util.List<vn.com.ecopharma.hrm.rc.model.Document> findByClassAndClassPK(
-		java.lang.String className, long classPK);
-
-	public vn.com.ecopharma.hrm.rc.model.Document findByClassAndClassPKAndFileEntryId(
-		java.lang.String className, long classPK, long fileEntryId);
-
-	public vn.com.ecopharma.hrm.rc.model.Document addDocument(
-		java.lang.String className, long classPK, long fileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext);
-
-	public java.util.List<vn.com.ecopharma.hrm.rc.model.Document> findByFileEntry(
-		long fileEntryId);
-
-	public void deleteByFileEntry(long fileEntryId);
 }

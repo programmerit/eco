@@ -284,38 +284,6 @@ public class DocumentLocalServiceWrapper implements DocumentLocalService,
 			arguments);
 	}
 
-	@Override
-	public java.util.List<vn.com.ecopharma.hrm.rc.model.Document> findByClassAndClassPK(
-		java.lang.String className, long classPK) {
-		return _documentLocalService.findByClassAndClassPK(className, classPK);
-	}
-
-	@Override
-	public vn.com.ecopharma.hrm.rc.model.Document findByClassAndClassPKAndFileEntryId(
-		java.lang.String className, long classPK, long fileEntryId) {
-		return _documentLocalService.findByClassAndClassPKAndFileEntryId(className,
-			classPK, fileEntryId);
-	}
-
-	@Override
-	public vn.com.ecopharma.hrm.rc.model.Document addDocument(
-		java.lang.String className, long classPK, long fileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		return _documentLocalService.addDocument(className, classPK,
-			fileEntryId, serviceContext);
-	}
-
-	@Override
-	public java.util.List<vn.com.ecopharma.hrm.rc.model.Document> findByFileEntry(
-		long fileEntryId) {
-		return _documentLocalService.findByFileEntry(fileEntryId);
-	}
-
-	@Override
-	public void deleteByFileEntry(long fileEntryId) {
-		_documentLocalService.deleteByFileEntry(fileEntryId);
-	}
-
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

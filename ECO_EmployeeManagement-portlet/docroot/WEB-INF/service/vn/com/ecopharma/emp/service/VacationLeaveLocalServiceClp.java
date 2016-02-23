@@ -150,6 +150,39 @@ public class VacationLeaveLocalServiceClp implements VacationLeaveLocalService {
 				"java.util.Date", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
+
+		_methodName25 = "countAllUnDeletedDocuments";
+
+		_methodParameterTypes25 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.List", "long",
+				"com.liferay.portal.kernel.search.Sort"
+			};
+
+		_methodName26 = "searchAllUnDeletedDocuments";
+
+		_methodParameterTypes26 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.List", "long",
+				"com.liferay.portal.kernel.search.Sort", "int", "int"
+			};
+
+		_methodName27 = "getIndexedDocument";
+
+		_methodParameterTypes27 = new String[] {
+				"java.lang.String",
+				"com.liferay.portal.kernel.search.SearchContext"
+			};
+
+		_methodName28 = "getIndexedDocument";
+
+		_methodParameterTypes28 = new String[] {
+				"long", "com.liferay.portal.kernel.search.SearchContext"
+			};
+
+		_methodName29 = "indexAll";
+
+		_methodParameterTypes29 = new String[] {  };
 	}
 
 	@Override
@@ -894,6 +927,156 @@ public class VacationLeaveLocalServiceClp implements VacationLeaveLocalService {
 		return (vn.com.ecopharma.emp.model.VacationLeave)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public int countAllUnDeletedDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
+					new Object[] {
+						ClpSerializer.translateInput(searchContext),
+						
+					ClpSerializer.translateInput(filterQueries),
+						
+					companyId,
+						
+					ClpSerializer.translateInput(sort)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Document> searchAllUnDeletedDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
+		int end) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
+					new Object[] {
+						ClpSerializer.translateInput(searchContext),
+						
+					ClpSerializer.translateInput(filterQueries),
+						
+					companyId,
+						
+					ClpSerializer.translateInput(sort),
+						
+					start,
+						
+					end
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.portal.kernel.search.Document>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Document getIndexedDocument(
+		java.lang.String id,
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
+					new Object[] {
+						ClpSerializer.translateInput(id),
+						
+					ClpSerializer.translateInput(searchContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portal.kernel.search.Document)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Document getIndexedDocument(
+		long id, com.liferay.portal.kernel.search.SearchContext searchContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
+					new Object[] { id, ClpSerializer.translateInput(
+							searchContext) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portal.kernel.search.Document)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public void indexAll() {
+		try {
+			_invokableLocalService.invokeMethod(_methodName29,
+				_methodParameterTypes29, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -943,4 +1126,14 @@ public class VacationLeaveLocalServiceClp implements VacationLeaveLocalService {
 	private String[] _methodParameterTypes23;
 	private String _methodName24;
 	private String[] _methodParameterTypes24;
+	private String _methodName25;
+	private String[] _methodParameterTypes25;
+	private String _methodName26;
+	private String[] _methodParameterTypes26;
+	private String _methodName27;
+	private String[] _methodParameterTypes27;
+	private String _methodName28;
+	private String[] _methodParameterTypes28;
+	private String _methodName29;
+	private String[] _methodParameterTypes29;
 }

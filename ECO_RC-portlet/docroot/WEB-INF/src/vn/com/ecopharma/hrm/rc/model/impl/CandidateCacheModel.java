@@ -38,7 +38,7 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{candidateId=");
 		sb.append(candidateId);
@@ -52,8 +52,26 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
 		sb.append(contactNumber);
 		sb.append(", dateOfBirth=");
 		sb.append(dateOfBirth);
+		sb.append(", placeOfBirth=");
+		sb.append(placeOfBirth);
+		sb.append(", gender=");
+		sb.append(gender);
 		sb.append(", identityCardNo=");
 		sb.append(identityCardNo);
+		sb.append(", issuedDate=");
+		sb.append(issuedDate);
+		sb.append(", issuedPlace=");
+		sb.append(issuedPlace);
+		sb.append(", maritalStatus=");
+		sb.append(maritalStatus);
+		sb.append(", numberOfChild=");
+		sb.append(numberOfChild);
+		sb.append(", nationality=");
+		sb.append(nationality);
+		sb.append(", ethnic=");
+		sb.append(ethnic);
+		sb.append(", religion=");
+		sb.append(religion);
 		sb.append(", applicationDate=");
 		sb.append(applicationDate);
 		sb.append(", status=");
@@ -122,11 +140,69 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
 			candidateImpl.setDateOfBirth(new Date(dateOfBirth));
 		}
 
+		if (placeOfBirth == null) {
+			candidateImpl.setPlaceOfBirth(StringPool.BLANK);
+		}
+		else {
+			candidateImpl.setPlaceOfBirth(placeOfBirth);
+		}
+
+		if (gender == null) {
+			candidateImpl.setGender(StringPool.BLANK);
+		}
+		else {
+			candidateImpl.setGender(gender);
+		}
+
 		if (identityCardNo == null) {
 			candidateImpl.setIdentityCardNo(StringPool.BLANK);
 		}
 		else {
 			candidateImpl.setIdentityCardNo(identityCardNo);
+		}
+
+		if (issuedDate == Long.MIN_VALUE) {
+			candidateImpl.setIssuedDate(null);
+		}
+		else {
+			candidateImpl.setIssuedDate(new Date(issuedDate));
+		}
+
+		if (issuedPlace == null) {
+			candidateImpl.setIssuedPlace(StringPool.BLANK);
+		}
+		else {
+			candidateImpl.setIssuedPlace(issuedPlace);
+		}
+
+		if (maritalStatus == null) {
+			candidateImpl.setMaritalStatus(StringPool.BLANK);
+		}
+		else {
+			candidateImpl.setMaritalStatus(maritalStatus);
+		}
+
+		candidateImpl.setNumberOfChild(numberOfChild);
+
+		if (nationality == null) {
+			candidateImpl.setNationality(StringPool.BLANK);
+		}
+		else {
+			candidateImpl.setNationality(nationality);
+		}
+
+		if (ethnic == null) {
+			candidateImpl.setEthnic(StringPool.BLANK);
+		}
+		else {
+			candidateImpl.setEthnic(ethnic);
+		}
+
+		if (religion == null) {
+			candidateImpl.setReligion(StringPool.BLANK);
+		}
+		else {
+			candidateImpl.setReligion(religion);
 		}
 
 		if (applicationDate == Long.MIN_VALUE) {
@@ -190,7 +266,16 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
 		emailAddress = objectInput.readUTF();
 		contactNumber = objectInput.readUTF();
 		dateOfBirth = objectInput.readLong();
+		placeOfBirth = objectInput.readUTF();
+		gender = objectInput.readUTF();
 		identityCardNo = objectInput.readUTF();
+		issuedDate = objectInput.readLong();
+		issuedPlace = objectInput.readUTF();
+		maritalStatus = objectInput.readUTF();
+		numberOfChild = objectInput.readInt();
+		nationality = objectInput.readUTF();
+		ethnic = objectInput.readUTF();
+		religion = objectInput.readUTF();
 		applicationDate = objectInput.readLong();
 		status = objectInput.readUTF();
 		locationId = objectInput.readLong();
@@ -239,11 +324,64 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
 
 		objectOutput.writeLong(dateOfBirth);
 
+		if (placeOfBirth == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(placeOfBirth);
+		}
+
+		if (gender == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(gender);
+		}
+
 		if (identityCardNo == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(identityCardNo);
+		}
+
+		objectOutput.writeLong(issuedDate);
+
+		if (issuedPlace == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(issuedPlace);
+		}
+
+		if (maritalStatus == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(maritalStatus);
+		}
+
+		objectOutput.writeInt(numberOfChild);
+
+		if (nationality == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(nationality);
+		}
+
+		if (ethnic == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(ethnic);
+		}
+
+		if (religion == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(religion);
 		}
 
 		objectOutput.writeLong(applicationDate);
@@ -285,7 +423,16 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
 	public String emailAddress;
 	public String contactNumber;
 	public long dateOfBirth;
+	public String placeOfBirth;
+	public String gender;
 	public String identityCardNo;
+	public long issuedDate;
+	public String issuedPlace;
+	public String maritalStatus;
+	public int numberOfChild;
+	public String nationality;
+	public String ethnic;
+	public String religion;
 	public long applicationDate;
 	public String status;
 	public long locationId;

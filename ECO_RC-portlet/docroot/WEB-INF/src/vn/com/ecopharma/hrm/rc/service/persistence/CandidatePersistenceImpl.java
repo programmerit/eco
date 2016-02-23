@@ -1481,7 +1481,16 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
 		candidateImpl.setEmailAddress(candidate.getEmailAddress());
 		candidateImpl.setContactNumber(candidate.getContactNumber());
 		candidateImpl.setDateOfBirth(candidate.getDateOfBirth());
+		candidateImpl.setPlaceOfBirth(candidate.getPlaceOfBirth());
+		candidateImpl.setGender(candidate.getGender());
 		candidateImpl.setIdentityCardNo(candidate.getIdentityCardNo());
+		candidateImpl.setIssuedDate(candidate.getIssuedDate());
+		candidateImpl.setIssuedPlace(candidate.getIssuedPlace());
+		candidateImpl.setMaritalStatus(candidate.getMaritalStatus());
+		candidateImpl.setNumberOfChild(candidate.getNumberOfChild());
+		candidateImpl.setNationality(candidate.getNationality());
+		candidateImpl.setEthnic(candidate.getEthnic());
+		candidateImpl.setReligion(candidate.getReligion());
 		candidateImpl.setApplicationDate(candidate.getApplicationDate());
 		candidateImpl.setStatus(candidate.getStatus());
 		candidateImpl.setLocationId(candidate.getLocationId());

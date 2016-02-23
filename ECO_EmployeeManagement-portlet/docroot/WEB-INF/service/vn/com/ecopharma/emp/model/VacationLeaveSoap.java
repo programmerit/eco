@@ -45,6 +45,7 @@ public class VacationLeaveSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setDeleted(model.getDeleted());
 
 		return soapModel;
 	}
@@ -209,6 +210,18 @@ public class VacationLeaveSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public boolean getDeleted() {
+		return _deleted;
+	}
+
+	public boolean isDeleted() {
+		return _deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		_deleted = deleted;
+	}
+
 	private long _vacationLeaveId;
 	private long _empId;
 	private String _leaveType;
@@ -223,4 +236,5 @@ public class VacationLeaveSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _deleted;
 }

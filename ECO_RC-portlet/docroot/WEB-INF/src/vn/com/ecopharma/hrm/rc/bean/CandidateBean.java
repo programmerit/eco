@@ -22,6 +22,7 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import vn.com.ecopharma.emp.model.University;
+import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.constant.CandidateField;
 import vn.com.ecopharma.hrm.rc.constant.CandidateNavigation;
@@ -44,12 +45,10 @@ import vn.com.ecopharma.hrm.rc.model.Experience;
 import vn.com.ecopharma.hrm.rc.model.InterviewSchedule;
 import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.CertificateLocalServiceUtil;
-import vn.com.ecopharma.hrm.rc.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.ExperienceLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.InterviewScheduleLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.util.BeanUtils;
-import vn.com.ecopharma.hrm.rc.util.DLUtils;
 import vn.com.ecopharma.hrm.rc.util.RCUtils;
 import vn.com.ecopharma.hrm.rc.util.VacancyUtils;
 
@@ -59,7 +58,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
@@ -69,7 +67,6 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 
 @ManagedBean(name = "candidateBean")
 @ViewScoped
@@ -86,8 +83,6 @@ public class CandidateBean implements Serializable {
 	private CandidateItem candidateItem;
 
 	private LazyDataModel<CandidateIndexItem> lazyDataModel;
-
-	// private List<Vacancy> vacancies;
 
 	private List<VacancyIndexItem> vacancyIndexItems;
 
@@ -324,30 +319,14 @@ public class CandidateBean implements Serializable {
 				LiferayFacesContext.getInstance().getServiceContext());
 	}
 
-	public void handleFileUpload(FileUploadEvent fileUploadEvent) {
-		final FileEntry fe = DLUtils.handleFileUpload(
-				fileUploadEvent.getFile(), "candidateDocs");
-		final long candidateId = candidateItem.getCandidate().getCandidateId();
-		try {
-			if (CandidateLocalServiceUtil.fetchCandidate(candidateId) != null
-					&& DocumentLocalServiceUtil
-							.findByClassAndClassPKAndFileEntryId(
-									Candidate.class.getName(), candidateId,
-									fe.getFileEntryId()) == null) {
-				vn.com.ecopharma.hrm.rc.model.Document document = DocumentLocalServiceUtil
-						.addDocument(Candidate.class.getName(), candidateId, fe
-								.getFileEntryId(), LiferayFacesContext
-								.getInstance().getServiceContext());
-				candidateItem.getDocumentItems()
-						.add(new DocumentItem(document));
-			} else {
-				candidateItem.getDocumentItems().add(new DocumentItem(fe));
-			}
-			fileEntryIds.add(fe.getFileEntryId());
-
-		} catch (SystemException e) {
-			LOGGER.info(e);
-		}
+	public void handleFileUpload(FileUploadEvent event) {
+		final vn.com.ecopharma.emp.model.Document uploadDocument = DocumentLocalServiceUtil
+				.uploadAndLinkEntity(candidateItem.getCandidate(),
+						event.getFile(), "CandidateDocuments", "", true,
+						LiferayFacesContext.getInstance().getServiceContext());
+		if (uploadDocument != null)
+			candidateItem.getDocumentItems().add(
+					new DocumentItem(uploadDocument));
 	}
 
 	public void onContextShow(SelectEvent event) {
@@ -360,18 +339,18 @@ public class CandidateBean implements Serializable {
 
 	public void onCancel() {
 		for (DocumentItem documentItem : candidateItem.getDocumentItems()) {
-			if (documentItem.getDocumentId() == 0) {
-				try {
-					DLFileEntryLocalServiceUtil.deleteDLFileEntry(documentItem
-							.getFileEntryId());
-					LOGGER.info("### sucessfully deleted FILE ENTRY "
-							+ documentItem.getFileEntryId());
-				} catch (PortalException e) {
-					LOGGER.info(e);
-				} catch (SystemException e) {
-					LOGGER.info(e);
-				}
-			}
+			// if (documentItem.getDocumentId() == 0) {
+			// try {
+			// DLFileEntryLocalServiceUtil.deleteDLFileEntry(documentItem
+			// .getFileEntryId());
+			// LOGGER.info("### sucessfully deleted FILE ENTRY "
+			// + documentItem.getFileEntryId());
+			// } catch (PortalException e) {
+			// LOGGER.info(e);
+			// } catch (SystemException e) {
+			// LOGGER.info(e);
+			// }
+			// }
 		}
 		CandidateViewBean candidateViewBean = BeanUtils.getCandidateViewBean();
 		candidateViewBean.switchMode(CandidateNavigation.VIEW);
@@ -617,8 +596,8 @@ public class CandidateBean implements Serializable {
 
 	public void deleteFileEntry(ActionEvent event) {
 		candidateItem.getDocumentItems().remove(deletedDocument);
-		DocumentLocalServiceUtil.deleteByFileEntry(deletedDocument
-				.getFileEntryId());
+		DocumentLocalServiceUtil.completelyDeleteDocuments(deletedDocument
+				.getFileEntry().getFileEntryId());
 	}
 
 	public LazyDataModel<CandidateIndexItem> getLazyDataModel() {

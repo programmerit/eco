@@ -8,7 +8,16 @@
 		<field name="emailAddress" type="String" />
 		<field name="contactNumber" type="String" />
 		<field name="dateOfBirth" type="Date" />
+		<field name="placeOfBirth" type="String" />
+		<field name="gender" type="String" />
 		<field name="identityCardNo" type="String" />
+		<field name="issuedDate" type="Date" />
+		<field name="issuedPlace" type="String" />
+		<field name="maritalStatus" type="String" />
+		<field name="numberOfChild" type="int" />
+		<field name="nationality" type="String" />
+		<field name="ethnic" type="String" />
+		<field name="religion" type="String" />
 		<field name="applicationDate" type="Date" />
 		<field name="status" type="String" />
 		<field name="locationId" type="long" />
@@ -67,20 +76,6 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="courseTimeFrom" type="Date" />
 		<field name="courseTimeTo" type="Date" />
-	</model>
-	<model name="vn.com.ecopharma.hrm.rc.model.Document">
-		<field name="documentId" type="long" />
-		<field name="className" type="String" />
-		<field name="classPK" type="long" />
-		<field name="type" type="String" />
-		<field name="fileEntryId" type="long" />
-		<field name="deleted" type="boolean" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
 	</model>
 	<model name="vn.com.ecopharma.hrm.rc.model.EmployeeInterviewSchedule">
 		<field name="employeeInterviewScheduleId" type="long" />

@@ -694,6 +694,11 @@
         <finder name="FileEntry" return-type="Collection">
             <finder-column name="fileEntryId"></finder-column>
         </finder>
+        <finder name="ClassNameClassPKAndFileEntry" return-type="Document">
+            <finder-column name="className"></finder-column>
+            <finder-column name="classPK"></finder-column>
+            <finder-column name="fileEntryId"></finder-column>
+        </finder>
 	</entity>
 	<entity name="VacationLeave" local-service="true">
 
@@ -719,6 +724,7 @@
 		<column name="userName" type="String"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
+        <column name="deleted" type="boolean"></column>
         <finder name="Emp" return-type="Collection">
             <finder-column name="empId"></finder-column>
         </finder>

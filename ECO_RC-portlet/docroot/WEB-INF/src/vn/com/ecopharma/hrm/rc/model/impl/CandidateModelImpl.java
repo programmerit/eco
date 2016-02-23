@@ -72,7 +72,16 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 			{ "emailAddress", Types.VARCHAR },
 			{ "contactNumber", Types.VARCHAR },
 			{ "dateOfBirth", Types.TIMESTAMP },
+			{ "placeOfBirth", Types.VARCHAR },
+			{ "gender", Types.VARCHAR },
 			{ "identityCardNo", Types.VARCHAR },
+			{ "issuedDate", Types.TIMESTAMP },
+			{ "issuedPlace", Types.VARCHAR },
+			{ "maritalStatus", Types.VARCHAR },
+			{ "numberOfChild", Types.INTEGER },
+			{ "nationality", Types.VARCHAR },
+			{ "ethnic", Types.VARCHAR },
+			{ "religion", Types.VARCHAR },
 			{ "applicationDate", Types.TIMESTAMP },
 			{ "status", Types.VARCHAR },
 			{ "locationId", Types.BIGINT },
@@ -85,7 +94,7 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "description", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_rcp_Candidate (candidateId LONG not null primary key,candidateCode VARCHAR(75) null,fullName VARCHAR(75) null,emailAddress VARCHAR(75) null,contactNumber VARCHAR(75) null,dateOfBirth DATE null,identityCardNo VARCHAR(75) null,applicationDate DATE null,status VARCHAR(75) null,locationId LONG,deleted BOOLEAN,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table eco_rcp_Candidate (candidateId LONG not null primary key,candidateCode VARCHAR(75) null,fullName VARCHAR(75) null,emailAddress VARCHAR(75) null,contactNumber VARCHAR(75) null,dateOfBirth DATE null,placeOfBirth VARCHAR(75) null,gender VARCHAR(75) null,identityCardNo VARCHAR(75) null,issuedDate DATE null,issuedPlace VARCHAR(75) null,maritalStatus VARCHAR(75) null,numberOfChild INTEGER,nationality VARCHAR(75) null,ethnic VARCHAR(75) null,religion VARCHAR(75) null,applicationDate DATE null,status VARCHAR(75) null,locationId LONG,deleted BOOLEAN,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table eco_rcp_Candidate";
 	public static final String ORDER_BY_JPQL = " ORDER BY candidate.candidateId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_rcp_Candidate.candidateId ASC";
@@ -125,7 +134,16 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 		model.setEmailAddress(soapModel.getEmailAddress());
 		model.setContactNumber(soapModel.getContactNumber());
 		model.setDateOfBirth(soapModel.getDateOfBirth());
+		model.setPlaceOfBirth(soapModel.getPlaceOfBirth());
+		model.setGender(soapModel.getGender());
 		model.setIdentityCardNo(soapModel.getIdentityCardNo());
+		model.setIssuedDate(soapModel.getIssuedDate());
+		model.setIssuedPlace(soapModel.getIssuedPlace());
+		model.setMaritalStatus(soapModel.getMaritalStatus());
+		model.setNumberOfChild(soapModel.getNumberOfChild());
+		model.setNationality(soapModel.getNationality());
+		model.setEthnic(soapModel.getEthnic());
+		model.setReligion(soapModel.getReligion());
 		model.setApplicationDate(soapModel.getApplicationDate());
 		model.setStatus(soapModel.getStatus());
 		model.setLocationId(soapModel.getLocationId());
@@ -207,7 +225,16 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 		attributes.put("emailAddress", getEmailAddress());
 		attributes.put("contactNumber", getContactNumber());
 		attributes.put("dateOfBirth", getDateOfBirth());
+		attributes.put("placeOfBirth", getPlaceOfBirth());
+		attributes.put("gender", getGender());
 		attributes.put("identityCardNo", getIdentityCardNo());
+		attributes.put("issuedDate", getIssuedDate());
+		attributes.put("issuedPlace", getIssuedPlace());
+		attributes.put("maritalStatus", getMaritalStatus());
+		attributes.put("numberOfChild", getNumberOfChild());
+		attributes.put("nationality", getNationality());
+		attributes.put("ethnic", getEthnic());
+		attributes.put("religion", getReligion());
 		attributes.put("applicationDate", getApplicationDate());
 		attributes.put("status", getStatus());
 		attributes.put("locationId", getLocationId());
@@ -261,10 +288,64 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 			setDateOfBirth(dateOfBirth);
 		}
 
+		String placeOfBirth = (String)attributes.get("placeOfBirth");
+
+		if (placeOfBirth != null) {
+			setPlaceOfBirth(placeOfBirth);
+		}
+
+		String gender = (String)attributes.get("gender");
+
+		if (gender != null) {
+			setGender(gender);
+		}
+
 		String identityCardNo = (String)attributes.get("identityCardNo");
 
 		if (identityCardNo != null) {
 			setIdentityCardNo(identityCardNo);
+		}
+
+		Date issuedDate = (Date)attributes.get("issuedDate");
+
+		if (issuedDate != null) {
+			setIssuedDate(issuedDate);
+		}
+
+		String issuedPlace = (String)attributes.get("issuedPlace");
+
+		if (issuedPlace != null) {
+			setIssuedPlace(issuedPlace);
+		}
+
+		String maritalStatus = (String)attributes.get("maritalStatus");
+
+		if (maritalStatus != null) {
+			setMaritalStatus(maritalStatus);
+		}
+
+		Integer numberOfChild = (Integer)attributes.get("numberOfChild");
+
+		if (numberOfChild != null) {
+			setNumberOfChild(numberOfChild);
+		}
+
+		String nationality = (String)attributes.get("nationality");
+
+		if (nationality != null) {
+			setNationality(nationality);
+		}
+
+		String ethnic = (String)attributes.get("ethnic");
+
+		if (ethnic != null) {
+			setEthnic(ethnic);
+		}
+
+		String religion = (String)attributes.get("religion");
+
+		if (religion != null) {
+			setReligion(religion);
 		}
 
 		Date applicationDate = (Date)attributes.get("applicationDate");
@@ -442,6 +523,38 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 
 	@JSON
 	@Override
+	public String getPlaceOfBirth() {
+		if (_placeOfBirth == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _placeOfBirth;
+		}
+	}
+
+	@Override
+	public void setPlaceOfBirth(String placeOfBirth) {
+		_placeOfBirth = placeOfBirth;
+	}
+
+	@JSON
+	@Override
+	public String getGender() {
+		if (_gender == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _gender;
+		}
+	}
+
+	@Override
+	public void setGender(String gender) {
+		_gender = gender;
+	}
+
+	@JSON
+	@Override
 	public String getIdentityCardNo() {
 		if (_identityCardNo == null) {
 			return StringPool.BLANK;
@@ -464,6 +577,108 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 
 	public String getOriginalIdentityCardNo() {
 		return GetterUtil.getString(_originalIdentityCardNo);
+	}
+
+	@JSON
+	@Override
+	public Date getIssuedDate() {
+		return _issuedDate;
+	}
+
+	@Override
+	public void setIssuedDate(Date issuedDate) {
+		_issuedDate = issuedDate;
+	}
+
+	@JSON
+	@Override
+	public String getIssuedPlace() {
+		if (_issuedPlace == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _issuedPlace;
+		}
+	}
+
+	@Override
+	public void setIssuedPlace(String issuedPlace) {
+		_issuedPlace = issuedPlace;
+	}
+
+	@JSON
+	@Override
+	public String getMaritalStatus() {
+		if (_maritalStatus == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _maritalStatus;
+		}
+	}
+
+	@Override
+	public void setMaritalStatus(String maritalStatus) {
+		_maritalStatus = maritalStatus;
+	}
+
+	@JSON
+	@Override
+	public int getNumberOfChild() {
+		return _numberOfChild;
+	}
+
+	@Override
+	public void setNumberOfChild(int numberOfChild) {
+		_numberOfChild = numberOfChild;
+	}
+
+	@JSON
+	@Override
+	public String getNationality() {
+		if (_nationality == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _nationality;
+		}
+	}
+
+	@Override
+	public void setNationality(String nationality) {
+		_nationality = nationality;
+	}
+
+	@JSON
+	@Override
+	public String getEthnic() {
+		if (_ethnic == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _ethnic;
+		}
+	}
+
+	@Override
+	public void setEthnic(String ethnic) {
+		_ethnic = ethnic;
+	}
+
+	@JSON
+	@Override
+	public String getReligion() {
+		if (_religion == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _religion;
+		}
+	}
+
+	@Override
+	public void setReligion(String religion) {
+		_religion = religion;
 	}
 
 	@JSON
@@ -654,7 +869,16 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 		candidateImpl.setEmailAddress(getEmailAddress());
 		candidateImpl.setContactNumber(getContactNumber());
 		candidateImpl.setDateOfBirth(getDateOfBirth());
+		candidateImpl.setPlaceOfBirth(getPlaceOfBirth());
+		candidateImpl.setGender(getGender());
 		candidateImpl.setIdentityCardNo(getIdentityCardNo());
+		candidateImpl.setIssuedDate(getIssuedDate());
+		candidateImpl.setIssuedPlace(getIssuedPlace());
+		candidateImpl.setMaritalStatus(getMaritalStatus());
+		candidateImpl.setNumberOfChild(getNumberOfChild());
+		candidateImpl.setNationality(getNationality());
+		candidateImpl.setEthnic(getEthnic());
+		candidateImpl.setReligion(getReligion());
 		candidateImpl.setApplicationDate(getApplicationDate());
 		candidateImpl.setStatus(getStatus());
 		candidateImpl.setLocationId(getLocationId());
@@ -774,12 +998,79 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 			candidateCacheModel.dateOfBirth = Long.MIN_VALUE;
 		}
 
+		candidateCacheModel.placeOfBirth = getPlaceOfBirth();
+
+		String placeOfBirth = candidateCacheModel.placeOfBirth;
+
+		if ((placeOfBirth != null) && (placeOfBirth.length() == 0)) {
+			candidateCacheModel.placeOfBirth = null;
+		}
+
+		candidateCacheModel.gender = getGender();
+
+		String gender = candidateCacheModel.gender;
+
+		if ((gender != null) && (gender.length() == 0)) {
+			candidateCacheModel.gender = null;
+		}
+
 		candidateCacheModel.identityCardNo = getIdentityCardNo();
 
 		String identityCardNo = candidateCacheModel.identityCardNo;
 
 		if ((identityCardNo != null) && (identityCardNo.length() == 0)) {
 			candidateCacheModel.identityCardNo = null;
+		}
+
+		Date issuedDate = getIssuedDate();
+
+		if (issuedDate != null) {
+			candidateCacheModel.issuedDate = issuedDate.getTime();
+		}
+		else {
+			candidateCacheModel.issuedDate = Long.MIN_VALUE;
+		}
+
+		candidateCacheModel.issuedPlace = getIssuedPlace();
+
+		String issuedPlace = candidateCacheModel.issuedPlace;
+
+		if ((issuedPlace != null) && (issuedPlace.length() == 0)) {
+			candidateCacheModel.issuedPlace = null;
+		}
+
+		candidateCacheModel.maritalStatus = getMaritalStatus();
+
+		String maritalStatus = candidateCacheModel.maritalStatus;
+
+		if ((maritalStatus != null) && (maritalStatus.length() == 0)) {
+			candidateCacheModel.maritalStatus = null;
+		}
+
+		candidateCacheModel.numberOfChild = getNumberOfChild();
+
+		candidateCacheModel.nationality = getNationality();
+
+		String nationality = candidateCacheModel.nationality;
+
+		if ((nationality != null) && (nationality.length() == 0)) {
+			candidateCacheModel.nationality = null;
+		}
+
+		candidateCacheModel.ethnic = getEthnic();
+
+		String ethnic = candidateCacheModel.ethnic;
+
+		if ((ethnic != null) && (ethnic.length() == 0)) {
+			candidateCacheModel.ethnic = null;
+		}
+
+		candidateCacheModel.religion = getReligion();
+
+		String religion = candidateCacheModel.religion;
+
+		if ((religion != null) && (religion.length() == 0)) {
+			candidateCacheModel.religion = null;
 		}
 
 		Date applicationDate = getApplicationDate();
@@ -848,7 +1139,7 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{candidateId=");
 		sb.append(getCandidateId());
@@ -862,8 +1153,26 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 		sb.append(getContactNumber());
 		sb.append(", dateOfBirth=");
 		sb.append(getDateOfBirth());
+		sb.append(", placeOfBirth=");
+		sb.append(getPlaceOfBirth());
+		sb.append(", gender=");
+		sb.append(getGender());
 		sb.append(", identityCardNo=");
 		sb.append(getIdentityCardNo());
+		sb.append(", issuedDate=");
+		sb.append(getIssuedDate());
+		sb.append(", issuedPlace=");
+		sb.append(getIssuedPlace());
+		sb.append(", maritalStatus=");
+		sb.append(getMaritalStatus());
+		sb.append(", numberOfChild=");
+		sb.append(getNumberOfChild());
+		sb.append(", nationality=");
+		sb.append(getNationality());
+		sb.append(", ethnic=");
+		sb.append(getEthnic());
+		sb.append(", religion=");
+		sb.append(getReligion());
 		sb.append(", applicationDate=");
 		sb.append(getApplicationDate());
 		sb.append(", status=");
@@ -893,7 +1202,7 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(58);
+		StringBundler sb = new StringBundler(85);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.hrm.rc.model.Candidate");
@@ -924,8 +1233,44 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 		sb.append(getDateOfBirth());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>placeOfBirth</column-name><column-value><![CDATA[");
+		sb.append(getPlaceOfBirth());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>gender</column-name><column-value><![CDATA[");
+		sb.append(getGender());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>identityCardNo</column-name><column-value><![CDATA[");
 		sb.append(getIdentityCardNo());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>issuedDate</column-name><column-value><![CDATA[");
+		sb.append(getIssuedDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>issuedPlace</column-name><column-value><![CDATA[");
+		sb.append(getIssuedPlace());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>maritalStatus</column-name><column-value><![CDATA[");
+		sb.append(getMaritalStatus());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>numberOfChild</column-name><column-value><![CDATA[");
+		sb.append(getNumberOfChild());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>nationality</column-name><column-value><![CDATA[");
+		sb.append(getNationality());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>ethnic</column-name><column-value><![CDATA[");
+		sb.append(getEthnic());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>religion</column-name><column-value><![CDATA[");
+		sb.append(getReligion());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>applicationDate</column-name><column-value><![CDATA[");
@@ -989,8 +1334,17 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 	private String _contactNumber;
 	private String _originalContactNumber;
 	private Date _dateOfBirth;
+	private String _placeOfBirth;
+	private String _gender;
 	private String _identityCardNo;
 	private String _originalIdentityCardNo;
+	private Date _issuedDate;
+	private String _issuedPlace;
+	private String _maritalStatus;
+	private int _numberOfChild;
+	private String _nationality;
+	private String _ethnic;
+	private String _religion;
 	private Date _applicationDate;
 	private String _status;
 	private long _locationId;

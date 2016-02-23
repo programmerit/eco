@@ -13,9 +13,6 @@
 	<bean id="vn.com.ecopharma.hrm.rc.service.CertificateLocalService" class="vn.com.ecopharma.hrm.rc.service.impl.CertificateLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.rc.service.CertificateService" class="vn.com.ecopharma.hrm.rc.service.impl.CertificateServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.rc.service.persistence.CertificatePersistence" class="vn.com.ecopharma.hrm.rc.service.persistence.CertificatePersistenceImpl" parent="basePersistence" />
-	<bean id="vn.com.ecopharma.hrm.rc.service.DocumentLocalService" class="vn.com.ecopharma.hrm.rc.service.impl.DocumentLocalServiceImpl" />
-	<bean id="vn.com.ecopharma.hrm.rc.service.DocumentService" class="vn.com.ecopharma.hrm.rc.service.impl.DocumentServiceImpl" />
-	<bean id="vn.com.ecopharma.hrm.rc.service.persistence.DocumentPersistence" class="vn.com.ecopharma.hrm.rc.service.persistence.DocumentPersistenceImpl" parent="basePersistence" />
 	<bean id="vn.com.ecopharma.hrm.rc.service.EmployeeInterviewScheduleLocalService" class="vn.com.ecopharma.hrm.rc.service.impl.EmployeeInterviewScheduleLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.rc.service.EmployeeInterviewScheduleService" class="vn.com.ecopharma.hrm.rc.service.impl.EmployeeInterviewScheduleServiceImpl" />
 	<bean id="vn.com.ecopharma.hrm.rc.service.persistence.EmployeeInterviewSchedulePersistence" class="vn.com.ecopharma.hrm.rc.service.persistence.EmployeeInterviewSchedulePersistenceImpl" parent="basePersistence" />

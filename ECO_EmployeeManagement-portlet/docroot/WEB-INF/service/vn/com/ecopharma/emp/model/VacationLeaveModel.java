@@ -291,6 +291,27 @@ public interface VacationLeaveModel extends BaseModel<VacationLeave>,
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the deleted of this vacation leave.
+	 *
+	 * @return the deleted of this vacation leave
+	 */
+	public boolean getDeleted();
+
+	/**
+	 * Returns <code>true</code> if this vacation leave is deleted.
+	 *
+	 * @return <code>true</code> if this vacation leave is deleted; <code>false</code> otherwise
+	 */
+	public boolean isDeleted();
+
+	/**
+	 * Sets whether this vacation leave is deleted.
+	 *
+	 * @param deleted the deleted of this vacation leave
+	 */
+	public void setDeleted(boolean deleted);
+
 	@Override
 	public boolean isNew();
 

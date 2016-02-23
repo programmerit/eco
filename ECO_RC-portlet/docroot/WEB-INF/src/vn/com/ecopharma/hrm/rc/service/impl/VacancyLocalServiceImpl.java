@@ -24,7 +24,6 @@ import vn.com.ecopharma.hrm.rc.enumeration.VacancyCandidateType;
 import vn.com.ecopharma.hrm.rc.enumeration.VacancyStatus;
 import vn.com.ecopharma.hrm.rc.model.Vacancy;
 import vn.com.ecopharma.hrm.rc.model.VacancyCandidate;
-import vn.com.ecopharma.hrm.rc.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.base.VacancyLocalServiceBaseImpl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -218,8 +217,8 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 
 			// add documents for candidate
 			for (long fileEntryId : fileEntryIds) {
-				DocumentLocalServiceUtil.addDocument(Vacancy.class.getName(),
-						vacancy.getVacancyId(), fileEntryId, serviceContext);
+				// DocumentLocalServiceUtil.addDocument(Vacancy.class.getName(),
+				// vacancy.getVacancyId(), fileEntryId, serviceContext);
 			}
 
 			// index new employee
@@ -240,14 +239,14 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 			ServiceContext serviceContext) {
 		try {
 			for (Long fileEntryId : fileEntryIds) {
-				if (DocumentLocalServiceUtil
-						.findByClassAndClassPKAndFileEntryId(
-								Vacancy.class.getName(),
-								vacancy.getVacancyId(), fileEntryId) == null) {
-					DocumentLocalServiceUtil.addDocument(
-							Vacancy.class.getName(), vacancy.getVacancyId(),
-							fileEntryId, serviceContext);
-				}
+				// if (DocumentLocalServiceUtil
+				// .findByClassAndClassPKAndFileEntryId(
+				// Vacancy.class.getName(),
+				// vacancy.getVacancyId(), fileEntryId) == null) {
+				// DocumentLocalServiceUtil.addDocument(
+				// Vacancy.class.getName(), vacancy.getVacancyId(),
+				// fileEntryId, serviceContext);
+				// }
 			}
 
 			vacancy.setModifiedDate(new Date(System.currentTimeMillis()));

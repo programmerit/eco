@@ -21,7 +21,7 @@
 					style="margin-bottom:20px;" activeIndex="0">
 					<p:tab id="candidateBasicInfoTab"
 						title="#{i18n['candidate.modifyCandidate.basic_information']}">
-						<p:panelGrid layout="grid" columns="2">
+						<p:panelGrid layout="grid" columns="3">
 							<h:panelGrid columns="2">
 
 								<h:outputText value="Full name" />
@@ -42,18 +42,30 @@
 									value="#{candidateBean.candidateItem.candidate.contactNumber}" />
 
 								<h:outputText value="Identity Card No" />
-								<p:inputText id="cIdentityCardNo" placeholder="Identity Card No"
-									required="true"
-									value="#{candidateBean.candidateItem.candidate.identityCardNo}" />
+								<p:inputText id="identityCardNo" required="true"
+									requiredMessage="Identity Card No is required"
+									value="#{candidateBean.candidateItem.candidate.identityCardNo}"
+									placeholder="Identity Card No">
+								</p:inputText>
+
+								<h:outputText value="Issued Date" />
+								<p:calendar id="issuedDate" mask="false"
+									value="#{candidateBean.candidateItem.candidate.issuedDate}"
+									pattern="dd/MM/yyyy" placeholder="Issued Date" />
+
+								<h:outputText value="Issued Place" />
+								<p:inputText id="issuedPlace"
+									value="#{candidateBean.candidateItem.candidate.issuedPlace}"
+									placeholder="Issued Place" />
 
 								<h:outputText value="Vacancy" />
-								<p:selectOneMenu id="cVacancySelect" 
+								<p:selectOneMenu id="cVacancySelect"
 									converter="vacancyIndexItemConverter" filter="true"
 									value="#{candidateBean.candidateItem.vacancyIndexItem}">
 									<f:selectItem itemLabel="Select Vacancy" itemValue="" />
-									<f:selectItems value="#{candidateBean.vacancyIndexItems}" 
+									<f:selectItems value="#{candidateBean.vacancyIndexItems}"
 										var="v"
-										itemLabel="#{v.titles} #{v.status == 'UNPUBLISHED' ? '  [UNPUBLISHED]' : ''} " 
+										itemLabel="#{v.titles} #{v.status == 'UNPUBLISHED' ? '  [UNPUBLISHED]' : ''} "
 										itemValue="#{v}"
 										itemDisabled="#{v.status == 'UNPUBLISHED' || v.status == 'NEW'}" />
 								</p:selectOneMenu>
@@ -76,6 +88,31 @@
 							</h:panelGrid>
 
 							<h:panelGrid columns="2">
+								<h:outputText value="Gender" />
+								<p:selectOneRadio id="gender"
+									value="#{candidateBean.candidateItem.candidate.applicationDate}"
+									required="true">
+									<f:selectItem itemLabel="Male" itemValue="Male" />
+									<f:selectItem itemLabel="Female" itemValue="Female" />
+								</p:selectOneRadio>
+
+								<h:outputText value="Ethnic " />
+								<p:inputText
+									value="#{candidateBean.candidateItem.candidate.ethnic}"
+									style="width: 70px;" />
+
+								<h:outputText value="Religion " />
+								<p:inputText
+									value="#{candidateBean.candidateItem.candidate.religion}"
+									style="width: 70px;" />
+
+								<h:outputText value="Nationality " />
+								<p:inputText
+									value="#{candidateBean.candidateItem.candidate.nationality}"
+									style="width: 70px;" />
+							</h:panelGrid>
+
+							<h:panelGrid columns="2">
 								<h:outputText value="Upload Documents" />
 								<h:panelGroup>
 									<p:fileUpload
@@ -88,29 +125,60 @@
 								</h:panelGroup>
 
 								<h:outputText value="Current Documents" />
-								<h:panelGroup id="documents">
-									<ui:repeat var="doc" id="candidateDocs"
-										rendered="#{candidateBean.candidateItem.documentItems.size() > 0}"
-										value="#{candidateBean.candidateItem.documentItems}">
-										<p:commandLink value="#{doc.fileName}"
-											actionListener="#{candidateBean.onPreviewFile(doc.fileEntryId)}" />
-										<p:commandLink value="[Remove]"
-											onclick="PF('wDeleteConfirmDialog').show()"
-											styleClass="currentStatus status-red"
-											style="margin-left: 30px">
-											<f:setPropertyActionListener
-												target="#{candidateBean.deletedDocument}" value="#{doc}" />
-										</p:commandLink>
-										<br />
-									</ui:repeat>
-									<h:outputText value="No documents exist" id="noDocsPlaceHolder"
-										rendered="#{candidateBean.candidateItem.documentItems.size() eq 0}" />
-								</h:panelGroup>
+								<p:outputPanel autoUpdate="true">
+									<h:panelGroup id="documents">
+										<ui:repeat var="doc" id="candidateDocs"
+											rendered="#{candidateBean.candidateItem.documentItems.size() > 0}"
+											value="#{candidateBean.candidateItem.documentItems}">
+											<p:commandLink value="#{doc.fileName}"
+												actionListener="#{candidateBean.onPreviewFile(doc.fileEntryId)}" />
+											<p:commandLink value="[Remove]"
+												onclick="PF('wDeleteConfirmDialog').show()"
+												styleClass="currentStatus status-red"
+												style="margin-left: 30px">
+												<f:setPropertyActionListener
+													target="#{candidateBean.deletedDocument}" value="#{doc}" />
+											</p:commandLink>
+											<br />
+										</ui:repeat>
+										<h:outputText value="No documents exist"
+											id="noDocsPlaceHolder"
+											rendered="#{candidateBean.candidateItem.documentItems.size() eq 0}" />
+									</h:panelGroup>
+								</p:outputPanel>
 
+								<h:outputText value="Documents" />
+								<p:outputPanel autoUpdate="true" id="documentOutputPanel">
+									<h:panelGroup id="noDocsPanelGroup" styleClass="panel-message"
+										rendered="#{candidateBean.candidateItem.documentItems.size() eq 0}">
+										<h:outputText styleClass="no-item-label" value="No Documents" />
+										<br />
+										<p:commandLink value="Upload Document"
+											onclick="PF('wUploadDocumentDialog').show();" />
+									</h:panelGroup>
+									<h:panelGroup
+										rendered="#{candidateBean.candidateItem.documentItems.size() > 0}">
+										<ui:repeat var="doc"
+											value="#{candidateBean.candidateItem.documentItems}"
+											varStatus="status">
+											<h:panelGroup rendered="#{not doc.UIDeleted}">
+
+												<p:commandLink value="#{doc.fileEntry.title}"
+													onclick="window.location = '#{doc.fileURL}'" />
+												<p:commandLink value="[X]" style="margin-left: 5px;"
+													onclick="PF('wDeleteDocumentConfirmDialog').show()">
+													<f:setPropertyActionListener value="#{status.index}"
+														target="#{empView.deletedDocumentIndex}" />
+												</p:commandLink>
+											</h:panelGroup>
+										</ui:repeat>
+									</h:panelGroup>
+								</p:outputPanel>
 							</h:panelGrid>
 
 						</p:panelGrid>
 					</p:tab>
+
 					<p:tab id="experienceDetails" title="Experiences">
 						<h:panelGroup id="candidateExperiencesGroup">
 							<ui:repeat var="e"
@@ -257,8 +325,7 @@
 				</p:accordionPanel>
 
 				<p:commandButton id="cSave" value="Save"
-					update=":CandidatePanelGroup"
-					action="#{candidateBean.onSave}" /> | 
+					update=":CandidatePanelGroup" action="#{candidateBean.onSave}" /> | 
 					
 				<p:commandLink id="cCancel" immediate="true"
 					actionListener="#{candidateBean.onCancel}"

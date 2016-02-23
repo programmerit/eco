@@ -33,7 +33,6 @@ import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
-import vn.com.ecopharma.emp.util.EmployeeUtils;
 import vn.com.ecopharma.emp.util.FilterUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
@@ -142,11 +141,10 @@ public class EmployeeIndexedBean implements Serializable {
 							employeeFilterBean.getSelectedGenders());
 				}
 
-				if (!employeeFilterBean.getStatus().equals(
-						EmployeeStatus.ALL.toString())) {
-					filters.put(EmpField.STATUS, EmployeeUtils
-							.removeDashChar(EmployeeStatus.valueOf(
-									employeeFilterBean.getStatus()).toString()));
+				if (employeeFilterBean.getSelectedStatuses() != null
+						&& !employeeFilterBean.getSelectedStatuses().isEmpty()) {
+					filters.put(EmpField.STATUS,
+							employeeFilterBean.getSelectedStatuses());
 				}
 
 				FilterUtils.bindOrgFilters(employeeFilterBean, filters);

@@ -12,7 +12,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import org.apache.commons.lang3.StringUtils;
-import org.primefaces.component.link.Link;
 import org.primefaces.context.RequestContext;
 
 import vn.com.ecopharma.emp.constant.EmpField;
@@ -29,11 +28,12 @@ public class EmployeeFilterView extends OrganizationFilterBean {
 	private String globalString = StringUtils.EMPTY;
 	private String employeeCode = StringUtils.EMPTY;
 	private String fullName = StringUtils.EMPTY;
-	private String status = EmployeeStatus.ALL.toString();
+
 	private Date joinedDateFrom;
 	private Date joinedDateTo;
 
 	private List<String> selectedGenders;
+	private List<String> selectedStatuses;
 
 	public void onGlobalFiltering() {
 		// only execute search for more than 2 words
@@ -55,8 +55,8 @@ public class EmployeeFilterView extends OrganizationFilterBean {
 			employeeCode = StringUtils.EMPTY;
 		} else if (selectedGenders.contains(removeValue)) {
 			selectedGenders.remove(removeValue);
-		} else if (status.equals(removeValue)) {
-			status = EmployeeStatus.ALL.toString();
+		} else if (selectedStatuses.contains(removeValue)) {
+			selectedStatuses.remove(removeValue);
 		}
 
 		// for date
@@ -83,8 +83,12 @@ public class EmployeeFilterView extends OrganizationFilterBean {
 		checkAndAddFilterBadge(joinedDateFrom, badges);
 		checkAndAddFilterBadge(joinedDateTo, badges);
 		checkAndAddJoinedDateFilterBadge(badges);
-		if (!status.equalsIgnoreCase(EmployeeStatus.ALL.toString()))
-			checkAndAddFilterBadge(status, badges);
+		// if (!status.equalsIgnoreCase(EmployeeStatus.ALL.toString()))
+		// checkAndAddFilterBadge(status, badges);
+
+		if (selectedStatuses != null && !selectedStatuses.isEmpty()) {
+			badges.addAll(selectedStatuses);
+		}
 
 		if (selectedGenders != null && !selectedGenders.isEmpty()) {
 			badges.addAll(selectedGenders);
@@ -180,12 +184,12 @@ public class EmployeeFilterView extends OrganizationFilterBean {
 		this.selectedGenders = selectedGenders;
 	}
 
-	public String getStatus() {
-		return status;
+	public List<String> getSelectedStatuses() {
+		return selectedStatuses;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setSelectedStatuses(List<String> selectedStatuses) {
+		this.selectedStatuses = selectedStatuses;
 	}
 
 	public List<String> getStatuses() {

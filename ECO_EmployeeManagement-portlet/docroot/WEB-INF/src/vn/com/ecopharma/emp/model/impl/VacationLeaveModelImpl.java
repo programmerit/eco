@@ -79,9 +79,10 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP }
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "deleted", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_VacationLeave (vacationLeaveId LONG not null primary key,empId LONG,leaveType VARCHAR(75) null,leaveFrom DATE null,leaveTo DATE null,actualTo DATE null,reason VARCHAR(75) null,description VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_VacationLeave (vacationLeaveId LONG not null primary key,empId LONG,leaveType VARCHAR(75) null,leaveFrom DATE null,leaveTo DATE null,actualTo DATE null,reason VARCHAR(75) null,description VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,deleted BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table eco_em_portlet_VacationLeave";
 	public static final String ORDER_BY_JPQL = " ORDER BY vacationLeave.vacationLeaveId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_em_portlet_VacationLeave.vacationLeaveId ASC";
@@ -128,6 +129,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setDeleted(soapModel.getDeleted());
 
 		return model;
 	}
@@ -206,6 +208,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("deleted", getDeleted());
 
 		return attributes;
 	}
@@ -294,6 +297,12 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Boolean deleted = (Boolean)attributes.get("deleted");
+
+		if (deleted != null) {
+			setDeleted(deleted);
 		}
 	}
 
@@ -503,6 +512,22 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
+	@Override
+	public boolean getDeleted() {
+		return _deleted;
+	}
+
+	@Override
+	public boolean isDeleted() {
+		return _deleted;
+	}
+
+	@Override
+	public void setDeleted(boolean deleted) {
+		_deleted = deleted;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -548,6 +573,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		vacationLeaveImpl.setUserName(getUserName());
 		vacationLeaveImpl.setCreateDate(getCreateDate());
 		vacationLeaveImpl.setModifiedDate(getModifiedDate());
+		vacationLeaveImpl.setDeleted(getDeleted());
 
 		vacationLeaveImpl.resetOriginalValues();
 
@@ -700,12 +726,14 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 			vacationLeaveCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		vacationLeaveCacheModel.deleted = getDeleted();
+
 		return vacationLeaveCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{vacationLeaveId=");
 		sb.append(getVacationLeaveId());
@@ -735,6 +763,8 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", deleted=");
+		sb.append(getDeleted());
 		sb.append("}");
 
 		return sb.toString();
@@ -742,7 +772,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.VacationLeave");
@@ -804,6 +834,10 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>deleted</column-name><column-value><![CDATA[");
+		sb.append(getDeleted());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -832,6 +866,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _deleted;
 	private long _columnBitmask;
 	private VacationLeave _escapedModel;
 }

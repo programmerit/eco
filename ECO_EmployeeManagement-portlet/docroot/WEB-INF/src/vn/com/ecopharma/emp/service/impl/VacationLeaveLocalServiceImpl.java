@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import vn.com.ecopharma.emp.constant.EMInfo;
+import vn.com.ecopharma.emp.constant.VacationLeaveField;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.enumeration.VacationLeaveType;
 import vn.com.ecopharma.emp.model.Emp;
@@ -29,8 +31,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.ParseException;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
@@ -146,6 +160,97 @@ public class VacationLeaveLocalServiceImpl extends
 		return addVacationLeave(createPrePersistedEntity(serviceContext),
 				empId, leaveType, leaveFrom, leaveTo, actualTo, reason,
 				description);
+	}
+
+	public int countAllUnDeletedDocuments(SearchContext searchContext,
+			List<Query> filterQueries, long companyId, Sort sort) {
+		return searchAllUnDeletedDocuments(searchContext, filterQueries,
+				companyId, sort, QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
+	}
+
+	public List<Document> searchAllUnDeletedDocuments(
+			SearchContext searchContext, List<Query> filterQueries,
+			long companyId, Sort sort, int start, int end) {
+
+		LOGGER.info("FilterQueries size: " + filterQueries.size());
+		final BooleanQuery fullQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		final BooleanQuery allEmployeeEntriesBooleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		final BooleanQuery noneDeletedEmployeesBooleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+
+		allEmployeeEntriesBooleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME,
+				VacationLeave.class.getName());
+		noneDeletedEmployeesBooleanQuery.addExactTerm(
+				VacationLeaveField.IS_DELETED, "false");
+
+		try {
+			// add filter queries
+			fullQuery.add(allEmployeeEntriesBooleanQuery,
+					BooleanClauseOccur.MUST);
+			if (filterQueries != null && filterQueries.size() > 0) {
+				for (Query query : filterQueries) {
+					fullQuery.add(query, BooleanClauseOccur.MUST);
+				}
+			}
+
+			// always filter for none-delete item
+			fullQuery.add(noneDeletedEmployeesBooleanQuery,
+					BooleanClauseOccur.MUST);
+
+			final List<Document> documents = SearchEngineUtil.search(
+					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
+					fullQuery, sort, start, end).toList();
+			return documents;
+
+		} catch (SearchException e) {
+			LOGGER.info(e);
+		} catch (ParseException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
+	public Document getIndexedDocument(String id, SearchContext searchContext) {
+		return getIndexedDocument(Long.valueOf(id), searchContext);
+	}
+
+	public Document getIndexedDocument(long id, SearchContext searchContext) {
+		searchContext.setPortletIds(new String[] { EMInfo.PORTLET_ID });
+		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
+		BooleanQuery booleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME,
+				VacationLeave.class.getName());
+		booleanQuery.addExactTerm(VacationLeaveField.ID, id);
+
+		try {
+			fullQuery.add(booleanQuery, BooleanClauseOccur.MUST);
+			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
+			return !hits.toList().isEmpty() ? hits.toList().get(0) : null;
+		} catch (ParseException e) {
+			LOGGER.info(e);
+		} catch (SearchException e) {
+			LOGGER.info(e);
+		}
+
+		return null;
+	}
+
+	public void indexAll() {
+		final List<VacationLeave> all = findAll();
+		// re-index modified employee
+		Indexer indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(VacationLeave.class.getName());
+		for (VacationLeave item : all) {
+			// re-index
+			try {
+				indexer.reindex(item);
+			} catch (SearchException e) {
+				LOGGER.info(e);
+			}
+		}
 	}
 
 }

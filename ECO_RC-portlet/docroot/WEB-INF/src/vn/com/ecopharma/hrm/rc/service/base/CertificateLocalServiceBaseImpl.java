@@ -37,7 +37,6 @@ import vn.com.ecopharma.hrm.rc.service.persistence.CandidateActionHistoryPersist
 import vn.com.ecopharma.hrm.rc.service.persistence.CandidateEvaluationPersistence;
 import vn.com.ecopharma.hrm.rc.service.persistence.CandidatePersistence;
 import vn.com.ecopharma.hrm.rc.service.persistence.CertificatePersistence;
-import vn.com.ecopharma.hrm.rc.service.persistence.DocumentPersistence;
 import vn.com.ecopharma.hrm.rc.service.persistence.EmployeeInterviewSchedulePersistence;
 import vn.com.ecopharma.hrm.rc.service.persistence.EvaluationCriteriaKeyValuePersistence;
 import vn.com.ecopharma.hrm.rc.service.persistence.EvaluationCriteriaPersistence;
@@ -520,62 +519,6 @@ public abstract class CertificateLocalServiceBaseImpl
 	public void setCertificatePersistence(
 		CertificatePersistence certificatePersistence) {
 		this.certificatePersistence = certificatePersistence;
-	}
-
-	/**
-	 * Returns the document local service.
-	 *
-	 * @return the document local service
-	 */
-	public vn.com.ecopharma.hrm.rc.service.DocumentLocalService getDocumentLocalService() {
-		return documentLocalService;
-	}
-
-	/**
-	 * Sets the document local service.
-	 *
-	 * @param documentLocalService the document local service
-	 */
-	public void setDocumentLocalService(
-		vn.com.ecopharma.hrm.rc.service.DocumentLocalService documentLocalService) {
-		this.documentLocalService = documentLocalService;
-	}
-
-	/**
-	 * Returns the document remote service.
-	 *
-	 * @return the document remote service
-	 */
-	public vn.com.ecopharma.hrm.rc.service.DocumentService getDocumentService() {
-		return documentService;
-	}
-
-	/**
-	 * Sets the document remote service.
-	 *
-	 * @param documentService the document remote service
-	 */
-	public void setDocumentService(
-		vn.com.ecopharma.hrm.rc.service.DocumentService documentService) {
-		this.documentService = documentService;
-	}
-
-	/**
-	 * Returns the document persistence.
-	 *
-	 * @return the document persistence
-	 */
-	public DocumentPersistence getDocumentPersistence() {
-		return documentPersistence;
-	}
-
-	/**
-	 * Sets the document persistence.
-	 *
-	 * @param documentPersistence the document persistence
-	 */
-	public void setDocumentPersistence(DocumentPersistence documentPersistence) {
-		this.documentPersistence = documentPersistence;
 	}
 
 	/**
@@ -1327,12 +1270,6 @@ public abstract class CertificateLocalServiceBaseImpl
 	protected vn.com.ecopharma.hrm.rc.service.CertificateService certificateService;
 	@BeanReference(type = CertificatePersistence.class)
 	protected CertificatePersistence certificatePersistence;
-	@BeanReference(type = vn.com.ecopharma.hrm.rc.service.DocumentLocalService.class)
-	protected vn.com.ecopharma.hrm.rc.service.DocumentLocalService documentLocalService;
-	@BeanReference(type = vn.com.ecopharma.hrm.rc.service.DocumentService.class)
-	protected vn.com.ecopharma.hrm.rc.service.DocumentService documentService;
-	@BeanReference(type = DocumentPersistence.class)
-	protected DocumentPersistence documentPersistence;
 	@BeanReference(type = vn.com.ecopharma.hrm.rc.service.EmployeeInterviewScheduleLocalService.class)
 	protected vn.com.ecopharma.hrm.rc.service.EmployeeInterviewScheduleLocalService employeeInterviewScheduleLocalService;
 	@BeanReference(type = vn.com.ecopharma.hrm.rc.service.EmployeeInterviewScheduleService.class)

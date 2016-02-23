@@ -150,6 +150,36 @@ public interface CandidateModel extends BaseModel<Candidate>, GroupedModel {
 	public void setDateOfBirth(Date dateOfBirth);
 
 	/**
+	 * Returns the place of birth of this candidate.
+	 *
+	 * @return the place of birth of this candidate
+	 */
+	@AutoEscape
+	public String getPlaceOfBirth();
+
+	/**
+	 * Sets the place of birth of this candidate.
+	 *
+	 * @param placeOfBirth the place of birth of this candidate
+	 */
+	public void setPlaceOfBirth(String placeOfBirth);
+
+	/**
+	 * Returns the gender of this candidate.
+	 *
+	 * @return the gender of this candidate
+	 */
+	@AutoEscape
+	public String getGender();
+
+	/**
+	 * Sets the gender of this candidate.
+	 *
+	 * @param gender the gender of this candidate
+	 */
+	public void setGender(String gender);
+
+	/**
 	 * Returns the identity card no of this candidate.
 	 *
 	 * @return the identity card no of this candidate
@@ -163,6 +193,109 @@ public interface CandidateModel extends BaseModel<Candidate>, GroupedModel {
 	 * @param identityCardNo the identity card no of this candidate
 	 */
 	public void setIdentityCardNo(String identityCardNo);
+
+	/**
+	 * Returns the issued date of this candidate.
+	 *
+	 * @return the issued date of this candidate
+	 */
+	public Date getIssuedDate();
+
+	/**
+	 * Sets the issued date of this candidate.
+	 *
+	 * @param issuedDate the issued date of this candidate
+	 */
+	public void setIssuedDate(Date issuedDate);
+
+	/**
+	 * Returns the issued place of this candidate.
+	 *
+	 * @return the issued place of this candidate
+	 */
+	@AutoEscape
+	public String getIssuedPlace();
+
+	/**
+	 * Sets the issued place of this candidate.
+	 *
+	 * @param issuedPlace the issued place of this candidate
+	 */
+	public void setIssuedPlace(String issuedPlace);
+
+	/**
+	 * Returns the marital status of this candidate.
+	 *
+	 * @return the marital status of this candidate
+	 */
+	@AutoEscape
+	public String getMaritalStatus();
+
+	/**
+	 * Sets the marital status of this candidate.
+	 *
+	 * @param maritalStatus the marital status of this candidate
+	 */
+	public void setMaritalStatus(String maritalStatus);
+
+	/**
+	 * Returns the number of child of this candidate.
+	 *
+	 * @return the number of child of this candidate
+	 */
+	public int getNumberOfChild();
+
+	/**
+	 * Sets the number of child of this candidate.
+	 *
+	 * @param numberOfChild the number of child of this candidate
+	 */
+	public void setNumberOfChild(int numberOfChild);
+
+	/**
+	 * Returns the nationality of this candidate.
+	 *
+	 * @return the nationality of this candidate
+	 */
+	@AutoEscape
+	public String getNationality();
+
+	/**
+	 * Sets the nationality of this candidate.
+	 *
+	 * @param nationality the nationality of this candidate
+	 */
+	public void setNationality(String nationality);
+
+	/**
+	 * Returns the ethnic of this candidate.
+	 *
+	 * @return the ethnic of this candidate
+	 */
+	@AutoEscape
+	public String getEthnic();
+
+	/**
+	 * Sets the ethnic of this candidate.
+	 *
+	 * @param ethnic the ethnic of this candidate
+	 */
+	public void setEthnic(String ethnic);
+
+	/**
+	 * Returns the religion of this candidate.
+	 *
+	 * @return the religion of this candidate
+	 */
+	@AutoEscape
+	public String getReligion();
+
+	/**
+	 * Sets the religion of this candidate.
+	 *
+	 * @param religion the religion of this candidate
+	 */
+	public void setReligion(String religion);
 
 	/**
 	 * Returns the application date of this candidate.

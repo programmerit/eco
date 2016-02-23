@@ -19,6 +19,7 @@ create index IX_765F22D6 on eco_em_portlet_District (regionCode, name);
 
 create index IX_2E18E11F on eco_em_portlet_Document (className, classPK);
 create index IX_E7D74E88 on eco_em_portlet_Document (className, classPK, documentType);
+create index IX_B886E542 on eco_em_portlet_Document (className, classPK, fileEntryId);
 create index IX_F26BFDD8 on eco_em_portlet_Document (documentType);
 create index IX_1BF70BF2 on eco_em_portlet_Document (fileEntryId);
 

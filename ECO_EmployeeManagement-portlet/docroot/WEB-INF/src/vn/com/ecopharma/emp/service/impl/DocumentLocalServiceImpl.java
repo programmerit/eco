@@ -131,6 +131,17 @@ public class DocumentLocalServiceImpl extends DocumentLocalServiceBaseImpl {
 		return new ArrayList<Document>();
 	}
 
+	public Document fetchByClassNameClassPKAndFileEntry(String className,
+			long classPK, long fileEntryId) {
+		try {
+			return documentPersistence.fetchByClassNameClassPKAndFileEntry(
+					className, classPK, fileEntryId);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
 	public Document createPrePersistedEntity(ServiceContext serviceContext) {
 		try {
 			long id = counterLocalService.increment();

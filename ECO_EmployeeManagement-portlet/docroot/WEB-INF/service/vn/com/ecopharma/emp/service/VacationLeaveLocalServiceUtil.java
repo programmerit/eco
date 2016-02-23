@@ -315,6 +315,40 @@ public class VacationLeaveLocalServiceUtil {
 			actualTo, reason, description, serviceContext);
 	}
 
+	public static int countAllUnDeletedDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort) {
+		return getService()
+				   .countAllUnDeletedDocuments(searchContext, filterQueries,
+			companyId, sort);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.search.Document> searchAllUnDeletedDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
+		int end) {
+		return getService()
+				   .searchAllUnDeletedDocuments(searchContext, filterQueries,
+			companyId, sort, start, end);
+	}
+
+	public static com.liferay.portal.kernel.search.Document getIndexedDocument(
+		java.lang.String id,
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().getIndexedDocument(id, searchContext);
+	}
+
+	public static com.liferay.portal.kernel.search.Document getIndexedDocument(
+		long id, com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().getIndexedDocument(id, searchContext);
+	}
+
+	public static void indexAll() {
+		getService().indexAll();
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

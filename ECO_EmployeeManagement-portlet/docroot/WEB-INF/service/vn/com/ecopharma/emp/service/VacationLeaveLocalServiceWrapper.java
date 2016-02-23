@@ -332,6 +332,43 @@ public class VacationLeaveLocalServiceWrapper
 			leaveFrom, leaveTo, actualTo, reason, description, serviceContext);
 	}
 
+	@Override
+	public int countAllUnDeletedDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort) {
+		return _vacationLeaveLocalService.countAllUnDeletedDocuments(searchContext,
+			filterQueries, companyId, sort);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Document> searchAllUnDeletedDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
+		int end) {
+		return _vacationLeaveLocalService.searchAllUnDeletedDocuments(searchContext,
+			filterQueries, companyId, sort, start, end);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Document getIndexedDocument(
+		java.lang.String id,
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return _vacationLeaveLocalService.getIndexedDocument(id, searchContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Document getIndexedDocument(
+		long id, com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return _vacationLeaveLocalService.getIndexedDocument(id, searchContext);
+	}
+
+	@Override
+	public void indexAll() {
+		_vacationLeaveLocalService.indexAll();
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

@@ -142,81 +142,87 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 
 		_methodParameterTypes24 = new String[] { "long" };
 
-		_methodName25 = "createPrePersistedEntity";
+		_methodName25 = "fetchByClassNameClassPKAndFileEntry";
 
 		_methodParameterTypes25 = new String[] {
-				"com.liferay.portal.service.ServiceContext"
+				"java.lang.String", "long", "long"
 			};
 
-		_methodName26 = "addDocument";
+		_methodName26 = "createPrePersistedEntity";
 
 		_methodParameterTypes26 = new String[] {
-				"vn.com.ecopharma.emp.model.Document", "java.lang.String",
-				"long", "long", "java.lang.String"
+				"com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName27 = "addDocument";
 
 		_methodParameterTypes27 = new String[] {
+				"vn.com.ecopharma.emp.model.Document", "java.lang.String",
+				"long", "long", "java.lang.String"
+			};
+
+		_methodName28 = "addDocument";
+
+		_methodParameterTypes28 = new String[] {
 				"java.lang.String", "long", "long", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName28 = "completelyDeleteDocuments";
+		_methodName29 = "completelyDeleteDocuments";
 
-		_methodParameterTypes28 = new String[] { "long" };
+		_methodParameterTypes29 = new String[] { "long" };
 
-		_methodName29 = "uploadAndLinkEntity";
+		_methodName30 = "uploadAndLinkEntity";
 
-		_methodParameterTypes29 = new String[] {
+		_methodParameterTypes30 = new String[] {
 				"com.liferay.portal.model.BaseModel",
 				"org.primefaces.model.UploadedFile", "java.lang.String",
 				"java.lang.String", "boolean",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName30 = "getDLFileEntry";
+		_methodName31 = "getDLFileEntry";
 
-		_methodParameterTypes30 = new String[] {
+		_methodParameterTypes31 = new String[] {
 				"vn.com.ecopharma.emp.model.Document"
 			};
 
-		_methodName31 = "getUploadFileEntry";
+		_methodName32 = "getUploadFileEntry";
 
-		_methodParameterTypes31 = new String[] {
+		_methodParameterTypes32 = new String[] {
 				"com.liferay.portlet.documentlibrary.model.DLFileEntry"
 			};
 
-		_methodName32 = "getFileEntry";
+		_methodName33 = "getFileEntry";
 
-		_methodParameterTypes32 = new String[] {
+		_methodParameterTypes33 = new String[] {
 				"vn.com.ecopharma.emp.model.Document"
 			};
 
-		_methodName33 = "getFilePath";
-
-		_methodParameterTypes33 = new String[] {
-				"com.liferay.portal.kernel.repository.model.FileEntry"
-			};
-
-		_methodName34 = "uploadFile";
+		_methodName34 = "getFilePath";
 
 		_methodParameterTypes34 = new String[] {
-				"org.primefaces.model.UploadedFile", "java.lang.String",
-				"boolean", "com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.kernel.repository.model.FileEntry"
 			};
 
 		_methodName35 = "uploadFile";
 
 		_methodParameterTypes35 = new String[] {
+				"org.primefaces.model.UploadedFile", "java.lang.String",
+				"boolean", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName36 = "uploadFile";
+
+		_methodParameterTypes36 = new String[] {
 				"javax.portlet.PortletRequest", "java.io.File",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName36 = "createFolder";
+		_methodName37 = "createFolder";
 
-		_methodParameterTypes36 = new String[] {
+		_methodParameterTypes37 = new String[] {
 				"java.lang.String", "java.lang.String", "long",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -932,13 +938,44 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 	}
 
 	@Override
-	public vn.com.ecopharma.emp.model.Document createPrePersistedEntity(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public vn.com.ecopharma.emp.model.Document fetchByClassNameClassPKAndFileEntry(
+		java.lang.String className, long classPK, long fileEntryId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName25,
 					_methodParameterTypes25,
+					new Object[] {
+						ClpSerializer.translateInput(className),
+						
+					classPK,
+						
+					fileEntryId
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.Document)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.Document createPrePersistedEntity(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] { ClpSerializer.translateInput(serviceContext) });
 		}
 		catch (Throwable t) {
@@ -964,8 +1001,8 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] {
 						ClpSerializer.translateInput(prePersistedEntity),
 						
@@ -1001,8 +1038,8 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] {
 						ClpSerializer.translateInput(className),
 						
@@ -1033,8 +1070,8 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 	@Override
 	public void completelyDeleteDocuments(long fileEntryId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName28,
-				_methodParameterTypes28, new Object[] { fileEntryId });
+			_invokableLocalService.invokeMethod(_methodName29,
+				_methodParameterTypes29, new Object[] { fileEntryId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1059,8 +1096,8 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
 					new Object[] {
 						ClpSerializer.translateInput(entity),
 						
@@ -1098,8 +1135,8 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] { ClpSerializer.translateInput(document) });
 		}
 		catch (Throwable t) {
@@ -1133,8 +1170,8 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] { ClpSerializer.translateInput(dlFileEntry) });
 		}
 		catch (Throwable t) {
@@ -1166,8 +1203,8 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32,
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
 					new Object[] { ClpSerializer.translateInput(document) });
 		}
 		catch (Throwable t) {
@@ -1191,8 +1228,8 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33,
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
 					new Object[] { ClpSerializer.translateInput(fileEntry) });
 		}
 		catch (Throwable t) {
@@ -1218,8 +1255,8 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName34,
-					_methodParameterTypes34,
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35,
 					new Object[] {
 						ClpSerializer.translateInput(uploadedFile),
 						
@@ -1257,8 +1294,8 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName35,
-					_methodParameterTypes35,
+			returnObj = _invokableLocalService.invokeMethod(_methodName36,
+					_methodParameterTypes36,
 					new Object[] {
 						ClpSerializer.translateInput(request),
 						
@@ -1310,8 +1347,8 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName36,
-					_methodParameterTypes36,
+			returnObj = _invokableLocalService.invokeMethod(_methodName37,
+					_methodParameterTypes37,
 					new Object[] {
 						ClpSerializer.translateInput(name),
 						
@@ -1414,4 +1451,6 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 	private String[] _methodParameterTypes35;
 	private String _methodName36;
 	private String[] _methodParameterTypes36;
+	private String _methodName37;
+	private String[] _methodParameterTypes37;
 }

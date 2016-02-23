@@ -24,24 +24,24 @@ import java.util.Arrays;
  */
 public class VacancyEvaluationCriteriaServiceClpInvoker {
 	public VacancyEvaluationCriteriaServiceClpInvoker() {
-		_methodName100 = "getBeanIdentifier";
+		_methodName94 = "getBeanIdentifier";
 
-		_methodParameterTypes100 = new String[] {  };
+		_methodParameterTypes94 = new String[] {  };
 
-		_methodName101 = "setBeanIdentifier";
+		_methodName95 = "setBeanIdentifier";
 
-		_methodParameterTypes101 = new String[] { "java.lang.String" };
+		_methodParameterTypes95 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName100.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes100, parameterTypes)) {
+		if (_methodName94.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes94, parameterTypes)) {
 			return VacancyEvaluationCriteriaServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName101.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes101, parameterTypes)) {
+		if (_methodName95.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes95, parameterTypes)) {
 			VacancyEvaluationCriteriaServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
@@ -50,8 +50,8 @@ public class VacancyEvaluationCriteriaServiceClpInvoker {
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName100;
-	private String[] _methodParameterTypes100;
-	private String _methodName101;
-	private String[] _methodParameterTypes101;
+	private String _methodName94;
+	private String[] _methodParameterTypes94;
+	private String _methodName95;
+	private String[] _methodParameterTypes95;
 }

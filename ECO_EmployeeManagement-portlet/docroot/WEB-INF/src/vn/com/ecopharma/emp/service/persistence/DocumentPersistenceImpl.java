@@ -2365,6 +2365,316 @@ public class DocumentPersistenceImpl extends BasePersistenceImpl<Document>
 	}
 
 	private static final String _FINDER_COLUMN_FILEENTRY_FILEENTRYID_2 = "document.fileEntryId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_CLASSNAMECLASSPKANDFILEENTRY =
+		new FinderPath(DocumentModelImpl.ENTITY_CACHE_ENABLED,
+			DocumentModelImpl.FINDER_CACHE_ENABLED, DocumentImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByClassNameClassPKAndFileEntry",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Long.class.getName()
+			},
+			DocumentModelImpl.CLASSNAME_COLUMN_BITMASK |
+			DocumentModelImpl.CLASSPK_COLUMN_BITMASK |
+			DocumentModelImpl.FILEENTRYID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_CLASSNAMECLASSPKANDFILEENTRY =
+		new FinderPath(DocumentModelImpl.ENTITY_CACHE_ENABLED,
+			DocumentModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByClassNameClassPKAndFileEntry",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Long.class.getName()
+			});
+
+	/**
+	 * Returns the document where className = &#63; and classPK = &#63; and fileEntryId = &#63; or throws a {@link vn.com.ecopharma.emp.NoSuchDocumentException} if it could not be found.
+	 *
+	 * @param className the class name
+	 * @param classPK the class p k
+	 * @param fileEntryId the file entry ID
+	 * @return the matching document
+	 * @throws vn.com.ecopharma.emp.NoSuchDocumentException if a matching document could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Document findByClassNameClassPKAndFileEntry(String className,
+		long classPK, long fileEntryId)
+		throws NoSuchDocumentException, SystemException {
+		Document document = fetchByClassNameClassPKAndFileEntry(className,
+				classPK, fileEntryId);
+
+		if (document == null) {
+			StringBundler msg = new StringBundler(8);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("className=");
+			msg.append(className);
+
+			msg.append(", classPK=");
+			msg.append(classPK);
+
+			msg.append(", fileEntryId=");
+			msg.append(fileEntryId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchDocumentException(msg.toString());
+		}
+
+		return document;
+	}
+
+	/**
+	 * Returns the document where className = &#63; and classPK = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param className the class name
+	 * @param classPK the class p k
+	 * @param fileEntryId the file entry ID
+	 * @return the matching document, or <code>null</code> if a matching document could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Document fetchByClassNameClassPKAndFileEntry(String className,
+		long classPK, long fileEntryId) throws SystemException {
+		return fetchByClassNameClassPKAndFileEntry(className, classPK,
+			fileEntryId, true);
+	}
+
+	/**
+	 * Returns the document where className = &#63; and classPK = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param className the class name
+	 * @param classPK the class p k
+	 * @param fileEntryId the file entry ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching document, or <code>null</code> if a matching document could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Document fetchByClassNameClassPKAndFileEntry(String className,
+		long classPK, long fileEntryId, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { className, classPK, fileEntryId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_CLASSNAMECLASSPKANDFILEENTRY,
+					finderArgs, this);
+		}
+
+		if (result instanceof Document) {
+			Document document = (Document)result;
+
+			if (!Validator.equals(className, document.getClassName()) ||
+					(classPK != document.getClassPK()) ||
+					(fileEntryId != document.getFileEntryId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_SELECT_DOCUMENT_WHERE);
+
+			boolean bindClassName = false;
+
+			if (className == null) {
+				query.append(_FINDER_COLUMN_CLASSNAMECLASSPKANDFILEENTRY_CLASSNAME_1);
+			}
+			else if (className.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_CLASSNAMECLASSPKANDFILEENTRY_CLASSNAME_3);
+			}
+			else {
+				bindClassName = true;
+
+				query.append(_FINDER_COLUMN_CLASSNAMECLASSPKANDFILEENTRY_CLASSNAME_2);
+			}
+
+			query.append(_FINDER_COLUMN_CLASSNAMECLASSPKANDFILEENTRY_CLASSPK_2);
+
+			query.append(_FINDER_COLUMN_CLASSNAMECLASSPKANDFILEENTRY_FILEENTRYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindClassName) {
+					qPos.add(className);
+				}
+
+				qPos.add(classPK);
+
+				qPos.add(fileEntryId);
+
+				List<Document> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CLASSNAMECLASSPKANDFILEENTRY,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"DocumentPersistenceImpl.fetchByClassNameClassPKAndFileEntry(String, long, long, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					Document document = list.get(0);
+
+					result = document;
+
+					cacheResult(document);
+
+					if ((document.getClassName() == null) ||
+							!document.getClassName().equals(className) ||
+							(document.getClassPK() != classPK) ||
+							(document.getFileEntryId() != fileEntryId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CLASSNAMECLASSPKANDFILEENTRY,
+							finderArgs, document);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CLASSNAMECLASSPKANDFILEENTRY,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Document)result;
+		}
+	}
+
+	/**
+	 * Removes the document where className = &#63; and classPK = &#63; and fileEntryId = &#63; from the database.
+	 *
+	 * @param className the class name
+	 * @param classPK the class p k
+	 * @param fileEntryId the file entry ID
+	 * @return the document that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Document removeByClassNameClassPKAndFileEntry(String className,
+		long classPK, long fileEntryId)
+		throws NoSuchDocumentException, SystemException {
+		Document document = findByClassNameClassPKAndFileEntry(className,
+				classPK, fileEntryId);
+
+		return remove(document);
+	}
+
+	/**
+	 * Returns the number of documents where className = &#63; and classPK = &#63; and fileEntryId = &#63;.
+	 *
+	 * @param className the class name
+	 * @param classPK the class p k
+	 * @param fileEntryId the file entry ID
+	 * @return the number of matching documents
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByClassNameClassPKAndFileEntry(String className,
+		long classPK, long fileEntryId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_CLASSNAMECLASSPKANDFILEENTRY;
+
+		Object[] finderArgs = new Object[] { className, classPK, fileEntryId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_DOCUMENT_WHERE);
+
+			boolean bindClassName = false;
+
+			if (className == null) {
+				query.append(_FINDER_COLUMN_CLASSNAMECLASSPKANDFILEENTRY_CLASSNAME_1);
+			}
+			else if (className.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_CLASSNAMECLASSPKANDFILEENTRY_CLASSNAME_3);
+			}
+			else {
+				bindClassName = true;
+
+				query.append(_FINDER_COLUMN_CLASSNAMECLASSPKANDFILEENTRY_CLASSNAME_2);
+			}
+
+			query.append(_FINDER_COLUMN_CLASSNAMECLASSPKANDFILEENTRY_CLASSPK_2);
+
+			query.append(_FINDER_COLUMN_CLASSNAMECLASSPKANDFILEENTRY_FILEENTRYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindClassName) {
+					qPos.add(className);
+				}
+
+				qPos.add(classPK);
+
+				qPos.add(fileEntryId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CLASSNAMECLASSPKANDFILEENTRY_CLASSNAME_1 =
+		"document.className IS NULL AND ";
+	private static final String _FINDER_COLUMN_CLASSNAMECLASSPKANDFILEENTRY_CLASSNAME_2 =
+		"document.className = ? AND ";
+	private static final String _FINDER_COLUMN_CLASSNAMECLASSPKANDFILEENTRY_CLASSNAME_3 =
+		"(document.className IS NULL OR document.className = '') AND ";
+	private static final String _FINDER_COLUMN_CLASSNAMECLASSPKANDFILEENTRY_CLASSPK_2 =
+		"document.classPK = ? AND ";
+	private static final String _FINDER_COLUMN_CLASSNAMECLASSPKANDFILEENTRY_FILEENTRYID_2 =
+		"document.fileEntryId = ?";
 
 	public DocumentPersistenceImpl() {
 		setModelClass(Document.class);
@@ -2379,6 +2689,12 @@ public class DocumentPersistenceImpl extends BasePersistenceImpl<Document>
 	public void cacheResult(Document document) {
 		EntityCacheUtil.putResult(DocumentModelImpl.ENTITY_CACHE_ENABLED,
 			DocumentImpl.class, document.getPrimaryKey(), document);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CLASSNAMECLASSPKANDFILEENTRY,
+			new Object[] {
+				document.getClassName(), document.getClassPK(),
+				document.getFileEntryId()
+			}, document);
 
 		document.resetOriginalValues();
 	}
@@ -2436,6 +2752,8 @@ public class DocumentPersistenceImpl extends BasePersistenceImpl<Document>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(document);
 	}
 
 	@Override
@@ -2446,6 +2764,66 @@ public class DocumentPersistenceImpl extends BasePersistenceImpl<Document>
 		for (Document document : documents) {
 			EntityCacheUtil.removeResult(DocumentModelImpl.ENTITY_CACHE_ENABLED,
 				DocumentImpl.class, document.getPrimaryKey());
+
+			clearUniqueFindersCache(document);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(Document document) {
+		if (document.isNew()) {
+			Object[] args = new Object[] {
+					document.getClassName(), document.getClassPK(),
+					document.getFileEntryId()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CLASSNAMECLASSPKANDFILEENTRY,
+				args, Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CLASSNAMECLASSPKANDFILEENTRY,
+				args, document);
+		}
+		else {
+			DocumentModelImpl documentModelImpl = (DocumentModelImpl)document;
+
+			if ((documentModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_CLASSNAMECLASSPKANDFILEENTRY.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						document.getClassName(), document.getClassPK(),
+						document.getFileEntryId()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CLASSNAMECLASSPKANDFILEENTRY,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CLASSNAMECLASSPKANDFILEENTRY,
+					args, document);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(Document document) {
+		DocumentModelImpl documentModelImpl = (DocumentModelImpl)document;
+
+		Object[] args = new Object[] {
+				document.getClassName(), document.getClassPK(),
+				document.getFileEntryId()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMECLASSPKANDFILEENTRY,
+			args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CLASSNAMECLASSPKANDFILEENTRY,
+			args);
+
+		if ((documentModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_CLASSNAMECLASSPKANDFILEENTRY.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					documentModelImpl.getOriginalClassName(),
+					documentModelImpl.getOriginalClassPK(),
+					documentModelImpl.getOriginalFileEntryId()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMECLASSPKANDFILEENTRY,
+				args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CLASSNAMECLASSPKANDFILEENTRY,
+				args);
 		}
 	}
 
@@ -2676,6 +3054,9 @@ public class DocumentPersistenceImpl extends BasePersistenceImpl<Document>
 
 		EntityCacheUtil.putResult(DocumentModelImpl.ENTITY_CACHE_ENABLED,
 			DocumentImpl.class, document.getPrimaryKey(), document);
+
+		clearUniqueFindersCache(document);
+		cacheUniqueFindersCache(document);
 
 		return document;
 	}

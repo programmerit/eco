@@ -5,16 +5,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import vn.com.ecopharma.emp.model.Document;
+import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
 import vn.com.ecopharma.hrm.rc.enumeration.VacancyCandidateType;
 import vn.com.ecopharma.hrm.rc.model.Candidate;
 import vn.com.ecopharma.hrm.rc.model.Certificate;
-import vn.com.ecopharma.hrm.rc.model.Document;
 import vn.com.ecopharma.hrm.rc.model.Experience;
 import vn.com.ecopharma.hrm.rc.model.VacancyCandidate;
 import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.CertificateLocalServiceUtil;
-import vn.com.ecopharma.hrm.rc.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.ExperienceLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.VacancyCandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
@@ -71,7 +71,8 @@ public class CandidateItem implements Serializable {
 
 	private List<DocumentItem> getDocumentList(long candidateId) {
 		List<Document> documents = DocumentLocalServiceUtil
-				.findByClassAndClassPK(Candidate.class.getName(), candidateId);
+				.findByClassNameAndClassPK(Candidate.class.getName(),
+						candidateId);
 		final List<DocumentItem> docItems = new ArrayList<>();
 		for (Document doc : documents) {
 			docItems.add(new DocumentItem(doc));

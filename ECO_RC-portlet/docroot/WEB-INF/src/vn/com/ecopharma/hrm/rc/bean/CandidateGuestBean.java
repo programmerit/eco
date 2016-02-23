@@ -168,32 +168,33 @@ public class CandidateGuestBean implements Serializable {
 		final FileEntry fe = DLUtils.handleFileUpload(
 				fileUploadEvent.getFile(), "candidateDocs");
 		final long candidateId = candidateItem.getCandidate().getCandidateId();
-		try {
-			if (CandidateLocalServiceUtil.fetchCandidate(candidateId) != null
-					&& DocumentLocalServiceUtil
-							.findByClassAndClassPKAndFileEntryId(
-									Candidate.class.getName(), candidateId,
-									fe.getFileEntryId()) == null) {
-				vn.com.ecopharma.hrm.rc.model.Document document = DocumentLocalServiceUtil
-						.addDocument(Candidate.class.getName(), candidateId, fe
-								.getFileEntryId(), LiferayFacesContext
-								.getInstance().getServiceContext());
-				candidateItem.getDocumentItems()
-						.add(new DocumentItem(document));
-			} else {
-				candidateItem.getDocumentItems().add(new DocumentItem(fe));
-			}
-			fileEntryIds.add(fe.getFileEntryId());
-
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
+		// try {
+		// if (CandidateLocalServiceUtil.fetchCandidate(candidateId) != null
+		// && DocumentLocalServiceUtil
+		// .findByClassAndClassPKAndFileEntryId(
+		// Candidate.class.getName(), candidateId,
+		// fe.getFileEntryId()) == null) {
+		// vn.com.ecopharma.hrm.rc.model.Document document =
+		// DocumentLocalServiceUtil
+		// .addDocument(Candidate.class.getName(), candidateId, fe
+		// .getFileEntryId(), LiferayFacesContext
+		// .getInstance().getServiceContext());
+		// candidateItem.getDocumentItems()
+		// .add(new DocumentItem(document));
+		// } else {
+		// candidateItem.getDocumentItems().add(new DocumentItem(fe));
+		// }
+		// fileEntryIds.add(fe.getFileEntryId());
+		//
+		// } catch (SystemException e) {
+		// e.printStackTrace();
+		// }
 	}
 
 	public void deleteFileEntry(ActionEvent event) {
-		candidateItem.getDocumentItems().remove(deletedDocument);
-		DocumentLocalServiceUtil.deleteByFileEntry(deletedDocument
-				.getFileEntryId());
+		// candidateItem.getDocumentItems().remove(deletedDocument);
+		// DocumentLocalServiceUtil.deleteByFileEntry(deletedDocument
+		// .getFileEntryId());
 	}
 
 	public void removeOneExperience(int index) {

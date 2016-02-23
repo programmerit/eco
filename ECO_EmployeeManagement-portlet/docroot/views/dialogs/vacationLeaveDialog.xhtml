@@ -34,7 +34,7 @@
 						<h:outputText value="Leave Date From" />
 						<p:calendar id="leaveFrom" required="true"
 							value="#{leaveBean.leave.leaveFrom}" pattern="dd/MM/yyyy">
-							<p:ajax event="dateSelect" update="leaveTo actualTo" />
+							<p:ajax event="dateSelect" update="leaveTo" />
 						</p:calendar>
 
 						<h:outputText value="Leave Date To" />
@@ -49,7 +49,7 @@
 						<p:inputText value="#{leaveBean.leave.reason}" />
 
 						<h:outputText value="Description" />
-						<p:inputText value="#{leaveBean.leave.description}" />
+						<p:inputTextarea value="#{leaveBean.leave.description}" />
 					</p:panelGrid>
 				</p:outputPanel>
 

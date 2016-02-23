@@ -28,16 +28,15 @@ import vn.com.ecopharma.hrm.rc.model.CandidateActionHistory;
 import vn.com.ecopharma.hrm.rc.model.Certificate;
 import vn.com.ecopharma.hrm.rc.model.Experience;
 import vn.com.ecopharma.hrm.rc.model.VacancyCandidate;
-import vn.com.ecopharma.hrm.rc.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.VacancyCandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.base.CandidateLocalServiceBaseImpl;
 import vn.com.ecopharma.hrm.rc.util.RCUtils;
 
-import com.liferay.faces.util.logging.Logger;
-import com.liferay.faces.util.logging.LoggerFactory;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
@@ -82,8 +81,8 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 	 * candidate local service.
 	 */
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(CandidateLocalServiceImpl.class);
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(CandidateLocalServiceImpl.class);
 
 	public List<Candidate> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -98,15 +97,15 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		try {
 			return candidatePersistence.findAll(start, end, orderByComparator);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	/*
 	 * public Candidate findByEmailAddress(String emailAddress) { try { return
 	 * candidatePersistence.fetchByEmail(emailAddress); } catch (SystemException
-	 * e) { e.printStackTrace(); } return null; }
+	 * e) { LOGGER.info(e); } return null; }
 	 */
 
 	public boolean isEmailExisted(String emailAddress) {
@@ -115,7 +114,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 					.findByEmailAddress(emailAddress);
 			return candidates != null && candidates.size() > 0;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return false;
 	}
@@ -124,7 +123,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		try {
 			return candidatePersistence.fetchByIdentityCardNo(identityCardNo);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -133,7 +132,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		try {
 			return candidatePersistence.fetchByContactNumber(contactNumber);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -143,7 +142,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			final long id = counterLocalService.increment();
 			return candidatePersistence.create(id);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -183,10 +182,10 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 						VacancyCandidateType.MAIN.toString());
 				// add documents for candidate
 				for (long fileEntryId : fileEntryIds) {
-					DocumentLocalServiceUtil.addDocument(
-							Candidate.class.getName(),
-							candidate.getCandidateId(), fileEntryId,
-							serviceContext);
+					// DocumentLocalServiceUtil.addDocument(
+					// Candidate.class.getName(),
+					// candidate.getCandidateId(), fileEntryId,
+					// serviceContext);
 				}
 
 				// add candidate experiences
@@ -237,11 +236,11 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			}
 			return null;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (PortalException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -362,15 +361,15 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			}
 
 			for (Long fileEntryId : fileEntryIds) {
-				if (DocumentLocalServiceUtil
-						.findByClassAndClassPKAndFileEntryId(
-								Candidate.class.getName(),
-								candidate.getCandidateId(), fileEntryId) == null) {
-					DocumentLocalServiceUtil.addDocument(
-							Candidate.class.getName(),
-							candidate.getCandidateId(), fileEntryId,
-							serviceContext);
-				}
+				// if (DocumentLocalServiceUtil
+				// .findByClassAndClassPKAndFileEntryId(
+				// Candidate.class.getName(),
+				// candidate.getCandidateId(), fileEntryId) == null) {
+				// DocumentLocalServiceUtil.addDocument(
+				// Candidate.class.getName(),
+				// candidate.getCandidateId(), fileEntryId,
+				// serviceContext);
+				// }
 			}
 
 			candidate.setModifiedDate(new Date(System.currentTimeMillis()));
@@ -394,11 +393,11 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			return candidate;
 
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (PortalException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -422,7 +421,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 
 			return candidate;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -433,7 +432,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			Candidate candidate = fetchCandidate(candidateId);
 			return changeCandidateStatus(candidate, status, serviceContext);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -443,7 +442,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 	 * SystemException { Candidate c = super.updateCandidate(candidate); //
 	 * index new employee Indexer indexer =
 	 * IndexerRegistryUtil.getIndexer(Candidate.class); try {
-	 * indexer.reindex(c); } catch (SearchException e) { e.printStackTrace(); }
+	 * indexer.reindex(c); } catch (SearchException e) { LOGGER.info(e); }
 	 * return c; }
 	 */
 
@@ -470,9 +469,9 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 
 			return candidate;
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -482,7 +481,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			Candidate candidate = fetchCandidate(candidateId);
 			markDeleted(candidate, serviceContext);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -530,9 +529,9 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
 					fullQuery, sort, start, end).toList();
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -559,9 +558,9 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 
 			return documents;
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -581,9 +580,9 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
 			return !hits.toList().isEmpty() ? hits.toList().get(0) : null;
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 
 		return null;
@@ -603,7 +602,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			try {
 				indexer.reindex(candidate);
 			} catch (SearchException e) {
-				e.printStackTrace();
+				LOGGER.info(e);
 			}
 		}
 	}
@@ -626,7 +625,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 
 			}
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 	}
 
@@ -647,7 +646,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 					.fetchByVacancyCandidateAndInterview(vacancyCandidateId,
 							interviewId) != null;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return false;
 	}

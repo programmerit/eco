@@ -321,6 +321,13 @@ public class DocumentLocalServiceWrapper implements DocumentLocalService,
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.Document fetchByClassNameClassPKAndFileEntry(
+		java.lang.String className, long classPK, long fileEntryId) {
+		return _documentLocalService.fetchByClassNameClassPKAndFileEntry(className,
+			classPK, fileEntryId);
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.Document createPrePersistedEntity(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return _documentLocalService.createPrePersistedEntity(serviceContext);

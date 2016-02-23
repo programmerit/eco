@@ -64,6 +64,7 @@ public class VacationLeaveWrapper implements VacationLeave,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("deleted", getDeleted());
 
 		return attributes;
 	}
@@ -152,6 +153,12 @@ public class VacationLeaveWrapper implements VacationLeave,
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Boolean deleted = (Boolean)attributes.get("deleted");
+
+		if (deleted != null) {
+			setDeleted(deleted);
 		}
 	}
 
@@ -475,6 +482,36 @@ public class VacationLeaveWrapper implements VacationLeave,
 	@Override
 	public void setModifiedDate(java.util.Date modifiedDate) {
 		_vacationLeave.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Returns the deleted of this vacation leave.
+	*
+	* @return the deleted of this vacation leave
+	*/
+	@Override
+	public boolean getDeleted() {
+		return _vacationLeave.getDeleted();
+	}
+
+	/**
+	* Returns <code>true</code> if this vacation leave is deleted.
+	*
+	* @return <code>true</code> if this vacation leave is deleted; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDeleted() {
+		return _vacationLeave.isDeleted();
+	}
+
+	/**
+	* Sets whether this vacation leave is deleted.
+	*
+	* @param deleted the deleted of this vacation leave
+	*/
+	@Override
+	public void setDeleted(boolean deleted) {
+		_vacationLeave.setDeleted(deleted);
 	}
 
 	@Override

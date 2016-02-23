@@ -29,7 +29,6 @@ import vn.com.ecopharma.hrm.rc.model.CandidateActionHistoryClp;
 import vn.com.ecopharma.hrm.rc.model.CandidateClp;
 import vn.com.ecopharma.hrm.rc.model.CandidateEvaluationClp;
 import vn.com.ecopharma.hrm.rc.model.CertificateClp;
-import vn.com.ecopharma.hrm.rc.model.DocumentClp;
 import vn.com.ecopharma.hrm.rc.model.EmployeeInterviewScheduleClp;
 import vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaClp;
 import vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValueClp;
@@ -132,10 +131,6 @@ public class ClpSerializer {
 			return translateInputCertificate(oldModel);
 		}
 
-		if (oldModelClassName.equals(DocumentClp.class.getName())) {
-			return translateInputDocument(oldModel);
-		}
-
 		if (oldModelClassName.equals(
 					EmployeeInterviewScheduleClp.class.getName())) {
 			return translateInputEmployeeInterviewSchedule(oldModel);
@@ -230,16 +225,6 @@ public class ClpSerializer {
 		CertificateClp oldClpModel = (CertificateClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getCertificateRemoteModel();
-
-		newModel.setModelAttributes(oldClpModel.getModelAttributes());
-
-		return newModel;
-	}
-
-	public static Object translateInputDocument(BaseModel<?> oldModel) {
-		DocumentClp oldClpModel = (DocumentClp)oldModel;
-
-		BaseModel<?> newModel = oldClpModel.getDocumentRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -480,43 +465,6 @@ public class ClpSerializer {
 		if (oldModelClassName.equals(
 					"vn.com.ecopharma.hrm.rc.model.impl.CertificateImpl")) {
 			return translateOutputCertificate(oldModel);
-		}
-		else if (oldModelClassName.endsWith("Clp")) {
-			try {
-				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
-
-				Method getClpSerializerClassMethod = oldModelClass.getMethod(
-						"getClpSerializerClass");
-
-				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
-
-				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
-
-				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
-						BaseModel.class);
-
-				Class<?> oldModelModelClass = oldModel.getModelClass();
-
-				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
-						oldModelModelClass.getSimpleName() + "RemoteModel");
-
-				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
-
-				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
-						oldRemoteModel);
-
-				return newModel;
-			}
-			catch (Throwable t) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Unable to translate " + oldModelClassName, t);
-				}
-			}
-		}
-
-		if (oldModelClassName.equals(
-					"vn.com.ecopharma.hrm.rc.model.impl.DocumentImpl")) {
-			return translateOutputDocument(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -1020,10 +968,6 @@ public class ClpSerializer {
 			return new vn.com.ecopharma.hrm.rc.NoSuchCertificateException();
 		}
 
-		if (className.equals("vn.com.ecopharma.hrm.rc.NoSuchDocumentException")) {
-			return new vn.com.ecopharma.hrm.rc.NoSuchDocumentException();
-		}
-
 		if (className.equals(
 					"vn.com.ecopharma.hrm.rc.NoSuchEmployeeInterviewScheduleException")) {
 			return new vn.com.ecopharma.hrm.rc.NoSuchEmployeeInterviewScheduleException();
@@ -1112,16 +1056,6 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setCertificateRemoteModel(oldModel);
-
-		return newModel;
-	}
-
-	public static Object translateOutputDocument(BaseModel<?> oldModel) {
-		DocumentClp newModel = new DocumentClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setDocumentRemoteModel(oldModel);
 
 		return newModel;
 	}

@@ -2,8 +2,10 @@ package vn.com.ecopharma.hrm.tt.bean;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import vn.com.ecopharma.emp.model.Department;
@@ -16,6 +18,7 @@ import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
+import vn.com.ecopharma.hrm.tt.constant.EmpField;
 
 public class OrganizationFilterBean implements OrganizationFilter {
 	/**
@@ -70,6 +73,56 @@ public class OrganizationFilterBean implements OrganizationFilter {
 	public List<Titles> getTitlesList() {
 		return TitlesLocalServiceUtil.findFilterListByRelatedFields(
 				selectedDepartments, selectedUnits, selectedUnitGroups);
+	}
+
+	public List<String> getSelectedDevisionStrings() {
+		final List<String> result = new ArrayList<>();
+		for (Devision devision : selectedDevisions) {
+			result.add(devision.getName());
+		}
+		return result;
+	}
+
+	public List<String> getSelectedDepartmentStrings() {
+		final List<String> result = new ArrayList<>();
+		for (Department department : selectedDepartments) {
+			result.add(department.getName());
+		}
+		return result;
+	}
+
+	public List<String> getSelectedUnitStrings() {
+		final List<String> result = new ArrayList<>();
+		for (Unit unit : selectedUnits) {
+			result.add(unit.getName());
+		}
+		return result;
+	}
+
+	public List<String> getSelectedUnitGroupStrings() {
+		final List<String> result = new ArrayList<>();
+		for (UnitGroup unitGroup : selectedUnitGroups) {
+			result.add(unitGroup.getName());
+		}
+		return result;
+	}
+
+	public List<String> getSelectedTitlesListStrings() {
+		final List<String> result = new ArrayList<>();
+		for (Titles titles : selectedTitlesList) {
+			result.add(titles.getName());
+		}
+		return result;
+	}
+
+	public Map<String, List<String>> getOrganizationFilters() {
+		final Map<String, List<String>> map = new HashMap<>();
+		map.put(EmpField.DEVISION, getSelectedDevisionStrings());
+		map.put(EmpField.DEPARTMENT, getSelectedDepartmentStrings());
+		map.put(EmpField.UNIT, getSelectedUnitStrings());
+		map.put(EmpField.UNIT_GROUP, getSelectedUnitGroupStrings());
+		map.put(EmpField.TITLES, getSelectedTitlesListStrings());
+		return map;
 	}
 
 	public List<Devision> getSelectedDevisions() {

@@ -38,7 +38,7 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{vacationLeaveId=");
 		sb.append(vacationLeaveId);
@@ -68,6 +68,8 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", deleted=");
+		sb.append(deleted);
 		sb.append("}");
 
 		return sb.toString();
@@ -147,6 +149,8 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 			vacationLeaveImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		vacationLeaveImpl.setDeleted(deleted);
+
 		vacationLeaveImpl.resetOriginalValues();
 
 		return vacationLeaveImpl;
@@ -168,6 +172,7 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		deleted = objectInput.readBoolean();
 	}
 
 	@Override
@@ -214,6 +219,7 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+		objectOutput.writeBoolean(deleted);
 	}
 
 	public long vacationLeaveId;
@@ -230,4 +236,5 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public boolean deleted;
 }

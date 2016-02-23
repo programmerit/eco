@@ -122,13 +122,20 @@
 					</h:panelGroup>
 
 					<h:panelGroup>
-						<p:selectOneMenu id="filter_status" var="s"
-							value="#{empFilterBean.status}">
-							<p:ajax event="change"
+						<p:selectCheckboxMenu id="statusFilterSelect" label="Status"
+							filter="true" filterMatchMode="startsWith"
+							value="#{empFilterBean.selectedStatuses}">
+							<p:ajax
+								oncomplete="PF('employeeTable').filter(); refreshFooter();" />
+							<p:ajax event="toggleSelect"
 								oncomplete="PF('employeeTable').filter(); refreshFooter();" />
 							<f:selectItems value="#{empFilterBean.statuses}" var="s"
 								itemLabel="#{s}" itemValue="#{s}" />
-						</p:selectOneMenu>
+							<p:column>
+					                #{s}
+					            </p:column>
+						</p:selectCheckboxMenu>
+
 					</h:panelGroup>
 				</p:panelGrid>
 			</h:panelGroup>
@@ -193,6 +200,8 @@
 				<p:link value="Promotion List" outcome="promotionHistory" /> |
 				
 				<p:link value="Discipline List" outcome="empDiscipline" /> |	
+				
+				<p:link value="Vacation Leave" outcome="vacationLeaveView" /> |
 
 				<p:commandLink value="Import/Export"
 					actionListener="#{empView.importExportEmployee}"

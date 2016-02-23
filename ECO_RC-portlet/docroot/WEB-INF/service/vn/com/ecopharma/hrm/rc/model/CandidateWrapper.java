@@ -55,7 +55,16 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
 		attributes.put("emailAddress", getEmailAddress());
 		attributes.put("contactNumber", getContactNumber());
 		attributes.put("dateOfBirth", getDateOfBirth());
+		attributes.put("placeOfBirth", getPlaceOfBirth());
+		attributes.put("gender", getGender());
 		attributes.put("identityCardNo", getIdentityCardNo());
+		attributes.put("issuedDate", getIssuedDate());
+		attributes.put("issuedPlace", getIssuedPlace());
+		attributes.put("maritalStatus", getMaritalStatus());
+		attributes.put("numberOfChild", getNumberOfChild());
+		attributes.put("nationality", getNationality());
+		attributes.put("ethnic", getEthnic());
+		attributes.put("religion", getReligion());
 		attributes.put("applicationDate", getApplicationDate());
 		attributes.put("status", getStatus());
 		attributes.put("locationId", getLocationId());
@@ -109,10 +118,64 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
 			setDateOfBirth(dateOfBirth);
 		}
 
+		String placeOfBirth = (String)attributes.get("placeOfBirth");
+
+		if (placeOfBirth != null) {
+			setPlaceOfBirth(placeOfBirth);
+		}
+
+		String gender = (String)attributes.get("gender");
+
+		if (gender != null) {
+			setGender(gender);
+		}
+
 		String identityCardNo = (String)attributes.get("identityCardNo");
 
 		if (identityCardNo != null) {
 			setIdentityCardNo(identityCardNo);
+		}
+
+		Date issuedDate = (Date)attributes.get("issuedDate");
+
+		if (issuedDate != null) {
+			setIssuedDate(issuedDate);
+		}
+
+		String issuedPlace = (String)attributes.get("issuedPlace");
+
+		if (issuedPlace != null) {
+			setIssuedPlace(issuedPlace);
+		}
+
+		String maritalStatus = (String)attributes.get("maritalStatus");
+
+		if (maritalStatus != null) {
+			setMaritalStatus(maritalStatus);
+		}
+
+		Integer numberOfChild = (Integer)attributes.get("numberOfChild");
+
+		if (numberOfChild != null) {
+			setNumberOfChild(numberOfChild);
+		}
+
+		String nationality = (String)attributes.get("nationality");
+
+		if (nationality != null) {
+			setNationality(nationality);
+		}
+
+		String ethnic = (String)attributes.get("ethnic");
+
+		if (ethnic != null) {
+			setEthnic(ethnic);
+		}
+
+		String religion = (String)attributes.get("religion");
+
+		if (religion != null) {
+			setReligion(religion);
 		}
 
 		Date applicationDate = (Date)attributes.get("applicationDate");
@@ -323,6 +386,46 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
 	}
 
 	/**
+	* Returns the place of birth of this candidate.
+	*
+	* @return the place of birth of this candidate
+	*/
+	@Override
+	public java.lang.String getPlaceOfBirth() {
+		return _candidate.getPlaceOfBirth();
+	}
+
+	/**
+	* Sets the place of birth of this candidate.
+	*
+	* @param placeOfBirth the place of birth of this candidate
+	*/
+	@Override
+	public void setPlaceOfBirth(java.lang.String placeOfBirth) {
+		_candidate.setPlaceOfBirth(placeOfBirth);
+	}
+
+	/**
+	* Returns the gender of this candidate.
+	*
+	* @return the gender of this candidate
+	*/
+	@Override
+	public java.lang.String getGender() {
+		return _candidate.getGender();
+	}
+
+	/**
+	* Sets the gender of this candidate.
+	*
+	* @param gender the gender of this candidate
+	*/
+	@Override
+	public void setGender(java.lang.String gender) {
+		_candidate.setGender(gender);
+	}
+
+	/**
 	* Returns the identity card no of this candidate.
 	*
 	* @return the identity card no of this candidate
@@ -340,6 +443,146 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
 	@Override
 	public void setIdentityCardNo(java.lang.String identityCardNo) {
 		_candidate.setIdentityCardNo(identityCardNo);
+	}
+
+	/**
+	* Returns the issued date of this candidate.
+	*
+	* @return the issued date of this candidate
+	*/
+	@Override
+	public java.util.Date getIssuedDate() {
+		return _candidate.getIssuedDate();
+	}
+
+	/**
+	* Sets the issued date of this candidate.
+	*
+	* @param issuedDate the issued date of this candidate
+	*/
+	@Override
+	public void setIssuedDate(java.util.Date issuedDate) {
+		_candidate.setIssuedDate(issuedDate);
+	}
+
+	/**
+	* Returns the issued place of this candidate.
+	*
+	* @return the issued place of this candidate
+	*/
+	@Override
+	public java.lang.String getIssuedPlace() {
+		return _candidate.getIssuedPlace();
+	}
+
+	/**
+	* Sets the issued place of this candidate.
+	*
+	* @param issuedPlace the issued place of this candidate
+	*/
+	@Override
+	public void setIssuedPlace(java.lang.String issuedPlace) {
+		_candidate.setIssuedPlace(issuedPlace);
+	}
+
+	/**
+	* Returns the marital status of this candidate.
+	*
+	* @return the marital status of this candidate
+	*/
+	@Override
+	public java.lang.String getMaritalStatus() {
+		return _candidate.getMaritalStatus();
+	}
+
+	/**
+	* Sets the marital status of this candidate.
+	*
+	* @param maritalStatus the marital status of this candidate
+	*/
+	@Override
+	public void setMaritalStatus(java.lang.String maritalStatus) {
+		_candidate.setMaritalStatus(maritalStatus);
+	}
+
+	/**
+	* Returns the number of child of this candidate.
+	*
+	* @return the number of child of this candidate
+	*/
+	@Override
+	public int getNumberOfChild() {
+		return _candidate.getNumberOfChild();
+	}
+
+	/**
+	* Sets the number of child of this candidate.
+	*
+	* @param numberOfChild the number of child of this candidate
+	*/
+	@Override
+	public void setNumberOfChild(int numberOfChild) {
+		_candidate.setNumberOfChild(numberOfChild);
+	}
+
+	/**
+	* Returns the nationality of this candidate.
+	*
+	* @return the nationality of this candidate
+	*/
+	@Override
+	public java.lang.String getNationality() {
+		return _candidate.getNationality();
+	}
+
+	/**
+	* Sets the nationality of this candidate.
+	*
+	* @param nationality the nationality of this candidate
+	*/
+	@Override
+	public void setNationality(java.lang.String nationality) {
+		_candidate.setNationality(nationality);
+	}
+
+	/**
+	* Returns the ethnic of this candidate.
+	*
+	* @return the ethnic of this candidate
+	*/
+	@Override
+	public java.lang.String getEthnic() {
+		return _candidate.getEthnic();
+	}
+
+	/**
+	* Sets the ethnic of this candidate.
+	*
+	* @param ethnic the ethnic of this candidate
+	*/
+	@Override
+	public void setEthnic(java.lang.String ethnic) {
+		_candidate.setEthnic(ethnic);
+	}
+
+	/**
+	* Returns the religion of this candidate.
+	*
+	* @return the religion of this candidate
+	*/
+	@Override
+	public java.lang.String getReligion() {
+		return _candidate.getReligion();
+	}
+
+	/**
+	* Sets the religion of this candidate.
+	*
+	* @param religion the religion of this candidate
+	*/
+	@Override
+	public void setReligion(java.lang.String religion) {
+		_candidate.setReligion(religion);
 	}
 
 	/**

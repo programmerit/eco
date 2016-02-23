@@ -80,7 +80,16 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 		attributes.put("emailAddress", getEmailAddress());
 		attributes.put("contactNumber", getContactNumber());
 		attributes.put("dateOfBirth", getDateOfBirth());
+		attributes.put("placeOfBirth", getPlaceOfBirth());
+		attributes.put("gender", getGender());
 		attributes.put("identityCardNo", getIdentityCardNo());
+		attributes.put("issuedDate", getIssuedDate());
+		attributes.put("issuedPlace", getIssuedPlace());
+		attributes.put("maritalStatus", getMaritalStatus());
+		attributes.put("numberOfChild", getNumberOfChild());
+		attributes.put("nationality", getNationality());
+		attributes.put("ethnic", getEthnic());
+		attributes.put("religion", getReligion());
 		attributes.put("applicationDate", getApplicationDate());
 		attributes.put("status", getStatus());
 		attributes.put("locationId", getLocationId());
@@ -134,10 +143,64 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 			setDateOfBirth(dateOfBirth);
 		}
 
+		String placeOfBirth = (String)attributes.get("placeOfBirth");
+
+		if (placeOfBirth != null) {
+			setPlaceOfBirth(placeOfBirth);
+		}
+
+		String gender = (String)attributes.get("gender");
+
+		if (gender != null) {
+			setGender(gender);
+		}
+
 		String identityCardNo = (String)attributes.get("identityCardNo");
 
 		if (identityCardNo != null) {
 			setIdentityCardNo(identityCardNo);
+		}
+
+		Date issuedDate = (Date)attributes.get("issuedDate");
+
+		if (issuedDate != null) {
+			setIssuedDate(issuedDate);
+		}
+
+		String issuedPlace = (String)attributes.get("issuedPlace");
+
+		if (issuedPlace != null) {
+			setIssuedPlace(issuedPlace);
+		}
+
+		String maritalStatus = (String)attributes.get("maritalStatus");
+
+		if (maritalStatus != null) {
+			setMaritalStatus(maritalStatus);
+		}
+
+		Integer numberOfChild = (Integer)attributes.get("numberOfChild");
+
+		if (numberOfChild != null) {
+			setNumberOfChild(numberOfChild);
+		}
+
+		String nationality = (String)attributes.get("nationality");
+
+		if (nationality != null) {
+			setNationality(nationality);
+		}
+
+		String ethnic = (String)attributes.get("ethnic");
+
+		if (ethnic != null) {
+			setEthnic(ethnic);
+		}
+
+		String religion = (String)attributes.get("religion");
+
+		if (religion != null) {
+			setReligion(religion);
 		}
 
 		Date applicationDate = (Date)attributes.get("applicationDate");
@@ -346,6 +409,52 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 	}
 
 	@Override
+	public String getPlaceOfBirth() {
+		return _placeOfBirth;
+	}
+
+	@Override
+	public void setPlaceOfBirth(String placeOfBirth) {
+		_placeOfBirth = placeOfBirth;
+
+		if (_candidateRemoteModel != null) {
+			try {
+				Class<?> clazz = _candidateRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setPlaceOfBirth", String.class);
+
+				method.invoke(_candidateRemoteModel, placeOfBirth);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getGender() {
+		return _gender;
+	}
+
+	@Override
+	public void setGender(String gender) {
+		_gender = gender;
+
+		if (_candidateRemoteModel != null) {
+			try {
+				Class<?> clazz = _candidateRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setGender", String.class);
+
+				method.invoke(_candidateRemoteModel, gender);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
 	public String getIdentityCardNo() {
 		return _identityCardNo;
 	}
@@ -362,6 +471,167 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 						String.class);
 
 				method.invoke(_candidateRemoteModel, identityCardNo);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public Date getIssuedDate() {
+		return _issuedDate;
+	}
+
+	@Override
+	public void setIssuedDate(Date issuedDate) {
+		_issuedDate = issuedDate;
+
+		if (_candidateRemoteModel != null) {
+			try {
+				Class<?> clazz = _candidateRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setIssuedDate", Date.class);
+
+				method.invoke(_candidateRemoteModel, issuedDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getIssuedPlace() {
+		return _issuedPlace;
+	}
+
+	@Override
+	public void setIssuedPlace(String issuedPlace) {
+		_issuedPlace = issuedPlace;
+
+		if (_candidateRemoteModel != null) {
+			try {
+				Class<?> clazz = _candidateRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setIssuedPlace", String.class);
+
+				method.invoke(_candidateRemoteModel, issuedPlace);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getMaritalStatus() {
+		return _maritalStatus;
+	}
+
+	@Override
+	public void setMaritalStatus(String maritalStatus) {
+		_maritalStatus = maritalStatus;
+
+		if (_candidateRemoteModel != null) {
+			try {
+				Class<?> clazz = _candidateRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setMaritalStatus", String.class);
+
+				method.invoke(_candidateRemoteModel, maritalStatus);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public int getNumberOfChild() {
+		return _numberOfChild;
+	}
+
+	@Override
+	public void setNumberOfChild(int numberOfChild) {
+		_numberOfChild = numberOfChild;
+
+		if (_candidateRemoteModel != null) {
+			try {
+				Class<?> clazz = _candidateRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setNumberOfChild", int.class);
+
+				method.invoke(_candidateRemoteModel, numberOfChild);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getNationality() {
+		return _nationality;
+	}
+
+	@Override
+	public void setNationality(String nationality) {
+		_nationality = nationality;
+
+		if (_candidateRemoteModel != null) {
+			try {
+				Class<?> clazz = _candidateRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setNationality", String.class);
+
+				method.invoke(_candidateRemoteModel, nationality);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getEthnic() {
+		return _ethnic;
+	}
+
+	@Override
+	public void setEthnic(String ethnic) {
+		_ethnic = ethnic;
+
+		if (_candidateRemoteModel != null) {
+			try {
+				Class<?> clazz = _candidateRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setEthnic", String.class);
+
+				method.invoke(_candidateRemoteModel, ethnic);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getReligion() {
+		return _religion;
+	}
+
+	@Override
+	public void setReligion(String religion) {
+		_religion = religion;
+
+		if (_candidateRemoteModel != null) {
+			try {
+				Class<?> clazz = _candidateRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setReligion", String.class);
+
+				method.invoke(_candidateRemoteModel, religion);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -712,7 +982,16 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 		clone.setEmailAddress(getEmailAddress());
 		clone.setContactNumber(getContactNumber());
 		clone.setDateOfBirth(getDateOfBirth());
+		clone.setPlaceOfBirth(getPlaceOfBirth());
+		clone.setGender(getGender());
 		clone.setIdentityCardNo(getIdentityCardNo());
+		clone.setIssuedDate(getIssuedDate());
+		clone.setIssuedPlace(getIssuedPlace());
+		clone.setMaritalStatus(getMaritalStatus());
+		clone.setNumberOfChild(getNumberOfChild());
+		clone.setNationality(getNationality());
+		clone.setEthnic(getEthnic());
+		clone.setReligion(getReligion());
 		clone.setApplicationDate(getApplicationDate());
 		clone.setStatus(getStatus());
 		clone.setLocationId(getLocationId());
@@ -776,7 +1055,7 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{candidateId=");
 		sb.append(getCandidateId());
@@ -790,8 +1069,26 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 		sb.append(getContactNumber());
 		sb.append(", dateOfBirth=");
 		sb.append(getDateOfBirth());
+		sb.append(", placeOfBirth=");
+		sb.append(getPlaceOfBirth());
+		sb.append(", gender=");
+		sb.append(getGender());
 		sb.append(", identityCardNo=");
 		sb.append(getIdentityCardNo());
+		sb.append(", issuedDate=");
+		sb.append(getIssuedDate());
+		sb.append(", issuedPlace=");
+		sb.append(getIssuedPlace());
+		sb.append(", maritalStatus=");
+		sb.append(getMaritalStatus());
+		sb.append(", numberOfChild=");
+		sb.append(getNumberOfChild());
+		sb.append(", nationality=");
+		sb.append(getNationality());
+		sb.append(", ethnic=");
+		sb.append(getEthnic());
+		sb.append(", religion=");
+		sb.append(getReligion());
 		sb.append(", applicationDate=");
 		sb.append(getApplicationDate());
 		sb.append(", status=");
@@ -821,7 +1118,7 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(58);
+		StringBundler sb = new StringBundler(85);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.hrm.rc.model.Candidate");
@@ -852,8 +1149,44 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 		sb.append(getDateOfBirth());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>placeOfBirth</column-name><column-value><![CDATA[");
+		sb.append(getPlaceOfBirth());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>gender</column-name><column-value><![CDATA[");
+		sb.append(getGender());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>identityCardNo</column-name><column-value><![CDATA[");
 		sb.append(getIdentityCardNo());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>issuedDate</column-name><column-value><![CDATA[");
+		sb.append(getIssuedDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>issuedPlace</column-name><column-value><![CDATA[");
+		sb.append(getIssuedPlace());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>maritalStatus</column-name><column-value><![CDATA[");
+		sb.append(getMaritalStatus());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>numberOfChild</column-name><column-value><![CDATA[");
+		sb.append(getNumberOfChild());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>nationality</column-name><column-value><![CDATA[");
+		sb.append(getNationality());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>ethnic</column-name><column-value><![CDATA[");
+		sb.append(getEthnic());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>religion</column-name><column-value><![CDATA[");
+		sb.append(getReligion());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>applicationDate</column-name><column-value><![CDATA[");
@@ -911,7 +1244,16 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 	private String _emailAddress;
 	private String _contactNumber;
 	private Date _dateOfBirth;
+	private String _placeOfBirth;
+	private String _gender;
 	private String _identityCardNo;
+	private Date _issuedDate;
+	private String _issuedPlace;
+	private String _maritalStatus;
+	private int _numberOfChild;
+	private String _nationality;
+	private String _ethnic;
+	private String _religion;
 	private Date _applicationDate;
 	private String _status;
 	private long _locationId;

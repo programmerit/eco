@@ -6,7 +6,6 @@
 	<import class="vn.com.ecopharma.hrm.rc.model.CandidateActionHistory" />
 	<import class="vn.com.ecopharma.hrm.rc.model.CandidateEvaluation" />
 	<import class="vn.com.ecopharma.hrm.rc.model.Certificate" />
-	<import class="vn.com.ecopharma.hrm.rc.model.Document" />
 	<import class="vn.com.ecopharma.hrm.rc.model.EmployeeInterviewSchedule" />
 	<import class="vn.com.ecopharma.hrm.rc.model.EvaluationCriteria" />
 	<import class="vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue" />
@@ -27,7 +26,16 @@
 		<property name="emailAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="contactNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="dateOfBirth" type="org.hibernate.type.TimestampType" />
+		<property name="placeOfBirth" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="gender" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="identityCardNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="issuedDate" type="org.hibernate.type.TimestampType" />
+		<property name="issuedPlace" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="maritalStatus" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="numberOfChild" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="nationality" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ethnic" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="religion" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="applicationDate" type="org.hibernate.type.TimestampType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="locationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -95,23 +103,6 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="courseTimeFrom" type="org.hibernate.type.TimestampType" />
 		<property name="courseTimeTo" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="vn.com.ecopharma.hrm.rc.model.impl.DocumentImpl" table="eco_rcp_Document">
-		<cache usage="read-write" />
-		<id name="documentId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="className" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
-		<property name="fileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="deleted" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="vn.com.ecopharma.hrm.rc.model.impl.EmployeeInterviewScheduleImpl" table="eco_rcp_EmployeeInterviewSchedule">
 		<cache usage="read-write" />

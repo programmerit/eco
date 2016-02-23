@@ -39,7 +39,7 @@
 						<p:inputText id="filter_globalString"
 							value="#{timeTrackingFilterBean.globalString}"
 							placeholder="Everything" style="width: 150px;">
-							<p:ajax event="keyup"
+							<p:ajax event="keyup" delay="1000"
 								oncomplete="refreshReports(); refreshFooter();" />
 						</p:inputText>
 						<p:tooltip for="filter_globalString" value="Filter Everything"
@@ -49,7 +49,7 @@
 						<p:inputText id="filter_fullName"
 							value="#{timeTrackingFilterBean.fullName}" placeholder="FullName"
 							style="width: 150px;">
-							<p:ajax event="keyup"
+							<p:ajax event="keyup" delay="1000"
 								oncomplete="refreshReports(); refreshFooter();" />
 						</p:inputText>
 						<p:tooltip for="filter_fullName" value="Filter [Fullname]"
@@ -60,7 +60,7 @@
 						<p:inputText id="filter_empCode"
 							value="#{timeTrackingFilterBean.employeeCode}"
 							placeholder="Employee Code" style="width: 150px">
-							<p:ajax event="keyup"
+							<p:ajax event="keyup" delay="1000"
 								oncomplete="refreshReports(); refreshFooter();" />
 						</p:inputText>
 						<p:tooltip for="filter_empCode" value="Filter [Employee Code]"

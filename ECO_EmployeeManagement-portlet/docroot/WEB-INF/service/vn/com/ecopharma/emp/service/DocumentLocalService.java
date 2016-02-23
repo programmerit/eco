@@ -268,6 +268,10 @@ public interface DocumentLocalService extends BaseLocalService,
 	public java.util.List<vn.com.ecopharma.emp.model.Document> findByFileEntry(
 		long fileEntryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public vn.com.ecopharma.emp.model.Document fetchByClassNameClassPKAndFileEntry(
+		java.lang.String className, long classPK, long fileEntryId);
+
 	public vn.com.ecopharma.emp.model.Document createPrePersistedEntity(
 		com.liferay.portal.service.ServiceContext serviceContext);
 

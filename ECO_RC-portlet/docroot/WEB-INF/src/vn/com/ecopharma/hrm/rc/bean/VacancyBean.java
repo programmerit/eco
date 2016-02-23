@@ -17,6 +17,7 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import vn.com.ecopharma.emp.model.Titles;
+import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.constant.VacancyField;
 import vn.com.ecopharma.hrm.rc.constant.VacancyNavigation;
 import vn.com.ecopharma.hrm.rc.dm.VacancyLazyDM;
@@ -26,22 +27,16 @@ import vn.com.ecopharma.hrm.rc.dto.VacancyItem;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateCertificateType;
 import vn.com.ecopharma.hrm.rc.enumeration.VacancyStatus;
 import vn.com.ecopharma.hrm.rc.model.Vacancy;
-import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
-import vn.com.ecopharma.hrm.rc.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.util.BeanUtils;
-import vn.com.ecopharma.hrm.rc.util.DLUtils;
 import vn.com.ecopharma.hrm.rc.util.RCUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 
 @ManagedBean
 @ViewScoped
@@ -127,26 +122,14 @@ public class VacancyBean extends PersistableBean {
 		}
 	}
 
-	public void handleFileUpload(FileUploadEvent fileUploadEvent) {
-		FileEntry fe = DLUtils.handleFileUpload(fileUploadEvent.getFile(),
-				"vacancyDocs");
-		try {
-			long vacancyId = vacancyItem.getVacancy().getVacancyId();
-			if (CandidateLocalServiceUtil.fetchCandidate(vacancyId) != null
-					&& DocumentLocalServiceUtil
-							.findByClassAndClassPKAndFileEntryId(
-									Vacancy.class.getName(), vacancyId,
-									fe.getFileEntryId()) == null) {
-				DocumentLocalServiceUtil.addDocument(Vacancy.class.getName(),
-						vacancyId, fe.getFileEntryId(), LiferayFacesContext
+	public void handleFileUpload(FileUploadEvent event) {
+		final vn.com.ecopharma.emp.model.Document uploadDocument = DocumentLocalServiceUtil
+				.uploadAndLinkEntity(vacancyItem.getVacancy(), event.getFile(),
+						"VacancyDocuments", "", true, LiferayFacesContext
 								.getInstance().getServiceContext());
-			}
-			fileEntryIds.add(fe.getFileEntryId());
-			vacancyItem.getDocumentItems().add(new DocumentItem(fe));
-
-		} catch (SystemException e) {
-			LOGGER.info(e);
-		}
+		if (uploadDocument != null)
+			vacancyItem.getDocumentItems()
+					.add(new DocumentItem(uploadDocument));
 	}
 
 	public void addVacancy() {
@@ -166,23 +149,22 @@ public class VacancyBean extends PersistableBean {
 	}
 
 	public void onCancel(ActionEvent event) {
-		for (DocumentItem documentItem : vacancyItem.getDocumentItems()) {
-			if (documentItem.getDocumentId() == 0) {
-				try {
-					DLFileEntryLocalServiceUtil.deleteDLFileEntry(documentItem
-							.getFileEntryId());
-					LOGGER.info("### sucessfully deleted FILE ENTRY "
-							+ documentItem.getFileEntryId());
-				} catch (PortalException e) {
-					LOGGER.info(e);
-				} catch (SystemException e) {
-					LOGGER.info(e);
-				}
-			}
-		}
-		VacancyViewBean vacancyViewBean = BeanUtils.getVacancyViewBean();
-		vacancyViewBean.switchMode(VacancyNavigation.VIEW);
-		;
+		// for (DocumentItem documentItem : vacancyItem.getDocumentItems()) {
+		// if (documentItem.getDocumentId() == 0) {
+		// try {
+		// DLFileEntryLocalServiceUtil.deleteDLFileEntry(documentItem
+		// .getFileEntryId());
+		// LOGGER.info("### sucessfully deleted FILE ENTRY "
+		// + documentItem.getFileEntryId());
+		// } catch (PortalException e) {
+		// LOGGER.info(e);
+		// } catch (SystemException e) {
+		// LOGGER.info(e);
+		// }
+		// }
+		// }
+		// VacancyViewBean vacancyViewBean = BeanUtils.getVacancyViewBean();
+		// vacancyViewBean.switchMode(VacancyNavigation.VIEW);
 	}
 
 	public void onPreviewFile(long fileEntryId) {
@@ -220,8 +202,8 @@ public class VacancyBean extends PersistableBean {
 
 	public void deleteFileEntry(ActionEvent event) {
 		vacancyItem.getDocumentItems().remove(deletedDocument);
-		DocumentLocalServiceUtil.deleteByFileEntry(deletedDocument
-				.getFileEntryId());
+		DocumentLocalServiceUtil.completelyDeleteDocuments(deletedDocument
+				.getFileEntry().getFileEntryId());
 	}
 
 	public LazyDataModel<VacancyIndexItem> getLazyDataModel() {

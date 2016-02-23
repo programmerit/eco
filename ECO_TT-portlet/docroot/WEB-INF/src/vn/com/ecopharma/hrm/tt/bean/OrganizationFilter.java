@@ -2,6 +2,7 @@ package vn.com.ecopharma.hrm.tt.bean;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
@@ -48,5 +49,17 @@ public interface OrganizationFilter extends Serializable {
 	public List<Titles> getSelectedTitlesList();
 
 	public void setSelectedTitlesList(List<Titles> selectedTitlesList);
+
+	public List<String> getSelectedDevisionStrings();
+
+	public List<String> getSelectedDepartmentStrings();
+
+	public List<String> getSelectedUnitStrings();
+
+	public List<String> getSelectedUnitGroupStrings();
+
+	public List<String> getSelectedTitlesListStrings();
+
+	public Map<String, List<String>> getOrganizationFilters();
 
 }

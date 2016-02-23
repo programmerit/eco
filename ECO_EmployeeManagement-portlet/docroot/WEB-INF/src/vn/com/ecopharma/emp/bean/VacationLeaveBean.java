@@ -113,7 +113,6 @@ public class VacationLeaveBean {
 				calendar.setTime(leaveFrom);
 				calendar.add(Calendar.DATE, 180);
 				leaveTo = calendar.getTime();
-				actualTo = calendar.getTime();
 			}
 			return leaveTo;
 		}

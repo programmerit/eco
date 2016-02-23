@@ -275,34 +275,6 @@ public class DocumentLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static java.util.List<vn.com.ecopharma.hrm.rc.model.Document> findByClassAndClassPK(
-		java.lang.String className, long classPK) {
-		return getService().findByClassAndClassPK(className, classPK);
-	}
-
-	public static vn.com.ecopharma.hrm.rc.model.Document findByClassAndClassPKAndFileEntryId(
-		java.lang.String className, long classPK, long fileEntryId) {
-		return getService()
-				   .findByClassAndClassPKAndFileEntryId(className, classPK,
-			fileEntryId);
-	}
-
-	public static vn.com.ecopharma.hrm.rc.model.Document addDocument(
-		java.lang.String className, long classPK, long fileEntryId,
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		return getService()
-				   .addDocument(className, classPK, fileEntryId, serviceContext);
-	}
-
-	public static java.util.List<vn.com.ecopharma.hrm.rc.model.Document> findByFileEntry(
-		long fileEntryId) {
-		return getService().findByFileEntry(fileEntryId);
-	}
-
-	public static void deleteByFileEntry(long fileEntryId) {
-		getService().deleteByFileEntry(fileEntryId);
-	}
-
 	public static void clearService() {
 		_service = null;
 	}

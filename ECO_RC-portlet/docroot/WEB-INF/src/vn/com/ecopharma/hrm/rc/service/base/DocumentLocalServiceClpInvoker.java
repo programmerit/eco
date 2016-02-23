@@ -113,31 +113,6 @@ public class DocumentLocalServiceClpInvoker {
 		_methodName117 = "setBeanIdentifier";
 
 		_methodParameterTypes117 = new String[] { "java.lang.String" };
-
-		_methodName122 = "findByClassAndClassPK";
-
-		_methodParameterTypes122 = new String[] { "java.lang.String", "long" };
-
-		_methodName123 = "findByClassAndClassPKAndFileEntryId";
-
-		_methodParameterTypes123 = new String[] {
-				"java.lang.String", "long", "long"
-			};
-
-		_methodName124 = "addDocument";
-
-		_methodParameterTypes124 = new String[] {
-				"java.lang.String", "long", "long",
-				"com.liferay.portal.service.ServiceContext"
-			};
-
-		_methodName125 = "findByFileEntry";
-
-		_methodParameterTypes125 = new String[] { "long" };
-
-		_methodName126 = "deleteByFileEntry";
-
-		_methodParameterTypes126 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -241,39 +216,6 @@ public class DocumentLocalServiceClpInvoker {
 			return null;
 		}
 
-		if (_methodName122.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
-			return DocumentLocalServiceUtil.findByClassAndClassPK((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue());
-		}
-
-		if (_methodName123.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
-			return DocumentLocalServiceUtil.findByClassAndClassPKAndFileEntryId((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue(),
-				((Long)arguments[2]).longValue());
-		}
-
-		if (_methodName124.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
-			return DocumentLocalServiceUtil.addDocument((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue(),
-				((Long)arguments[2]).longValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[3]);
-		}
-
-		if (_methodName125.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
-			return DocumentLocalServiceUtil.findByFileEntry(((Long)arguments[0]).longValue());
-		}
-
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
-			DocumentLocalServiceUtil.deleteByFileEntry(((Long)arguments[0]).longValue());
-
-			return null;
-		}
-
 		throw new UnsupportedOperationException();
 	}
 
@@ -313,14 +255,4 @@ public class DocumentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes116;
 	private String _methodName117;
 	private String[] _methodParameterTypes117;
-	private String _methodName122;
-	private String[] _methodParameterTypes122;
-	private String _methodName123;
-	private String[] _methodParameterTypes123;
-	private String _methodName124;
-	private String[] _methodParameterTypes124;
-	private String _methodName125;
-	private String[] _methodParameterTypes125;
-	private String _methodName126;
-	private String[] _methodParameterTypes126;
 }

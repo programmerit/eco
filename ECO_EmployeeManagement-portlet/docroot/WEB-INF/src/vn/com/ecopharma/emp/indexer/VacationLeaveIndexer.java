@@ -37,6 +37,10 @@ public class VacationLeaveIndexer extends
 	protected Document doGetDocument(Object obj) throws Exception {
 		VacationLeave vacationLeave = (VacationLeave) obj;
 		Document document = super.doGetDocument(vacationLeave);
+
+		document.addNumber(VacationLeaveField.ID,
+				vacationLeave.getVacationLeaveId());
+
 		document.addText(VacationLeaveField.LEAVE_TYPE,
 				vacationLeave.getLeaveType());
 		document.addDate(VacationLeaveField.LEAVE_FROM,
@@ -48,6 +52,8 @@ public class VacationLeaveIndexer extends
 		document.addText(VacationLeaveField.REASON, vacationLeave.getReason());
 		document.addText(VacationLeaveField.DESCRIPTION,
 				vacationLeave.getDescription());
+		document.addText(VacationLeaveField.IS_DELETED,
+				vacationLeave.isDeleted() ? "true" : "false");
 
 		document.addText(Field.TITLE, VacationLeave.class.getName());
 		document.addDate(Field.CREATE_DATE, vacationLeave.getCreateDate());

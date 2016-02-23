@@ -37,7 +37,16 @@ public class CandidateSoap implements Serializable {
 		soapModel.setEmailAddress(model.getEmailAddress());
 		soapModel.setContactNumber(model.getContactNumber());
 		soapModel.setDateOfBirth(model.getDateOfBirth());
+		soapModel.setPlaceOfBirth(model.getPlaceOfBirth());
+		soapModel.setGender(model.getGender());
 		soapModel.setIdentityCardNo(model.getIdentityCardNo());
+		soapModel.setIssuedDate(model.getIssuedDate());
+		soapModel.setIssuedPlace(model.getIssuedPlace());
+		soapModel.setMaritalStatus(model.getMaritalStatus());
+		soapModel.setNumberOfChild(model.getNumberOfChild());
+		soapModel.setNationality(model.getNationality());
+		soapModel.setEthnic(model.getEthnic());
+		soapModel.setReligion(model.getReligion());
 		soapModel.setApplicationDate(model.getApplicationDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setLocationId(model.getLocationId());
@@ -149,12 +158,84 @@ public class CandidateSoap implements Serializable {
 		_dateOfBirth = dateOfBirth;
 	}
 
+	public String getPlaceOfBirth() {
+		return _placeOfBirth;
+	}
+
+	public void setPlaceOfBirth(String placeOfBirth) {
+		_placeOfBirth = placeOfBirth;
+	}
+
+	public String getGender() {
+		return _gender;
+	}
+
+	public void setGender(String gender) {
+		_gender = gender;
+	}
+
 	public String getIdentityCardNo() {
 		return _identityCardNo;
 	}
 
 	public void setIdentityCardNo(String identityCardNo) {
 		_identityCardNo = identityCardNo;
+	}
+
+	public Date getIssuedDate() {
+		return _issuedDate;
+	}
+
+	public void setIssuedDate(Date issuedDate) {
+		_issuedDate = issuedDate;
+	}
+
+	public String getIssuedPlace() {
+		return _issuedPlace;
+	}
+
+	public void setIssuedPlace(String issuedPlace) {
+		_issuedPlace = issuedPlace;
+	}
+
+	public String getMaritalStatus() {
+		return _maritalStatus;
+	}
+
+	public void setMaritalStatus(String maritalStatus) {
+		_maritalStatus = maritalStatus;
+	}
+
+	public int getNumberOfChild() {
+		return _numberOfChild;
+	}
+
+	public void setNumberOfChild(int numberOfChild) {
+		_numberOfChild = numberOfChild;
+	}
+
+	public String getNationality() {
+		return _nationality;
+	}
+
+	public void setNationality(String nationality) {
+		_nationality = nationality;
+	}
+
+	public String getEthnic() {
+		return _ethnic;
+	}
+
+	public void setEthnic(String ethnic) {
+		_ethnic = ethnic;
+	}
+
+	public String getReligion() {
+		return _religion;
+	}
+
+	public void setReligion(String religion) {
+		_religion = religion;
 	}
 
 	public Date getApplicationDate() {
@@ -255,7 +336,16 @@ public class CandidateSoap implements Serializable {
 	private String _emailAddress;
 	private String _contactNumber;
 	private Date _dateOfBirth;
+	private String _placeOfBirth;
+	private String _gender;
 	private String _identityCardNo;
+	private Date _issuedDate;
+	private String _issuedPlace;
+	private String _maritalStatus;
+	private int _numberOfChild;
+	private String _nationality;
+	private String _ethnic;
+	private String _religion;
 	private Date _applicationDate;
 	private String _status;
 	private long _locationId;
