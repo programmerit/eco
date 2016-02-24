@@ -175,10 +175,9 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 		_methodName30 = "uploadAndLinkEntity";
 
 		_methodParameterTypes30 = new String[] {
-				"com.liferay.portal.model.BaseModel",
-				"org.primefaces.model.UploadedFile", "java.lang.String",
-				"java.lang.String", "boolean",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.model.BaseModel", "java.io.InputStream",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"boolean", "com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName31 = "getDLFileEntry";
@@ -208,7 +207,7 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 		_methodName35 = "uploadFile";
 
 		_methodParameterTypes35 = new String[] {
-				"org.primefaces.model.UploadedFile", "java.lang.String",
+				"java.io.InputStream", "java.lang.String", "java.lang.String",
 				"boolean", "com.liferay.portal.service.ServiceContext"
 			};
 
@@ -1088,10 +1087,9 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 
 	@Override
 	public vn.com.ecopharma.emp.model.Document uploadAndLinkEntity(
-		com.liferay.portal.model.BaseModel<?> entity,
-		org.primefaces.model.UploadedFile uploadedFile,
-		java.lang.String folderName, java.lang.String documentType,
-		boolean isAutoCreateFolder,
+		com.liferay.portal.model.BaseModel<?> entity, java.io.InputStream is,
+		java.lang.String fileName, java.lang.String folderName,
+		java.lang.String documentType, boolean isAutoCreateFolder,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
 
@@ -1101,7 +1099,9 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 					new Object[] {
 						ClpSerializer.translateInput(entity),
 						
-					ClpSerializer.translateInput(uploadedFile),
+					ClpSerializer.translateInput(is),
+						
+					ClpSerializer.translateInput(fileName),
 						
 					ClpSerializer.translateInput(folderName),
 						
@@ -1249,7 +1249,7 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry uploadFile(
-		org.primefaces.model.UploadedFile uploadedFile,
+		java.io.InputStream is, java.lang.String fileName,
 		java.lang.String folderName, boolean isAutoCreateFolder,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
@@ -1258,7 +1258,9 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName35,
 					_methodParameterTypes35,
 					new Object[] {
-						ClpSerializer.translateInput(uploadedFile),
+						ClpSerializer.translateInput(is),
+						
+					ClpSerializer.translateInput(fileName),
 						
 					ClpSerializer.translateInput(folderName),
 						

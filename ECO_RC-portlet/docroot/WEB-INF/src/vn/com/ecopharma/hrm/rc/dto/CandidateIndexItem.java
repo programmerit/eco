@@ -221,6 +221,6 @@ public class CandidateIndexItem implements Serializable {
 	}
 
 	public String getLocalizedStatus() {
-		return CandidateStatus.valueOf(getStatus()).getLocalizedName();
+		return CandidateStatus.valueOf(getStatus()).getLocalizedString();
 	}
 }

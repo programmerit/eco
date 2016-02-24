@@ -1,4 +1,4 @@
-package vn.com.ecopharma.hrm.rc.bean;
+package vn.com.ecopharma.hrm.rc.bean.filter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,6 +16,8 @@ import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
 import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.util.RCUtils;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
@@ -31,6 +33,9 @@ public class CandidateFilterBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(CandidateFilterBean.class);
+
 	private String global = StringUtils.EMPTY;
 	private String fullName = StringUtils.EMPTY;
 	private String emailAddress = StringUtils.EMPTY;
@@ -45,7 +50,7 @@ public class CandidateFilterBean implements Serializable {
 	private String applyDate;
 
 	public List<VacancyIndexItem> onCompleteVacancies(String query) {
-		final List<VacancyIndexItem> filteredItems = new ArrayList<VacancyIndexItem>();
+		final List<VacancyIndexItem> filteredItems = new ArrayList<>();
 		final SearchContext searchContext = RCUtils.getCurrentSearchContext();
 		try {
 			final BooleanQuery nameFilterBooleanQuery = BooleanQueryFactoryUtil
@@ -58,16 +63,17 @@ public class CandidateFilterBean implements Serializable {
 			Sort sort = new Sort();
 			sort.setFieldName(VacancyField.VACANCY_ID);
 			final List<Document> docs = VacancyLocalServiceUtil
-					.searchAllUnDeletedAndPublishedVacanciesIndexedDocument(searchContext,
-							queries, searchContext.getCompanyId(), sort, 0, 10);
+					.searchAllUnDeletedAndPublishedVacanciesIndexedDocument(
+							searchContext, queries,
+							searchContext.getCompanyId(), sort, 0, 10);
 			for (Document doc : docs) {
 				filteredItems.add(new VacancyIndexItem(doc));
 			}
 			return filteredItems;
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	public void resetApplyDateFrom() {

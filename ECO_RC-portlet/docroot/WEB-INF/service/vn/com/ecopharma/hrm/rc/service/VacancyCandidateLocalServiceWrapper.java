@@ -364,6 +364,18 @@ public class VacancyCandidateLocalServiceWrapper
 			type);
 	}
 
+	@Override
+	public java.util.List<vn.com.ecopharma.hrm.rc.model.VacancyCandidate> findOPTIONALVacancyCandidate(
+		long candidateId) {
+		return _vacancyCandidateLocalService.findOPTIONALVacancyCandidate(candidateId);
+	}
+
+	@Override
+	public vn.com.ecopharma.hrm.rc.model.VacancyCandidate findMAINVacancyCandidate(
+		long candidateId) {
+		return _vacancyCandidateLocalService.findMAINVacancyCandidate(candidateId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

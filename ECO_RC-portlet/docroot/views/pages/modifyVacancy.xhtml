@@ -3,14 +3,12 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
 	<h:head />
 	<h:body>
 		<h:form id="modifyVacancy"
 			rendered="#{vacancyViewBean.currentMode==2 || vacancyViewBean.currentMode==3}">
-
-			<p:remoteCommand name="refreshDocuments"
-				update=":modifyVacancy:accordion:documents" />
 
 			<p:outputPanel id="vacancyOutputPanel">
 				<p:messages id="msgs" />
@@ -77,41 +75,35 @@
 							</h:panelGroup>
 
 							<h:panelGroup>
-
-
 								<p:panelGrid columns="2">
-									<h:outputText value="Upload Documents" />
-									<h:panelGroup>
-										<p:fileUpload
-											fileUploadListener="#{vacancyBean.handleFileUpload}"
-											oncomplete="refreshDocuments();" mode="advanced"
-											dragDropSupport="true" multiple="true"
-											update=":modifyVacancy:msgs :modifyVacancy:accordion:noDocsPlaceHolder"
-											sizeLimit="10000000" fileLimit="3"
-											allowTypes="/(\.|\/)(doc|docx|pdf)$/" />
-									</h:panelGroup>
-
-									<h:outputText value="Current Documents" />
-									<h:panelGroup id="documents">
-										<ui:repeat var="doc" id="vacancyDocuments"
-											rendered="#{vacancyBean.vacancyItem.documentItems.size() > 0}"
-											value="#{vacancyBean.vacancyItem.documentItems}">
-											<p:commandLink value="#{doc.fileName}"
-												actionListener="#{vacancyBean.onPreviewFile(doc.fileEntryId)}"
-												oncomplete="PF('wPreviewDialog').show();" />
-											<p:commandLink value="[Remove]"
-												onclick="PF('wDeleteConfirmDialog').show()"
-												styleClass="currentStatus status-red"
-												style="margin-left: 30px">
-												<f:setPropertyActionListener
-													target="#{vacancyBean.deletedDocument}" value="#{doc}" />
-											</p:commandLink>
+									<h:outputText value="Documents" />
+									<p:outputPanel autoUpdate="true" id="documentOutputPanel">
+										<h:panelGroup id="noDocsPanelGroup" styleClass="panel-message"
+											rendered="#{vacancyBean.vacancyItem.documents.size() eq 0}">
+											<h:outputText styleClass="no-item-label" value="No Documents" />
 											<br />
-										</ui:repeat>
-										<h:outputText value="No documents exist"
-											id="noDocsPlaceHolder"
-											rendered="#{vacancyBean.vacancyItem.documentItems.size() eq 0}" />
-									</h:panelGroup>
+											<p:commandLink value="Upload Document"
+												onclick="PF('wUploadDocumentDialog').show();" />
+										</h:panelGroup>
+
+										<h:panelGroup
+											rendered="#{vacancyBean.vacancyItem.documents.size() > 0}">
+											<ui:repeat var="doc"
+												value="#{vacancyBean.vacancyItem.documents}"
+												varStatus="status">
+												<h:panelGroup rendered="#{not doc.UIDeleted}">
+
+													<p:commandLink value="#{doc.fileEntry.title}"
+														onclick="window.location = '#{doc.fileURL}'" />
+													<p:commandLink value="[X]" style="margin-left: 5px;"
+														onclick="PF('wDeleteDocumentConfirmDialog').show()">
+														<f:setPropertyActionListener value="#{status.index}"
+															target="#{vacancyBean.deletedDocumentIndex}" />
+													</p:commandLink>
+												</h:panelGroup>
+											</ui:repeat>
+										</h:panelGroup>
+									</p:outputPanel>
 
 									<h:outputText value="Posted Date: " />
 									<p:calendar id="vPostedDate" mask="false"
@@ -150,24 +142,11 @@
 					actionListener="#{vacancyBean.onCancel}" immediate="true"
 					update=":VacancyPanelGroup" value="Cancel" />
 			</p:outputPanel>
-
-			<!-- DELETE CONFIRMATION DIALOG -->
-			<p:confirmDialog id="deleteConfirmDialog"
-				widgetVar="wDeleteConfirmDialog" message="Delete this File?"
-				header="Delete Confirmation" severity="alert" closeOnEscape="true"
-				showEffect="fade">
-				<p:commandButton id="confirmDelete" value="Yes"
-					styleClass="RedButton"
-					oncomplete="refreshDocuments(); PF('wDeleteConfirmDialog').hide()"
-					actionListener="#{vacancyBean.deleteFileEntry}"
-					update=":modifyVacancy:accordion:noDocsPlaceHolder" />
-				<p:commandButton id="discardDelete" value="No"
-					onclick="PF('wDeleteConfirmDialog').hide()" />
-			</p:confirmDialog>
 		</h:form>
 
 		<h:form>
-			<p:dialog widgetVar="titlesSelectDialog" showHeader="false">
+			<p:dialog widgetVar="titlesSelectDialog" showHeader="false"
+				modal="true">
 				<p:outputPanel>
 					<h:panelGrid columns="2">
 						<h:outputText value="Devision" />
@@ -260,6 +239,33 @@
 			</p:dialog>
 		</h:form>
 
+
+		<!-- DIALOGS -->
+		<eco:confirmDialog wDialogVar="wDeleteDocumentConfirmDialog"
+			message="Delete this document?" header="Delete Confirmation"
+			onAction="#{vacancyBean.deleteDocument}"
+			oncompleteActions="PF('wDeleteDocumentConfirmDialog').hide();"
+			update="" />
+
+		<h:form id="uploadDocumentForm">
+			<p:dialog widgetVar="wUploadDocumentDialog" modal="true" height="252"
+				showHeader="false" closable="true" closeOnEscape="true">
+				<p:outputPanel>
+					<p:panelGrid columns="2">
+						<h:outputText value="Document Type: " />
+						<p:selectOneMenu id="documentTypeSelect" var="t"
+							value="#{vacancyBean.selectedDocumentType}">
+							<f:selectItems value="#{vacancyBean.allDocumentTypes}"
+								itemLabel="#{t}" itemValue="#{t}" />
+						</p:selectOneMenu>
+					</p:panelGrid>
+					<p:fileUpload
+						fileUploadListener="#{vacancyBean.handleDocumentUpload}"
+						dragDropSupport="false" multiple="false" id="documentUploader"
+						sizeLimit="1000000" allowTypes="/(\.|\/)(doc|docx|pdf)$/" />
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
 
 	</h:body>
 </f:view>

@@ -4,14 +4,14 @@ import javax.el.ELContext;
 import javax.faces.context.FacesContext;
 
 import vn.com.ecopharma.hrm.rc.bean.CandidateBean;
-import vn.com.ecopharma.hrm.rc.bean.CandidateFilterBean;
 import vn.com.ecopharma.hrm.rc.bean.CandidateViewBean;
 import vn.com.ecopharma.hrm.rc.bean.InterviewManagementFilterBean;
 import vn.com.ecopharma.hrm.rc.bean.RCViewBean;
 import vn.com.ecopharma.hrm.rc.bean.TitlesActionBean;
 import vn.com.ecopharma.hrm.rc.bean.VacancyBean;
-import vn.com.ecopharma.hrm.rc.bean.VacancyFilterBean;
 import vn.com.ecopharma.hrm.rc.bean.VacancyViewBean;
+import vn.com.ecopharma.hrm.rc.bean.filter.CandidateFilterBean;
+import vn.com.ecopharma.hrm.rc.bean.filter.VacancyFilterBean;
 
 public class BeanUtils {
 

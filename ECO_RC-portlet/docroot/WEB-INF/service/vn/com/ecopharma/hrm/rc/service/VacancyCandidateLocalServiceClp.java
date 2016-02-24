@@ -167,6 +167,14 @@ public class VacancyCandidateLocalServiceClp
 		_methodName30 = "findByCandidateAndType";
 
 		_methodParameterTypes30 = new String[] { "long", "java.lang.String" };
+
+		_methodName31 = "findOPTIONALVacancyCandidate";
+
+		_methodParameterTypes31 = new String[] { "long" };
+
+		_methodName32 = "findMAINVacancyCandidate";
+
+		_methodParameterTypes32 = new String[] { "long" };
 	}
 
 	@Override
@@ -1022,6 +1030,54 @@ public class VacancyCandidateLocalServiceClp
 		return (java.util.List<vn.com.ecopharma.hrm.rc.model.VacancyCandidate>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public java.util.List<vn.com.ecopharma.hrm.rc.model.VacancyCandidate> findOPTIONALVacancyCandidate(
+		long candidateId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31, new Object[] { candidateId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<vn.com.ecopharma.hrm.rc.model.VacancyCandidate>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public vn.com.ecopharma.hrm.rc.model.VacancyCandidate findMAINVacancyCandidate(
+		long candidateId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32, new Object[] { candidateId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.hrm.rc.model.VacancyCandidate)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -1083,4 +1139,8 @@ public class VacancyCandidateLocalServiceClp
 	private String[] _methodParameterTypes29;
 	private String _methodName30;
 	private String[] _methodParameterTypes30;
+	private String _methodName31;
+	private String[] _methodParameterTypes31;
+	private String _methodName32;
+	private String[] _methodParameterTypes32;
 }

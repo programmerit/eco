@@ -175,10 +175,9 @@ public class DocumentLocalServiceClpInvoker {
 		_methodName191 = "uploadAndLinkEntity";
 
 		_methodParameterTypes191 = new String[] {
-				"com.liferay.portal.model.BaseModel",
-				"org.primefaces.model.UploadedFile", "java.lang.String",
-				"java.lang.String", "boolean",
-				"com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.model.BaseModel", "java.io.InputStream",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"boolean", "com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName192 = "getDLFileEntry";
@@ -208,7 +207,7 @@ public class DocumentLocalServiceClpInvoker {
 		_methodName196 = "uploadFile";
 
 		_methodParameterTypes196 = new String[] {
-				"org.primefaces.model.UploadedFile", "java.lang.String",
+				"java.io.InputStream", "java.lang.String", "java.lang.String",
 				"boolean", "com.liferay.portal.service.ServiceContext"
 			};
 
@@ -403,10 +402,11 @@ public class DocumentLocalServiceClpInvoker {
 		if (_methodName191.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes191, parameterTypes)) {
 			return DocumentLocalServiceUtil.uploadAndLinkEntity((com.liferay.portal.model.BaseModel<?>)arguments[0],
-				(org.primefaces.model.UploadedFile)arguments[1],
+				(java.io.InputStream)arguments[1],
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
-				((Boolean)arguments[4]).booleanValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[5]);
+				(java.lang.String)arguments[4],
+				((Boolean)arguments[5]).booleanValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[6]);
 		}
 
 		if (_methodName192.equals(name) &&
@@ -431,10 +431,10 @@ public class DocumentLocalServiceClpInvoker {
 
 		if (_methodName196.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes196, parameterTypes)) {
-			return DocumentLocalServiceUtil.uploadFile((org.primefaces.model.UploadedFile)arguments[0],
-				(java.lang.String)arguments[1],
-				((Boolean)arguments[2]).booleanValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[3]);
+			return DocumentLocalServiceUtil.uploadFile((java.io.InputStream)arguments[0],
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				((Boolean)arguments[3]).booleanValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[4]);
 		}
 
 		if (_methodName197.equals(name) &&

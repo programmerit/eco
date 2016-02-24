@@ -27,23 +27,23 @@ public class VacancyItem implements Serializable {
 
 	private Vacancy vacancy;
 
-	private List<DocumentItem> documentItems;
+	private List<DocumentItem> documents;
 
 	public VacancyItem() {
 		vacancy = VacancyLocalServiceUtil.createPrePersistedVacancy();
 		vacancy.setPostedDate(new Date(System.currentTimeMillis()));
 		vacancy.setStatus(VacancyStatus.NEW.toString());
-		documentItems = new ArrayList<>();
+		documents = new ArrayList<>();
 	}
 
 	public VacancyItem(Vacancy vacancy) {
 		this.vacancy = vacancy;
-		List<Document> documents = DocumentLocalServiceUtil
+		List<Document> docs = DocumentLocalServiceUtil
 				.findByClassNameAndClassPK(Vacancy.class.getName(),
 						vacancy.getVacancyId());
-		this.documentItems = new ArrayList<>();
-		for (Document doc : documents) {
-			documentItems.add(new DocumentItem(doc));
+		this.documents = new ArrayList<>();
+		for (Document doc : docs) {
+			documents.add(new DocumentItem(doc));
 		}
 	}
 
@@ -71,11 +71,11 @@ public class VacancyItem implements Serializable {
 		this.titles = titles;
 	}
 
-	public List<DocumentItem> getDocumentItems() {
-		return documentItems;
+	public List<DocumentItem> getDocuments() {
+		return documents;
 	}
 
-	public void setDocumentItems(List<DocumentItem> documentItems) {
-		this.documentItems = documentItems;
+	public void setDocuments(List<DocumentItem> documentItems) {
+		this.documents = documentItems;
 	}
 }

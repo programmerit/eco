@@ -114,16 +114,16 @@
 						<h:outputText value="#{vacancy.name}" />
 					</p:column> -->
 
-					<p:column headerText="TITLES" sortBy="#{vacancyFilterBean.titles}">
+					<p:column headerText="Titles" sortBy="#{vacancyFilterBean.titles}">
 						<h:outputText value="#{vacancy.titles}" />
 					</p:column>
 
-					<p:column headerText="N.O. POSITION"
+					<p:column headerText="Number of position"
 						sortBy="#{vacancyFilterBean.numberOfPosition}">
 						<h:outputText value="#{vacancy.numberOfPosition}" />
 					</p:column>
 
-					<p:column headerText="STATUS" sortBy="#{vacancyFilterBean.status}">
+					<p:column headerText="Status" sortBy="#{vacancyFilterBean.status}">
 						<h:outputText id="vacancyStatus"
 							styleClass="currentStatus #{vacancyViewBean.currentStatusCSS(vacancy.status)}"
 							value="#{vacancy.status}" />

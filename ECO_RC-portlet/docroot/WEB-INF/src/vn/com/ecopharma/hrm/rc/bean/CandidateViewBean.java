@@ -33,8 +33,9 @@ import com.liferay.portal.service.ServiceContext;
 public class CandidateViewBean extends EntityViewBean {
 
 	private static final long serialVersionUID = 1L;
-	
-	private static final Log LOGGER = LogFactoryUtil.getLog(CandidateViewBean.class);
+
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(CandidateViewBean.class);
 
 	private String currentNav = StringUtils.EMPTY;
 
@@ -53,7 +54,7 @@ public class CandidateViewBean extends EntityViewBean {
 			break;
 		case CandidateNavigation.CREATE:
 		case CandidateNavigation.EDIT:
-			currentNav = "/views/pages/modifyCandidate.xhtml";
+			currentNav = "/views/pages/modifyCandidate2.xhtml";
 			break;
 		case CandidateNavigation.TRANSFER_TO_EMPLOYEE:
 			currentNav = "/views/pages/employee.xhtml";
@@ -173,7 +174,7 @@ public class CandidateViewBean extends EntityViewBean {
 	}
 
 	public String getLocalizedStatus(String status) {
-		return CandidateStatus.valueOf(status).getLocalizedName();
+		return CandidateStatus.valueOf(status).getLocalizedString();
 	}
 
 	public String getCurrentNav() {

@@ -288,10 +288,9 @@ public interface DocumentLocalService extends BaseLocalService,
 	public void completelyDeleteDocuments(long fileEntryId);
 
 	public vn.com.ecopharma.emp.model.Document uploadAndLinkEntity(
-		com.liferay.portal.model.BaseModel<?> entity,
-		org.primefaces.model.UploadedFile uploadedFile,
-		java.lang.String folderName, java.lang.String documentType,
-		boolean isAutoCreateFolder,
+		com.liferay.portal.model.BaseModel<?> entity, java.io.InputStream is,
+		java.lang.String fileName, java.lang.String folderName,
+		java.lang.String documentType, boolean isAutoCreateFolder,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -315,7 +314,7 @@ public interface DocumentLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry);
 
 	public com.liferay.portal.kernel.repository.model.FileEntry uploadFile(
-		org.primefaces.model.UploadedFile uploadedFile,
+		java.io.InputStream is, java.lang.String fileName,
 		java.lang.String folderName, boolean isAutoCreateFolder,
 		com.liferay.portal.service.ServiceContext serviceContext);
 

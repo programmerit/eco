@@ -150,3 +150,19 @@ span.currentStatus {
 select.ui-helper-hidden {
 	display: none;
 }
+
+/* documents */
+.panel-message {
+	display: block;
+	text-align: center;
+	font-size: 16px;
+	line-height: 20px;
+	font-weight: 700;
+	line-height: 20px;
+}
+
+.panel-message .no-item-label {
+	font-size: inherit;
+	line-height: inherit;
+	margin: 0 0 9px;
+}

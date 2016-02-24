@@ -34,7 +34,7 @@ public class CandidateItem implements Serializable {
 
 	private List<VacancyIndexItem> desiredVacancies;
 
-	private List<DocumentItem> documentItems;
+	private List<DocumentItem> documents;
 
 	private List<ExperienceObjectItem> experiences;
 
@@ -46,7 +46,7 @@ public class CandidateItem implements Serializable {
 				.toString());
 		this.candidate.setApplicationDate(new Date(System.currentTimeMillis()));
 		this.vacancyIndexItem = null;
-		this.documentItems = new ArrayList<>();
+		this.documents = new ArrayList<>();
 		this.experiences = new ArrayList<>();
 		this.certificates = new ArrayList<>();
 		this.desiredVacancies = new ArrayList<>();
@@ -54,11 +54,11 @@ public class CandidateItem implements Serializable {
 
 	public CandidateItem(Candidate candidate) {
 		this.candidate = candidate;
-		// this.vacancyIndexItem = getIndexVacancy(candidate.getCandidateId());
-		this.vacancyItem = new VacancyItem(
-				VacancyLocalServiceUtil.getVacancyByCandidateId(candidate
-						.getCandidateId()));
-		this.documentItems = getDocumentList(candidate.getCandidateId());
+		this.vacancyIndexItem = getIndexVacancy(candidate.getCandidateId());
+		// this.vacancyItem = new VacancyItem(
+		// VacancyLocalServiceUtil.getVacancyByCandidateId(candidate
+		// .getCandidateId()));
+		this.documents = getDocumentList(candidate.getCandidateId());
 		this.experiences = getExperienceList(candidate.getCandidateId());
 		this.certificates = getCertificateList(candidate.getCandidateId());
 		this.desiredVacancies = getDesireVacanciesList(candidate
@@ -67,6 +67,17 @@ public class CandidateItem implements Serializable {
 
 	public CandidateItem(long candidateId) throws SystemException {
 		this(CandidateLocalServiceUtil.fetchCandidate(candidateId));
+	}
+
+	private VacancyIndexItem getIndexVacancy(long candidateId) {
+		VacancyCandidate vacancyCandidate = VacancyCandidateLocalServiceUtil
+				.findMAINVacancyCandidate(candidateId);
+		if (vacancyCandidate != null)
+			return new VacancyIndexItem(
+					VacancyLocalServiceUtil.getIndexVacancyDocument(
+							vacancyCandidate.getVacancyId(),
+							RCUtils.getCurrentSearchContext()));
+		return null;
 	}
 
 	private List<DocumentItem> getDocumentList(long candidateId) {
@@ -130,12 +141,12 @@ public class CandidateItem implements Serializable {
 		this.vacancyIndexItem = vacancyIndexItem;
 	}
 
-	public List<DocumentItem> getDocumentItems() {
-		return documentItems;
+	public List<DocumentItem> getDocuments() {
+		return documents;
 	}
 
-	public void setDocumentItems(List<DocumentItem> documentItems) {
-		this.documentItems = documentItems;
+	public void setDocuments(List<DocumentItem> documents) {
+		this.documents = documents;
 	}
 
 	public List<ExperienceObjectItem> getExperiences() {

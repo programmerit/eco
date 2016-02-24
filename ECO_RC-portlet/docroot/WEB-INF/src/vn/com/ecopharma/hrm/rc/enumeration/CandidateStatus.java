@@ -22,6 +22,13 @@ public enum CandidateStatus {
 	MARK_INTERVIEW_PASS, // mark pass
 	MARK_INTERVIEW_FAIL; // mark fail
 
+	public static List<String> getAll() {
+		final List<String> result = new ArrayList<>();
+		for (CandidateStatus status : values())
+			result.add(status.toString());
+		return result;
+	}
+
 	public static List<CandidateStatus> getAvailableStatus(
 			CandidateStatus status) {
 		switch (status) {
@@ -107,7 +114,7 @@ public enum CandidateStatus {
 	 * 
 	 * @return localized key of current status
 	 */
-	public String getLocalizedName() {
+	public String getLocalizedString() {
 		return "candidate.status." + this;
 	}
 

@@ -1,5 +1,6 @@
 package vn.com.ecopharma.hrm.rc.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -24,6 +25,7 @@ import org.primefaces.model.SortOrder;
 import vn.com.ecopharma.emp.model.University;
 import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
+import vn.com.ecopharma.hrm.rc.bean.filter.CandidateFilterBean;
 import vn.com.ecopharma.hrm.rc.constant.CandidateField;
 import vn.com.ecopharma.hrm.rc.constant.CandidateNavigation;
 import vn.com.ecopharma.hrm.rc.constant.VacancyField;
@@ -38,6 +40,7 @@ import vn.com.ecopharma.hrm.rc.dto.InterviewScheduleItem;
 import vn.com.ecopharma.hrm.rc.dto.VacancyIndexItem;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateCertificateType;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
+import vn.com.ecopharma.hrm.rc.enumeration.DocumentType;
 import vn.com.ecopharma.hrm.rc.enumeration.InterviewScheduleStatus;
 import vn.com.ecopharma.hrm.rc.model.Candidate;
 import vn.com.ecopharma.hrm.rc.model.Certificate;
@@ -90,8 +93,6 @@ public class CandidateBean implements Serializable {
 
 	private long deletedCandidateId;
 
-	private DocumentItem deletedDocument;
-
 	private int first;
 
 	private int pageSize;
@@ -99,6 +100,10 @@ public class CandidateBean implements Serializable {
 	private boolean isBackFromOtherPage = false;
 
 	private String rejectReason = StringUtils.EMPTY;// TODO refactor
+
+	private String selectedDocumentType;
+
+	private int deletedDocumentIndex = -1;
 
 	@PostConstruct
 	public void init() {
@@ -319,14 +324,22 @@ public class CandidateBean implements Serializable {
 				LiferayFacesContext.getInstance().getServiceContext());
 	}
 
-	public void handleFileUpload(FileUploadEvent event) {
-		final vn.com.ecopharma.emp.model.Document uploadDocument = DocumentLocalServiceUtil
-				.uploadAndLinkEntity(candidateItem.getCandidate(),
-						event.getFile(), "CandidateDocuments", "", true,
-						LiferayFacesContext.getInstance().getServiceContext());
-		if (uploadDocument != null)
-			candidateItem.getDocumentItems().add(
-					new DocumentItem(uploadDocument));
+	public void handleDocumentUpload(FileUploadEvent event) {
+		System.out.println("TEST");
+		try {
+			final vn.com.ecopharma.emp.model.Document uploadDocument = DocumentLocalServiceUtil
+					.uploadAndLinkEntity(candidateItem.getCandidate(), event
+							.getFile().getInputstream(), event.getFile()
+							.getFileName(), "CandidateDocuments",
+							DocumentType.CANDIDATE_CV.toString(), true,
+							LiferayFacesContext.getInstance()
+									.getServiceContext());
+			if (uploadDocument != null)
+				candidateItem.getDocuments().add(
+						new DocumentItem(uploadDocument));
+		} catch (IOException e) {
+			LOGGER.info(e);
+		}
 	}
 
 	public void onContextShow(SelectEvent event) {
@@ -338,7 +351,7 @@ public class CandidateBean implements Serializable {
 	}
 
 	public void onCancel() {
-		for (DocumentItem documentItem : candidateItem.getDocumentItems()) {
+		for (DocumentItem documentItem : candidateItem.getDocuments()) {
 			// if (documentItem.getDocumentId() == 0) {
 			// try {
 			// DLFileEntryLocalServiceUtil.deleteDLFileEntry(documentItem
@@ -594,10 +607,14 @@ public class CandidateBean implements Serializable {
 
 	}
 
-	public void deleteFileEntry(ActionEvent event) {
-		candidateItem.getDocumentItems().remove(deletedDocument);
-		DocumentLocalServiceUtil.completelyDeleteDocuments(deletedDocument
-				.getFileEntry().getFileEntryId());
+	public void deleteDocument(ActionEvent event) {
+		if (deletedDocumentIndex != -1) {
+			DocumentItem item = candidateItem.getDocuments().get(
+					deletedDocumentIndex);
+			DocumentLocalServiceUtil.completelyDeleteDocuments(item
+					.getFileEntry().getFileEntryId());
+			candidateItem.getDocuments().remove(deletedDocumentIndex);
+		}
 	}
 
 	public LazyDataModel<CandidateIndexItem> getLazyDataModel() {
@@ -638,14 +655,6 @@ public class CandidateBean implements Serializable {
 
 	public void setVacancyIndexItems(List<VacancyIndexItem> vacancyIndexItems) {
 		this.vacancyIndexItems = vacancyIndexItems;
-	}
-
-	public DocumentItem getDeletedDocument() {
-		return deletedDocument;
-	}
-
-	public void setDeletedDocument(DocumentItem deletedDocument) {
-		this.deletedDocument = deletedDocument;
 	}
 
 	public List<CandidateIndexItem> getSelectedItems() {
@@ -710,5 +719,25 @@ public class CandidateBean implements Serializable {
 
 	public void setRejectReason(String rejectReason) {
 		this.rejectReason = rejectReason;
+	}
+
+	public String getSelectedDocumentType() {
+		return selectedDocumentType;
+	}
+
+	public void setSelectedDocumentType(String selectedDocumentType) {
+		this.selectedDocumentType = selectedDocumentType;
+	}
+
+	public int getDeletedDocumentIndex() {
+		return deletedDocumentIndex;
+	}
+
+	public void setDeletedDocumentIndex(int deletedDocumentIndex) {
+		this.deletedDocumentIndex = deletedDocumentIndex;
+	}
+
+	public List<String> getAllDocumentTypes() {
+		return DocumentType.getAll();
 	}
 }

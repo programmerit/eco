@@ -1,5 +1,6 @@
 package vn.com.ecopharma.emp.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -429,14 +430,19 @@ public class EmployeeBean implements Serializable {
 	}
 
 	public void handleDocumentUpload(FileUploadEvent event) {
-		final Document uploadDocument = DocumentLocalServiceUtil
-				.uploadAndLinkEntity(modifyEmployeeInfoItem.getEmp(),
-						event.getFile(), "EmployeeDocuments",
-						DocumentType.LABOR_CONTRACT.toString(), true,
-						EmployeeUtils.getServiceContext());
-		if (uploadDocument != null)
-			modifyEmployeeInfoItem.getDocuments().add(
-					new DocumentItem(uploadDocument));
+		try {
+			final Document uploadDocument = DocumentLocalServiceUtil
+					.uploadAndLinkEntity(modifyEmployeeInfoItem.getEmp(), event
+							.getFile().getInputstream(), event.getFile()
+							.getFileName(), "EmployeeDocuments",
+							DocumentType.LABOR_CONTRACT.toString(), true,
+							EmployeeUtils.getServiceContext());
+			if (uploadDocument != null)
+				modifyEmployeeInfoItem.getDocuments().add(
+						new DocumentItem(uploadDocument));
+		} catch (IOException e) {
+			LOGGER.info(e);
+		}
 	}
 
 	public void deleteDocument() {

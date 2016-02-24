@@ -1,5 +1,6 @@
 package vn.com.ecopharma.hrm.rc.bean;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import org.primefaces.model.SortOrder;
 
 import vn.com.ecopharma.emp.model.Titles;
 import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
+import vn.com.ecopharma.hrm.rc.bean.filter.VacancyFilterBean;
 import vn.com.ecopharma.hrm.rc.constant.VacancyField;
 import vn.com.ecopharma.hrm.rc.constant.VacancyNavigation;
 import vn.com.ecopharma.hrm.rc.dm.VacancyLazyDM;
@@ -25,6 +27,7 @@ import vn.com.ecopharma.hrm.rc.dto.DocumentItem;
 import vn.com.ecopharma.hrm.rc.dto.VacancyIndexItem;
 import vn.com.ecopharma.hrm.rc.dto.VacancyItem;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateCertificateType;
+import vn.com.ecopharma.hrm.rc.enumeration.DocumentType;
 import vn.com.ecopharma.hrm.rc.enumeration.VacancyStatus;
 import vn.com.ecopharma.hrm.rc.model.Vacancy;
 import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
@@ -55,7 +58,9 @@ public class VacancyBean extends PersistableBean {
 
 	private List<Long> fileEntryIds;
 
-	private DocumentItem deletedDocument;
+	private int deletedDocumentIndex;
+
+	private String selectedDocumentType;
 
 	@PostConstruct
 	public void init() {
@@ -122,14 +127,20 @@ public class VacancyBean extends PersistableBean {
 		}
 	}
 
-	public void handleFileUpload(FileUploadEvent event) {
-		final vn.com.ecopharma.emp.model.Document uploadDocument = DocumentLocalServiceUtil
-				.uploadAndLinkEntity(vacancyItem.getVacancy(), event.getFile(),
-						"VacancyDocuments", "", true, LiferayFacesContext
-								.getInstance().getServiceContext());
-		if (uploadDocument != null)
-			vacancyItem.getDocumentItems()
-					.add(new DocumentItem(uploadDocument));
+	public void handleDocumentUpload(FileUploadEvent event) {
+		try {
+			final vn.com.ecopharma.emp.model.Document uploadDocument = DocumentLocalServiceUtil
+					.uploadAndLinkEntity(vacancyItem.getVacancy(), event
+							.getFile().getInputstream(), event.getFile()
+							.getFileName(), "VacancyDocuments", "", true,
+							LiferayFacesContext.getInstance()
+									.getServiceContext());
+			if (uploadDocument != null)
+				vacancyItem.getDocuments()
+						.add(new DocumentItem(uploadDocument));
+		} catch (IOException e) {
+			LOGGER.info(e);
+		}
 	}
 
 	public void addVacancy() {
@@ -201,9 +212,11 @@ public class VacancyBean extends PersistableBean {
 	}
 
 	public void deleteFileEntry(ActionEvent event) {
-		vacancyItem.getDocumentItems().remove(deletedDocument);
-		DocumentLocalServiceUtil.completelyDeleteDocuments(deletedDocument
-				.getFileEntry().getFileEntryId());
+		DocumentItem item = vacancyItem.getDocuments()
+				.get(deletedDocumentIndex);
+		vacancyItem.getDocuments().remove(item);
+		DocumentLocalServiceUtil.completelyDeleteDocuments(item.getFileEntry()
+				.getFileEntryId());
 	}
 
 	public LazyDataModel<VacancyIndexItem> getLazyDataModel() {
@@ -259,20 +272,32 @@ public class VacancyBean extends PersistableBean {
 		return result;
 	}
 
-	public DocumentItem getDeletedDocument() {
-		return deletedDocument;
-	}
-
-	public void setDeletedDocument(DocumentItem deletedDocument) {
-		this.deletedDocument = deletedDocument;
-	}
-
 	public List<String> getCertificateTypes() {
 		return CandidateCertificateType.getAll();
 	}
 
 	public String getTypeLocalizedString(String type) {
 		return CandidateCertificateType.valueOf(type).getLocalizedString();
+	}
+
+	public int getDeletedDocumentIndex() {
+		return deletedDocumentIndex;
+	}
+
+	public void setDeletedDocumentIndex(int deletedDocumentIndex) {
+		this.deletedDocumentIndex = deletedDocumentIndex;
+	}
+
+	public String getSelectedDocumentType() {
+		return selectedDocumentType;
+	}
+
+	public void setSelectedDocumentType(String selectedDocumentType) {
+		this.selectedDocumentType = selectedDocumentType;
+	}
+
+	public List<String> getAllDocumentTypes() {
+		return DocumentType.getAll();
 	}
 
 }

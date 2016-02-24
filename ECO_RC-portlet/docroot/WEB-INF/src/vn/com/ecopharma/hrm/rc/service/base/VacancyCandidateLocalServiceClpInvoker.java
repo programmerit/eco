@@ -165,6 +165,14 @@ public class VacancyCandidateLocalServiceClpInvoker {
 		_methodName127 = "findByCandidateAndType";
 
 		_methodParameterTypes127 = new String[] { "long", "java.lang.String" };
+
+		_methodName128 = "findOPTIONALVacancyCandidate";
+
+		_methodParameterTypes128 = new String[] { "long" };
+
+		_methodName129 = "findMAINVacancyCandidate";
+
+		_methodParameterTypes129 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -338,6 +346,16 @@ public class VacancyCandidateLocalServiceClpInvoker {
 				(java.lang.String)arguments[1]);
 		}
 
+		if (_methodName128.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
+			return VacancyCandidateLocalServiceUtil.findOPTIONALVacancyCandidate(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName129.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
+			return VacancyCandidateLocalServiceUtil.findMAINVacancyCandidate(((Long)arguments[0]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -401,4 +419,8 @@ public class VacancyCandidateLocalServiceClpInvoker {
 	private String[] _methodParameterTypes126;
 	private String _methodName127;
 	private String[] _methodParameterTypes127;
+	private String _methodName128;
+	private String[] _methodParameterTypes128;
+	private String _methodName129;
+	private String[] _methodParameterTypes129;
 }

@@ -199,12 +199,12 @@ public class DocumentLocalServiceImpl extends DocumentLocalServiceBaseImpl {
 		}
 	}
 
-	public Document uploadAndLinkEntity(BaseModel<?> entity,
-			UploadedFile uploadedFile, String folderName, String documentType,
+	public Document uploadAndLinkEntity(BaseModel<?> entity, InputStream is,
+			String fileName, String folderName, String documentType,
 			boolean isAutoCreateFolder, ServiceContext serviceContext) {
 		String className = entity.getModelClassName();
 		long classPK = Long.valueOf(entity.getPrimaryKeyObj().toString());
-		FileEntry fileEntry = uploadFile(uploadedFile, folderName,
+		FileEntry fileEntry = uploadFile(is, fileName, folderName,
 				isAutoCreateFolder, serviceContext);
 		if (fileEntry == null)
 			return null;
@@ -256,10 +256,10 @@ public class DocumentLocalServiceImpl extends DocumentLocalServiceBaseImpl {
 		return StringUtils.EMPTY;
 	}
 
-	public FileEntry uploadFile(UploadedFile uploadedFile, String folderName,
-			boolean isAutoCreateFolder, ServiceContext serviceContext) {
+	public FileEntry uploadFile(InputStream is, String fileName,
+			String folderName, boolean isAutoCreateFolder,
+			ServiceContext serviceContext) {
 		try {
-			final InputStream is = uploadedFile.getInputstream();
 			File file = FileUtil.createTempFile(is);
 			DLFolder folder = DLFolderLocalServiceUtil.fetchFolder(
 					serviceContext.getScopeGroupId(), 0, folderName);
@@ -275,14 +275,12 @@ public class DocumentLocalServiceImpl extends DocumentLocalServiceBaseImpl {
 
 			PortletRequest pRequest = (PortletRequest) LiferayFacesContext
 					.getCurrentInstance().getExternalContext().getRequest();
-			String fileName = StringUtils.EMPTY;
+
+			// check if a file with same name has already existed
 			if (DLFileEntryLocalServiceUtil.fetchFileEntryByName(
 					serviceContext.getScopeGroupId(), folder.getFolderId(),
-					uploadedFile.getFileName()) == null) {
-				fileName = uploadedFile.getFileName();
-			} else {
-				fileName = uploadedFile.getFileName()
-						+ System.currentTimeMillis();
+					fileName) != null) {
+				fileName = fileName + System.currentTimeMillis();
 			}
 			final DLFileEntry dlFileEntry = uploadFile(pRequest, file,
 					fileName, StringUtils.EMPTY, StringUtils.EMPTY,

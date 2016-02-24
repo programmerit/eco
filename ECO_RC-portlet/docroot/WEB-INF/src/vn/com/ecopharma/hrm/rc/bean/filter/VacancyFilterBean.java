@@ -1,4 +1,4 @@
-package vn.com.ecopharma.hrm.rc.bean;
+package vn.com.ecopharma.hrm.rc.bean.filter;
 
 import java.io.Serializable;
 

@@ -14,8 +14,10 @@
 
 package vn.com.ecopharma.hrm.rc.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import vn.com.ecopharma.hrm.rc.enumeration.VacancyCandidateType;
 import vn.com.ecopharma.hrm.rc.model.VacancyCandidate;
 import vn.com.ecopharma.hrm.rc.service.base.VacancyCandidateLocalServiceBaseImpl;
 
@@ -68,7 +70,7 @@ public class VacancyCandidateLocalServiceImpl extends
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	public VacancyCandidate createPrePersitedVacancyCandidate() {
@@ -149,7 +151,7 @@ public class VacancyCandidateLocalServiceImpl extends
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	public List<VacancyCandidate> findByCandidate(long candidateId) {
@@ -158,7 +160,7 @@ public class VacancyCandidateLocalServiceImpl extends
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	public List<VacancyCandidate> findByCandidateAndType(long candidateId,
@@ -169,6 +171,17 @@ public class VacancyCandidateLocalServiceImpl extends
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new ArrayList<>();
+	}
+
+	public List<VacancyCandidate> findOPTIONALVacancyCandidate(long candidateId) {
+		return findByCandidateAndType(candidateId,
+				VacancyCandidateType.OPTIONAL.toString());
+	}
+
+	public VacancyCandidate findMAINVacancyCandidate(long candidateId) {
+		List<VacancyCandidate> vacancyCandidates = findByCandidateAndType(
+				candidateId, VacancyCandidateType.MAIN.toString());
+		return !vacancyCandidates.isEmpty() ? vacancyCandidates.get(0) : null;
 	}
 }

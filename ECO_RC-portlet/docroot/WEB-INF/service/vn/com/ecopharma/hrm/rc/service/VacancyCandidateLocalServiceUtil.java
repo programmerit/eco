@@ -333,6 +333,16 @@ public class VacancyCandidateLocalServiceUtil {
 		return getService().findByCandidateAndType(candidateId, type);
 	}
 
+	public static java.util.List<vn.com.ecopharma.hrm.rc.model.VacancyCandidate> findOPTIONALVacancyCandidate(
+		long candidateId) {
+		return getService().findOPTIONALVacancyCandidate(candidateId);
+	}
+
+	public static vn.com.ecopharma.hrm.rc.model.VacancyCandidate findMAINVacancyCandidate(
+		long candidateId) {
+		return getService().findMAINVacancyCandidate(candidateId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}
