@@ -8,7 +8,7 @@ import javax.faces.context.FacesContext;
 import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 
-import vn.com.ecopharma.hrm.rc.dto.AbstractIndexEntityItem;
+import vn.com.ecopharma.hrm.rc.dto.AbstractIndexedItem;
 import vn.com.ecopharma.hrm.rc.dto.IndexedEntity;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
@@ -67,9 +67,9 @@ public class RCUtils {
 	 * @return
 	 */
 	public static List<Long> getIdsFromIndexedItemList(
-			List<? extends AbstractIndexEntityItem> list) {
+			List<? extends AbstractIndexedItem> list) {
 		final List<Long> ids = new ArrayList<Long>();
-		for (IndexedEntity<?> i : list) {
+		for (IndexedEntity i : list) {
 			ids.add(i.getId());
 		}
 		return ids;

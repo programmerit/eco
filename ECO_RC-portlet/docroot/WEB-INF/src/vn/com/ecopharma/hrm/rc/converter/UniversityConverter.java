@@ -17,13 +17,18 @@ public class UniversityConverter extends AbstractBaseModelConverter<University> 
 			return UniversityLocalServiceUtil
 					.getUniversity(Long.valueOf(value));
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			info(e);
 		} catch (PortalException e) {
-			e.printStackTrace();
+			info(e);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			info(e);
 		}
 		return null;
+	}
+
+	@Override
+	protected Class<?> getLogClass() {
+		return UniversityConverter.class;
 	}
 
 }

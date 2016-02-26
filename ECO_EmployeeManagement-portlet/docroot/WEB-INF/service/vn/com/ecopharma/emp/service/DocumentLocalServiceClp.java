@@ -175,7 +175,8 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 		_methodName30 = "uploadAndLinkEntity";
 
 		_methodParameterTypes30 = new String[] {
-				"com.liferay.portal.model.BaseModel", "java.io.InputStream",
+				"com.liferay.portal.model.BaseModel",
+				"javax.portlet.PortletRequest", "java.io.InputStream",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"boolean", "com.liferay.portal.service.ServiceContext"
 			};
@@ -201,14 +202,16 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 		_methodName34 = "getFilePath";
 
 		_methodParameterTypes34 = new String[] {
+				"javax.portlet.PortletRequest",
 				"com.liferay.portal.kernel.repository.model.FileEntry"
 			};
 
 		_methodName35 = "uploadFile";
 
 		_methodParameterTypes35 = new String[] {
-				"java.io.InputStream", "java.lang.String", "java.lang.String",
-				"boolean", "com.liferay.portal.service.ServiceContext"
+				"javax.portlet.PortletRequest", "java.io.InputStream",
+				"java.lang.String", "java.lang.String", "boolean",
+				"com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName36 = "uploadFile";
@@ -1087,7 +1090,8 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 
 	@Override
 	public vn.com.ecopharma.emp.model.Document uploadAndLinkEntity(
-		com.liferay.portal.model.BaseModel<?> entity, java.io.InputStream is,
+		com.liferay.portal.model.BaseModel<?> entity,
+		javax.portlet.PortletRequest request, java.io.InputStream is,
 		java.lang.String fileName, java.lang.String folderName,
 		java.lang.String documentType, boolean isAutoCreateFolder,
 		com.liferay.portal.service.ServiceContext serviceContext) {
@@ -1098,6 +1102,8 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 					_methodParameterTypes30,
 					new Object[] {
 						ClpSerializer.translateInput(entity),
+						
+					ClpSerializer.translateInput(request),
 						
 					ClpSerializer.translateInput(is),
 						
@@ -1223,14 +1229,18 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 	}
 
 	@Override
-	public java.lang.String getFilePath(
+	public java.lang.String getFilePath(javax.portlet.PortletRequest request,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName34,
 					_methodParameterTypes34,
-					new Object[] { ClpSerializer.translateInput(fileEntry) });
+					new Object[] {
+						ClpSerializer.translateInput(request),
+						
+					ClpSerializer.translateInput(fileEntry)
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1249,8 +1259,9 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry uploadFile(
-		java.io.InputStream is, java.lang.String fileName,
-		java.lang.String folderName, boolean isAutoCreateFolder,
+		javax.portlet.PortletRequest request, java.io.InputStream is,
+		java.lang.String fileName, java.lang.String folderName,
+		boolean isAutoCreateFolder,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
 
@@ -1258,7 +1269,9 @@ public class DocumentLocalServiceClp implements DocumentLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName35,
 					_methodParameterTypes35,
 					new Object[] {
-						ClpSerializer.translateInput(is),
+						ClpSerializer.translateInput(request),
+						
+					ClpSerializer.translateInput(is),
 						
 					ClpSerializer.translateInput(fileName),
 						

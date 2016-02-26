@@ -75,8 +75,8 @@ public class ScheduleInterviewForCandidatesBean implements Serializable {
 						interviewScheduleItem.getCandidateIndexItem()
 								.getVacancyCandidateId(),
 						getEmpIds(interviewScheduleItem.getInterviewers()),
-						interviewScheduleItem.getCandidateIndexItem()
-								.getCandidateId(), serviceContext);
+						interviewScheduleItem.getCandidateIndexItem().getId(),
+						serviceContext);
 				FacesMessage msg = new FacesMessage(
 						FacesMessage.SEVERITY_INFO,
 						"Schedule Interview Success",
@@ -154,7 +154,7 @@ public class ScheduleInterviewForCandidatesBean implements Serializable {
 			if (interviewScheduleForAllItem.isSetInterviewForAll()) {
 				isAvailablePrevInterviewRound = CandidateLocalServiceUtil
 						.hasAlreadyScheduleForInterview(item
-								.getCandidateIndexItem().getCandidateId(), item
+								.getCandidateIndexItem().getId(), item
 								.getCandidateIndexItem().getVacancyId(),
 								interviewScheduleForAllItem
 										.getSelectedInterview()

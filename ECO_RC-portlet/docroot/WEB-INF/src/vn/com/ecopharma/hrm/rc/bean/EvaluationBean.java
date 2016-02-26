@@ -41,17 +41,16 @@ public class EvaluationBean implements Serializable {
 				for (EvaluationKeyValueItem kvItem : eItem
 						.getEvaluationKeyValueItems()) {
 					CandidateEvaluation candidateEvaluation = CandidateEvaluationLocalServiceUtil
-							.addCandidateEvaluation(item.getCandidateId(),
-									eItem.getEvaluationCriteria()
-											.getEvaluationCriteriaId(), kvItem
-											.getEvaluationCriteriaKeyValue()
-											.getEvaluationCriteriaKeyValueId(),
-									kvItem.getValue(), RCUtils
-											.getServiceContext());
+							.addCandidateEvaluation(item.getId(), eItem
+									.getEvaluationCriteria()
+									.getEvaluationCriteriaId(), kvItem
+									.getEvaluationCriteriaKeyValue()
+									.getEvaluationCriteriaKeyValueId(), kvItem
+									.getValue(), RCUtils.getServiceContext());
 
 					if (candidateEvaluation != null) {
 						CandidateLocalServiceUtil.changeCandidateStatus(
-								item.getCandidateId(),
+								item.getId(),
 								CandidateStatus.JOB_OFFERED.toString(),
 								RCUtils.getServiceContext());
 					}
@@ -62,8 +61,7 @@ public class EvaluationBean implements Serializable {
 
 	public void onOfferWORating(ActionEvent event) {
 		for (CandidateIndexItem item : candidateIndexItems) {
-			CandidateLocalServiceUtil.changeCandidateStatus(
-					item.getCandidateId(),
+			CandidateLocalServiceUtil.changeCandidateStatus(item.getId(),
 					CandidateStatus.JOB_OFFERED.toString(),
 					RCUtils.getServiceContext());
 		}

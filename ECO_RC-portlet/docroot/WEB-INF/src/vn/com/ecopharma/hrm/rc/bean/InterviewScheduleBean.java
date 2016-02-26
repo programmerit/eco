@@ -59,8 +59,8 @@ public class InterviewScheduleBean implements Serializable {
 					interviewScheduleItem.getCandidateIndexItem()
 							.getVacancyCandidateId(),
 					getEmpIds(interviewScheduleItem.getInterviewers()),
-					interviewScheduleItem.getCandidateIndexItem()
-							.getCandidateId(), serviceContext);
+					interviewScheduleItem.getCandidateIndexItem().getId(),
+					serviceContext);
 
 			RequestContext.getCurrentInstance().execute(
 					"PF('wInterviewScheduleDialog').hide()");

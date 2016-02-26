@@ -106,8 +106,6 @@ public class TimeTrackingReportLazyDataModel extends
 			return empTimeTrackingIndexedItems;
 		} catch (ParseException e) {
 			LOGGER.info(e);
-		} catch (java.text.ParseException e) {
-			LOGGER.info(e);
 		}
 		return new ArrayList<>();
 	}

@@ -14,11 +14,14 @@ m  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
 
 package vn.com.ecopharma.hrm.rc.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.constant.CandidateField;
 import vn.com.ecopharma.hrm.rc.constant.ECO_RCUtils;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateHistoryActionType;
@@ -51,6 +54,8 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.TermRangeQuery;
+import com.liferay.portal.kernel.search.TermRangeQueryFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
@@ -181,12 +186,12 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 						result.getCandidateId(),
 						VacancyCandidateType.MAIN.toString());
 				// add documents for candidate
-				for (long fileEntryId : fileEntryIds) {
-					// DocumentLocalServiceUtil.addDocument(
-					// Candidate.class.getName(),
-					// candidate.getCandidateId(), fileEntryId,
-					// serviceContext);
-				}
+				// for (long fileEntryId : fileEntryIds) {
+				// DocumentLocalServiceUtil.addDocument(
+				// Candidate.class.getName(),
+				// candidate.getCandidateId(), fileEntryId,
+				// serviceContext);
+				// }
 
 				// add candidate experiences
 				for (Map.Entry<Experience, Boolean> entry : experienceMap
@@ -360,17 +365,17 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 				}
 			}
 
-			for (Long fileEntryId : fileEntryIds) {
-				// if (DocumentLocalServiceUtil
-				// .findByClassAndClassPKAndFileEntryId(
-				// Candidate.class.getName(),
-				// candidate.getCandidateId(), fileEntryId) == null) {
-				// DocumentLocalServiceUtil.addDocument(
-				// Candidate.class.getName(),
-				// candidate.getCandidateId(), fileEntryId,
-				// serviceContext);
-				// }
-			}
+			// for (Long fileEntryId : fileEntryIds) {
+			// if (DocumentLocalServiceUtil
+			// .findByClassAndClassPKAndFileEntryId(
+			// Candidate.class.getName(),
+			// candidate.getCandidateId(), fileEntryId) == null) {
+			// DocumentLocalServiceUtil.addDocument(
+			// Candidate.class.getName(),
+			// candidate.getCandidateId(), fileEntryId,
+			// serviceContext);
+			// }
+			// }
 
 			candidate.setModifiedDate(new Date(System.currentTimeMillis()));
 
@@ -515,7 +520,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			// add filter queries
 			fullQuery.add(allCandidateEntriesBooleanQuery,
 					BooleanClauseOccur.MUST);
-			if (filterQueries != null && filterQueries.size() > 0) {
+			if (filterQueries != null && !filterQueries.isEmpty()) {
 				for (Query query : filterQueries) {
 					fullQuery.add(query, BooleanClauseOccur.MUST);
 				}
@@ -525,6 +530,11 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			fullQuery.add(noneDeletedCandidateBooleanQuery,
 					BooleanClauseOccur.MUST);
 
+			/* SORT */
+			if (sort == null) {
+				sort = new Sort(CandidateField.CANDIDATE_ID, false);
+			}
+
 			return SearchEngineUtil.search(
 					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
 					fullQuery, sort, start, end).toList();
@@ -533,36 +543,101 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		} catch (ParseException e) {
 			LOGGER.info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
-	public List<Document> searchAllUnDeletedEmployeeIndexedDocument1(
-			SearchContext searchContext, List<Query> filterQueries,
-			long companyId, Sort sort, int start, int end) {
-		try {
-			BooleanQuery fQuery = BooleanQueryFactoryUtil.create(searchContext);
-
-			fQuery.addTerm("*", "*");
-			/*
-			 * final BooleanQuery allEmployeeEntriesBooleanQuery =
-			 * BooleanQueryFactoryUtil .create(searchContext);
-			 * 
-			 * allEmployeeEntriesBooleanQuery.addRequiredTerm(
-			 * Field.ENTRY_CLASS_NAME, Employee.class.getName());
-			 * 
-			 * fQuery.add(allEmployeeEntriesBooleanQuery,
-			 * BooleanClauseOccur.MUST);
-			 */
-			List<Document> documents = SearchEngineUtil.search(searchContext,
-					fQuery).toList();
-
-			return documents;
-		} catch (SearchException e) {
-			LOGGER.info(e);
-		} catch (ParseException e) {
-			LOGGER.info(e);
+	@SuppressWarnings("unchecked")
+	public List<Document> filterByFields(SearchContext searchContext,
+			Map<String, Object> filters, Sort sort, long companyId, int start,
+			int end) throws ParseException {
+		final List<Query> queries = new ArrayList<>();
+		Date dateFrom = filters.get(CandidateField.APPLY_DATE_FROM) != null ? (Date) filters
+				.get(CandidateField.APPLY_DATE_FROM) : null;
+		Date dateTo = filters.get(CandidateField.APPLY_DATE_TO) != null ? (Date) filters
+				.get(CandidateField.APPLY_DATE_TO) : null;
+		for (Map.Entry<String, Object> filter : filters.entrySet()) {
+			String filterProperty = filter.getKey();
+			Object filterValue = filter.getValue();
+			LOGGER.info(filterProperty);
+			LOGGER.info(filterValue);
+			if (filterValue instanceof String) {
+				if (filterProperty.equalsIgnoreCase(CandidateField.GLOBAL)) {
+					final BooleanQuery globalFilterBooleanQuery = BooleanQueryFactoryUtil
+							.create(searchContext);
+					globalFilterBooleanQuery.addTerms(
+							getGlobalSearchableFields(), (String) filterValue,
+							true);
+					queries.add(globalFilterBooleanQuery);
+				} else {
+					BooleanQuery stringFilterQuery = BooleanQueryFactoryUtil
+							.create(searchContext);
+					stringFilterQuery
+							.addTerm(filterProperty, (String) filterValue,
+									true, BooleanClauseOccur.MUST);
+					queries.add(stringFilterQuery);
+				}
+			} else if (filterValue instanceof List<?>) {
+				queries.add(EmpLocalServiceUtil.createStringListQuery(
+						filterProperty, (List<String>) filterValue,
+						searchContext));
+			} else if (filterValue instanceof Date) {
+				Query applicationDateRangeQuery = createDateTermRangeQuery(
+						CandidateField.APPLICATION_DATE, dateFrom, dateTo,
+						searchContext);
+				if (applicationDateRangeQuery != null)
+					queries.add(applicationDateRangeQuery);
+			}
 		}
-		return null;
+		/* SORT */
+		if (sort == null) {
+			sort = new Sort(CandidateField.CANDIDATE_ID, false);
+		}
+		return searchAllUnDeletedCandidatesIndexedDocument(searchContext,
+				queries, companyId, sort, start, end);
+	}
+
+	public int countFilterByFields(SearchContext searchContext,
+			Map<String, Object> filters, Sort sort, long companyId)
+			throws ParseException {
+		return filterByFields(searchContext, filters, sort, companyId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
+	}
+
+	public Query createDateTermRangeQuery(String field, Date dateFrom,
+			Date dateTo, SearchContext searchContext) {
+		final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
+		final String defaultDateFromString = "19700101000000";
+
+		final String defaultDateToString = sdf.format(getCurrentDateNextYear());
+
+		final String filterDateFrom = dateFrom != null ? sdf.format(dateFrom)
+				: defaultDateFromString;
+
+		final String filterDateTo = dateTo != null ? sdf.format(dateTo)
+				: defaultDateToString;
+
+		final boolean isDefaultJDSearch = filterDateFrom
+				.equals(defaultDateFromString)
+				&& filterDateTo.equals(defaultDateToString);
+
+		// check not include null joined date
+		return !isDefaultJDSearch ? TermRangeQueryFactoryUtil.create(
+				searchContext, field, filterDateFrom, filterDateTo, true, true)
+				: null;
+
+	}
+
+	public Date getCurrentDateNextYear() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.YEAR, 1);
+		return calendar.getTime();
+	}
+
+	private String[] getGlobalSearchableFields() {
+		return new String[] { CandidateField.FULLNAME, CandidateField.STATUS,
+				CandidateField.EMAIL, CandidateField.CONTACT_NUMBER,
+				CandidateField.VACANCY, CandidateField.APPLICATION_DATE };
 	}
 
 	public Document getIndexCandidateDocument(long id,

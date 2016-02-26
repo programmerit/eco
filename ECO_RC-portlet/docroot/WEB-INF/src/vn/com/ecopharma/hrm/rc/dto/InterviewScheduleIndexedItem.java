@@ -1,6 +1,5 @@
 package vn.com.ecopharma.hrm.rc.dto;
 
-import java.text.ParseException;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
@@ -9,7 +8,7 @@ import vn.com.ecopharma.hrm.rc.constant.InterviewScheduleField;
 
 import com.liferay.portal.kernel.search.Document;
 
-public class InterviewScheduleIndexedItem extends AbstractIndexEntityItem {
+public class InterviewScheduleIndexedItem extends AbstractIndexedItem {
 
 	private static final long serialVersionUID = 1L;
 
@@ -17,42 +16,28 @@ public class InterviewScheduleIndexedItem extends AbstractIndexEntityItem {
 		super(document);
 	}
 
-	@Override
-	protected String idFieldName() {
-		return InterviewScheduleField.ID;
-	}
-
 	public String getVacancy() {
-		return getDocument().getField(InterviewScheduleField.VACANCY)
-				.getValue();
+		return checkNullFieldAndReturnEmptyString(InterviewScheduleField.VACANCY);
 	}
 
 	public String getCandidateName() {
-		return getDocument().getField(InterviewScheduleField.CANDIDATE)
-				.getValue();
+		return checkNullFieldAndReturnEmptyString(InterviewScheduleField.CANDIDATE);
 	}
 
 	public String getInterviewName() {
-		return getDocument().getField(InterviewScheduleField.INTERVIEW_NAME)
-				.getValue();
+		return checkNullFieldAndReturnEmptyString(InterviewScheduleField.INTERVIEW_NAME);
 	}
 
 	public String getStatus() {
-		return getDocument().getField(InterviewScheduleField.STATUS).getValue();
+		return checkNullFieldAndReturnEmptyString(InterviewScheduleField.STATUS);
 	}
 
 	public Date getInterviewDate() {
-		try {
-			return getDocument().getDate(InterviewScheduleField.INTERVIEW_DATE);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return checkNullFieldAndReturnNullDate(InterviewScheduleField.INTERVIEW_DATE);
 	}
 
 	public String getInterviewTime() {
-		return getDocument().getField(InterviewScheduleField.INTERVIEW_TIME)
-				.getValue();
+		return checkNullFieldAndReturnEmptyString(InterviewScheduleField.INTERVIEW_TIME);
 	}
 
 	public String[] getInterviewers() {
@@ -67,5 +52,10 @@ public class InterviewScheduleIndexedItem extends AbstractIndexEntityItem {
 					: interviewers[i] + ".";
 		}
 		return result;
+	}
+
+	@Override
+	protected String getIdFieldName() {
+		return InterviewScheduleField.ID;
 	}
 }

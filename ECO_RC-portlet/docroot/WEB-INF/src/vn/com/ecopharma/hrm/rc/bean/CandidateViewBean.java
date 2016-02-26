@@ -54,7 +54,7 @@ public class CandidateViewBean extends EntityViewBean {
 			break;
 		case CandidateNavigation.CREATE:
 		case CandidateNavigation.EDIT:
-			currentNav = "/views/pages/modifyCandidate2.xhtml";
+			currentNav = "/views/pages/modifyCandidate.xhtml";
 			break;
 		case CandidateNavigation.TRANSFER_TO_EMPLOYEE:
 			currentNav = "/views/pages/employee.xhtml";
@@ -127,9 +127,9 @@ public class CandidateViewBean extends EntityViewBean {
 					InterviewSchedule interviewSchedule = InterviewScheduleLocalServiceUtil
 							.updateInterviewSchedule(is);
 					if (interviewSchedule != null) {
-						CandidateLocalServiceUtil.changeCandidateStatus(
-								item.getCandidateId(), status.toString(),
-								serviceContext);
+						CandidateLocalServiceUtil
+								.changeCandidateStatus(item.getId(),
+										status.toString(), serviceContext);
 					}
 				} catch (SystemException e) {
 					LOGGER.info(e);
@@ -151,7 +151,7 @@ public class CandidateViewBean extends EntityViewBean {
 				break;
 			default:
 				final Candidate candidate = CandidateLocalServiceUtil
-						.fetchCandidate(item.getCandidateId());
+						.fetchCandidate(item.getId());
 				candidate.setStatus(selectedStatus);
 				CandidateLocalServiceUtil.updateCandidate(candidate);
 				RequestContext.getCurrentInstance().execute(

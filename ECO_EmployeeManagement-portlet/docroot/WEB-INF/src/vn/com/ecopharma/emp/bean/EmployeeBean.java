@@ -13,7 +13,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.portlet.PortletRequest;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -219,9 +221,9 @@ public class EmployeeBean implements Serializable {
 
 			modifyEmployeeInfoItem.setUserImgURL(url);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (PortalException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		switchPage(3);
 	}
@@ -232,7 +234,7 @@ public class EmployeeBean implements Serializable {
 	public void addNewEmployee() {
 		showUserTab = true;
 		modifyEmployeeInfoItem = new EmpInfoItem();
-		modifyEmployeeInfoItem.setTestDataForEmp();
+		// modifyEmployeeInfoItem.setTestDataForEmp();
 		updateString = StringUtils.EMPTY;
 		switchPage(2);
 	}
@@ -431,12 +433,15 @@ public class EmployeeBean implements Serializable {
 
 	public void handleDocumentUpload(FileUploadEvent event) {
 		try {
+			PortletRequest request = (PortletRequest) FacesContext
+					.getCurrentInstance().getExternalContext().getRequest();
 			final Document uploadDocument = DocumentLocalServiceUtil
-					.uploadAndLinkEntity(modifyEmployeeInfoItem.getEmp(), event
-							.getFile().getInputstream(), event.getFile()
-							.getFileName(), "EmployeeDocuments",
-							DocumentType.LABOR_CONTRACT.toString(), true,
-							EmployeeUtils.getServiceContext());
+					.uploadAndLinkEntity(modifyEmployeeInfoItem.getEmp(),
+							request, event.getFile().getInputstream(), event
+									.getFile().getFileName(),
+							"EmployeeDocuments", DocumentType.LABOR_CONTRACT
+									.toString(), true, EmployeeUtils
+									.getServiceContext());
 			if (uploadDocument != null)
 				modifyEmployeeInfoItem.getDocuments().add(
 						new DocumentItem(uploadDocument));
@@ -706,7 +711,7 @@ public class EmployeeBean implements Serializable {
 	}
 
 	// Dependent Names action part
-	public void onAddDependence() {
+	public void onAddDependence(ActionEvent event) {
 		modifyEmployeeInfoItem.getDependentNames().add(
 				new DependentName(StringUtils.EMPTY, false));
 	}

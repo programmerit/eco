@@ -74,7 +74,7 @@ public class EmployeeBean implements Serializable {
 	public void transferCandidateInfo(CandidateItem candidateItem) {
 		try {
 			modifyEmployeeInfoItem = transferCandidateInfo(candidateItem
-					.getCandidate());
+					.getObject());
 		} catch (SystemException e) {
 			LogFactoryUtil.getLog(EmployeeBean.class).info(e);
 		}
@@ -84,7 +84,7 @@ public class EmployeeBean implements Serializable {
 			CandidateIndexItem candidateIndexItem) {
 		try {
 			Candidate c = CandidateLocalServiceUtil
-					.fetchCandidate(candidateIndexItem.getCandidateId());
+					.fetchCandidate(candidateIndexItem.getId());
 			modifyEmployeeInfoItem = transferCandidateInfo(c);
 		} catch (SystemException e) {
 			LogFactoryUtil.getLog(EmployeeBean.class).info(e);

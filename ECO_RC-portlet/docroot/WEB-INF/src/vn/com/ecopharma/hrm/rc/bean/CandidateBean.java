@@ -13,6 +13,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.portlet.PortletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
@@ -29,7 +30,7 @@ import vn.com.ecopharma.hrm.rc.bean.filter.CandidateFilterBean;
 import vn.com.ecopharma.hrm.rc.constant.CandidateField;
 import vn.com.ecopharma.hrm.rc.constant.CandidateNavigation;
 import vn.com.ecopharma.hrm.rc.constant.VacancyField;
-import vn.com.ecopharma.hrm.rc.dm.CandidateLazyDM;
+import vn.com.ecopharma.hrm.rc.dm.CandidateLazyDataModel;
 import vn.com.ecopharma.hrm.rc.dto.CandidateIndexItem;
 import vn.com.ecopharma.hrm.rc.dto.CandidateItem;
 import vn.com.ecopharma.hrm.rc.dto.CertificateObjectItem;
@@ -109,22 +110,24 @@ public class CandidateBean implements Serializable {
 	public void init() {
 		selectedItems = new ArrayList<>();
 
-		lazyDataModel = new CandidateLazyDM() {
+		lazyDataModel = new CandidateLazyDataModel() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public List<CandidateIndexItem> load(int first, int pageSize,
 					String sortField, SortOrder sortOrder,
 					Map<String, Object> filters) {
+				System.out.println("HEREEEEEE");
 				CandidateFilterBean filterBean = BeanUtils
 						.getCandidateFilterBean();
 				if (!filterBean.getGlobal().equals(StringUtils.EMPTY)) {
 					filters.put(CandidateField.GLOBAL, filterBean.getGlobal());
 				}
 
-				if (!filterBean.getStatus().equals(StringUtils.EMPTY)
-						&& !filterBean.getStatus().equals("ALL_STATUS")) {
-					filters.put(CandidateField.STATUS, filterBean.getStatus());
+				if (filterBean.getSelectedStatuses() != null
+						&& !filterBean.getSelectedStatuses().isEmpty()) {
+					filters.put(CandidateField.STATUS,
+							filterBean.getSelectedStatuses());
 				}
 
 				if (!filterBean.getFullName().equals(StringUtils.EMPTY)) {
@@ -158,17 +161,17 @@ public class CandidateBean implements Serializable {
 							filterBean.getApplyDateTo());
 				}
 
-				if (isBackFromOtherPage) {
-					// CandidateBean.this.first = first;
-					// CandidateBean.this.pageSize = pageSize;
-					System.out.println("LOAD BACK FROM OTHER PAGE");
-					isBackFromOtherPage = false;
-					return super.load(CandidateBean.this.first,
-							CandidateBean.this.pageSize, sortField, sortOrder,
-							filters);
-				}
-				CandidateBean.this.first = first;
-				CandidateBean.this.pageSize = pageSize;
+				// if (isBackFromOtherPage) {
+				// CandidateBean.this.first = first;
+				// CandidateBean.this.pageSize = pageSize;
+				// System.out.println("LOAD BACK FROM OTHER PAGE");
+				// isBackFromOtherPage = false;
+				// return super.load(CandidateBean.this.first,
+				// CandidateBean.this.pageSize, sortField, sortOrder,
+				// filters);
+				// }
+				// CandidateBean.this.first = first;
+				// CandidateBean.this.pageSize = pageSize;
 				return super.load(first, pageSize, sortField, sortOrder,
 						filters);
 
@@ -197,8 +200,7 @@ public class CandidateBean implements Serializable {
 			ServiceContext serviceContext = LiferayFacesContext.getInstance()
 					.getServiceContext();
 			Candidate candidate = CandidateLocalServiceUtil
-					.fetchCandidate(candidateItem.getCandidate()
-							.getCandidateId());
+					.fetchCandidate(candidateItem.getObject().getCandidateId());
 			final Map<Experience, Boolean> experienceMap = new LinkedHashMap<Experience, Boolean>();
 			for (ExperienceObjectItem experienceObjectItem : candidateItem
 					.getExperiences()) {
@@ -214,7 +216,7 @@ public class CandidateBean implements Serializable {
 			}
 
 			if (candidate == null) { // create new
-				candidate = candidateItem.getCandidate();
+				candidate = candidateItem.getObject();
 				CandidateLocalServiceUtil.addCandidate(candidate, 0,
 						candidateItem.getVacancyIndexItem().getId(),
 						candidateItem.getPossibleDesiredVacancies(),
@@ -222,10 +224,9 @@ public class CandidateBean implements Serializable {
 						serviceContext);
 			} else { // update
 
-				CandidateLocalServiceUtil.updateCandidate(
-						candidateItem.getCandidate(), candidateItem
-								.getVacancyItem().getVacancy().getVacancyId(),
-						candidateItem.getPossibleDesiredVacancies(),
+				CandidateLocalServiceUtil.updateCandidate(candidateItem
+						.getObject(), candidateItem.getVacancyIndexItem()
+						.getId(), candidateItem.getPossibleDesiredVacancies(),
 						fileEntryIds, experienceMap, certificateMap,
 						serviceContext);
 			}
@@ -286,8 +287,7 @@ public class CandidateBean implements Serializable {
 
 	public void editCandidate(CandidateIndexItem candidateIndexItem) {
 		try {
-			this.candidateItem = new CandidateItem(
-					candidateIndexItem.getCandidateId());
+			this.candidateItem = new CandidateItem(candidateIndexItem.getId());
 			BeanUtils.getCandidateViewBean().switchMode(
 					CandidateNavigation.EDIT);
 		} catch (SystemException e) {
@@ -310,8 +310,7 @@ public class CandidateBean implements Serializable {
 				.getObject();
 		// candidateIndexItem.getEvaluationItems();
 		try {
-			this.candidateItem = new CandidateItem(
-					candidateIndexItem.getCandidateId());
+			this.candidateItem = new CandidateItem(candidateIndexItem.getId());
 			BeanUtils.getCandidateViewBean().switchMode(
 					CandidateNavigation.EDIT);
 		} catch (SystemException e) {
@@ -327,10 +326,12 @@ public class CandidateBean implements Serializable {
 	public void handleDocumentUpload(FileUploadEvent event) {
 		System.out.println("TEST");
 		try {
+			PortletRequest request = (PortletRequest) FacesContext
+					.getCurrentInstance().getExternalContext().getRequest();
 			final vn.com.ecopharma.emp.model.Document uploadDocument = DocumentLocalServiceUtil
-					.uploadAndLinkEntity(candidateItem.getCandidate(), event
-							.getFile().getInputstream(), event.getFile()
-							.getFileName(), "CandidateDocuments",
+					.uploadAndLinkEntity(candidateItem.getObject(), request,
+							event.getFile().getInputstream(), event.getFile()
+									.getFileName(), "CandidateDocuments",
 							DocumentType.CANDIDATE_CV.toString(), true,
 							LiferayFacesContext.getInstance()
 									.getServiceContext());
@@ -351,20 +352,20 @@ public class CandidateBean implements Serializable {
 	}
 
 	public void onCancel() {
-		for (DocumentItem documentItem : candidateItem.getDocuments()) {
-			// if (documentItem.getDocumentId() == 0) {
-			// try {
-			// DLFileEntryLocalServiceUtil.deleteDLFileEntry(documentItem
-			// .getFileEntryId());
-			// LOGGER.info("### sucessfully deleted FILE ENTRY "
-			// + documentItem.getFileEntryId());
-			// } catch (PortalException e) {
-			// LOGGER.info(e);
-			// } catch (SystemException e) {
-			// LOGGER.info(e);
-			// }
-			// }
-		}
+		// for (DocumentItem documentItem : candidateItem.getDocuments()) {
+		// if (documentItem.getDocumentId() == 0) {
+		// try {
+		// DLFileEntryLocalServiceUtil.deleteDLFileEntry(documentItem
+		// .getFileEntryId());
+		// LOGGER.info("### sucessfully deleted FILE ENTRY "
+		// + documentItem.getFileEntryId());
+		// } catch (PortalException e) {
+		// LOGGER.info(e);
+		// } catch (SystemException e) {
+		// LOGGER.info(e);
+		// }
+		// }
+		// }
 		CandidateViewBean candidateViewBean = BeanUtils.getCandidateViewBean();
 		candidateViewBean.switchMode(CandidateNavigation.VIEW);
 	}
@@ -372,7 +373,7 @@ public class CandidateBean implements Serializable {
 	// private void onEditCandidate(CandidateIndexItem candidateIndexItem) {
 	// try {
 	// Candidate candidate = CandidateLocalServiceUtil
-	// .getCandidate(candidateIndexItem.getCandidateId());
+	// .getCandidate(candidateIndexItem.getId());
 	// this.candidateItem = new CandidateItem(candidate);
 	// BeanUtils.getCandidateViewBean().setCurrentMode(3);
 	// } catch (PortalException e) {
@@ -415,7 +416,7 @@ public class CandidateBean implements Serializable {
 		case SHORTLIST:
 			for (CandidateIndexItem candidateIndexItem : selectedItems) {
 				CandidateLocalServiceUtil.changeCandidateStatus(
-						candidateIndexItem.getCandidateId(),
+						candidateIndexItem.getId(),
 						CandidateStatus.SHORTLIST.toString(), serviceContext);
 			}
 			msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -452,7 +453,7 @@ public class CandidateBean implements Serializable {
 					InterviewScheduleLocalServiceUtil
 							.updateInterviewSchedule(is);
 					CandidateLocalServiceUtil.changeCandidateStatus(
-							item.getCandidateId(), status, serviceContext);
+							item.getId(), status, serviceContext);
 				} catch (SystemException e) {
 					LOGGER.info(e);
 				}
@@ -488,7 +489,7 @@ public class CandidateBean implements Serializable {
 		}
 		// for (CandidateIndexItem item : selectedItems) {
 		// final Candidate candidate = CandidateLocalServiceUtil
-		// .fetchCandidate(item.getCandidateId());
+		// .fetchCandidate(item.getId());
 		// candidate.setStatus(status);
 		// CandidateLocalServiceUtil.updateCandidate(candidate);
 		// }
@@ -507,11 +508,11 @@ public class CandidateBean implements Serializable {
 			}
 			try {
 				Candidate candidate = CandidateLocalServiceUtil
-						.getCandidate(item.getCandidateId());
+						.getCandidate(item.getId());
 				candidate.setDescription(rejectReason);
-				CandidateLocalServiceUtil.changeCandidateStatus(item
-						.getCandidateId(), CandidateStatus.REJECT.toString(),
-						LiferayFacesContext.getInstance().getServiceContext());
+				CandidateLocalServiceUtil.changeCandidateStatus(item.getId(),
+						CandidateStatus.REJECT.toString(), LiferayFacesContext
+								.getInstance().getServiceContext());
 			} catch (PortalException e) {
 				LOGGER.info(e);
 			} catch (SystemException e) {
@@ -560,11 +561,11 @@ public class CandidateBean implements Serializable {
 				.getData();
 		candidateIndexItem.setExperiences(ExperienceLocalServiceUtil
 				.findByClassNameAndClassPK(Candidate.class.getName(),
-						candidateIndexItem.getCandidateId()));
+						candidateIndexItem.getId()));
 
 		candidateIndexItem.setCertificates(CertificateLocalServiceUtil
 				.findByClassNameAndClassPK(Candidate.class.getName(),
-						candidateIndexItem.getCandidateId()));
+						candidateIndexItem.getId()));
 	}
 
 	public void onShow() {
@@ -607,7 +608,7 @@ public class CandidateBean implements Serializable {
 
 	}
 
-	public void deleteDocument(ActionEvent event) {
+	public void deleteDocument() {
 		if (deletedDocumentIndex != -1) {
 			DocumentItem item = candidateItem.getDocuments().get(
 					deletedDocumentIndex);

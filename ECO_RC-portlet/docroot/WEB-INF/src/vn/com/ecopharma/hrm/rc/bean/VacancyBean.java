@@ -8,7 +8,9 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.portlet.PortletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
@@ -108,16 +110,16 @@ public class VacancyBean extends PersistableBean {
 			ServiceContext serviceContext = LiferayFacesContext.getInstance()
 					.getServiceContext();
 			Vacancy vacancy = VacancyLocalServiceUtil.fetchVacancy(vacancyItem
-					.getVacancy().getVacancyId());
+					.getObject().getVacancyId());
 			if (vacancy == null) { // create new
-				vacancy = vacancyItem.getVacancy();
+				vacancy = vacancyItem.getObject();
 				vacancy.setTitlesId(vacancyItem.getTitles() != null ? vacancyItem
 						.getTitles().getTitlesId() : 0);
 
 				VacancyLocalServiceUtil.addVacancy(vacancy, 0, fileEntryIds,
 						serviceContext);
 			} else {
-				VacancyLocalServiceUtil.updateVacancy(vacancyItem.getVacancy(),
+				VacancyLocalServiceUtil.updateVacancy(vacancyItem.getObject(),
 						fileEntryIds, serviceContext);
 			}
 			BeanUtils.getVacancyViewBean().switchMode(VacancyNavigation.VIEW);
@@ -129,11 +131,13 @@ public class VacancyBean extends PersistableBean {
 
 	public void handleDocumentUpload(FileUploadEvent event) {
 		try {
+			PortletRequest request = (PortletRequest) FacesContext
+					.getCurrentInstance().getExternalContext().getRequest();
 			final vn.com.ecopharma.emp.model.Document uploadDocument = DocumentLocalServiceUtil
-					.uploadAndLinkEntity(vacancyItem.getVacancy(), event
-							.getFile().getInputstream(), event.getFile()
-							.getFileName(), "VacancyDocuments", "", true,
-							LiferayFacesContext.getInstance()
+					.uploadAndLinkEntity(vacancyItem.getObject(), request,
+							event.getFile().getInputstream(), event.getFile()
+									.getFileName(), "VacancyDocuments", "",
+							true, LiferayFacesContext.getInstance()
 									.getServiceContext());
 			if (uploadDocument != null)
 				vacancyItem.getDocuments()

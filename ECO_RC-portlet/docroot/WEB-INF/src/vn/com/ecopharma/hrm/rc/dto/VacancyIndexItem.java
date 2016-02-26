@@ -4,28 +4,23 @@ import vn.com.ecopharma.hrm.rc.constant.VacancyField;
 
 import com.liferay.portal.kernel.search.Document;
 
-public class VacancyIndexItem extends AbstractIndexEntityItem {
+public class VacancyIndexItem extends AbstractIndexedItem {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String titles;
 
 	public VacancyIndexItem(Document document) {
 		super(document);
-		this.titles = getDocument().getField(VacancyField.TITLES).getValue();
 	}
 
 	public int getNumberOfPosition() {
-		return getDocument().getField(VacancyField.NUMBER_OF_POSITION) != null ? Integer
-				.valueOf(getDocument()
-						.getField(VacancyField.NUMBER_OF_POSITION).getValue())
-				: 0;
+		return checkNullFieldAndReturnIntegerValue(VacancyField.NUMBER_OF_POSITION);
 	}
 
 	public String getTitles() {
-		return titles;
+		return checkNullFieldAndReturnEmptyString(VacancyField.TITLES);
 	}
 
 	public String getDescription() {
@@ -33,16 +28,15 @@ public class VacancyIndexItem extends AbstractIndexEntityItem {
 	}
 
 	public long getTitlesId() {
-		return Long.valueOf(getDocument().getField(VacancyField.TITLES_ID)
-				.getValue());
+		return checkNullFieldAndReturnLongValue(VacancyField.TITLES_ID);
 	}
 
 	public String getStatus() {
-		return getDocument().getField(VacancyField.STATUS).getValue();
+		return checkNullFieldAndReturnEmptyString(VacancyField.STATUS);
 	}
 
 	@Override
-	protected String idFieldName() {
+	protected String getIdFieldName() {
 		return VacancyField.VACANCY_ID;
 	}
 

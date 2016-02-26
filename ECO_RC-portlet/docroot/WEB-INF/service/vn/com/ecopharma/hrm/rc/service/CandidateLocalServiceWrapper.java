@@ -414,13 +414,36 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.search.Document> searchAllUnDeletedEmployeeIndexedDocument1(
+	public java.util.List<com.liferay.portal.kernel.search.Document> filterByFields(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
-		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
-		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
-		int end) {
-		return _candidateLocalService.searchAllUnDeletedEmployeeIndexedDocument1(searchContext,
-			filterQueries, companyId, sort, start, end);
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end) throws com.liferay.portal.kernel.search.ParseException {
+		return _candidateLocalService.filterByFields(searchContext, filters,
+			sort, companyId, start, end);
+	}
+
+	@Override
+	public int countFilterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
+		throws com.liferay.portal.kernel.search.ParseException {
+		return _candidateLocalService.countFilterByFields(searchContext,
+			filters, sort, companyId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Query createDateTermRangeQuery(
+		java.lang.String field, java.util.Date dateFrom, java.util.Date dateTo,
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return _candidateLocalService.createDateTermRangeQuery(field, dateFrom,
+			dateTo, searchContext);
+	}
+
+	@Override
+	public java.util.Date getCurrentDateNextYear() {
+		return _candidateLocalService.getCurrentDateNextYear();
 	}
 
 	@Override

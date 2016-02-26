@@ -129,6 +129,10 @@ public class EmpField {
 
 	public static final String UNIVERSITY_ID = "universityId";
 
+	// For filter only
+	public static final String JOINED_DATE_FROM = "joinedDateFrom";
+	public static final String JOINED_DATE_TO = "joinedDateTo";
+
 	private EmpField() {
 	}
 

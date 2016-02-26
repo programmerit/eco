@@ -288,16 +288,31 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.Map<java.lang.String, java.lang.Object> filters,
 		com.liferay.portal.kernel.search.Sort sort, long companyId)
-		throws com.liferay.portal.kernel.search.ParseException,
-			java.text.ParseException;
+		throws com.liferay.portal.kernel.search.ParseException;
 
 	public java.util.List<com.liferay.portal.kernel.search.Document> filterEmployeeByFields(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.Map<java.lang.String, java.lang.Object> filters,
 		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
-		int end)
-		throws com.liferay.portal.kernel.search.ParseException,
-			java.text.ParseException;
+		int end) throws com.liferay.portal.kernel.search.ParseException;
+
+	public void createDateTermRangeQuery(java.lang.String field,
+		java.util.List<com.liferay.portal.kernel.search.Query> queries,
+		java.util.Date dateFrom, java.util.Date dateTo,
+		com.liferay.portal.kernel.search.SearchContext searchContext);
+
+	public com.liferay.portal.kernel.search.Query createStringListQuery(
+		java.lang.String property, java.util.List<java.lang.String> values,
+		com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.search.ParseException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String[] getGlobalSearchFields();
+
+	public java.lang.String removeDashChar(java.lang.String s);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Date getCurrentDateNextYear();
 
 	public vn.com.ecopharma.emp.model.Emp createPrePersistedEntity(
 		com.liferay.portal.service.ServiceContext serviceContext);

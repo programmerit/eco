@@ -285,6 +285,18 @@ public interface VacancyLocalService extends BaseLocalService,
 		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
 		int end);
 
+	public java.util.List<com.liferay.portal.kernel.search.Document> filterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end) throws com.liferay.portal.kernel.search.ParseException;
+
+	public int countFilterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
+		throws com.liferay.portal.kernel.search.ParseException;
+
 	public vn.com.ecopharma.hrm.rc.model.Vacancy createPrePersistedVacancy();
 
 	public vn.com.ecopharma.hrm.rc.model.Vacancy createPrePersistedVacancy(

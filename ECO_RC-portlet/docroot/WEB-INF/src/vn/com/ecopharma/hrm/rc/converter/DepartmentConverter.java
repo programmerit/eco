@@ -5,7 +5,6 @@ import javax.faces.convert.FacesConverter;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
 @FacesConverter(value = "departmentConverter")
@@ -14,15 +13,18 @@ public class DepartmentConverter extends AbstractBaseModelConverter<Department> 
 	@Override
 	protected Department returnedObject(String value) {
 		try {
-			return DepartmentLocalServiceUtil
-					.getDepartment(Long.valueOf(value));
+			return DepartmentLocalServiceUtil.fetchDepartment(Long
+					.valueOf(value));
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (PortalException e) {
-			e.printStackTrace();
+			info(e);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			info(e);
 		}
 		return null;
+	}
+
+	@Override
+	protected Class<?> getLogClass() {
+		return DepartmentConverter.class;
 	}
 }

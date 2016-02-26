@@ -211,44 +211,62 @@ public class CandidateLocalServiceClpInvoker {
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName132 = "searchAllUnDeletedEmployeeIndexedDocument1";
+		_methodName132 = "filterByFields";
 
 		_methodParameterTypes132 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
-				"java.util.List", "long",
-				"com.liferay.portal.kernel.search.Sort", "int", "int"
+				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long",
+				"int", "int"
 			};
 
-		_methodName133 = "getIndexCandidateDocument";
+		_methodName133 = "countFilterByFields";
 
 		_methodParameterTypes133 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long"
+			};
+
+		_methodName134 = "createDateTermRangeQuery";
+
+		_methodParameterTypes134 = new String[] {
+				"java.lang.String", "java.util.Date", "java.util.Date",
+				"com.liferay.portal.kernel.search.SearchContext"
+			};
+
+		_methodName135 = "getCurrentDateNextYear";
+
+		_methodParameterTypes135 = new String[] {  };
+
+		_methodName137 = "getIndexCandidateDocument";
+
+		_methodParameterTypes137 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName134 = "getIndexCandidateDocument";
+		_methodName138 = "getIndexCandidateDocument";
 
-		_methodParameterTypes134 = new String[] {
+		_methodParameterTypes138 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName135 = "indexAllCandidates";
+		_methodName139 = "indexAllCandidates";
 
-		_methodParameterTypes135 = new String[] {  };
+		_methodParameterTypes139 = new String[] {  };
 
-		_methodName136 = "removeAllCandidateIndexes";
+		_methodName140 = "removeAllCandidateIndexes";
 
-		_methodParameterTypes136 = new String[] {
+		_methodParameterTypes140 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 
-		_methodName137 = "hasAlreadyScheduleForInterview";
+		_methodName141 = "hasAlreadyScheduleForInterview";
 
-		_methodParameterTypes137 = new String[] { "long", "long", "long" };
+		_methodParameterTypes141 = new String[] { "long", "long", "long" };
 
-		_methodName138 = "hasAlreadyScheduleForInterview";
+		_methodName142 = "hasAlreadyScheduleForInterview";
 
-		_methodParameterTypes138 = new String[] { "long", "long" };
+		_methodParameterTypes142 = new String[] { "long", "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -469,50 +487,70 @@ public class CandidateLocalServiceClpInvoker {
 
 		if (_methodName132.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
-			return CandidateLocalServiceUtil.searchAllUnDeletedEmployeeIndexedDocument1((com.liferay.portal.kernel.search.SearchContext)arguments[0],
-				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
-				((Long)arguments[2]).longValue(),
-				(com.liferay.portal.kernel.search.Sort)arguments[3],
+			return CandidateLocalServiceUtil.filterByFields((com.liferay.portal.kernel.search.SearchContext)arguments[0],
+				(java.util.Map<java.lang.String, java.lang.Object>)arguments[1],
+				(com.liferay.portal.kernel.search.Sort)arguments[2],
+				((Long)arguments[3]).longValue(),
 				((Integer)arguments[4]).intValue(),
 				((Integer)arguments[5]).intValue());
 		}
 
 		if (_methodName133.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
-			return CandidateLocalServiceUtil.getIndexCandidateDocument(((Long)arguments[0]).longValue(),
-				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
+			return CandidateLocalServiceUtil.countFilterByFields((com.liferay.portal.kernel.search.SearchContext)arguments[0],
+				(java.util.Map<java.lang.String, java.lang.Object>)arguments[1],
+				(com.liferay.portal.kernel.search.Sort)arguments[2],
+				((Long)arguments[3]).longValue());
 		}
 
 		if (_methodName134.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
-			return CandidateLocalServiceUtil.getIndexCandidateDocument((java.lang.String)arguments[0],
-				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
+			return CandidateLocalServiceUtil.createDateTermRangeQuery((java.lang.String)arguments[0],
+				(java.util.Date)arguments[1], (java.util.Date)arguments[2],
+				(com.liferay.portal.kernel.search.SearchContext)arguments[3]);
 		}
 
 		if (_methodName135.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
+			return CandidateLocalServiceUtil.getCurrentDateNextYear();
+		}
+
+		if (_methodName137.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
+			return CandidateLocalServiceUtil.getIndexCandidateDocument(((Long)arguments[0]).longValue(),
+				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
+		}
+
+		if (_methodName138.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
+			return CandidateLocalServiceUtil.getIndexCandidateDocument((java.lang.String)arguments[0],
+				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
+		}
+
+		if (_methodName139.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
 			CandidateLocalServiceUtil.indexAllCandidates();
 
 			return null;
 		}
 
-		if (_methodName136.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
+		if (_methodName140.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
 			CandidateLocalServiceUtil.removeAllCandidateIndexes((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				((Long)arguments[1]).longValue());
 
 			return null;
 		}
 
-		if (_methodName137.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
+		if (_methodName141.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
 			return CandidateLocalServiceUtil.hasAlreadyScheduleForInterview(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName138.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
+		if (_methodName142.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
 			return CandidateLocalServiceUtil.hasAlreadyScheduleForInterview(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
@@ -596,10 +634,16 @@ public class CandidateLocalServiceClpInvoker {
 	private String[] _methodParameterTypes134;
 	private String _methodName135;
 	private String[] _methodParameterTypes135;
-	private String _methodName136;
-	private String[] _methodParameterTypes136;
 	private String _methodName137;
 	private String[] _methodParameterTypes137;
 	private String _methodName138;
 	private String[] _methodParameterTypes138;
+	private String _methodName139;
+	private String[] _methodParameterTypes139;
+	private String _methodName140;
+	private String[] _methodParameterTypes140;
+	private String _methodName141;
+	private String[] _methodParameterTypes141;
+	private String _methodName142;
+	private String[] _methodParameterTypes142;
 }

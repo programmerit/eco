@@ -342,6 +342,26 @@ public class VacancyLocalServiceWrapper implements VacancyLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Document> filterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end) throws com.liferay.portal.kernel.search.ParseException {
+		return _vacancyLocalService.filterByFields(searchContext, filters,
+			sort, companyId, start, end);
+	}
+
+	@Override
+	public int countFilterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
+		throws com.liferay.portal.kernel.search.ParseException {
+		return _vacancyLocalService.countFilterByFields(searchContext, filters,
+			sort, companyId);
+	}
+
+	@Override
 	public vn.com.ecopharma.hrm.rc.model.Vacancy createPrePersistedVacancy() {
 		return _vacancyLocalService.createPrePersistedVacancy();
 	}

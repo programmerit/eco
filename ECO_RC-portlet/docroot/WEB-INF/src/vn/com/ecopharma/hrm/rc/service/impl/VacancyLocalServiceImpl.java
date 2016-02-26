@@ -17,7 +17,12 @@ package vn.com.ecopharma.hrm.rc.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
+import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
+import vn.com.ecopharma.hrm.rc.constant.CandidateField;
 import vn.com.ecopharma.hrm.rc.constant.ECO_RCUtils;
 import vn.com.ecopharma.hrm.rc.constant.VacancyField;
 import vn.com.ecopharma.hrm.rc.enumeration.VacancyCandidateType;
@@ -143,8 +148,10 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 			fullQuery.add(noneDeletedVacancyBooleanQuery,
 					BooleanClauseOccur.MUST);
 
-			sort = sort != null ? sort : new Sort(VacancyField.VACANCY_ID,
-					false);
+			/* SORT */
+			if (sort == null) {
+				sort = new Sort(CandidateField.VACANCY_ID, false);
+			}
 
 			return SearchEngineUtil.search(
 					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
@@ -175,6 +182,72 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 		filterQueries.add(publishedStatusBooleanQuery);
 		return searchAllUnDeletedVacanciesIndexedDocument(searchContext,
 				filterQueries, companyId, sort, start, end);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Document> filterByFields(SearchContext searchContext,
+			Map<String, Object> filters, Sort sort, long companyId, int start,
+			int end) throws ParseException {
+		final List<Query> queries = new ArrayList<>();
+
+		for (Map.Entry<String, Object> filter : filters.entrySet()) {
+			String filterProperty = filter.getKey();
+			Object filterValue = filter.getValue();
+
+			if (filterValue instanceof String) {
+				if (filterProperty.equalsIgnoreCase(VacancyField.GLOBAL)) {
+					final BooleanQuery globalFilterBooleanQuery = BooleanQueryFactoryUtil
+							.create(searchContext);
+					globalFilterBooleanQuery.addTerms(
+							getGlobalSearchableFields(), (String) filterValue,
+							true);
+					queries.add(globalFilterBooleanQuery);
+				} else if (filterProperty
+						.equalsIgnoreCase(CandidateField.APPLY_DATE_FROM)
+						|| filterProperty
+								.equalsIgnoreCase(CandidateField.APPLY_DATE_TO)) {
+					// final String dateFrom = filters
+					// .get(CandidateField.APPLY_DATE_FROM) != null ? (String)
+					// filters
+					// .get(CandidateField.APPLY_DATE_FROM)
+					// : StringUtils.EMPTY;
+					// final String dateTo = filters
+					// .get(CandidateField.APPLY_DATE_TO) != null ? (String)
+					// filters
+					// .get(CandidateField.APPLY_DATE_TO)
+					// : StringUtils.EMPTY;
+					//
+					// EmpLocalServiceUtil.createDateTermRangeQuery(
+					// CandidateField.APPLICATION_DATE, queries, dateFrom,
+					// dateTo, searchContext);
+				} else {
+					BooleanQuery stringFilterQuery = BooleanQueryFactoryUtil
+							.create(searchContext);
+					stringFilterQuery
+							.addTerm(filterProperty, (String) filterValue,
+									true, BooleanClauseOccur.MUST);
+					queries.add(stringFilterQuery);
+				}
+			} else if (filterValue instanceof List<?>) {
+				queries.add(EmpLocalServiceUtil.createStringListQuery(
+						filterProperty, (List<String>) filterValue,
+						searchContext));
+			}
+		}
+		return searchAllUnDeletedVacanciesIndexedDocument(searchContext,
+				queries, companyId, sort, start, end);
+	}
+
+	public int countFilterByFields(SearchContext searchContext,
+			Map<String, Object> filters, Sort sort, long companyId)
+			throws ParseException {
+		return filterByFields(searchContext, filters, sort, companyId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
+	}
+
+	private String[] getGlobalSearchableFields() {
+		return new String[] { VacancyField.TITLES,
+				VacancyField.NUMBER_OF_POSITION, VacancyField.STATUS };
 	}
 
 	public Vacancy createPrePersistedVacancy() {

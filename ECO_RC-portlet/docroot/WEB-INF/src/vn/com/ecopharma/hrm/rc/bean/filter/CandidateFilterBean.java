@@ -41,11 +41,11 @@ public class CandidateFilterBean implements Serializable {
 	private String emailAddress = StringUtils.EMPTY;
 	private String contactNumber = StringUtils.EMPTY;
 	private String vacancy = StringUtils.EMPTY;
-	private String status = StringUtils.EMPTY;
 
 	private Date applyDateFrom;
 	private Date applyDateTo;
 	private List<VacancyIndexItem> vacancyItems;
+	private List<String> selectedStatuses;
 
 	private String applyDate;
 
@@ -116,14 +116,6 @@ public class CandidateFilterBean implements Serializable {
 		this.vacancy = vacancy;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	public String getContactNumber() {
 		return contactNumber;
 	}
@@ -170,5 +162,13 @@ public class CandidateFilterBean implements Serializable {
 
 	public void setVacancyItems(List<VacancyIndexItem> vacancyItems) {
 		this.vacancyItems = vacancyItems;
+	}
+
+	public List<String> getSelectedStatuses() {
+		return selectedStatuses;
+	}
+
+	public void setSelectedStatuses(List<String> selectedStatuses) {
+		this.selectedStatuses = selectedStatuses;
 	}
 }

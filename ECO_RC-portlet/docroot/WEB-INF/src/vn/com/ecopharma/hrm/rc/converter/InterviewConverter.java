@@ -16,11 +16,16 @@ public class InterviewConverter extends AbstractBaseModelConverter<Interview> {
 			return InterviewLocalServiceUtil
 					.fetchInterview(Long.valueOf(value));
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			info(e);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			info(e);
 		}
 		return null;
+	}
+
+	@Override
+	protected Class<?> getLogClass() {
+		return InterviewConverter.class;
 	}
 
 }

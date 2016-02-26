@@ -21,7 +21,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -45,7 +44,6 @@ import vn.com.ecopharma.emp.model.EmpOrgRelationship;
 import vn.com.ecopharma.emp.model.PromotedHistory;
 import vn.com.ecopharma.emp.model.ResignationHistory;
 import vn.com.ecopharma.emp.service.base.EmpLocalServiceBaseImpl;
-import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -119,10 +117,9 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			.getLog(EmpLocalServiceImpl.class);
 
 	private static final String COMMON_DATE_FORMAT = "dd/MM/yyyy";
+	private static final String FILTER_DATE_FORMAT = "yyyyMMddhhmmss";
 
 	private static final String GLOBAL_FILTER = "globalString";
-	private static final String JOINED_DATE_FROM = "joined_dateFrom";
-	private static final String JOINED_DATE_TO = "joined_dateTo";
 
 	private static final String MISSING_EMPLOYEE_CODE_CHAR = "9";
 
@@ -262,7 +259,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 
 	public int countFilterEmployeeByFields(SearchContext searchContext,
 			Map<String, Object> filters, Sort sort, long companyId)
-			throws ParseException, java.text.ParseException {
+			throws ParseException {
 		return filterEmployeeByFields(searchContext, filters, sort, companyId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
 	}
@@ -270,39 +267,18 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	@SuppressWarnings("unchecked")
 	public List<Document> filterEmployeeByFields(SearchContext searchContext,
 			Map<String, Object> filters, Sort sort, long companyId, int start,
-			int end) throws java.text.ParseException, ParseException {
+			int end) throws ParseException {
 		final List<Query> queries = new ArrayList<>();
-		String joinedDateFrom = StringUtils.EMPTY;
-		String joinedDateTo = StringUtils.EMPTY;
-		final List<String> genders = new ArrayList<>();
 		if (filters != null) {
-			joinedDateFrom = filters.get(JOINED_DATE_FROM) != null ? (String) filters
-					.get(JOINED_DATE_FROM) : StringUtils.EMPTY;
+			Date joinedDateFrom = filters.get(EmpField.JOINED_DATE_FROM) != null ? (Date) filters
+					.get(EmpField.JOINED_DATE_FROM) : null;
 
-			joinedDateTo = filters.get(JOINED_DATE_TO) != null ? (String) filters
-					.get(JOINED_DATE_TO) : StringUtils.EMPTY;
+			Date joinedDateTo = filters.get(EmpField.JOINED_DATE_TO) != null ? (Date) filters
+					.get(EmpField.JOINED_DATE_TO) : null;
 
-			final List<String> allEmpFields = EmpField.getAllFields();
-			allEmpFields.remove(EmpField.EMP_ID);
-			allEmpFields.remove(EmpField.EMPLOYEE_USER_ID);
-			allEmpFields.remove(EmpField.IS_DELETED);
-			allEmpFields.remove(EmpField.TITLES_ID);
-			allEmpFields.remove(EmpField.UNIVERSITY_ID);
-			allEmpFields.remove(EmpField.LEVEL_ID);
-			allEmpFields.remove(EmpField.DEVISION_ID);
-			allEmpFields.remove(EmpField.TOTAL_SALARY);
-			allEmpFields.remove(EmpField.BONUS);
-			allEmpFields.remove(EmpField.POSITION_WAGE_RATES);
-			allEmpFields.remove(EmpField.BASE_WAGE_RATES);
-
-			String[] fields = allEmpFields.toArray(new String[allEmpFields
-					.size()]);
-
-			boolean isGenderFiltered = false;
-			for (Iterator<String> it = filters.keySet().iterator(); it
-					.hasNext();) {
-				final String filterProperty = it.next();
-				final Object filterValue = filters.get(filterProperty);
+			for (Map.Entry<String, Object> filter : filters.entrySet()) {
+				final String filterProperty = filter.getKey();
+				final Object filterValue = filter.getValue();
 				LOGGER.info("Filter Property: " + filterProperty);
 
 				if (filterValue instanceof String) {
@@ -310,16 +286,10 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 					if (filterProperty.equalsIgnoreCase(GLOBAL_FILTER)) {
 						final BooleanQuery globalFilterBooleanQuery = BooleanQueryFactoryUtil
 								.create(searchContext);
-						globalFilterBooleanQuery.addTerms(fields,
-								(String) filterValue, true);
+						globalFilterBooleanQuery.addTerms(
+								getGlobalSearchFields(), (String) filterValue,
+								true);
 						queries.add(globalFilterBooleanQuery);
-
-					} else if (filterProperty
-							.equalsIgnoreCase(JOINED_DATE_FROM)
-							|| filterProperty.equalsIgnoreCase(JOINED_DATE_TO)) {
-						createAndAddJoinedDateTermRangeQuery(queries,
-								joinedDateFrom, joinedDateTo, searchContext);
-
 					} else {
 						// TODO
 						BooleanQuery stringFilterQuery = BooleanQueryFactoryUtil
@@ -329,26 +299,26 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 								BooleanClauseOccur.MUST);
 						queries.add(stringFilterQuery);
 					}
-				} else if (filterValue instanceof List<?>
-						&& (filterProperty.equalsIgnoreCase(EmpField.GENDER))
-						|| filterProperty.equalsIgnoreCase(EmpField.STATUS)) {
-					queries.add(createStringListQuery(filterProperty,
-							(List<String>) filterValue, searchContext));
-				} else if (isOrganizationFilter(filterProperty)) {
-					queries.add(createOrganizationFilterQuery(filterProperty,
-							(List<String>) filterValue, searchContext));
+				} else if (filterValue instanceof List<?>) {
+					if ((filterProperty.equalsIgnoreCase(EmpField.GENDER))
+							|| filterProperty.equalsIgnoreCase(EmpField.STATUS)) {
+						queries.add(createStringListQuery(filterProperty,
+								(List<String>) filterValue, searchContext));
+					} else if (isOrganizationFilter(filterProperty)) {
+						queries.add(createOrganizationFilterQuery(
+								filterProperty, (List<String>) filterValue,
+								searchContext));
+					}
+				} else if (filterValue instanceof Date) {
+					createDateTermRangeQuery(EmpField.JOINED_DATE, queries,
+							joinedDateFrom, joinedDateTo, searchContext);
 				}
 			}
-
-			if (isGenderFiltered) {
-				genders.addAll((List<String>) filters.get(EmpField.GENDER));
-			}
-			/* SORT */
-			if (sort == null) {
-				sort = new Sort(EmpField.EMP_ID, false);
-			}
 		}
-
+		/* SORT */
+		if (sort == null) {
+			sort = new Sort(EmpField.EMP_ID, false);
+		}
 		return searchAllUnDeletedEmpIndexedDocument(searchContext, queries,
 				companyId, sort, start, end);
 	}
@@ -361,55 +331,75 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 				|| filterProperty.equalsIgnoreCase(EmpField.TITLES);
 	}
 
-	private void createAndAddJoinedDateTermRangeQuery(List<Query> queries,
-			String joinedDateFrom, String joinedDateTo,
-			SearchContext searchContext) throws java.text.ParseException {
-		final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
-		final SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+	public void createDateTermRangeQuery(String field, List<Query> queries,
+			Date dateFrom, Date dateTo, SearchContext searchContext) {
+		final SimpleDateFormat sdf = new SimpleDateFormat(FILTER_DATE_FORMAT);
 		final String defaultDateFromString = "19700101000000";
-		final String currentDateString = sdf.format(new Date(System
-				.currentTimeMillis()));// example:
-										// 19700101000000
-		int nextYear = Integer.valueOf(currentDateString.substring(0, 4)) + 1;
-		final String nextYearString = nextYear
-				+ currentDateString.substring(4, currentDateString.length());
 
-		final String defaultDateToString = nextYearString;
+		final String defaultDateToString = sdf.format(getCurrentDateNextYear());
 
-		final String filterJoinedDateFrom = joinedDateFrom != null
-				&& joinedDateFrom != StringUtils.EMPTY ? sdf.format(sdf1
-				.parse(joinedDateFrom)) : defaultDateFromString;
+		final String filterDateFrom = dateFrom != null ? sdf.format(dateFrom)
+				: defaultDateFromString;
 
-		final String filterJoinedDateTo = joinedDateTo != null
-				&& joinedDateTo != StringUtils.EMPTY ? sdf.format(sdf1
-				.parse(joinedDateTo)) : defaultDateToString;
+		final String filterDateTo = dateTo != null ? sdf.format(dateTo)
+				: defaultDateToString;
 
-		final boolean isDefaultJDSearch = filterJoinedDateFrom
+		final boolean isDefaultJDSearch = filterDateFrom
 				.equals(defaultDateFromString)
-				&& filterJoinedDateTo.equals(defaultDateToString);
+				&& filterDateTo.equals(defaultDateToString);
 
-		final TermRangeQuery joinedDateTermRangeQuery = TermRangeQueryFactoryUtil
-				.create(searchContext, EmpField.JOINED_DATE,
-						filterJoinedDateFrom, filterJoinedDateTo, true, true);
+		final TermRangeQuery dateTermRangeQuery = TermRangeQueryFactoryUtil
+				.create(searchContext, field, filterDateFrom, filterDateTo,
+						true, true);
 
 		// not include null joined date
 		if (!isDefaultJDSearch) {
-			queries.add(joinedDateTermRangeQuery);
+			queries.add(dateTermRangeQuery);
 		}
+
 	}
 
-	private Query createStringListQuery(String property, List<String> values,
+	public Query createStringListQuery(String property, List<String> values,
 			SearchContext searchContext) throws ParseException {
 		final BooleanQuery query = BooleanQueryFactoryUtil
 				.create(searchContext);
 		for (String value : values) {
 			TermQuery termQuery = TermQueryFactoryUtil.create(searchContext,
-					property, StringUtils.trimToEmpty(EmployeeUtils
-							.removeDashChar(value)));
+					property, StringUtils.trimToEmpty(removeDashChar(value)));
 			query.add(termQuery, BooleanClauseOccur.SHOULD);
 		}
 
 		return query;
+	}
+
+	public String[] getGlobalSearchFields() {
+		final List<String> allEmpFields = EmpField.getAllFields();
+		allEmpFields.remove(EmpField.EMP_ID);
+		allEmpFields.remove(EmpField.EMPLOYEE_USER_ID);
+		allEmpFields.remove(EmpField.IS_DELETED);
+		allEmpFields.remove(EmpField.TITLES_ID);
+		allEmpFields.remove(EmpField.UNIVERSITY_ID);
+		allEmpFields.remove(EmpField.LEVEL_ID);
+		allEmpFields.remove(EmpField.DEVISION_ID);
+		allEmpFields.remove(EmpField.TOTAL_SALARY);
+		allEmpFields.remove(EmpField.BONUS);
+		allEmpFields.remove(EmpField.POSITION_WAGE_RATES);
+		allEmpFields.remove(EmpField.BASE_WAGE_RATES);
+		allEmpFields.remove(EmpField.JOINED_DATE_FROM);
+		allEmpFields.remove(EmpField.JOINED_DATE_TO);
+
+		return allEmpFields.toArray(new String[allEmpFields.size()]);
+
+	}
+
+	public String removeDashChar(String s) {
+		final String[] dashChars = new String[] { "-", "_" };
+
+		for (String dashChar : dashChars)
+			if (s.contains(dashChar)) {
+				s = s.replaceAll(dashChar, " "); // NOSONAR
+			}
+		return s.replaceAll("\\s+", " ").trim();
 	}
 
 	private Query createOrganizationFilterQuery(String property,
@@ -424,6 +414,13 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			query.add(termQuery, BooleanClauseOccur.SHOULD);
 		}
 		return query;
+	}
+
+	public Date getCurrentDateNextYear() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.YEAR, 1);
+		return calendar.getTime();
 	}
 
 	public Emp createPrePersistedEntity(ServiceContext serviceContext) {

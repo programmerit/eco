@@ -1,5 +1,7 @@
 package vn.com.ecopharma.hrm.rc.dto;
 
-public interface IndexedEntity<T> {
+import java.io.Serializable;
+
+public interface IndexedEntity extends Serializable {
 	public long getId();
 }

@@ -2,10 +2,10 @@ package vn.com.ecopharma.hrm.rc.converter;
 
 import javax.faces.convert.FacesConverter;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import vn.com.ecopharma.emp.model.District;
 import vn.com.ecopharma.emp.service.DistrictLocalServiceUtil;
+
+import com.liferay.portal.kernel.exception.SystemException;
 
 @FacesConverter("districtConverter")
 public class DistrictConverter extends AbstractBaseModelConverter<District> {
@@ -15,11 +15,16 @@ public class DistrictConverter extends AbstractBaseModelConverter<District> {
 		try {
 			return DistrictLocalServiceUtil.fetchDistrict(Long.valueOf(value));
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			info(e);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			info(e);
 		}
 		return null;
+	}
+
+	@Override
+	protected Class<?> getLogClass() {
+		return DistrictConverter.class;
 	}
 
 }

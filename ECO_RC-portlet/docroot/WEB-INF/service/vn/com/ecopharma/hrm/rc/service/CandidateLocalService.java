@@ -325,12 +325,24 @@ public interface CandidateLocalService extends BaseLocalService,
 		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
 		int end);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.kernel.search.Document> searchAllUnDeletedEmployeeIndexedDocument1(
+	public java.util.List<com.liferay.portal.kernel.search.Document> filterByFields(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
-		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
-		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
-		int end);
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end) throws com.liferay.portal.kernel.search.ParseException;
+
+	public int countFilterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
+		throws com.liferay.portal.kernel.search.ParseException;
+
+	public com.liferay.portal.kernel.search.Query createDateTermRangeQuery(
+		java.lang.String field, java.util.Date dateFrom, java.util.Date dateTo,
+		com.liferay.portal.kernel.search.SearchContext searchContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Date getCurrentDateNextYear();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.Document getIndexCandidateDocument(

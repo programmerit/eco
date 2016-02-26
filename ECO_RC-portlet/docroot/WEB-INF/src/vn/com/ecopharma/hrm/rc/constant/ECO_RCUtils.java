@@ -40,8 +40,6 @@ public class ECO_RCUtils {
 		for (Document document : documents) {
 			final CandidateIndexItem candidateIndexItem = new CandidateIndexItem(
 					document);
-			System.out
-					.println("IS DELETED:  " + candidateIndexItem.isDeleted());
 			result.add(candidateIndexItem);
 		}
 		return result;

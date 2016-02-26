@@ -8,21 +8,25 @@ import com.liferay.portal.model.Region;
 import com.liferay.portal.service.RegionServiceUtil;
 
 @FacesConverter(value = "regionConverter")
-public class RegionConverter extends AbstractBaseModelConverter<Region>{
+public class RegionConverter extends AbstractBaseModelConverter<Region> {
 
 	@Override
 	protected Region returnedObject(String value) {
 		try {
 			return RegionServiceUtil.getRegion(Long.valueOf(value));
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			info(e);
 		} catch (PortalException e) {
-			e.printStackTrace();
+			info(e);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			info(e);
 		}
 		return null;
 	}
-	
-	
+
+	@Override
+	protected Class<?> getLogClass() {
+		return RegionConverter.class;
+	}
+
 }

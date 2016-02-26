@@ -6,6 +6,8 @@ import javax.faces.convert.Converter;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.BaseModel;
 
 /**
@@ -14,8 +16,8 @@ import com.liferay.portal.model.BaseModel;
  * @param <T>
  *            concrete sub class of BaseModel<T>
  */
-public abstract class AbstractBaseModelConverter<T extends BaseModel<T>> implements
-		Converter {
+public abstract class AbstractBaseModelConverter<T extends BaseModel<T>>
+		implements Converter {
 
 	@Override
 	public T getAsObject(FacesContext context, UIComponent component,
@@ -34,5 +36,16 @@ public abstract class AbstractBaseModelConverter<T extends BaseModel<T>> impleme
 		return StringUtils.EMPTY;
 	}
 
+	public void info(Throwable e) {
+		getLogger().info(e);
+	}
+
+	protected Log getLogger() {
+		return getLogClass() != null ? LogFactoryUtil.getLog(getLogClass())
+				: LogFactoryUtil.getLog(AbstractBaseModelConverter.class);
+	}
+
 	protected abstract T returnedObject(String value);
+
+	protected abstract Class<?> getLogClass();
 }

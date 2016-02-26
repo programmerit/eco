@@ -83,9 +83,6 @@ public class EmployeeFilterView extends OrganizationFilterBean {
 		checkAndAddFilterBadge(joinedDateFrom, badges);
 		checkAndAddFilterBadge(joinedDateTo, badges);
 		checkAndAddJoinedDateFilterBadge(badges);
-		// if (!status.equalsIgnoreCase(EmployeeStatus.ALL.toString()))
-		// checkAndAddFilterBadge(status, badges);
-
 		if (selectedStatuses != null && !selectedStatuses.isEmpty()) {
 			badges.addAll(selectedStatuses);
 		}

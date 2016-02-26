@@ -350,8 +350,7 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.Map<java.lang.String, java.lang.Object> filters,
 		com.liferay.portal.kernel.search.Sort sort, long companyId)
-		throws com.liferay.portal.kernel.search.ParseException,
-			java.text.ParseException {
+		throws com.liferay.portal.kernel.search.ParseException {
 		return _empLocalService.countFilterEmployeeByFields(searchContext,
 			filters, sort, companyId);
 	}
@@ -361,11 +360,42 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.Map<java.lang.String, java.lang.Object> filters,
 		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
-		int end)
-		throws com.liferay.portal.kernel.search.ParseException,
-			java.text.ParseException {
+		int end) throws com.liferay.portal.kernel.search.ParseException {
 		return _empLocalService.filterEmployeeByFields(searchContext, filters,
 			sort, companyId, start, end);
+	}
+
+	@Override
+	public void createDateTermRangeQuery(java.lang.String field,
+		java.util.List<com.liferay.portal.kernel.search.Query> queries,
+		java.util.Date dateFrom, java.util.Date dateTo,
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		_empLocalService.createDateTermRangeQuery(field, queries, dateFrom,
+			dateTo, searchContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Query createStringListQuery(
+		java.lang.String property, java.util.List<java.lang.String> values,
+		com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.search.ParseException {
+		return _empLocalService.createStringListQuery(property, values,
+			searchContext);
+	}
+
+	@Override
+	public java.lang.String[] getGlobalSearchFields() {
+		return _empLocalService.getGlobalSearchFields();
+	}
+
+	@Override
+	public java.lang.String removeDashChar(java.lang.String s) {
+		return _empLocalService.removeDashChar(s);
+	}
+
+	@Override
+	public java.util.Date getCurrentDateNextYear() {
+		return _empLocalService.getCurrentDateNextYear();
 	}
 
 	@Override

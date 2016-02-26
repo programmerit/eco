@@ -333,8 +333,7 @@ public class EmpLocalServiceUtil {
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.Map<java.lang.String, java.lang.Object> filters,
 		com.liferay.portal.kernel.search.Sort sort, long companyId)
-		throws com.liferay.portal.kernel.search.ParseException,
-			java.text.ParseException {
+		throws com.liferay.portal.kernel.search.ParseException {
 		return getService()
 				   .countFilterEmployeeByFields(searchContext, filters, sort,
 			companyId);
@@ -344,12 +343,39 @@ public class EmpLocalServiceUtil {
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.Map<java.lang.String, java.lang.Object> filters,
 		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
-		int end)
-		throws com.liferay.portal.kernel.search.ParseException,
-			java.text.ParseException {
+		int end) throws com.liferay.portal.kernel.search.ParseException {
 		return getService()
 				   .filterEmployeeByFields(searchContext, filters, sort,
 			companyId, start, end);
+	}
+
+	public static void createDateTermRangeQuery(java.lang.String field,
+		java.util.List<com.liferay.portal.kernel.search.Query> queries,
+		java.util.Date dateFrom, java.util.Date dateTo,
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		getService()
+			.createDateTermRangeQuery(field, queries, dateFrom, dateTo,
+			searchContext);
+	}
+
+	public static com.liferay.portal.kernel.search.Query createStringListQuery(
+		java.lang.String property, java.util.List<java.lang.String> values,
+		com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.search.ParseException {
+		return getService()
+				   .createStringListQuery(property, values, searchContext);
+	}
+
+	public static java.lang.String[] getGlobalSearchFields() {
+		return getService().getGlobalSearchFields();
+	}
+
+	public static java.lang.String removeDashChar(java.lang.String s) {
+		return getService().removeDashChar(s);
+	}
+
+	public static java.util.Date getCurrentDateNextYear() {
+		return getService().getCurrentDateNextYear();
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp createPrePersistedEntity(

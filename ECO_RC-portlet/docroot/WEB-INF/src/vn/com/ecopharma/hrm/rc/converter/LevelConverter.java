@@ -16,13 +16,18 @@ public class LevelConverter extends AbstractBaseModelConverter<Level> {
 		try {
 			return LevelLocalServiceUtil.getLevel(Long.valueOf(value));
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			info(e);
 		} catch (PortalException e) {
-			e.printStackTrace();
+			info(e);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			info(e);
 		}
 		return null;
+	}
+
+	@Override
+	protected Class<?> getLogClass() {
+		return LevelConverter.class;
 	}
 
 }

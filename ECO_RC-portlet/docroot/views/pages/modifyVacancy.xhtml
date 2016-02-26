@@ -29,35 +29,35 @@
 
 									<h:outputText value="Number of Approved Position" />
 									<p:inputText
-										value="#{vacancyBean.vacancyItem.vacancy.approvedNumberOfPosition}" />
+										value="#{vacancyBean.vacancyItem.object.approvedNumberOfPosition}" />
 
 									<h:outputText value="Number of Current Employee" />
 									<p:inputText
-										value="#{vacancyBean.vacancyItem.vacancy.currentNumberOfEmployee}" />
+										value="#{vacancyBean.vacancyItem.object.currentNumberOfEmployee}" />
 
 									<h:outputText value="Number of New Recruitment" />
 									<p:inputText
-										value="#{vacancyBean.vacancyItem.vacancy.numberOfNewRecruitment}" />
+										value="#{vacancyBean.vacancyItem.object.numberOfNewRecruitment}" />
 
 									<h:outputText value="Number of Replaced Recruitment" />
 									<p:inputText
-										value="#{vacancyBean.vacancyItem.vacancy.numberOfReplacedRecruitment}" />
+										value="#{vacancyBean.vacancyItem.object.numberOfReplacedRecruitment}" />
 
 									<h:outputText value="Expected Salary" />
 									<p:inputText
-										value="#{vacancyBean.vacancyItem.vacancy.expectedSalary}" />
+										value="#{vacancyBean.vacancyItem.object.expectedSalary}" />
 
 									<h:outputText value="Expected Joined Date" />
 									<p:calendar
-										value="#{vacancyBean.vacancyItem.vacancy.expectedJoinedDate}" />
+										value="#{vacancyBean.vacancyItem.object.expectedJoinedDate}" />
 
 									<h:outputText value="Working Place" />
 									<p:inputText
-										value="#{vacancyBean.vacancyItem.vacancy.workingPlace}" />
+										value="#{vacancyBean.vacancyItem.object.workingPlace}" />
 
 									<h:outputText value="Required Education: " />
 									<p:selectOneMenu id="certificateTypeSelect"
-										value="#{vacancyBean.vacancyItem.vacancy.certificateType}">
+										value="#{vacancyBean.vacancyItem.object.certificateType}">
 										<f:selectItem itemLabel="Certificate Type" itemValue="" />
 										<f:selectItems value="#{vacancyBean.certificateTypes}" var="t"
 											itemLabel="#{i18n[vacancyBean.getTypeLocalizedString(t)]}"
@@ -66,11 +66,11 @@
 
 									<h:outputText value="Required Experiences: " />
 									<p:inputText id="experiences"
-										value="#{vacancyBean.vacancyItem.vacancy.experiences}" />
+										value="#{vacancyBean.vacancyItem.object.experiences}" />
 
 									<h:outputText value="Description: " />
 									<p:inputTextarea id="vDescription" placeholder="Description..."
-										value="#{vacancyBean.vacancyItem.vacancy.description}" />
+										value="#{vacancyBean.vacancyItem.object.description}" />
 								</p:panelGrid>
 							</h:panelGroup>
 
@@ -79,7 +79,7 @@
 									<h:outputText value="Documents" />
 									<p:outputPanel autoUpdate="true" id="documentOutputPanel">
 										<h:panelGroup id="noDocsPanelGroup" styleClass="panel-message"
-											rendered="#{vacancyBean.vacancyItem.documents.size() eq 0}">
+											rendered="#{vacancyBean.vacancyItem.emptyDocuments}">
 											<h:outputText styleClass="no-item-label" value="No Documents" />
 											<br />
 											<p:commandLink value="Upload Document"
@@ -87,7 +87,7 @@
 										</h:panelGroup>
 
 										<h:panelGroup
-											rendered="#{vacancyBean.vacancyItem.documents.size() > 0}">
+											rendered="#{not vacancyBean.vacancyItem.emptyDocuments}">
 											<ui:repeat var="doc"
 												value="#{vacancyBean.vacancyItem.documents}"
 												varStatus="status">
@@ -108,20 +108,20 @@
 									<h:outputText value="Posted Date: " />
 									<p:calendar id="vPostedDate" mask="false"
 										widgetVar="wPostedDate"
-										value="#{vacancyBean.vacancyItem.vacancy.postedDate}"
+										value="#{vacancyBean.vacancyItem.object.postedDate}"
 										pattern="dd/MM/yyyy" styleClass="calendarClass">
 									</p:calendar>
 
 									<h:outputText value="Expired Date: " />
 									<p:calendar id="vExpiredDate" mask="false"
 										widgetVar="wExpiredDate"
-										value="#{vacancyBean.vacancyItem.vacancy.expiredDate}"
+										value="#{vacancyBean.vacancyItem.object.expiredDate}"
 										pattern="dd/MM/yyyy" styleClass="calendarClass">
 									</p:calendar>
 
 									<h:outputText value="Status: " />
 									<p:selectOneMenu id="vStatusSelect"
-										value="#{vacancyBean.vacancyItem.vacancy.status}">
+										value="#{vacancyBean.vacancyItem.object.status}">
 										<f:selectItem itemLabel="Status" itemValue="" />
 										<f:selectItems value="#{vacancyBean.vacancyStatuses}"
 											var="status" itemValue="#{status}" itemLabel="#{status}" />

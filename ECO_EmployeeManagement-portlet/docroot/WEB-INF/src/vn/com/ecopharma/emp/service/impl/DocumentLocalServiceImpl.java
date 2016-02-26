@@ -25,12 +25,10 @@ import java.util.List;
 import javax.portlet.PortletRequest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.primefaces.model.UploadedFile;
 
 import vn.com.ecopharma.emp.model.Document;
 import vn.com.ecopharma.emp.service.base.DocumentLocalServiceBaseImpl;
 
-import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -199,12 +197,13 @@ public class DocumentLocalServiceImpl extends DocumentLocalServiceBaseImpl {
 		}
 	}
 
-	public Document uploadAndLinkEntity(BaseModel<?> entity, InputStream is,
-			String fileName, String folderName, String documentType,
-			boolean isAutoCreateFolder, ServiceContext serviceContext) {
+	public Document uploadAndLinkEntity(BaseModel<?> entity,
+			PortletRequest request, InputStream is, String fileName,
+			String folderName, String documentType, boolean isAutoCreateFolder,
+			ServiceContext serviceContext) {
 		String className = entity.getModelClassName();
 		long classPK = Long.valueOf(entity.getPrimaryKeyObj().toString());
-		FileEntry fileEntry = uploadFile(is, fileName, folderName,
+		FileEntry fileEntry = uploadFile(request, is, fileName, folderName,
 				isAutoCreateFolder, serviceContext);
 		if (fileEntry == null)
 			return null;
@@ -238,15 +237,12 @@ public class DocumentLocalServiceImpl extends DocumentLocalServiceBaseImpl {
 		return null;
 	}
 
-	public String getFilePath(FileEntry fileEntry) {
+	public String getFilePath(PortletRequest request, FileEntry fileEntry) {
 		try {
-			PortletRequest pRequest = (PortletRequest) LiferayFacesContext
-					.getCurrentInstance().getExternalContext().getRequest();
-			String fileURL = DLUtil
-					.getPreviewURL(fileEntry, fileEntry.getFileVersion(),
-							(ThemeDisplay) pRequest
-									.getAttribute(WebKeys.THEME_DISPLAY), "",
-							false, true);
+			String fileURL = DLUtil.getPreviewURL(fileEntry,
+					fileEntry.getFileVersion(),
+					(ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY),
+					"", false, true);
 			return fileURL;
 		} catch (PortalException e) {
 			LOGGER.info(e);
@@ -256,8 +252,8 @@ public class DocumentLocalServiceImpl extends DocumentLocalServiceBaseImpl {
 		return StringUtils.EMPTY;
 	}
 
-	public FileEntry uploadFile(InputStream is, String fileName,
-			String folderName, boolean isAutoCreateFolder,
+	public FileEntry uploadFile(PortletRequest request, InputStream is,
+			String fileName, String folderName, boolean isAutoCreateFolder,
 			ServiceContext serviceContext) {
 		try {
 			File file = FileUtil.createTempFile(is);
@@ -273,8 +269,8 @@ public class DocumentLocalServiceImpl extends DocumentLocalServiceBaseImpl {
 				LOGGER.info("Folder " + folder.getName() + " was created.");
 			}
 
-			PortletRequest pRequest = (PortletRequest) LiferayFacesContext
-					.getCurrentInstance().getExternalContext().getRequest();
+			// PortletRequest pRequest = (PortletRequest) LiferayFacesContext
+			// .getCurrentInstance().getExternalContext().getRequest();
 
 			// check if a file with same name has already existed
 			if (DLFileEntryLocalServiceUtil.fetchFileEntryByName(
@@ -282,9 +278,9 @@ public class DocumentLocalServiceImpl extends DocumentLocalServiceBaseImpl {
 					fileName) != null) {
 				fileName = fileName + System.currentTimeMillis();
 			}
-			final DLFileEntry dlFileEntry = uploadFile(pRequest, file,
-					fileName, StringUtils.EMPTY, StringUtils.EMPTY,
-					folder.getFolderId(), serviceContext);
+			final DLFileEntry dlFileEntry = uploadFile(request, file, fileName,
+					StringUtils.EMPTY, StringUtils.EMPTY, folder.getFolderId(),
+					serviceContext);
 			file.delete();
 
 			final FileEntry fe = getUploadFileEntry(dlFileEntry);

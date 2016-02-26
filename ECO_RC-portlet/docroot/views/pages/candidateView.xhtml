@@ -20,34 +20,40 @@
 					<h:panelGroup>
 						<p:inputText id="filter_globalString"
 							value="#{candidateFilterBean.global}" placeholder="Everything">
-							<p:ajax event="keyup" oncomplete="PF('wCandidates').filter();" />
+							<p:ajax event="keyup" delay="1000"
+								oncomplete="PF('wCandidates').filter();" />
 						</p:inputText>
 						<p:tooltip for="filter_globalString" value="Filter Everything"
 							showEffect="clip" hideEffect="explode" />
 						<br />
-						<p:selectOneMenu id="filter_cStatusSelect"
-							value="#{candidateFilterBean.status}">
-							<p:ajax event="change" oncomplete="PF('wCandidates').filter()" />
-							<f:selectItem itemLabel="ALL" itemValue="ALL_STATUS" />
-							<f:selectItems value="#{candidateFilterBean.allStatus}"
-								var="status" itemValue="#{status}"
-								itemLabel="#{i18n[candidateViewBean.getLocalizedStatus(status)]}" />
-						</p:selectOneMenu>
+
+						<p:selectCheckboxMenu id="filter_cStatusSelect"
+							value="#{candidateFilterBean.selectedStatuses}" label="Status">
+							<p:ajax oncomplete="PF('wCandidates').filter();" />
+							<p:ajax event="toggleSelect"
+								oncomplete="PF('wCandidates').filter();" />
+							<f:selectItems value="#{candidateFilterBean.allStatus}" var="s"
+								itemLabel="#{i18n[candidateViewBean.getLocalizedStatus(s)]}"
+								itemValue="#{s}" />
+						</p:selectCheckboxMenu>
 						<p:tooltip for="filter_cStatusSelect" value="Filter [Status]"
 							showEffect="clip" hideEffect="explode" />
+
 					</h:panelGroup>
 
 					<h:panelGroup>
 						<p:inputText id="filter_cName"
 							value="#{candidateFilterBean.fullName}" placeholder="Name">
-							<p:ajax event="keyup" oncomplete="PF('wCandidates').filter();" />
+							<p:ajax event="keyup" delay="1000"
+								oncomplete="PF('wCandidates').filter();" />
 						</p:inputText>
 						<p:tooltip for="filter_cName" value="Filter [Candidate's Name]"
 							showEffect="clip" hideEffect="explode" />
 
 						<p:inputText id="filter_cEmail"
 							value="#{candidateFilterBean.emailAddress}" placeholder="Email">
-							<p:ajax event="keyup" oncomplete="PF('wCandidates').filter();" />
+							<p:ajax event="keyup" delay="1000"
+								oncomplete="PF('wCandidates').filter();" />
 						</p:inputText>
 						<p:tooltip for="filter_cEmail" value="Filter [Email]"
 							showEffect="clip" hideEffect="explode" />
@@ -57,7 +63,8 @@
 						<p:inputText id="filter_cContactNumber"
 							value="#{candidateFilterBean.contactNumber}"
 							placeholder="Contact No.">
-							<p:ajax event="keyup" oncomplete="PF('wCandidates').filter();" />
+							<p:ajax event="keyup" delay="1000"
+								oncomplete="PF('wCandidates').filter();" />
 						</p:inputText>
 						<p:tooltip for="filter_cContactNumber"
 							value="Filter [Contact Number]" showEffect="clip"
@@ -202,12 +209,12 @@
 			</h:panelGroup>
 			<p:dataTable id="candidates" var="candidate" widgetVar="wCandidates"
 				reflow="true" value="#{candidateBean.lazyDataModel}"
-				paginatorAlwaysVisible="false" paginator="true" rows="10"
+				paginatorAlwaysVisible="true" paginator="true" rows="10"
 				paginatorPosition="bottom"
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="10,25,50" lazy="true" selectionMode="multiple"
-				selection="#{candidateBean.selectedItems}"
-				rowKey="#{candidate.candidateId}" emptyMessage="No candidates found">
+				selection="#{candidateBean.selectedItems}" rowKey="#{candidate.id}"
+				emptyMessage="No candidates found">
 				<!-- Notice [async] -->
 				<p:ajax event="rowDblselect" delay="100"
 					listener="#{candidateBean.onRowDblSelect}"
@@ -278,14 +285,13 @@
 					<p:commandLink id="editBtn" value="Edit"
 						actionListener="#{candidateBean.editCandidate(candidate)}"
 						update=":CandidatePanelGroup"
-						rendered="#{candidatePermission.checkPermission(candidate.candidateId, 'UPDATE')}" />
+						rendered="#{candidatePermission.checkPermission(candidate.id, 'UPDATE')}" />
 					<h:outputText value="|" />
 					<p:commandLink id="deleteBtn" style="margin-left: 2px"
 						value="Delete" onclick="PF('wDeleteConfirmDialog').show()"
-						rendered="#{candidatePermission.checkPermission(candidate.candidateId, 'DELETE')}">
-						<f:setPropertyActionListener
-							target="#{candidateBean.deletedCandidateId}"
-							value="#{candidate.candidateId}" />
+						rendered="#{candidatePermission.checkPermission(candidate.id, 'DELETE')}">
+						<f:setPropertyActionListener target="#{candidateBean.deletedid}"
+							value="#{candidate.id}" />
 					</p:commandLink>
 				</p:column>
 				<p:rowExpansion>
@@ -331,7 +337,7 @@
 							N/A
 						</h:panelGroup>
 
-					<ui:repeat var="e" value="#{candidate.evaluationItems}"
+					<!-- <ui:repeat var="e" value="#{candidate.evaluationItems}"
 						varStatus="status">
 						<h:outputText value="#{e.evaluationCriteria.type}"
 							style="font-weight: bold;" />
@@ -349,11 +355,11 @@
 							</h:panelGrid>
 						</ui:repeat>
 						<br />
-					</ui:repeat>
+					</ui:repeat> -->
 					<h:panelGroup>
 						<p:commandLink value="View Detail" style="float:right"
-							onclick="window.location.hash = '#vCandidate/candidateId=#{candidate.candidateId}';"
-							rendered="#{candidatePermission.checkPermission(candidate.candidateId, 'UPDATE')}" />
+							onclick="window.location.hash = '#vCandidate/id=#{candidate.id}';"
+							rendered="#{candidatePermission.checkPermission(candidate.id, 'UPDATE')}" />
 					</h:panelGroup>
 				</p:rowExpansion>
 			</p:dataTable>

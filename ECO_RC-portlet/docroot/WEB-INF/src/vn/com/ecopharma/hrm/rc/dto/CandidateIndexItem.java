@@ -1,8 +1,5 @@
 package vn.com.ecopharma.hrm.rc.dto;
 
-import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,95 +24,65 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
 
-public class CandidateIndexItem implements Serializable {
+public class CandidateIndexItem extends AbstractIndexedItem {
 
 	private static final long serialVersionUID = 1L;
-	private static final String SOURCE_DATETIME_FORMAT = "yyyyMMddhhmmss";
-	private static final String DESTINATION_DATETIME_FORMAT = "dd/MM/yyyy";
-	private Document candidateDocument;
 
 	private List<Experience> experiences;
 
 	private List<Certificate> certificates;
 
-	public CandidateIndexItem(Document candidateDocument) {
-		this.candidateDocument = candidateDocument;
+	public CandidateIndexItem(Document document) {
+		super(document);
 	}
 
-	public long getCandidateId() {
-		return Long.valueOf(candidateDocument.getField(
-				CandidateField.CANDIDATE_ID).getValue());
+	@Override
+	protected String getIdFieldName() {
+		return CandidateField.CANDIDATE_ID;
 	}
 
 	public String getEmailAddress() {
-		return candidateDocument.getField(CandidateField.EMAIL).getValue();
+		return checkNullFieldAndReturnEmptyString(CandidateField.EMAIL);
 	}
 
 	public String getContactNumber() {
-		return candidateDocument.getField(CandidateField.CONTACT_NUMBER)
-				.getValue();
+		return checkNullFieldAndReturnEmptyString(CandidateField.CONTACT_NUMBER);
 	}
 
 	public String getVacancy() {
-		return candidateDocument.getField(CandidateField.VACANCY) != null ? candidateDocument
-				.getField(CandidateField.VACANCY).getValue()
-				: StringUtils.EMPTY;
+		return checkNullFieldAndReturnEmptyString(CandidateField.VACANCY);
 	}
 
 	public long getVacancyId() {
-		return candidateDocument.getField(CandidateField.VACANCY_ID) != null ? Long
-				.valueOf(candidateDocument.getField(CandidateField.VACANCY_ID)
-						.getValue()) : 0L;
+		return checkNullFieldAndReturnLongValue(CandidateField.VACANCY_ID);
 	}
 
 	public long getVacancyCandidateId() {
-		return Long.valueOf(candidateDocument.getField(
-				CandidateField.VACANCY_CANDIDATE_ID).getValue());
+		return checkNullFieldAndReturnLongValue(CandidateField.VACANCY_CANDIDATE_ID);
 	}
 
 	public String getLocation() {
-		return candidateDocument.getField(CandidateField.LOCATION).getValue();
+		return checkNullFieldAndReturnEmptyString(CandidateField.LOCATION);
 	}
 
 	public String getFullName() {
-		return candidateDocument.getField(CandidateField.FULLNAME).getValue();
+		return checkNullFieldAndReturnEmptyString(CandidateField.FULLNAME);
 	}
 
 	public String getStatus() {
-		return candidateDocument.getField(CandidateField.STATUS).getValue();
+		return checkNullFieldAndReturnEmptyString(CandidateField.STATUS);
 	}
 
 	public String isDeleted() {
-		return candidateDocument.getField(CandidateField.IS_DELETED).getValue();
+		return checkNullFieldAndReturnEmptyString(CandidateField.IS_DELETED);
 	}
 
 	public java.util.Date getApplicationDate() {
-		final SimpleDateFormat sdf = new SimpleDateFormat(
-				SOURCE_DATETIME_FORMAT);
-		try {
-			return sdf.parse(candidateDocument.getField(
-					CandidateField.APPLICATION_DATE).getValue());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return checkNullFieldAndReturnNullDate(CandidateField.APPLICATION_DATE);
 	}
 
 	public String getFormattedApplicationDate() {
-		try {
-			SimpleDateFormat srcSdf = new SimpleDateFormat(
-					SOURCE_DATETIME_FORMAT);
-			SimpleDateFormat desSdf = new SimpleDateFormat(
-					DESTINATION_DATETIME_FORMAT);
-
-			return candidateDocument.getField(CandidateField.APPLICATION_DATE) != null ? desSdf
-					.format(srcSdf.parse(candidateDocument.getField(
-							CandidateField.APPLICATION_DATE).getValue()))
-					: StringUtils.EMPTY;
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return StringUtils.EMPTY;
+		return getParseDateString(getApplicationDate());
 	}
 
 	public List<Experience> getExperiences() {
@@ -159,7 +126,7 @@ public class CandidateIndexItem implements Serializable {
 		final List<EvaluationItem> result = new ArrayList<EvaluationItem>();
 		if (this.getStatus().equals(CandidateStatus.JOB_OFFERED.toString())) {
 			final List<CandidateEvaluation> candidateEvaluations = CandidateEvaluationLocalServiceUtil
-					.findByCandidate(this.getCandidateId());
+					.findByCandidate(this.getId());
 			if (candidateEvaluations == null || candidateEvaluations.isEmpty()) {
 				return result;
 			}
@@ -198,7 +165,7 @@ public class CandidateIndexItem implements Serializable {
 	public String getDesiredPositions() {
 		try {
 			final List<VacancyCandidate> desiredPositions = VacancyCandidateLocalServiceUtil
-					.findByCandidateAndType(getCandidateId(),
+					.findByCandidateAndType(getId(),
 							VacancyCandidateType.OPTIONAL.toString());
 			String result = StringUtils.EMPTY;
 			int count = 0;

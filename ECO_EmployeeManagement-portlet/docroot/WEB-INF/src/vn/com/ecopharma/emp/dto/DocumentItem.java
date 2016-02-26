@@ -1,5 +1,8 @@
 package vn.com.ecopharma.emp.dto;
 
+import javax.faces.context.FacesContext;
+import javax.portlet.PortletRequest;
+
 import vn.com.ecopharma.emp.model.Document;
 import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
 
@@ -23,7 +26,8 @@ public class DocumentItem extends AbstractUIBaseModelItem<Document> {
 	public DocumentItem(Document document) {
 		super(document);
 		this.fileEntry = DocumentLocalServiceUtil.getFileEntry(getObject());
-		this.fileURL = DocumentLocalServiceUtil.getFilePath(fileEntry);
+		this.fileURL = DocumentLocalServiceUtil.getFilePath(getRequest(),
+				fileEntry);
 	}
 
 	@Override
@@ -46,6 +50,11 @@ public class DocumentItem extends AbstractUIBaseModelItem<Document> {
 
 	public void setFileEntry(FileEntry fileEntry) {
 		this.fileEntry = fileEntry;
+	}
+
+	protected PortletRequest getRequest() {
+		return (PortletRequest) FacesContext.getCurrentInstance()
+				.getExternalContext().getRequest();
 	}
 
 }

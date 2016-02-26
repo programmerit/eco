@@ -358,12 +358,14 @@ public class DocumentLocalServiceWrapper implements DocumentLocalService,
 
 	@Override
 	public vn.com.ecopharma.emp.model.Document uploadAndLinkEntity(
-		com.liferay.portal.model.BaseModel<?> entity, java.io.InputStream is,
+		com.liferay.portal.model.BaseModel<?> entity,
+		javax.portlet.PortletRequest request, java.io.InputStream is,
 		java.lang.String fileName, java.lang.String folderName,
 		java.lang.String documentType, boolean isAutoCreateFolder,
 		com.liferay.portal.service.ServiceContext serviceContext) {
-		return _documentLocalService.uploadAndLinkEntity(entity, is, fileName,
-			folderName, documentType, isAutoCreateFolder, serviceContext);
+		return _documentLocalService.uploadAndLinkEntity(entity, request, is,
+			fileName, folderName, documentType, isAutoCreateFolder,
+			serviceContext);
 	}
 
 	@Override
@@ -389,18 +391,19 @@ public class DocumentLocalServiceWrapper implements DocumentLocalService,
 	}
 
 	@Override
-	public java.lang.String getFilePath(
+	public java.lang.String getFilePath(javax.portlet.PortletRequest request,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry) {
-		return _documentLocalService.getFilePath(fileEntry);
+		return _documentLocalService.getFilePath(request, fileEntry);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry uploadFile(
-		java.io.InputStream is, java.lang.String fileName,
-		java.lang.String folderName, boolean isAutoCreateFolder,
+		javax.portlet.PortletRequest request, java.io.InputStream is,
+		java.lang.String fileName, java.lang.String folderName,
+		boolean isAutoCreateFolder,
 		com.liferay.portal.service.ServiceContext serviceContext) {
-		return _documentLocalService.uploadFile(is, fileName, folderName,
-			isAutoCreateFolder, serviceContext);
+		return _documentLocalService.uploadFile(request, is, fileName,
+			folderName, isAutoCreateFolder, serviceContext);
 	}
 
 	@Override

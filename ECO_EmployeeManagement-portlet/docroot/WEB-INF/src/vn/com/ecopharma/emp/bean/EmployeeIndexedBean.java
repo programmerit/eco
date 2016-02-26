@@ -1,7 +1,6 @@
 package vn.com.ecopharma.emp.bean;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +20,7 @@ import org.primefaces.model.SortOrder;
 
 import vn.com.ecopharma.emp.bean.filter.EmployeeFilterView;
 import vn.com.ecopharma.emp.constant.EmpField;
-import vn.com.ecopharma.emp.dm.EmployeeIndexLazyDataModel;
+import vn.com.ecopharma.emp.dm.EmpIndexLazyDataModel;
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.model.Emp;
@@ -36,6 +35,9 @@ import vn.com.ecopharma.emp.util.BeanUtils;
 import vn.com.ecopharma.emp.util.FilterUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
@@ -46,6 +48,9 @@ import com.liferay.portal.util.PortalUtil;
 public class EmployeeIndexedBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(EmployeeIndexedBean.class);
 
 	private static final List<String> VALID_COLUMNS = Arrays.asList(
 			"employeeCode", "fullName", "fullNameVi", "titles", "gender",
@@ -69,10 +74,7 @@ public class EmployeeIndexedBean implements Serializable {
 			"fullNameVi", "titles", "gender", "birthdayString",
 			"joinedDateString");
 
-	private static final String DATE_FORMAT = "dd/MM/yyyy";
 	private static final String GLOBAL_STRING = "globalString";
-	private static final String JOINED_DATE_FROM = "joined_dateFrom";
-	private static final String JOINED_DATE_TO = "joined_dateTo";
 
 	private LazyDataModel<EmpIndexedItem> lazyDataModel;
 	private List<EmpIndexedItem> selectedEmployeeIndexItems;
@@ -87,75 +89,55 @@ public class EmployeeIndexedBean implements Serializable {
 
 	private List<Query> queries;
 
-	private int first = -1;
-
-	private int pageSize;
-
 	@PostConstruct
 	public void init() {
 		selectedEmployeeIndexItems = new ArrayList<>();
-		lazyDataModel = new EmployeeIndexLazyDataModel() {
+		lazyDataModel = new EmpIndexLazyDataModel() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public List<EmpIndexedItem> load(int first, int pageSize,
-					String sortField_, SortOrder sortOrder_,
+					String sortField, SortOrder sortOrder,
 					Map<String, Object> filters) {
-				final SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-				final EmployeeFilterView employeeFilterBean = (EmployeeFilterView) BeanUtils
+				final EmployeeFilterView filterBean = (EmployeeFilterView) BeanUtils
 						.getBackingBeanByName("empFilterBean");
 
-				final String dateFromStr = employeeFilterBean
-						.getJoinedDateFrom() != null ? sdf
-						.format(employeeFilterBean.getJoinedDateFrom())
-						: StringUtils.EMPTY;
-				final String dateToStr = employeeFilterBean.getJoinedDateTo() != null ? sdf
-						.format(employeeFilterBean.getJoinedDateTo())
-						: StringUtils.EMPTY;
-
-				if (employeeFilterBean.getGlobalString() != StringUtils.EMPTY) {
-					filters.put(GLOBAL_STRING,
-							employeeFilterBean.getGlobalString());
+				if (filterBean.getGlobalString() != StringUtils.EMPTY) {
+					filters.put(GLOBAL_STRING, filterBean.getGlobalString());
 				}
 
-				if (employeeFilterBean.getEmployeeCode() != StringUtils.EMPTY) {
-					filters.put(EmpField.EMP_CODE,
-							employeeFilterBean.getEmployeeCode());
+				if (filterBean.getEmployeeCode() != StringUtils.EMPTY) {
+					filters.put(EmpField.EMP_CODE, filterBean.getEmployeeCode());
 				}
 
-				if (dateFromStr != StringUtils.EMPTY) {
-					filters.put(JOINED_DATE_FROM, dateFromStr);
-				}
-				if (dateToStr != StringUtils.EMPTY) {
-					filters.put(JOINED_DATE_TO, dateToStr);
+				if (filterBean.getJoinedDateFrom() != null)
+					filters.put(EmpField.JOINED_DATE_FROM,
+							filterBean.getJoinedDateFrom());
+
+				if (filterBean.getJoinedDateTo() != null)
+					filters.put(EmpField.JOINED_DATE_TO,
+							filterBean.getJoinedDateTo());
+
+				if (filterBean.getFullName() != StringUtils.EMPTY) {
+					filters.put(EmpField.VN_FULL_NAME, filterBean.getFullName());
 				}
 
-				if (employeeFilterBean.getFullName() != StringUtils.EMPTY) {
-					filters.put(EmpField.VN_FULL_NAME,
-							employeeFilterBean.getFullName());
-				}
-
-				if (employeeFilterBean.getSelectedGenders() != null
-						&& !employeeFilterBean.getSelectedGenders().isEmpty()) {
+				if (filterBean.getSelectedGenders() != null
+						&& !filterBean.getSelectedGenders().isEmpty()) {
 					filters.put(EmpField.GENDER,
-							employeeFilterBean.getSelectedGenders());
+							filterBean.getSelectedGenders());
 				}
 
-				if (employeeFilterBean.getSelectedStatuses() != null
-						&& !employeeFilterBean.getSelectedStatuses().isEmpty()) {
+				if (filterBean.getSelectedStatuses() != null
+						&& !filterBean.getSelectedStatuses().isEmpty()) {
 					filters.put(EmpField.STATUS,
-							employeeFilterBean.getSelectedStatuses());
+							filterBean.getSelectedStatuses());
 				}
 
-				FilterUtils.bindOrgFilters(employeeFilterBean, filters);
+				FilterUtils.bindOrgFilters(filterBean, filters);
 
-				sortField = sortField_;
-				sortOder = sortOrder_;
-				filterMap = filters;
-				empIndexedItems = super.load(first, pageSize, sortField_,
-						sortOrder_, filters);
-				queries = this.getQueries();
-				return empIndexedItems;
+				return super.load(first, pageSize, sortField, sortOrder,
+						filters);
 			}
 		};
 		createDynamicColumns();
@@ -171,6 +153,15 @@ public class EmployeeIndexedBean implements Serializable {
 				columns.add(new ColumnModel(columnKey, columnKey));
 			}
 		}
+	}
+
+	public void reindexAllEmps() {
+		for (Emp emp : EmpLocalServiceUtil.findAll())
+			try {
+				EmpLocalServiceUtil.updateEmp(emp);
+			} catch (SystemException e) {
+				LOGGER.info(e);
+			}
 	}
 
 	public List<String> completeColumns(String query) {
@@ -354,22 +345,6 @@ public class EmployeeIndexedBean implements Serializable {
 	public void setSelectedEmployeeIndexItems(
 			List<EmpIndexedItem> selectedEmployeeIndexItems) {
 		this.selectedEmployeeIndexItems = selectedEmployeeIndexItems;
-	}
-
-	public int getFirst() {
-		return first;
-	}
-
-	public void setFirst(int first) {
-		this.first = first;
-	}
-
-	public int getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
 	}
 
 	public String getEmpClassName() {

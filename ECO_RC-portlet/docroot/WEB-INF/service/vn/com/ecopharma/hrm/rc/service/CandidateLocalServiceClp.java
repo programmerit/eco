@@ -211,44 +211,62 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName35 = "searchAllUnDeletedEmployeeIndexedDocument1";
+		_methodName35 = "filterByFields";
 
 		_methodParameterTypes35 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
-				"java.util.List", "long",
-				"com.liferay.portal.kernel.search.Sort", "int", "int"
+				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long",
+				"int", "int"
 			};
 
-		_methodName36 = "getIndexCandidateDocument";
+		_methodName36 = "countFilterByFields";
 
 		_methodParameterTypes36 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long"
+			};
+
+		_methodName37 = "createDateTermRangeQuery";
+
+		_methodParameterTypes37 = new String[] {
+				"java.lang.String", "java.util.Date", "java.util.Date",
+				"com.liferay.portal.kernel.search.SearchContext"
+			};
+
+		_methodName38 = "getCurrentDateNextYear";
+
+		_methodParameterTypes38 = new String[] {  };
+
+		_methodName39 = "getIndexCandidateDocument";
+
+		_methodParameterTypes39 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName37 = "getIndexCandidateDocument";
+		_methodName40 = "getIndexCandidateDocument";
 
-		_methodParameterTypes37 = new String[] {
+		_methodParameterTypes40 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName38 = "indexAllCandidates";
+		_methodName41 = "indexAllCandidates";
 
-		_methodParameterTypes38 = new String[] {  };
+		_methodParameterTypes41 = new String[] {  };
 
-		_methodName39 = "removeAllCandidateIndexes";
+		_methodName42 = "removeAllCandidateIndexes";
 
-		_methodParameterTypes39 = new String[] {
+		_methodParameterTypes42 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 
-		_methodName40 = "hasAlreadyScheduleForInterview";
+		_methodName43 = "hasAlreadyScheduleForInterview";
 
-		_methodParameterTypes40 = new String[] { "long", "long", "long" };
+		_methodParameterTypes43 = new String[] { "long", "long", "long" };
 
-		_methodName41 = "hasAlreadyScheduleForInterview";
+		_methodName44 = "hasAlreadyScheduleForInterview";
 
-		_methodParameterTypes41 = new String[] { "long", "long" };
+		_methodParameterTypes44 = new String[] { "long", "long" };
 	}
 
 	@Override
@@ -1314,11 +1332,11 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.search.Document> searchAllUnDeletedEmployeeIndexedDocument1(
+	public java.util.List<com.liferay.portal.kernel.search.Document> filterByFields(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
-		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
-		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
-		int end) {
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end) throws com.liferay.portal.kernel.search.ParseException {
 		Object returnObj = null;
 
 		try {
@@ -1327,11 +1345,11 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
-					ClpSerializer.translateInput(filterQueries),
-						
-					companyId,
+					ClpSerializer.translateInput(filters),
 						
 					ClpSerializer.translateInput(sort),
+						
+					companyId,
 						
 					start,
 						
@@ -1340,6 +1358,10 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.search.ParseException) {
+				throw (com.liferay.portal.kernel.search.ParseException)t;
+			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -1354,13 +1376,110 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.search.Document getIndexCandidateDocument(
-		long id, com.liferay.portal.kernel.search.SearchContext searchContext) {
+	public int countFilterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
+		throws com.liferay.portal.kernel.search.ParseException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName36,
 					_methodParameterTypes36,
+					new Object[] {
+						ClpSerializer.translateInput(searchContext),
+						
+					ClpSerializer.translateInput(filters),
+						
+					ClpSerializer.translateInput(sort),
+						
+					companyId
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.search.ParseException) {
+				throw (com.liferay.portal.kernel.search.ParseException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Query createDateTermRangeQuery(
+		java.lang.String field, java.util.Date dateFrom, java.util.Date dateTo,
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName37,
+					_methodParameterTypes37,
+					new Object[] {
+						ClpSerializer.translateInput(field),
+						
+					ClpSerializer.translateInput(dateFrom),
+						
+					ClpSerializer.translateInput(dateTo),
+						
+					ClpSerializer.translateInput(searchContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portal.kernel.search.Query)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.Date getCurrentDateNextYear() {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName38,
+					_methodParameterTypes38, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.Date)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Document getIndexCandidateDocument(
+		long id, com.liferay.portal.kernel.search.SearchContext searchContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName39,
+					_methodParameterTypes39,
 					new Object[] { id, ClpSerializer.translateInput(
 							searchContext) });
 		}
@@ -1386,8 +1505,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName37,
-					_methodParameterTypes37,
+			returnObj = _invokableLocalService.invokeMethod(_methodName40,
+					_methodParameterTypes40,
 					new Object[] {
 						ClpSerializer.translateInput(id),
 						
@@ -1412,8 +1531,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 	@Override
 	public void indexAllCandidates() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName38,
-				_methodParameterTypes38, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName41,
+				_methodParameterTypes41, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1433,8 +1552,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		long companyId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName39,
-				_methodParameterTypes39,
+			_invokableLocalService.invokeMethod(_methodName42,
+				_methodParameterTypes42,
 				new Object[] {
 					ClpSerializer.translateInput(searchContext),
 					
@@ -1460,8 +1579,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName40,
-					_methodParameterTypes40,
+			returnObj = _invokableLocalService.invokeMethod(_methodName43,
+					_methodParameterTypes43,
 					new Object[] { candidateId, vacancyId, interviewId });
 		}
 		catch (Throwable t) {
@@ -1485,8 +1604,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName41,
-					_methodParameterTypes41,
+			returnObj = _invokableLocalService.invokeMethod(_methodName44,
+					_methodParameterTypes44,
 					new Object[] { vacancyCandidateId, interviewId });
 		}
 		catch (Throwable t) {
@@ -1587,4 +1706,10 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 	private String[] _methodParameterTypes40;
 	private String _methodName41;
 	private String[] _methodParameterTypes41;
+	private String _methodName42;
+	private String[] _methodParameterTypes42;
+	private String _methodName43;
+	private String[] _methodParameterTypes43;
+	private String _methodName44;
+	private String[] _methodParameterTypes44;
 }

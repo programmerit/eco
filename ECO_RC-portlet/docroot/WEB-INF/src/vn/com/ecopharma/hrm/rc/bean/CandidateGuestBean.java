@@ -80,11 +80,11 @@ public class CandidateGuestBean implements Serializable {
 		try {
 			FacesMessage message = null;
 			if (!CandidateLocalServiceUtil.isEmailExisted(candidateItem
-					.getCandidate().getEmailAddress())) {
+					.getObject().getEmailAddress())) {
 				ServiceContext serviceContext = LiferayFacesContext
 						.getInstance().getServiceContext();
 				Candidate candidate = CandidateLocalServiceUtil
-						.fetchCandidate(candidateItem.getCandidate()
+						.fetchCandidate(candidateItem.getObject()
 								.getCandidateId());
 				final Map<Experience, Boolean> experienceMap = new LinkedHashMap<Experience, Boolean>();
 				for (ExperienceObjectItem experienceObjectItem : candidateItem
@@ -102,9 +102,9 @@ public class CandidateGuestBean implements Serializable {
 				}
 
 				if (candidate == null) { // create new
-					candidate = candidateItem.getCandidate();
+					candidate = candidateItem.getObject();
 					CandidateLocalServiceUtil.addCandidate(candidate, 0,
-							candidateItem.getVacancyItem().getVacancy()
+							candidateItem.getVacancyItem().getObject()
 									.getVacancyId(),
 							candidateItem.getPossibleDesiredVacancies(),
 							fileEntryIds, experienceMap, certificateMap,
@@ -112,8 +112,8 @@ public class CandidateGuestBean implements Serializable {
 				} else { // update
 
 					CandidateLocalServiceUtil.updateCandidate(
-							candidateItem.getCandidate(), candidateItem
-									.getVacancyItem().getVacancy()
+							candidateItem.getObject(), candidateItem
+									.getVacancyItem().getObject()
 									.getVacancyId(),
 							candidateItem.getPossibleDesiredVacancies(),
 							fileEntryIds, experienceMap, certificateMap,
@@ -167,7 +167,7 @@ public class CandidateGuestBean implements Serializable {
 	public void handleFileUpload(FileUploadEvent fileUploadEvent) {
 		final FileEntry fe = DLUtils.handleFileUpload(
 				fileUploadEvent.getFile(), "candidateDocs");
-		final long candidateId = candidateItem.getCandidate().getCandidateId();
+		final long candidateId = candidateItem.getObject().getCandidateId();
 		// try {
 		// if (CandidateLocalServiceUtil.fetchCandidate(candidateId) != null
 		// && DocumentLocalServiceUtil

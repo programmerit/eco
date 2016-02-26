@@ -15,12 +15,17 @@ public class CountryConverter extends AbstractBaseModelConverter<Country> {
 		try {
 			return CountryServiceUtil.getCountry(Long.valueOf(value));
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			info(e);
 		} catch (PortalException e) {
-			e.printStackTrace();
+			info(e);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			info(e);
 		}
 		return null;
+	}
+
+	@Override
+	protected Class<?> getLogClass() {
+		return CountryConverter.class;
 	}
 }

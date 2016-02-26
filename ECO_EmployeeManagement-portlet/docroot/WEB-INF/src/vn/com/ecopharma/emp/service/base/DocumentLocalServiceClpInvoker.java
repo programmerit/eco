@@ -175,7 +175,8 @@ public class DocumentLocalServiceClpInvoker {
 		_methodName191 = "uploadAndLinkEntity";
 
 		_methodParameterTypes191 = new String[] {
-				"com.liferay.portal.model.BaseModel", "java.io.InputStream",
+				"com.liferay.portal.model.BaseModel",
+				"javax.portlet.PortletRequest", "java.io.InputStream",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"boolean", "com.liferay.portal.service.ServiceContext"
 			};
@@ -201,14 +202,16 @@ public class DocumentLocalServiceClpInvoker {
 		_methodName195 = "getFilePath";
 
 		_methodParameterTypes195 = new String[] {
+				"javax.portlet.PortletRequest",
 				"com.liferay.portal.kernel.repository.model.FileEntry"
 			};
 
 		_methodName196 = "uploadFile";
 
 		_methodParameterTypes196 = new String[] {
-				"java.io.InputStream", "java.lang.String", "java.lang.String",
-				"boolean", "com.liferay.portal.service.ServiceContext"
+				"javax.portlet.PortletRequest", "java.io.InputStream",
+				"java.lang.String", "java.lang.String", "boolean",
+				"com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName197 = "uploadFile";
@@ -402,11 +405,12 @@ public class DocumentLocalServiceClpInvoker {
 		if (_methodName191.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes191, parameterTypes)) {
 			return DocumentLocalServiceUtil.uploadAndLinkEntity((com.liferay.portal.model.BaseModel<?>)arguments[0],
-				(java.io.InputStream)arguments[1],
-				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
-				(java.lang.String)arguments[4],
-				((Boolean)arguments[5]).booleanValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[6]);
+				(javax.portlet.PortletRequest)arguments[1],
+				(java.io.InputStream)arguments[2],
+				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
+				(java.lang.String)arguments[5],
+				((Boolean)arguments[6]).booleanValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[7]);
 		}
 
 		if (_methodName192.equals(name) &&
@@ -426,15 +430,17 @@ public class DocumentLocalServiceClpInvoker {
 
 		if (_methodName195.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes195, parameterTypes)) {
-			return DocumentLocalServiceUtil.getFilePath((com.liferay.portal.kernel.repository.model.FileEntry)arguments[0]);
+			return DocumentLocalServiceUtil.getFilePath((javax.portlet.PortletRequest)arguments[0],
+				(com.liferay.portal.kernel.repository.model.FileEntry)arguments[1]);
 		}
 
 		if (_methodName196.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes196, parameterTypes)) {
-			return DocumentLocalServiceUtil.uploadFile((java.io.InputStream)arguments[0],
-				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
-				((Boolean)arguments[3]).booleanValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[4]);
+			return DocumentLocalServiceUtil.uploadFile((javax.portlet.PortletRequest)arguments[0],
+				(java.io.InputStream)arguments[1],
+				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
+				((Boolean)arguments[4]).booleanValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[5]);
 		}
 
 		if (_methodName197.equals(name) &&

@@ -1,12 +1,9 @@
 package vn.com.ecopharma.hrm.rc.dto;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import vn.com.ecopharma.emp.model.Document;
-import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
 import vn.com.ecopharma.hrm.rc.enumeration.VacancyCandidateType;
 import vn.com.ecopharma.hrm.rc.model.Candidate;
@@ -22,11 +19,9 @@ import vn.com.ecopharma.hrm.rc.util.RCUtils;
 
 import com.liferay.portal.kernel.exception.SystemException;
 
-public class CandidateItem implements Serializable {
+public class CandidateItem extends AbstractDocumentableBaseModelItem<Candidate> {
 
 	private static final long serialVersionUID = 1L;
-
-	private Candidate candidate;
 
 	private VacancyIndexItem vacancyIndexItem;
 
@@ -34,31 +29,25 @@ public class CandidateItem implements Serializable {
 
 	private List<VacancyIndexItem> desiredVacancies;
 
-	private List<DocumentItem> documents;
-
 	private List<ExperienceObjectItem> experiences;
 
 	private List<CertificateObjectItem> certificates;
 
 	public CandidateItem() {
-		this.candidate = CandidateLocalServiceUtil.createPrePersistCandidate();
-		this.candidate.setStatus(CandidateStatus.APPLICATION_INITIATED
-				.toString());
-		this.candidate.setApplicationDate(new Date(System.currentTimeMillis()));
+		super();
+		this.getObject().setStatus(
+				CandidateStatus.APPLICATION_INITIATED.toString());
+		this.getObject().setApplicationDate(
+				new Date(System.currentTimeMillis()));
 		this.vacancyIndexItem = null;
-		this.documents = new ArrayList<>();
 		this.experiences = new ArrayList<>();
 		this.certificates = new ArrayList<>();
 		this.desiredVacancies = new ArrayList<>();
 	}
 
 	public CandidateItem(Candidate candidate) {
-		this.candidate = candidate;
+		super(candidate);
 		this.vacancyIndexItem = getIndexVacancy(candidate.getCandidateId());
-		// this.vacancyItem = new VacancyItem(
-		// VacancyLocalServiceUtil.getVacancyByCandidateId(candidate
-		// .getCandidateId()));
-		this.documents = getDocumentList(candidate.getCandidateId());
 		this.experiences = getExperienceList(candidate.getCandidateId());
 		this.certificates = getCertificateList(candidate.getCandidateId());
 		this.desiredVacancies = getDesireVacanciesList(candidate
@@ -78,17 +67,6 @@ public class CandidateItem implements Serializable {
 							vacancyCandidate.getVacancyId(),
 							RCUtils.getCurrentSearchContext()));
 		return null;
-	}
-
-	private List<DocumentItem> getDocumentList(long candidateId) {
-		List<Document> documents = DocumentLocalServiceUtil
-				.findByClassNameAndClassPK(Candidate.class.getName(),
-						candidateId);
-		final List<DocumentItem> docItems = new ArrayList<>();
-		for (Document doc : documents) {
-			docItems.add(new DocumentItem(doc));
-		}
-		return docItems;
 	}
 
 	private List<ExperienceObjectItem> getExperienceList(long candidateId) {
@@ -125,28 +103,12 @@ public class CandidateItem implements Serializable {
 		return items;
 	}
 
-	public Candidate getCandidate() {
-		return candidate;
-	}
-
-	public void setCandidate(Candidate candidate) {
-		this.candidate = candidate;
-	}
-
 	public VacancyIndexItem getVacancyIndexItem() {
 		return vacancyIndexItem;
 	}
 
 	public void setVacancyIndexItem(VacancyIndexItem vacancyIndexItem) {
 		this.vacancyIndexItem = vacancyIndexItem;
-	}
-
-	public List<DocumentItem> getDocuments() {
-		return documents;
-	}
-
-	public void setDocuments(List<DocumentItem> documents) {
-		this.documents = documents;
 	}
 
 	public List<ExperienceObjectItem> getExperiences() {
@@ -185,6 +147,11 @@ public class CandidateItem implements Serializable {
 		return desiredVacancies != null ? RCUtils
 				.getIdsFromIndexedItemList(desiredVacancies)
 				: new ArrayList<Long>();
+	}
+
+	@Override
+	public Candidate createPrepersistedEntity() {
+		return CandidateLocalServiceUtil.createPrePersistCandidate();
 	}
 
 }

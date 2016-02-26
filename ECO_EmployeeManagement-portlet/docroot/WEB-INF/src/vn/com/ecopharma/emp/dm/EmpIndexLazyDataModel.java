@@ -7,8 +7,6 @@ import java.util.Map;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import vn.com.ecopharma.emp.constant.EMInfo;
-import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
@@ -25,12 +23,12 @@ import com.liferay.portal.kernel.search.Sort;
  * @author TaoTran
  *
  */
-public class EmployeeIndexLazyDataModel extends LazyDataModel<EmpIndexedItem> {
+public class EmpIndexLazyDataModel extends LazyDataModel<EmpIndexedItem> {
 
 	private static final long serialVersionUID = 1L;
 
 	private static final Log LOGGER = LogFactoryUtil
-			.getLog(EmployeeIndexLazyDataModel.class);
+			.getLog(EmpIndexLazyDataModel.class);
 
 	private List<Query> queries;
 
@@ -48,25 +46,9 @@ public class EmployeeIndexLazyDataModel extends LazyDataModel<EmpIndexedItem> {
 	@Override
 	public List<EmpIndexedItem> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, Object> filters) {
-		final List<String> allEmpFields = EmpField.getAllFields();
-		allEmpFields.remove(EmpField.EMP_ID);
-		allEmpFields.remove(EmpField.EMPLOYEE_USER_ID);
-		allEmpFields.remove(EmpField.IS_DELETED);
-		allEmpFields.remove(EmpField.TITLES_ID);
-		allEmpFields.remove(EmpField.UNIVERSITY_ID);
-		allEmpFields.remove(EmpField.LEVEL_ID);
-		allEmpFields.remove(EmpField.DEVISION_ID);
-		allEmpFields.remove(EmpField.TOTAL_SALARY);
-		allEmpFields.remove(EmpField.BONUS);
-		allEmpFields.remove(EmpField.POSITION_WAGE_RATES);
-		allEmpFields.remove(EmpField.BASE_WAGE_RATES);
 
 		final SearchContext searchContext = EmployeeUtils
 				.getCurrentSearchContext();
-		searchContext.setPortletIds(new String[] { EMInfo.PORTLET_ID });
-		String[] globalSearchableFields = allEmpFields
-				.toArray(new String[allEmpFields.size()]);
-
 		try {
 			long companyId = EmployeeUtils.getCompanyId();
 			final Sort sort = sortField != null ? new Sort(sortField,
@@ -86,8 +68,6 @@ public class EmployeeIndexLazyDataModel extends LazyDataModel<EmpIndexedItem> {
 			setRowCount(totalRowCount);
 			return emps;
 		} catch (ParseException e) {
-			LOGGER.info(e);
-		} catch (java.text.ParseException e) {
 			LOGGER.info(e);
 		}
 		return new ArrayList<>();

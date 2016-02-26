@@ -299,7 +299,6 @@
 								<f:selectItem itemLabel="Level" itemValue="" />
 								<f:selectItems value="#{empView.levels}" var="l"
 									itemLabel="#{l.level}" itemValue="#{l}" />
-
 								<p:column>
 					               	#{l.level}
 					            </p:column>
@@ -348,9 +347,7 @@
 							<h:outputText value="Contract Signed Date" />
 							<p:calendar id="laborContractSignedDate" mask="true"
 								value="#{empView.modifyEmployeeInfoItem.emp.laborContractSignedDate}"
-								pattern="dd/MM/yyyy" placeholder="Labor Contract Signed Date">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</p:calendar>
+								pattern="dd/MM/yyyy" placeholder="Labor Contract Signed Date" />
 							<p:message for="laborContractSignedDate" display="icon" />
 							<p:tooltip for="laborContractSignedDate"
 								value="Labor Contract Signed Date" showEffect="clip"
