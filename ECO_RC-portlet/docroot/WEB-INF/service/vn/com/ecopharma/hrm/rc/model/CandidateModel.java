@@ -253,19 +253,18 @@ public interface CandidateModel extends BaseModel<Candidate>, GroupedModel {
 	public void setNumberOfChild(int numberOfChild);
 
 	/**
-	 * Returns the nationality of this candidate.
+	 * Returns the nationality ID of this candidate.
 	 *
-	 * @return the nationality of this candidate
+	 * @return the nationality ID of this candidate
 	 */
-	@AutoEscape
-	public String getNationality();
+	public long getNationalityId();
 
 	/**
-	 * Sets the nationality of this candidate.
+	 * Sets the nationality ID of this candidate.
 	 *
-	 * @param nationality the nationality of this candidate
+	 * @param nationalityId the nationality ID of this candidate
 	 */
-	public void setNationality(String nationality);
+	public void setNationalityId(long nationalityId);
 
 	/**
 	 * Returns the ethnic of this candidate.

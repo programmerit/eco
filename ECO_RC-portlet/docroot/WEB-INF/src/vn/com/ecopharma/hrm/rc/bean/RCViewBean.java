@@ -37,7 +37,7 @@ public class RCViewBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		currentHashTag = "vCandidate";
+		// currentHashTag = "vCandidate";
 	}
 
 	/**

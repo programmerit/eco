@@ -6,9 +6,9 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
 	<h:head>
-		<h:outputScript library="js" name="jquery.ba-bbq.min.js" />
 	</h:head>
 	<h:body>
 
@@ -23,37 +23,10 @@
 		</p:dialog>
 
 		<h:panelGroup id="RCPanelGroup">
-
 			<p:growl id="notification" />
-			<h:form id="navigationForm">
-
-				<p:remoteCommand name="updateNav"
-					actionListener="#{RCViewBean.updateNav()}" update=":RCPanelGroup" />
-
-				<p:commandLink id="candiatePageLink" value="Candidate"
-					actionListener="#{RCViewBean.switchPage(1)}" update=":RCPanelGroup"
-					disabled="#{RCViewBean.currentPage==1}" /> 
-					| 
-				<p:commandLink id="vacancyPageLink" value="Vacancy"
-					actionListener="#{RCViewBean.switchPage(2)}" update=":RCPanelGroup"
-					disabled="#{RCViewBean.currentPage==2}" />
-					| 
-				<p:commandLink id="reportPageLink" value="Report"
-					actionListener="#{RCViewBean.switchPage(3)}" update=":RCPanelGroup"
-					disabled="#{RCViewBean.currentPage==3}" />
-					| 
-				<p:commandLink id="interviewPageLink" value="Interview"
-					actionListener="#{RCViewBean.switchPage(4)}" update=":RCPanelGroup"
-					disabled="#{RCViewBean.currentPage==4}" />
-					| 
-				<p:link id="candidateGuestLink" value="Guest Link"
-					outcome="candidateGuest" />
-			</h:form>
+			<eco:navigationPanel pathToFile="pages/" />
 
 			<!-- GLOBAL preview dialog -->
-			<ui:include src="/views/dialogs/previewDialog.xhtml" />
-
-			<ui:include id="include" src="#{RCViewBean.currentNav}" />
 
 
 		</h:panelGroup>

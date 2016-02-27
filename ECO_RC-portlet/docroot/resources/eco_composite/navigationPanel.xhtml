@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+	<composite:interface>
+		<composite:attribute name="pathToFile" />
+		<composite:attribute name="current" />
+	</composite:interface>
+
+	<composite:implementation>
+		<ui:repeat var="nav" value="#{navigationBean.navigationItems}"
+			varStatus="status">
+			<p:link value="#{nav.value}"
+				disabled="#{cc.attrs.current eq nav.value}"
+				outcome="#{cc.attrs.pathToFile}#{nav.outCome}" />
+			<h:outputText value="|" style="margin-right: 3px;"
+				rendered="#{not navigationBean.isLastNavigationItem(nav)}" />
+		</ui:repeat>
+	</composite:implementation>
+</f:view>

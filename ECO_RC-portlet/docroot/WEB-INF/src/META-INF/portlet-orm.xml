@@ -26,7 +26,7 @@
 			<basic name="issuedPlace" />
 			<basic name="maritalStatus" />
 			<basic name="numberOfChild" />
-			<basic name="nationality" />
+			<basic name="nationalityId" />
 			<basic name="ethnic" />
 			<basic name="religion" />
 			<basic name="applicationDate">

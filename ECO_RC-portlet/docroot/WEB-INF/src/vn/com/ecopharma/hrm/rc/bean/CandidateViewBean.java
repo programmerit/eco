@@ -37,20 +37,22 @@ public class CandidateViewBean extends EntityViewBean {
 	private static final Log LOGGER = LogFactoryUtil
 			.getLog(CandidateViewBean.class);
 
+	private static final String VIEW = "/views/pages/candidateView.xhtml";
+
 	private String currentNav = StringUtils.EMPTY;
 
 	private String selectedStatus = StringUtils.EMPTY;
 
 	@PostConstruct
 	public void init() {
-		currentNav = "/views/pages/candidateView.xhtml";
+		currentNav = VIEW;
 	}
 
 	@Override
 	public void switchMode(int mode) {
 		switch (mode) {
 		case CandidateNavigation.VIEW:
-			currentNav = "/views/pages/candidateView.xhtml";
+			currentNav = VIEW;
 			break;
 		case CandidateNavigation.CREATE:
 		case CandidateNavigation.EDIT:

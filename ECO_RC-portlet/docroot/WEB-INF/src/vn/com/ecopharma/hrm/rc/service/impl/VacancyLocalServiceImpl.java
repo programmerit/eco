@@ -14,6 +14,7 @@
 
 package vn.com.ecopharma.hrm.rc.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.TermRangeQueryFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
@@ -220,6 +222,9 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 					// EmpLocalServiceUtil.createDateTermRangeQuery(
 					// CandidateField.APPLICATION_DATE, queries, dateFrom,
 					// dateTo, searchContext);
+					// Query dateRangeQuery =
+					// candidateLocalService.createDateTermRangeQuery(filterProperty,
+					// dateFrom, dateTo, searchContext)
 				} else {
 					BooleanQuery stringFilterQuery = BooleanQueryFactoryUtil
 							.create(searchContext);

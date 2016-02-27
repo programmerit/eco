@@ -66,8 +66,8 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
 		sb.append(maritalStatus);
 		sb.append(", numberOfChild=");
 		sb.append(numberOfChild);
-		sb.append(", nationality=");
-		sb.append(nationality);
+		sb.append(", nationalityId=");
+		sb.append(nationalityId);
 		sb.append(", ethnic=");
 		sb.append(ethnic);
 		sb.append(", religion=");
@@ -183,13 +183,7 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
 		}
 
 		candidateImpl.setNumberOfChild(numberOfChild);
-
-		if (nationality == null) {
-			candidateImpl.setNationality(StringPool.BLANK);
-		}
-		else {
-			candidateImpl.setNationality(nationality);
-		}
+		candidateImpl.setNationalityId(nationalityId);
 
 		if (ethnic == null) {
 			candidateImpl.setEthnic(StringPool.BLANK);
@@ -273,7 +267,7 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
 		issuedPlace = objectInput.readUTF();
 		maritalStatus = objectInput.readUTF();
 		numberOfChild = objectInput.readInt();
-		nationality = objectInput.readUTF();
+		nationalityId = objectInput.readLong();
 		ethnic = objectInput.readUTF();
 		religion = objectInput.readUTF();
 		applicationDate = objectInput.readLong();
@@ -362,13 +356,7 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
 		}
 
 		objectOutput.writeInt(numberOfChild);
-
-		if (nationality == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(nationality);
-		}
+		objectOutput.writeLong(nationalityId);
 
 		if (ethnic == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -430,7 +418,7 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
 	public String issuedPlace;
 	public String maritalStatus;
 	public int numberOfChild;
-	public String nationality;
+	public long nationalityId;
 	public String ethnic;
 	public String religion;
 	public long applicationDate;

@@ -18,6 +18,7 @@ import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.util.RCUtils;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.Country;
 
 public class CandidateItem extends AbstractDocumentableBaseModelItem<Candidate> {
 
@@ -33,6 +34,8 @@ public class CandidateItem extends AbstractDocumentableBaseModelItem<Candidate> 
 
 	private List<CertificateObjectItem> certificates;
 
+	private Country nationality;
+
 	public CandidateItem() {
 		super();
 		this.getObject().setStatus(
@@ -43,6 +46,7 @@ public class CandidateItem extends AbstractDocumentableBaseModelItem<Candidate> 
 		this.experiences = new ArrayList<>();
 		this.certificates = new ArrayList<>();
 		this.desiredVacancies = new ArrayList<>();
+		this.nationality = RCUtils.getDefaultCountry();
 	}
 
 	public CandidateItem(Candidate candidate) {
@@ -52,6 +56,7 @@ public class CandidateItem extends AbstractDocumentableBaseModelItem<Candidate> 
 		this.certificates = getCertificateList(candidate.getCandidateId());
 		this.desiredVacancies = getDesireVacanciesList(candidate
 				.getCandidateId());
+		this.nationality = RCUtils.getCountryById(candidate.getNationalityId());
 	}
 
 	public CandidateItem(long candidateId) throws SystemException {
@@ -154,4 +159,11 @@ public class CandidateItem extends AbstractDocumentableBaseModelItem<Candidate> 
 		return CandidateLocalServiceUtil.createPrePersistCandidate();
 	}
 
+	public Country getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(Country nationality) {
+		this.nationality = nationality;
+	}
 }

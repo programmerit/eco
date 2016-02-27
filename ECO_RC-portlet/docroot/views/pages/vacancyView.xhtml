@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head />
+	<h:body>
+		<h:form id="vacancySearchForm"
+			rendered="#{vacancyViewBean.currentMode==1}">
+
+			<h:link value="Show/Hide filter" styleClass="label"
+				onclick="toggle('#{requestScope.filterGrid.clientId}'); return false;" />
+
+			<p:panelGrid columns="4" layout="grid"
+				style="margin-bottom: 7px!important;">
+				<h:panelGroup>
+					<p:inputText id="filter_vGlobalString"
+						value="#{vacancyFilterBean.global}" placeholder="Everything">
+						<p:ajax event="keyup" delay="1000"
+							oncomplete="PF('wVacancies').filter();" />
+					</p:inputText>
+					<p:tooltip for="filter_vGlobalString" value="Filter Everything"
+						showEffect="clip" hideEffect="explode" />
+
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<p:inputText id="filter_vName" value="#{vacancyFilterBean.name}"
+						placeholder="Name">
+						<p:ajax event="keyup" delay="1000"
+							oncomplete="PF('wVacancies').filter();" />
+					</p:inputText>
+					<p:tooltip for="filter_vName" value="Filter [Vacancy's Name]"
+						showEffect="clip" hideEffect="explode" />
+
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<p:inputText id="filter_vTitles"
+						value="#{vacancyFilterBean.titles}" placeholder="Titles">
+						<p:ajax event="keyup" delay="1000"
+							oncomplete="PF('wVacancies').filter();" />
+					</p:inputText>
+					<p:tooltip for="filter_vTitles" value="Filter [Titles]"
+						showEffect="clip" hideEffect="explode" />
+				</h:panelGroup>
+
+				<h:panelGroup>
+					<p:spinner id="filter_vNumberOfPositionFrom"
+						value="#{vacancyFilterBean.numberOfPositionFrom}">
+						<p:ajax process="@this" oncomplete="PF('wVacancies').filter();" />
+					</p:spinner>
+					<p:tooltip for="filter_vNumberOfPositionFrom"
+						value="Filter [Number of Position] From" showEffect="clip"
+						hideEffect="explode" />
+					<br />
+
+					<p:spinner id="filter_vNumberOfPositionTo" min="-1"
+						value="#{vacancyFilterBean.numberOfPositionTo}">
+						<p:ajax process="@this" oncomplete="PF('wVacancies').filter();" />
+					</p:spinner>
+					<p:tooltip for="filter_vNumberOfPositionTo" min="-1"
+						value="Filter [Number of Position] To" showEffect="clip"
+						hideEffect="explode" />
+				</h:panelGroup>
+			</p:panelGrid>
+		</h:form>
+
+		<h:form id="vacancyMainForm"
+			rendered="#{vacancyViewBean.currentMode==1}">
+
+			<p:remoteCommand name="refreshVacancyTable"
+				update=":vacancyMainForm:vacancies" />
+
+			<p:commandLink id="vBackButton" value="Back"
+				rendered="#{vacancyViewBean.currentMode != 1}"
+				actionListener="#{vacancyViewBean.switchMode(1)}"
+				update=":VacancyPanelGroup" immediate="true" />
+			<h:outputText value="|"
+				rendered="#{vacancyViewBean.currentMode != 1}" />
+
+			<p:commandLink id="addVacancy" value="Add New Vacancy"
+				actionListener="#{vacancyViewBean.switchMode(2)}"
+				action="#{vacancyBean.addVacancy}"
+				update=":VacancyPanelGroup :modifyVacancy:vacancyOutputPanel" /> |
+
+				<p:commandLink value="Remove Indexes"
+				actionListener="#{vacancyBean.removeIndexes}" ajax="true" /> |
+				<p:commandLink value="Index All Vacancies"
+				actionListener="#{vacancyBean.indexAll}" ajax="true" /> |
+
+				<p:commandLink value="Import/Export Settings"
+				onclick="PF('wPresetSettingDialog').show()" />
+
+			<p:dataTable id="vacancies" var="vacancy" widgetVar="wVacancies"
+				reflow="true" value="#{vacancyBean.lazyDataModel}"
+				paginatorAlwaysVisible="false" paginator="true" rows="25"
+				paginatorPosition="bottom"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10, 25, 50" lazy="true" selectionMode="single"
+				selection="#{vacancyBean.selectedItem}" rowKey="#{vacancy.id}"
+				emptyMessage="No vacancies found">
+				<p:ajax event="rowDblselect"
+					listener="#{vacancyBean.onRowDblSelect}"
+					update=":VacancyPanelGroup :modifyVacancy:vacancyOutputPanel" />
+
+				<p:column headerText="ID">
+					<h:outputText value="#{vacancy.id}" />
+				</p:column>
+
+				<p:column headerText="Titles" sortBy="#{vacancyFilterBean.titles}">
+					<h:outputText value="#{vacancy.titles}" />
+				</p:column>
+
+				<p:column headerText="Number of position"
+					sortBy="#{vacancyFilterBean.numberOfPosition}">
+					<h:outputText value="#{vacancy.numberOfPosition}" />
+				</p:column>
+
+				<p:column headerText="Status" sortBy="#{vacancyFilterBean.status}">
+					<h:outputText id="vacancyStatus"
+						styleClass="currentStatus #{vacancyViewBean.currentStatusCSS(vacancy.status)}"
+						value="#{vacancy.status}" />
+					<p:selectOneMenu id="vacancyStatusSelect" style="margin-top:20px;"
+						value="#{vacancyViewBean.selectedStatus}">
+						<p:ajax update="vacancyStatusSelect"
+							listener="#{vacancyViewBean.onStatusChange(vacancy)}"
+							oncomplete="refreshVacancyTable();">
+						</p:ajax>
+						<f:selectItem itemLabel="---" itemValue="" />
+						<f:selectItems
+							value="#{vacancyViewBean.getAvailableStatuses(vacancy.status)}"
+							var="status" itemValue="#{status}" itemLabel="#{status}" />
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="Action" width="85">
+					<p:commandLink id="editBtn" value="Edit"
+						action="#{vacancyBean.editVacancy(vacancy)}"
+						update=":VacancyPanelGroup"
+						rendered="#{vacancyPermission.checkPermission(vacancy.id, 'UPDATE')}">
+					</p:commandLink> | 
+
+						<p:commandLink id="deleteBtn" styleClass="RedButton"
+						style="margin-left: 2px;"
+						onclick="PF('wDeleteConfirmDialog').show()" value="Delete"
+						rendered="#{vacancyPermission.checkPermission(vacancy.id, 'DELETE')}">
+						<f:setPropertyActionListener
+							target="#{vacancyBean.deletedVacancyId}" value="#{vacancy.id}" />
+					</p:commandLink>
+				</p:column>
+
+			</p:dataTable>
+
+			<!-- DELETE CONFIRMATION DIALOG -->
+			<p:confirmDialog id="deleteConfirmDialog"
+				widgetVar="wDeleteConfirmDialog" message="Delete this Vacancy?"
+				header="Delete Confirmation" severity="alert" closeOnEscape="true"
+				showEffect="fade">
+				<p:commandButton id="confirmDelete" value="Yes"
+					styleClass="RedButton"
+					oncomplete="PF('wDeleteConfirmDialog').hide(); refreshVacancyTable();"
+					actionListener="#{vacancyBean.markDeleteVacancy}" />
+				<p:commandButton id="discardDelete" value="No"
+					onclick="PF('wDeleteConfirmDialog').hide()" />
+			</p:confirmDialog>
+		</h:form>
+
+		<ui:include src="/views/pages/modifyVacancy.xhtml" />
+
+	</h:body>
+</f:view>

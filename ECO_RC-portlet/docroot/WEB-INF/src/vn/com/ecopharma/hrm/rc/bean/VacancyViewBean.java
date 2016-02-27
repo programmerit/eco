@@ -2,6 +2,7 @@ package vn.com.ecopharma.hrm.rc.bean;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -22,15 +23,22 @@ public class VacancyViewBean extends EntityViewBean {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final String VIEW = "/views/pages/vacancyView.xhtml";
+
 	private String currentNav = StringUtils.EMPTY;
 
 	private String selectedStatus = StringUtils.EMPTY;
+
+	@PostConstruct
+	public void init() {
+		currentNav = VIEW;
+	}
 
 	@Override
 	public void switchMode(int mode) {
 		switch (mode) {
 		case VacancyNavigation.VIEW:
-
+			currentNav = VIEW;
 			break;
 		case VacancyNavigation.CREATE:
 		case VacancyNavigation.EDIT:

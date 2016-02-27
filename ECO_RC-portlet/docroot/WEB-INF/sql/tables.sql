@@ -12,7 +12,7 @@ create table eco_rcp_Candidate (
 	issuedPlace VARCHAR(75) null,
 	maritalStatus VARCHAR(75) null,
 	numberOfChild INTEGER,
-	nationality VARCHAR(75) null,
+	nationalityId LONG,
 	ethnic VARCHAR(75) null,
 	religion VARCHAR(75) null,
 	applicationDate DATE null,

@@ -103,9 +103,17 @@
 								style="width: 70px;" />
 
 							<h:outputText value="Nationality " />
-							<p:inputText
-								value="#{candidateBean.candidateItem.object.nationality}"
-								style="width: 70px;" />
+							<p:selectOneMenu id="nationalitySelect" var="n" filter="true"
+								filterMatchMode="contains" converter="countryConverter"
+								value="#{candidateBean.candidateItem.nationality}"
+								label="Nationality">
+								<f:selectItem itemLabel="Select country" itemValue="" />
+								<f:selectItems value="#{candidateBean.allCountries}" var="n"
+									itemLabel="#{n.name}" itemValue="#{n}" />
+								<p:column>
+									#{n.name}
+								</p:column>
+							</p:selectOneMenu>
 						</h:panelGrid>
 
 						<h:panelGrid columns="2">

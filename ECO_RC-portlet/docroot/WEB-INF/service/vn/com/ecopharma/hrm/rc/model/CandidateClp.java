@@ -87,7 +87,7 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 		attributes.put("issuedPlace", getIssuedPlace());
 		attributes.put("maritalStatus", getMaritalStatus());
 		attributes.put("numberOfChild", getNumberOfChild());
-		attributes.put("nationality", getNationality());
+		attributes.put("nationalityId", getNationalityId());
 		attributes.put("ethnic", getEthnic());
 		attributes.put("religion", getReligion());
 		attributes.put("applicationDate", getApplicationDate());
@@ -185,10 +185,10 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 			setNumberOfChild(numberOfChild);
 		}
 
-		String nationality = (String)attributes.get("nationality");
+		Long nationalityId = (Long)attributes.get("nationalityId");
 
-		if (nationality != null) {
-			setNationality(nationality);
+		if (nationalityId != null) {
+			setNationalityId(nationalityId);
 		}
 
 		String ethnic = (String)attributes.get("ethnic");
@@ -571,21 +571,21 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 	}
 
 	@Override
-	public String getNationality() {
-		return _nationality;
+	public long getNationalityId() {
+		return _nationalityId;
 	}
 
 	@Override
-	public void setNationality(String nationality) {
-		_nationality = nationality;
+	public void setNationalityId(long nationalityId) {
+		_nationalityId = nationalityId;
 
 		if (_candidateRemoteModel != null) {
 			try {
 				Class<?> clazz = _candidateRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setNationality", String.class);
+				Method method = clazz.getMethod("setNationalityId", long.class);
 
-				method.invoke(_candidateRemoteModel, nationality);
+				method.invoke(_candidateRemoteModel, nationalityId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -989,7 +989,7 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 		clone.setIssuedPlace(getIssuedPlace());
 		clone.setMaritalStatus(getMaritalStatus());
 		clone.setNumberOfChild(getNumberOfChild());
-		clone.setNationality(getNationality());
+		clone.setNationalityId(getNationalityId());
 		clone.setEthnic(getEthnic());
 		clone.setReligion(getReligion());
 		clone.setApplicationDate(getApplicationDate());
@@ -1083,8 +1083,8 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 		sb.append(getMaritalStatus());
 		sb.append(", numberOfChild=");
 		sb.append(getNumberOfChild());
-		sb.append(", nationality=");
-		sb.append(getNationality());
+		sb.append(", nationalityId=");
+		sb.append(getNationalityId());
 		sb.append(", ethnic=");
 		sb.append(getEthnic());
 		sb.append(", religion=");
@@ -1177,8 +1177,8 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 		sb.append(getNumberOfChild());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>nationality</column-name><column-value><![CDATA[");
-		sb.append(getNationality());
+			"<column><column-name>nationalityId</column-name><column-value><![CDATA[");
+		sb.append(getNationalityId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>ethnic</column-name><column-value><![CDATA[");
@@ -1251,7 +1251,7 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 	private String _issuedPlace;
 	private String _maritalStatus;
 	private int _numberOfChild;
-	private String _nationality;
+	private long _nationalityId;
 	private String _ethnic;
 	private String _religion;
 	private Date _applicationDate;

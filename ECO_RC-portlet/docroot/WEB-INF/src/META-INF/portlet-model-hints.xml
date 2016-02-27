@@ -15,7 +15,7 @@
 		<field name="issuedPlace" type="String" />
 		<field name="maritalStatus" type="String" />
 		<field name="numberOfChild" type="int" />
-		<field name="nationality" type="String" />
+		<field name="nationalityId" type="long" />
 		<field name="ethnic" type="String" />
 		<field name="religion" type="String" />
 		<field name="applicationDate" type="Date" />

@@ -62,7 +62,7 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
 		attributes.put("issuedPlace", getIssuedPlace());
 		attributes.put("maritalStatus", getMaritalStatus());
 		attributes.put("numberOfChild", getNumberOfChild());
-		attributes.put("nationality", getNationality());
+		attributes.put("nationalityId", getNationalityId());
 		attributes.put("ethnic", getEthnic());
 		attributes.put("religion", getReligion());
 		attributes.put("applicationDate", getApplicationDate());
@@ -160,10 +160,10 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
 			setNumberOfChild(numberOfChild);
 		}
 
-		String nationality = (String)attributes.get("nationality");
+		Long nationalityId = (Long)attributes.get("nationalityId");
 
-		if (nationality != null) {
-			setNationality(nationality);
+		if (nationalityId != null) {
+			setNationalityId(nationalityId);
 		}
 
 		String ethnic = (String)attributes.get("ethnic");
@@ -526,23 +526,23 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
 	}
 
 	/**
-	* Returns the nationality of this candidate.
+	* Returns the nationality ID of this candidate.
 	*
-	* @return the nationality of this candidate
+	* @return the nationality ID of this candidate
 	*/
 	@Override
-	public java.lang.String getNationality() {
-		return _candidate.getNationality();
+	public long getNationalityId() {
+		return _candidate.getNationalityId();
 	}
 
 	/**
-	* Sets the nationality of this candidate.
+	* Sets the nationality ID of this candidate.
 	*
-	* @param nationality the nationality of this candidate
+	* @param nationalityId the nationality ID of this candidate
 	*/
 	@Override
-	public void setNationality(java.lang.String nationality) {
-		_candidate.setNationality(nationality);
+	public void setNationalityId(long nationalityId) {
+		_candidate.setNationalityId(nationalityId);
 	}
 
 	/**

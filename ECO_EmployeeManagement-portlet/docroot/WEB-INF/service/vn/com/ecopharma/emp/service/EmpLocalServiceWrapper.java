@@ -375,6 +375,15 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.Query createDateTermRangeQuery(
+		java.lang.String field, java.util.Date dateFrom, java.util.Date dateTo,
+		boolean includesLower, boolean includesUpper,
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return _empLocalService.createDateTermRangeQuery(field, dateFrom,
+			dateTo, includesLower, includesUpper, searchContext);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.Query createStringListQuery(
 		java.lang.String property, java.util.List<java.lang.String> values,
 		com.liferay.portal.kernel.search.SearchContext searchContext)

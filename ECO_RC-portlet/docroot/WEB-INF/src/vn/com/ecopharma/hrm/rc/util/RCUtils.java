@@ -12,13 +12,27 @@ import vn.com.ecopharma.hrm.rc.dto.AbstractIndexedItem;
 import vn.com.ecopharma.hrm.rc.dto.IndexedEntity;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.Country;
+import com.liferay.portal.service.CountryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 
 public class RCUtils {
+
+	private static final Log LOGGER = LogFactoryUtil.getLog(RCUtils.class);
+
+	private static final String DEFAULT_COUNTRY_NAME = "vietnam";
+
+	private RCUtils() {
+
+	}
 
 	/**
 	 * @param name
@@ -73,6 +87,28 @@ public class RCUtils {
 			ids.add(i.getId());
 		}
 		return ids;
+	}
+
+	public static Country getDefaultCountry() {
+		try {
+			return CountryServiceUtil.getCountryByName(DEFAULT_COUNTRY_NAME);
+		} catch (PortalException e) {
+			LOGGER.info(e);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
+	public static Country getCountryById(long id) {
+		if (id == 0)
+			return null;
+		try {
+			return CountryServiceUtil.fetchCountry(id);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
 	}
 
 	public static ServiceContext getServiceContext() {

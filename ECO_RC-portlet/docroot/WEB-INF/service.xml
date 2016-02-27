@@ -22,7 +22,7 @@
         <column name="issuedPlace" type="String"></column>
         <column name="maritalStatus" type="String"></column>
         <column name="numberOfChild" type="int"></column>
-        <column name="nationality" type="String"></column>
+        <column name="nationalityId" type="long"></column>
         <column name="ethnic" type="String"></column>
         <column name="religion" type="String"></column>
         <column name="applicationDate" type="Date"></column>

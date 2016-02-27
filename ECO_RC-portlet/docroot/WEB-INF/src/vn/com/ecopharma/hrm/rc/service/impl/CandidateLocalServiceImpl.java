@@ -581,6 +581,10 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 						filterProperty, (List<String>) filterValue,
 						searchContext));
 			} else if (filterValue instanceof Date) {
+				// Query applicationDateRangeQuery = EmpLocalServiceUtil
+				// .createDateTermRangeQuery(
+				// CandidateField.APPLICATION_DATE, dateFrom,
+				// dateTo, true, true, searchContext);
 				Query applicationDateRangeQuery = createDateTermRangeQuery(
 						CandidateField.APPLICATION_DATE, dateFrom, dateTo,
 						searchContext);

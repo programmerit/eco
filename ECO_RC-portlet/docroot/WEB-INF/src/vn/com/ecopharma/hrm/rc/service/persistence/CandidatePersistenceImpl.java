@@ -1488,7 +1488,7 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
 		candidateImpl.setIssuedPlace(candidate.getIssuedPlace());
 		candidateImpl.setMaritalStatus(candidate.getMaritalStatus());
 		candidateImpl.setNumberOfChild(candidate.getNumberOfChild());
-		candidateImpl.setNationality(candidate.getNationality());
+		candidateImpl.setNationalityId(candidate.getNationalityId());
 		candidateImpl.setEthnic(candidate.getEthnic());
 		candidateImpl.setReligion(candidate.getReligion());
 		candidateImpl.setApplicationDate(candidate.getApplicationDate());

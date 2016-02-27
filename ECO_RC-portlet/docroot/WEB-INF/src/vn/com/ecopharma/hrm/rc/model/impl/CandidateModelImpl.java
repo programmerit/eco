@@ -79,7 +79,7 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 			{ "issuedPlace", Types.VARCHAR },
 			{ "maritalStatus", Types.VARCHAR },
 			{ "numberOfChild", Types.INTEGER },
-			{ "nationality", Types.VARCHAR },
+			{ "nationalityId", Types.BIGINT },
 			{ "ethnic", Types.VARCHAR },
 			{ "religion", Types.VARCHAR },
 			{ "applicationDate", Types.TIMESTAMP },
@@ -94,7 +94,7 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "description", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_rcp_Candidate (candidateId LONG not null primary key,candidateCode VARCHAR(75) null,fullName VARCHAR(75) null,emailAddress VARCHAR(75) null,contactNumber VARCHAR(75) null,dateOfBirth DATE null,placeOfBirth VARCHAR(75) null,gender VARCHAR(75) null,identityCardNo VARCHAR(75) null,issuedDate DATE null,issuedPlace VARCHAR(75) null,maritalStatus VARCHAR(75) null,numberOfChild INTEGER,nationality VARCHAR(75) null,ethnic VARCHAR(75) null,religion VARCHAR(75) null,applicationDate DATE null,status VARCHAR(75) null,locationId LONG,deleted BOOLEAN,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table eco_rcp_Candidate (candidateId LONG not null primary key,candidateCode VARCHAR(75) null,fullName VARCHAR(75) null,emailAddress VARCHAR(75) null,contactNumber VARCHAR(75) null,dateOfBirth DATE null,placeOfBirth VARCHAR(75) null,gender VARCHAR(75) null,identityCardNo VARCHAR(75) null,issuedDate DATE null,issuedPlace VARCHAR(75) null,maritalStatus VARCHAR(75) null,numberOfChild INTEGER,nationalityId LONG,ethnic VARCHAR(75) null,religion VARCHAR(75) null,applicationDate DATE null,status VARCHAR(75) null,locationId LONG,deleted BOOLEAN,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table eco_rcp_Candidate";
 	public static final String ORDER_BY_JPQL = " ORDER BY candidate.candidateId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_rcp_Candidate.candidateId ASC";
@@ -141,7 +141,7 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 		model.setIssuedPlace(soapModel.getIssuedPlace());
 		model.setMaritalStatus(soapModel.getMaritalStatus());
 		model.setNumberOfChild(soapModel.getNumberOfChild());
-		model.setNationality(soapModel.getNationality());
+		model.setNationalityId(soapModel.getNationalityId());
 		model.setEthnic(soapModel.getEthnic());
 		model.setReligion(soapModel.getReligion());
 		model.setApplicationDate(soapModel.getApplicationDate());
@@ -232,7 +232,7 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 		attributes.put("issuedPlace", getIssuedPlace());
 		attributes.put("maritalStatus", getMaritalStatus());
 		attributes.put("numberOfChild", getNumberOfChild());
-		attributes.put("nationality", getNationality());
+		attributes.put("nationalityId", getNationalityId());
 		attributes.put("ethnic", getEthnic());
 		attributes.put("religion", getReligion());
 		attributes.put("applicationDate", getApplicationDate());
@@ -330,10 +330,10 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 			setNumberOfChild(numberOfChild);
 		}
 
-		String nationality = (String)attributes.get("nationality");
+		Long nationalityId = (Long)attributes.get("nationalityId");
 
-		if (nationality != null) {
-			setNationality(nationality);
+		if (nationalityId != null) {
+			setNationalityId(nationalityId);
 		}
 
 		String ethnic = (String)attributes.get("ethnic");
@@ -635,18 +635,13 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 
 	@JSON
 	@Override
-	public String getNationality() {
-		if (_nationality == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _nationality;
-		}
+	public long getNationalityId() {
+		return _nationalityId;
 	}
 
 	@Override
-	public void setNationality(String nationality) {
-		_nationality = nationality;
+	public void setNationalityId(long nationalityId) {
+		_nationalityId = nationalityId;
 	}
 
 	@JSON
@@ -876,7 +871,7 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 		candidateImpl.setIssuedPlace(getIssuedPlace());
 		candidateImpl.setMaritalStatus(getMaritalStatus());
 		candidateImpl.setNumberOfChild(getNumberOfChild());
-		candidateImpl.setNationality(getNationality());
+		candidateImpl.setNationalityId(getNationalityId());
 		candidateImpl.setEthnic(getEthnic());
 		candidateImpl.setReligion(getReligion());
 		candidateImpl.setApplicationDate(getApplicationDate());
@@ -1049,13 +1044,7 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 
 		candidateCacheModel.numberOfChild = getNumberOfChild();
 
-		candidateCacheModel.nationality = getNationality();
-
-		String nationality = candidateCacheModel.nationality;
-
-		if ((nationality != null) && (nationality.length() == 0)) {
-			candidateCacheModel.nationality = null;
-		}
+		candidateCacheModel.nationalityId = getNationalityId();
 
 		candidateCacheModel.ethnic = getEthnic();
 
@@ -1167,8 +1156,8 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 		sb.append(getMaritalStatus());
 		sb.append(", numberOfChild=");
 		sb.append(getNumberOfChild());
-		sb.append(", nationality=");
-		sb.append(getNationality());
+		sb.append(", nationalityId=");
+		sb.append(getNationalityId());
 		sb.append(", ethnic=");
 		sb.append(getEthnic());
 		sb.append(", religion=");
@@ -1261,8 +1250,8 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 		sb.append(getNumberOfChild());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>nationality</column-name><column-value><![CDATA[");
-		sb.append(getNationality());
+			"<column><column-name>nationalityId</column-name><column-value><![CDATA[");
+		sb.append(getNationalityId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>ethnic</column-name><column-value><![CDATA[");
@@ -1342,7 +1331,7 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 	private String _issuedPlace;
 	private String _maritalStatus;
 	private int _numberOfChild;
-	private String _nationality;
+	private long _nationalityId;
 	private String _ethnic;
 	private String _religion;
 	private Date _applicationDate;

@@ -301,6 +301,11 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		java.util.Date dateFrom, java.util.Date dateTo,
 		com.liferay.portal.kernel.search.SearchContext searchContext);
 
+	public com.liferay.portal.kernel.search.Query createDateTermRangeQuery(
+		java.lang.String field, java.util.Date dateFrom, java.util.Date dateTo,
+		boolean includesLower, boolean includesUpper,
+		com.liferay.portal.kernel.search.SearchContext searchContext);
+
 	public com.liferay.portal.kernel.search.Query createStringListQuery(
 		java.lang.String property, java.util.List<java.lang.String> values,
 		com.liferay.portal.kernel.search.SearchContext searchContext)

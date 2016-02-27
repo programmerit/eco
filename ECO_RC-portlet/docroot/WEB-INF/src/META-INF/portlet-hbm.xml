@@ -33,7 +33,7 @@
 		<property name="issuedPlace" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="maritalStatus" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="numberOfChild" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="nationality" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="nationalityId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="ethnic" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="religion" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="applicationDate" type="org.hibernate.type.TimestampType" />

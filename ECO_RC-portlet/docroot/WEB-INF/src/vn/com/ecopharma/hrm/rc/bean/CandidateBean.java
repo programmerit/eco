@@ -70,6 +70,8 @@ import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.model.Country;
+import com.liferay.portal.service.CountryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 
 @ManagedBean(name = "candidateBean")
@@ -178,7 +180,6 @@ public class CandidateBean implements Serializable {
 			}
 		};
 
-		// vacancies = VacancyLocalServiceUtil.findAllUnDeleted();
 		final SearchContext searchContext = RCUtils.getCurrentSearchContext();
 		final Sort sort = new Sort(VacancyField.VACANCY_ID, false);
 		vacancyIndexItems = VacancyUtils
@@ -217,26 +218,22 @@ public class CandidateBean implements Serializable {
 
 			if (candidate == null) { // create new
 				candidate = candidateItem.getObject();
+				candidate.setNationalityId(candidateItem.getNationality()
+						.getCountryId());
 				CandidateLocalServiceUtil.addCandidate(candidate, 0,
 						candidateItem.getVacancyIndexItem().getId(),
 						candidateItem.getPossibleDesiredVacancies(),
 						fileEntryIds, experienceMap, certificateMap,
 						serviceContext);
 			} else { // update
-
+				candidateItem.getObject().setNationalityId(
+						candidateItem.getNationality().getCountryId());
 				CandidateLocalServiceUtil.updateCandidate(candidateItem
 						.getObject(), candidateItem.getVacancyIndexItem()
 						.getId(), candidateItem.getPossibleDesiredVacancies(),
 						fileEntryIds, experienceMap, certificateMap,
 						serviceContext);
 			}
-
-			// RequestContext.getCurrentInstance().execute(
-			// "window.location.hash = '#vCandidate/first=" + first
-			// + "&pageSize=" + pageSize + "';");
-
-			// RequestContext.getCurrentInstance().execute(
-			// "window.location.hash = '#vCandidate';");
 			BeanUtils.getCandidateViewBean().switchMode(
 					CandidateNavigation.VIEW);
 
@@ -265,10 +262,6 @@ public class CandidateBean implements Serializable {
 							QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 			for (Document doc : docs) {
 				VacancyIndexItem vacancyIndexItem = new VacancyIndexItem(doc);
-				// if (!candidateItem.getDesiredVacancies().contains(
-				// vacancyIndexItem)
-				// && (vacancyIndexItem.getId() != candidateItem
-				// .getVacancyIndexItem().getId()))
 				filteredItems.add(vacancyIndexItem);
 			}
 			return filteredItems;
@@ -280,8 +273,6 @@ public class CandidateBean implements Serializable {
 
 	public void addCandidate() {
 		this.candidateItem = new CandidateItem();
-		// RequestContext.getCurrentInstance().execute(
-		// "window.location.hash = '#vCandidate/addCandidate';");
 		BeanUtils.getCandidateViewBean().switchMode(CandidateNavigation.CREATE);
 	}
 
@@ -740,5 +731,14 @@ public class CandidateBean implements Serializable {
 
 	public List<String> getAllDocumentTypes() {
 		return DocumentType.getAll();
+	}
+
+	public List<Country> getAllCountries() {
+		try {
+			return CountryServiceUtil.getCountries();
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return new ArrayList<>();
 	}
 }

@@ -310,8 +310,13 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 								searchContext));
 					}
 				} else if (filterValue instanceof Date) {
-					createDateTermRangeQuery(EmpField.JOINED_DATE, queries,
-							joinedDateFrom, joinedDateTo, searchContext);
+					// createDateTermRangeQuery(EmpField.JOINED_DATE, queries,
+					// joinedDateFrom, joinedDateTo, searchContext);
+					Query dateRangeQuery = createDateTermRangeQuery(
+							EmpField.JOINED_DATE, joinedDateFrom, joinedDateTo,
+							true, true, searchContext);
+					if (dateRangeQuery != null)
+						queries.add(dateRangeQuery);
 				}
 			}
 		}
@@ -357,6 +362,26 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			queries.add(dateTermRangeQuery);
 		}
 
+	}
+
+	public Query createDateTermRangeQuery(String field, Date dateFrom,
+			Date dateTo, boolean includesLower, boolean includesUpper,
+			SearchContext searchContext) {
+		if (dateFrom == null && dateTo == null)
+			return null;
+		final SimpleDateFormat sdf = new SimpleDateFormat(FILTER_DATE_FORMAT);
+		final String defaultDateFromString = "19700101000000";
+
+		final String defaultDateToString = sdf.format(getCurrentDateNextYear());
+
+		final String filterDateFrom = dateFrom != null ? sdf.format(dateFrom)
+				: defaultDateFromString;
+
+		final String filterDateTo = dateTo != null ? sdf.format(dateTo)
+				: defaultDateToString;
+
+		return TermRangeQueryFactoryUtil.create(searchContext, field,
+				filterDateFrom, filterDateTo, includesLower, includesUpper);
 	}
 
 	public Query createStringListQuery(String property, List<String> values,

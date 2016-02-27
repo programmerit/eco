@@ -44,7 +44,7 @@ public class CandidateSoap implements Serializable {
 		soapModel.setIssuedPlace(model.getIssuedPlace());
 		soapModel.setMaritalStatus(model.getMaritalStatus());
 		soapModel.setNumberOfChild(model.getNumberOfChild());
-		soapModel.setNationality(model.getNationality());
+		soapModel.setNationalityId(model.getNationalityId());
 		soapModel.setEthnic(model.getEthnic());
 		soapModel.setReligion(model.getReligion());
 		soapModel.setApplicationDate(model.getApplicationDate());
@@ -214,12 +214,12 @@ public class CandidateSoap implements Serializable {
 		_numberOfChild = numberOfChild;
 	}
 
-	public String getNationality() {
-		return _nationality;
+	public long getNationalityId() {
+		return _nationalityId;
 	}
 
-	public void setNationality(String nationality) {
-		_nationality = nationality;
+	public void setNationalityId(long nationalityId) {
+		_nationalityId = nationalityId;
 	}
 
 	public String getEthnic() {
@@ -343,7 +343,7 @@ public class CandidateSoap implements Serializable {
 	private String _issuedPlace;
 	private String _maritalStatus;
 	private int _numberOfChild;
-	private String _nationality;
+	private long _nationalityId;
 	private String _ethnic;
 	private String _religion;
 	private Date _applicationDate;
