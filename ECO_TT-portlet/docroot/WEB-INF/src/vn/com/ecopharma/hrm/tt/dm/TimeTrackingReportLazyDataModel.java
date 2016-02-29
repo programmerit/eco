@@ -11,7 +11,9 @@ import org.primefaces.model.SortOrder;
 
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
+import vn.com.ecopharma.hrm.tt.dto.EmpIndexedItem;
 import vn.com.ecopharma.hrm.tt.dto.EmpTimeTrackingIndexedItem;
+import vn.com.ecopharma.hrm.tt.dto.ReportTimeItem;
 import vn.com.ecopharma.hrm.tt.dto.TimeTrackingIndexItem;
 import vn.com.ecopharma.hrm.tt.utils.TTUtils;
 
@@ -40,31 +42,6 @@ public class TimeTrackingReportLazyDataModel extends
 		try {
 			final SearchContext searchContext = TTUtils
 					.getCurrentSearchContext();
-			// final List<Query> queries = new ArrayList<>();
-
-			// add Filtered values
-			// for (Map.Entry<String, Object> entry : filters.entrySet()) {
-			// if (!entry.getKey().equalsIgnoreCase(
-			// TimeTrackingField.FILTERED_DATE_FROM)
-			// && !entry.getKey().equalsIgnoreCase(
-			// TimeTrackingField.FILTERED_DATE_TO)
-			// && !entry.getKey().equalsIgnoreCase(
-			// TimeTrackingField.GLOBAL)
-			// && !entry.getKey().equalsIgnoreCase(
-			// TimeTrackingField.MONTH)
-			// && !entry.getKey().equalsIgnoreCase(
-			// TimeTrackingField.YEAR)
-			// && !entry.getKey().equalsIgnoreCase(
-			// TimeTrackingField.IS_EMPTY_IN)
-			// && !entry.getKey().equalsIgnoreCase(
-			// TimeTrackingField.IS_EMPTY_OUT)) {
-			// BooleanQuery query = BooleanQueryFactoryUtil
-			// .create(searchContext);
-			// query.addTerm(entry.getKey(), (String) entry.getValue(),
-			// true, BooleanClauseOccur.MUST);
-			// queries.add(query);
-			// }
-			// }
 
 			final List<Document> empDocs = EmpLocalServiceUtil
 					.filterEmployeeByFields(TTUtils.getCurrentSearchContext(),
@@ -74,28 +51,37 @@ public class TimeTrackingReportLazyDataModel extends
 
 			for (Document document : empDocs) {
 				final EmpTimeTrackingIndexedItem empTimeTrackingIndexedItem = new EmpTimeTrackingIndexedItem(
-						document);
+						new EmpIndexedItem(document));
 				final int month = (Integer) filters
 						.get(TimeTrackingField.MONTH);
 
 				final int year = (Integer) filters.get(TimeTrackingField.YEAR);
 
 				final List<TimeTrackingIndexItem> timeTrackingIndexItems = TTUtils
-						.getTimeTrackingIndexItems(
-								empTimeTrackingIndexedItem.getEmployeeCode(),
-								month, year, true, true);
+						.getTimeTrackingIndexItems(empTimeTrackingIndexedItem
+								.getEmp().getEmployeeCode(), month, year, true,
+								true);
 
-				LOGGER.info(empTimeTrackingIndexedItem.getFullName() + "    "
-						+ timeTrackingIndexItems.size());
+				LOGGER.info(empTimeTrackingIndexedItem.getId() + "   "
+						+ empTimeTrackingIndexedItem.getEmp().getFullNameVi()
+						+ "    " + timeTrackingIndexItems.size());
 
-				final Map<String, Date> minInMap = getMinInMap(timeTrackingIndexItems);
-				final Map<String, Date> maxOutMap = getMaxOutMap(timeTrackingIndexItems);
-				empTimeTrackingIndexedItem.setMinInMap(minInMap);
-				empTimeTrackingIndexedItem.setMaxOutMap(maxOutMap);
+				// final Map<String, Date> minInMap =
+				// getMinInMap(timeTrackingIndexItems);
+				// final Map<String, Date> maxOutMap =
+				// getMaxOutMap(timeTrackingIndexItems);
+				// empTimeTrackingIndexedItem.setMinInMap(minInMap);
+				// empTimeTrackingIndexedItem.setMaxOutMap(maxOutMap);
+
+				final Map<String, ReportTimeItem> timeMap = getTimeMap(timeTrackingIndexItems);
+
+				empTimeTrackingIndexedItem.setReportTimeMap(timeMap);
+
 				empTimeTrackingIndexedItem
-						.setGrandTotalMinInTime(getGrandMinIn(minInMap));
+						.setGrandTotalMinInTime(getGrandMinIn(timeMap));
 				empTimeTrackingIndexedItem
-						.setGrandTotalMaxOutTime(getGrandMaxOut(maxOutMap));
+						.setGrandTotalMaxOutTime(getGrandMaxOut(timeMap));
+
 				empTimeTrackingIndexedItems.add(empTimeTrackingIndexedItem);
 			}
 			int countTotal = EmpLocalServiceUtil.countFilterEmployeeByFields(
@@ -132,13 +118,13 @@ public class TimeTrackingReportLazyDataModel extends
 
 	@Override
 	public EmpTimeTrackingIndexedItem getRowData(String rowKey) {
-		return new EmpTimeTrackingIndexedItem(
-				EmpLocalServiceUtil.getIndexedEmp(rowKey, getSearchContext()));
+		return new EmpTimeTrackingIndexedItem(new EmpIndexedItem(
+				EmpLocalServiceUtil.getIndexedEmp(rowKey, getSearchContext())));
 	}
 
 	@Override
 	public Object getRowKey(EmpTimeTrackingIndexedItem object) {
-		return object.getEmployeeId();
+		return object.getId();
 	}
 
 	// Other helper methods
@@ -178,32 +164,52 @@ public class TimeTrackingReportLazyDataModel extends
 		return resultMap;
 	}
 
-	private static Date getGrandMinIn(Map<String, Date> map) {
+	public Map<String, ReportTimeItem> getTimeMap(
+			List<TimeTrackingIndexItem> timeTrackingIndexItems) {
+		Map<String, ReportTimeItem> result = new LinkedHashMap<>();
+		for (TimeTrackingIndexItem item : timeTrackingIndexItems) {
+			final Date[] inArray = new Date[] { item.getIn1(), item.getIn2(),
+					item.getIn3() };
+			final Date[] outArray = new Date[] { item.getOut1(),
+					item.getOut2(), item.getOut3() };
+			Date min = null;
+			Date max = null;
+			ReportTimeItem timeItem = new ReportTimeItem(
+					TTUtils.compareAndGetMinTime(0, min, inArray),
+					TTUtils.compareAndGetMaxTime(0, max, outArray, inArray));
+			result.put(item.getDateFormatted(), timeItem);
+		}
+		return result;
+	}
+
+	private static Date getGrandMinIn(Map<String, ReportTimeItem> map) {
 		if (map == null || map.values().isEmpty())
 			return null;
 		Date min = null;
-		for (Date date : map.values()) {
+		for (ReportTimeItem item : map.values()) {
 			if (min == null) {
-				min = date;
+				min = item.getMinIn();
 			} else {
-				if (date != null && compareTimes(date, min) < 0) {
-					min = date;
+				if (item != null && item.getMinIn() != null
+						&& compareTimes(item.getMinIn(), min) < 0) {
+					min = item.getMinIn();
 				}
 			}
 		}
 		return min;
 	}
 
-	private static Date getGrandMaxOut(Map<String, Date> map) {
+	private static Date getGrandMaxOut(Map<String, ReportTimeItem> map) {
 		if (map == null || map.values().isEmpty())
 			return null;
 		Date max = null;
-		for (Date date : map.values()) {
+		for (ReportTimeItem item : map.values()) {
 			if (max == null) {
-				max = date;
+				max = item.getMaxOut();
 			} else {
-				if (date != null && compareTimes(date, max) > 0) {
-					max = date;
+				if (item != null && item.getMaxOut() != null
+						&& compareTimes(item.getMaxOut(), max) > 0) {
+					max = item.getMaxOut();
 				}
 			}
 		}

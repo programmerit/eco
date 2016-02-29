@@ -1171,6 +1171,7 @@ public class TimeTrackingPersistenceImpl extends BasePersistenceImpl<TimeTrackin
 		timeTrackingImpl.setUserName(timeTracking.getUserName());
 		timeTrackingImpl.setCreateDate(timeTracking.getCreateDate());
 		timeTrackingImpl.setModifiedDate(timeTracking.getModifiedDate());
+		timeTrackingImpl.setLeaveRefId(timeTracking.getLeaveRefId());
 
 		return timeTrackingImpl;
 	}

@@ -65,6 +65,7 @@ public class TimeTrackingWrapper implements TimeTracking,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("leaveRefId", getLeaveRefId());
 
 		return attributes;
 	}
@@ -159,6 +160,12 @@ public class TimeTrackingWrapper implements TimeTracking,
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long leaveRefId = (Long)attributes.get("leaveRefId");
+
+		if (leaveRefId != null) {
+			setLeaveRefId(leaveRefId);
 		}
 	}
 
@@ -502,6 +509,26 @@ public class TimeTrackingWrapper implements TimeTracking,
 	@Override
 	public void setModifiedDate(java.util.Date modifiedDate) {
 		_timeTracking.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Returns the leave ref ID of this time tracking.
+	*
+	* @return the leave ref ID of this time tracking
+	*/
+	@Override
+	public long getLeaveRefId() {
+		return _timeTracking.getLeaveRefId();
+	}
+
+	/**
+	* Sets the leave ref ID of this time tracking.
+	*
+	* @param leaveRefId the leave ref ID of this time tracking
+	*/
+	@Override
+	public void setLeaveRefId(long leaveRefId) {
+		_timeTracking.setLeaveRefId(leaveRefId);
 	}
 
 	@Override

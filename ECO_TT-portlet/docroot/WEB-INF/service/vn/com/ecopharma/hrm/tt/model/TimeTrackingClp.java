@@ -90,6 +90,7 @@ public class TimeTrackingClp extends BaseModelImpl<TimeTracking>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("leaveRefId", getLeaveRefId());
 
 		return attributes;
 	}
@@ -184,6 +185,12 @@ public class TimeTrackingClp extends BaseModelImpl<TimeTracking>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long leaveRefId = (Long)attributes.get("leaveRefId");
+
+		if (leaveRefId != null) {
+			setLeaveRefId(leaveRefId);
 		}
 	}
 
@@ -542,6 +549,29 @@ public class TimeTrackingClp extends BaseModelImpl<TimeTracking>
 		}
 	}
 
+	@Override
+	public long getLeaveRefId() {
+		return _leaveRefId;
+	}
+
+	@Override
+	public void setLeaveRefId(long leaveRefId) {
+		_leaveRefId = leaveRefId;
+
+		if (_timeTrackingRemoteModel != null) {
+			try {
+				Class<?> clazz = _timeTrackingRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setLeaveRefId", long.class);
+
+				method.invoke(_timeTrackingRemoteModel, leaveRefId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getTimeTrackingRemoteModel() {
 		return _timeTrackingRemoteModel;
 	}
@@ -626,6 +656,7 @@ public class TimeTrackingClp extends BaseModelImpl<TimeTracking>
 		clone.setUserName(getUserName());
 		clone.setCreateDate(getCreateDate());
 		clone.setModifiedDate(getModifiedDate());
+		clone.setLeaveRefId(getLeaveRefId());
 
 		return clone;
 	}
@@ -678,7 +709,7 @@ public class TimeTrackingClp extends BaseModelImpl<TimeTracking>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{timeTrackingId=");
 		sb.append(getTimeTrackingId());
@@ -710,6 +741,8 @@ public class TimeTrackingClp extends BaseModelImpl<TimeTracking>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", leaveRefId=");
+		sb.append(getLeaveRefId());
 		sb.append("}");
 
 		return sb.toString();
@@ -717,7 +750,7 @@ public class TimeTrackingClp extends BaseModelImpl<TimeTracking>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.hrm.tt.model.TimeTracking");
@@ -783,6 +816,10 @@ public class TimeTrackingClp extends BaseModelImpl<TimeTracking>
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>leaveRefId</column-name><column-value><![CDATA[");
+		sb.append(getLeaveRefId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -805,6 +842,7 @@ public class TimeTrackingClp extends BaseModelImpl<TimeTracking>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _leaveRefId;
 	private BaseModel<?> _timeTrackingRemoteModel;
 	private Class<?> _clpSerializerClass = vn.com.ecopharma.hrm.tt.service.ClpSerializer.class;
 }

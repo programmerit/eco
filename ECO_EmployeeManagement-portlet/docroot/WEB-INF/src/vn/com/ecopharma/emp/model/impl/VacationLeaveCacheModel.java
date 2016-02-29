@@ -38,7 +38,7 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{vacationLeaveId=");
 		sb.append(vacationLeaveId);
@@ -52,6 +52,8 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 		sb.append(leaveTo);
 		sb.append(", actualTo=");
 		sb.append(actualTo);
+		sb.append(", numberOfHours=");
+		sb.append(numberOfHours);
 		sb.append(", reason=");
 		sb.append(reason);
 		sb.append(", description=");
@@ -70,6 +72,8 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 		sb.append(modifiedDate);
 		sb.append(", deleted=");
 		sb.append(deleted);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -109,6 +113,8 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 		else {
 			vacationLeaveImpl.setActualTo(new Date(actualTo));
 		}
+
+		vacationLeaveImpl.setNumberOfHours(numberOfHours);
 
 		if (reason == null) {
 			vacationLeaveImpl.setReason(StringPool.BLANK);
@@ -151,6 +157,13 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 
 		vacationLeaveImpl.setDeleted(deleted);
 
+		if (status == null) {
+			vacationLeaveImpl.setStatus(StringPool.BLANK);
+		}
+		else {
+			vacationLeaveImpl.setStatus(status);
+		}
+
 		vacationLeaveImpl.resetOriginalValues();
 
 		return vacationLeaveImpl;
@@ -164,6 +177,7 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 		leaveFrom = objectInput.readLong();
 		leaveTo = objectInput.readLong();
 		actualTo = objectInput.readLong();
+		numberOfHours = objectInput.readInt();
 		reason = objectInput.readUTF();
 		description = objectInput.readUTF();
 		groupId = objectInput.readLong();
@@ -173,6 +187,7 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		deleted = objectInput.readBoolean();
+		status = objectInput.readUTF();
 	}
 
 	@Override
@@ -191,6 +206,7 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 		objectOutput.writeLong(leaveFrom);
 		objectOutput.writeLong(leaveTo);
 		objectOutput.writeLong(actualTo);
+		objectOutput.writeInt(numberOfHours);
 
 		if (reason == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -220,6 +236,13 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeBoolean(deleted);
+
+		if (status == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(status);
+		}
 	}
 
 	public long vacationLeaveId;
@@ -228,6 +251,7 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 	public long leaveFrom;
 	public long leaveTo;
 	public long actualTo;
+	public int numberOfHours;
 	public String reason;
 	public String description;
 	public long groupId;
@@ -237,4 +261,5 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 	public long createDate;
 	public long modifiedDate;
 	public boolean deleted;
+	public String status;
 }

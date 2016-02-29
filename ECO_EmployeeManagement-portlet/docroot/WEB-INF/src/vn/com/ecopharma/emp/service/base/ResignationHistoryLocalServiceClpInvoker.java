@@ -106,97 +106,97 @@ public class ResignationHistoryLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.ResignationHistory"
 			};
 
-		_methodName174 = "getBeanIdentifier";
-
-		_methodParameterTypes174 = new String[] {  };
-
-		_methodName175 = "setBeanIdentifier";
-
-		_methodParameterTypes175 = new String[] { "java.lang.String" };
-
-		_methodName180 = "findAll";
+		_methodName180 = "getBeanIdentifier";
 
 		_methodParameterTypes180 = new String[] {  };
 
-		_methodName181 = "findAll";
+		_methodName181 = "setBeanIdentifier";
 
-		_methodParameterTypes181 = new String[] { "int", "int" };
+		_methodParameterTypes181 = new String[] { "java.lang.String" };
 
-		_methodName182 = "findAll";
+		_methodName186 = "findAll";
 
-		_methodParameterTypes182 = new String[] {
+		_methodParameterTypes186 = new String[] {  };
+
+		_methodName187 = "findAll";
+
+		_methodParameterTypes187 = new String[] { "int", "int" };
+
+		_methodName188 = "findAll";
+
+		_methodParameterTypes188 = new String[] {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName183 = "findByEmployee";
+		_methodName189 = "findByEmployee";
 
-		_methodParameterTypes183 = new String[] { "long" };
+		_methodParameterTypes189 = new String[] { "long" };
 
-		_methodName184 = "createPrePersisted";
+		_methodName190 = "createPrePersisted";
 
-		_methodParameterTypes184 = new String[] {  };
+		_methodParameterTypes190 = new String[] {  };
 
-		_methodName185 = "addResignationHistory";
+		_methodName191 = "addResignationHistory";
 
-		_methodParameterTypes185 = new String[] {
+		_methodParameterTypes191 = new String[] {
 				"vn.com.ecopharma.emp.model.ResignationHistory",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName186 = "updateResignationHistory";
+		_methodName192 = "updateResignationHistory";
 
-		_methodParameterTypes186 = new String[] {
+		_methodParameterTypes192 = new String[] {
 				"long", "java.util.Date", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName187 = "markDeleted";
+		_methodName193 = "markDeleted";
 
-		_methodParameterTypes187 = new String[] {
+		_methodParameterTypes193 = new String[] {
 				"vn.com.ecopharma.emp.model.ResignationHistory"
 			};
 
-		_methodName188 = "countAllUnDeletedDocuments";
+		_methodName194 = "countAllUnDeletedDocuments";
 
-		_methodParameterTypes188 = new String[] {
+		_methodParameterTypes194 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort"
 			};
 
-		_methodName189 = "searchAllUnDeletedDocuments";
+		_methodName195 = "searchAllUnDeletedDocuments";
 
-		_methodParameterTypes189 = new String[] {
+		_methodParameterTypes195 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName190 = "getIndexedDocument";
+		_methodName196 = "getIndexedDocument";
 
-		_methodParameterTypes190 = new String[] {
+		_methodParameterTypes196 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName191 = "getIndexedDocument";
+		_methodName197 = "getIndexedDocument";
 
-		_methodParameterTypes191 = new String[] {
+		_methodParameterTypes197 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName192 = "indexAll";
+		_methodName198 = "indexAll";
 
-		_methodParameterTypes192 = new String[] {  };
+		_methodParameterTypes198 = new String[] {  };
 
-		_methodName193 = "removeAllIndexes";
+		_methodName199 = "removeAllIndexes";
 
-		_methodParameterTypes193 = new String[] {
+		_methodParameterTypes199 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 
-		_methodName194 = "addMissingResignedEmployee";
+		_methodName200 = "addMissingResignedEmployee";
 
-		_methodParameterTypes194 = new String[] {
+		_methodParameterTypes200 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -290,74 +290,74 @@ public class ResignationHistoryLocalServiceClpInvoker {
 			return ResignationHistoryLocalServiceUtil.updateResignationHistory((vn.com.ecopharma.emp.model.ResignationHistory)arguments[0]);
 		}
 
-		if (_methodName174.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
+		if (_methodName180.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes180, parameterTypes)) {
 			return ResignationHistoryLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName175.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
+		if (_methodName181.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes181, parameterTypes)) {
 			ResignationHistoryLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName180.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes180, parameterTypes)) {
+		if (_methodName186.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes186, parameterTypes)) {
 			return ResignationHistoryLocalServiceUtil.findAll();
 		}
 
-		if (_methodName181.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes181, parameterTypes)) {
+		if (_methodName187.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes187, parameterTypes)) {
 			return ResignationHistoryLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName182.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes182, parameterTypes)) {
+		if (_methodName188.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes188, parameterTypes)) {
 			return ResignationHistoryLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[2]);
 		}
 
-		if (_methodName183.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes183, parameterTypes)) {
+		if (_methodName189.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes189, parameterTypes)) {
 			return ResignationHistoryLocalServiceUtil.findByEmployee(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName184.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes184, parameterTypes)) {
+		if (_methodName190.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes190, parameterTypes)) {
 			return ResignationHistoryLocalServiceUtil.createPrePersisted();
 		}
 
-		if (_methodName185.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes185, parameterTypes)) {
+		if (_methodName191.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes191, parameterTypes)) {
 			return ResignationHistoryLocalServiceUtil.addResignationHistory((vn.com.ecopharma.emp.model.ResignationHistory)arguments[0],
 				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
 
-		if (_methodName186.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes186, parameterTypes)) {
+		if (_methodName192.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes192, parameterTypes)) {
 			return ResignationHistoryLocalServiceUtil.updateResignationHistory(((Long)arguments[0]).longValue(),
 				(java.util.Date)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3]);
 		}
 
-		if (_methodName187.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes187, parameterTypes)) {
+		if (_methodName193.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes193, parameterTypes)) {
 			return ResignationHistoryLocalServiceUtil.markDeleted((vn.com.ecopharma.emp.model.ResignationHistory)arguments[0]);
 		}
 
-		if (_methodName188.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes188, parameterTypes)) {
+		if (_methodName194.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes194, parameterTypes)) {
 			return ResignationHistoryLocalServiceUtil.countAllUnDeletedDocuments((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
 				((Long)arguments[2]).longValue(),
 				(com.liferay.portal.kernel.search.Sort)arguments[3]);
 		}
 
-		if (_methodName189.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes189, parameterTypes)) {
+		if (_methodName195.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes195, parameterTypes)) {
 			return ResignationHistoryLocalServiceUtil.searchAllUnDeletedDocuments((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -366,35 +366,35 @@ public class ResignationHistoryLocalServiceClpInvoker {
 				((Integer)arguments[5]).intValue());
 		}
 
-		if (_methodName190.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes190, parameterTypes)) {
+		if (_methodName196.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes196, parameterTypes)) {
 			return ResignationHistoryLocalServiceUtil.getIndexedDocument((java.lang.String)arguments[0],
 				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
 		}
 
-		if (_methodName191.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes191, parameterTypes)) {
+		if (_methodName197.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes197, parameterTypes)) {
 			return ResignationHistoryLocalServiceUtil.getIndexedDocument(((Long)arguments[0]).longValue(),
 				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
 		}
 
-		if (_methodName192.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes192, parameterTypes)) {
+		if (_methodName198.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes198, parameterTypes)) {
 			ResignationHistoryLocalServiceUtil.indexAll();
 
 			return null;
 		}
 
-		if (_methodName193.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes193, parameterTypes)) {
+		if (_methodName199.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes199, parameterTypes)) {
 			ResignationHistoryLocalServiceUtil.removeAllIndexes((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				((Long)arguments[1]).longValue());
 
 			return null;
 		}
 
-		if (_methodName194.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes194, parameterTypes)) {
+		if (_methodName200.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes200, parameterTypes)) {
 			ResignationHistoryLocalServiceUtil.addMissingResignedEmployee((com.liferay.portal.service.ServiceContext)arguments[0]);
 
 			return null;
@@ -435,22 +435,10 @@ public class ResignationHistoryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName174;
-	private String[] _methodParameterTypes174;
-	private String _methodName175;
-	private String[] _methodParameterTypes175;
 	private String _methodName180;
 	private String[] _methodParameterTypes180;
 	private String _methodName181;
 	private String[] _methodParameterTypes181;
-	private String _methodName182;
-	private String[] _methodParameterTypes182;
-	private String _methodName183;
-	private String[] _methodParameterTypes183;
-	private String _methodName184;
-	private String[] _methodParameterTypes184;
-	private String _methodName185;
-	private String[] _methodParameterTypes185;
 	private String _methodName186;
 	private String[] _methodParameterTypes186;
 	private String _methodName187;
@@ -469,4 +457,16 @@ public class ResignationHistoryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes193;
 	private String _methodName194;
 	private String[] _methodParameterTypes194;
+	private String _methodName195;
+	private String[] _methodParameterTypes195;
+	private String _methodName196;
+	private String[] _methodParameterTypes196;
+	private String _methodName197;
+	private String[] _methodParameterTypes197;
+	private String _methodName198;
+	private String[] _methodParameterTypes198;
+	private String _methodName199;
+	private String[] _methodParameterTypes199;
+	private String _methodName200;
+	private String[] _methodParameterTypes200;
 }

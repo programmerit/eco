@@ -19,6 +19,9 @@
 	<bean id="vn.com.ecopharma.emp.service.EmpLocalService" class="vn.com.ecopharma.emp.service.impl.EmpLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.EmpService" class="vn.com.ecopharma.emp.service.impl.EmpServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.persistence.EmpPersistence" class="vn.com.ecopharma.emp.service.persistence.EmpPersistenceImpl" parent="basePersistence" />
+	<bean id="vn.com.ecopharma.emp.service.EmpAnnualLeaveLocalService" class="vn.com.ecopharma.emp.service.impl.EmpAnnualLeaveLocalServiceImpl" />
+	<bean id="vn.com.ecopharma.emp.service.EmpAnnualLeaveService" class="vn.com.ecopharma.emp.service.impl.EmpAnnualLeaveServiceImpl" />
+	<bean id="vn.com.ecopharma.emp.service.persistence.EmpAnnualLeavePersistence" class="vn.com.ecopharma.emp.service.persistence.EmpAnnualLeavePersistenceImpl" parent="basePersistence" />
 	<bean id="vn.com.ecopharma.emp.service.EmpBankInfoLocalService" class="vn.com.ecopharma.emp.service.impl.EmpBankInfoLocalServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.EmpBankInfoService" class="vn.com.ecopharma.emp.service.impl.EmpBankInfoServiceImpl" />
 	<bean id="vn.com.ecopharma.emp.service.persistence.EmpBankInfoPersistence" class="vn.com.ecopharma.emp.service.persistence.EmpBankInfoPersistenceImpl" parent="basePersistence" />

@@ -1439,6 +1439,7 @@ public class VacationLeavePersistenceImpl extends BasePersistenceImpl<VacationLe
 		vacationLeaveImpl.setLeaveFrom(vacationLeave.getLeaveFrom());
 		vacationLeaveImpl.setLeaveTo(vacationLeave.getLeaveTo());
 		vacationLeaveImpl.setActualTo(vacationLeave.getActualTo());
+		vacationLeaveImpl.setNumberOfHours(vacationLeave.getNumberOfHours());
 		vacationLeaveImpl.setReason(vacationLeave.getReason());
 		vacationLeaveImpl.setDescription(vacationLeave.getDescription());
 		vacationLeaveImpl.setGroupId(vacationLeave.getGroupId());
@@ -1448,6 +1449,7 @@ public class VacationLeavePersistenceImpl extends BasePersistenceImpl<VacationLe
 		vacationLeaveImpl.setCreateDate(vacationLeave.getCreateDate());
 		vacationLeaveImpl.setModifiedDate(vacationLeave.getModifiedDate());
 		vacationLeaveImpl.setDeleted(vacationLeave.isDeleted());
+		vacationLeaveImpl.setStatus(vacationLeave.getStatus());
 
 		return vacationLeaveImpl;
 	}

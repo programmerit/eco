@@ -38,6 +38,7 @@ import vn.com.ecopharma.emp.service.persistence.DepartmentPersistence;
 import vn.com.ecopharma.emp.service.persistence.DevisionPersistence;
 import vn.com.ecopharma.emp.service.persistence.DistrictPersistence;
 import vn.com.ecopharma.emp.service.persistence.DocumentPersistence;
+import vn.com.ecopharma.emp.service.persistence.EmpAnnualLeavePersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpBankInfoPersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpDisciplinePersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpNotifyEmailPersistence;
@@ -640,6 +641,63 @@ public abstract class EmpDisciplineLocalServiceBaseImpl
 	 */
 	public void setEmpPersistence(EmpPersistence empPersistence) {
 		this.empPersistence = empPersistence;
+	}
+
+	/**
+	 * Returns the emp annual leave local service.
+	 *
+	 * @return the emp annual leave local service
+	 */
+	public vn.com.ecopharma.emp.service.EmpAnnualLeaveLocalService getEmpAnnualLeaveLocalService() {
+		return empAnnualLeaveLocalService;
+	}
+
+	/**
+	 * Sets the emp annual leave local service.
+	 *
+	 * @param empAnnualLeaveLocalService the emp annual leave local service
+	 */
+	public void setEmpAnnualLeaveLocalService(
+		vn.com.ecopharma.emp.service.EmpAnnualLeaveLocalService empAnnualLeaveLocalService) {
+		this.empAnnualLeaveLocalService = empAnnualLeaveLocalService;
+	}
+
+	/**
+	 * Returns the emp annual leave remote service.
+	 *
+	 * @return the emp annual leave remote service
+	 */
+	public vn.com.ecopharma.emp.service.EmpAnnualLeaveService getEmpAnnualLeaveService() {
+		return empAnnualLeaveService;
+	}
+
+	/**
+	 * Sets the emp annual leave remote service.
+	 *
+	 * @param empAnnualLeaveService the emp annual leave remote service
+	 */
+	public void setEmpAnnualLeaveService(
+		vn.com.ecopharma.emp.service.EmpAnnualLeaveService empAnnualLeaveService) {
+		this.empAnnualLeaveService = empAnnualLeaveService;
+	}
+
+	/**
+	 * Returns the emp annual leave persistence.
+	 *
+	 * @return the emp annual leave persistence
+	 */
+	public EmpAnnualLeavePersistence getEmpAnnualLeavePersistence() {
+		return empAnnualLeavePersistence;
+	}
+
+	/**
+	 * Sets the emp annual leave persistence.
+	 *
+	 * @param empAnnualLeavePersistence the emp annual leave persistence
+	 */
+	public void setEmpAnnualLeavePersistence(
+		EmpAnnualLeavePersistence empAnnualLeavePersistence) {
+		this.empAnnualLeavePersistence = empAnnualLeavePersistence;
 	}
 
 	/**
@@ -1894,6 +1952,12 @@ public abstract class EmpDisciplineLocalServiceBaseImpl
 	protected vn.com.ecopharma.emp.service.EmpService empService;
 	@BeanReference(type = EmpPersistence.class)
 	protected EmpPersistence empPersistence;
+	@BeanReference(type = vn.com.ecopharma.emp.service.EmpAnnualLeaveLocalService.class)
+	protected vn.com.ecopharma.emp.service.EmpAnnualLeaveLocalService empAnnualLeaveLocalService;
+	@BeanReference(type = vn.com.ecopharma.emp.service.EmpAnnualLeaveService.class)
+	protected vn.com.ecopharma.emp.service.EmpAnnualLeaveService empAnnualLeaveService;
+	@BeanReference(type = EmpAnnualLeavePersistence.class)
+	protected EmpAnnualLeavePersistence empAnnualLeavePersistence;
 	@BeanReference(type = vn.com.ecopharma.emp.service.EmpBankInfoLocalService.class)
 	protected vn.com.ecopharma.emp.service.EmpBankInfoLocalService empBankInfoLocalService;
 	@BeanReference(type = vn.com.ecopharma.emp.service.EmpBankInfoService.class)

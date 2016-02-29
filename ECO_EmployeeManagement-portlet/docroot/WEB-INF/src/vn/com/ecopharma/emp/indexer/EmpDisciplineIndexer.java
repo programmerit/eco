@@ -2,7 +2,6 @@ package vn.com.ecopharma.emp.indexer;
 
 import java.util.Collection;
 
-import vn.com.ecopharma.emp.constant.EMInfo;
 import vn.com.ecopharma.emp.constant.EmpDisciplineField;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpDiscipline;
@@ -10,7 +9,6 @@ import vn.com.ecopharma.emp.permission.EmpDisciplinePermission;
 import vn.com.ecopharma.emp.service.EmpDisciplineLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.persistence.EmpDisciplineActionableDynamicQuery;
-import vn.com.ecopharma.emp.util.SearchEngineUtils;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -22,7 +20,7 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 public class EmpDisciplineIndexer extends
-		AbstractBaseModelIndexer<EmpDiscipline> {
+		AbstractBaseEmpInfoModelIndexer<EmpDiscipline> {
 
 	private String[] CLASS_NAMES = new String[] { EmpDiscipline.class.getName() };
 
@@ -40,10 +38,7 @@ public class EmpDisciplineIndexer extends
 	protected Document doGetDocument(Object obj) throws Exception {
 		final EmpDiscipline o = (EmpDiscipline) obj;
 		final Emp emp = EmpLocalServiceUtil.fetchEmp(o.getEmpId());
-
-		final Document document = getBaseModelDocument(EMInfo.PORTLET_ID, o);
-		SearchEngineUtils.indexOrganizationFields(document, emp);
-		SearchEngineUtils.indexEmpInfo(document, emp);
+		final Document document = super.doGetDocument(emp);
 		document.addNumber(EmpDisciplineField.ID, o.getEmpDisciplineId());
 		document.addText(EmpDisciplineField.DECISION_NO, o.getDecisionNo());
 		document.addText(EmpDisciplineField.CONTENT, o.getContent());
@@ -107,6 +102,11 @@ public class EmpDisciplineIndexer extends
 				documents.add(document);
 			}
 		};
+	}
+
+	@Override
+	protected long getEmpId(EmpDiscipline t) {
+		return t.getEmpId();
 	}
 
 }

@@ -49,9 +49,14 @@ public class VacationLeaveIndexer extends
 				vacationLeave.getLeaveTo());
 		document.addDate(VacationLeaveField.ACTUAL_TO,
 				vacationLeave.getActualTo());
+		document.addNumber(VacationLeaveField.NUMBER_OF_HOURS,
+				vacationLeave.getNumberOfHours());
+
 		document.addText(VacationLeaveField.REASON, vacationLeave.getReason());
 		document.addText(VacationLeaveField.DESCRIPTION,
 				vacationLeave.getDescription());
+		document.addText(VacationLeaveField.STATUS, vacationLeave.getStatus());
+
 		document.addText(VacationLeaveField.IS_DELETED,
 				vacationLeave.isDeleted() ? "true" : "false");
 

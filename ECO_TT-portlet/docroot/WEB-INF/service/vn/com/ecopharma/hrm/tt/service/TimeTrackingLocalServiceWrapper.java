@@ -353,10 +353,10 @@ public class TimeTrackingLocalServiceWrapper implements TimeTrackingLocalService
 	public vn.com.ecopharma.hrm.tt.model.TimeTracking addTimeTracking(
 		long empId, java.util.Date date, java.util.Date in1,
 		java.util.Date out1, java.util.Date in2, java.util.Date out2,
-		java.util.Date in3, java.util.Date out3,
+		java.util.Date in3, java.util.Date out3, long leaveRefId,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return _timeTrackingLocalService.addTimeTracking(empId, date, in1,
-			out1, in2, out2, in3, out3, serviceContext);
+			out1, in2, out2, in3, out3, leaveRefId, serviceContext);
 	}
 
 	@Override

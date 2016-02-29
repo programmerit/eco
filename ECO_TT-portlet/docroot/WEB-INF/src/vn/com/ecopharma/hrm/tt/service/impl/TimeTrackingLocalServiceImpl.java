@@ -173,10 +173,9 @@ public class TimeTrackingLocalServiceImpl extends
 	 * java.util.Date, java.util.Date, java.util.Date,
 	 * com.liferay.portal.service.ServiceContext)
 	 */
-	@Override
 	public TimeTracking addTimeTracking(long empId, Date date, Date in1,
 			Date out1, Date in2, Date out2, Date in3, Date out3,
-			ServiceContext serviceContext) {
+			long leaveRefId, ServiceContext serviceContext) {
 		try {
 			final long id = counterLocalService.increment();
 			TimeTracking timeTracking = timeTrackingPersistence.create(id);
@@ -193,11 +192,12 @@ public class TimeTrackingLocalServiceImpl extends
 			timeTracking.setIn3(in3);
 			timeTracking.setOut3(out3);
 
+			timeTracking.setLeaveRefId(leaveRefId);
+
 			timeTracking.setUserId(serviceContext.getUserId());
 			timeTracking.setCompanyId(serviceContext.getCompanyId());
 			timeTracking.setGroupId(serviceContext.getScopeGroupId());
 			timeTracking.setCreateDate(new Date());
-			timeTracking.setModifiedDate(new Date());
 
 			timeTracking = super.addTimeTracking(timeTracking);
 

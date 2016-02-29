@@ -298,21 +298,26 @@ public class VacationLeaveLocalServiceUtil {
 	public static vn.com.ecopharma.emp.model.VacationLeave addVacationLeave(
 		vn.com.ecopharma.emp.model.VacationLeave prePersistedEntity,
 		long empId, java.lang.String leaveType, java.util.Date leaveFrom,
-		java.util.Date leaveTo, java.util.Date actualTo,
+		java.util.Date leaveTo, java.util.Date actualTo, int numberOfHours,
 		java.lang.String reason, java.lang.String description) {
 		return getService()
 				   .addVacationLeave(prePersistedEntity, empId, leaveType,
-			leaveFrom, leaveTo, actualTo, reason, description);
+			leaveFrom, leaveTo, actualTo, numberOfHours, reason, description);
 	}
 
 	public static vn.com.ecopharma.emp.model.VacationLeave addVacationLeave(
 		long empId, java.lang.String leaveType, java.util.Date leaveFrom,
-		java.util.Date leaveTo, java.util.Date actualTo,
+		java.util.Date leaveTo, java.util.Date actualTo, int numberOfHours,
 		java.lang.String reason, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
 				   .addVacationLeave(empId, leaveType, leaveFrom, leaveTo,
-			actualTo, reason, description, serviceContext);
+			actualTo, numberOfHours, reason, description, serviceContext);
+	}
+
+	public static vn.com.ecopharma.emp.model.VacationLeave addVacationLeave(
+		long empId, vn.com.ecopharma.emp.model.VacationLeave leave) {
+		return getService().addVacationLeave(empId, leave);
 	}
 
 	public static int countAllUnDeletedDocuments(

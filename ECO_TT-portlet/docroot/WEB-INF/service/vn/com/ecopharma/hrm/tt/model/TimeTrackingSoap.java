@@ -46,6 +46,7 @@ public class TimeTrackingSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setLeaveRefId(model.getLeaveRefId());
 
 		return soapModel;
 	}
@@ -218,6 +219,14 @@ public class TimeTrackingSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getLeaveRefId() {
+		return _leaveRefId;
+	}
+
+	public void setLeaveRefId(long leaveRefId) {
+		_leaveRefId = leaveRefId;
+	}
+
 	private long _timeTrackingId;
 	private long _empId;
 	private Date _date;
@@ -233,4 +242,5 @@ public class TimeTrackingSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _leaveRefId;
 }

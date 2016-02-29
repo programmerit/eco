@@ -21,6 +21,7 @@ import java.util.List;
 import vn.com.ecopharma.emp.constant.EMInfo;
 import vn.com.ecopharma.emp.constant.VacationLeaveField;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
+import vn.com.ecopharma.emp.enumeration.VacationLeaveStatus;
 import vn.com.ecopharma.emp.enumeration.VacationLeaveType;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.VacationLeave;
@@ -117,12 +118,13 @@ public class VacationLeaveLocalServiceImpl extends
 
 	public VacationLeave addVacationLeave(VacationLeave prePersistedEntity,
 			long empId, String leaveType, Date leaveFrom, Date leaveTo,
-			Date actualTo, String reason, String description) {
+			Date actualTo, int numberOfHours, String reason, String description) {
 		prePersistedEntity.setEmpId(empId);
 		prePersistedEntity.setLeaveType(leaveType);
 		prePersistedEntity.setLeaveFrom(leaveFrom);
 		prePersistedEntity.setLeaveTo(leaveTo);
 		prePersistedEntity.setActualTo(actualTo);
+		prePersistedEntity.setNumberOfHours(numberOfHours);
 		prePersistedEntity.setReason(reason);
 		prePersistedEntity.setDescription(description);
 		try {
@@ -155,11 +157,44 @@ public class VacationLeaveLocalServiceImpl extends
 	}
 
 	public VacationLeave addVacationLeave(long empId, String leaveType,
-			Date leaveFrom, Date leaveTo, Date actualTo, String reason,
-			String description, ServiceContext serviceContext) {
+			Date leaveFrom, Date leaveTo, Date actualTo, int numberOfHours,
+			String reason, String description, ServiceContext serviceContext) {
 		return addVacationLeave(createPrePersistedEntity(serviceContext),
-				empId, leaveType, leaveFrom, leaveTo, actualTo, reason,
-				description);
+				empId, leaveType, leaveFrom, leaveTo, actualTo, numberOfHours,
+				reason, description);
+	}
+
+	public VacationLeave addVacationLeave(long empId, VacationLeave leave) {
+		leave.setEmpId(empId);
+		leave.setStatus(VacationLeaveStatus.PENDING_REQUEST.toString());
+		try {
+			VacationLeave result = super.addVacationLeave(leave);
+			resourceLocalService.addResources(result.getCompanyId(),
+					result.getGroupId(), result.getUserId(),
+					VacationLeave.class.getName(), result.getVacationLeaveId(),
+					false, true, true);
+
+			final Indexer indexer = IndexerRegistryUtil
+					.nullSafeGetIndexer(VacationLeave.class.getName());
+
+			indexer.reindex(VacationLeave.class.getName(),
+					result.getVacationLeaveId());
+
+			// set status to employee
+			if (result.getLeaveType().equals(
+					VacationLeaveType.MATERNITY.toString())) {
+				Emp emp = empLocalService.fetchEmp(empId);
+				emp.setStatus(EmployeeStatus.MATERNITY_LEAVE.toString());
+				empLocalService.updateEmp(emp);
+			}
+
+			return result;
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		} catch (PortalException e) {
+			LOGGER.info(e);
+		}
+		return null;
 	}
 
 	public int countAllUnDeletedDocuments(SearchContext searchContext,

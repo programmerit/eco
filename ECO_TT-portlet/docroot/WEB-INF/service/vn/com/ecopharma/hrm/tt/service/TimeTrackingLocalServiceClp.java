@@ -166,7 +166,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 		_methodParameterTypes27 = new String[] {
 				"long", "java.util.Date", "java.util.Date", "java.util.Date",
 				"java.util.Date", "java.util.Date", "java.util.Date",
-				"java.util.Date", "com.liferay.portal.service.ServiceContext"
+				"java.util.Date", "long",
+				"com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName28 = "updateTimeTracking";
@@ -988,7 +989,7 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 	public vn.com.ecopharma.hrm.tt.model.TimeTracking addTimeTracking(
 		long empId, java.util.Date date, java.util.Date in1,
 		java.util.Date out1, java.util.Date in2, java.util.Date out2,
-		java.util.Date in3, java.util.Date out3,
+		java.util.Date in3, java.util.Date out3, long leaveRefId,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
 
@@ -1011,6 +1012,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 					ClpSerializer.translateInput(in3),
 						
 					ClpSerializer.translateInput(out3),
+						
+					leaveRefId,
 						
 					ClpSerializer.translateInput(serviceContext)
 					});

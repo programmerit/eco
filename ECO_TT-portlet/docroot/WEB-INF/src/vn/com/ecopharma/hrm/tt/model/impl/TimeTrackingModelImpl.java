@@ -80,9 +80,10 @@ public class TimeTrackingModelImpl extends BaseModelImpl<TimeTracking>
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP }
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "leaveRefId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_ttp_TimeTracking (timeTrackingId LONG not null primary key,empId LONG,date_ DATE null,in1 DATE null,out1 DATE null,in2 DATE null,out2 DATE null,in3 DATE null,out3 DATE null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table eco_ttp_TimeTracking (timeTrackingId LONG not null primary key,empId LONG,date_ DATE null,in1 DATE null,out1 DATE null,in2 DATE null,out2 DATE null,in3 DATE null,out3 DATE null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,leaveRefId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table eco_ttp_TimeTracking";
 	public static final String ORDER_BY_JPQL = " ORDER BY timeTracking.timeTrackingId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_ttp_TimeTracking.timeTrackingId ASC";
@@ -130,6 +131,7 @@ public class TimeTrackingModelImpl extends BaseModelImpl<TimeTracking>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setLeaveRefId(soapModel.getLeaveRefId());
 
 		return model;
 	}
@@ -209,6 +211,7 @@ public class TimeTrackingModelImpl extends BaseModelImpl<TimeTracking>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("leaveRefId", getLeaveRefId());
 
 		return attributes;
 	}
@@ -303,6 +306,12 @@ public class TimeTrackingModelImpl extends BaseModelImpl<TimeTracking>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long leaveRefId = (Long)attributes.get("leaveRefId");
+
+		if (leaveRefId != null) {
+			setLeaveRefId(leaveRefId);
 		}
 	}
 
@@ -508,6 +517,17 @@ public class TimeTrackingModelImpl extends BaseModelImpl<TimeTracking>
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
+	@Override
+	public long getLeaveRefId() {
+		return _leaveRefId;
+	}
+
+	@Override
+	public void setLeaveRefId(long leaveRefId) {
+		_leaveRefId = leaveRefId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -554,6 +574,7 @@ public class TimeTrackingModelImpl extends BaseModelImpl<TimeTracking>
 		timeTrackingImpl.setUserName(getUserName());
 		timeTrackingImpl.setCreateDate(getCreateDate());
 		timeTrackingImpl.setModifiedDate(getModifiedDate());
+		timeTrackingImpl.setLeaveRefId(getLeaveRefId());
 
 		timeTrackingImpl.resetOriginalValues();
 
@@ -718,12 +739,14 @@ public class TimeTrackingModelImpl extends BaseModelImpl<TimeTracking>
 			timeTrackingCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		timeTrackingCacheModel.leaveRefId = getLeaveRefId();
+
 		return timeTrackingCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{timeTrackingId=");
 		sb.append(getTimeTrackingId());
@@ -755,6 +778,8 @@ public class TimeTrackingModelImpl extends BaseModelImpl<TimeTracking>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", leaveRefId=");
+		sb.append(getLeaveRefId());
 		sb.append("}");
 
 		return sb.toString();
@@ -762,7 +787,7 @@ public class TimeTrackingModelImpl extends BaseModelImpl<TimeTracking>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.hrm.tt.model.TimeTracking");
@@ -828,6 +853,10 @@ public class TimeTrackingModelImpl extends BaseModelImpl<TimeTracking>
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>leaveRefId</column-name><column-value><![CDATA[");
+		sb.append(getLeaveRefId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -857,6 +886,7 @@ public class TimeTrackingModelImpl extends BaseModelImpl<TimeTracking>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _leaveRefId;
 	private long _columnBitmask;
 	private TimeTracking _escapedModel;
 }

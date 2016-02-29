@@ -38,7 +38,7 @@ public class TimeTrackingCacheModel implements CacheModel<TimeTracking>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{timeTrackingId=");
 		sb.append(timeTrackingId);
@@ -70,6 +70,8 @@ public class TimeTrackingCacheModel implements CacheModel<TimeTracking>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", leaveRefId=");
+		sb.append(leaveRefId);
 		sb.append("}");
 
 		return sb.toString();
@@ -156,6 +158,8 @@ public class TimeTrackingCacheModel implements CacheModel<TimeTracking>,
 			timeTrackingImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		timeTrackingImpl.setLeaveRefId(leaveRefId);
+
 		timeTrackingImpl.resetOriginalValues();
 
 		return timeTrackingImpl;
@@ -178,6 +182,7 @@ public class TimeTrackingCacheModel implements CacheModel<TimeTracking>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		leaveRefId = objectInput.readLong();
 	}
 
 	@Override
@@ -205,6 +210,7 @@ public class TimeTrackingCacheModel implements CacheModel<TimeTracking>,
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+		objectOutput.writeLong(leaveRefId);
 	}
 
 	public long timeTrackingId;
@@ -222,4 +228,5 @@ public class TimeTrackingCacheModel implements CacheModel<TimeTracking>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long leaveRefId;
 }

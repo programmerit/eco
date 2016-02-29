@@ -329,11 +329,11 @@ public class TimeTrackingLocalServiceUtil {
 	public static vn.com.ecopharma.hrm.tt.model.TimeTracking addTimeTracking(
 		long empId, java.util.Date date, java.util.Date in1,
 		java.util.Date out1, java.util.Date in2, java.util.Date out2,
-		java.util.Date in3, java.util.Date out3,
+		java.util.Date in3, java.util.Date out3, long leaveRefId,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
 				   .addTimeTracking(empId, date, in1, out1, in2, out2, in3,
-			out3, serviceContext);
+			out3, leaveRefId, serviceContext);
 	}
 
 	public static vn.com.ecopharma.hrm.tt.model.TimeTracking updateTimeTracking(

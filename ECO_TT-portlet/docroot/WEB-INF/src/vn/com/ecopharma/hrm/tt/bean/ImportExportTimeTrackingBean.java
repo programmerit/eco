@@ -90,7 +90,7 @@ public class ImportExportTimeTrackingBean implements Serializable {
 									item.getDate(), item.getIn1(), item
 											.getOut1(), item.getIn2(), item
 											.getOut2(), item.getIn3(), item
-											.getOut3(), LiferayFacesContext
+											.getOut3(), 0L, LiferayFacesContext
 											.getInstance().getServiceContext());
 						} else {
 							TimeTrackingLocalServiceUtil.updateTimeTracking(

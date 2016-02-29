@@ -28,6 +28,7 @@
 		<column name="userName" type="String"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
+        <column name="leaveRefId" type="long"></column>
         <finder name="Emp" return-type="Collection">
             <finder-column name="empId"></finder-column>
         </finder>

@@ -24,9 +24,9 @@
 		<h:form id="searchForm">
 
 			<p:remoteCommand name="refreshFooter"
-				update=":reports:totalFilteredCount" />
+				update=":reportForm:reports:totalFilteredCount" />
 
-			<p:remoteCommand name="refreshReports" update=":reports" />
+			<p:remoteCommand name="refreshReports" update=":reportForm:reports" />
 
 			<h:link value="Show/Hide filter" styleClass="label"
 				onmouseover="toggle('#{requestScope.filterGrid.clientId}'); return false;"
@@ -74,7 +74,7 @@
 							<f:selectItems value="#{timeTrackingFilterBean.months}" var="m"
 								itemLabel="#{timeTrackingFilterBean.getMonthName(m)}"
 								itemValue="#{m}" />
-							<p:ajax update=":reports" />
+							<p:ajax update=":reportForm:reports" />
 							<p:column>#{timeTrackingFilterBean.getMonthName(m)}</p:column>
 						</p:selectOneMenu>
 
@@ -83,7 +83,7 @@
 							<p:ajax oncomplete="refreshReports(); refreshFooter();" />
 							<f:selectItems value="#{timeTrackingFilterBean.years}" var="y"
 								itemLabel="#{y}" itemValue="#{y}" />
-							<p:ajax update=":reports" />
+							<p:ajax update=":reportForm:reports" />
 							<p:column>#{y}</p:column>
 						</p:selectOneMenu>
 
@@ -95,74 +95,91 @@
 			</h:panelGroup>
 		</h:form>
 
-		<p:dataTable id="reports" widgetVar="wReportTable" var="t" lazy="true"
-			value="#{timeTrackingReportBean.lazyDataModel}"
-			paginatorAlwaysVisible="true" paginator="true" rows="10"
-			paginatorPosition="bottom"
-			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-			rowsPerPageTemplate="10,25,50" scrollable="true"
-			selection="#{timeTrackingReportBean.selectedEmpTimeTrackingIndexedItem}"
-			selectionMode="single" style="margin-top:40px">
+
+		<h:form id="reportForm">
+			<p:contextMenu id="reportContext" for="reports">
+				<p:menuitem value="Add Leave Request"
+					actionListener="#{timeTrackingReportBean.onAddLeaveRequest}"
+					update=":includedDialogPanelGroup"
+					oncomplete="PF('wLeaveRequestDialog').show();" />
+			</p:contextMenu>
+
+			<p:dataTable id="reports" widgetVar="wReportTable" var="t"
+				lazy="true" value="#{timeTrackingReportBean.lazyDataModel}"
+				paginatorAlwaysVisible="true" paginator="true" rows="10"
+				paginatorPosition="bottom"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,25,50" scrollable="true"
+				selection="#{timeTrackingReportBean.selectedEmpTimeTrackingIndexedItem}"
+				rowKey="#{t.id}" selectionMode="single" style="margin-top:40px">
 
 
-			<p:columnGroup type="header">
-				<p:row>
-					<p:column rowspan="3" headerText="Emp Code" width="50" />
-					<p:column rowspan="3" headerText="Name" width="100" />
-					<p:column rowspan="3" headerText="Values" width="80" />
-					<p:column colspan="#{timeTrackingReportBean.getDatesSize(7)}"
-						headerText="TIME TRACKING RECORDS 2015" width="2000" />
-					<p:column rowspan="3" headerText="Grand Total" width="80"
-						style="font-size: 15px; font-weight: bold;" />
-				</p:row>
-				<p:row>
-					<ui:repeat
-						value="#{timeTrackingReportBean.shortDatesOfMonthStrings}" var="d">
-						<p:column headerText="#{d}" width="80" />
-					</ui:repeat>
-				</p:row>
-				<p:row>
-					<ui:repeat value="#{timeTrackingReportBean.daysOfMonthStrings}"
-						var="d">
-						<p:column headerText="#{d}" width="80" style="font-weight: bold;"
-							styleClass="#{d == 'Sun' ? 'sunday' : ''}" />
-					</ui:repeat>
-				</p:row>
-			</p:columnGroup>
+				<p:columnGroup type="header">
+					<p:row>
+						<p:column rowspan="3" headerText="Emp Code" width="50" />
+						<p:column rowspan="3" headerText="Name" width="100" />
+						<p:column rowspan="3" headerText="Values" width="80" />
+						<p:column colspan="#{timeTrackingReportBean.getDatesSize(7)}"
+							headerText="TIME TRACKING RECORDS 2015" width="2000" />
+						<p:column rowspan="3" headerText="Grand Total" width="80"
+							style="font-size: 15px; font-weight: bold;" />
+					</p:row>
+					<p:row>
+						<ui:repeat
+							value="#{timeTrackingReportBean.shortDatesOfMonthStrings}"
+							var="d">
+							<p:column headerText="#{d}" width="80" />
+						</ui:repeat>
+					</p:row>
+					<p:row>
+						<ui:repeat value="#{timeTrackingReportBean.daysOfMonthStrings}"
+							var="d">
+							<p:column headerText="#{d}" width="80" style="font-weight: bold;"
+								styleClass="#{d == 'Sun' ? 'sunday' : ''}" />
+						</ui:repeat>
+					</p:row>
+				</p:columnGroup>
 
 
-			<p:column width="80">
-				<h:outputText value="#{t.employeeCode}" />
-			</p:column>
+				<p:column width="80">
+					<h:outputText value="#{t.emp.employeeCode}" />
+				</p:column>
 
-			<p:column width="100">
-				<h:outputText value="#{t.fullName}" />
-			</p:column>
+				<p:column width="100">
+					<h:outputText value="#{t.emp.fullNameVi}" />
+				</p:column>
 
-			<p:column>
-				<h:outputText value="Min IN" style="color: blue;" />
-				<p:separator style="width: 100px; margin-left: -10px;" />
-				<h:outputText value="Max OUT" />
-			</p:column>
+				<p:column>
+					<h:outputText value="Min IN" style="color: blue;" />
+					<p:separator style="width: 100px; margin-left: -10px;" />
+					<h:outputText value="Max OUT" />
+				</p:column>
 
-			<p:columns value="#{timeTrackingReportBean.datesOfMonthStrings}"
-				var="d">
-				<h:outputText value="#{t.getMinIn(d)}" style="color: blue;" />
-				<p:separator style="width: 100px; margin-left: -10px;" />
-				<h:outputText value="#{t.getMaxOut(d)}" style="color: black;" />
-			</p:columns>
+				<p:columns value="#{timeTrackingReportBean.datesOfMonthStrings}"
+					var="d">
+					<h:outputText value="#{t.getReportTimeItem(d).formattedMinIn}"
+						style="color: blue;" />
+					<p:separator style="width: 100px; margin-left: -10px;" />
+					<h:outputText value="#{t.getReportTimeItem(d).formattedMaxOut}"
+						style="color: black;" />
+				</p:columns>
 
-			<p:column>
-				<h:outputText value="#{t.grandTotalMinIn}" style="color: blue;" />
-				<p:separator style="width: 100px; margin-left: -10px;" />
-				<h:outputText value="#{t.grandTotalMaxOut}" style="color: black;" />
-			</p:column>
+				<p:column>
+					<h:outputText value="#{t.grandTotalMinIn}" style="color: blue;" />
+					<p:separator style="width: 100px; margin-left: -10px;" />
+					<h:outputText value="#{t.grandTotalMaxOut}" style="color: black;" />
+				</p:column>
 
-			<f:facet name="footer">
+				<f:facet name="footer">
 		        		In total there are of <h:outputText id="totalFilteredCount"
-					value="#{timeTrackingReportBean.lazyDataModel.rowCount}" /> employees.
+						value="#{timeTrackingReportBean.lazyDataModel.rowCount}" /> employees.
 		   			 </f:facet>
-		</p:dataTable>
+			</p:dataTable>
+		</h:form>
+		<!-- Dialog -->
+		<h:panelGroup id="includedDialogPanelGroup">
+			<ui:include src="#{timeTrackingReportBean.includedDialog}" />
+		</h:panelGroup>
 
 	</h:body>
 	<script type="text/javascript">

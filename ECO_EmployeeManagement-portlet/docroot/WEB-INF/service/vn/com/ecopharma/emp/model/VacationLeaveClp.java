@@ -81,6 +81,7 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 		attributes.put("leaveFrom", getLeaveFrom());
 		attributes.put("leaveTo", getLeaveTo());
 		attributes.put("actualTo", getActualTo());
+		attributes.put("numberOfHours", getNumberOfHours());
 		attributes.put("reason", getReason());
 		attributes.put("description", getDescription());
 		attributes.put("groupId", getGroupId());
@@ -90,6 +91,7 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("deleted", getDeleted());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -130,6 +132,12 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 
 		if (actualTo != null) {
 			setActualTo(actualTo);
+		}
+
+		Integer numberOfHours = (Integer)attributes.get("numberOfHours");
+
+		if (numberOfHours != null) {
+			setNumberOfHours(numberOfHours);
 		}
 
 		String reason = (String)attributes.get("reason");
@@ -184,6 +192,12 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 
 		if (deleted != null) {
 			setDeleted(deleted);
+		}
+
+		String status = (String)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -318,6 +332,29 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 				Method method = clazz.getMethod("setActualTo", Date.class);
 
 				method.invoke(_vacationLeaveRemoteModel, actualTo);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public int getNumberOfHours() {
+		return _numberOfHours;
+	}
+
+	@Override
+	public void setNumberOfHours(int numberOfHours) {
+		_numberOfHours = numberOfHours;
+
+		if (_vacationLeaveRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacationLeaveRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setNumberOfHours", int.class);
+
+				method.invoke(_vacationLeaveRemoteModel, numberOfHours);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -547,6 +584,29 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 		}
 	}
 
+	@Override
+	public String getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(String status) {
+		_status = status;
+
+		if (_vacationLeaveRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacationLeaveRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setStatus", String.class);
+
+				method.invoke(_vacationLeaveRemoteModel, status);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getVacationLeaveRemoteModel() {
 		return _vacationLeaveRemoteModel;
 	}
@@ -623,6 +683,7 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 		clone.setLeaveFrom(getLeaveFrom());
 		clone.setLeaveTo(getLeaveTo());
 		clone.setActualTo(getActualTo());
+		clone.setNumberOfHours(getNumberOfHours());
 		clone.setReason(getReason());
 		clone.setDescription(getDescription());
 		clone.setGroupId(getGroupId());
@@ -632,6 +693,7 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 		clone.setCreateDate(getCreateDate());
 		clone.setModifiedDate(getModifiedDate());
 		clone.setDeleted(getDeleted());
+		clone.setStatus(getStatus());
 
 		return clone;
 	}
@@ -684,7 +746,7 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{vacationLeaveId=");
 		sb.append(getVacationLeaveId());
@@ -698,6 +760,8 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 		sb.append(getLeaveTo());
 		sb.append(", actualTo=");
 		sb.append(getActualTo());
+		sb.append(", numberOfHours=");
+		sb.append(getNumberOfHours());
 		sb.append(", reason=");
 		sb.append(getReason());
 		sb.append(", description=");
@@ -716,6 +780,8 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 		sb.append(getModifiedDate());
 		sb.append(", deleted=");
 		sb.append(getDeleted());
+		sb.append(", status=");
+		sb.append(getStatus());
 		sb.append("}");
 
 		return sb.toString();
@@ -723,7 +789,7 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.VacationLeave");
@@ -752,6 +818,10 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 		sb.append(
 			"<column><column-name>actualTo</column-name><column-value><![CDATA[");
 		sb.append(getActualTo());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>numberOfHours</column-name><column-value><![CDATA[");
+		sb.append(getNumberOfHours());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>reason</column-name><column-value><![CDATA[");
@@ -789,6 +859,10 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 			"<column><column-name>deleted</column-name><column-value><![CDATA[");
 		sb.append(getDeleted());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>status</column-name><column-value><![CDATA[");
+		sb.append(getStatus());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -801,6 +875,7 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 	private Date _leaveFrom;
 	private Date _leaveTo;
 	private Date _actualTo;
+	private int _numberOfHours;
 	private String _reason;
 	private String _description;
 	private long _groupId;
@@ -811,6 +886,7 @@ public class VacationLeaveClp extends BaseModelImpl<VacationLeave>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _deleted;
+	private String _status;
 	private BaseModel<?> _vacationLeaveRemoteModel;
 	private Class<?> _clpSerializerClass = vn.com.ecopharma.emp.service.ClpSerializer.class;
 }

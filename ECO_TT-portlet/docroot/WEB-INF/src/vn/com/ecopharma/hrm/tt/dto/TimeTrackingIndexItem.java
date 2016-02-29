@@ -1,23 +1,18 @@
 package vn.com.ecopharma.hrm.tt.dto;
 
-import java.io.Serializable;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.commons.lang3.StringUtils;
-
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
+import vn.com.ecopharma.hrm.tt.constant.VacationLeaveField;
 
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
 
 /**
  * @author TaoTran
  *
  */
-public class TimeTrackingIndexItem implements Serializable {
+public class TimeTrackingIndexItem extends BaseEmpInfoIndexedItem {
 
 	/**
 	 * 
@@ -39,13 +34,22 @@ public class TimeTrackingIndexItem implements Serializable {
 	private SimpleDateFormat sourceSdf = null;
 
 	public TimeTrackingIndexItem(Document document) {
-		this.document = document;
-		this.in1 = parseDate(document.getField(TimeTrackingField.IN_1));
-		this.out1 = parseDate(document.getField(TimeTrackingField.OUT_1));
-		this.in2 = parseDate(document.getField(TimeTrackingField.IN_2));
-		this.out2 = parseDate(document.getField(TimeTrackingField.OUT_2));
-		this.in3 = parseDate(document.getField(TimeTrackingField.IN_3));
-		this.out3 = parseDate(document.getField(TimeTrackingField.OUT_3));
+		super(document);
+		this.in1 = checkNullFieldAndReturnNullDate(TimeTrackingField.IN_1);
+		this.out1 = checkNullFieldAndReturnNullDate(TimeTrackingField.OUT_1);
+		this.in2 = checkNullFieldAndReturnNullDate(TimeTrackingField.IN_2);
+		this.out2 = checkNullFieldAndReturnNullDate(TimeTrackingField.OUT_2);
+		this.in3 = checkNullFieldAndReturnNullDate(TimeTrackingField.IN_3);
+		this.out3 = checkNullFieldAndReturnNullDate(TimeTrackingField.OUT_3);
+
+	}
+
+	public long getVacationLeaveId() {
+		return checkNullFieldAndReturnLongValue(VacationLeaveField.ID);
+	}
+
+	public boolean isVacationLeaveApplied() {
+		return getVacationLeaveId() != 0;
 	}
 
 	public Document getDocument() {
@@ -56,43 +60,13 @@ public class TimeTrackingIndexItem implements Serializable {
 		this.document = document;
 	}
 
-	public long getId() {
-		return Long.valueOf(document.getField(TimeTrackingField.ID).getValue());
-	}
-
-	public long getEmpId() {
-		return Long.valueOf(document.getField(TimeTrackingField.EMP_ID)
-				.getValue());
-	}
-
-	public String getFullName() {
-		return document.getField(TimeTrackingField.FULLNAME).getValue();
-	}
-
-	public String getEmpCode() {
-		return getStringFieldValue(TimeTrackingField.EMP_CODE);
-	}
-
-	public String getUnit() {
-		return getStringFieldValue(TimeTrackingField.UNIT);
-	}
-
-	public String getTitles() {
-		return getStringFieldValue(TimeTrackingField.TITLES);
-	}
-
-	private String getStringFieldValue(String fieldName) {
-		return document.getField(fieldName) != null ? document.getField(
-				fieldName).getValue() : StringUtils.EMPTY;
-	}
-
 	public Date getTrackingDate() {
-		return parseDate(document.getField(TimeTrackingField.DATE));
+		return checkNullFieldAndReturnNullDate(TimeTrackingField.DATE);
 	}
 
 	public String getDateFormatted() {
-		return new SimpleDateFormat(OUTPUT_DATE_FORMAT)
-				.format(getTrackingDate());
+		return getParseDateString(getTrackingDate());
+
 	}
 
 	public String getDay() {
@@ -185,21 +159,6 @@ public class TimeTrackingIndexItem implements Serializable {
 		return sourceSdf;
 	}
 
-	private Date parseDate(Field field) {
-		return field != null ? parseDate(field.getValue()) : null;
-	}
-
-	private Date parseDate(String value) {
-		if (value == null || StringUtils.trimToNull(value) == null)
-			return null;
-		try {
-			return getSourceSdf().parse(value);
-		} catch (ParseException e) {
-			LogFactoryUtil.getLog(TimeTrackingIndexItem.class).info(e);
-		}
-		return null;
-	}
-
 	private static String formattedTime(Date date) {
 		return date == null ? "--:--" : new SimpleDateFormat(TIME_FORMAT)
 				.format(date);
@@ -209,6 +168,11 @@ public class TimeTrackingIndexItem implements Serializable {
 	public String toString() {
 		return getFullName() + " " + getDateFormatted() + "  "
 				+ getIn1Formatted() + "  " + getOut2Formatted();
+	}
+
+	@Override
+	protected String getIdFieldName() {
+		return TimeTrackingField.ID;
 	}
 
 }

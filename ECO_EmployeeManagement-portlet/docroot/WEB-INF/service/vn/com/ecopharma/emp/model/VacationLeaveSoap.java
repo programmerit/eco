@@ -37,6 +37,7 @@ public class VacationLeaveSoap implements Serializable {
 		soapModel.setLeaveFrom(model.getLeaveFrom());
 		soapModel.setLeaveTo(model.getLeaveTo());
 		soapModel.setActualTo(model.getActualTo());
+		soapModel.setNumberOfHours(model.getNumberOfHours());
 		soapModel.setReason(model.getReason());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setGroupId(model.getGroupId());
@@ -46,6 +47,7 @@ public class VacationLeaveSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setDeleted(model.getDeleted());
+		soapModel.setStatus(model.getStatus());
 
 		return soapModel;
 	}
@@ -146,6 +148,14 @@ public class VacationLeaveSoap implements Serializable {
 		_actualTo = actualTo;
 	}
 
+	public int getNumberOfHours() {
+		return _numberOfHours;
+	}
+
+	public void setNumberOfHours(int numberOfHours) {
+		_numberOfHours = numberOfHours;
+	}
+
 	public String getReason() {
 		return _reason;
 	}
@@ -222,12 +232,21 @@ public class VacationLeaveSoap implements Serializable {
 		_deleted = deleted;
 	}
 
+	public String getStatus() {
+		return _status;
+	}
+
+	public void setStatus(String status) {
+		_status = status;
+	}
+
 	private long _vacationLeaveId;
 	private long _empId;
 	private String _leaveType;
 	private Date _leaveFrom;
 	private Date _leaveTo;
 	private Date _actualTo;
+	private int _numberOfHours;
 	private String _reason;
 	private String _description;
 	private long _groupId;
@@ -237,4 +256,5 @@ public class VacationLeaveSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _deleted;
+	private String _status;
 }

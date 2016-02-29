@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import vn.com.ecopharma.hrm.tt.constant.EmpField;
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
+import vn.com.ecopharma.hrm.tt.dto.EmpIndexedItem;
 import vn.com.ecopharma.hrm.tt.dto.EmpTimeTrackingIndexedItem;
 import vn.com.ecopharma.hrm.tt.dto.TimeTrackingIndexItem;
 import vn.com.ecopharma.hrm.tt.dto.TimeTrackingReport;
@@ -40,6 +41,8 @@ import com.liferay.portal.util.PortalUtil;
 public class TTUtils {
 
 	private static final String RANGE_DATE_FORMAT = "yyyyMMddhhmmss";
+	
+	
 
 	private TTUtils() {
 	}
@@ -98,7 +101,8 @@ public class TTUtils {
 		final List<EmpTimeTrackingIndexedItem> results = new ArrayList<>(
 				documents.size());
 		for (final Document document : documents) {
-			results.add(new EmpTimeTrackingIndexedItem(document));
+			results.add(new EmpTimeTrackingIndexedItem(new EmpIndexedItem(
+					document)));
 		}
 		return results;
 	}
@@ -317,5 +321,22 @@ public class TTUtils {
 		return StringUtils.trimToEmpty(user.getLastName()) + " "
 				+ StringUtils.trimToEmpty(user.getMiddleName()) + " "
 				+ StringUtils.trimToEmpty(user.getFirstName());
+	}
+
+	public static List<Date> getDatesBetweenTwoDates(Date date1, Date date2,
+			boolean includedHolidays) {
+		List<Date> dates = new ArrayList<>();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date1);
+		while (calendar.getTime().before(date2)) {
+			calendar.add(Calendar.DATE, 1);
+			if (includedHolidays) {
+				dates.add(calendar.getTime());
+			} else {
+				if (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
+					dates.add(calendar.getTime());
+			}
+		}
+		return dates;
 	}
 }

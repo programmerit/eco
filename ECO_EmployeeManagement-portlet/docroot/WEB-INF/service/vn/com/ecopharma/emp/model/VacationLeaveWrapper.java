@@ -56,6 +56,7 @@ public class VacationLeaveWrapper implements VacationLeave,
 		attributes.put("leaveFrom", getLeaveFrom());
 		attributes.put("leaveTo", getLeaveTo());
 		attributes.put("actualTo", getActualTo());
+		attributes.put("numberOfHours", getNumberOfHours());
 		attributes.put("reason", getReason());
 		attributes.put("description", getDescription());
 		attributes.put("groupId", getGroupId());
@@ -65,6 +66,7 @@ public class VacationLeaveWrapper implements VacationLeave,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("deleted", getDeleted());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -105,6 +107,12 @@ public class VacationLeaveWrapper implements VacationLeave,
 
 		if (actualTo != null) {
 			setActualTo(actualTo);
+		}
+
+		Integer numberOfHours = (Integer)attributes.get("numberOfHours");
+
+		if (numberOfHours != null) {
+			setNumberOfHours(numberOfHours);
 		}
 
 		String reason = (String)attributes.get("reason");
@@ -159,6 +167,12 @@ public class VacationLeaveWrapper implements VacationLeave,
 
 		if (deleted != null) {
 			setDeleted(deleted);
+		}
+
+		String status = (String)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -300,6 +314,26 @@ public class VacationLeaveWrapper implements VacationLeave,
 	@Override
 	public void setActualTo(java.util.Date actualTo) {
 		_vacationLeave.setActualTo(actualTo);
+	}
+
+	/**
+	* Returns the number of hours of this vacation leave.
+	*
+	* @return the number of hours of this vacation leave
+	*/
+	@Override
+	public int getNumberOfHours() {
+		return _vacationLeave.getNumberOfHours();
+	}
+
+	/**
+	* Sets the number of hours of this vacation leave.
+	*
+	* @param numberOfHours the number of hours of this vacation leave
+	*/
+	@Override
+	public void setNumberOfHours(int numberOfHours) {
+		_vacationLeave.setNumberOfHours(numberOfHours);
 	}
 
 	/**
@@ -512,6 +546,26 @@ public class VacationLeaveWrapper implements VacationLeave,
 	@Override
 	public void setDeleted(boolean deleted) {
 		_vacationLeave.setDeleted(deleted);
+	}
+
+	/**
+	* Returns the status of this vacation leave.
+	*
+	* @return the status of this vacation leave
+	*/
+	@Override
+	public java.lang.String getStatus() {
+		return _vacationLeave.getStatus();
+	}
+
+	/**
+	* Sets the status of this vacation leave.
+	*
+	* @param status the status of this vacation leave
+	*/
+	@Override
+	public void setStatus(java.lang.String status) {
+		_vacationLeave.setStatus(status);
 	}
 
 	@Override

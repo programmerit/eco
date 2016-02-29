@@ -301,6 +301,20 @@ public interface TimeTrackingModel extends BaseModel<TimeTracking>, GroupedModel
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the leave ref ID of this time tracking.
+	 *
+	 * @return the leave ref ID of this time tracking
+	 */
+	public long getLeaveRefId();
+
+	/**
+	 * Sets the leave ref ID of this time tracking.
+	 *
+	 * @param leaveRefId the leave ref ID of this time tracking
+	 */
+	public void setLeaveRefId(long leaveRefId);
+
 	@Override
 	public boolean isNew();
 

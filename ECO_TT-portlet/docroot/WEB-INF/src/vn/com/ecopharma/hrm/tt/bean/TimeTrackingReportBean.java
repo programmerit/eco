@@ -11,12 +11,16 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 
+import org.apache.commons.lang3.StringUtils;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
 import vn.com.ecopharma.hrm.tt.dm.TimeTrackingReportLazyDataModel;
+import vn.com.ecopharma.hrm.tt.dto.EmpLeaveRequestItem;
 import vn.com.ecopharma.hrm.tt.dto.EmpTimeTrackingIndexedItem;
 import vn.com.ecopharma.hrm.tt.utils.BeanUtils;
 import vn.com.ecopharma.hrm.tt.utils.FilterUtils;
@@ -40,6 +44,8 @@ public class TimeTrackingReportBean implements Serializable {
 	private LazyDataModel<EmpTimeTrackingIndexedItem> lazyDataModel;
 
 	private EmpTimeTrackingIndexedItem selectedEmpTimeTrackingIndexedItem;
+
+	private String includedDialog = StringUtils.EMPTY;
 
 	@PostConstruct
 	public void init() {
@@ -88,6 +94,17 @@ public class TimeTrackingReportBean implements Serializable {
 						filters);
 			}
 		};
+
+	}
+
+	public void onAddLeaveRequest(ActionEvent event) {
+		if (selectedEmpTimeTrackingIndexedItem != null) {
+			LeaveRequestBean requestBean = BeanUtils.getLeaveRequestBean();
+			requestBean.setRequestItem(new EmpLeaveRequestItem(
+					selectedEmpTimeTrackingIndexedItem.getEmp()));
+
+			includedDialog = "/views/dialogs/leaveRequestDialog.xhtml";
+		}
 
 	}
 
@@ -167,4 +184,11 @@ public class TimeTrackingReportBean implements Serializable {
 		this.selectedEmpTimeTrackingIndexedItem = selectedEmpTimeTrackingIndexedItem;
 	}
 
+	public String getIncludedDialog() {
+		return includedDialog;
+	}
+
+	public void setIncludedDialog(String includedDialog) {
+		this.includedDialog = includedDialog;
+	}
 }

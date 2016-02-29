@@ -269,14 +269,17 @@ public interface VacationLeaveLocalService extends BaseLocalService,
 	public vn.com.ecopharma.emp.model.VacationLeave addVacationLeave(
 		vn.com.ecopharma.emp.model.VacationLeave prePersistedEntity,
 		long empId, java.lang.String leaveType, java.util.Date leaveFrom,
-		java.util.Date leaveTo, java.util.Date actualTo,
+		java.util.Date leaveTo, java.util.Date actualTo, int numberOfHours,
 		java.lang.String reason, java.lang.String description);
 
 	public vn.com.ecopharma.emp.model.VacationLeave addVacationLeave(
 		long empId, java.lang.String leaveType, java.util.Date leaveFrom,
-		java.util.Date leaveTo, java.util.Date actualTo,
+		java.util.Date leaveTo, java.util.Date actualTo, int numberOfHours,
 		java.lang.String reason, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public vn.com.ecopharma.emp.model.VacationLeave addVacationLeave(
+		long empId, vn.com.ecopharma.emp.model.VacationLeave leave);
 
 	public int countAllUnDeletedDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,

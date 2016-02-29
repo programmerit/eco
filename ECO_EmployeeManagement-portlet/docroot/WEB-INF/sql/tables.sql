@@ -141,6 +141,30 @@ create table eco_em_portlet_Emp (
 	modifiedDate DATE null
 );
 
+create table eco_em_portlet_EmpAnnualLeave (
+	empAnnualLeaveId LONG not null primary key,
+	empId LONG,
+	noOfAnualLeave DOUBLE,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null
+);
+
+create table eco_em_portlet_EmpAnualLeave (
+	empAnualLeaveId LONG not null primary key,
+	empId LONG,
+	noOfAnualLeave DOUBLE,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null
+);
+
 create table eco_em_portlet_EmpBankInfo (
 	empBankInfoId LONG not null primary key,
 	empId LONG,
@@ -377,6 +401,7 @@ create table eco_em_portlet_VacationLeave (
 	leaveFrom DATE null,
 	leaveTo DATE null,
 	actualTo DATE null,
+	numberOfHours INTEGER,
 	reason VARCHAR(75) null,
 	description VARCHAR(75) null,
 	groupId LONG,
@@ -385,7 +410,8 @@ create table eco_em_portlet_VacationLeave (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	deleted BOOLEAN
+	deleted BOOLEAN,
+	status VARCHAR(75) null
 );
 
 create table eco_em_portlet_WorkingLocation (

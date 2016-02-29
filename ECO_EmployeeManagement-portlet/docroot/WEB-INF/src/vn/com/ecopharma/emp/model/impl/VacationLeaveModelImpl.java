@@ -72,6 +72,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 			{ "leaveFrom", Types.TIMESTAMP },
 			{ "leaveTo", Types.TIMESTAMP },
 			{ "actualTo", Types.TIMESTAMP },
+			{ "numberOfHours", Types.INTEGER },
 			{ "reason", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "groupId", Types.BIGINT },
@@ -80,9 +81,10 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "deleted", Types.BOOLEAN }
+			{ "deleted", Types.BOOLEAN },
+			{ "status", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_VacationLeave (vacationLeaveId LONG not null primary key,empId LONG,leaveType VARCHAR(75) null,leaveFrom DATE null,leaveTo DATE null,actualTo DATE null,reason VARCHAR(75) null,description VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,deleted BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_VacationLeave (vacationLeaveId LONG not null primary key,empId LONG,leaveType VARCHAR(75) null,leaveFrom DATE null,leaveTo DATE null,actualTo DATE null,numberOfHours INTEGER,reason VARCHAR(75) null,description VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,deleted BOOLEAN,status VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table eco_em_portlet_VacationLeave";
 	public static final String ORDER_BY_JPQL = " ORDER BY vacationLeave.vacationLeaveId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_em_portlet_VacationLeave.vacationLeaveId ASC";
@@ -121,6 +123,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		model.setLeaveFrom(soapModel.getLeaveFrom());
 		model.setLeaveTo(soapModel.getLeaveTo());
 		model.setActualTo(soapModel.getActualTo());
+		model.setNumberOfHours(soapModel.getNumberOfHours());
 		model.setReason(soapModel.getReason());
 		model.setDescription(soapModel.getDescription());
 		model.setGroupId(soapModel.getGroupId());
@@ -130,6 +133,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setDeleted(soapModel.getDeleted());
+		model.setStatus(soapModel.getStatus());
 
 		return model;
 	}
@@ -200,6 +204,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		attributes.put("leaveFrom", getLeaveFrom());
 		attributes.put("leaveTo", getLeaveTo());
 		attributes.put("actualTo", getActualTo());
+		attributes.put("numberOfHours", getNumberOfHours());
 		attributes.put("reason", getReason());
 		attributes.put("description", getDescription());
 		attributes.put("groupId", getGroupId());
@@ -209,6 +214,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("deleted", getDeleted());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -249,6 +255,12 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 
 		if (actualTo != null) {
 			setActualTo(actualTo);
+		}
+
+		Integer numberOfHours = (Integer)attributes.get("numberOfHours");
+
+		if (numberOfHours != null) {
+			setNumberOfHours(numberOfHours);
 		}
 
 		String reason = (String)attributes.get("reason");
@@ -303,6 +315,12 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 
 		if (deleted != null) {
 			setDeleted(deleted);
+		}
+
+		String status = (String)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -397,6 +415,17 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 	@Override
 	public void setActualTo(Date actualTo) {
 		_actualTo = actualTo;
+	}
+
+	@JSON
+	@Override
+	public int getNumberOfHours() {
+		return _numberOfHours;
+	}
+
+	@Override
+	public void setNumberOfHours(int numberOfHours) {
+		_numberOfHours = numberOfHours;
 	}
 
 	@JSON
@@ -528,6 +557,22 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		_deleted = deleted;
 	}
 
+	@JSON
+	@Override
+	public String getStatus() {
+		if (_status == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _status;
+		}
+	}
+
+	@Override
+	public void setStatus(String status) {
+		_status = status;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -565,6 +610,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		vacationLeaveImpl.setLeaveFrom(getLeaveFrom());
 		vacationLeaveImpl.setLeaveTo(getLeaveTo());
 		vacationLeaveImpl.setActualTo(getActualTo());
+		vacationLeaveImpl.setNumberOfHours(getNumberOfHours());
 		vacationLeaveImpl.setReason(getReason());
 		vacationLeaveImpl.setDescription(getDescription());
 		vacationLeaveImpl.setGroupId(getGroupId());
@@ -574,6 +620,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		vacationLeaveImpl.setCreateDate(getCreateDate());
 		vacationLeaveImpl.setModifiedDate(getModifiedDate());
 		vacationLeaveImpl.setDeleted(getDeleted());
+		vacationLeaveImpl.setStatus(getStatus());
 
 		vacationLeaveImpl.resetOriginalValues();
 
@@ -678,6 +725,8 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 			vacationLeaveCacheModel.actualTo = Long.MIN_VALUE;
 		}
 
+		vacationLeaveCacheModel.numberOfHours = getNumberOfHours();
+
 		vacationLeaveCacheModel.reason = getReason();
 
 		String reason = vacationLeaveCacheModel.reason;
@@ -728,12 +777,20 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 
 		vacationLeaveCacheModel.deleted = getDeleted();
 
+		vacationLeaveCacheModel.status = getStatus();
+
+		String status = vacationLeaveCacheModel.status;
+
+		if ((status != null) && (status.length() == 0)) {
+			vacationLeaveCacheModel.status = null;
+		}
+
 		return vacationLeaveCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{vacationLeaveId=");
 		sb.append(getVacationLeaveId());
@@ -747,6 +804,8 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		sb.append(getLeaveTo());
 		sb.append(", actualTo=");
 		sb.append(getActualTo());
+		sb.append(", numberOfHours=");
+		sb.append(getNumberOfHours());
 		sb.append(", reason=");
 		sb.append(getReason());
 		sb.append(", description=");
@@ -765,6 +824,8 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		sb.append(getModifiedDate());
 		sb.append(", deleted=");
 		sb.append(getDeleted());
+		sb.append(", status=");
+		sb.append(getStatus());
 		sb.append("}");
 
 		return sb.toString();
@@ -772,7 +833,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.VacationLeave");
@@ -801,6 +862,10 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		sb.append(
 			"<column><column-name>actualTo</column-name><column-value><![CDATA[");
 		sb.append(getActualTo());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>numberOfHours</column-name><column-value><![CDATA[");
+		sb.append(getNumberOfHours());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>reason</column-name><column-value><![CDATA[");
@@ -838,6 +903,10 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 			"<column><column-name>deleted</column-name><column-value><![CDATA[");
 		sb.append(getDeleted());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>status</column-name><column-value><![CDATA[");
+		sb.append(getStatus());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -857,6 +926,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 	private Date _leaveFrom;
 	private Date _leaveTo;
 	private Date _actualTo;
+	private int _numberOfHours;
 	private String _reason;
 	private String _description;
 	private long _groupId;
@@ -867,6 +937,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _deleted;
+	private String _status;
 	private long _columnBitmask;
 	private VacationLeave _escapedModel;
 }

@@ -126,6 +126,17 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 	</model>
+	<model name="vn.com.ecopharma.emp.model.EmpAnnualLeave">
+		<field name="empAnnualLeaveId" type="long" />
+		<field name="empId" type="long" />
+		<field name="noOfAnualLeave" type="double" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
 	<model name="vn.com.ecopharma.emp.model.EmpBankInfo">
 		<field name="empBankInfoId" type="long" />
 		<field name="empId" type="long" />
@@ -340,6 +351,7 @@
 		<field name="leaveFrom" type="Date" />
 		<field name="leaveTo" type="Date" />
 		<field name="actualTo" type="Date" />
+		<field name="numberOfHours" type="int" />
 		<field name="reason" type="String" />
 		<field name="description" type="String" />
 		<field name="groupId" type="long" />
@@ -349,6 +361,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="deleted" type="boolean" />
+		<field name="status" type="String" />
 	</model>
 	<model name="vn.com.ecopharma.emp.model.WorkingLocation">
 		<field name="workingLocationId" type="long" />

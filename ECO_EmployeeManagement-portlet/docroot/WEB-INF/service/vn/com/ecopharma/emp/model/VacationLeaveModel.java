@@ -148,6 +148,20 @@ public interface VacationLeaveModel extends BaseModel<VacationLeave>,
 	public void setActualTo(Date actualTo);
 
 	/**
+	 * Returns the number of hours of this vacation leave.
+	 *
+	 * @return the number of hours of this vacation leave
+	 */
+	public int getNumberOfHours();
+
+	/**
+	 * Sets the number of hours of this vacation leave.
+	 *
+	 * @param numberOfHours the number of hours of this vacation leave
+	 */
+	public void setNumberOfHours(int numberOfHours);
+
+	/**
 	 * Returns the reason of this vacation leave.
 	 *
 	 * @return the reason of this vacation leave
@@ -311,6 +325,21 @@ public interface VacationLeaveModel extends BaseModel<VacationLeave>,
 	 * @param deleted the deleted of this vacation leave
 	 */
 	public void setDeleted(boolean deleted);
+
+	/**
+	 * Returns the status of this vacation leave.
+	 *
+	 * @return the status of this vacation leave
+	 */
+	@AutoEscape
+	public String getStatus();
+
+	/**
+	 * Sets the status of this vacation leave.
+	 *
+	 * @param status the status of this vacation leave
+	 */
+	public void setStatus(String status);
 
 	@Override
 	public boolean isNew();

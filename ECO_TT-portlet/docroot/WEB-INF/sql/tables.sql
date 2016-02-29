@@ -13,5 +13,6 @@ create table eco_ttp_TimeTracking (
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
-	modifiedDate DATE null
+	modifiedDate DATE null,
+	leaveRefId LONG
 );

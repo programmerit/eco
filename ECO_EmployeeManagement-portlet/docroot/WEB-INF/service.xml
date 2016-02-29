@@ -712,6 +712,7 @@
         <column name="leaveFrom" type="Date"></column>
         <column name="leaveTo" type="Date"></column>
         <column name="actualTo" type="Date"></column>
+        <column name="numberOfHours" type="int"></column>
         <column name="reason" type="String"></column>
         <column name="description" type="String"></column>
 
@@ -725,6 +726,7 @@
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
         <column name="deleted" type="boolean"></column>
+        <column name="status" type="String"></column>
         <finder name="Emp" return-type="Collection">
             <finder-column name="empId"></finder-column>
         </finder>
@@ -732,6 +734,26 @@
             <finder-column name="empId"></finder-column>
             <finder-column name="leaveType"></finder-column>
         </finder>
+	</entity>
+	<entity name="EmpAnnualLeave" local-service="true">
+
+		<!-- PK fields -->
+
+		<column name="empAnnualLeaveId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+        <column name="empId" type="long"></column>
+        <column name="noOfAnualLeave" type="double"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+        <column name="modifiedDate" type="Date"></column>
 	</entity>
 
 </service-builder>

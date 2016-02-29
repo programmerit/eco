@@ -21,7 +21,7 @@
 						<h:outputText value="Leave Type" />
 						<p:selectOneMenu id="leaveTypeSelect" required="true"
 							requiredMessage="Leave Type required"
-							value="#{leaveBean.leave.leaveType}" var="l">
+							value="#{leaveBean.leave.leave.leaveType}" var="l">
 							<p:ajax event="change" update="leaveTo actualTo" />
 							<f:selectItem itemLabel="Select Discipline Type" itemValue="" />
 							<f:selectItems value="#{leaveBean.leaveTypes}" var="l"
@@ -33,23 +33,24 @@
 
 						<h:outputText value="Leave Date From" />
 						<p:calendar id="leaveFrom" required="true"
-							value="#{leaveBean.leave.leaveFrom}" pattern="dd/MM/yyyy">
-							<p:ajax event="dateSelect" update="leaveTo" />
+							value="#{leaveBean.leave.leave.leaveFrom}" pattern="dd/MM/yyyy">
+							<p:ajax event="dateSelect"
+								listener="#{leaveBean.onLeaveFromDateSelect}" update="leaveTo" />
 						</p:calendar>
 
 						<h:outputText value="Leave Date To" />
 						<p:calendar id="leaveTo" required="true"
-							value="#{leaveBean.leave.leaveTo}" pattern="dd/MM/yyyy" />
+							value="#{leaveBean.leave.leave.leaveTo}" pattern="dd/MM/yyyy" />
 
 						<h:outputText value="Actual Leave Date To" />
-						<p:calendar id="actualTo" required="true"
-							value="#{leaveBean.leave.actualTo}" pattern="dd/MM/yyyy" />
+						<p:calendar id="actualTo"
+							value="#{leaveBean.leave.leave.actualTo}" pattern="dd/MM/yyyy" />
 
 						<h:outputText value="Reason: " />
-						<p:inputText value="#{leaveBean.leave.reason}" />
+						<p:inputText value="#{leaveBean.leave.leave.reason}" />
 
 						<h:outputText value="Description" />
-						<p:inputTextarea value="#{leaveBean.leave.description}" />
+						<p:inputTextarea value="#{leaveBean.leave.leave.description}" />
 					</p:panelGrid>
 				</p:outputPanel>
 

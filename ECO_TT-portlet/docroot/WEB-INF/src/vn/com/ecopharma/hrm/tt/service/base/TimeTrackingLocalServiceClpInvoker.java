@@ -165,7 +165,8 @@ public class TimeTrackingLocalServiceClpInvoker {
 		_methodParameterTypes48 = new String[] {
 				"long", "java.util.Date", "java.util.Date", "java.util.Date",
 				"java.util.Date", "java.util.Date", "java.util.Date",
-				"java.util.Date", "com.liferay.portal.service.ServiceContext"
+				"java.util.Date", "long",
+				"com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName49 = "updateTimeTracking";
@@ -340,8 +341,8 @@ public class TimeTrackingLocalServiceClpInvoker {
 				(java.util.Date)arguments[1], (java.util.Date)arguments[2],
 				(java.util.Date)arguments[3], (java.util.Date)arguments[4],
 				(java.util.Date)arguments[5], (java.util.Date)arguments[6],
-				(java.util.Date)arguments[7],
-				(com.liferay.portal.service.ServiceContext)arguments[8]);
+				(java.util.Date)arguments[7], ((Long)arguments[8]).longValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[9]);
 		}
 
 		if (_methodName49.equals(name) &&
