@@ -9,6 +9,7 @@ import vn.com.ecopharma.emp.service.VacationLeaveLocalServiceUtil;
 import vn.com.ecopharma.hrm.tt.bean.LeaveRequestBean;
 import vn.com.ecopharma.hrm.tt.constant.ECO_TT_Info;
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
+import vn.com.ecopharma.hrm.tt.constant.VacationLeaveField;
 import vn.com.ecopharma.hrm.tt.model.TimeTracking;
 import vn.com.ecopharma.hrm.tt.service.TimeTrackingLocalServiceUtil;
 import vn.com.ecopharma.hrm.tt.service.persistence.TimeTrackingActionableDynamicQuery;
@@ -60,10 +61,25 @@ public class TimeTrackingIndexer extends
 
 		document.addDate(TimeTrackingField.IN_3, o.getIn3());
 		document.addDate(TimeTrackingField.OUT_3, o.getOut3());
-		
+
 		if (o.getLeaveRefId() != 0) {
-			VacationLeave leave = VacationLeaveLocalServiceUtil.fetchVacationLeave(o.getLeaveRefId());
-			
+			VacationLeave leave = VacationLeaveLocalServiceUtil
+					.fetchVacationLeave(o.getLeaveRefId());
+			document.addNumber(VacationLeaveField.ID,
+					leave.getVacationLeaveId());
+
+			document.addText(VacationLeaveField.LEAVE_TYPE,
+					leave.getLeaveType());
+			document.addDate(VacationLeaveField.LEAVE_FROM,
+					leave.getLeaveFrom());
+			document.addDate(VacationLeaveField.LEAVE_TO, leave.getLeaveTo());
+			document.addDate(VacationLeaveField.ACTUAL_TO, leave.getActualTo());
+			document.addNumber(VacationLeaveField.NUMBER_OF_HOURS,
+					leave.getNumberOfHours());
+			document.addText(VacationLeaveField.STATUS, leave.getStatus());
+			document.addText(VacationLeaveField.REASON, leave.getReason());
+			document.addText(VacationLeaveField.DESCRIPTION,
+					leave.getDescription());
 		}
 		// document.addText(TimeTrackingField.IS_EMPTY_IN,
 		// isAllInEmpty(o) ? "true" : "false");
