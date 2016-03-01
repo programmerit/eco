@@ -447,7 +447,7 @@ public class EmpLocalServiceClp implements EmpLocalService {
 
 		_methodParameterTypes77 = new String[] { "java.util.List" };
 
-		_methodName78 = "getNewEmpsAndSendNotifyEmail";
+		_methodName78 = "fixLaborContractSignedDate";
 
 		_methodParameterTypes78 = new String[] {  };
 	}
@@ -2962,12 +2962,14 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	}
 
 	@Override
-	public void sendNewEmpsNotificationEmail(
+	public boolean sendNewEmpsNotificationEmail(
 		java.util.List<vn.com.ecopharma.emp.model.Emp> emps) {
+		Object returnObj = null;
+
 		try {
-			_invokableLocalService.invokeMethod(_methodName77,
-				_methodParameterTypes77,
-				new Object[] { ClpSerializer.translateInput(emps) });
+			returnObj = _invokableLocalService.invokeMethod(_methodName77,
+					_methodParameterTypes77,
+					new Object[] { ClpSerializer.translateInput(emps) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -2980,16 +2982,28 @@ public class EmpLocalServiceClp implements EmpLocalService {
 					" is not a valid exception");
 			}
 		}
+
+		return ((Boolean)returnObj).booleanValue();
 	}
 
 	@Override
-	public void getNewEmpsAndSendNotifyEmail() {
+	public void fixLaborContractSignedDate()
+		throws com.liferay.portal.kernel.exception.SystemException,
+			java.text.ParseException {
 		try {
 			_invokableLocalService.invokeMethod(_methodName78,
 				_methodParameterTypes78, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof java.text.ParseException) {
+				throw (java.text.ParseException)t;
+			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;

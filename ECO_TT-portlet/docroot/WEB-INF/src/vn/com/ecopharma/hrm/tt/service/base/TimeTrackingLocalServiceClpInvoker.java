@@ -160,25 +160,53 @@ public class TimeTrackingLocalServiceClpInvoker {
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName48 = "addTimeTracking";
+		_methodName48 = "reindexAllTimeTrackings";
 
-		_methodParameterTypes48 = new String[] {
+		_methodParameterTypes48 = new String[] {  };
+
+		_methodName49 = "removeAllIndexes";
+
+		_methodParameterTypes49 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext", "long"
+			};
+
+		_methodName50 = "addTimeTracking";
+
+		_methodParameterTypes50 = new String[] {
 				"long", "java.util.Date", "java.util.Date", "java.util.Date",
 				"java.util.Date", "java.util.Date", "java.util.Date",
 				"java.util.Date", "long",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName49 = "updateTimeTracking";
+		_methodName51 = "updateTimeTracking";
 
-		_methodParameterTypes49 = new String[] {
+		_methodParameterTypes51 = new String[] {
 				"long", "java.util.Date", "java.util.Date", "java.util.Date",
 				"java.util.Date", "java.util.Date", "java.util.Date"
 			};
 
-		_methodName50 = "completelyRemoveAllTimeTrackings";
+		_methodName52 = "updateTimeTracking";
 
-		_methodParameterTypes50 = new String[] {  };
+		_methodParameterTypes52 = new String[] {
+				"vn.com.ecopharma.hrm.tt.model.TimeTracking"
+			};
+
+		_methodName53 = "setLeaveForTimeTracking";
+
+		_methodParameterTypes53 = new String[] {
+				"vn.com.ecopharma.hrm.tt.model.TimeTracking", "long"
+			};
+
+		_methodName54 = "completelyRemoveAllTimeTrackings";
+
+		_methodParameterTypes54 = new String[] {  };
+
+		_methodName55 = "getDatesBetweenTwoDates";
+
+		_methodParameterTypes55 = new String[] {
+				"java.util.Date", "java.util.Date", "boolean", "boolean"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -337,6 +365,21 @@ public class TimeTrackingLocalServiceClpInvoker {
 
 		if (_methodName48.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
+			TimeTrackingLocalServiceUtil.reindexAllTimeTrackings();
+
+			return null;
+		}
+
+		if (_methodName49.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes49, parameterTypes)) {
+			TimeTrackingLocalServiceUtil.removeAllIndexes((com.liferay.portal.kernel.search.SearchContext)arguments[0],
+				((Long)arguments[1]).longValue());
+
+			return null;
+		}
+
+		if (_methodName50.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
 			return TimeTrackingLocalServiceUtil.addTimeTracking(((Long)arguments[0]).longValue(),
 				(java.util.Date)arguments[1], (java.util.Date)arguments[2],
 				(java.util.Date)arguments[3], (java.util.Date)arguments[4],
@@ -345,19 +388,38 @@ public class TimeTrackingLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[9]);
 		}
 
-		if (_methodName49.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes49, parameterTypes)) {
+		if (_methodName51.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes51, parameterTypes)) {
 			return TimeTrackingLocalServiceUtil.updateTimeTracking(((Long)arguments[0]).longValue(),
 				(java.util.Date)arguments[1], (java.util.Date)arguments[2],
 				(java.util.Date)arguments[3], (java.util.Date)arguments[4],
 				(java.util.Date)arguments[5], (java.util.Date)arguments[6]);
 		}
 
-		if (_methodName50.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
+		if (_methodName52.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
+			return TimeTrackingLocalServiceUtil.updateTimeTracking((vn.com.ecopharma.hrm.tt.model.TimeTracking)arguments[0]);
+		}
+
+		if (_methodName53.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes53, parameterTypes)) {
+			return TimeTrackingLocalServiceUtil.setLeaveForTimeTracking((vn.com.ecopharma.hrm.tt.model.TimeTracking)arguments[0],
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName54.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
 			TimeTrackingLocalServiceUtil.completelyRemoveAllTimeTrackings();
 
 			return null;
+		}
+
+		if (_methodName55.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
+			return TimeTrackingLocalServiceUtil.getDatesBetweenTwoDates((java.util.Date)arguments[0],
+				(java.util.Date)arguments[1],
+				((Boolean)arguments[2]).booleanValue(),
+				((Boolean)arguments[3]).booleanValue());
 		}
 
 		throw new UnsupportedOperationException();
@@ -421,4 +483,14 @@ public class TimeTrackingLocalServiceClpInvoker {
 	private String[] _methodParameterTypes49;
 	private String _methodName50;
 	private String[] _methodParameterTypes50;
+	private String _methodName51;
+	private String[] _methodParameterTypes51;
+	private String _methodName52;
+	private String[] _methodParameterTypes52;
+	private String _methodName53;
+	private String[] _methodParameterTypes53;
+	private String _methodName54;
+	private String[] _methodParameterTypes54;
+	private String _methodName55;
+	private String[] _methodParameterTypes55;
 }

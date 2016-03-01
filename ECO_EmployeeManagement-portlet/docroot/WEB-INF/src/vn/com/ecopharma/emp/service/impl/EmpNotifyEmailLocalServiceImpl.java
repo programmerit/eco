@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vn.com.ecopharma.emp.NoSuchEmpNotifyEmailException;
+import vn.com.ecopharma.emp.enumeration.EmployeeNotifyType;
 import vn.com.ecopharma.emp.model.EmpNotifyEmail;
 import vn.com.ecopharma.emp.service.base.EmpNotifyEmailLocalServiceBaseImpl;
 
@@ -103,6 +104,29 @@ public class EmpNotifyEmailLocalServiceImpl extends
 			LOGGER.info(e);
 		}
 		return null;
+	}
+
+	public EmpNotifyEmail updateEmpNotifyEmail(long empNotifyEmailId,
+			String status) {
+		try {
+			EmpNotifyEmail obj = fetchEmpNotifyEmail(empNotifyEmailId);
+			obj.setStatus(status);
+			return super.updateEmpNotifyEmail(obj);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
+	public EmpNotifyEmail updateSentMailNotify(long empNotifyEmailId) {
+		return updateEmpNotifyEmail(empNotifyEmailId,
+				EmployeeNotifyType.SENT.toString());
+	}
+
+	public void updateSentMailNotifications(List<EmpNotifyEmail> items) {
+		for (EmpNotifyEmail item : items) {
+			item.setStatus(EmployeeNotifyType.SENT.toString());
+		}
 	}
 
 	public EmpNotifyEmail removeEmpNotifyEmail(long id) {

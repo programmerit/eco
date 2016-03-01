@@ -142,9 +142,21 @@ public class EmpNotifyEmailLocalServiceClpInvoker {
 				"long", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName192 = "removeEmpNotifyEmail";
+		_methodName192 = "updateEmpNotifyEmail";
 
-		_methodParameterTypes192 = new String[] { "long" };
+		_methodParameterTypes192 = new String[] { "long", "java.lang.String" };
+
+		_methodName193 = "updateSentMailNotify";
+
+		_methodParameterTypes193 = new String[] { "long" };
+
+		_methodName194 = "updateSentMailNotifications";
+
+		_methodParameterTypes194 = new String[] { "java.util.List" };
+
+		_methodName195 = "removeEmpNotifyEmail";
+
+		_methodParameterTypes195 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -284,6 +296,24 @@ public class EmpNotifyEmailLocalServiceClpInvoker {
 
 		if (_methodName192.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes192, parameterTypes)) {
+			return EmpNotifyEmailLocalServiceUtil.updateEmpNotifyEmail(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
+		}
+
+		if (_methodName193.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes193, parameterTypes)) {
+			return EmpNotifyEmailLocalServiceUtil.updateSentMailNotify(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName194.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes194, parameterTypes)) {
+			EmpNotifyEmailLocalServiceUtil.updateSentMailNotifications((java.util.List<vn.com.ecopharma.emp.model.EmpNotifyEmail>)arguments[0]);
+
+			return null;
+		}
+
+		if (_methodName195.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes195, parameterTypes)) {
 			return EmpNotifyEmailLocalServiceUtil.removeEmpNotifyEmail(((Long)arguments[0]).longValue());
 		}
 
@@ -340,4 +370,10 @@ public class EmpNotifyEmailLocalServiceClpInvoker {
 	private String[] _methodParameterTypes191;
 	private String _methodName192;
 	private String[] _methodParameterTypes192;
+	private String _methodName193;
+	private String[] _methodParameterTypes193;
+	private String _methodName194;
+	private String[] _methodParameterTypes194;
+	private String _methodName195;
+	private String[] _methodParameterTypes195;
 }

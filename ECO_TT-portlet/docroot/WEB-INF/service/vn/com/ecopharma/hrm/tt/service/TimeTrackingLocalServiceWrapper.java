@@ -350,6 +350,18 @@ public class TimeTrackingLocalServiceWrapper implements TimeTrackingLocalService
 	}
 
 	@Override
+	public void reindexAllTimeTrackings() {
+		_timeTrackingLocalService.reindexAllTimeTrackings();
+	}
+
+	@Override
+	public void removeAllIndexes(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		long companyId) {
+		_timeTrackingLocalService.removeAllIndexes(searchContext, companyId);
+	}
+
+	@Override
 	public vn.com.ecopharma.hrm.tt.model.TimeTracking addTimeTracking(
 		long empId, java.util.Date date, java.util.Date in1,
 		java.util.Date out1, java.util.Date in2, java.util.Date out2,
@@ -369,8 +381,23 @@ public class TimeTrackingLocalServiceWrapper implements TimeTrackingLocalService
 	}
 
 	@Override
+	public vn.com.ecopharma.hrm.tt.model.TimeTracking setLeaveForTimeTracking(
+		vn.com.ecopharma.hrm.tt.model.TimeTracking timeTracking, long leaveRefId) {
+		return _timeTrackingLocalService.setLeaveForTimeTracking(timeTracking,
+			leaveRefId);
+	}
+
+	@Override
 	public void completelyRemoveAllTimeTrackings() {
 		_timeTrackingLocalService.completelyRemoveAllTimeTrackings();
+	}
+
+	@Override
+	public java.util.List<java.util.Date> getDatesBetweenTwoDates(
+		java.util.Date date1, java.util.Date date2, boolean includedHolidays,
+		boolean includedLowerTerm) {
+		return _timeTrackingLocalService.getDatesBetweenTwoDates(date1, date2,
+			includedHolidays, includedLowerTerm);
 	}
 
 	/**

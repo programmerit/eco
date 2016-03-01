@@ -18,9 +18,8 @@ public class TimeTrackingIndexItem extends BaseEmpInfoIndexedItem {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final String SOURCE_DATETIME_FORMAT = "yyyyMMddHHmmss";
-	private static final String OUTPUT_DATE_FORMAT = "dd/MM/yyyy";
 	private static final String TIME_FORMAT = "HH:mm";
+	private static final String DAY_FORMAT = "EEE";
 
 	private Date in1;
 	private Date out1;
@@ -30,8 +29,6 @@ public class TimeTrackingIndexItem extends BaseEmpInfoIndexedItem {
 	private Date out3;
 
 	private Document document;
-
-	private SimpleDateFormat sourceSdf = null;
 
 	public TimeTrackingIndexItem(Document document) {
 		super(document);
@@ -70,7 +67,7 @@ public class TimeTrackingIndexItem extends BaseEmpInfoIndexedItem {
 	}
 
 	public String getDay() {
-		return new SimpleDateFormat("EEEE").format(getTrackingDate());
+		return new SimpleDateFormat(DAY_FORMAT).format(getTrackingDate());
 	}
 
 	public Date getIn1() {
@@ -122,7 +119,7 @@ public class TimeTrackingIndexItem extends BaseEmpInfoIndexedItem {
 	}
 
 	public String getIn1Formatted() {
-		return formattedTime(getIn1());
+		return isVacationLeaveApplied() ? "Leave" : formattedTime(getIn1());
 	}
 
 	public String getIn2Formatted() {
@@ -145,18 +142,16 @@ public class TimeTrackingIndexItem extends BaseEmpInfoIndexedItem {
 		return formattedTime(getOut3());
 	}
 
-	public String getEmptyIn() {
-		return document.get(TimeTrackingField.IS_EMPTY_IN);
-	}
+	// public String getEmptyIn() {
+	// return document.get(TimeTrackingField.IS_EMPTY_IN);
+	// }
+	//
+	// public String getEmptyOut() {
+	// return document.get(TimeTrackingField.IS_EMPTY_OUT);
+	// }
 
-	public String getEmptyOut() {
-		return document.get(TimeTrackingField.IS_EMPTY_OUT);
-	}
-
-	private SimpleDateFormat getSourceSdf() {
-		if (sourceSdf == null)
-			return new SimpleDateFormat(SOURCE_DATETIME_FORMAT);
-		return sourceSdf;
+	public String getEmpCode() {
+		return super.getEmployeeCode();
 	}
 
 	private static String formattedTime(Date date) {

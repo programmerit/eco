@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import vn.com.ecopharma.emp.constant.VacationLeaveField;
 import vn.com.ecopharma.emp.model.VacationLeave;
+import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.VacationLeaveLocalServiceUtil;
 import vn.com.ecopharma.emp.service.persistence.VacationLeaveActionableDynamicQuery;
 
@@ -41,8 +42,8 @@ public class VacationLeaveIndexer extends
 		document.addNumber(VacationLeaveField.ID,
 				vacationLeave.getVacationLeaveId());
 
-		document.addText(VacationLeaveField.LEAVE_TYPE,
-				vacationLeave.getLeaveType());
+		document.addText(VacationLeaveField.LEAVE_TYPE, EmpLocalServiceUtil
+				.removeDashChar(vacationLeave.getLeaveType()));
 		document.addDate(VacationLeaveField.LEAVE_FROM,
 				vacationLeave.getLeaveFrom());
 		document.addDate(VacationLeaveField.LEAVE_TO,
@@ -55,7 +56,8 @@ public class VacationLeaveIndexer extends
 		document.addText(VacationLeaveField.REASON, vacationLeave.getReason());
 		document.addText(VacationLeaveField.DESCRIPTION,
 				vacationLeave.getDescription());
-		document.addText(VacationLeaveField.STATUS, vacationLeave.getStatus());
+		document.addText(VacationLeaveField.STATUS,
+				EmpLocalServiceUtil.removeDashChar(vacationLeave.getStatus()));
 
 		document.addText(VacationLeaveField.IS_DELETED,
 				vacationLeave.isDeleted() ? "true" : "false");

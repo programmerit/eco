@@ -161,25 +161,47 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName27 = "addTimeTracking";
+		_methodName27 = "reindexAllTimeTrackings";
 
-		_methodParameterTypes27 = new String[] {
+		_methodParameterTypes27 = new String[] {  };
+
+		_methodName28 = "removeAllIndexes";
+
+		_methodParameterTypes28 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext", "long"
+			};
+
+		_methodName29 = "addTimeTracking";
+
+		_methodParameterTypes29 = new String[] {
 				"long", "java.util.Date", "java.util.Date", "java.util.Date",
 				"java.util.Date", "java.util.Date", "java.util.Date",
 				"java.util.Date", "long",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName28 = "updateTimeTracking";
+		_methodName30 = "updateTimeTracking";
 
-		_methodParameterTypes28 = new String[] {
+		_methodParameterTypes30 = new String[] {
 				"long", "java.util.Date", "java.util.Date", "java.util.Date",
 				"java.util.Date", "java.util.Date", "java.util.Date"
 			};
 
-		_methodName29 = "completelyRemoveAllTimeTrackings";
+		_methodName31 = "setLeaveForTimeTracking";
 
-		_methodParameterTypes29 = new String[] {  };
+		_methodParameterTypes31 = new String[] {
+				"vn.com.ecopharma.hrm.tt.model.TimeTracking", "long"
+			};
+
+		_methodName32 = "completelyRemoveAllTimeTrackings";
+
+		_methodParameterTypes32 = new String[] {  };
+
+		_methodName33 = "getDatesBetweenTwoDates";
+
+		_methodParameterTypes33 = new String[] {
+				"java.util.Date", "java.util.Date", "boolean", "boolean"
+			};
 	}
 
 	@Override
@@ -986,6 +1008,51 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 	}
 
 	@Override
+	public void reindexAllTimeTrackings() {
+		try {
+			_invokableLocalService.invokeMethod(_methodName27,
+				_methodParameterTypes27, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public void removeAllIndexes(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		long companyId) {
+		try {
+			_invokableLocalService.invokeMethod(_methodName28,
+				_methodParameterTypes28,
+				new Object[] {
+					ClpSerializer.translateInput(searchContext),
+					
+				companyId
+				});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
 	public vn.com.ecopharma.hrm.tt.model.TimeTracking addTimeTracking(
 		long empId, java.util.Date date, java.util.Date in1,
 		java.util.Date out1, java.util.Date in2, java.util.Date out2,
@@ -994,8 +1061,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
 					new Object[] {
 						empId,
 						
@@ -1041,8 +1108,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28,
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
 					new Object[] {
 						timeTrackingId,
 						
@@ -1075,10 +1142,18 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 	}
 
 	@Override
-	public void completelyRemoveAllTimeTrackings() {
+	public vn.com.ecopharma.hrm.tt.model.TimeTracking setLeaveForTimeTracking(
+		vn.com.ecopharma.hrm.tt.model.TimeTracking timeTracking, long leaveRefId) {
+		Object returnObj = null;
+
 		try {
-			_invokableLocalService.invokeMethod(_methodName29,
-				_methodParameterTypes29, new Object[] {  });
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
+					new Object[] {
+						ClpSerializer.translateInput(timeTracking),
+						
+					leaveRefId
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1091,6 +1166,61 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 					" is not a valid exception");
 			}
 		}
+
+		return (vn.com.ecopharma.hrm.tt.model.TimeTracking)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public void completelyRemoveAllTimeTrackings() {
+		try {
+			_invokableLocalService.invokeMethod(_methodName32,
+				_methodParameterTypes32, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public java.util.List<java.util.Date> getDatesBetweenTwoDates(
+		java.util.Date date1, java.util.Date date2, boolean includedHolidays,
+		boolean includedLowerTerm) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
+					new Object[] {
+						ClpSerializer.translateInput(date1),
+						
+					ClpSerializer.translateInput(date2),
+						
+					includedHolidays,
+						
+					includedLowerTerm
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<java.util.Date>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableLocalService _invokableLocalService;
@@ -1152,4 +1282,12 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 	private String[] _methodParameterTypes28;
 	private String _methodName29;
 	private String[] _methodParameterTypes29;
+	private String _methodName30;
+	private String[] _methodParameterTypes30;
+	private String _methodName31;
+	private String[] _methodParameterTypes31;
+	private String _methodName32;
+	private String[] _methodParameterTypes32;
+	private String _methodName33;
+	private String[] _methodParameterTypes33;
 }

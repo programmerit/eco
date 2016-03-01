@@ -19,10 +19,12 @@ import java.util.Date;
 import java.util.List;
 
 import vn.com.ecopharma.emp.constant.EMInfo;
+import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.constant.VacationLeaveField;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.enumeration.VacationLeaveStatus;
 import vn.com.ecopharma.emp.enumeration.VacationLeaveType;
+import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.VacationLeave;
 import vn.com.ecopharma.emp.service.base.VacationLeaveLocalServiceBaseImpl;
@@ -245,6 +247,75 @@ public class VacationLeaveLocalServiceImpl extends
 			LOGGER.info(e);
 		}
 		return null;
+	}
+
+	public List<Document> searchManagerPendingRequests(long managerId,
+			SearchContext searchContext, long companyId) {
+		try {
+
+			final List<Query> queries = new ArrayList<>();
+			final Emp manager = empLocalService.fetchEmp(managerId);
+			final Department departmentByManager = departmentLocalService
+					.fetchDepartment(manager.getDepartmentId());
+			final BooleanQuery leaveByDepartmentQuery = BooleanQueryFactoryUtil
+					.create(searchContext);
+			leaveByDepartmentQuery.addExactTerm(EmpField.DEPARTMENT,
+					departmentByManager.getName());
+
+			final BooleanQuery pendingRequestQuery = BooleanQueryFactoryUtil
+					.create(searchContext);
+			pendingRequestQuery.addExactTerm(VacationLeaveField.STATUS,
+					empLocalService
+							.removeDashChar(VacationLeaveStatus.PENDING_REQUEST
+									.toString()));
+
+			// add to list
+			queries.add(leaveByDepartmentQuery);
+			queries.add(pendingRequestQuery);
+
+			return searchAllUnDeletedDocuments(searchContext, queries,
+					companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return new ArrayList<>();
+	}
+
+	public void reindexAll() {
+		final Indexer indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(VacationLeave.class.getName());
+		final List<VacationLeave> vacationLeaves = findAll();
+		for (VacationLeave v : vacationLeaves) {
+			// index employee
+			try {
+				indexer.reindex(v);
+			} catch (SearchException e) {
+				LOGGER.info(e);
+			}
+		}
+
+	}
+
+	public void removeAllIndexes(SearchContext searchContext, long companyId) {
+		final BooleanQuery booleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		booleanQuery.addExactTerm(Field.ENTRY_CLASS_NAME,
+				VacationLeave.class.getName());
+		try {
+			final Hits hits = SearchEngineUtil.search(
+					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
+					booleanQuery, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			final List<Document> docs = hits.toList();
+			for (Document doc : docs) {
+				SearchEngineUtil.deleteDocument(
+						SearchEngineUtil.getDefaultSearchEngineId(), companyId,
+						doc.getUID());
+
+			}
+		} catch (SearchException e) {
+			LOGGER.info(e);
+		}
 	}
 
 	public Document getIndexedDocument(String id, SearchContext searchContext) {

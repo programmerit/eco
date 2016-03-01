@@ -1,10 +1,31 @@
 package vn.com.ecopharma.hrm.tt.enumeration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public enum VacationLeaveType {
-	ANNUAL_LEAVE, PERSONAL_REASON_LEAVE, WO_PAYMENT_LEAVE, POLICY_LEAVE, OTHERS;
+
+	ANNUAL_LEAVE(Arrays.asList("P", "1/2P")), // Nghỉ phép
+	WO_PAYMENT_LEAVE(Arrays.asList("N", "1/2N")), // Nghỉ không lương
+	COMPENSATION_LEAVE(Arrays.asList("NB", "1/2NB")), // Nghỉ bù
+	POLICY_LEAVE(Arrays.asList("CD", "OD", "CO", "TS")), // Nghỉ chế độ
+	HOLIDAYS(Arrays.asList("L")), // Nghỉ lễ
+	OTHERS(Arrays.asList("O")); // Khác
+
+	private List<String> signs;
+
+	VacationLeaveType(List<String> signs) {
+		this.signs = signs;
+	}
+
+	public List<String> getSigns() {
+		return signs;
+	}
+
+	public void setSigns(List<String> signs) {
+		this.signs = signs;
+	}
 
 	@Override
 	public String toString() {

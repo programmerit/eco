@@ -12,6 +12,7 @@ import vn.com.ecopharma.emp.model.VacationLeave;
 import vn.com.ecopharma.emp.service.VacationLeaveLocalServiceUtil;
 import vn.com.ecopharma.hrm.tt.dto.EmpLeaveRequestItem;
 import vn.com.ecopharma.hrm.tt.enumeration.VacationLeaveType;
+import vn.com.ecopharma.hrm.tt.model.TimeTracking;
 import vn.com.ecopharma.hrm.tt.service.TimeTrackingLocalServiceUtil;
 import vn.com.ecopharma.hrm.tt.utils.TTUtils;
 
@@ -38,15 +39,27 @@ public class LeaveRequestBean implements Serializable {
 				.addVacationLeave(requestItem.getEmp().getId(), leave);
 
 		if (vacationLeave != null) {
-			List<Date> vacationRange = TTUtils.getDatesBetweenTwoDates(
-					vacationLeave.getLeaveFrom(), vacationLeave.getLeaveTo(),
-					false);
+			List<Date> vacationRange = TimeTrackingLocalServiceUtil
+					.getDatesBetweenTwoDates(vacationLeave.getLeaveFrom(),
+							vacationLeave.getLeaveTo(), false, true);
 			for (Date date : vacationRange) {
-				LOGGER.info("Adding timetracking Date: " + date);
-				TimeTrackingLocalServiceUtil.addTimeTracking(
-						vacationLeave.getEmpId(), date, null, null, null, null,
-						null, null, vacationLeave.getVacationLeaveId(),
-						TTUtils.getServiceContext());
+
+				final TimeTracking checkedTimeTracking = TimeTrackingLocalServiceUtil
+						.findByEmpAndDate(vacationLeave.getEmpId(), date);
+
+				if (checkedTimeTracking == null) {
+					LOGGER.info("Adding timetracking Date: " + date);
+					TimeTrackingLocalServiceUtil.addTimeTracking(
+							vacationLeave.getEmpId(), date, null, null, null,
+							null, null, null,
+							vacationLeave.getVacationLeaveId(),
+							TTUtils.getServiceContext());
+				} else {
+					LOGGER.info("Update timetracking Date: " + date);
+					TimeTrackingLocalServiceUtil.setLeaveForTimeTracking(
+							checkedTimeTracking,
+							vacationLeave.getVacationLeaveId());
+				}
 			}
 
 		}

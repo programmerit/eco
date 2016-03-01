@@ -2,6 +2,7 @@ package vn.com.ecopharma.emp.bean;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -176,6 +177,16 @@ public class EmployeeBean implements Serializable {
 
 	public void onTestSendMail() {
 		this.includedDialog = "/views/dialogs/notifyDialog.xhtml";
+	}
+
+	public void onTestUpdateLaborContractSignedDate() {
+		try {
+			EmpLocalServiceUtil.fixLaborContractSignedDate();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void addOneAddress() {

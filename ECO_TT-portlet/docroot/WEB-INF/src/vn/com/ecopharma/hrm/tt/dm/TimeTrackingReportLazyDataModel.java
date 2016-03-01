@@ -177,6 +177,7 @@ public class TimeTrackingReportLazyDataModel extends
 			ReportTimeItem timeItem = new ReportTimeItem(
 					TTUtils.compareAndGetMinTime(0, min, inArray),
 					TTUtils.compareAndGetMaxTime(0, max, outArray, inArray));
+			timeItem.setLeaveApplied(item.isVacationLeaveApplied());
 			result.put(item.getDateFormatted(), timeItem);
 		}
 		return result;

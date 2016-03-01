@@ -15,6 +15,7 @@
 package vn.com.ecopharma.hrm.tt.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -164,6 +165,39 @@ public class TimeTrackingLocalServiceImpl extends
 		return getIndexedTimeTracking(Long.valueOf(id), searchContext);
 	}
 
+	public void reindexAllTimeTrackings() {
+		final Indexer indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(TimeTracking.class.getName());
+		for (TimeTracking item : findAll()) {
+			try {
+				indexer.reindex(item);
+			} catch (SearchException e) {
+				LOGGER.info(e);
+			}
+		}
+	}
+
+	public void removeAllIndexes(SearchContext searchContext, long companyId) {
+		final BooleanQuery booleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		booleanQuery.addExactTerm(Field.ENTRY_CLASS_NAME,
+				TimeTracking.class.getName());
+		try {
+			final Hits hits = SearchEngineUtil.search(
+					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
+					booleanQuery, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			final List<Document> docs = hits.toList();
+			for (Document doc : docs) {
+				SearchEngineUtil.deleteDocument(
+						SearchEngineUtil.getDefaultSearchEngineId(), companyId,
+						doc.getUID());
+
+			}
+		} catch (SearchException e) {
+			LOGGER.info(e);
+		}
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -262,6 +296,29 @@ public class TimeTrackingLocalServiceImpl extends
 		return null;
 	}
 
+	public TimeTracking updateTimeTracking(TimeTracking timeTracking) {
+		try {
+			timeTracking.setModifiedDate(new Date());
+			timeTracking = super.updateTimeTracking(timeTracking);
+			final Indexer indexer = IndexerRegistryUtil
+					.nullSafeGetIndexer(TimeTracking.class.getName());
+			indexer.reindex(timeTracking);
+
+			return timeTracking;
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		} catch (SearchException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
+	public TimeTracking setLeaveForTimeTracking(TimeTracking timeTracking,
+			long leaveRefId) {
+		timeTracking.setLeaveRefId(leaveRefId);
+		return this.updateTimeTracking(timeTracking);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -284,5 +341,26 @@ public class TimeTrackingLocalServiceImpl extends
 		} catch (PortalException e) {
 			LOGGER.info(e);
 		}
+	}
+
+	public List<Date> getDatesBetweenTwoDates(Date date1, Date date2,
+			boolean includedHolidays, boolean includedLowerTerm) {
+		List<Date> dates = new ArrayList<>();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date1);
+		while (calendar.getTime().before(date2)) {
+			calendar.add(Calendar.DATE, 1);
+			if (includedHolidays) {
+				dates.add(calendar.getTime());
+			} else {
+				if (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
+					dates.add(calendar.getTime());
+			}
+		}
+
+		if (includedLowerTerm)
+			dates.add(date1);
+
+		return dates;
 	}
 }

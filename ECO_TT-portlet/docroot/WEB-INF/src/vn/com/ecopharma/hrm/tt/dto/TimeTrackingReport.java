@@ -29,7 +29,7 @@ public class TimeTrackingReport {
 	public TimeTrackingReport(TimeTrackingIndexItem timeTrackingIndexItem) {
 		this.empId = timeTrackingIndexItem.getEmpId();
 		this.fullName = timeTrackingIndexItem.getFullName();
-		this.empCode = timeTrackingIndexItem.getEmpCode();
+		//this.empCode = timeTrackingIndexItem.getEmpCode();
 		this.sourceTimeMap = new LinkedHashMap<String, SourceTimeItem>();
 	}
 

@@ -35,6 +35,7 @@ import vn.com.ecopharma.emp.constant.EMInfo;
 import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.enumeration.EmployeeNotifyType;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
+import vn.com.ecopharma.emp.enumeration.LaborContractType;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.District;
 import vn.com.ecopharma.emp.model.Emp;
@@ -1566,13 +1567,10 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		builder.append("		<td>Stt</td>");
 		builder.append("		<td>MSNV</td>");
 		builder.append("		<td>Họ và tên</td>");
-		builder.append("		<td>Chức danh</td>");
 		builder.append("		<td>Phòng ban</td>");
+		builder.append("		<td>Chức danh</td>");
 		builder.append("		<td>Ngày nhận việc</td>");
-		builder.append("		<td>Nơi làm việc</td>");
-		builder.append("		<td>Điện thoại</td>");
 		builder.append("		<td>Email</td>");
-		builder.append("		<td>Ghi chú</td>");
 		builder.append("	</tr>");
 		int count = 0;
 		String empCode = StringUtils.EMPTY;
@@ -1580,10 +1578,8 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		String titles = StringUtils.EMPTY;
 		String dept = StringUtils.EMPTY;
 		String joinedDate = StringUtils.EMPTY;
-		String workingPlace = StringUtils.EMPTY;
-		String contactNumber = StringUtils.EMPTY;
+		// String workingPlace = StringUtils.EMPTY;
 		String email = StringUtils.EMPTY;
-		String note = StringUtils.EMPTY;
 		SimpleDateFormat sdf = new SimpleDateFormat(COMMON_DATE_FORMAT);
 		for (Emp emp : emps) {
 			try {
@@ -1596,19 +1592,15 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 				dept = departmentLocalService.fetchDepartment(
 						emp.getDepartmentId()).getName();
 				joinedDate = sdf.format(emp.getJoinedDate());
-				contactNumber = emp.getContactNumber();
 				email = userByEmp.getEmailAddress();
 				builder.append("	<tr style='height: 40px; text-align: center;'>");
 				builder.append("		<td>" + count + "</td>");
 				builder.append("		<td>" + empCode + "</td>");
 				builder.append("		<td>" + fullName + "</td>");
-				builder.append("		<td>" + titles + "</td>");
 				builder.append("		<td>" + dept + "</td>");
+				builder.append("		<td>" + titles + "</td>");
 				builder.append("		<td>" + joinedDate + "</td>");
-				builder.append("		<td>" + workingPlace + "</td>");
-				builder.append("		<td>" + contactNumber + "</td>");
 				builder.append("		<td>" + email + "</td>");
-				builder.append("		<td>" + note + "</td>");
 				builder.append("	</tr>");
 			} catch (SystemException e) {
 				LOGGER.info(e);
@@ -1633,7 +1625,8 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		return builder.toString();
 	}
 
-	public void sendNewEmpsNotificationEmail(List<Emp> emps) {
+	public boolean sendNewEmpsNotificationEmail(List<Emp> emps) {
+
 		try {
 			Set<String> managerEmails = getManagerEmailsForNewEmpsNotification(emps);
 			LOGGER.info("Managers : " + managerEmails);
@@ -1660,17 +1653,22 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 					new InternetAddress("hvvinh@ecopharma.com.vn"),
 					new InternetAddress("vtvtan@ecopharma.com.vn"),
 					new InternetAddress("ntttien@ecopharma.com.vn"),
-					new InternetAddress("ltovy@ecopharma.com.vn") };
-
-			InternetAddress from = new InternetAddress("tvtao@ecopharma.com.vn");
-			InternetAddress[] toTest = new InternetAddress[] {
-					new InternetAddress("tao.tranv@gmail.com"),
+					new InternetAddress("ltovy@ecopharma.com.vn"),
 					new InternetAddress("tvtao@ecopharma.com.vn") };
+
+			InternetAddress from = new InternetAddress("admin@ecopharma.com.vn");
 
 			String emailContent = getEntireNewEmployeesHtmlMailContent(emps);
 
-			MailEngine.send(from, toTest, null,
-					"Thông tin nhân sự sắp nhận việc", emailContent, true);
+			MailEngine.send(from, to, cc, "Thông tin nhân sự sắp nhận việc",
+					emailContent, true);
+
+			LOGGER.info("TO: " + to.toString());
+			LOGGER.info("CC: " + cc.toString());
+			LOGGER.info("CONTENT: " + emailContent);
+
+			return true;
+
 		} catch (AddressException e) {
 			LOGGER.info(e);
 		} catch (MailEngineException e) {
@@ -1678,9 +1676,46 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}
+		return false;
 	}
 
-	public void getNewEmpsAndSendNotifyEmail() {
+	public void fixLaborContractSignedDate() throws java.text.ParseException,
+			SystemException {
+		List<Emp> emps = findAll();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Date createdDateCheck = sdf.parse("01/08/2016");
+		Calendar calendar = Calendar.getInstance();
+		for (Emp emp : emps) {
+			Date createdDate = emp.getCreateDate();
+			Date laborContractSignedDate = emp.getLaborContractSignedDate();
+			if (createdDate.compareTo(createdDateCheck) < 0
+					&& !emp.getLaborContractType().equalsIgnoreCase(
+							LaborContractType.PROBATION_CONTRACT.toString())
+					&& laborContractSignedDate != null) {
+				calendar.setTime(laborContractSignedDate);
+				boolean isLastDay = calendar.get(Calendar.DATE) == calendar
+						.getActualMaximum(Calendar.DATE);
 
+				if (isLastDay) {
+					User user = UserLocalServiceUtil.fetchUser(emp
+							.getEmpUserId());
+					LOGGER.info(emp.getEmpCode() + "  " + user.getFullName()
+							+ "   Signed Date "
+							+ sdf.format(calendar.getTime()));
+
+					calendar.set(Calendar.DATE, 1);
+					calendar.add(Calendar.MONTH, 1);
+
+					LOGGER.info("Will be Changed to: "
+							+ sdf.format(calendar.getTime()));
+
+					emp.setLaborContractSignedDate(calendar.getTime());
+					updateEmp(emp);
+
+				}
+
+			}
+		}
 	}
+
 }

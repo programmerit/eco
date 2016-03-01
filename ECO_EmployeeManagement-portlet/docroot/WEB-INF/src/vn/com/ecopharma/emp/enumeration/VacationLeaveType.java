@@ -5,7 +5,7 @@ import java.util.List;
 
 public enum VacationLeaveType {
 
-	MATERNITY;
+	MATERNITY, ANNUAL_LEAVE;
 
 	@Override
 	public String toString() {

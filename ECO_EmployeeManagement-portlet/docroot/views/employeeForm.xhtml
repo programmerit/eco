@@ -18,9 +18,6 @@
 			<p:remoteCommand name="refreshBankInfos"
 				update=":bankInfoForm:bankInfosOutputPanel" />
 
-			<p:remoteCommand name="refreshDependentNames"
-				update=":modifyForm:accordion:dependentNamesPanelGrid" />
-
 			<p:remoteCommand name="refreshUsername"
 				update=":modifyForm:accordion:username" />
 
@@ -299,6 +296,7 @@
 								<f:selectItem itemLabel="Level" itemValue="" />
 								<f:selectItems value="#{empView.levels}" var="l"
 									itemLabel="#{l.level}" itemValue="#{l}" />
+
 								<p:column>
 					               	#{l.level}
 					            </p:column>
@@ -347,7 +345,8 @@
 							<h:outputText value="Contract Signed Date" />
 							<p:calendar id="laborContractSignedDate" mask="true"
 								value="#{empView.modifyEmployeeInfoItem.emp.laborContractSignedDate}"
-								pattern="dd/MM/yyyy" placeholder="Labor Contract Signed Date" />
+								pattern="dd/MM/yyyy" placeholder="Labor Contract Signed Date">
+							</p:calendar>
 							<p:message for="laborContractSignedDate" display="icon" />
 							<p:tooltip for="laborContractSignedDate"
 								value="Labor Contract Signed Date" showEffect="clip"
@@ -471,31 +470,37 @@
 								hideEffect="explode" />
 
 							<h:outputText value="Dependent Names" />
-							<h:panelGrid id="dependentNamesPanelGrid">
-								<h:panelGroup id="noDependentNamesPanelGrid"
+							<p:outputPanel autoUpdate="true" id="dependentOutputPanel">
+								<h:panelGroup id="noItemsPanelGroup" styleClass="panel-message"
 									rendered="#{empView.modifyEmployeeInfoItem.emptyOrAllDeletedDependentNames}">
-									<h:outputText value="No Dependent " />
-									<p:commandLink value="Click to add one"
-										actionListener="#{empView.onAddDependence}"
-										oncomplete="refreshDependentNames();" ajax="true"
-										immediate="true" />
+									<h:outputText styleClass="no-item-label" value="No Dependents" />
+									<br />
+									<p:commandLink value="Add"
+										actionListener="#{empView.onAddDependence}" immediate="true" />
 								</h:panelGroup>
-								<ui:repeat var="n" id="nameObjects"
-									value="#{empView.modifyEmployeeInfoItem.dependentNames}"
-									varStatus="status">
-									<h:panelGroup rendered="#{not n.UIDeleted}">
-										<p:inputText value="#{n.name}" />
-										<p:commandLink value="+"
-											actionListener="#{empView.onAddDependence}"
-											oncomplete="refreshDependentNames();" ajax="true"
-											immediate="true" />
-										<p:commandLink value="-"
-											actionListener="#{empView.onRemoveDependence(status.index)}"
-											immediate="true" ajax="true"
-											oncomplete="refreshDependentNames();" />
-									</h:panelGroup>
-								</ui:repeat>
-							</h:panelGrid>
+
+								<h:panelGroup
+									rendered="#{not empView.modifyEmployeeInfoItem.emptyOrAllDeletedDependentNames}">
+									<ui:repeat var="d"
+										value="#{empView.modifyEmployeeInfoItem.dependentNames}"
+										varStatus="status">
+										<h:panelGroup rendered="#{not d.UIDeleted}"
+											style="display: block;">
+											<p:inputText value="#{d.name}" />
+
+											<p:commandLink value="+"
+												actionListener="#{empView.onAddDependence}" immediate="true" />
+
+											<p:commandLink value="-"
+												actionListener="#{empView.onRemoveDependence(status.index)}"
+												immediate="true" />
+										</h:panelGroup>
+
+									</ui:repeat>
+								</h:panelGroup>
+							</p:outputPanel>
+							<h:outputText />
+							<h:outputText />
 
 						</h:panelGrid>
 						<h:panelGrid columns="4">

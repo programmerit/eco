@@ -12,12 +12,14 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import vn.com.ecopharma.hrm.tt.constant.EmpField;
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
 import vn.com.ecopharma.hrm.tt.dm.TimeTrackingLazyDataModel;
 import vn.com.ecopharma.hrm.tt.dto.TimeTrackingIndexItem;
@@ -35,17 +37,19 @@ public class TimeTrackingBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static final List<String> VALID_COLUMNS = Arrays.asList("unit",
-			"empCode", "fullName", "titles", "dateFormatted", "day", "emptyIn",
-			"emptyOut", "in1Formatted", "out1Formatted", "in2Formatted",
-			"out2Formatted", "in3Formatted", "out3Formatted");
+	private static final List<String> VALID_COLUMNS = Arrays.asList(
+			EmpField.DEPARTMENT, EmpField.EMP_CODE, EmpField.VN_FULL_NAME,
+			EmpField.TITLES, "dateFormatted", "day", "in1Formatted",
+			"out1Formatted", "in2Formatted", "out2Formatted", "in3Formatted",
+			"out3Formatted");
 
-	private List<String> columnTemplates = Arrays.asList("unit", "empCode",
-			"fullName", "titles", "dateFormatted", "day", "emptyIn",
-			"emptyOut", "in1Formatted", "out1Formatted");
+	private List<String> columnTemplates = Arrays.asList(EmpField.DEPARTMENT,
+			EmpField.EMP_CODE, EmpField.VN_FULL_NAME, EmpField.TITLES,
+			"dateFormatted", "day", "in1Formatted", "out1Formatted");
 
-	private static final List<String> SORTABLE_COLUMNS = Arrays.asList("unit",
-			"empCode", "fullName", "titles");
+	private static final List<String> SORTABLE_COLUMNS = Arrays.asList(
+			EmpField.DEPARTMENT, EmpField.EMP_CODE, EmpField.VN_FULL_NAME,
+			EmpField.TITLES);
 
 	private static final List<String> EDITABLE_COLUMNS = Arrays.asList(
 			"in1Formatted", "out1Formatted", "in2Formatted", "out2Formatted",
@@ -96,6 +100,15 @@ public class TimeTrackingBean implements Serializable {
 			}
 		};
 		createDynamicColumns();
+	}
+
+	public void reindexAll(ActionEvent event) {
+		TimeTrackingLocalServiceUtil.reindexAllTimeTrackings();
+	}
+
+	public void removeAllIndexes(ActionEvent event) {
+		TimeTrackingLocalServiceUtil.removeAllIndexes(
+				TTUtils.getCurrentSearchContext(), TTUtils.getCompanyId());
 	}
 
 	public void updateColumns() {

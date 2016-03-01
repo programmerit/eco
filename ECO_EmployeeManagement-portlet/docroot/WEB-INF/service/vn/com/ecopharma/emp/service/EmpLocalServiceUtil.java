@@ -755,13 +755,15 @@ public class EmpLocalServiceUtil {
 		return getService().getEntireNewEmployeesHtmlMailContent(emps);
 	}
 
-	public static void sendNewEmpsNotificationEmail(
+	public static boolean sendNewEmpsNotificationEmail(
 		java.util.List<vn.com.ecopharma.emp.model.Emp> emps) {
-		getService().sendNewEmpsNotificationEmail(emps);
+		return getService().sendNewEmpsNotificationEmail(emps);
 	}
 
-	public static void getNewEmpsAndSendNotifyEmail() {
-		getService().getNewEmpsAndSendNotifyEmail();
+	public static void fixLaborContractSignedDate()
+		throws com.liferay.portal.kernel.exception.SystemException,
+			java.text.ParseException {
+		getService().fixLaborContractSignedDate();
 	}
 
 	public static void clearService() {

@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.model.Region;
 import com.liferay.portal.service.CountryServiceUtil;
-import com.liferay.portal.service.RegionServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 
 public class ImportExportEmployeeDTO implements Serializable {
@@ -130,7 +129,7 @@ public class ImportExportEmployeeDTO implements Serializable {
 	private Titles titles;
 
 	private String importFailedException;
-	
+
 	public ImportExportEmployeeDTO(XSSFRow r) {
 		this.bindFieldsFromExcelRow(r);
 	}

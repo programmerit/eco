@@ -305,6 +305,21 @@ public class EmpNotifyEmailLocalServiceUtil {
 		return getService().createEmpNotifyEmail(empId, type, status);
 	}
 
+	public static vn.com.ecopharma.emp.model.EmpNotifyEmail updateEmpNotifyEmail(
+		long empNotifyEmailId, java.lang.String status) {
+		return getService().updateEmpNotifyEmail(empNotifyEmailId, status);
+	}
+
+	public static vn.com.ecopharma.emp.model.EmpNotifyEmail updateSentMailNotify(
+		long empNotifyEmailId) {
+		return getService().updateSentMailNotify(empNotifyEmailId);
+	}
+
+	public static void updateSentMailNotifications(
+		java.util.List<vn.com.ecopharma.emp.model.EmpNotifyEmail> items) {
+		getService().updateSentMailNotifications(items);
+	}
+
 	public static vn.com.ecopharma.emp.model.EmpNotifyEmail removeEmpNotifyEmail(
 		long id) {
 		return getService().removeEmpNotifyEmail(id);

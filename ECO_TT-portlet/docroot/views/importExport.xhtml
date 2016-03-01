@@ -6,17 +6,11 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
 	<h:head />
 	<h:body>
-		<p:ajaxStatus onstart="PF('statusDialog').show()"
-			onsuccess="PF('statusDialog').hide()" />
-
-		<p:dialog widgetVar="statusDialog" modal="false" draggable="false"
-			closable="false" resizable="false" showHeader="false"
-			styleClass="eco-ajax-loading">
-			<p:graphicImage name="/images/ajax-loader1.gif" />
-		</p:dialog>
+		<eco:ajaxIndicator />
 		<h:form id="importExportForm">
 			<p:commandLink value="Remove All TimeTrackings"
 				actionListener="#{importExportTimeTrackingBean.completelyRemoveAllTimeTrackings}" />

@@ -143,9 +143,21 @@ public class EmpNotifyEmailLocalServiceClp implements EmpNotifyEmailLocalService
 				"long", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName25 = "removeEmpNotifyEmail";
+		_methodName25 = "updateEmpNotifyEmail";
 
-		_methodParameterTypes25 = new String[] { "long" };
+		_methodParameterTypes25 = new String[] { "long", "java.lang.String" };
+
+		_methodName26 = "updateSentMailNotify";
+
+		_methodParameterTypes26 = new String[] { "long" };
+
+		_methodName27 = "updateSentMailNotifications";
+
+		_methodParameterTypes27 = new String[] { "java.util.List" };
+
+		_methodName28 = "removeEmpNotifyEmail";
+
+		_methodParameterTypes28 = new String[] { "long" };
 	}
 
 	@Override
@@ -862,13 +874,87 @@ public class EmpNotifyEmailLocalServiceClp implements EmpNotifyEmailLocalService
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.EmpNotifyEmail updateEmpNotifyEmail(
+		long empNotifyEmailId, java.lang.String status) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
+					new Object[] {
+						empNotifyEmailId,
+						
+					ClpSerializer.translateInput(status)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.EmpNotifyEmail)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.EmpNotifyEmail updateSentMailNotify(
+		long empNotifyEmailId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26, new Object[] { empNotifyEmailId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.EmpNotifyEmail)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public void updateSentMailNotifications(
+		java.util.List<vn.com.ecopharma.emp.model.EmpNotifyEmail> items) {
+		try {
+			_invokableLocalService.invokeMethod(_methodName27,
+				_methodParameterTypes27,
+				new Object[] { ClpSerializer.translateInput(items) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.EmpNotifyEmail removeEmpNotifyEmail(
 		long id) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25, new Object[] { id });
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28, new Object[] { id });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -936,4 +1022,10 @@ public class EmpNotifyEmailLocalServiceClp implements EmpNotifyEmailLocalService
 	private String[] _methodParameterTypes24;
 	private String _methodName25;
 	private String[] _methodParameterTypes25;
+	private String _methodName26;
+	private String[] _methodParameterTypes26;
+	private String _methodName27;
+	private String[] _methodParameterTypes27;
+	private String _methodName28;
+	private String[] _methodParameterTypes28;
 }

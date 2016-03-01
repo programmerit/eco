@@ -291,6 +291,13 @@ public interface TimeTrackingLocalService extends BaseLocalService,
 		java.lang.String id,
 		com.liferay.portal.kernel.search.SearchContext searchContext);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public void reindexAllTimeTrackings();
+
+	public void removeAllIndexes(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		long companyId);
+
 	public vn.com.ecopharma.hrm.tt.model.TimeTracking addTimeTracking(
 		long empId, java.util.Date date, java.util.Date in1,
 		java.util.Date out1, java.util.Date in2, java.util.Date out2,
@@ -302,5 +309,13 @@ public interface TimeTrackingLocalService extends BaseLocalService,
 		java.util.Date in3, java.util.Date out1, java.util.Date out2,
 		java.util.Date out3);
 
+	public vn.com.ecopharma.hrm.tt.model.TimeTracking setLeaveForTimeTracking(
+		vn.com.ecopharma.hrm.tt.model.TimeTracking timeTracking, long leaveRefId);
+
 	public void completelyRemoveAllTimeTrackings();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.util.Date> getDatesBetweenTwoDates(
+		java.util.Date date1, java.util.Date date2, boolean includedHolidays,
+		boolean includedLowerTerm);
 }

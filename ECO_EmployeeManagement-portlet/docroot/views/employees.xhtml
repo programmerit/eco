@@ -223,7 +223,12 @@
 				<p:commandLink value="Test send mail"
 					actionListener="#{empView.onTestSendMail}"
 					update=":includedDialogPanelGroup"
-					oncomplete="PF('wNotifyDialog').show();" />
+					oncomplete="PF('wNotifyDialog').show();" /> |
+					
+				<p:commandLink value="Fix labor contract signed date"
+					actionListener="#{empView.onTestUpdateLaborContractSignedDate}" />
+
+
 
 			</h:panelGroup>
 

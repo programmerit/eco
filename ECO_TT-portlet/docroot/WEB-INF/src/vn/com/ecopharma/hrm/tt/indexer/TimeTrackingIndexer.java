@@ -6,7 +6,6 @@ import java.util.Locale;
 
 import vn.com.ecopharma.emp.model.VacationLeave;
 import vn.com.ecopharma.emp.service.VacationLeaveLocalServiceUtil;
-import vn.com.ecopharma.hrm.tt.bean.LeaveRequestBean;
 import vn.com.ecopharma.hrm.tt.constant.ECO_TT_Info;
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
 import vn.com.ecopharma.hrm.tt.constant.VacationLeaveField;
