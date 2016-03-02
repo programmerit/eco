@@ -5,11 +5,15 @@ import javax.faces.context.FacesContext;
 
 import vn.com.ecopharma.emp.bean.EmployeeBean;
 import vn.com.ecopharma.emp.bean.EmployeeIndexedBean;
+import vn.com.ecopharma.emp.bean.OrganizationPanelBean;
 import vn.com.ecopharma.emp.bean.OrganizationTreeViewBean;
 import vn.com.ecopharma.emp.bean.TitlesBean;
 import vn.com.ecopharma.emp.bean.filter.EmpDisciplineFilterBean;
+import vn.com.ecopharma.emp.bean.filter.EmployeeFilterView;
 import vn.com.ecopharma.emp.bean.filter.OrganizationFilterBean;
+import vn.com.ecopharma.emp.bean.filter.PromotionFilterBean;
 import vn.com.ecopharma.emp.bean.filter.ResignationFilterBean;
+import vn.com.ecopharma.emp.bean.filter.VacationLeaveFilterBean;
 import vn.com.ecopharma.emp.permission.EmpPermission;
 import vn.com.ecopharma.emp.permission.EmployeeModelPermission;
 
@@ -18,6 +22,8 @@ public class BeanUtils {
 	private static final String EMPLOYEE_BEAN = "empView";
 
 	private static final String EMPLOYEE_INDEXED_BEAN = "employeeIndexedBean";
+
+	private static final String EMPLOYEE_FILTER_BEAN = "empFilterBean";
 
 	private static final String TITLES_BEAN = "titlesBean";
 
@@ -32,6 +38,12 @@ public class BeanUtils {
 	private static final String EMP_PERMISSION_BEAN = "empPermission";
 
 	private static final String EMP_MODEL_PERMISSION_BEAN = "employeeModelPermission";
+
+	private static final String ORGANIZATION_PANEL_BEAN = "organizationPanelBean";
+
+	private static final String VACATION_LEAVE_FILTER_BEAN = "leaveFilterBean";
+
+	private static final String PROMOTION_FILTER_BEAN = "promotionFilterBean";
 
 	private BeanUtils() {
 	}
@@ -52,6 +64,10 @@ public class BeanUtils {
 
 	public static EmployeeIndexedBean getEmployeeIndexedBean() {
 		return (EmployeeIndexedBean) getBackingBeanByName(EMPLOYEE_INDEXED_BEAN);
+	}
+
+	public static EmployeeFilterView getEmpFilterBean() {
+		return (EmployeeFilterView) getBackingBeanByName(EMPLOYEE_FILTER_BEAN);
 	}
 
 	public static TitlesBean getTitlesBean() {
@@ -80,5 +96,17 @@ public class BeanUtils {
 
 	public static EmployeeModelPermission getEmpModelPermission() {
 		return (EmployeeModelPermission) getBackingBeanByName(EMP_MODEL_PERMISSION_BEAN);
+	}
+
+	public static OrganizationPanelBean getOrganizationPanelBean() {
+		return (OrganizationPanelBean) getBackingBeanByName(ORGANIZATION_PANEL_BEAN);
+	}
+
+	public static VacationLeaveFilterBean getLeaveFilterBean() {
+		return (VacationLeaveFilterBean) getBackingBeanByName(VACATION_LEAVE_FILTER_BEAN);
+	}
+
+	public static PromotionFilterBean getPromotionFilterBean() {
+		return (PromotionFilterBean) getBackingBeanByName(PROMOTION_FILTER_BEAN);
 	}
 }

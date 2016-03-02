@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 import vn.com.ecopharma.emp.model.Department;
+import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpOrgRelationship;
 import vn.com.ecopharma.emp.service.base.EmpOrgRelationshipLocalServiceBaseImpl;
 
@@ -100,6 +101,17 @@ public class EmpOrgRelationshipLocalServiceImpl extends
 		return new ArrayList<>();
 	}
 
+	public List<EmpOrgRelationship> findByEmpClassNameAndHeadOfOrg(long empId,
+			String className, boolean isHeadOfOrg) {
+		try {
+			return empOrgRelationshipPersistence.findByEmpClassNameHeadOfOrg(
+					empId, className, isHeadOfOrg);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return new ArrayList<>();
+	}
+
 	public EmpOrgRelationship fetchByClassNameClassPKHeadOfOrg(
 			String className, long classPK, boolean isHeadOfOrg) {
 		try {
@@ -134,6 +146,16 @@ public class EmpOrgRelationshipLocalServiceImpl extends
 			LOGGER.info(e);
 		}
 		return null;
+	}
+
+	public boolean isHeadOfAtLeastOneDepartment(long userId) {
+		Emp empByUser = empLocalService.findByUser(userId);
+		if (empByUser != null) {
+			List<EmpOrgRelationship> empOrgRelationships = findByEmpClassNameAndHeadOfOrg(
+					empByUser.getEmpId(), Department.class.getName(), true);
+			return !empOrgRelationships.isEmpty();
+		}
+		return false;
 	}
 
 	public boolean isHeadOfDepartment(long empId, long departmentId) {

@@ -24,8 +24,8 @@
 			<p:remoteCommand name="refreshPasswordFields"
 				update=":modifyForm:accordion:userPassword1 :modifyForm:accordion:userPassword2" />
 
-			<p:remoteCommand name="refreshDocumentOutputPanel"
-				update=":modifyForm:accordion:documentOutputPanel" />
+			<!-- 	<p:remoteCommand name="refreshDocumentOutputPanel"
+				update=":modifyForm:accordion:documentOutputPanel" /> -->
 
 			<p:commandLink value="Back" action="#{empView.cancelModification}"
 				immediate="true" update=":empPanelGroup">
@@ -101,7 +101,6 @@
 							<ui:repeat var="a" id="addressObjects"
 								value="#{empView.modifyEmployeeInfoItem.addresses}"
 								varStatus="status">
-
 								<h:panelGroup id="addressItem" rendered="#{not a.UIDeleted}">
 									<p:commandLink immediate="true" value="X"
 										actionListener="#{empView.removeOneAddress(status.index)}"
@@ -186,151 +185,52 @@
 
 				<p:tab id="workingDetail" title="Work Information">
 					<p:panelGrid columns="2" layout="grid">
-						<h:panelGrid columns="2" style="border: 0;">
-							<h:outputText value="Working Place" />
-							<p:selectOneMenu id="regionSelect"
-								value="#{empView.modifyEmployeeInfoItem.workingPlace}"
-								converter="regionConverter" effect="fade" filter="true"
-								filterMatchMode="contains" var="r">
-								<f:selectItem itemLabel="Select Place" itemValue="" />
-								<f:selectItems value="#{empView.workingPlaces}" var="r"
-									itemLabel="#{r.name}" itemValue="#{r}" />
+						<h:panelGroup>
+							<h:outputText />
+							<eco:organizationPanel levelIncluded="true">
+								<h:outputText value="Working Place" />
+								<p:selectOneMenu id="regionSelect"
+									value="#{empView.modifyEmployeeInfoItem.workingPlace}"
+									converter="regionItemConverter" effect="fade" filter="true"
+									filterMatchMode="contains" var="r">
+									<f:selectItem itemLabel="Select Place" itemValue="" />
+									<f:selectItems value="#{empView.workingPlaces}" var="r"
+										itemLabel="#{r.region.name}" itemValue="#{r}" />
 
-								<p:column>
-					                			#{r.name} (#{r.regionCode})
-					            			</p:column>
-							</p:selectOneMenu>
-
-							<h:outputText value="Devision" />
-							<p:selectOneMenu id="devisionSelect"
-								value="#{empView.modifyEmployeeInfoItem.devision}"
-								converter="devisionConverter" effect="fade" filter="true"
-								filterMatchMode="contains" var="d">
-								<p:ajax
-									update="departmentSelect unitSelect unitGroupSelect titlesSelect"
-									listener="#{empView.onDevisionChanged}" />
-
-								<f:selectItem itemLabel="Devision" itemValue="" />
-								<f:selectItems value="#{empView.devisions}" var="d"
-									itemLabel="#{d.name}" itemValue="#{d}" />
-								<p:column>
-					                #{d.name}
-					            </p:column>
-							</p:selectOneMenu>
-
-
-							<h:outputText value="Department" />
-							<h:panelGroup>
-								<p:selectOneMenu id="departmentSelect"
-									value="#{empView.modifyEmployeeInfoItem.department}"
-									converter="departmentConverter" effect="fade" filter="true"
-									filterMatchMode="contains" var="d">
-									<p:ajax
-										update="unitSelect unitGroupSelect titlesSelect managerCheckbox"
-										listener="#{empView.onDepartmentChanged}" />
-
-									<f:selectItem itemLabel="Department" itemValue="" />
-									<f:selectItems value="#{empView.departments}" var="d"
-										itemLabel="#{d.name}" itemValue="#{d}" />
 									<p:column>
-					                #{d.name}
-					            </p:column>
+					                			#{r.region.name} (#{r.region.regionCode})
+					            			</p:column>
 								</p:selectOneMenu>
-								<p:selectBooleanCheckbox
-									value="#{empView.modifyEmployeeInfoItem.manager}"
-									disabled="#{not departmentPermission.checkPermission(empView.modifyEmployeeInfoItem.department.departmentId, 'PERMISSIONS')}"
-									id="managerCheckbox" />
-								<p:tooltip for="managerCheckbox"
-									value="Check to set this employee as Manager of this Department" />
-							</h:panelGroup>
 
-							<h:outputText value="Unit" />
-							<p:selectOneMenu id="unitSelect"
-								value="#{empView.modifyEmployeeInfoItem.unit}"
-								converter="unitConverter" effect="fade" filter="true"
-								filterMatchMode="contains" var="u">
-								<p:ajax update="unitGroupSelect"
-									listener="#{empView.onUnitChanged}" />
+								<h:outputText value="Documents" />
+								<p:outputPanel autoUpdate="true" id="documentOutputPanel">
+									<h:panelGroup id="noDocsPanelGroup" styleClass="panel-message"
+										rendered="#{empView.modifyEmployeeInfoItem.documents.size() eq 0}">
+										<h:outputText styleClass="no-item-label" value="No Documents" />
+										<br />
+										<p:commandLink value="Upload"
+											onclick="PF('wUploadDocumentDialog').show();" />
+									</h:panelGroup>
+									<h:panelGroup
+										rendered="#{empView.modifyEmployeeInfoItem.documents.size() > 0}">
+										<ui:repeat var="doc"
+											value="#{empView.modifyEmployeeInfoItem.documents}"
+											varStatus="status">
+											<h:panelGroup rendered="#{not doc.UIDeleted}">
 
-								<f:selectItem itemLabel="Unit" itemValue="" />
-								<f:selectItems value="#{empView.units}" var="u"
-									itemLabel="#{u.name}" itemValue="#{u}" />
-								<p:column>
-					                #{u.name}
-					            </p:column>
-							</p:selectOneMenu>
-
-							<h:outputText value="Group" />
-							<p:selectOneMenu id="unitGroupSelect"
-								value="#{empView.modifyEmployeeInfoItem.unitGroup}"
-								converter="unitGroupConverter" effect="fade" filter="true"
-								filterMatchMode="contains" var="g">
-								<f:selectItem itemLabel="Group" itemValue="" />
-								<f:selectItems value="#{empView.unitGroups}" var="g"
-									itemLabel="#{g.name}" itemValue="#{g}" />
-								<p:column>
-					                #{g.name}
-					            </p:column>
-							</p:selectOneMenu>
-
-							<h:outputText value="Titles" />
-							<p:selectOneMenu id="titlesSelect"
-								value="#{empView.modifyEmployeeInfoItem.titles}"
-								converter="titlesConverter" effect="fade" filter="true"
-								filterMatchMode="contains" var="t" required="true"
-								validatorMessage="[Titles] is required">
-								<f:selectItem itemLabel="Titles" itemValue="" />
-								<f:selectItems value="#{empView.titlesList}" var="t"
-									itemLabel="#{t.name}" itemValue="#{t}" />
-								<p:column>
-					                #{t.name}
-					            </p:column>
-							</p:selectOneMenu>
-
-							<h:outputText value="Level" />
-							<p:selectOneMenu id="levelSelect"
-								value="#{empView.modifyEmployeeInfoItem.level}"
-								converter="levelConverter" effect="fade" filter="true"
-								filterMatchMode="contains" var="l">
-
-								<f:selectItem itemLabel="Level" itemValue="" />
-								<f:selectItems value="#{empView.levels}" var="l"
-									itemLabel="#{l.level}" itemValue="#{l}" />
-
-								<p:column>
-					               	#{l.level}
-					            </p:column>
-							</p:selectOneMenu>
-
-							<h:outputText value="Documents" />
-							<p:outputPanel autoUpdate="true" id="documentOutputPanel">
-								<h:panelGroup id="noDocsPanelGroup" styleClass="panel-message"
-									rendered="#{empView.modifyEmployeeInfoItem.documents.size() eq 0}">
-									<h:outputText styleClass="no-item-label" value="No Documents" />
-									<br />
-									<p:commandLink value="Upload Document"
-										onclick="PF('wUploadDocumentDialog').show();" />
-								</h:panelGroup>
-								<h:panelGroup
-									rendered="#{empView.modifyEmployeeInfoItem.documents.size() > 0}">
-									<ui:repeat var="doc"
-										value="#{empView.modifyEmployeeInfoItem.documents}"
-										varStatus="status">
-										<h:panelGroup rendered="#{not doc.UIDeleted}">
-
-											<p:commandLink value="#{doc.fileEntry.title}"
-												onclick="window.location = '#{doc.fileURL}'" />
-											<p:commandLink value="[X]" style="margin-left: 5px;"
-												onclick="PF('wDeleteDocumentConfirmDialog').show()">
-												<f:setPropertyActionListener value="#{status.index}"
-													target="#{empView.deletedDocumentIndex}" />
-											</p:commandLink>
-										</h:panelGroup>
-									</ui:repeat>
-								</h:panelGroup>
-							</p:outputPanel>
-
-						</h:panelGrid>
+												<p:commandLink value="#{doc.fileEntry.title}"
+													onclick="window.location = '#{doc.fileURL}'" />
+												<p:commandLink value="[X]" style="margin-left: 5px;"
+													onclick="PF('wDeleteDocumentConfirmDialog').show()">
+													<f:setPropertyActionListener value="#{status.index}"
+														target="#{empView.deletedDocumentIndex}" />
+												</p:commandLink>
+											</h:panelGroup>
+										</ui:repeat>
+									</h:panelGroup>
+								</p:outputPanel>
+							</eco:organizationPanel>
+						</h:panelGroup>
 
 						<h:panelGrid columns="4">
 							<h:outputText value="Joined Date" />

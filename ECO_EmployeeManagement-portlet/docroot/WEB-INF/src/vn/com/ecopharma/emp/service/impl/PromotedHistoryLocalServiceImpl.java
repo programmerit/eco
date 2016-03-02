@@ -17,6 +17,7 @@ package vn.com.ecopharma.emp.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import vn.com.ecopharma.emp.constant.EMInfo;
 import vn.com.ecopharma.emp.constant.PromotedHistoryField;
@@ -24,11 +25,10 @@ import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.PromotedHistory;
 import vn.com.ecopharma.emp.service.base.PromotedHistoryLocalServiceBaseImpl;
 
-import com.liferay.faces.util.logging.Logger;
-import com.liferay.faces.util.logging.LoggerFactory;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -75,8 +75,8 @@ public class PromotedHistoryLocalServiceImpl extends
 	 * the promoted history local service.
 	 */
 
-	public static final Logger LOGGER = LoggerFactory
-			.getLogger(PromotedHistoryLocalServiceImpl.class);
+	public static final Log LOGGER = LogFactoryUtil
+			.getLog(PromotedHistoryLocalServiceImpl.class);
 
 	public List<PromotedHistory> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -92,8 +92,7 @@ public class PromotedHistoryLocalServiceImpl extends
 			return promotedHistoryPersistence.findAll(start, end,
 					orderByComparator);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(PromotedHistoryLocalServiceImpl.class)
-					.info(e);
+			LOGGER.info(e);
 		}
 		return new ArrayList<>();
 	}
@@ -102,8 +101,7 @@ public class PromotedHistoryLocalServiceImpl extends
 		try {
 			return promotedHistoryPersistence.findByEmployee(employeeId);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(PromotedHistoryLocalServiceImpl.class)
-					.info(e);
+			LOGGER.info(e);
 		}
 		return new ArrayList<>();
 	}
@@ -112,8 +110,7 @@ public class PromotedHistoryLocalServiceImpl extends
 		try {
 			return promotedHistoryPersistence.findByOldTitlesId(oldTitlesId);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(PromotedHistoryLocalServiceImpl.class)
-					.info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -122,8 +119,7 @@ public class PromotedHistoryLocalServiceImpl extends
 		try {
 			return promotedHistoryPersistence.findByOldTitlesId(newTitlesId);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(PromotedHistoryLocalServiceImpl.class)
-					.info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -136,8 +132,7 @@ public class PromotedHistoryLocalServiceImpl extends
 			promotedHistory.setPromotedDate(new Date());
 			return promotedHistory;
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(PromotedHistoryLocalServiceImpl.class)
-					.info(e);
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -174,13 +169,35 @@ public class PromotedHistoryLocalServiceImpl extends
 
 			return promotedHistory;
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(PromotedHistoryLocalServiceImpl.class)
-					.info(e);
+			LOGGER.info(e);
 		} catch (PortalException e) {
-			LogFactoryUtil.getLog(PromotedHistoryLocalServiceImpl.class)
-					.info(e);
+			LOGGER.info(e);
 		}
 		return null;
+	}
+
+	public PromotedHistory updatePromotedHistory(long id, Date promotedDate,
+			String comment, ServiceContext serviceContext) {
+		try {
+			PromotedHistory obj = fetchPromotedHistory(id);
+			obj.setPromotedDate(promotedDate);
+			obj.setComment(comment);
+			obj.setModifiedDate(new Date());
+			obj.setUserId(serviceContext.getUserId());
+
+			obj = super.updatePromotedHistory(obj);
+
+			Indexer indexer = IndexerRegistryUtil
+					.nullSafeGetIndexer(PromotedHistory.class.getName());
+			indexer.reindex(obj);
+			return obj;
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		} catch (SearchException e) {
+			LOGGER.info(e);
+		}
+		return null;
+
 	}
 
 	public PromotedHistory markDeleted(PromotedHistory promotedHistory) {
@@ -196,25 +213,23 @@ public class PromotedHistoryLocalServiceImpl extends
 			indexer.reindex(promotedHistory);
 			return promotedHistory;
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(PromotedHistoryLocalServiceImpl.class)
-					.info(e);
+			LOGGER.info(e);
 		} catch (SearchException e) {
-			LogFactoryUtil.getLog(PromotedHistoryLocalServiceImpl.class)
-					.info(e);
+			LOGGER.info(e);
 		}
 		return null;
 
 	}
 
-	public int countAllUnDeletedDocuments(SearchContext searchContext,
+	public int countAllDocuments(SearchContext searchContext,
 			List<Query> filterQueries, long companyId, Sort sort) {
-		return searchAllUnDeletedDocuments(searchContext, filterQueries,
-				companyId, sort, QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
+		return searchAllDocuments(searchContext, filterQueries, companyId,
+				sort, QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
 	}
 
-	public List<Document> searchAllUnDeletedDocuments(
-			SearchContext searchContext, List<Query> filterQueries,
-			long companyId, Sort sort, int start, int end) {
+	public List<Document> searchAllDocuments(SearchContext searchContext,
+			List<Query> filterQueries, long companyId, Sort sort, int start,
+			int end) {
 
 		LOGGER.info("FilterQueries size: " + filterQueries.size());
 		final BooleanQuery fullQuery = BooleanQueryFactoryUtil
@@ -251,13 +266,72 @@ public class PromotedHistoryLocalServiceImpl extends
 			return documents;
 
 		} catch (SearchException e) {
-			LogFactoryUtil.getLog(PromotedHistoryLocalServiceImpl.class)
-					.info(e);
+			LOGGER.info(e);
 		} catch (ParseException e) {
-			LogFactoryUtil.getLog(PromotedHistoryLocalServiceImpl.class)
-					.info(e);
+			LOGGER.info(e);
 		}
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Document> filterByFields(SearchContext searchContext,
+			Map<String, Object> filters, Sort sort, long companyId, int start,
+			int end) throws ParseException {
+		final List<Query> queries = new ArrayList<>();
+		if (filters != null) {
+			// Date effectiveDateFrom = filters
+			// .get(EmpDisciplineField.EFFECTIVE_DATE_FROM) != null ? (Date)
+			// filters
+			// .get(EmpDisciplineField.EFFECTIVE_DATE_FROM) : null;
+			//
+			// Date effectiveDateTo = filters
+			// .get(EmpDisciplineField.EFFECTIVE_DATE_TO) != null ? (Date)
+			// filters
+			// .get(EmpDisciplineField.EFFECTIVE_DATE_TO) : null;
+			for (Map.Entry<String, Object> filter : filters.entrySet()) {
+				final String filterProperty = filter.getKey();
+				final Object filterValue = filter.getValue();
+				LOGGER.info("Filter Property: " + filterProperty);
+
+				if (filterValue instanceof String) {
+					LOGGER.info("Filter Property Value: " + filterValue);
+					// TODO
+					BooleanQuery stringFilterQuery = BooleanQueryFactoryUtil
+							.create(searchContext);
+					stringFilterQuery
+							.addTerm(filterProperty, (String) filterValue,
+									true, BooleanClauseOccur.MUST);
+					queries.add(stringFilterQuery);
+
+				} else if (filterValue instanceof List<?>) {
+					queries.add(empLocalService.createStringListQuery(
+							filterProperty, (List<String>) filterValue,
+							searchContext));
+				} else if (filterValue instanceof Date) {
+					// Query effectiveDateQuery = empLocalService
+					// .createDateTermRangeQuery(
+					// EmpDisciplineField.EFFECTIVE_DATE,
+					// effectiveDateFrom, effectiveDateTo, true,
+					// true, searchContext);
+					// if (effectiveDateQuery != null) {
+					// queries.add(effectiveDateQuery);
+					// }
+				}
+			}
+		}
+		/* SORT */
+		if (sort == null) {
+			sort = new Sort(PromotedHistoryField.ID, false);
+		}
+		return searchAllDocuments(searchContext, queries, companyId, sort,
+				start, end);
+	}
+
+	public int countFilterByFields(SearchContext searchContext,
+			Map<String, Object> filters, Sort sort, long companyId)
+			throws ParseException {
+		return filterByFields(searchContext, filters, sort, companyId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
 	}
 
 	public Document getIndexedDocument(String id, SearchContext searchContext) {
@@ -278,11 +352,9 @@ public class PromotedHistoryLocalServiceImpl extends
 			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
 			return !hits.toList().isEmpty() ? hits.toList().get(0) : null;
 		} catch (ParseException e) {
-			LogFactoryUtil.getLog(PromotedHistoryLocalServiceImpl.class)
-					.info(e);
+			LOGGER.info(e);
 		} catch (SearchException e) {
-			LogFactoryUtil.getLog(PromotedHistoryLocalServiceImpl.class)
-					.info(e);
+			LOGGER.info(e);
 		}
 
 		return null;
@@ -297,7 +369,7 @@ public class PromotedHistoryLocalServiceImpl extends
 			try {
 				indexer.reindex(item);
 			} catch (SearchException e) {
-				e.printStackTrace();
+				LOGGER.info(e);
 			}
 		}
 	}

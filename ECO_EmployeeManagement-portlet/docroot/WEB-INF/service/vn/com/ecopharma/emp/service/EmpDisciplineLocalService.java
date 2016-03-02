@@ -275,6 +275,18 @@ public interface EmpDisciplineLocalService extends BaseLocalService,
 		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
 		int end);
 
+	public java.util.List<com.liferay.portal.kernel.search.Document> filterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end) throws com.liferay.portal.kernel.search.ParseException;
+
+	public int countFilterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
+		throws com.liferay.portal.kernel.search.ParseException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.Document getIndexedDocument(
 		java.lang.String id,

@@ -32,7 +32,6 @@ import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
-import vn.com.ecopharma.emp.util.FilterUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -106,10 +105,6 @@ public class EmployeeIndexedBean implements Serializable {
 					filters.put(GLOBAL_STRING, filterBean.getGlobalString());
 				}
 
-				if (filterBean.getEmployeeCode() != StringUtils.EMPTY) {
-					filters.put(EmpField.EMP_CODE, filterBean.getEmployeeCode());
-				}
-
 				if (filterBean.getJoinedDateFrom() != null)
 					filters.put(EmpField.JOINED_DATE_FROM,
 							filterBean.getJoinedDateFrom());
@@ -117,10 +112,6 @@ public class EmployeeIndexedBean implements Serializable {
 				if (filterBean.getJoinedDateTo() != null)
 					filters.put(EmpField.JOINED_DATE_TO,
 							filterBean.getJoinedDateTo());
-
-				if (filterBean.getFullName() != StringUtils.EMPTY) {
-					filters.put(EmpField.VN_FULL_NAME, filterBean.getFullName());
-				}
 
 				if (filterBean.getSelectedGenders() != null
 						&& !filterBean.getSelectedGenders().isEmpty()) {
@@ -133,8 +124,6 @@ public class EmployeeIndexedBean implements Serializable {
 					filters.put(EmpField.STATUS,
 							filterBean.getSelectedStatuses());
 				}
-
-				FilterUtils.bindOrgFilters(filterBean, filters);
 
 				return super.load(first, pageSize, sortField, sortOrder,
 						filters);

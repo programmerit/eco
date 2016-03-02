@@ -366,6 +366,11 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 	}
 
 	@Override
+	public boolean isOrganizationFilter(java.lang.String filterProperty) {
+		return _empLocalService.isOrganizationFilter(filterProperty);
+	}
+
+	@Override
 	public void createDateTermRangeQuery(java.lang.String field,
 		java.util.List<com.liferay.portal.kernel.search.Query> queries,
 		java.util.Date dateFrom, java.util.Date dateTo,
@@ -496,11 +501,11 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isManager, boolean isImportAction,
+		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return _empLocalService.update(employee, userId, oldTitlesId,
-			addressesMap, dependentNameMap, bankInfoMap, isManager,
-			isImportAction, serviceContext);
+			addressesMap, dependentNameMap, bankInfoMap, isImportAction,
+			serviceContext);
 	}
 
 	@Override
@@ -510,11 +515,11 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isManager, boolean isImportAction,
+		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return _empLocalService.update(employee, user, oldTitlesId,
-			addressesMap, dependentNameMap, bankInfoMap, isManager,
-			isImportAction, serviceContext);
+			addressesMap, dependentNameMap, bankInfoMap, isImportAction,
+			serviceContext);
 	}
 
 	@Override
@@ -552,11 +557,11 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isManager, boolean isImportAction,
+		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return _empLocalService.addOrUpdateWithExistUser(employee, user,
 			oldTitlesId, addressesMap, dependentNameMap, bankInfoMap,
-			isManager, isImportAction, serviceContext);
+			isImportAction, serviceContext);
 	}
 
 	@Override
@@ -566,11 +571,11 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isManager, boolean isImportAction,
+		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return _empLocalService.addOrUpdateWithExistUser(employee,
 			userScreenName, oldTitlesId, addressesMap, dependentNameMap,
-			bankInfoMap, isManager, isImportAction, serviceContext);
+			bankInfoMap, isImportAction, serviceContext);
 	}
 
 	@Override

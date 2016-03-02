@@ -21,7 +21,6 @@ import vn.com.ecopharma.emp.dto.BankInfoObject;
 import vn.com.ecopharma.emp.dto.DependentName;
 import vn.com.ecopharma.emp.dto.DocumentItem;
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
-import vn.com.ecopharma.emp.dto.EmpInfoItem;
 import vn.com.ecopharma.emp.enumeration.ResignationType;
 import vn.com.ecopharma.emp.model.District;
 import vn.com.ecopharma.emp.model.Emp;
@@ -509,23 +508,6 @@ public class EmployeeUtils {
 				s = s.replaceAll(dashChar, " "); // NOSONAR
 			}
 		return s.replaceAll("\\s+", " ").trim();
-	}
-
-	public static void setAttributesToEmpFromEditItem(Emp employee,
-			EmpInfoItem empInfoItem) {
-		employee.setTitlesId(getBaseModelPrimaryKey(empInfoItem.getTitles()));
-
-		employee.setUnitGroupId(getBaseModelPrimaryKey(empInfoItem
-				.getUnitGroup()));
-
-		employee.setUnitId(getBaseModelPrimaryKey(empInfoItem.getUnit()));
-
-		employee.setDepartmentId(getBaseModelPrimaryKey(empInfoItem
-				.getDepartment()));
-
-		employee.setLevelId(getBaseModelPrimaryKey(empInfoItem.getLevel()));
-		employee.setUniversityId(getBaseModelPrimaryKey(empInfoItem
-				.getUniversity()));
 	}
 
 	public static List<Address> findAllEmpAddress(long employeeId) {

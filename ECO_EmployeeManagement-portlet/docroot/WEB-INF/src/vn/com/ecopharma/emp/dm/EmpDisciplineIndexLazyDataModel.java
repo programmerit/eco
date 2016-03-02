@@ -7,9 +7,11 @@ import java.util.Map;
 
 import org.primefaces.model.SortOrder;
 
+import vn.com.ecopharma.emp.bean.filter.EmpDisciplineFilterBean;
 import vn.com.ecopharma.emp.constant.EmpDisciplineField;
 import vn.com.ecopharma.emp.dto.EmpDisciplineIndexedItem;
 import vn.com.ecopharma.emp.service.EmpDisciplineLocalServiceUtil;
+import vn.com.ecopharma.emp.util.BeanUtils;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
 import vn.com.ecopharma.emp.util.SearchEngineUtils;
 
@@ -21,8 +23,9 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 
-public class EmpDisciplineIndexLazyDataModel extends
-		AbstractEmpBaseLazyDataModel<EmpDisciplineIndexedItem> {
+public class EmpDisciplineIndexLazyDataModel
+		extends
+		AbstractEmpBaseLazyDataModel<EmpDisciplineIndexedItem, EmpDisciplineFilterBean> {
 
 	/**
 	 * 
@@ -37,7 +40,8 @@ public class EmpDisciplineIndexLazyDataModel extends
 		final List<EmpDisciplineIndexedItem> results = new ArrayList<>();
 		final List<Query> queries = new ArrayList<>();
 		try {
-			super.bindOrganizationFilterFields(filters, queries);
+			super.bindOrganizationFilterFields(filters,
+					BeanUtils.getDisciplineFilterBean());
 
 			final SearchContext searchContext = getSearchContext();
 
@@ -53,15 +57,16 @@ public class EmpDisciplineIndexLazyDataModel extends
 
 			final Sort sort = new Sort(EmpDisciplineField.ID, false);
 			final List<Document> documents = EmpDisciplineLocalServiceUtil
-					.searchAllDocuments(searchContext, queries,
-							searchContext.getCompanyId(), sort, first, first
+					.filterByFields(searchContext, filters, sort,
+							searchContext.getCompanyId(), first, first
 									+ pageSize);
+
 			for (Document document : documents) {
 				results.add(new EmpDisciplineIndexedItem(document));
 			}
 			setPageSize(pageSize);
-			setRowCount(EmpDisciplineLocalServiceUtil.countAllDocuments(
-					searchContext, queries, searchContext.getCompanyId(), sort));
+			setRowCount(EmpDisciplineLocalServiceUtil.countFilterByFields(
+					searchContext, filters, sort, searchContext.getCompanyId()));
 
 			return results;
 		} catch (ParseException e) {

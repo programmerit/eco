@@ -298,8 +298,8 @@ public class EmployeeImportExportBean implements Serializable {
 						EmpLocalServiceUtil.addOrUpdateWithExistUser(employee,
 								originGeneratedUserScreenName,
 								employee.getTitlesId(), addressMap,
-								dependentNameMap, dto.getBankInfoMap(),
-								Boolean.FALSE, true, serviceContext);
+								dependentNameMap, dto.getBankInfoMap(), true,
+								serviceContext);
 					}
 
 				} catch (Exception e) {
@@ -317,8 +317,8 @@ public class EmployeeImportExportBean implements Serializable {
 				user.setLastName(dto.getLastName());
 				EmpLocalServiceUtil.update(checkExistEmp, user,
 						checkExistEmp.getTitlesId(), addressMap,
-						dependentNameMap, dto.getBankInfoMap(), Boolean.FALSE,
-						true, serviceContext);
+						dependentNameMap, dto.getBankInfoMap(), true,
+						serviceContext);
 			}
 		}
 	}

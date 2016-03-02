@@ -321,23 +321,42 @@ public class ResignationHistoryLocalServiceUtil {
 		return getService().markDeleted(resignationHistory);
 	}
 
-	public static int countAllUnDeletedDocuments(
+	public static int countSearchAllDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
 		long companyId, com.liferay.portal.kernel.search.Sort sort) {
 		return getService()
-				   .countAllUnDeletedDocuments(searchContext, filterQueries,
+				   .countSearchAllDocuments(searchContext, filterQueries,
 			companyId, sort);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.search.Document> searchAllUnDeletedDocuments(
+	public static java.util.List<com.liferay.portal.kernel.search.Document> searchAllDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
 		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
 		int end) {
 		return getService()
-				   .searchAllUnDeletedDocuments(searchContext, filterQueries,
-			companyId, sort, start, end);
+				   .searchAllDocuments(searchContext, filterQueries, companyId,
+			sort, start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.search.Document> filterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end) throws com.liferay.portal.kernel.search.ParseException {
+		return getService()
+				   .filterByFields(searchContext, filters, sort, companyId,
+			start, end);
+	}
+
+	public static int countFilterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
+		throws com.liferay.portal.kernel.search.ParseException {
+		return getService()
+				   .countFilterByFields(searchContext, filters, sort, companyId);
 	}
 
 	public static com.liferay.portal.kernel.search.Document getIndexedDocument(

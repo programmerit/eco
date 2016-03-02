@@ -269,6 +269,9 @@ public interface EmpOrgRelationshipLocalService extends BaseLocalService,
 	public java.util.List<vn.com.ecopharma.emp.model.EmpOrgRelationship> findByClassNameClassPK(
 		java.lang.String className, long classPK);
 
+	public java.util.List<vn.com.ecopharma.emp.model.EmpOrgRelationship> findByEmpClassNameAndHeadOfOrg(
+		long empId, java.lang.String className, boolean isHeadOfOrg);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public vn.com.ecopharma.emp.model.EmpOrgRelationship fetchByClassNameClassPKHeadOfOrg(
 		java.lang.String className, long classPK, boolean isHeadOfOrg);
@@ -281,6 +284,9 @@ public interface EmpOrgRelationshipLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public vn.com.ecopharma.emp.model.EmpOrgRelationship fetchByClassNameClassPKDeputyOfOrg(
 		java.lang.String className, long classPK, boolean isDeputyOfOrg);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isHeadOfAtLeastOneDepartment(long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isHeadOfDepartment(long empId, long departmentId);

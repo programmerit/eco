@@ -19,16 +19,13 @@ import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 
 @ManagedBean(name = "empFilterBean")
 @ViewScoped
-public class EmployeeFilterView extends OrganizationFilterBean {
+public class EmployeeFilterView extends BaseEmpFilterBean {
 
 	private static final long serialVersionUID = 1L;
 
 	private static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy";
 
 	private String globalString = StringUtils.EMPTY;
-	private String employeeCode = StringUtils.EMPTY;
-	private String fullName = StringUtils.EMPTY;
-
 	private Date joinedDateFrom;
 	private Date joinedDateTo;
 
@@ -49,10 +46,10 @@ public class EmployeeFilterView extends OrganizationFilterBean {
 		String removeValue = getFilterBadges().get(index);
 		if (globalString.equalsIgnoreCase(removeValue)) {
 			globalString = StringUtils.EMPTY;
-		} else if (fullName.equalsIgnoreCase(removeValue)) {
-			fullName = StringUtils.EMPTY;
-		} else if (employeeCode.equalsIgnoreCase(removeValue)) {
-			employeeCode = StringUtils.EMPTY;
+		} else if (getFullName().equalsIgnoreCase(removeValue)) {
+			setFullName(StringUtils.EMPTY);
+		} else if (getEmpCode().equalsIgnoreCase(removeValue)) {
+			setEmpCode(StringUtils.EMPTY);
 		} else if (selectedGenders.contains(removeValue)) {
 			selectedGenders.remove(removeValue);
 		} else if (selectedStatuses.contains(removeValue)) {
@@ -78,8 +75,8 @@ public class EmployeeFilterView extends OrganizationFilterBean {
 	public List<String> getFilterBadges() {
 		final Set<String> badges = new HashSet<String>(super.getFilterBadges());
 		checkAndAddFilterBadge(globalString, badges);
-		checkAndAddFilterBadge(employeeCode, badges);
-		checkAndAddFilterBadge(fullName, badges);
+		checkAndAddFilterBadge(getEmpCode(), badges);
+		checkAndAddFilterBadge(getFullName(), badges);
 		checkAndAddFilterBadge(joinedDateFrom, badges);
 		checkAndAddFilterBadge(joinedDateTo, badges);
 		checkAndAddJoinedDateFilterBadge(badges);
@@ -139,22 +136,6 @@ public class EmployeeFilterView extends OrganizationFilterBean {
 
 	public void setGlobalString(String globalString) {
 		this.globalString = globalString;
-	}
-
-	public String getFullName() {
-		return fullName;
-	}
-
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
-
-	public String getEmployeeCode() {
-		return employeeCode;
-	}
-
-	public void setEmployeeCode(String employeeCode) {
-		this.employeeCode = employeeCode;
 	}
 
 	public Date getJoinedDateFrom() {

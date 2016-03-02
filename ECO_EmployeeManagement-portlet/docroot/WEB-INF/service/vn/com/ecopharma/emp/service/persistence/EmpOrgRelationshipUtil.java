@@ -733,6 +733,206 @@ public class EmpOrgRelationshipUtil {
 	}
 
 	/**
+	* Returns all the emp org relationships where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63;.
+	*
+	* @param empId the emp ID
+	* @param orgClassName the org class name
+	* @param headOfOrg the head of org
+	* @return the matching emp org relationships
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<vn.com.ecopharma.emp.model.EmpOrgRelationship> findByEmpClassNameHeadOfOrg(
+		long empId, java.lang.String orgClassName, boolean headOfOrg)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByEmpClassNameHeadOfOrg(empId, orgClassName, headOfOrg);
+	}
+
+	/**
+	* Returns a range of all the emp org relationships where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.EmpOrgRelationshipModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param empId the emp ID
+	* @param orgClassName the org class name
+	* @param headOfOrg the head of org
+	* @param start the lower bound of the range of emp org relationships
+	* @param end the upper bound of the range of emp org relationships (not inclusive)
+	* @return the range of matching emp org relationships
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<vn.com.ecopharma.emp.model.EmpOrgRelationship> findByEmpClassNameHeadOfOrg(
+		long empId, java.lang.String orgClassName, boolean headOfOrg,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByEmpClassNameHeadOfOrg(empId, orgClassName, headOfOrg,
+			start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the emp org relationships where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.EmpOrgRelationshipModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param empId the emp ID
+	* @param orgClassName the org class name
+	* @param headOfOrg the head of org
+	* @param start the lower bound of the range of emp org relationships
+	* @param end the upper bound of the range of emp org relationships (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching emp org relationships
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<vn.com.ecopharma.emp.model.EmpOrgRelationship> findByEmpClassNameHeadOfOrg(
+		long empId, java.lang.String orgClassName, boolean headOfOrg,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByEmpClassNameHeadOfOrg(empId, orgClassName, headOfOrg,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first emp org relationship in the ordered set where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63;.
+	*
+	* @param empId the emp ID
+	* @param orgClassName the org class name
+	* @param headOfOrg the head of org
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching emp org relationship
+	* @throws vn.com.ecopharma.emp.NoSuchEmpOrgRelationshipException if a matching emp org relationship could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.EmpOrgRelationship findByEmpClassNameHeadOfOrg_First(
+		long empId, java.lang.String orgClassName, boolean headOfOrg,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.emp.NoSuchEmpOrgRelationshipException {
+		return getPersistence()
+				   .findByEmpClassNameHeadOfOrg_First(empId, orgClassName,
+			headOfOrg, orderByComparator);
+	}
+
+	/**
+	* Returns the first emp org relationship in the ordered set where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63;.
+	*
+	* @param empId the emp ID
+	* @param orgClassName the org class name
+	* @param headOfOrg the head of org
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching emp org relationship, or <code>null</code> if a matching emp org relationship could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.EmpOrgRelationship fetchByEmpClassNameHeadOfOrg_First(
+		long empId, java.lang.String orgClassName, boolean headOfOrg,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByEmpClassNameHeadOfOrg_First(empId, orgClassName,
+			headOfOrg, orderByComparator);
+	}
+
+	/**
+	* Returns the last emp org relationship in the ordered set where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63;.
+	*
+	* @param empId the emp ID
+	* @param orgClassName the org class name
+	* @param headOfOrg the head of org
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching emp org relationship
+	* @throws vn.com.ecopharma.emp.NoSuchEmpOrgRelationshipException if a matching emp org relationship could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.EmpOrgRelationship findByEmpClassNameHeadOfOrg_Last(
+		long empId, java.lang.String orgClassName, boolean headOfOrg,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.emp.NoSuchEmpOrgRelationshipException {
+		return getPersistence()
+				   .findByEmpClassNameHeadOfOrg_Last(empId, orgClassName,
+			headOfOrg, orderByComparator);
+	}
+
+	/**
+	* Returns the last emp org relationship in the ordered set where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63;.
+	*
+	* @param empId the emp ID
+	* @param orgClassName the org class name
+	* @param headOfOrg the head of org
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching emp org relationship, or <code>null</code> if a matching emp org relationship could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.EmpOrgRelationship fetchByEmpClassNameHeadOfOrg_Last(
+		long empId, java.lang.String orgClassName, boolean headOfOrg,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByEmpClassNameHeadOfOrg_Last(empId, orgClassName,
+			headOfOrg, orderByComparator);
+	}
+
+	/**
+	* Returns the emp org relationships before and after the current emp org relationship in the ordered set where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63;.
+	*
+	* @param empOrgRelationshipId the primary key of the current emp org relationship
+	* @param empId the emp ID
+	* @param orgClassName the org class name
+	* @param headOfOrg the head of org
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next emp org relationship
+	* @throws vn.com.ecopharma.emp.NoSuchEmpOrgRelationshipException if a emp org relationship with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.EmpOrgRelationship[] findByEmpClassNameHeadOfOrg_PrevAndNext(
+		long empOrgRelationshipId, long empId, java.lang.String orgClassName,
+		boolean headOfOrg,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.emp.NoSuchEmpOrgRelationshipException {
+		return getPersistence()
+				   .findByEmpClassNameHeadOfOrg_PrevAndNext(empOrgRelationshipId,
+			empId, orgClassName, headOfOrg, orderByComparator);
+	}
+
+	/**
+	* Removes all the emp org relationships where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63; from the database.
+	*
+	* @param empId the emp ID
+	* @param orgClassName the org class name
+	* @param headOfOrg the head of org
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByEmpClassNameHeadOfOrg(long empId,
+		java.lang.String orgClassName, boolean headOfOrg)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence()
+			.removeByEmpClassNameHeadOfOrg(empId, orgClassName, headOfOrg);
+	}
+
+	/**
+	* Returns the number of emp org relationships where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63;.
+	*
+	* @param empId the emp ID
+	* @param orgClassName the org class name
+	* @param headOfOrg the head of org
+	* @return the number of matching emp org relationships
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByEmpClassNameHeadOfOrg(long empId,
+		java.lang.String orgClassName, boolean headOfOrg)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countByEmpClassNameHeadOfOrg(empId, orgClassName, headOfOrg);
+	}
+
+	/**
 	* Caches the emp org relationship in the entity cache if it is enabled.
 	*
 	* @param empOrgRelationship the emp org relationship

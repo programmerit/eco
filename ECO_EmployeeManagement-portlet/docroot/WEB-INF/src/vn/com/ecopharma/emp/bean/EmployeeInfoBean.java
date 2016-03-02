@@ -23,32 +23,19 @@ import vn.com.ecopharma.emp.enumeration.EducationType;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.enumeration.LaborContractType;
 import vn.com.ecopharma.emp.enumeration.LocationType;
-import vn.com.ecopharma.emp.enumeration.ResignationType;
-import vn.com.ecopharma.emp.model.Department;
-import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.model.Level;
 import vn.com.ecopharma.emp.model.Location;
-import vn.com.ecopharma.emp.model.ResignationHistory;
 import vn.com.ecopharma.emp.model.Specialized;
-import vn.com.ecopharma.emp.model.Titles;
-import vn.com.ecopharma.emp.model.Unit;
-import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.model.University;
-import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
-import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DistrictLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LocationLocalServiceUtil;
 import vn.com.ecopharma.emp.service.ResignationHistoryLocalServiceUtil;
 import vn.com.ecopharma.emp.service.SpecializedLocalServiceUtil;
-import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
-import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
-import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
-import vn.com.ecopharma.emp.util.BeanUtils;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
@@ -146,7 +133,8 @@ public class EmployeeInfoBean implements Serializable {
 			modifyEmployeeInfoItem.getEmp().setSpecializeId(specializedId);
 
 			long workingPlaceId = modifyEmployeeInfoItem.getWorkingPlace() != null ? modifyEmployeeInfoItem
-					.getWorkingPlace().getRegionId() : 0L;
+					.getWorkingPlace().getRegion().getRegionId()
+					: 0L;
 			modifyEmployeeInfoItem.getEmp().setWorkingPlaceId(workingPlaceId);
 
 			if (showUserTab) {
@@ -154,8 +142,8 @@ public class EmployeeInfoBean implements Serializable {
 
 				User empUser = modifyEmployeeInfoItem.getUser();
 
-				EmployeeUtils.setAttributesToEmpFromEditItem(employee,
-						modifyEmployeeInfoItem);
+				// EmployeeUtils.setAttributesToEmpFromEditItem(employee,
+				// modifyEmployeeInfoItem);
 
 				final Calendar cal = Calendar.getInstance();
 				cal.setTime(employee.getBirthday());
@@ -195,7 +183,8 @@ public class EmployeeInfoBean implements Serializable {
 								.getGender().equalsIgnoreCase(MALE) ? true
 								: false, month, day, year, groups,
 						organizationIds, roles, userGroupIds, sendEmail,
-						addressMap, dependentMap, bankInfoMap, false, serviceContext);
+						addressMap, dependentMap, bankInfoMap, false,
+						serviceContext);
 
 				if (result != null) {
 					msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -213,12 +202,12 @@ public class EmployeeInfoBean implements Serializable {
 			} else {
 				Emp employee = modifyEmployeeInfoItem.getEmp();
 				long oldTitlesId = employee.getTitlesId();
-				EmployeeUtils.setAttributesToEmpFromEditItem(employee,
-						modifyEmployeeInfoItem);
+				// EmployeeUtils.setAttributesToEmpFromEditItem(employee,
+				// modifyEmployeeInfoItem);
 				EmpLocalServiceUtil.update(employee,
 						modifyEmployeeInfoItem.getUser(), oldTitlesId,
-						addressMap, dependentMap, bankInfoMap, false,
-						Boolean.FALSE, serviceContext);
+						addressMap, dependentMap, bankInfoMap, Boolean.FALSE,
+						serviceContext);
 
 				msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 						"Update employee successfully", "Employee "
@@ -229,28 +218,6 @@ public class EmployeeInfoBean implements Serializable {
 		} catch (Exception e) {
 			LOGGER.info(e);
 		}
-	}
-
-	public void onDevisionChanged() {
-		modifyEmployeeInfoItem.setDepartment(null);
-		modifyEmployeeInfoItem.setUnit(null);
-		modifyEmployeeInfoItem.setUnitGroup(null);
-		modifyEmployeeInfoItem.setTitles(null);
-	}
-
-	public void onDepartmentChanged() {
-		modifyEmployeeInfoItem.setUnit(null);
-		modifyEmployeeInfoItem.setUnitGroup(null);
-		modifyEmployeeInfoItem.setTitles(null);
-	}
-
-	public void onUnitChanged() {
-		modifyEmployeeInfoItem.setUnitGroup(null);
-		modifyEmployeeInfoItem.setTitles(null);
-	}
-
-	public void onUnitGroupChanged() {
-		modifyEmployeeInfoItem.setTitles(null);
 	}
 
 	public void onPromotionNewPosition() {
@@ -348,44 +315,6 @@ public class EmployeeInfoBean implements Serializable {
 		return StringUtils.trimToNull(generatedUsername) != null ? generatedUsername
 				: defaultUsername;
 
-	}
-
-	public List<Titles> getTitlesList() {
-		if (modifyEmployeeInfoItem.getDepartment() != null) {
-			return TitlesLocalServiceUtil
-					.findAllByDepartment(modifyEmployeeInfoItem.getDepartment()
-							.getDepartmentId());
-		}
-		return new ArrayList<>();
-	}
-
-	public List<UnitGroup> getUnitGroups() {
-		return modifyEmployeeInfoItem.getUnit() != null ? UnitGroupLocalServiceUtil
-				.findByUnit(modifyEmployeeInfoItem.getUnit().getUnitId())
-				: null;
-	}
-
-	public List<Unit> getUnits() {
-		final Department empDepartment = modifyEmployeeInfoItem.getDepartment();
-		return empDepartment != null ? UnitLocalServiceUtil
-				.findByDepartment(empDepartment.getDepartmentId())
-				: new ArrayList<Unit>();
-	}
-
-	public List<Department> getDepartments() {
-		List<Department> departments = modifyEmployeeInfoItem.getDevision() != null ? DepartmentLocalServiceUtil
-				.findByDevision(modifyEmployeeInfoItem.getDevision()
-						.getDevisionId()) : new ArrayList<Department>();
-		if (departments.isEmpty()
-				|| !departments
-						.contains(modifyEmployeeInfoItem.getDepartment())) {
-			modifyEmployeeInfoItem.setDepartment(null);
-		}
-		return departments;
-	}
-
-	public List<Devision> getDevisions() {
-		return DevisionLocalServiceUtil.findAll();
 	}
 
 	public List<String> getLaborContractTypes() {

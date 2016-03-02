@@ -145,51 +145,66 @@ public class EmpDisciplineLocalServiceClp implements EmpDisciplineLocalService {
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName24 = "getIndexedDocument";
+		_methodName24 = "filterByFields";
 
 		_methodParameterTypes24 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long",
+				"int", "int"
+			};
+
+		_methodName25 = "countFilterByFields";
+
+		_methodParameterTypes25 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long"
+			};
+
+		_methodName26 = "getIndexedDocument";
+
+		_methodParameterTypes26 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName25 = "getIndexedDocument";
+		_methodName27 = "getIndexedDocument";
 
-		_methodParameterTypes25 = new String[] {
+		_methodParameterTypes27 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName26 = "createPrePersistedEntity";
+		_methodName28 = "createPrePersistedEntity";
 
-		_methodParameterTypes26 = new String[] {
+		_methodParameterTypes28 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName27 = "addEmpDiscipline";
+		_methodName29 = "addEmpDiscipline";
 
-		_methodParameterTypes27 = new String[] {
+		_methodParameterTypes29 = new String[] {
 				"vn.com.ecopharma.emp.model.EmpDiscipline",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName28 = "addEmpsDiscipline";
+		_methodName30 = "addEmpsDiscipline";
 
-		_methodParameterTypes28 = new String[] {
+		_methodParameterTypes30 = new String[] {
 				"java.util.List", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.util.Date", "java.lang.String",
 				"java.lang.String", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName29 = "updateEmpDiscipline";
+		_methodName31 = "updateEmpDiscipline";
 
-		_methodParameterTypes29 = new String[] {
+		_methodParameterTypes31 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.util.Date", "java.lang.String",
 				"java.lang.String"
 			};
 
-		_methodName30 = "indexAll";
+		_methodName32 = "indexAll";
 
-		_methodParameterTypes30 = new String[] {  };
+		_methodParameterTypes32 = new String[] {  };
 	}
 
 	@Override
@@ -897,14 +912,98 @@ public class EmpDisciplineLocalServiceClp implements EmpDisciplineLocalService {
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Document> filterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end) throws com.liferay.portal.kernel.search.ParseException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
+					new Object[] {
+						ClpSerializer.translateInput(searchContext),
+						
+					ClpSerializer.translateInput(filters),
+						
+					ClpSerializer.translateInput(sort),
+						
+					companyId,
+						
+					start,
+						
+					end
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.search.ParseException) {
+				throw (com.liferay.portal.kernel.search.ParseException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.portal.kernel.search.Document>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public int countFilterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
+		throws com.liferay.portal.kernel.search.ParseException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
+					new Object[] {
+						ClpSerializer.translateInput(searchContext),
+						
+					ClpSerializer.translateInput(filters),
+						
+					ClpSerializer.translateInput(sort),
+						
+					companyId
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.search.ParseException) {
+				throw (com.liferay.portal.kernel.search.ParseException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.Document getIndexedDocument(
 		java.lang.String id,
 		com.liferay.portal.kernel.search.SearchContext searchContext) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] {
 						ClpSerializer.translateInput(id),
 						
@@ -932,8 +1031,8 @@ public class EmpDisciplineLocalServiceClp implements EmpDisciplineLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] { id, ClpSerializer.translateInput(
 							searchContext) });
 		}
@@ -958,8 +1057,8 @@ public class EmpDisciplineLocalServiceClp implements EmpDisciplineLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] { ClpSerializer.translateInput(serviceContext) });
 		}
 		catch (Throwable t) {
@@ -984,8 +1083,8 @@ public class EmpDisciplineLocalServiceClp implements EmpDisciplineLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
 					new Object[] {
 						ClpSerializer.translateInput(prePersistedObj),
 						
@@ -1014,8 +1113,8 @@ public class EmpDisciplineLocalServiceClp implements EmpDisciplineLocalService {
 		java.lang.String additionalType, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName28,
-				_methodParameterTypes28,
+			_invokableLocalService.invokeMethod(_methodName30,
+				_methodParameterTypes30,
 				new Object[] {
 					ClpSerializer.translateInput(empIds),
 					
@@ -1055,8 +1154,8 @@ public class EmpDisciplineLocalServiceClp implements EmpDisciplineLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] {
 						id,
 						
@@ -1091,8 +1190,8 @@ public class EmpDisciplineLocalServiceClp implements EmpDisciplineLocalService {
 	@Override
 	public void indexAll() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName30,
-				_methodParameterTypes30, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName32,
+				_methodParameterTypes32, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1168,4 +1267,8 @@ public class EmpDisciplineLocalServiceClp implements EmpDisciplineLocalService {
 	private String[] _methodParameterTypes29;
 	private String _methodName30;
 	private String[] _methodParameterTypes30;
+	private String _methodName31;
+	private String[] _methodParameterTypes31;
+	private String _methodName32;
+	private String[] _methodParameterTypes32;
 }

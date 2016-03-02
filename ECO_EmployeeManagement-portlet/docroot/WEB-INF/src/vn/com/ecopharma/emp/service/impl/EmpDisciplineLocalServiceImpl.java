@@ -17,6 +17,7 @@ package vn.com.ecopharma.emp.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import vn.com.ecopharma.emp.constant.EMInfo;
 import vn.com.ecopharma.emp.constant.EmpDisciplineField;
@@ -138,6 +139,65 @@ public class EmpDisciplineLocalServiceImpl extends
 			LogFactoryUtil.getLog(EmpDisciplineLocalServiceImpl.class).info(e);
 		}
 		return new ArrayList<>();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Document> filterByFields(SearchContext searchContext,
+			Map<String, Object> filters, Sort sort, long companyId, int start,
+			int end) throws ParseException {
+		final List<Query> queries = new ArrayList<>();
+		if (filters != null) {
+			Date effectiveDateFrom = filters
+					.get(EmpDisciplineField.EFFECTIVE_DATE_FROM) != null ? (Date) filters
+					.get(EmpDisciplineField.EFFECTIVE_DATE_FROM) : null;
+
+			Date effectiveDateTo = filters
+					.get(EmpDisciplineField.EFFECTIVE_DATE_TO) != null ? (Date) filters
+					.get(EmpDisciplineField.EFFECTIVE_DATE_TO) : null;
+			for (Map.Entry<String, Object> filter : filters.entrySet()) {
+				final String filterProperty = filter.getKey();
+				final Object filterValue = filter.getValue();
+				LOGGER.info("Filter Property: " + filterProperty);
+
+				if (filterValue instanceof String) {
+					LOGGER.info("Filter Property Value: " + filterValue);
+					// TODO
+					BooleanQuery stringFilterQuery = BooleanQueryFactoryUtil
+							.create(searchContext);
+					stringFilterQuery
+							.addTerm(filterProperty, (String) filterValue,
+									true, BooleanClauseOccur.MUST);
+					queries.add(stringFilterQuery);
+
+				} else if (filterValue instanceof List<?>) {
+					queries.add(empLocalService.createStringListQuery(
+							filterProperty, (List<String>) filterValue,
+							searchContext));
+				} else if (filterValue instanceof Date) {
+					Query effectiveDateQuery = empLocalService
+							.createDateTermRangeQuery(
+									EmpDisciplineField.EFFECTIVE_DATE,
+									effectiveDateFrom, effectiveDateTo, true,
+									true, searchContext);
+					if (effectiveDateQuery != null) {
+						queries.add(effectiveDateQuery);
+					}
+				}
+			}
+		}
+		/* SORT */
+		if (sort == null) {
+			sort = new Sort(EmpDisciplineField.ID, false);
+		}
+		return searchAllDocuments(searchContext, queries, companyId, sort,
+				start, end);
+	}
+
+	public int countFilterByFields(SearchContext searchContext,
+			Map<String, Object> filters, Sort sort, long companyId)
+			throws ParseException {
+		return filterByFields(searchContext, filters, sort, companyId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
 	}
 
 	public Document getIndexedDocument(String id, SearchContext searchContext) {

@@ -34,17 +34,17 @@ public class UnitBean extends AbstractOrganizationBean {
 	}
 
 	public void onSave(ActionEvent event) {
-		Department department = BeanUtils.getEmployeeViewBean()
-				.getModifyEmployeeInfoItem().getDepartment();
-		unit.setDepartmentId(department.getDepartmentId());
-		Unit result = UnitLocalServiceUtil.addUnit(unit,
-				EmployeeUtils.getServiceContext());
-		if (result != null) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"Create Unit successfully", "Unit " + unit.getName()
-							+ " has been created");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-		}
+		// Department department = BeanUtils.getEmployeeViewBean()
+		// .getModifyEmployeeInfoItem().getDepartment();
+		// unit.setDepartmentId(department.getDepartmentId());
+		// Unit result = UnitLocalServiceUtil.addUnit(unit,
+		// EmployeeUtils.getServiceContext());
+		// if (result != null) {
+		// FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		// "Create Unit successfully", "Unit " + unit.getName()
+		// + " has been created");
+		// FacesContext.getCurrentInstance().addMessage(null, msg);
+		// }
 	}
 
 	public Unit getUnit() {

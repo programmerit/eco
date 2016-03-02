@@ -326,6 +326,26 @@ public class EmpDisciplineLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Document> filterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end) throws com.liferay.portal.kernel.search.ParseException {
+		return _empDisciplineLocalService.filterByFields(searchContext,
+			filters, sort, companyId, start, end);
+	}
+
+	@Override
+	public int countFilterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
+		throws com.liferay.portal.kernel.search.ParseException {
+		return _empDisciplineLocalService.countFilterByFields(searchContext,
+			filters, sort, companyId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.Document getIndexedDocument(
 		java.lang.String id,
 		com.liferay.portal.kernel.search.SearchContext searchContext) {

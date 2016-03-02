@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -32,14 +33,13 @@ import vn.com.ecopharma.emp.dto.DependentName;
 import vn.com.ecopharma.emp.dto.DocumentItem;
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
 import vn.com.ecopharma.emp.dto.EmpInfoItem;
+import vn.com.ecopharma.emp.dto.RegionItem;
 import vn.com.ecopharma.emp.enumeration.DocumentType;
 import vn.com.ecopharma.emp.enumeration.EducationType;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.enumeration.LaborContractType;
 import vn.com.ecopharma.emp.enumeration.LocationType;
 import vn.com.ecopharma.emp.enumeration.ResignationType;
-import vn.com.ecopharma.emp.model.Department;
-import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Document;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
@@ -47,13 +47,8 @@ import vn.com.ecopharma.emp.model.Level;
 import vn.com.ecopharma.emp.model.Location;
 import vn.com.ecopharma.emp.model.ResignationHistory;
 import vn.com.ecopharma.emp.model.Specialized;
-import vn.com.ecopharma.emp.model.Titles;
-import vn.com.ecopharma.emp.model.Unit;
-import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.model.University;
 import vn.com.ecopharma.emp.permission.EmpPermission;
-import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
-import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DistrictLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
@@ -62,9 +57,6 @@ import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LocationLocalServiceUtil;
 import vn.com.ecopharma.emp.service.ResignationHistoryLocalServiceUtil;
 import vn.com.ecopharma.emp.service.SpecializedLocalServiceUtil;
-import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
-import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
-import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
@@ -217,7 +209,11 @@ public class EmployeeBean implements Serializable {
 	 * @param employeeInfoItem
 	 */
 	public void editEmployee(String employeeId) {
+		OrganizationPanelBean organizationPanelBean = BeanUtils
+				.getOrganizationPanelBean();
 		modifyEmployeeInfoItem = new EmpInfoItem(Long.valueOf(employeeId));
+		organizationPanelBean.setSelectedValuesFromEmp(modifyEmployeeInfoItem
+				.getEmp());
 		showUserTab = false;
 		updateString = StringUtils.EMPTY;
 
@@ -245,7 +241,7 @@ public class EmployeeBean implements Serializable {
 	public void addNewEmployee() {
 		showUserTab = true;
 		modifyEmployeeInfoItem = new EmpInfoItem();
-		// modifyEmployeeInfoItem.setTestDataForEmp();
+		BeanUtils.getOrganizationPanelBean().afterSetOrganizationToEntity();
 		updateString = StringUtils.EMPTY;
 		switchPage(2);
 	}
@@ -262,6 +258,7 @@ public class EmployeeBean implements Serializable {
 	 */
 	public void cancelModification() {
 		modifyEmployeeInfoItem = null;
+		BeanUtils.getOrganizationPanelBean().afterSetOrganizationToEntity();
 		switchPage(1);
 	}
 
@@ -283,8 +280,9 @@ public class EmployeeBean implements Serializable {
 						.isHeadOfDepartment(viewerEmp.getEmpId(), departmentId);
 			}
 		}
-		if (hasViewAuthorized)
+		if (hasViewAuthorized) {
 			editEmployee(String.valueOf(emp.getId()));
+		}
 	}
 
 	public void save() {
@@ -295,6 +293,8 @@ public class EmployeeBean implements Serializable {
 		FacesMessage msg = null;
 		boolean isSuccessfulModified = false;
 		try {
+			final Emp employee = modifyEmployeeInfoItem.getEmp();
+
 			final Map<Address, Boolean> addressMap = EmployeeUtils
 					.transferAddressObjectListToAddressMap(modifyEmployeeInfoItem
 							.getAddresses());
@@ -320,19 +320,17 @@ public class EmployeeBean implements Serializable {
 			modifyEmployeeInfoItem.getEmp().setSpecializeId(specializedId);
 
 			long workingPlaceId = modifyEmployeeInfoItem.getWorkingPlace() != null ? modifyEmployeeInfoItem
-					.getWorkingPlace().getRegionId() : 0L;
+					.getWorkingPlace().getRegion().getRegionId()
+					: 0L;
 			modifyEmployeeInfoItem.getEmp().setWorkingPlaceId(workingPlaceId);
 
-			boolean isManager = modifyEmployeeInfoItem.isManager();
+			long oldTitlesId = employee.getTitlesId();
+
+			BeanUtils.getOrganizationPanelBean().setSelectedValuesToEmp(
+					modifyEmployeeInfoItem.getEmp());
 
 			if (showUserTab) {
-				final Emp employee = modifyEmployeeInfoItem.getEmp();
-
 				User empUser = modifyEmployeeInfoItem.getUser();
-
-				EmployeeUtils.setAttributesToEmpFromEditItem(employee,
-						modifyEmployeeInfoItem);
-
 				final Calendar cal = Calendar.getInstance();
 				cal.setTime(employee.getBirthday());
 				int day = cal.get(Calendar.DAY_OF_MONTH);
@@ -394,14 +392,10 @@ public class EmployeeBean implements Serializable {
 
 				isSuccessfulModified = true;
 			} else {
-				Emp employee = modifyEmployeeInfoItem.getEmp();
-				long oldTitlesId = employee.getTitlesId();
-				EmployeeUtils.setAttributesToEmpFromEditItem(employee,
-						modifyEmployeeInfoItem);
 				EmpLocalServiceUtil.update(employee,
 						modifyEmployeeInfoItem.getUser(), oldTitlesId,
-						addressMap, dependentMap, bankInfoMap, isManager,
-						Boolean.FALSE, serviceContext);
+						addressMap, dependentMap, bankInfoMap, Boolean.FALSE,
+						serviceContext);
 
 				msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 						"Update employee successfully", "Employee "
@@ -410,6 +404,7 @@ public class EmployeeBean implements Serializable {
 				FacesContext.getCurrentInstance().addMessage(null, msg);
 				isSuccessfulModified = true;
 			}
+			BeanUtils.getOrganizationPanelBean().afterSetOrganizationToEntity();
 		} catch (Exception e) {
 			isSuccessfulModified = false;
 			LOGGER.info(e);
@@ -475,42 +470,6 @@ public class EmployeeBean implements Serializable {
 		return DocumentType.getAll();
 	}
 
-	public void onDevisionChanged() {
-		modifyEmployeeInfoItem.setDepartment(null);
-		modifyEmployeeInfoItem.setUnit(null);
-		modifyEmployeeInfoItem.setUnitGroup(null);
-		modifyEmployeeInfoItem.setTitles(null);
-	}
-
-	public void onDepartmentChanged() {
-		modifyEmployeeInfoItem.setUnit(null);
-		modifyEmployeeInfoItem.setUnitGroup(null);
-		modifyEmployeeInfoItem.setTitles(null);
-	}
-
-	public void onUnitChanged() {
-		modifyEmployeeInfoItem.setUnitGroup(null);
-		modifyEmployeeInfoItem.setTitles(null);
-	}
-
-	public void onUnitGroupChanged() {
-		modifyEmployeeInfoItem.setTitles(null);
-	}
-
-	public void addTitles() {
-		TitlesBean titlesBean = BeanUtils.getTitlesBean();
-		titlesBean.setTitles(TitlesLocalServiceUtil.createPrePersistedTitles());
-		titlesBean.setDepartment(modifyEmployeeInfoItem.getDepartment());
-		titlesBean.setUnit(modifyEmployeeInfoItem.getUnit());
-		titlesBean.setUnitGroup(modifyEmployeeInfoItem.getUnitGroup());
-		titlesBean
-				.setUpdateComponents(":modifyForm:accordion:titlesSelect :growl");
-	}
-
-	public void onEditTitles() {
-		BeanUtils.getTitlesBean().setTitles(modifyEmployeeInfoItem.getTitles());
-	}
-
 	public void onStatusChange(long employeeId) {
 		final EmployeeStatus status = EmployeeStatus.valueOf(selectedStatus);
 
@@ -531,6 +490,7 @@ public class EmployeeBean implements Serializable {
 		PromotionBean promotionBean = (PromotionBean) BeanUtils
 				.getBackingBeanByName("promotionBean");
 		promotionBean.setEmployeeId(id);
+		BeanUtils.getOrganizationPanelBean().afterSetOrganizationToEntity();
 		this.includedDialog = "/views/dialogs/promotionDialog.xhtml";
 		this.includedDialogOutputPanel = ":promotionForm:promotionOutputPanel";
 	}
@@ -647,61 +607,6 @@ public class EmployeeBean implements Serializable {
 
 	}
 
-	public List<Titles> getTitlesList() {
-		// if (modifyEmployeeInfoItem.getUnit() == null) {
-		// return modifyEmployeeInfoItem.getDepartment() != null ?
-		// TitlesLocalServiceUtil
-		// .findByDepartmentOnly(modifyEmployeeInfoItem
-		// .getDepartment().getDepartmentId())
-		// : new ArrayList<Titles>();
-		// } else {
-		// if (modifyEmployeeInfoItem.getUnitGroup() != null) {
-		// return TitlesLocalServiceUtil
-		// .findByUnitGroupOnly(modifyEmployeeInfoItem
-		// .getUnitGroup().getUnitGroupId());
-		// } else {
-		// return TitlesLocalServiceUtil
-		// .findByUnitOnly(modifyEmployeeInfoItem.getUnit()
-		// .getUnitId());
-		// }
-		// }
-		if (modifyEmployeeInfoItem.getDepartment() != null) {
-			return TitlesLocalServiceUtil
-					.findAllByDepartment(modifyEmployeeInfoItem.getDepartment()
-							.getDepartmentId());
-		}
-		return new ArrayList<>();
-	}
-
-	public List<UnitGroup> getUnitGroups() {
-		return modifyEmployeeInfoItem.getUnit() != null ? UnitGroupLocalServiceUtil
-				.findByUnit(modifyEmployeeInfoItem.getUnit().getUnitId())
-				: null;
-	}
-
-	public List<Unit> getUnits() {
-		final Department empDepartment = modifyEmployeeInfoItem.getDepartment();
-		return empDepartment != null ? UnitLocalServiceUtil
-				.findByDepartment(empDepartment.getDepartmentId())
-				: new ArrayList<Unit>();
-	}
-
-	public List<Department> getDepartments() {
-		List<Department> departments = modifyEmployeeInfoItem.getDevision() != null ? DepartmentLocalServiceUtil
-				.findByDevision(modifyEmployeeInfoItem.getDevision()
-						.getDevisionId()) : new ArrayList<Department>();
-		if (departments.isEmpty()
-				|| !departments
-						.contains(modifyEmployeeInfoItem.getDepartment())) {
-			modifyEmployeeInfoItem.setDepartment(null);
-		}
-		return departments;
-	}
-
-	public List<Devision> getDevisions() {
-		return DevisionLocalServiceUtil.findAll();
-	}
-
 	public List<String> getLaborContractTypes() {
 		final List<String> results = new ArrayList<>();
 		for (LaborContractType laborContractType : LaborContractType.values()) {
@@ -754,9 +659,15 @@ public class EmployeeBean implements Serializable {
 	 * 
 	 * @return all regions of VN
 	 */
-	public List<Region> getWorkingPlaces() {
+	public List<RegionItem> getWorkingPlaces() {
 		try {
-			return RegionServiceUtil.getRegions(17L);
+			final List<Region> vnRegions = RegionServiceUtil.getRegions(17L);
+			final List<RegionItem> regionItems = new ArrayList<>();
+			for (Region region : vnRegions) {
+				regionItems.add(new RegionItem(region));
+			}
+			Collections.sort(regionItems);
+			return regionItems;
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}

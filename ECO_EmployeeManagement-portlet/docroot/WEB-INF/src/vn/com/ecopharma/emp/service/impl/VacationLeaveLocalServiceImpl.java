@@ -17,6 +17,7 @@ package vn.com.ecopharma.emp.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import vn.com.ecopharma.emp.constant.EMInfo;
 import vn.com.ecopharma.emp.constant.EmpField;
@@ -26,6 +27,7 @@ import vn.com.ecopharma.emp.enumeration.VacationLeaveStatus;
 import vn.com.ecopharma.emp.enumeration.VacationLeaveType;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Emp;
+import vn.com.ecopharma.emp.model.EmpOrgRelationship;
 import vn.com.ecopharma.emp.model.VacationLeave;
 import vn.com.ecopharma.emp.service.base.VacationLeaveLocalServiceBaseImpl;
 
@@ -212,19 +214,19 @@ public class VacationLeaveLocalServiceImpl extends
 		LOGGER.info("FilterQueries size: " + filterQueries.size());
 		final BooleanQuery fullQuery = BooleanQueryFactoryUtil
 				.create(searchContext);
-		final BooleanQuery allEmployeeEntriesBooleanQuery = BooleanQueryFactoryUtil
+		final BooleanQuery allVacationLeaveEntriesBooleanQuery = BooleanQueryFactoryUtil
 				.create(searchContext);
-		final BooleanQuery noneDeletedEmployeesBooleanQuery = BooleanQueryFactoryUtil
+		final BooleanQuery noneDeletedVacationLeaveBooleanQuery = BooleanQueryFactoryUtil
 				.create(searchContext);
 
-		allEmployeeEntriesBooleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME,
-				VacationLeave.class.getName());
-		noneDeletedEmployeesBooleanQuery.addExactTerm(
+		allVacationLeaveEntriesBooleanQuery.addRequiredTerm(
+				Field.ENTRY_CLASS_NAME, VacationLeave.class.getName());
+		noneDeletedVacationLeaveBooleanQuery.addExactTerm(
 				VacationLeaveField.IS_DELETED, "false");
 
 		try {
 			// add filter queries
-			fullQuery.add(allEmployeeEntriesBooleanQuery,
+			fullQuery.add(allVacationLeaveEntriesBooleanQuery,
 					BooleanClauseOccur.MUST);
 			if (filterQueries != null && filterQueries.size() > 0) {
 				for (Query query : filterQueries) {
@@ -233,8 +235,10 @@ public class VacationLeaveLocalServiceImpl extends
 			}
 
 			// always filter for none-delete item
-			fullQuery.add(noneDeletedEmployeesBooleanQuery,
+			fullQuery.add(noneDeletedVacationLeaveBooleanQuery,
 					BooleanClauseOccur.MUST);
+
+			sort = sort != null ? sort : new Sort(VacationLeaveField.ID, true);
 
 			final List<Document> documents = SearchEngineUtil.search(
 					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
@@ -249,34 +253,103 @@ public class VacationLeaveLocalServiceImpl extends
 		return null;
 	}
 
-	public List<Document> searchManagerPendingRequests(long managerId,
+	@SuppressWarnings("unchecked")
+	public List<Document> filterByFields(SearchContext searchContext,
+			Map<String, Object> filters, Sort sort, long companyId, int start,
+			int end) throws ParseException {
+		final List<Query> queries = new ArrayList<>();
+		if (filters != null) {
+			// Date joinedDateFrom = filters.get(EmpField.JOINED_DATE_FROM) !=
+			// null ? (Date) filters
+			// .get(EmpField.JOINED_DATE_FROM) : null;
+			//
+			// Date joinedDateTo = filters.get(EmpField.JOINED_DATE_TO) != null
+			// ? (Date) filters
+			// .get(EmpField.JOINED_DATE_TO) : null;
+
+			for (Map.Entry<String, Object> filter : filters.entrySet()) {
+				final String filterProperty = filter.getKey();
+				final Object filterValue = filter.getValue();
+				LOGGER.info("Filter Property: " + filterProperty);
+
+				if (filterValue instanceof String) {
+					LOGGER.info("Filter Property Value: " + filterValue);
+					// TODO
+					BooleanQuery stringFilterQuery = BooleanQueryFactoryUtil
+							.create(searchContext);
+					stringFilterQuery
+							.addTerm(filterProperty, (String) filterValue,
+									true, BooleanClauseOccur.MUST);
+					queries.add(stringFilterQuery);
+
+				} else if (filterValue instanceof List<?>) {
+					queries.add(empLocalService.createStringListQuery(
+							filterProperty, (List<String>) filterValue,
+							searchContext));
+				} else if (filterValue instanceof Date) {
+					// createDateTermRangeQuery(EmpField.JOINED_DATE, queries,
+					// joinedDateFrom, joinedDateTo, searchContext);
+					// Query dateRangeQuery = createDateTermRangeQuery(
+					// EmpField.JOINED_DATE, joinedDateFrom, joinedDateTo,
+					// true, true, searchContext);
+					// if (dateRangeQuery != null)
+					// queries.add(dateRangeQuery);
+				}
+			}
+		}
+		/* SORT */
+		if (sort == null) {
+			sort = new Sort(VacationLeaveField.ID, false);
+		}
+		return searchAllUnDeletedDocuments(searchContext, queries, companyId,
+				sort, start, end);
+	}
+
+	public int countFilterByFields(SearchContext searchContext,
+			Map<String, Object> filters, Sort sort, long companyId)
+			throws ParseException {
+		return filterByFields(searchContext, filters, sort, companyId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
+	}
+
+	public List<Document> searchPendingRequestsOfManager(long managerId,
 			SearchContext searchContext, long companyId) {
 		try {
 
 			final List<Query> queries = new ArrayList<>();
-			final Emp manager = empLocalService.fetchEmp(managerId);
-			final Department departmentByManager = departmentLocalService
-					.fetchDepartment(manager.getDepartmentId());
-			final BooleanQuery leaveByDepartmentQuery = BooleanQueryFactoryUtil
-					.create(searchContext);
-			leaveByDepartmentQuery.addExactTerm(EmpField.DEPARTMENT,
-					departmentByManager.getName());
 
-			final BooleanQuery pendingRequestQuery = BooleanQueryFactoryUtil
-					.create(searchContext);
-			pendingRequestQuery.addExactTerm(VacationLeaveField.STATUS,
-					empLocalService
-							.removeDashChar(VacationLeaveStatus.PENDING_REQUEST
-									.toString()));
+			List<EmpOrgRelationship> departmentManagers = empOrgRelationshipLocalService
+					.findByEmpClassNameAndHeadOfOrg(managerId,
+							Department.class.getName(), true);
+
+			List<String> departmentNames = new ArrayList<>();
+
+			for (EmpOrgRelationship item : departmentManagers) {
+				departmentNames.add(departmentLocalService.fetchDepartment(
+						item.getOrgClassPK()).getName());
+			}
+
+			final Query leaveByDepartmentQuery = empLocalService
+					.createStringListQuery(EmpField.DEPARTMENT,
+							departmentNames, searchContext);
+
+			// final BooleanQuery pendingRequestQuery = BooleanQueryFactoryUtil
+			// .create(searchContext);
+			// pendingRequestQuery.addExactTerm(VacationLeaveField.STATUS,
+			// empLocalService
+			// .removeDashChar(VacationLeaveStatus.PENDING_REQUEST
+			// .toString()));
 
 			// add to list
 			queries.add(leaveByDepartmentQuery);
-			queries.add(pendingRequestQuery);
+			// queries.add(pendingRequestQuery);
 
 			return searchAllUnDeletedDocuments(searchContext, queries,
 					companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		} catch (SystemException e) {
+			LOGGER.info(e);
+		} catch (ParseException e) {
 			LOGGER.info(e);
 		}
 		return new ArrayList<>();

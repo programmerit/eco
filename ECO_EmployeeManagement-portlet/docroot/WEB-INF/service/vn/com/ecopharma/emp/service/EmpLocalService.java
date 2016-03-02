@@ -296,6 +296,9 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
 		int end) throws com.liferay.portal.kernel.search.ParseException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isOrganizationFilter(java.lang.String filterProperty);
+
 	public void createDateTermRangeQuery(java.lang.String field,
 		java.util.List<com.liferay.portal.kernel.search.Query> queries,
 		java.util.Date dateFrom, java.util.Date dateTo,
@@ -392,7 +395,7 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isManager, boolean isImportAction,
+		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
 	public vn.com.ecopharma.emp.model.Emp update(
@@ -401,7 +404,7 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isManager, boolean isImportAction,
+		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
 	public vn.com.ecopharma.emp.model.Emp updateExistedEmployee(
@@ -427,7 +430,7 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isManager, boolean isImportAction,
+		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
 	public vn.com.ecopharma.emp.model.Emp addOrUpdateWithExistUser(
@@ -436,7 +439,7 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isManager, boolean isImportAction,
+		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
 	public vn.com.ecopharma.emp.model.Emp createEmployee(

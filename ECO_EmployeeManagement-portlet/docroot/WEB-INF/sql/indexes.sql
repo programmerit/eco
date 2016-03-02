@@ -33,6 +33,7 @@ create index IX_90AA9689 on eco_em_portlet_EmpBankInfo (empId);
 create index IX_9FE130A5 on eco_em_portlet_EmpNotifyEmail (status);
 
 create index IX_574F6C0B on eco_em_portlet_EmpOrgRelationship (empId);
+create index IX_D0A0349F on eco_em_portlet_EmpOrgRelationship (empId, orgClassName, headOfOrg);
 create index IX_2ACF551C on eco_em_portlet_EmpOrgRelationship (empId, orgClassName, orgClassPK, headOfOrg);
 create index IX_B7C33EDE on eco_em_portlet_EmpOrgRelationship (orgClassName, orgClassPK);
 create index IX_5971BA94 on eco_em_portlet_EmpOrgRelationship (orgClassName, orgClassPK, deputyOfOrg);

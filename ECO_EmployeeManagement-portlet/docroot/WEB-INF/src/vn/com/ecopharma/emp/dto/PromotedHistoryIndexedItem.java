@@ -1,65 +1,64 @@
 package vn.com.ecopharma.emp.dto;
 
-import java.io.Serializable;
-import java.text.ParseException;
 import java.util.Date;
 
 import vn.com.ecopharma.emp.constant.PromotedHistoryField;
 
 import com.liferay.portal.kernel.search.Document;
 
-public class PromotedHistoryIndexedItem implements Serializable {
+public class PromotedHistoryIndexedItem extends BaseEmpInfoIndexedItem {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Document document;
+	private Date promotedDate;
+
+	private String comment;
 
 	public PromotedHistoryIndexedItem(Document document) {
-		this.document = document;
+		super(document);
+		promotedDate = checkNullFieldAndReturnNullDate(PromotedHistoryField.PROMOTED_DATE);
+		comment = checkNullFieldAndReturnEmptyString(PromotedHistoryField.COMMENT);
 	}
 
-	public long getPromotedHistoryId() {
-		return Long.valueOf(document.getField(PromotedHistoryField.ID)
-				.getValue());
-	}
-
-	public long getEmployeeId() {
-		return Long.valueOf(document.getField(PromotedHistoryField.EMPLOYEE_ID)
-				.getValue());
-	}
-
-	public String getFullName() {
-		return document.getField(PromotedHistoryField.FULLNAME).getValue();
+	public String getFormattedPromotedDate() {
+		return getParseDateString(promotedDate);
 	}
 
 	public Date getPromotedDate() {
-		try {
-			return document.getDate(PromotedHistoryField.PROMOTED_DATE);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return promotedDate;
 	}
 
 	public String getOldTitles() {
-		return document.getField(PromotedHistoryField.OLD_TITLES).getValue();
+		return checkNullFieldAndReturnEmptyString(PromotedHistoryField.OLD_TITLES);
 	}
 
 	public String getNewTitles() {
-		return document.getField(PromotedHistoryField.NEW_TITLES).getValue();
+		return checkNullFieldAndReturnEmptyString(PromotedHistoryField.NEW_TITLES);
 	}
 
 	public String getComment() {
-		return document.getField(PromotedHistoryField.COMMENT) != null ? document
-				.getField(PromotedHistoryField.COMMENT).getValue() : "N/A";
+		return comment;
 	}
 
 	public boolean isDeleted() {
-		return document.getField(PromotedHistoryField.IS_DELETED).getValue()
-				.equalsIgnoreCase("true");
+		return checkNullFieldAndReturnEmptyString(
+				PromotedHistoryField.IS_DELETED).equalsIgnoreCase("true");
+	}
+
+	public void setPromotedDate(Date promotedDate) {
+		this.promotedDate = promotedDate;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	@Override
+	protected String getIdFieldName() {
+		return PromotedHistoryField.ID;
 	}
 
 }

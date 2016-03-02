@@ -59,9 +59,8 @@
 					</h:panelGroup>
 
 					<h:panelGroup>
-						<p:inputText id="filter_empCode"
-							value="#{empFilterBean.employeeCode}" placeholder="Employee Code"
-							style="width: 150px">
+						<p:inputText id="filter_empCode" value="#{empFilterBean.empCode}"
+							placeholder="Employee Code" style="width: 150px">
 							<p:ajax event="keyup" delay="1000"
 								oncomplete="updateFilterRelatedComponents();" />
 						</p:inputText>

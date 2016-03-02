@@ -2132,6 +2132,639 @@ public class EmpOrgRelationshipPersistenceImpl extends BasePersistenceImpl<EmpOr
 		"empOrgRelationship.orgClassPK = ? AND ";
 	private static final String _FINDER_COLUMN_EMPCLASSNAMECLASSPKHEADOFORG_HEADOFORG_2 =
 		"empOrgRelationship.headOfOrg = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_EMPCLASSNAMEHEADOFORG =
+		new FinderPath(EmpOrgRelationshipModelImpl.ENTITY_CACHE_ENABLED,
+			EmpOrgRelationshipModelImpl.FINDER_CACHE_ENABLED,
+			EmpOrgRelationshipImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByEmpClassNameHeadOfOrg",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Boolean.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EMPCLASSNAMEHEADOFORG =
+		new FinderPath(EmpOrgRelationshipModelImpl.ENTITY_CACHE_ENABLED,
+			EmpOrgRelationshipModelImpl.FINDER_CACHE_ENABLED,
+			EmpOrgRelationshipImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByEmpClassNameHeadOfOrg",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Boolean.class.getName()
+			},
+			EmpOrgRelationshipModelImpl.EMPID_COLUMN_BITMASK |
+			EmpOrgRelationshipModelImpl.ORGCLASSNAME_COLUMN_BITMASK |
+			EmpOrgRelationshipModelImpl.HEADOFORG_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_EMPCLASSNAMEHEADOFORG = new FinderPath(EmpOrgRelationshipModelImpl.ENTITY_CACHE_ENABLED,
+			EmpOrgRelationshipModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByEmpClassNameHeadOfOrg",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Boolean.class.getName()
+			});
+
+	/**
+	 * Returns all the emp org relationships where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63;.
+	 *
+	 * @param empId the emp ID
+	 * @param orgClassName the org class name
+	 * @param headOfOrg the head of org
+	 * @return the matching emp org relationships
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<EmpOrgRelationship> findByEmpClassNameHeadOfOrg(long empId,
+		String orgClassName, boolean headOfOrg) throws SystemException {
+		return findByEmpClassNameHeadOfOrg(empId, orgClassName, headOfOrg,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the emp org relationships where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.EmpOrgRelationshipModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param empId the emp ID
+	 * @param orgClassName the org class name
+	 * @param headOfOrg the head of org
+	 * @param start the lower bound of the range of emp org relationships
+	 * @param end the upper bound of the range of emp org relationships (not inclusive)
+	 * @return the range of matching emp org relationships
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<EmpOrgRelationship> findByEmpClassNameHeadOfOrg(long empId,
+		String orgClassName, boolean headOfOrg, int start, int end)
+		throws SystemException {
+		return findByEmpClassNameHeadOfOrg(empId, orgClassName, headOfOrg,
+			start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the emp org relationships where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.emp.model.impl.EmpOrgRelationshipModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param empId the emp ID
+	 * @param orgClassName the org class name
+	 * @param headOfOrg the head of org
+	 * @param start the lower bound of the range of emp org relationships
+	 * @param end the upper bound of the range of emp org relationships (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching emp org relationships
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<EmpOrgRelationship> findByEmpClassNameHeadOfOrg(long empId,
+		String orgClassName, boolean headOfOrg, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EMPCLASSNAMEHEADOFORG;
+			finderArgs = new Object[] { empId, orgClassName, headOfOrg };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_EMPCLASSNAMEHEADOFORG;
+			finderArgs = new Object[] {
+					empId, orgClassName, headOfOrg,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<EmpOrgRelationship> list = (List<EmpOrgRelationship>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (EmpOrgRelationship empOrgRelationship : list) {
+				if ((empId != empOrgRelationship.getEmpId()) ||
+						!Validator.equals(orgClassName,
+							empOrgRelationship.getOrgClassName()) ||
+						(headOfOrg != empOrgRelationship.getHeadOfOrg())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_EMPORGRELATIONSHIP_WHERE);
+
+			query.append(_FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_EMPID_2);
+
+			boolean bindOrgClassName = false;
+
+			if (orgClassName == null) {
+				query.append(_FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_ORGCLASSNAME_1);
+			}
+			else if (orgClassName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_ORGCLASSNAME_3);
+			}
+			else {
+				bindOrgClassName = true;
+
+				query.append(_FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_ORGCLASSNAME_2);
+			}
+
+			query.append(_FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_HEADOFORG_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(EmpOrgRelationshipModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(empId);
+
+				if (bindOrgClassName) {
+					qPos.add(orgClassName);
+				}
+
+				qPos.add(headOfOrg);
+
+				if (!pagination) {
+					list = (List<EmpOrgRelationship>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<EmpOrgRelationship>(list);
+				}
+				else {
+					list = (List<EmpOrgRelationship>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first emp org relationship in the ordered set where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63;.
+	 *
+	 * @param empId the emp ID
+	 * @param orgClassName the org class name
+	 * @param headOfOrg the head of org
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching emp org relationship
+	 * @throws vn.com.ecopharma.emp.NoSuchEmpOrgRelationshipException if a matching emp org relationship could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public EmpOrgRelationship findByEmpClassNameHeadOfOrg_First(long empId,
+		String orgClassName, boolean headOfOrg,
+		OrderByComparator orderByComparator)
+		throws NoSuchEmpOrgRelationshipException, SystemException {
+		EmpOrgRelationship empOrgRelationship = fetchByEmpClassNameHeadOfOrg_First(empId,
+				orgClassName, headOfOrg, orderByComparator);
+
+		if (empOrgRelationship != null) {
+			return empOrgRelationship;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("empId=");
+		msg.append(empId);
+
+		msg.append(", orgClassName=");
+		msg.append(orgClassName);
+
+		msg.append(", headOfOrg=");
+		msg.append(headOfOrg);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEmpOrgRelationshipException(msg.toString());
+	}
+
+	/**
+	 * Returns the first emp org relationship in the ordered set where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63;.
+	 *
+	 * @param empId the emp ID
+	 * @param orgClassName the org class name
+	 * @param headOfOrg the head of org
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching emp org relationship, or <code>null</code> if a matching emp org relationship could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public EmpOrgRelationship fetchByEmpClassNameHeadOfOrg_First(long empId,
+		String orgClassName, boolean headOfOrg,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<EmpOrgRelationship> list = findByEmpClassNameHeadOfOrg(empId,
+				orgClassName, headOfOrg, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last emp org relationship in the ordered set where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63;.
+	 *
+	 * @param empId the emp ID
+	 * @param orgClassName the org class name
+	 * @param headOfOrg the head of org
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching emp org relationship
+	 * @throws vn.com.ecopharma.emp.NoSuchEmpOrgRelationshipException if a matching emp org relationship could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public EmpOrgRelationship findByEmpClassNameHeadOfOrg_Last(long empId,
+		String orgClassName, boolean headOfOrg,
+		OrderByComparator orderByComparator)
+		throws NoSuchEmpOrgRelationshipException, SystemException {
+		EmpOrgRelationship empOrgRelationship = fetchByEmpClassNameHeadOfOrg_Last(empId,
+				orgClassName, headOfOrg, orderByComparator);
+
+		if (empOrgRelationship != null) {
+			return empOrgRelationship;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("empId=");
+		msg.append(empId);
+
+		msg.append(", orgClassName=");
+		msg.append(orgClassName);
+
+		msg.append(", headOfOrg=");
+		msg.append(headOfOrg);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEmpOrgRelationshipException(msg.toString());
+	}
+
+	/**
+	 * Returns the last emp org relationship in the ordered set where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63;.
+	 *
+	 * @param empId the emp ID
+	 * @param orgClassName the org class name
+	 * @param headOfOrg the head of org
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching emp org relationship, or <code>null</code> if a matching emp org relationship could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public EmpOrgRelationship fetchByEmpClassNameHeadOfOrg_Last(long empId,
+		String orgClassName, boolean headOfOrg,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByEmpClassNameHeadOfOrg(empId, orgClassName, headOfOrg);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<EmpOrgRelationship> list = findByEmpClassNameHeadOfOrg(empId,
+				orgClassName, headOfOrg, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the emp org relationships before and after the current emp org relationship in the ordered set where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63;.
+	 *
+	 * @param empOrgRelationshipId the primary key of the current emp org relationship
+	 * @param empId the emp ID
+	 * @param orgClassName the org class name
+	 * @param headOfOrg the head of org
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next emp org relationship
+	 * @throws vn.com.ecopharma.emp.NoSuchEmpOrgRelationshipException if a emp org relationship with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public EmpOrgRelationship[] findByEmpClassNameHeadOfOrg_PrevAndNext(
+		long empOrgRelationshipId, long empId, String orgClassName,
+		boolean headOfOrg, OrderByComparator orderByComparator)
+		throws NoSuchEmpOrgRelationshipException, SystemException {
+		EmpOrgRelationship empOrgRelationship = findByPrimaryKey(empOrgRelationshipId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			EmpOrgRelationship[] array = new EmpOrgRelationshipImpl[3];
+
+			array[0] = getByEmpClassNameHeadOfOrg_PrevAndNext(session,
+					empOrgRelationship, empId, orgClassName, headOfOrg,
+					orderByComparator, true);
+
+			array[1] = empOrgRelationship;
+
+			array[2] = getByEmpClassNameHeadOfOrg_PrevAndNext(session,
+					empOrgRelationship, empId, orgClassName, headOfOrg,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected EmpOrgRelationship getByEmpClassNameHeadOfOrg_PrevAndNext(
+		Session session, EmpOrgRelationship empOrgRelationship, long empId,
+		String orgClassName, boolean headOfOrg,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_EMPORGRELATIONSHIP_WHERE);
+
+		query.append(_FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_EMPID_2);
+
+		boolean bindOrgClassName = false;
+
+		if (orgClassName == null) {
+			query.append(_FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_ORGCLASSNAME_1);
+		}
+		else if (orgClassName.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_ORGCLASSNAME_3);
+		}
+		else {
+			bindOrgClassName = true;
+
+			query.append(_FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_ORGCLASSNAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_HEADOFORG_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(EmpOrgRelationshipModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(empId);
+
+		if (bindOrgClassName) {
+			qPos.add(orgClassName);
+		}
+
+		qPos.add(headOfOrg);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(empOrgRelationship);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<EmpOrgRelationship> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the emp org relationships where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63; from the database.
+	 *
+	 * @param empId the emp ID
+	 * @param orgClassName the org class name
+	 * @param headOfOrg the head of org
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByEmpClassNameHeadOfOrg(long empId, String orgClassName,
+		boolean headOfOrg) throws SystemException {
+		for (EmpOrgRelationship empOrgRelationship : findByEmpClassNameHeadOfOrg(
+				empId, orgClassName, headOfOrg, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(empOrgRelationship);
+		}
+	}
+
+	/**
+	 * Returns the number of emp org relationships where empId = &#63; and orgClassName = &#63; and headOfOrg = &#63;.
+	 *
+	 * @param empId the emp ID
+	 * @param orgClassName the org class name
+	 * @param headOfOrg the head of org
+	 * @return the number of matching emp org relationships
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByEmpClassNameHeadOfOrg(long empId, String orgClassName,
+		boolean headOfOrg) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_EMPCLASSNAMEHEADOFORG;
+
+		Object[] finderArgs = new Object[] { empId, orgClassName, headOfOrg };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_EMPORGRELATIONSHIP_WHERE);
+
+			query.append(_FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_EMPID_2);
+
+			boolean bindOrgClassName = false;
+
+			if (orgClassName == null) {
+				query.append(_FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_ORGCLASSNAME_1);
+			}
+			else if (orgClassName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_ORGCLASSNAME_3);
+			}
+			else {
+				bindOrgClassName = true;
+
+				query.append(_FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_ORGCLASSNAME_2);
+			}
+
+			query.append(_FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_HEADOFORG_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(empId);
+
+				if (bindOrgClassName) {
+					qPos.add(orgClassName);
+				}
+
+				qPos.add(headOfOrg);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_EMPID_2 = "empOrgRelationship.empId = ? AND ";
+	private static final String _FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_ORGCLASSNAME_1 =
+		"empOrgRelationship.orgClassName IS NULL AND ";
+	private static final String _FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_ORGCLASSNAME_2 =
+		"empOrgRelationship.orgClassName = ? AND ";
+	private static final String _FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_ORGCLASSNAME_3 =
+		"(empOrgRelationship.orgClassName IS NULL OR empOrgRelationship.orgClassName = '') AND ";
+	private static final String _FINDER_COLUMN_EMPCLASSNAMEHEADOFORG_HEADOFORG_2 =
+		"empOrgRelationship.headOfOrg = ?";
 
 	public EmpOrgRelationshipPersistenceImpl() {
 		setModelClass(EmpOrgRelationship.class);
@@ -2590,6 +3223,31 @@ public class EmpOrgRelationshipPersistenceImpl extends BasePersistenceImpl<EmpOr
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMECLASSPK,
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMECLASSPK,
+					args);
+			}
+
+			if ((empOrgRelationshipModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EMPCLASSNAMEHEADOFORG.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						empOrgRelationshipModelImpl.getOriginalEmpId(),
+						empOrgRelationshipModelImpl.getOriginalOrgClassName(),
+						empOrgRelationshipModelImpl.getOriginalHeadOfOrg()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_EMPCLASSNAMEHEADOFORG,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EMPCLASSNAMEHEADOFORG,
+					args);
+
+				args = new Object[] {
+						empOrgRelationshipModelImpl.getEmpId(),
+						empOrgRelationshipModelImpl.getOrgClassName(),
+						empOrgRelationshipModelImpl.getHeadOfOrg()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_EMPCLASSNAMEHEADOFORG,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EMPCLASSNAMEHEADOFORG,
 					args);
 			}
 		}

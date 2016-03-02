@@ -349,6 +349,10 @@ public class EmpLocalServiceUtil {
 			companyId, start, end);
 	}
 
+	public static boolean isOrganizationFilter(java.lang.String filterProperty) {
+		return getService().isOrganizationFilter(filterProperty);
+	}
+
 	public static void createDateTermRangeQuery(java.lang.String field,
 		java.util.List<com.liferay.portal.kernel.search.Query> queries,
 		java.util.Date dateFrom, java.util.Date dateTo,
@@ -474,12 +478,11 @@ public class EmpLocalServiceUtil {
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isManager, boolean isImportAction,
+		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
 				   .update(employee, userId, oldTitlesId, addressesMap,
-			dependentNameMap, bankInfoMap, isManager, isImportAction,
-			serviceContext);
+			dependentNameMap, bankInfoMap, isImportAction, serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp update(
@@ -488,12 +491,11 @@ public class EmpLocalServiceUtil {
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isManager, boolean isImportAction,
+		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
 				   .update(employee, user, oldTitlesId, addressesMap,
-			dependentNameMap, bankInfoMap, isManager, isImportAction,
-			serviceContext);
+			dependentNameMap, bankInfoMap, isImportAction, serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp updateExistedEmployee(
@@ -530,12 +532,12 @@ public class EmpLocalServiceUtil {
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isManager, boolean isImportAction,
+		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
 				   .addOrUpdateWithExistUser(employee, user, oldTitlesId,
-			addressesMap, dependentNameMap, bankInfoMap, isManager,
-			isImportAction, serviceContext);
+			addressesMap, dependentNameMap, bankInfoMap, isImportAction,
+			serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp addOrUpdateWithExistUser(
@@ -544,12 +546,12 @@ public class EmpLocalServiceUtil {
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		boolean isManager, boolean isImportAction,
+		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
 				   .addOrUpdateWithExistUser(employee, userScreenName,
 			oldTitlesId, addressesMap, dependentNameMap, bankInfoMap,
-			isManager, isImportAction, serviceContext);
+			isImportAction, serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp createEmployee(

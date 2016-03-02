@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.LazyDataModel;
 
 import vn.com.ecopharma.emp.dm.PromotionHistoryIndexLazyDataModel;
@@ -30,6 +31,19 @@ public class PromotionHistoryBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		lazyDataModel = new PromotionHistoryIndexLazyDataModel();
+	}
+
+	public void onRowEdit(RowEditEvent event) {
+		PromotedHistoryIndexedItem item = (PromotedHistoryIndexedItem) event
+				.getObject();
+
+		PromotedHistoryLocalServiceUtil.updatePromotedHistory(item.getId(),
+				item.getPromotedDate(), item.getComment(),
+				EmployeeUtils.getServiceContext());
+	}
+
+	public void onRowEditCancel(RowEditEvent event) {
+
 	}
 
 	public void onRemoveAllIndex(ActionEvent event) {

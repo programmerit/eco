@@ -10,7 +10,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
-import vn.com.ecopharma.emp.enumeration.ResignationType;
 import vn.com.ecopharma.emp.model.ResignationHistory;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.ResignationHistoryLocalServiceUtil;

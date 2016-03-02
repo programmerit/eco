@@ -144,57 +144,72 @@ public class EmpDisciplineLocalServiceClpInvoker {
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName191 = "getIndexedDocument";
+		_methodName191 = "filterByFields";
 
 		_methodParameterTypes191 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long",
+				"int", "int"
+			};
+
+		_methodName192 = "countFilterByFields";
+
+		_methodParameterTypes192 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long"
+			};
+
+		_methodName193 = "getIndexedDocument";
+
+		_methodParameterTypes193 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName192 = "getIndexedDocument";
+		_methodName194 = "getIndexedDocument";
 
-		_methodParameterTypes192 = new String[] {
+		_methodParameterTypes194 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName193 = "createPrePersistedEntity";
+		_methodName195 = "createPrePersistedEntity";
 
-		_methodParameterTypes193 = new String[] {
+		_methodParameterTypes195 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName194 = "addEmpDiscipline";
+		_methodName196 = "addEmpDiscipline";
 
-		_methodParameterTypes194 = new String[] {
+		_methodParameterTypes196 = new String[] {
 				"vn.com.ecopharma.emp.model.EmpDiscipline",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName195 = "addEmpsDiscipline";
+		_methodName197 = "addEmpsDiscipline";
 
-		_methodParameterTypes195 = new String[] {
+		_methodParameterTypes197 = new String[] {
 				"java.util.List", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.util.Date", "java.lang.String",
 				"java.lang.String", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName196 = "updateEmpDiscipline";
+		_methodName198 = "updateEmpDiscipline";
 
-		_methodParameterTypes196 = new String[] {
+		_methodParameterTypes198 = new String[] {
 				"vn.com.ecopharma.emp.model.EmpDiscipline"
 			};
 
-		_methodName197 = "updateEmpDiscipline";
+		_methodName199 = "updateEmpDiscipline";
 
-		_methodParameterTypes197 = new String[] {
+		_methodParameterTypes199 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.util.Date", "java.lang.String",
 				"java.lang.String"
 			};
 
-		_methodName198 = "indexAll";
+		_methodName200 = "indexAll";
 
-		_methodParameterTypes198 = new String[] {  };
+		_methodParameterTypes200 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -336,29 +351,47 @@ public class EmpDisciplineLocalServiceClpInvoker {
 
 		if (_methodName191.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes191, parameterTypes)) {
-			return EmpDisciplineLocalServiceUtil.getIndexedDocument((java.lang.String)arguments[0],
-				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
+			return EmpDisciplineLocalServiceUtil.filterByFields((com.liferay.portal.kernel.search.SearchContext)arguments[0],
+				(java.util.Map<java.lang.String, java.lang.Object>)arguments[1],
+				(com.liferay.portal.kernel.search.Sort)arguments[2],
+				((Long)arguments[3]).longValue(),
+				((Integer)arguments[4]).intValue(),
+				((Integer)arguments[5]).intValue());
 		}
 
 		if (_methodName192.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes192, parameterTypes)) {
-			return EmpDisciplineLocalServiceUtil.getIndexedDocument(((Long)arguments[0]).longValue(),
-				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
+			return EmpDisciplineLocalServiceUtil.countFilterByFields((com.liferay.portal.kernel.search.SearchContext)arguments[0],
+				(java.util.Map<java.lang.String, java.lang.Object>)arguments[1],
+				(com.liferay.portal.kernel.search.Sort)arguments[2],
+				((Long)arguments[3]).longValue());
 		}
 
 		if (_methodName193.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes193, parameterTypes)) {
-			return EmpDisciplineLocalServiceUtil.createPrePersistedEntity((com.liferay.portal.service.ServiceContext)arguments[0]);
+			return EmpDisciplineLocalServiceUtil.getIndexedDocument((java.lang.String)arguments[0],
+				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
 		}
 
 		if (_methodName194.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes194, parameterTypes)) {
-			return EmpDisciplineLocalServiceUtil.addEmpDiscipline((vn.com.ecopharma.emp.model.EmpDiscipline)arguments[0],
-				(com.liferay.portal.service.ServiceContext)arguments[1]);
+			return EmpDisciplineLocalServiceUtil.getIndexedDocument(((Long)arguments[0]).longValue(),
+				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
 		}
 
 		if (_methodName195.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes195, parameterTypes)) {
+			return EmpDisciplineLocalServiceUtil.createPrePersistedEntity((com.liferay.portal.service.ServiceContext)arguments[0]);
+		}
+
+		if (_methodName196.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes196, parameterTypes)) {
+			return EmpDisciplineLocalServiceUtil.addEmpDiscipline((vn.com.ecopharma.emp.model.EmpDiscipline)arguments[0],
+				(com.liferay.portal.service.ServiceContext)arguments[1]);
+		}
+
+		if (_methodName197.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes197, parameterTypes)) {
 			EmpDisciplineLocalServiceUtil.addEmpsDiscipline((java.util.List<java.lang.Long>)arguments[0],
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3], (java.util.Date)arguments[4],
@@ -368,21 +401,21 @@ public class EmpDisciplineLocalServiceClpInvoker {
 			return null;
 		}
 
-		if (_methodName196.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes196, parameterTypes)) {
+		if (_methodName198.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes198, parameterTypes)) {
 			return EmpDisciplineLocalServiceUtil.updateEmpDiscipline((vn.com.ecopharma.emp.model.EmpDiscipline)arguments[0]);
 		}
 
-		if (_methodName197.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes197, parameterTypes)) {
+		if (_methodName199.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes199, parameterTypes)) {
 			return EmpDisciplineLocalServiceUtil.updateEmpDiscipline(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3], (java.util.Date)arguments[4],
 				(java.lang.String)arguments[5], (java.lang.String)arguments[6]);
 		}
 
-		if (_methodName198.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes198, parameterTypes)) {
+		if (_methodName200.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes200, parameterTypes)) {
 			EmpDisciplineLocalServiceUtil.indexAll();
 
 			return null;
@@ -453,4 +486,8 @@ public class EmpDisciplineLocalServiceClpInvoker {
 	private String[] _methodParameterTypes197;
 	private String _methodName198;
 	private String[] _methodParameterTypes198;
+	private String _methodName199;
+	private String[] _methodParameterTypes199;
+	private String _methodName200;
+	private String[] _methodParameterTypes200;
 }

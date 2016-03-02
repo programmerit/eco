@@ -3,7 +3,6 @@ package vn.com.ecopharma.emp.dto;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -12,26 +11,14 @@ import vn.com.ecopharma.emp.enumeration.CertificateType;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.enumeration.LaborContractType;
 import vn.com.ecopharma.emp.model.Certificate;
-import vn.com.ecopharma.emp.model.Department;
-import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Emp;
-import vn.com.ecopharma.emp.model.Level;
 import vn.com.ecopharma.emp.model.Specialized;
-import vn.com.ecopharma.emp.model.Titles;
-import vn.com.ecopharma.emp.model.Unit;
-import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.model.University;
 import vn.com.ecopharma.emp.permission.EmpPermission;
 import vn.com.ecopharma.emp.permission.EmployeeModelPermission;
 import vn.com.ecopharma.emp.service.CertificateLocalServiceUtil;
-import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
-import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
-import vn.com.ecopharma.emp.service.EmpOrgRelationshipLocalServiceUtil;
 import vn.com.ecopharma.emp.service.SpecializedLocalServiceUtil;
-import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
-import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
-import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
@@ -42,7 +29,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.model.Region;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.RegionServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -63,12 +49,6 @@ public class EmpInfoItem implements Serializable {
 	private Emp employee;
 	private User user;
 	private University university;
-	private Titles titles;
-	private Level level;
-	private Devision devision;
-	private Department department;
-	private Unit unit;
-	private UnitGroup unitGroup;
 
 	private List<Certificate> majorCertificates;
 
@@ -89,11 +69,9 @@ public class EmpInfoItem implements Serializable {
 
 	private Specialized specialized;
 
-	private Region workingPlace;
+	private RegionItem workingPlace;
 
 	private String userImgURL;
-
-	private boolean isManager;
 
 	private boolean isEdit = false;
 
@@ -126,23 +104,13 @@ public class EmpInfoItem implements Serializable {
 		try {
 			user = UserLocalServiceUtil.fetchUser(employee.getEmpUserId());
 			fullName = EmployeeUtils.getViFullnameFromUser(user);
-			titles = TitlesLocalServiceUtil.getTitles(employee.getTitlesId());
-			unitGroup = employee.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
-					.getUnitGroup(employee.getUnitGroupId()) : null;
-			unit = employee.getUnitId() != 0 ? UnitLocalServiceUtil
-					.getUnit(employee.getUnitId()) : null;
-			department = employee.getDepartmentId() != 0 ? DepartmentLocalServiceUtil
-					.getDepartment(employee.getDepartmentId()) : null;
-			devision = department != null ? DevisionLocalServiceUtil
-					.getDevision(department.getDevisionId()) : null;
+
 			specialized = employee.getSpecializeId() != 0L ? SpecializedLocalServiceUtil
 					.fetchSpecialized(employee.getSpecializeId()) : null;
 
-			isManager = EmpOrgRelationshipLocalServiceUtil.isHeadOfDepartment(
-					empId, department.getDepartmentId());
-
-			workingPlace = employee.getWorkingPlaceId() != 0L ? RegionServiceUtil
-					.getRegion(employee.getWorkingPlaceId()) : null;
+			workingPlace = employee.getWorkingPlaceId() != 0L ? new RegionItem(
+					RegionServiceUtil.getRegion(employee.getWorkingPlaceId()))
+					: null;
 
 		} catch (PortalException e) {
 			LOGGER.info(e);
@@ -164,24 +132,6 @@ public class EmpInfoItem implements Serializable {
 		this.user = createNewUser();
 		this.employee = createNewEmp();
 		this.isEdit = false;
-	}
-
-	public void setTestDataForEmp() {
-		try {
-			this.devision = DevisionLocalServiceUtil.fetchDevision(185315L);
-			this.department = DepartmentLocalServiceUtil
-					.fetchDepartment(185316);
-			this.titles = TitlesLocalServiceUtil.fetchTitles(185322);
-
-			this.employee.setJoinedDate(new Date());
-			this.employee.setIdentityCardNo("024374362");
-			this.user.setFirstName("Tao");
-			this.user.setMiddleName("Van");
-			this.user.setLastName("Tran");
-		} catch (SystemException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	private Emp createNewEmp() {
@@ -234,18 +184,6 @@ public class EmpInfoItem implements Serializable {
 		return university;
 	}
 
-	public Devision getDevision() {
-		return devision;
-	}
-
-	public Titles getTitles() {
-		return titles;
-	}
-
-	public Level getLevel() {
-		return level;
-	}
-
 	public boolean isEmptyOrAllDeletedDependentNames() {
 		if (dependentNames.isEmpty())
 			return true;
@@ -266,36 +204,12 @@ public class EmpInfoItem implements Serializable {
 		this.user = user;
 	}
 
-	public void setTitles(Titles titles) {
-		this.titles = titles;
-	}
-
-	public void setLevel(Level level) {
-		this.level = level;
-	}
-
 	public void setUniversity(University university) {
 		this.university = university;
 	}
 
-	public long getTitlesId() {
-		return titles != null ? titles.getTitlesId() : 0;
-	}
-
-	public long getLevelId() {
-		return level != null ? level.getLevelId() : 0;
-	}
-
 	public long getUniversityId() {
 		return university != null ? university.getUniversityId() : 0;
-	}
-
-	public boolean isManager() {
-		return isManager;
-	}
-
-	public void setManager(boolean isManager) {
-		this.isManager = isManager;
 	}
 
 	public List<AddressObjectItem> getAddresses() {
@@ -338,34 +252,6 @@ public class EmpInfoItem implements Serializable {
 		this.dependentNames = dependentNames;
 	}
 
-	public void setDevision(Devision devision) {
-		this.devision = devision;
-	}
-
-	public Unit getUnit() {
-		return unit;
-	}
-
-	public void setUnit(Unit unit) {
-		this.unit = unit;
-	}
-
-	public UnitGroup getUnitGroup() {
-		return unitGroup;
-	}
-
-	public void setUnitGroup(UnitGroup unitGroup) {
-		this.unitGroup = unitGroup;
-	}
-
-	public Department getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(Department department) {
-		this.department = department;
-	}
-
 	public List<Certificate> getMajorCertificates() {
 		return majorCertificates;
 	}
@@ -406,11 +292,11 @@ public class EmpInfoItem implements Serializable {
 		this.specialized = specialized;
 	}
 
-	public Region getWorkingPlace() {
+	public RegionItem getWorkingPlace() {
 		return workingPlace;
 	}
 
-	public void setWorkingPlace(Region workingPlace) {
+	public void setWorkingPlace(RegionItem workingPlace) {
 		this.workingPlace = workingPlace;
 	}
 

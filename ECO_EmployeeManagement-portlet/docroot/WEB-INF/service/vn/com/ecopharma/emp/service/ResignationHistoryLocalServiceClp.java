@@ -157,7 +157,7 @@ public class ResignationHistoryLocalServiceClp
 				"vn.com.ecopharma.emp.model.ResignationHistory"
 			};
 
-		_methodName27 = "countAllUnDeletedDocuments";
+		_methodName27 = "countSearchAllDocuments";
 
 		_methodParameterTypes27 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
@@ -165,7 +165,7 @@ public class ResignationHistoryLocalServiceClp
 				"com.liferay.portal.kernel.search.Sort"
 			};
 
-		_methodName28 = "searchAllUnDeletedDocuments";
+		_methodName28 = "searchAllDocuments";
 
 		_methodParameterTypes28 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
@@ -173,32 +173,47 @@ public class ResignationHistoryLocalServiceClp
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName29 = "getIndexedDocument";
+		_methodName29 = "filterByFields";
 
 		_methodParameterTypes29 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long",
+				"int", "int"
+			};
+
+		_methodName30 = "countFilterByFields";
+
+		_methodParameterTypes30 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long"
+			};
+
+		_methodName31 = "getIndexedDocument";
+
+		_methodParameterTypes31 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName30 = "getIndexedDocument";
+		_methodName32 = "getIndexedDocument";
 
-		_methodParameterTypes30 = new String[] {
+		_methodParameterTypes32 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName31 = "indexAll";
+		_methodName33 = "indexAll";
 
-		_methodParameterTypes31 = new String[] {  };
+		_methodParameterTypes33 = new String[] {  };
 
-		_methodName32 = "removeAllIndexes";
+		_methodName34 = "removeAllIndexes";
 
-		_methodParameterTypes32 = new String[] {
+		_methodParameterTypes34 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 
-		_methodName33 = "addMissingResignedEmployee";
+		_methodName35 = "addMissingResignedEmployee";
 
-		_methodParameterTypes33 = new String[] {
+		_methodParameterTypes35 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -991,7 +1006,7 @@ public class ResignationHistoryLocalServiceClp
 	}
 
 	@Override
-	public int countAllUnDeletedDocuments(
+	public int countSearchAllDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
 		long companyId, com.liferay.portal.kernel.search.Sort sort) {
@@ -1026,7 +1041,7 @@ public class ResignationHistoryLocalServiceClp
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.search.Document> searchAllUnDeletedDocuments(
+	public java.util.List<com.liferay.portal.kernel.search.Document> searchAllDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
 		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
@@ -1066,14 +1081,98 @@ public class ResignationHistoryLocalServiceClp
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Document> filterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end) throws com.liferay.portal.kernel.search.ParseException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
+					new Object[] {
+						ClpSerializer.translateInput(searchContext),
+						
+					ClpSerializer.translateInput(filters),
+						
+					ClpSerializer.translateInput(sort),
+						
+					companyId,
+						
+					start,
+						
+					end
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.search.ParseException) {
+				throw (com.liferay.portal.kernel.search.ParseException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.portal.kernel.search.Document>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public int countFilterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
+		throws com.liferay.portal.kernel.search.ParseException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
+					new Object[] {
+						ClpSerializer.translateInput(searchContext),
+						
+					ClpSerializer.translateInput(filters),
+						
+					ClpSerializer.translateInput(sort),
+						
+					companyId
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.search.ParseException) {
+				throw (com.liferay.portal.kernel.search.ParseException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.Document getIndexedDocument(
 		java.lang.String id,
 		com.liferay.portal.kernel.search.SearchContext searchContext) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] {
 						ClpSerializer.translateInput(id),
 						
@@ -1101,8 +1200,8 @@ public class ResignationHistoryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] { id, ClpSerializer.translateInput(
 							searchContext) });
 		}
@@ -1124,8 +1223,8 @@ public class ResignationHistoryLocalServiceClp
 	@Override
 	public void indexAll() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName31,
-				_methodParameterTypes31, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName33,
+				_methodParameterTypes33, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1145,8 +1244,8 @@ public class ResignationHistoryLocalServiceClp
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		long companyId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName32,
-				_methodParameterTypes32,
+			_invokableLocalService.invokeMethod(_methodName34,
+				_methodParameterTypes34,
 				new Object[] {
 					ClpSerializer.translateInput(searchContext),
 					
@@ -1170,8 +1269,8 @@ public class ResignationHistoryLocalServiceClp
 	public void addMissingResignedEmployee(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName33,
-				_methodParameterTypes33,
+			_invokableLocalService.invokeMethod(_methodName35,
+				_methodParameterTypes35,
 				new Object[] { ClpSerializer.translateInput(serviceContext) });
 		}
 		catch (Throwable t) {
@@ -1254,4 +1353,8 @@ public class ResignationHistoryLocalServiceClp
 	private String[] _methodParameterTypes32;
 	private String _methodName33;
 	private String[] _methodParameterTypes33;
+	private String _methodName34;
+	private String[] _methodParameterTypes34;
+	private String _methodName35;
+	private String[] _methodParameterTypes35;
 }

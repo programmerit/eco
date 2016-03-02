@@ -155,7 +155,7 @@ public class ResignationHistoryLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.ResignationHistory"
 			};
 
-		_methodName194 = "countAllUnDeletedDocuments";
+		_methodName194 = "countSearchAllDocuments";
 
 		_methodParameterTypes194 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
@@ -163,7 +163,7 @@ public class ResignationHistoryLocalServiceClpInvoker {
 				"com.liferay.portal.kernel.search.Sort"
 			};
 
-		_methodName195 = "searchAllUnDeletedDocuments";
+		_methodName195 = "searchAllDocuments";
 
 		_methodParameterTypes195 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
@@ -171,32 +171,47 @@ public class ResignationHistoryLocalServiceClpInvoker {
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName196 = "getIndexedDocument";
+		_methodName196 = "filterByFields";
 
 		_methodParameterTypes196 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long",
+				"int", "int"
+			};
+
+		_methodName197 = "countFilterByFields";
+
+		_methodParameterTypes197 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long"
+			};
+
+		_methodName198 = "getIndexedDocument";
+
+		_methodParameterTypes198 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName197 = "getIndexedDocument";
+		_methodName199 = "getIndexedDocument";
 
-		_methodParameterTypes197 = new String[] {
+		_methodParameterTypes199 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName198 = "indexAll";
+		_methodName200 = "indexAll";
 
-		_methodParameterTypes198 = new String[] {  };
+		_methodParameterTypes200 = new String[] {  };
 
-		_methodName199 = "removeAllIndexes";
+		_methodName201 = "removeAllIndexes";
 
-		_methodParameterTypes199 = new String[] {
+		_methodParameterTypes201 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 
-		_methodName200 = "addMissingResignedEmployee";
+		_methodName202 = "addMissingResignedEmployee";
 
-		_methodParameterTypes200 = new String[] {
+		_methodParameterTypes202 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -350,7 +365,7 @@ public class ResignationHistoryLocalServiceClpInvoker {
 
 		if (_methodName194.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes194, parameterTypes)) {
-			return ResignationHistoryLocalServiceUtil.countAllUnDeletedDocuments((com.liferay.portal.kernel.search.SearchContext)arguments[0],
+			return ResignationHistoryLocalServiceUtil.countSearchAllDocuments((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
 				((Long)arguments[2]).longValue(),
 				(com.liferay.portal.kernel.search.Sort)arguments[3]);
@@ -358,7 +373,7 @@ public class ResignationHistoryLocalServiceClpInvoker {
 
 		if (_methodName195.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes195, parameterTypes)) {
-			return ResignationHistoryLocalServiceUtil.searchAllUnDeletedDocuments((com.liferay.portal.kernel.search.SearchContext)arguments[0],
+			return ResignationHistoryLocalServiceUtil.searchAllDocuments((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
 				((Long)arguments[2]).longValue(),
 				(com.liferay.portal.kernel.search.Sort)arguments[3],
@@ -368,33 +383,51 @@ public class ResignationHistoryLocalServiceClpInvoker {
 
 		if (_methodName196.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes196, parameterTypes)) {
-			return ResignationHistoryLocalServiceUtil.getIndexedDocument((java.lang.String)arguments[0],
-				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
+			return ResignationHistoryLocalServiceUtil.filterByFields((com.liferay.portal.kernel.search.SearchContext)arguments[0],
+				(java.util.Map<java.lang.String, java.lang.Object>)arguments[1],
+				(com.liferay.portal.kernel.search.Sort)arguments[2],
+				((Long)arguments[3]).longValue(),
+				((Integer)arguments[4]).intValue(),
+				((Integer)arguments[5]).intValue());
 		}
 
 		if (_methodName197.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes197, parameterTypes)) {
-			return ResignationHistoryLocalServiceUtil.getIndexedDocument(((Long)arguments[0]).longValue(),
-				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
+			return ResignationHistoryLocalServiceUtil.countFilterByFields((com.liferay.portal.kernel.search.SearchContext)arguments[0],
+				(java.util.Map<java.lang.String, java.lang.Object>)arguments[1],
+				(com.liferay.portal.kernel.search.Sort)arguments[2],
+				((Long)arguments[3]).longValue());
 		}
 
 		if (_methodName198.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes198, parameterTypes)) {
+			return ResignationHistoryLocalServiceUtil.getIndexedDocument((java.lang.String)arguments[0],
+				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
+		}
+
+		if (_methodName199.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes199, parameterTypes)) {
+			return ResignationHistoryLocalServiceUtil.getIndexedDocument(((Long)arguments[0]).longValue(),
+				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
+		}
+
+		if (_methodName200.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes200, parameterTypes)) {
 			ResignationHistoryLocalServiceUtil.indexAll();
 
 			return null;
 		}
 
-		if (_methodName199.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes199, parameterTypes)) {
+		if (_methodName201.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes201, parameterTypes)) {
 			ResignationHistoryLocalServiceUtil.removeAllIndexes((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				((Long)arguments[1]).longValue());
 
 			return null;
 		}
 
-		if (_methodName200.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes200, parameterTypes)) {
+		if (_methodName202.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes202, parameterTypes)) {
 			ResignationHistoryLocalServiceUtil.addMissingResignedEmployee((com.liferay.portal.service.ServiceContext)arguments[0]);
 
 			return null;
@@ -469,4 +502,8 @@ public class ResignationHistoryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes199;
 	private String _methodName200;
 	private String[] _methodParameterTypes200;
+	private String _methodName201;
+	private String[] _methodParameterTypes201;
+	private String _methodName202;
+	private String[] _methodParameterTypes202;
 }

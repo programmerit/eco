@@ -173,6 +173,10 @@ public class EmpLocalServiceClpInvoker {
 				"int", "int"
 			};
 
+		_methodName198 = "isOrganizationFilter";
+
+		_methodParameterTypes198 = new String[] { "java.lang.String" };
+
 		_methodName199 = "createDateTermRangeQuery";
 
 		_methodParameterTypes199 = new String[] {
@@ -241,7 +245,7 @@ public class EmpLocalServiceClpInvoker {
 		_methodParameterTypes209 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp", "long", "long",
 				"java.util.Map", "java.util.Map", "java.util.Map", "boolean",
-				"boolean", "com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName210 = "update";
@@ -249,7 +253,7 @@ public class EmpLocalServiceClpInvoker {
 		_methodParameterTypes210 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp",
 				"com.liferay.portal.model.User", "long", "java.util.Map",
-				"java.util.Map", "java.util.Map", "boolean", "boolean",
+				"java.util.Map", "java.util.Map", "boolean",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
@@ -272,7 +276,7 @@ public class EmpLocalServiceClpInvoker {
 		_methodParameterTypes212 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp",
 				"com.liferay.portal.model.User", "long", "java.util.Map",
-				"java.util.Map", "java.util.Map", "boolean", "boolean",
+				"java.util.Map", "java.util.Map", "boolean",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
@@ -281,7 +285,7 @@ public class EmpLocalServiceClpInvoker {
 		_methodParameterTypes213 = new String[] {
 				"vn.com.ecopharma.emp.model.Emp", "java.lang.String", "long",
 				"java.util.Map", "java.util.Map", "java.util.Map", "boolean",
-				"boolean", "com.liferay.portal.service.ServiceContext"
+				"com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName214 = "createEmployee";
@@ -635,6 +639,11 @@ public class EmpLocalServiceClpInvoker {
 				((Integer)arguments[5]).intValue());
 		}
 
+		if (_methodName198.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes198, parameterTypes)) {
+			return EmpLocalServiceUtil.isOrganizationFilter((java.lang.String)arguments[0]);
+		}
+
 		if (_methodName199.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes199, parameterTypes)) {
 			EmpLocalServiceUtil.createDateTermRangeQuery((java.lang.String)arguments[0],
@@ -727,8 +736,7 @@ public class EmpLocalServiceClpInvoker {
 				(java.util.Map<java.lang.String, java.lang.Boolean>)arguments[4],
 				(java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean>)arguments[5],
 				((Boolean)arguments[6]).booleanValue(),
-				((Boolean)arguments[7]).booleanValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[8]);
+				(com.liferay.portal.service.ServiceContext)arguments[7]);
 		}
 
 		if (_methodName210.equals(name) &&
@@ -740,8 +748,7 @@ public class EmpLocalServiceClpInvoker {
 				(java.util.Map<java.lang.String, java.lang.Boolean>)arguments[4],
 				(java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean>)arguments[5],
 				((Boolean)arguments[6]).booleanValue(),
-				((Boolean)arguments[7]).booleanValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[8]);
+				(com.liferay.portal.service.ServiceContext)arguments[7]);
 		}
 
 		if (_methodName211.equals(name) &&
@@ -782,8 +789,7 @@ public class EmpLocalServiceClpInvoker {
 				(java.util.Map<java.lang.String, java.lang.Boolean>)arguments[4],
 				(java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean>)arguments[5],
 				((Boolean)arguments[6]).booleanValue(),
-				((Boolean)arguments[7]).booleanValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[8]);
+				(com.liferay.portal.service.ServiceContext)arguments[7]);
 		}
 
 		if (_methodName213.equals(name) &&
@@ -795,8 +801,7 @@ public class EmpLocalServiceClpInvoker {
 				(java.util.Map<java.lang.String, java.lang.Boolean>)arguments[4],
 				(java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean>)arguments[5],
 				((Boolean)arguments[6]).booleanValue(),
-				((Boolean)arguments[7]).booleanValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[8]);
+				(com.liferay.portal.service.ServiceContext)arguments[7]);
 		}
 
 		if (_methodName214.equals(name) &&
@@ -1096,6 +1101,8 @@ public class EmpLocalServiceClpInvoker {
 	private String[] _methodParameterTypes196;
 	private String _methodName197;
 	private String[] _methodParameterTypes197;
+	private String _methodName198;
+	private String[] _methodParameterTypes198;
 	private String _methodName199;
 	private String[] _methodParameterTypes199;
 	private String _methodName200;

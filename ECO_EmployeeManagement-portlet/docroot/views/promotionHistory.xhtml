@@ -13,15 +13,37 @@
 	<h:body>
 
 		<p:growl id="growl" showDetail="true" sticky="false" life="4000" />
+		<eco:ajaxIndicator />
+
 		<h:panelGroup id="promotionPanelGroup">
+
+			<h:form id="searchForm">
+				<h:link value="Show/Hide filter" styleClass="label"
+					onmouseover="toggle('#{requestScope.filterGrid.clientId}'); return false;"
+					onclick="toggle('#{requestScope.filterGrid.clientId}'); return false;" />
+
+				<h:panelGroup binding="#{requestScope.filterGrid}" id="filterGroup"
+					style="display: none;">
+					<p:panelGrid id="filterGrid" columns="3" styleClass="filter-grid"
+						style="margin-bottom: 7px!important; color: black!important;">
+
+						<h:panelGroup>
+							<eco:baseEmpFilterPanel empBean="#{promotionFilterBean}"
+								onCompleteUpdate="PF('promotionHistoryTable').filter();" />
+						</h:panelGroup>
+					</p:panelGrid>
+				</h:panelGroup>
+			</h:form>
+
 			<h:form id="promotionForm">
 
 				<p:link ajax="true" value="Back" outcome="view"
-					rendered="#{employeeModelPermission.checkPermission('VIEW')}" />
-
-				<p:commandButton value="Index All"
-					actionListener="#{promotionHistoryBean.onIndexAll}" />
-				<p:commandButton value="Remove All Index"
+					rendered="#{employeeModelPermission.checkPermission('VIEW')}" /> |
+	
+				<p:commandLink value="Index All"
+					actionListener="#{promotionHistoryBean.onIndexAll}" /> |
+					
+				<p:commandLink value="Remove All Index"
 					actionListener="#{promotionHistoryBean.onRemoveAllIndex}" />
 
 				<p:dataTable id="promotionHistories" var="p"
@@ -31,21 +53,32 @@
 					paginatorPosition="bottom"
 					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="10,25,50" lazy="true" selectionMode="single"
-					selection="#{promotionHistoryBean.selectedItem}"
-					rowKey="#{p.promotedHistoryId}" emptyMessage="No records found">
+					selection="#{promotionHistoryBean.selectedItem}" rowKey="#{p.id}"
+					editable="true" emptyMessage="No records found">
 
-					<p:column headerText="Id">
-						<h:outputText value="#{p.promotedHistoryId}" />
+					<p:ajax event="rowEdit"
+						listener="#{promotionHistoryBean.onRowEdit}" />
+					<p:ajax event="rowEditCancel"
+						listener="#{promotionHistoryBean.onRowEditCancel}" />
+
+					<p:column headerText="Name">
+						<h:outputText value="#{p.fullNameVi}" />
 					</p:column>
 
-					<p:column headerText="Employee Name">
-						<h:outputText value="#{p.fullName}" />
+					<p:column headerText="Employee Code">
+						<h:outputText value="#{p.employeeCode}" />
 					</p:column>
+
 
 					<p:column headerText="Promoted Date">
-						<h:outputText value="#{p.promotedDate}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</h:outputText>
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{p.formattedPromotedDate}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar value="#{p.promotedDate}" pattern="dd/MM/yyyy" />
+							</f:facet>
+						</p:cellEditor>
 					</p:column>
 
 					<p:column headerText="Old Position">
@@ -57,8 +90,20 @@
 					</p:column>
 
 					<p:column headerText="Comment">
-						<h:outputText value="#{p.comment}" />
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{p.comment}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputTextarea value="#{p.comment}" />
+							</f:facet>
+						</p:cellEditor>
 					</p:column>
+
+					<p:column style="width:32px">
+						<p:rowEditor />
+					</p:column>
+
 					<f:facet name="footer">
 		        		In total there are of <h:outputText id="totalFilteredCount"
 							value="#{promotionHistoryBean.lazyDataModel.rowCount}" /> records.
@@ -68,5 +113,21 @@
 		</h:panelGroup>
 
 	</h:body>
+
+	<script type="text/javascript">
+		function toggle(id) {
+			var element = document.getElementById(id);
+			if (element.style.display == 'block') {
+				element.style.display = 'none';
+			} else {
+				element.style.display = 'block'
+			}
+		}
+	</script>
+	<style type="text/css">
+.ui-panelgrid tbody tr td {
+	border: none !important;
+}
+</style>
 </f:view>
 

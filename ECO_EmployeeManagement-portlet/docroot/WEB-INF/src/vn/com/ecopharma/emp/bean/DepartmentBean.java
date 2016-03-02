@@ -36,21 +36,21 @@ public class DepartmentBean extends AbstractOrganizationBean {
 	@Override
 	public void onSave(ActionEvent event) {
 		final EmployeeBean employeeViewBean = BeanUtils.getEmployeeViewBean();
-		final Devision selectedDevision = employeeViewBean
-				.getModifyEmployeeInfoItem().getDevision();
-		if (selectedDevision != null) {
-			department.setDevisionId(selectedDevision.getDevisionId());
-			Department result = DepartmentLocalServiceUtil.addDepartment(
-					department, EmployeeUtils.getServiceContext());
-			if (result != null) {
-				employeeViewBean.getModifyEmployeeInfoItem().setDepartment(
-						result);
-				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Create Department successfully", "Department "
-								+ result.getName() + " has been created");
-				FacesContext.getCurrentInstance().addMessage(null, msg);
-			}
-		}
+		// final Devision selectedDevision = employeeViewBean
+		// .getModifyEmployeeInfoItem().getDevision();
+		// if (selectedDevision != null) {
+		// department.setDevisionId(selectedDevision.getDevisionId());
+		// Department result = DepartmentLocalServiceUtil.addDepartment(
+		// department, EmployeeUtils.getServiceContext());
+		// if (result != null) {
+		// employeeViewBean.getModifyEmployeeInfoItem().setDepartment(
+		// result);
+		// FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+		// "Create Department successfully", "Department "
+		// + result.getName() + " has been created");
+		// FacesContext.getCurrentInstance().addMessage(null, msg);
+		// }
+		// }
 	}
 
 	public Department getDepartment() {

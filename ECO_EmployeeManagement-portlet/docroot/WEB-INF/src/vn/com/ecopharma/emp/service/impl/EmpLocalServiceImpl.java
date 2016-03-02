@@ -329,7 +329,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 				companyId, sort, start, end);
 	}
 
-	private boolean isOrganizationFilter(String filterProperty) {
+	public boolean isOrganizationFilter(String filterProperty) {
 		return filterProperty.equalsIgnoreCase(EmpField.DEVISION)
 				|| filterProperty.equalsIgnoreCase(EmpField.DEPARTMENT)
 				|| filterProperty.equalsIgnoreCase(EmpField.UNIT)
@@ -702,12 +702,12 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	public Emp update(Emp employee, long userId, long oldTitlesId,
 			Map<Address, Boolean> addressesMap,
 			Map<String, Boolean> dependentNameMap,
-			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isManager,
-			boolean isImportAction, ServiceContext serviceContext) {
+			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isImportAction,
+			ServiceContext serviceContext) {
 		try {
 			User user = userLocalService.fetchUser(userId);
 			return update(employee, user, oldTitlesId, addressesMap,
-					dependentNameMap, bankInfoMap, isManager, isImportAction,
+					dependentNameMap, bankInfoMap, isImportAction,
 					serviceContext);
 		} catch (SystemException e) {
 			LOGGER.info(e);
@@ -718,8 +718,8 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	public Emp update(Emp employee, User user, long oldTitlesId,
 			Map<Address, Boolean> addressesMap,
 			Map<String, Boolean> dependentNameMap,
-			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isManager,
-			boolean isImportAction, ServiceContext serviceContext) {
+			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isImportAction,
+			ServiceContext serviceContext) {
 		try {
 			final long empId = employee.getEmpId();
 			boolean isPositionChanged = false;
@@ -797,40 +797,41 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			}
 
 			// Is Manager ?
-			if (!isImportAction) {
-				boolean isCurrentlyManager = empOrgRelationshipLocalService
-						.isHeadOfDepartment(empId, employee.getDepartmentId());
-				EmpOrgRelationship currentManagerOfDept = empOrgRelationshipLocalService
-						.fetchByClassNameClassPKHeadOfOrg(
-								Department.class.getName(),
-								employee.getDepartmentId(), true);
-				if (isCurrentlyManager) {
-					// de-select current employee as manager
-					if (!isManager) {
-						// remove relationship
-						currentManagerOfDept.setEmpId(0L);
-						empOrgRelationshipLocalService
-								.updateEmpOrgRelationship(currentManagerOfDept);
-					}
-				} else {
-					if (isManager) {
-						if (currentManagerOfDept != null) {
-							currentManagerOfDept.setEmpId(empId);
-							currentManagerOfDept.setModifiedDate(new Date());
-							empOrgRelationshipLocalService
-									.updateEmpOrgRelationship(currentManagerOfDept);
-						} else {
-							empOrgRelationshipLocalService
-									.addEmpOrgRelationship(empId,
-											Department.class.getName(),
-											employee.getDepartmentId(), true,
-											false, serviceContext);
-
-						}
-					}
-				}
-
-			}
+			// if (!isImportAction) {
+			// boolean isCurrentlyManager = empOrgRelationshipLocalService
+			// .isHeadOfDepartment(empId, employee.getDepartmentId());
+			// EmpOrgRelationship currentManagerOfDept =
+			// empOrgRelationshipLocalService
+			// .fetchByClassNameClassPKHeadOfOrg(
+			// Department.class.getName(),
+			// employee.getDepartmentId(), true);
+			// if (isCurrentlyManager) {
+			// // de-select current employee as manager
+			// if (!isManager) {
+			// // remove relationship
+			// currentManagerOfDept.setEmpId(0L);
+			// empOrgRelationshipLocalService
+			// .updateEmpOrgRelationship(currentManagerOfDept);
+			// }
+			// } else {
+			// if (isManager) {
+			// if (currentManagerOfDept != null) {
+			// currentManagerOfDept.setEmpId(empId);
+			// currentManagerOfDept.setModifiedDate(new Date());
+			// empOrgRelationshipLocalService
+			// .updateEmpOrgRelationship(currentManagerOfDept);
+			// } else {
+			// empOrgRelationshipLocalService
+			// .addEmpOrgRelationship(empId,
+			// Department.class.getName(),
+			// employee.getDepartmentId(), true,
+			// false, serviceContext);
+			//
+			// }
+			// }
+			// }
+			//
+			// }
 
 			// Add employee's banking info
 			for (Map.Entry<EmpBankInfo, Boolean> entry : bankInfoMap.entrySet()) {
@@ -921,13 +922,13 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	public Emp addOrUpdateWithExistUser(Emp employee, User user,
 			long oldTitlesId, Map<Address, Boolean> addressesMap,
 			Map<String, Boolean> dependentNameMap,
-			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isManager,
-			boolean isImportAction, ServiceContext serviceContext) {
+			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isImportAction,
+			ServiceContext serviceContext) {
 		try {
 			if (super.fetchEmp(employee.getEmpId()) != null) { // call update
 				return update(employee, user, oldTitlesId, addressesMap,
-						dependentNameMap, bankInfoMap, isManager,
-						isImportAction, serviceContext);
+						dependentNameMap, bankInfoMap, isImportAction,
+						serviceContext);
 			} else {
 				return addEmp(employee, user, addressesMap, dependentNameMap,
 						bankInfoMap, serviceContext);
@@ -943,16 +944,16 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	public Emp addOrUpdateWithExistUser(Emp employee, String userScreenName,
 			long oldTitlesId, Map<Address, Boolean> addressesMap,
 			Map<String, Boolean> dependentNameMap,
-			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isManager,
-			boolean isImportAction, ServiceContext serviceContext) {
+			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isImportAction,
+			ServiceContext serviceContext) {
 		try {
 			User user = userLocalService.getUserByScreenName(
 					serviceContext.getCompanyId(), userScreenName);
 
 			if (super.fetchEmp(employee.getEmpId()) != null) { // call update
 				return update(employee, user, oldTitlesId, addressesMap,
-						dependentNameMap, bankInfoMap, isManager,
-						isImportAction, serviceContext);
+						dependentNameMap, bankInfoMap, isImportAction,
+						serviceContext);
 			} else {
 				return addEmp(employee, user, addressesMap, dependentNameMap,
 						bankInfoMap, serviceContext);

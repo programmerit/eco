@@ -345,22 +345,42 @@ public class ResignationHistoryLocalServiceWrapper
 	}
 
 	@Override
-	public int countAllUnDeletedDocuments(
+	public int countSearchAllDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
 		long companyId, com.liferay.portal.kernel.search.Sort sort) {
-		return _resignationHistoryLocalService.countAllUnDeletedDocuments(searchContext,
+		return _resignationHistoryLocalService.countSearchAllDocuments(searchContext,
 			filterQueries, companyId, sort);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.search.Document> searchAllUnDeletedDocuments(
+	public java.util.List<com.liferay.portal.kernel.search.Document> searchAllDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
 		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
 		int end) {
-		return _resignationHistoryLocalService.searchAllUnDeletedDocuments(searchContext,
+		return _resignationHistoryLocalService.searchAllDocuments(searchContext,
 			filterQueries, companyId, sort, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Document> filterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end) throws com.liferay.portal.kernel.search.ParseException {
+		return _resignationHistoryLocalService.filterByFields(searchContext,
+			filters, sort, companyId, start, end);
+	}
+
+	@Override
+	public int countFilterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
+		throws com.liferay.portal.kernel.search.ParseException {
+		return _resignationHistoryLocalService.countFilterByFields(searchContext,
+			filters, sort, companyId);
 	}
 
 	@Override

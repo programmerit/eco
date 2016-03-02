@@ -153,48 +153,70 @@ public class PromotedHistoryLocalServiceClp
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName27 = "markDeleted";
+		_methodName27 = "updatePromotedHistory";
 
 		_methodParameterTypes27 = new String[] {
+				"long", "java.util.Date", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName28 = "markDeleted";
+
+		_methodParameterTypes28 = new String[] {
 				"vn.com.ecopharma.emp.model.PromotedHistory"
 			};
 
-		_methodName28 = "countAllUnDeletedDocuments";
+		_methodName29 = "countAllDocuments";
 
-		_methodParameterTypes28 = new String[] {
+		_methodParameterTypes29 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort"
 			};
 
-		_methodName29 = "searchAllUnDeletedDocuments";
+		_methodName30 = "searchAllDocuments";
 
-		_methodParameterTypes29 = new String[] {
+		_methodParameterTypes30 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName30 = "getIndexedDocument";
+		_methodName31 = "filterByFields";
 
-		_methodParameterTypes30 = new String[] {
+		_methodParameterTypes31 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long",
+				"int", "int"
+			};
+
+		_methodName32 = "countFilterByFields";
+
+		_methodParameterTypes32 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long"
+			};
+
+		_methodName33 = "getIndexedDocument";
+
+		_methodParameterTypes33 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName31 = "getIndexedDocument";
+		_methodName34 = "getIndexedDocument";
 
-		_methodParameterTypes31 = new String[] {
+		_methodParameterTypes34 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName32 = "indexAll";
+		_methodName35 = "indexAll";
 
-		_methodParameterTypes32 = new String[] {  };
+		_methodParameterTypes35 = new String[] {  };
 
-		_methodName33 = "removeAllIndexes";
+		_methodName36 = "removeAllIndexes";
 
-		_methodParameterTypes33 = new String[] {
+		_methodParameterTypes36 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 	}
@@ -961,13 +983,47 @@ public class PromotedHistoryLocalServiceClp
 	}
 
 	@Override
-	public vn.com.ecopharma.emp.model.PromotedHistory markDeleted(
-		vn.com.ecopharma.emp.model.PromotedHistory promotedHistory) {
+	public vn.com.ecopharma.emp.model.PromotedHistory updatePromotedHistory(
+		long id, java.util.Date promotedDate, java.lang.String comment,
+		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName27,
 					_methodParameterTypes27,
+					new Object[] {
+						id,
+						
+					ClpSerializer.translateInput(promotedDate),
+						
+					ClpSerializer.translateInput(comment),
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.PromotedHistory)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.PromotedHistory markDeleted(
+		vn.com.ecopharma.emp.model.PromotedHistory promotedHistory) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] { ClpSerializer.translateInput(promotedHistory) });
 		}
 		catch (Throwable t) {
@@ -986,15 +1042,15 @@ public class PromotedHistoryLocalServiceClp
 	}
 
 	@Override
-	public int countAllUnDeletedDocuments(
+	public int countAllDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
 		long companyId, com.liferay.portal.kernel.search.Sort sort) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28,
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1021,7 +1077,7 @@ public class PromotedHistoryLocalServiceClp
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.search.Document> searchAllUnDeletedDocuments(
+	public java.util.List<com.liferay.portal.kernel.search.Document> searchAllDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
 		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
@@ -1029,8 +1085,8 @@ public class PromotedHistoryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1061,14 +1117,98 @@ public class PromotedHistoryLocalServiceClp
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Document> filterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end) throws com.liferay.portal.kernel.search.ParseException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
+					new Object[] {
+						ClpSerializer.translateInput(searchContext),
+						
+					ClpSerializer.translateInput(filters),
+						
+					ClpSerializer.translateInput(sort),
+						
+					companyId,
+						
+					start,
+						
+					end
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.search.ParseException) {
+				throw (com.liferay.portal.kernel.search.ParseException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.portal.kernel.search.Document>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public int countFilterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
+		throws com.liferay.portal.kernel.search.ParseException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
+					new Object[] {
+						ClpSerializer.translateInput(searchContext),
+						
+					ClpSerializer.translateInput(filters),
+						
+					ClpSerializer.translateInput(sort),
+						
+					companyId
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.search.ParseException) {
+				throw (com.liferay.portal.kernel.search.ParseException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.Document getIndexedDocument(
 		java.lang.String id,
 		com.liferay.portal.kernel.search.SearchContext searchContext) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30,
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
 					new Object[] {
 						ClpSerializer.translateInput(id),
 						
@@ -1096,8 +1236,8 @@ public class PromotedHistoryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
 					new Object[] { id, ClpSerializer.translateInput(
 							searchContext) });
 		}
@@ -1119,8 +1259,8 @@ public class PromotedHistoryLocalServiceClp
 	@Override
 	public void indexAll() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName32,
-				_methodParameterTypes32, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName35,
+				_methodParameterTypes35, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1140,8 +1280,8 @@ public class PromotedHistoryLocalServiceClp
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		long companyId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName33,
-				_methodParameterTypes33,
+			_invokableLocalService.invokeMethod(_methodName36,
+				_methodParameterTypes36,
 				new Object[] {
 					ClpSerializer.translateInput(searchContext),
 					
@@ -1228,4 +1368,10 @@ public class PromotedHistoryLocalServiceClp
 	private String[] _methodParameterTypes32;
 	private String _methodName33;
 	private String[] _methodParameterTypes33;
+	private String _methodName34;
+	private String[] _methodParameterTypes34;
+	private String _methodName35;
+	private String[] _methodParameterTypes35;
+	private String _methodName36;
+	private String[] _methodParameterTypes36;
 }

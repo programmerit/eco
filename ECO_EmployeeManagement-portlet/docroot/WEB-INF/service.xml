@@ -641,6 +641,11 @@
             <finder-column name="orgClassPK"></finder-column>
             <finder-column name="headOfOrg"></finder-column>
         </finder>
+        <finder name="EmpClassNameHeadOfOrg" return-type="Collection">
+            <finder-column name="empId"></finder-column>
+            <finder-column name="orgClassName"></finder-column>
+            <finder-column name="headOfOrg"></finder-column>
+        </finder>
 	</entity>
 	<entity name="EmpNotifyEmail" local-service="true">
 

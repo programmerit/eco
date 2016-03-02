@@ -360,6 +360,47 @@ public class VacationLeaveLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Document> filterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end) throws com.liferay.portal.kernel.search.ParseException {
+		return _vacationLeaveLocalService.filterByFields(searchContext,
+			filters, sort, companyId, start, end);
+	}
+
+	@Override
+	public int countFilterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
+		throws com.liferay.portal.kernel.search.ParseException {
+		return _vacationLeaveLocalService.countFilterByFields(searchContext,
+			filters, sort, companyId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Document> searchPendingRequestsOfManager(
+		long managerId,
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		long companyId) {
+		return _vacationLeaveLocalService.searchPendingRequestsOfManager(managerId,
+			searchContext, companyId);
+	}
+
+	@Override
+	public void reindexAll() {
+		_vacationLeaveLocalService.reindexAll();
+	}
+
+	@Override
+	public void removeAllIndexes(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		long companyId) {
+		_vacationLeaveLocalService.removeAllIndexes(searchContext, companyId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.Document getIndexedDocument(
 		java.lang.String id,
 		com.liferay.portal.kernel.search.SearchContext searchContext) {

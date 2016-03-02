@@ -138,50 +138,60 @@ public class EmpOrgRelationshipLocalServiceClp
 
 		_methodParameterTypes23 = new String[] { "java.lang.String", "long" };
 
-		_methodName24 = "fetchByClassNameClassPKHeadOfOrg";
+		_methodName24 = "findByEmpClassNameAndHeadOfOrg";
 
 		_methodParameterTypes24 = new String[] {
+				"long", "java.lang.String", "boolean"
+			};
+
+		_methodName25 = "fetchByClassNameClassPKHeadOfOrg";
+
+		_methodParameterTypes25 = new String[] {
 				"java.lang.String", "long", "boolean"
 			};
 
-		_methodName25 = "fetchByEmpClassNameClassPKHeadOfOrg";
+		_methodName26 = "fetchByEmpClassNameClassPKHeadOfOrg";
 
-		_methodParameterTypes25 = new String[] {
+		_methodParameterTypes26 = new String[] {
 				"long", "java.lang.String", "long", "boolean"
 			};
 
-		_methodName26 = "fetchByClassNameClassPKDeputyOfOrg";
+		_methodName27 = "fetchByClassNameClassPKDeputyOfOrg";
 
-		_methodParameterTypes26 = new String[] {
+		_methodParameterTypes27 = new String[] {
 				"java.lang.String", "long", "boolean"
 			};
 
-		_methodName27 = "isHeadOfDepartment";
+		_methodName28 = "isHeadOfAtLeastOneDepartment";
 
-		_methodParameterTypes27 = new String[] { "long", "long" };
+		_methodParameterTypes28 = new String[] { "long" };
 
-		_methodName28 = "createPrepersistedEntity";
+		_methodName29 = "isHeadOfDepartment";
 
-		_methodParameterTypes28 = new String[] {
+		_methodParameterTypes29 = new String[] { "long", "long" };
+
+		_methodName30 = "createPrepersistedEntity";
+
+		_methodParameterTypes30 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName29 = "addEmpOrgRelationship";
+		_methodName31 = "addEmpOrgRelationship";
 
-		_methodParameterTypes29 = new String[] {
+		_methodParameterTypes31 = new String[] {
 				"long", "java.lang.String", "long", "boolean", "boolean",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName30 = "updateEmpOrgRelationship";
+		_methodName32 = "updateEmpOrgRelationship";
 
-		_methodParameterTypes30 = new String[] {
+		_methodParameterTypes32 = new String[] {
 				"long", "long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName31 = "updateEmpOrgRelationship";
+		_methodName33 = "updateEmpOrgRelationship";
 
-		_methodParameterTypes31 = new String[] {
+		_methodParameterTypes33 = new String[] {
 				"vn.com.ecopharma.emp.model.EmpOrgRelationship", "long",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -880,13 +890,44 @@ public class EmpOrgRelationshipLocalServiceClp
 	}
 
 	@Override
-	public vn.com.ecopharma.emp.model.EmpOrgRelationship fetchByClassNameClassPKHeadOfOrg(
-		java.lang.String className, long classPK, boolean isHeadOfOrg) {
+	public java.util.List<vn.com.ecopharma.emp.model.EmpOrgRelationship> findByEmpClassNameAndHeadOfOrg(
+		long empId, java.lang.String className, boolean isHeadOfOrg) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName24,
 					_methodParameterTypes24,
+					new Object[] {
+						empId,
+						
+					ClpSerializer.translateInput(className),
+						
+					isHeadOfOrg
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<vn.com.ecopharma.emp.model.EmpOrgRelationship>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.EmpOrgRelationship fetchByClassNameClassPKHeadOfOrg(
+		java.lang.String className, long classPK, boolean isHeadOfOrg) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
 						ClpSerializer.translateInput(className),
 						
@@ -917,8 +958,8 @@ public class EmpOrgRelationshipLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] {
 						empId,
 						
@@ -950,8 +991,8 @@ public class EmpOrgRelationshipLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] {
 						ClpSerializer.translateInput(className),
 						
@@ -976,12 +1017,35 @@ public class EmpOrgRelationshipLocalServiceClp
 	}
 
 	@Override
+	public boolean isHeadOfAtLeastOneDepartment(long userId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28, new Object[] { userId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Boolean)returnObj).booleanValue();
+	}
+
+	@Override
 	public boolean isHeadOfDepartment(long empId, long departmentId) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
 					new Object[] { empId, departmentId });
 		}
 		catch (Throwable t) {
@@ -1006,8 +1070,8 @@ public class EmpOrgRelationshipLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28,
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
 					new Object[] { ClpSerializer.translateInput(serviceContext) });
 		}
 		catch (Throwable t) {
@@ -1037,8 +1101,8 @@ public class EmpOrgRelationshipLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] {
 						empId,
 						
@@ -1075,8 +1139,8 @@ public class EmpOrgRelationshipLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] {
 						empOrgRelationshipId,
 						
@@ -1108,8 +1172,8 @@ public class EmpOrgRelationshipLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
 					new Object[] {
 						ClpSerializer.translateInput(empOrgRelationship),
 						
@@ -1200,4 +1264,8 @@ public class EmpOrgRelationshipLocalServiceClp
 	private String[] _methodParameterTypes30;
 	private String _methodName31;
 	private String[] _methodParameterTypes31;
+	private String _methodName32;
+	private String[] _methodParameterTypes32;
+	private String _methodName33;
+	private String[] _methodParameterTypes33;
 }
