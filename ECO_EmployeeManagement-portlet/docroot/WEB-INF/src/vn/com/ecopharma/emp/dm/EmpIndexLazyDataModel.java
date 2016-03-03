@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.ParseException;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 
 /**
@@ -34,22 +33,20 @@ public class EmpIndexLazyDataModel extends
 	@Override
 	public EmpIndexedItem getRowData(String rowKey) {
 		return new EmpIndexedItem(EmpLocalServiceUtil.getIndexedEmp(rowKey,
-				EmployeeUtils.getCurrentSearchContext()));
+				searchContext));
 	}
 
 	@Override
 	public List<EmpIndexedItem> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, Object> filters) {
-		try {
-			super.bindOrganizationFilterFields(filters,
-					BeanUtils.getEmpFilterBean());
-			final SearchContext searchContext = EmployeeUtils
-					.getCurrentSearchContext();
 
-			long companyId = EmployeeUtils.getCompanyId();
-			final Sort sort = sortField != null ? new Sort(sortField,
-					sortOrder.equals(SortOrder.ASCENDING) ? true : false)
-					: null;
+		super.bindOrganizationFilterFields(filters,
+				BeanUtils.getEmpFilterBean());
+
+		long companyId = EmployeeUtils.getCompanyId();
+		final Sort sort = sortField != null ? new Sort(sortField,
+				sortOrder.equals(SortOrder.ASCENDING) ? true : false) : null;
+		try {
 			List<Document> docs = EmpLocalServiceUtil.filterEmployeeByFields(
 					searchContext, filters, sort, companyId, first, first
 							+ pageSize);

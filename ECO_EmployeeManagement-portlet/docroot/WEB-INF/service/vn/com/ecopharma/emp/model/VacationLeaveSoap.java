@@ -34,6 +34,7 @@ public class VacationLeaveSoap implements Serializable {
 		soapModel.setVacationLeaveId(model.getVacationLeaveId());
 		soapModel.setEmpId(model.getEmpId());
 		soapModel.setLeaveType(model.getLeaveType());
+		soapModel.setSign(model.getSign());
 		soapModel.setLeaveFrom(model.getLeaveFrom());
 		soapModel.setLeaveTo(model.getLeaveTo());
 		soapModel.setActualTo(model.getActualTo());
@@ -122,6 +123,14 @@ public class VacationLeaveSoap implements Serializable {
 
 	public void setLeaveType(String leaveType) {
 		_leaveType = leaveType;
+	}
+
+	public String getSign() {
+		return _sign;
+	}
+
+	public void setSign(String sign) {
+		_sign = sign;
 	}
 
 	public Date getLeaveFrom() {
@@ -243,6 +252,7 @@ public class VacationLeaveSoap implements Serializable {
 	private long _vacationLeaveId;
 	private long _empId;
 	private String _leaveType;
+	private String _sign;
 	private Date _leaveFrom;
 	private Date _leaveTo;
 	private Date _actualTo;

@@ -15,12 +15,11 @@ public class AbstractIndexedLazyDataModel<T extends AbstractIndexedItem>
 	 */
 	private static final long serialVersionUID = 1L;
 
+	protected static final SearchContext searchContext = EmployeeUtils
+			.getCurrentSearchContext();
+
 	@Override
 	public Object getRowKey(T object) {
 		return object.getId();
-	}
-
-	protected SearchContext getSearchContext() {
-		return EmployeeUtils.getCurrentSearchContext();
 	}
 }

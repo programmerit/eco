@@ -15,6 +15,8 @@ public class VacationLeaveIndexedItem extends BaseEmpInfoIndexedItem {
 
 	private String type;
 
+	private String sign;
+
 	private Date leaveFrom;
 
 	private Date leaveTo;
@@ -28,6 +30,7 @@ public class VacationLeaveIndexedItem extends BaseEmpInfoIndexedItem {
 	public VacationLeaveIndexedItem(Document document) {
 		super(document);
 		this.type = checkNullFieldAndReturnEmptyString(VacationLeaveField.LEAVE_TYPE);
+		this.sign = checkNullFieldAndReturnEmptyString(VacationLeaveField.SIGN);
 		this.leaveFrom = checkNullFieldAndReturnNullDate(VacationLeaveField.LEAVE_FROM);
 		this.leaveTo = checkNullFieldAndReturnNullDate(VacationLeaveField.LEAVE_TO);
 		this.actualTo = checkNullFieldAndReturnNullDate(VacationLeaveField.ACTUAL_TO);
@@ -46,6 +49,14 @@ public class VacationLeaveIndexedItem extends BaseEmpInfoIndexedItem {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getSign() {
+		return sign;
+	}
+
+	public void setSign(String sign) {
+		this.sign = sign;
 	}
 
 	public Date getLeaveFrom() {

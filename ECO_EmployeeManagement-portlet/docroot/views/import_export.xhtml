@@ -56,10 +56,9 @@
 							</p:selectOneRadio>
 
 							<p:autoComplete id="columns" multiple="true" scrollHeight="300"
-								value="#{employeeIndexedBean.columnTemplates}"
-								completeMethod="#{employeeIndexedBean.completeColumns}"
-								var="column" itemValue="#{column}"
-								itemLabel="#{i18n[employeeIndexedBean.getHeaderi18nKey(column)]}"
+								value="#{employeeImportExportBean.selectedColumnStrings}"
+								completeMethod="#{employeeImportExportBean.completeColumns}"
+								var="column" itemValue="#{column}" itemLabel="#{column}"
 								autoHighlight="true" placeholder="Type to select column..."
 								styleClass="column-setting">
 							</p:autoComplete>
@@ -73,6 +72,9 @@
 						actionListener="#{employeeImportExportBean.generateExportList}"
 						oncomplete="PF('wDownloadExportDialog').show();">
 					</p:commandButton>
+
+					<p:commandButton value="Get Selected Columns"
+						actionListener="#{employeeImportExportBean.onShowSelectedColumn}" />
 				</p:tab>
 
 				<p:tab id="importEmployeeTab" title="Import Employee">

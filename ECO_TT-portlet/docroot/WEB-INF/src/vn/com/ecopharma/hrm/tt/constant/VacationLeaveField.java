@@ -6,6 +6,8 @@ public class VacationLeaveField {
 
 	public static final String LEAVE_TYPE = "leaveType";
 
+	public static final String SIGN = "sign";
+
 	public static final String LEAVE_FROM = "leaveFrom";
 
 	public static final String LEAVE_TO = "leaveTo";

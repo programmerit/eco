@@ -44,6 +44,9 @@ public class VacationLeaveIndexer extends
 
 		document.addText(VacationLeaveField.LEAVE_TYPE, EmpLocalServiceUtil
 				.removeDashChar(vacationLeave.getLeaveType()));
+
+		document.addText(VacationLeaveField.SIGN, vacationLeave.getSign());
+
 		document.addDate(VacationLeaveField.LEAVE_FROM,
 				vacationLeave.getLeaveFrom());
 		document.addDate(VacationLeaveField.LEAVE_TO,

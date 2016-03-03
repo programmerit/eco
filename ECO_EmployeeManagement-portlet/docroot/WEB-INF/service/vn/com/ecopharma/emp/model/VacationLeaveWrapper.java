@@ -53,6 +53,7 @@ public class VacationLeaveWrapper implements VacationLeave,
 		attributes.put("vacationLeaveId", getVacationLeaveId());
 		attributes.put("empId", getEmpId());
 		attributes.put("leaveType", getLeaveType());
+		attributes.put("sign", getSign());
 		attributes.put("leaveFrom", getLeaveFrom());
 		attributes.put("leaveTo", getLeaveTo());
 		attributes.put("actualTo", getActualTo());
@@ -89,6 +90,12 @@ public class VacationLeaveWrapper implements VacationLeave,
 
 		if (leaveType != null) {
 			setLeaveType(leaveType);
+		}
+
+		String sign = (String)attributes.get("sign");
+
+		if (sign != null) {
+			setSign(sign);
 		}
 
 		Date leaveFrom = (Date)attributes.get("leaveFrom");
@@ -254,6 +261,26 @@ public class VacationLeaveWrapper implements VacationLeave,
 	@Override
 	public void setLeaveType(java.lang.String leaveType) {
 		_vacationLeave.setLeaveType(leaveType);
+	}
+
+	/**
+	* Returns the sign of this vacation leave.
+	*
+	* @return the sign of this vacation leave
+	*/
+	@Override
+	public java.lang.String getSign() {
+		return _vacationLeave.getSign();
+	}
+
+	/**
+	* Sets the sign of this vacation leave.
+	*
+	* @param sign the sign of this vacation leave
+	*/
+	@Override
+	public void setSign(java.lang.String sign) {
+		_vacationLeave.setSign(sign);
 	}
 
 	/**

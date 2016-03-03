@@ -438,6 +438,7 @@
 		</id>
 		<property name="empId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="leaveType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="sign" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="leaveFrom" type="org.hibernate.type.TimestampType" />
 		<property name="leaveTo" type="org.hibernate.type.TimestampType" />
 		<property name="actualTo" type="org.hibernate.type.TimestampType" />

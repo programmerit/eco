@@ -11,13 +11,11 @@ import vn.com.ecopharma.emp.constant.ResignationHistoryField;
 import vn.com.ecopharma.emp.dto.ResignationHistoryIndexedItem;
 import vn.com.ecopharma.emp.service.ResignationHistoryLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
-import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 
 public class ResignationHistoryIndexLazyDataModel
@@ -36,7 +34,8 @@ public class ResignationHistoryIndexLazyDataModel
 	public ResignationHistoryIndexedItem getRowData(String rowKey) {
 		return new ResignationHistoryIndexedItem(
 				ResignationHistoryLocalServiceUtil.getIndexedDocument(rowKey,
-						EmployeeUtils.getCurrentSearchContext()));
+						searchContext));
+
 	}
 
 	@Override
@@ -46,8 +45,6 @@ public class ResignationHistoryIndexLazyDataModel
 		try {
 			super.bindOrganizationFilterFields(filters,
 					BeanUtils.getResignationFilterBean());
-			final SearchContext searchContext = EmployeeUtils
-					.getCurrentSearchContext();
 
 			final Sort sort = new Sort(ResignationHistoryField.ID, false);
 			final List<Document> documents = ResignationHistoryLocalServiceUtil

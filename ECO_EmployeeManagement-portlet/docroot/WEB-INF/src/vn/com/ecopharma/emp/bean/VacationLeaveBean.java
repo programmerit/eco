@@ -22,7 +22,9 @@ import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 @ManagedBean(name = "leaveBean")
 @ViewScoped
-public class VacationLeaveBean {
+public class VacationLeaveBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private VacationItem leave;
 

@@ -613,6 +613,7 @@
 			<id name="vacationLeaveId" />
 			<basic name="empId" />
 			<basic name="leaveType" />
+			<basic name="sign" />
 			<basic name="leaveFrom">
 				<temporal>TIMESTAMP</temporal>
 			</basic>

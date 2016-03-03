@@ -7,6 +7,7 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,8 +27,9 @@ import org.primefaces.model.SortOrder;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
-import vn.com.ecopharma.emp.bean.EmployeeIndexedBean;
-import vn.com.ecopharma.emp.constant.EmpField;
+import vn.com.ecopharma.emp.dto.ColumnItem;
+import vn.com.ecopharma.emp.dto.EmpIndexedItem;
+import vn.com.ecopharma.emp.dto.FilterDTO;
 import vn.com.ecopharma.emp.dto.ImportExportEmployeeDTO;
 import vn.com.ecopharma.emp.enumeration.EmployeeExportType;
 import vn.com.ecopharma.emp.model.Emp;
@@ -41,7 +43,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -89,6 +91,14 @@ public class EmployeeImportExportBean implements Serializable {
 
 	private transient List<?> exportList;
 
+	private List<ColumnItem> columns;
+
+	private List<String> columnStrings;
+
+	private List<ColumnItem> selectedColumns;
+
+	private List<String> selectedColumnStrings;
+
 	private boolean isFinishedImport;
 
 	private int first;
@@ -101,40 +111,84 @@ public class EmployeeImportExportBean implements Serializable {
 		importList = new ArrayList<>();
 		possiblyDuplicationList = new ArrayList<>();
 		failedImportList = new ArrayList<>();
+		columns = ImportExportUtils.createDefaultColumnItems();
+		columnStrings = new ArrayList<String>();
+		for (ColumnItem item : columns) {
+			columnStrings.add(item.getPropertyName());
+		}
+	}
+
+	public void onShowSelectedColumn() {
+		selectedColumns = new ArrayList<>();
+		for (String column : selectedColumnStrings) {
+			for (ColumnItem item : columns) {
+				if (item.getPropertyName().equalsIgnoreCase(column)) {
+					selectedColumns.add(item);
+					break;
+				}
+			}
+		}
+
+		EmpIndexedItem indexedItem = new EmpIndexedItem(
+				EmpLocalServiceUtil.getIndexedEmp(187616,
+						EmployeeUtils.getCurrentSearchContext()));
+
+		for (ColumnItem item : selectedColumns) {
+			System.out.println(item.getPropertyName() + "  "
+					+ item.getPropertyViName() + "  " + item.getIndex());
+
+			System.out.println(indexedItem.getItemKeyValueMap().get(
+					item.getPropertyName()));
+		}
+
+	}
+
+	public List<String> completeColumns(String query) {
+		final List<String> result = new ArrayList<>();
+		for (String item : columnStrings) {
+			if (item.contains(query)) {
+				result.add(item);
+			}
+		}
+		return result;
 	}
 
 	public void generateExportList() {
-		final EmployeeIndexedBean employeeIndexedBean = BeanUtils
-				.getEmployeeIndexedBean();
-		final SortOrder sortOrder = employeeIndexedBean.getSortOder();
-		final String sortField = employeeIndexedBean.getSortField();
+		FilterDTO filterDTO = BeanUtils.getEmpFilterHolderBean()
+				.getEmpFilterDTO();
 		final SearchContext searchContext = EmployeeUtils
 				.getCurrentSearchContext();
-		Sort searchSort;
-		if (sortField != null) {
-			searchSort = new Sort(sortField,
-					sortOrder.equals(SortOrder.ASCENDING) ? false : true);
-		} else {
-			searchSort = new Sort(EmpField.EMP_ID, false);
+		Sort searchSort = null;
+		if (filterDTO.getSortField() != null) {
+			searchSort = new Sort(filterDTO.getSortField(), filterDTO
+					.getSortOrder().equals(SortOrder.ASCENDING) ? false : true);
 		}
-
-		if ("all".equalsIgnoreCase(exportRange)) {
-			exportList = EmployeeUtils
-					.getEmployeeIndexedItemsFromIndexedDocuments(EmpLocalServiceUtil
-							.searchAllUnDeletedEmpIndexedDocument(
-									searchContext, new ArrayList<Query>(),
-									searchContext.getCompanyId(), searchSort,
-									QueryUtil.ALL_POS, QueryUtil.ALL_POS));
-		} else if ("allFilterRange".equalsIgnoreCase(exportRange)) {
-			exportList = EmployeeUtils
-					.getEmployeeIndexedItemsFromIndexedDocuments(EmpLocalServiceUtil
-							.searchAllUnDeletedEmpIndexedDocument(
-									searchContext,
-									employeeIndexedBean.getQueries(),
-									searchContext.getCompanyId(), searchSort,
-									QueryUtil.ALL_POS, QueryUtil.ALL_POS));
-		} else if ("currentPage".equalsIgnoreCase(exportRange)) {
-			exportList = employeeIndexedBean.getEmpIndexedItems();
+		try {
+			if ("all".equalsIgnoreCase(exportRange)) {
+				exportList = EmployeeUtils
+						.getEmployeeIndexedItemsFromIndexedDocuments(EmpLocalServiceUtil
+								.filterEmployeeByFields(searchContext,
+										new HashMap<String, Object>(), null,
+										searchContext.getCompanyId(),
+										QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+			} else if ("allFilterRange".equalsIgnoreCase(exportRange)) {
+				exportList = EmployeeUtils
+						.getEmployeeIndexedItemsFromIndexedDocuments(EmpLocalServiceUtil
+								.filterEmployeeByFields(searchContext,
+										filterDTO.getFilters(), searchSort,
+										searchContext.getCompanyId(),
+										QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+			} else if ("currentPage".equalsIgnoreCase(exportRange)) {
+				exportList = EmployeeUtils
+						.getEmployeeIndexedItemsFromIndexedDocuments(EmpLocalServiceUtil
+								.filterEmployeeByFields(searchContext,
+										filterDTO.getFilters(), searchSort,
+										searchContext.getCompanyId(),
+										filterDTO.getStart(),
+										filterDTO.getEnd()));
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -432,4 +486,37 @@ public class EmployeeImportExportBean implements Serializable {
 	public void setFinishedImport(boolean isFinishedImport) {
 		this.isFinishedImport = isFinishedImport;
 	}
+
+	public List<ColumnItem> getColumns() {
+		return columns;
+	}
+
+	public void setColumns(List<ColumnItem> columns) {
+		this.columns = columns;
+	}
+
+	public List<ColumnItem> getSelectedColumns() {
+		return selectedColumns;
+	}
+
+	public void setSelectedColumns(List<ColumnItem> selectedColumns) {
+		this.selectedColumns = selectedColumns;
+	}
+
+	public List<String> getColumnStrings() {
+		return columnStrings;
+	}
+
+	public void setColumnStrings(List<String> columnStrings) {
+		this.columnStrings = columnStrings;
+	}
+
+	public List<String> getSelectedColumnStrings() {
+		return selectedColumnStrings;
+	}
+
+	public void setSelectedColumnStrings(List<String> selectedColumnStrings) {
+		this.selectedColumnStrings = selectedColumnStrings;
+	}
+
 }

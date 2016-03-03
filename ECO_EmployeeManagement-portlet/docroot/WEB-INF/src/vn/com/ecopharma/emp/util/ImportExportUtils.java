@@ -20,7 +20,10 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import vn.com.ecopharma.emp.constant.EmpAdditionalFieds;
+import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.dto.BankInfoObject;
+import vn.com.ecopharma.emp.dto.ColumnItem;
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
 import vn.com.ecopharma.emp.enumeration.EmployeeExportType;
 import vn.com.ecopharma.emp.enumeration.LaborContractType;
@@ -697,6 +700,84 @@ public class ImportExportUtils {
 	public static String getReturnValueFromStringCell(Cell cell) {
 		return isEmptyOrNullStringCell(cell) ? StringUtils.EMPTY : StringUtils
 				.trimToEmpty(cell.getStringCellValue());
+	}
+
+	public static List<ColumnItem> createDefaultColumnItems() {
+		final List<ColumnItem> result = new ArrayList<>();
+		result.add(new ColumnItem(0, "Stt", "STT"));
+		result.add(new ColumnItem(1, EmpField.EMP_CODE, "Mã NV"));
+		result.add(new ColumnItem(2, EmpField.VN_FULL_NAME, "Họ và Tên"));
+		result.add(new ColumnItem(3, EmpField.TITLES, "Chức danh"));
+		result.add(new ColumnItem(4, EmpField.LEVEL, "Cấp bậc"));
+		result.add(new ColumnItem(5, EmpField.PROMOTED_DATE, "Ngày bổ nhiệm"));
+		result.add(new ColumnItem(6, EmpField.UNIT_GROUP, "Nhóm"));
+		result.add(new ColumnItem(7, EmpField.UNIT, "Bộ phận"));
+		result.add(new ColumnItem(8, EmpField.DEPARTMENT, "Phòng"));
+		result.add(new ColumnItem(9, EmpField.DEVISION, "Khối"));
+		result.add(new ColumnItem(10, EmpField.JOINED_DATE, "Ngày vào"));
+		result.add(new ColumnItem(11, EmpField.LABOR_CONTRACT_SIGNED_DATE,
+				"Ngày ký HĐ"));
+		result.add(new ColumnItem(12, EmpField.LABOR_CONTRACT_EXPIRED_DATE,
+				"Ngày kết thúc HĐ"));
+		result.add(new ColumnItem(13, EmpField.LABOR_CONTRACT_TYPE, "Loại HĐLĐ"));
+		result.add(new ColumnItem(14, EmpField.LABOR_CONTRACT_SIGNED_TIME,
+				"Lần ký HĐLĐ"));
+		result.add(new ColumnItem(15, EmpField.BIRTHDAY, "Ngày tháng năm sinh"));
+		result.add(new ColumnItem(16, EmpField.GENDER, "Giới tính"));
+		result.add(new ColumnItem(17, EmpField.PLACE_OF_BIRTH, "Nơi Sinh"));
+		result.add(new ColumnItem(18, EmpField.EDUCATION, "Trình độ học vấn"));
+		result.add(new ColumnItem(19, EmpField.SPECIALIZED, "Chuyên môn"));
+		result.add(new ColumnItem(20, EmpField.UNIVERSITY, "Trường"));
+		result.add(new ColumnItem(21, EmpField.MARITAL_STATUS,
+				"Tình trạng hôn nhân"));
+		result.add(new ColumnItem(22, EmpField.IDENTITY_CARD_NO, "Số CMND"));
+		result.add(new ColumnItem(23, EmpField.ISSUED_DATE, "Ngày cấp"));
+		result.add(new ColumnItem(24, EmpField.ISSUED_PLACE, "Nơi Cấp"));
+		result.add(new ColumnItem(25, EmpField.TITLES, "Địa chỉ Thường trú"));
+		result.add(new ColumnItem(26, EmpField.TITLES, "Địa Chỉ Tạm Trú"));
+		result.add(new ColumnItem(27, EmpField.CONTACT_NUMBER, "Số ĐT Liên lạc"));
+		result.add(new ColumnItem(28, EmpField.PERSONAL_EMAIL_ADDRESS,
+				"Email cá nhân"));
+		result.add(new ColumnItem(29, EmpField.EMAIL, "Email Công ty"));
+		result.add(new ColumnItem(30, EmpField.TAX_CODE, "Mã số Thuế"));
+		result.add(new ColumnItem(31, EmpField.NUMBER_OF_DEPENDENTS,
+				"Số người phụ thuộc"));
+		result.add(new ColumnItem(32, EmpField.DEPENDENT_NAMES,
+				"Tên Người phụ thuộc"));
+		result.add(new ColumnItem(33, EmpField.SOCIAL_INSURANCE_NO,
+				"Số sổ BHXH"));
+		result.add(new ColumnItem(34, EmpField.HEALTH_INSURANCE_NO,
+				"Số Thẻ BHYT"));
+		result.add(new ColumnItem(35, EmpAdditionalFieds.BANK_ACCOUNT_NO1,
+				"Số Tài khoản NH 1"));
+		result.add(new ColumnItem(36, EmpAdditionalFieds.BANK_NAME1,
+				"Tên Ngân Hàng 1"));
+		result.add(new ColumnItem(37, EmpAdditionalFieds.BANK_BRANCH_NAME1,
+				"Tên Chi nhánh Ngân Hàng 1"));
+
+		result.add(new ColumnItem(38, EmpAdditionalFieds.BANK_ACCOUNT_NO2,
+				"Số Tài khoản NH 2"));
+		result.add(new ColumnItem(39, EmpAdditionalFieds.BANK_NAME2,
+				"Tên Ngân Hàng 2"));
+		result.add(new ColumnItem(40, EmpAdditionalFieds.BANK_BRANCH_NAME2,
+				"Tên Chi nhánh Ngân Hàng 2"));
+
+		result.add(new ColumnItem(41, EmpAdditionalFieds.BANK_ACCOUNT_NO3,
+				"Số Tài khoản NH 3"));
+		result.add(new ColumnItem(42, EmpAdditionalFieds.BANK_NAME3,
+				"Tên Ngân Hàng 3"));
+		result.add(new ColumnItem(43, EmpAdditionalFieds.BANK_BRANCH_NAME3,
+				"Tên Chi nhánh Ngân Hàng 3"));
+		result.add(new ColumnItem(44, EmpField.BASE_WAGE_RATES, "Lương căn bản"));
+		result.add(new ColumnItem(45, EmpField.POSITION_WAGE_RATES,
+				"Lương vị trí"));
+		result.add(new ColumnItem(46, EmpField.CAPACITY_SALARY,
+				"Lương năng lực"));
+		result.add(new ColumnItem(47, EmpField.TOTAL_SALARY, "Tổng lương"));
+		result.add(new ColumnItem(48, EmpField.BONUS, "Thưởng thành tích"));
+		result.add(new ColumnItem(49, EmpField.RESIGNED_DATE, "Ngày nghỉ việc"));
+
+		return result;
 	}
 
 }

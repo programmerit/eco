@@ -12,7 +12,6 @@ import vn.com.ecopharma.emp.constant.EmpDisciplineField;
 import vn.com.ecopharma.emp.dto.EmpDisciplineIndexedItem;
 import vn.com.ecopharma.emp.service.EmpDisciplineLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
-import vn.com.ecopharma.emp.util.EmployeeUtils;
 import vn.com.ecopharma.emp.util.SearchEngineUtils;
 
 import com.liferay.portal.kernel.log.Log;
@@ -20,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 
 public class EmpDisciplineIndexLazyDataModel
@@ -42,8 +40,6 @@ public class EmpDisciplineIndexLazyDataModel
 		try {
 			super.bindOrganizationFilterFields(filters,
 					BeanUtils.getDisciplineFilterBean());
-
-			final SearchContext searchContext = getSearchContext();
 
 			final Date effectiveDateFrom = (Date) filters
 					.get(EmpDisciplineField.EFFECTIVE_DATE_FROM);
@@ -81,6 +77,6 @@ public class EmpDisciplineIndexLazyDataModel
 	public EmpDisciplineIndexedItem getRowData(String rowKey) {
 		return new EmpDisciplineIndexedItem(
 				EmpDisciplineLocalServiceUtil.getIndexedDocument(rowKey,
-						EmployeeUtils.getCurrentSearchContext()));
+						searchContext));
 	}
 }

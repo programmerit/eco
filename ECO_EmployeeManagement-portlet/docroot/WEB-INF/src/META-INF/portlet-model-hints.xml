@@ -348,6 +348,7 @@
 		<field name="vacationLeaveId" type="long" />
 		<field name="empId" type="long" />
 		<field name="leaveType" type="String" />
+		<field name="sign" type="String" />
 		<field name="leaveFrom" type="Date" />
 		<field name="leaveTo" type="Date" />
 		<field name="actualTo" type="Date" />

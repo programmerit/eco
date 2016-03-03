@@ -398,6 +398,7 @@ create table eco_em_portlet_VacationLeave (
 	vacationLeaveId LONG not null primary key,
 	empId LONG,
 	leaveType VARCHAR(75) null,
+	sign VARCHAR(75) null,
 	leaveFrom DATE null,
 	leaveTo DATE null,
 	actualTo DATE null,

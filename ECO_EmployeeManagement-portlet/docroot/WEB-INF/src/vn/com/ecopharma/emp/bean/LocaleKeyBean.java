@@ -26,6 +26,7 @@ public class LocaleKeyBean {
 	public String getLeaveTypeKey(String type) {
 		if (StringUtils.EMPTY.equals(type))
 			return StringUtils.EMPTY;
+		type = type.replaceAll(" ", "_");
 		VacationLeaveType typeEnum = VacationLeaveType.valueOf(type);
 		return typeEnum.getLocalizedString();
 	}

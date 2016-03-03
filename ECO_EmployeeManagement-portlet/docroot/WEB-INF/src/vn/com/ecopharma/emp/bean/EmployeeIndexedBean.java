@@ -22,6 +22,7 @@ import vn.com.ecopharma.emp.bean.filter.EmployeeFilterView;
 import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.dm.EmpIndexLazyDataModel;
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
+import vn.com.ecopharma.emp.dto.FilterDTO;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
@@ -37,7 +38,6 @@ import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.util.PortalUtil;
@@ -78,16 +78,6 @@ public class EmployeeIndexedBean implements Serializable {
 	private LazyDataModel<EmpIndexedItem> lazyDataModel;
 	private List<EmpIndexedItem> selectedEmployeeIndexItems;
 
-	private List<EmpIndexedItem> empIndexedItems;
-
-	private transient Map<String, Object> filterMap;
-
-	private String sortField;
-
-	private SortOrder sortOder;
-
-	private List<Query> queries;
-
 	@PostConstruct
 	public void init() {
 		selectedEmployeeIndexItems = new ArrayList<>();
@@ -125,8 +115,14 @@ public class EmployeeIndexedBean implements Serializable {
 							filterBean.getSelectedStatuses());
 				}
 
-				return super.load(first, pageSize, sortField, sortOrder,
-						filters);
+				List<EmpIndexedItem> empIndexedItems = super.load(first,
+						pageSize, sortField, sortOrder, filters);
+
+				BeanUtils.getEmpFilterHolderBean().setEmpFilterDTO(
+						new FilterDTO(sortField, sortOrder, filters, first,
+								pageSize));
+
+				return empIndexedItems;
 			}
 		};
 		createDynamicColumns();
@@ -161,7 +157,7 @@ public class EmployeeIndexedBean implements Serializable {
 		}
 		return filteredItem;
 	}
-
+	
 	public void updateColumns() {
 		final UIComponent table = FacesContext.getCurrentInstance()
 				.getViewRoot().findComponent(":employeesForm:employees");
@@ -269,46 +265,6 @@ public class EmployeeIndexedBean implements Serializable {
 
 	public void setLazyDataModel(LazyDataModel<EmpIndexedItem> lazyDataModel) {
 		this.lazyDataModel = lazyDataModel;
-	}
-
-	public List<EmpIndexedItem> getEmpIndexedItems() {
-		return empIndexedItems;
-	}
-
-	public void setEmpIndexedItems(List<EmpIndexedItem> empIndexedItems) {
-		this.empIndexedItems = empIndexedItems;
-	}
-
-	public Map<String, Object> getFilterMap() {
-		return filterMap;
-	}
-
-	public void setFilterMap(Map<String, Object> filterMap) {
-		this.filterMap = filterMap;
-	}
-
-	public SortOrder getSortOder() {
-		return sortOder;
-	}
-
-	public void setSortOder(SortOrder sortOder) {
-		this.sortOder = sortOder;
-	}
-
-	public String getSortField() {
-		return sortField;
-	}
-
-	public void setSortField(String sortField) {
-		this.sortField = sortField;
-	}
-
-	public List<Query> getQueries() {
-		return queries;
-	}
-
-	public void setQueries(List<Query> queries) {
-		this.queries = queries;
 	}
 
 	public List<ColumnModel> getColumns() {

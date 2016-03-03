@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 
 public class VacationLeaveIndexLazyDataModel
@@ -34,12 +33,10 @@ public class VacationLeaveIndexLazyDataModel
 	@Override
 	public List<VacationLeaveIndexedItem> load(int first, int pageSize,
 			String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+		super.bindOrganizationFilterFields(filters,
+				BeanUtils.getLeaveFilterBean());
 		final List<VacationLeaveIndexedItem> results = new ArrayList<>();
 		try {
-			super.bindOrganizationFilterFields(filters,
-					BeanUtils.getLeaveFilterBean());
-			final SearchContext searchContext = getSearchContext();
-
 			final Sort sort = new Sort(VacationLeaveField.ID, false);
 			final List<Document> documents = VacationLeaveLocalServiceUtil
 					.filterByFields(searchContext, filters, sort,
@@ -63,7 +60,7 @@ public class VacationLeaveIndexLazyDataModel
 	public VacationLeaveIndexedItem getRowData(String rowKey) {
 		return new VacationLeaveIndexedItem(
 				VacationLeaveLocalServiceUtil.getIndexedDocument(
-						Long.valueOf(rowKey), getSearchContext()));
+						Long.valueOf(rowKey), searchContext));
 	}
 
 }

@@ -106,6 +106,21 @@ public interface VacationLeaveModel extends BaseModel<VacationLeave>,
 	public void setLeaveType(String leaveType);
 
 	/**
+	 * Returns the sign of this vacation leave.
+	 *
+	 * @return the sign of this vacation leave
+	 */
+	@AutoEscape
+	public String getSign();
+
+	/**
+	 * Sets the sign of this vacation leave.
+	 *
+	 * @param sign the sign of this vacation leave
+	 */
+	public void setSign(String sign);
+
+	/**
 	 * Returns the leave from of this vacation leave.
 	 *
 	 * @return the leave from of this vacation leave

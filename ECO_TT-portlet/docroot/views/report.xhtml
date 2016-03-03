@@ -10,8 +10,13 @@
 	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
 	<h:head />
 	<h:body>
-
 		<eco:ajaxIndicator />
+		<h:panelGroup rendered="#{mainBean.currentManager}"
+			style="display: inline-block;">
+			<h:outputText
+				value="There are #{mainBean.pendingVacationLeaveRequests.size()} PENDING REQUESTS" />
+		</h:panelGroup>
+
 
 		<h:link outcome="importExport" value="Import/Export " /> | 
 		<h:link outcome="timetracking" value="Detail TimeTracking " />

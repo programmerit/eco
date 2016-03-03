@@ -31,15 +31,29 @@
 							value="#{leaveRequestBean.requestItem.emp.department}" />
 
 						<h:outputText value="Leave Type:" />
-						<p:selectOneMenu id="leaveTypeSelect"
-							value="#{leaveRequestBean.requestItem.leave.leaveType}"
-							label="Leave Type" var="t">
-							<f:selectItems value="#{leaveRequestBean.allTypes}" var="t"
-								itemLabel="#{t}" itemValue="#{t}" />
-							<p:column>
-							#{t}
-						</p:column>
-						</p:selectOneMenu>
+						<h:panelGroup>
+							<p:outputPanel autoUpdate="true">
+								<p:selectOneMenu id="leaveTypeSelect"
+									value="#{leaveRequestBean.requestItem.leave.leaveType}"
+									label="Leave Type" var="t">
+									<p:ajax update="signSelect" />
+									<f:selectItem itemLabel="Leave Type" itemValue="" />
+									<f:selectItems value="#{leaveRequestBean.allTypes}" var="t"
+										itemLabel="#{t}" itemValue="#{t}" />
+									<p:column>#{t}</p:column>
+								</p:selectOneMenu>
+
+								<p:selectOneMenu id="signSelect"
+									value="#{leaveRequestBean.requestItem.leave.sign}" label="Sign"
+									var="s">
+									<f:selectItems value="#{leaveRequestBean.signs}" var="s"
+										itemLabel="#{s}" itemValue="#{s}" />
+									<p:column>#{s}</p:column>
+								</p:selectOneMenu>
+							</p:outputPanel>
+						</h:panelGroup>
+
+
 
 						<h:outputText value="Time:" />
 						<h:panelGroup>

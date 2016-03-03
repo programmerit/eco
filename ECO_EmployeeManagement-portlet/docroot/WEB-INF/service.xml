@@ -714,6 +714,7 @@
 		<!-- Group instance -->
         <column name="empId" type="long"></column>
         <column name="leaveType" type="String"></column>
+        <column name="sign" type="String"></column>
         <column name="leaveFrom" type="Date"></column>
         <column name="leaveTo" type="Date"></column>
         <column name="actualTo" type="Date"></column>

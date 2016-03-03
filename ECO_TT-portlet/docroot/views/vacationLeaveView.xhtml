@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
+	<h:head />
+
+	<h:body>
+		<eco:ajaxIndicator />
+		<p:growl id="growl" showDetail="true" sticky="false" life="4000" />
+		<h:panelGroup id="disciplinePanelGroup">
+			<h:form id="searchForm">
+				<h:link value="Show/Hide filter" styleClass="label"
+					onmouseover="toggle('#{requestScope.filterGrid.clientId}'); return false;"
+					onclick="toggle('#{requestScope.filterGrid.clientId}'); return false;" />
+
+				<h:panelGroup binding="#{requestScope.filterGrid}" id="filterGroup"
+					style="display: none;">
+					<p:panelGrid id="filterGrid" columns="1" styleClass="filter-grid"
+						style="margin-bottom: 7px!important; color: black!important;">
+						<h:panelGroup>
+							<eco:baseEmpFilterPanel empBean="#{leaveFilterBean}"
+								onCompleteUpdate="PF('leaveTable').filter();" />
+						</h:panelGroup>
+					</p:panelGrid>
+
+				</h:panelGroup>
+			</h:form>
+
+			<h:form id="leaveViewForm">
+
+				<p:link ajax="true" value="Back" outcome="view"
+					rendered="#{employeeModelPermission.checkPermission('VIEW')}" />
+
+				<p:commandLink value="Index All"
+					actionListener="#{leaveViewBean.onIndexAll}" /> | 
+				<p:commandLink value="Remove All Index"
+					actionListener="#{leaveViewBean.onRemoveAllIndex}" />
+					|
+				<p:commandLink value="Re-Update Discipline Employee"
+					actionListener="#{leaveViewBean.reUpdateEmp}" />
+
+				<p:dataTable id="leaves" var="l" widgetVar="leaveTable"
+					value="#{leaveViewBean.lazyDataModel}"
+					paginatorAlwaysVisible="true" paginator="true" rows="25"
+					paginatorPosition="bottom"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,25,50" lazy="true" selectionMode="single"
+					selection="#{leaveViewBean.selectedItem}" rowKey="#{l.id}"
+					emptyMessage="No records found" editable="true">
+					<p:ajax event="rowEdit" listener="#{leaveViewBean.onRowEdit}"
+						update=":growl" />
+					<p:ajax event="rowEditCancel"
+						listener="#{leaveViewBean.onRowEditCancel}" update=":growl" />
+
+					<p:column headerText="Employee Code">
+						<h:outputText value="#{l.employeeCode}" />
+					</p:column>
+
+					<p:column headerText="Employee Name">
+						<h:outputText value="#{l.fullNameVi}" />
+					</p:column>
+
+					<p:column headerText="Titles">
+						<h:outputText value="#{l.titles}" />
+					</p:column>
+
+					<p:column headerText="Leave Type">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText
+									value="#{i18n[localeKeyBean.getLeaveTypeKey(l.type)]}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu id="leaveTypeSelect" required="true"
+									requiredMessage="Leave Type required" value="#{l.type}" var="t">
+									<f:selectItem itemLabel="Select Leave Type" itemValue="" />
+									<f:selectItems value="#{leaveViewBean.leaveTypes}" var="t"
+										itemLabel="#{i18n[localeKeyBean.getLeaveTypeKey(t)]}"
+										itemValue="#{t}">
+										<p:column>#{localeKeyBean.getLeaveTypeKey(t)}</p:column>
+									</f:selectItems>
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Leave Type">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{l.sign}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu id="signSelect" required="true"
+									requiredMessage="Leave Type required" value="#{l.type}" var="t">
+									<f:selectItem itemLabel="Select Leave Type" itemValue="" />
+									<f:selectItems value="#{leaveViewBean.leaveTypes}" var="t"
+										itemLabel="#{i18n[localeKeyBean.getLeaveTypeKey(t)]}"
+										itemValue="#{t}">
+										<p:column>#{localeKeyBean.getLeaveTypeKey(t)}</p:column>
+									</f:selectItems>
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Leave From">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{l.leaveFromString}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar value="#{l.leaveFrom}" pattern="dd/MM/yyyy" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Leave To">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{l.leaveToString}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar value="#{l.leaveTo}" pattern="dd/MM/yyyy" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Actual Leave To">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{l.actualToString}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar value="#{l.actualTo}" pattern="dd/MM/yyyy" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Reason">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{l.reason}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{l.reason}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Description">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{l.description}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{l.description}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column style="width:32px">
+						<p:rowEditor />
+					</p:column>
+					<f:facet name="footer">
+		        		In total there are of <h:outputText id="totalFilteredCount"
+							value="#{leaveViewBean.lazyDataModel.rowCount}" /> employees.
+		   			 </f:facet>
+				</p:dataTable>
+			</h:form>
+		</h:panelGroup>
+
+	</h:body>
+	<script type="text/javascript">
+		function toggle(id) {
+			var element = document.getElementById(id);
+			if (element.style.display == 'block') {
+				element.style.display = 'none';
+			} else {
+				element.style.display = 'block'
+			}
+		}
+	</script>
+	<style type="text/css">
+.ui-panelgrid tbody tr td {
+	border: none !important;
+}
+</style>
+</f:view>
+
+

@@ -12,12 +12,18 @@
 	<h:body>
 		<eco:ajaxIndicator />
 
-		MAIN BEAN
+		<p:link outcome="report" value="Report" /> | 
+		
+		<p:link outcome="timetracking" value="Detail TimeTracking" /> | 
+		
+		<p:link outcome="vacationLeaveView" value="View All Leaves" />
 
-		<h:panelGroup rendered="#{mainBean.currentManager}">
+		<h:panelGroup rendered="#{mainBean.currentManager}"
+			style="display: block;">
 			<h:outputText
-				value="There are #{mainBean.pendingVacationLeaveRequests.size()} PENDING REQUESTS" />
+				value="You have #{mainBean.pendingVacationLeaveRequests.size()} PENDING REQUESTS" />
 		</h:panelGroup>
+
 
 	</h:body>
 </f:view>

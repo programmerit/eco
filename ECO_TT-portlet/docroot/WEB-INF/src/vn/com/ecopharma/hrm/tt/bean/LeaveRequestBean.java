@@ -1,12 +1,15 @@
 package vn.com.ecopharma.hrm.tt.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
+
+import org.apache.commons.lang3.StringUtils;
 
 import vn.com.ecopharma.emp.model.VacationLeave;
 import vn.com.ecopharma.emp.service.VacationLeaveLocalServiceUtil;
@@ -67,6 +70,21 @@ public class LeaveRequestBean implements Serializable {
 
 	public List<String> getAllTypes() {
 		return VacationLeaveType.getAll();
+	}
+
+	public List<String> getSigns() {
+		if (requestItem.getLeave() == null)
+			return new ArrayList<>();
+
+		if (requestItem.getLeave().getLeaveType() == null
+				|| requestItem.getLeave().getLeaveType()
+						.equalsIgnoreCase(StringUtils.EMPTY))
+			return new ArrayList<>();
+
+		VacationLeaveType leaveType = VacationLeaveType.valueOf(requestItem
+				.getLeave().getLeaveType());
+
+		return leaveType.getSigns();
 	}
 
 	public EmpLeaveRequestItem getRequestItem() {

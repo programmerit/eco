@@ -38,7 +38,7 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{vacationLeaveId=");
 		sb.append(vacationLeaveId);
@@ -46,6 +46,8 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 		sb.append(empId);
 		sb.append(", leaveType=");
 		sb.append(leaveType);
+		sb.append(", sign=");
+		sb.append(sign);
 		sb.append(", leaveFrom=");
 		sb.append(leaveFrom);
 		sb.append(", leaveTo=");
@@ -91,6 +93,13 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 		}
 		else {
 			vacationLeaveImpl.setLeaveType(leaveType);
+		}
+
+		if (sign == null) {
+			vacationLeaveImpl.setSign(StringPool.BLANK);
+		}
+		else {
+			vacationLeaveImpl.setSign(sign);
 		}
 
 		if (leaveFrom == Long.MIN_VALUE) {
@@ -174,6 +183,7 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 		vacationLeaveId = objectInput.readLong();
 		empId = objectInput.readLong();
 		leaveType = objectInput.readUTF();
+		sign = objectInput.readUTF();
 		leaveFrom = objectInput.readLong();
 		leaveTo = objectInput.readLong();
 		actualTo = objectInput.readLong();
@@ -201,6 +211,13 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 		}
 		else {
 			objectOutput.writeUTF(leaveType);
+		}
+
+		if (sign == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(sign);
 		}
 
 		objectOutput.writeLong(leaveFrom);
@@ -248,6 +265,7 @@ public class VacationLeaveCacheModel implements CacheModel<VacationLeave>,
 	public long vacationLeaveId;
 	public long empId;
 	public String leaveType;
+	public String sign;
 	public long leaveFrom;
 	public long leaveTo;
 	public long actualTo;

@@ -1436,6 +1436,7 @@ public class VacationLeavePersistenceImpl extends BasePersistenceImpl<VacationLe
 		vacationLeaveImpl.setVacationLeaveId(vacationLeave.getVacationLeaveId());
 		vacationLeaveImpl.setEmpId(vacationLeave.getEmpId());
 		vacationLeaveImpl.setLeaveType(vacationLeave.getLeaveType());
+		vacationLeaveImpl.setSign(vacationLeave.getSign());
 		vacationLeaveImpl.setLeaveFrom(vacationLeave.getLeaveFrom());
 		vacationLeaveImpl.setLeaveTo(vacationLeave.getLeaveTo());
 		vacationLeaveImpl.setActualTo(vacationLeave.getActualTo());

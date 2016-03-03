@@ -9,8 +9,6 @@ import vn.com.ecopharma.emp.bean.filter.OrganizationFilterBean;
 import vn.com.ecopharma.emp.dto.AbstractIndexedItem;
 import vn.com.ecopharma.emp.util.FilterUtils;
 
-import com.liferay.portal.kernel.search.ParseException;
-
 public abstract class AbstractBaseOrganizationLazyDataModel<T extends AbstractIndexedItem, S extends OrganizationFilterBean>
 		extends AbstractIndexedLazyDataModel<T> {
 

@@ -69,6 +69,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 			{ "vacationLeaveId", Types.BIGINT },
 			{ "empId", Types.BIGINT },
 			{ "leaveType", Types.VARCHAR },
+			{ "sign", Types.VARCHAR },
 			{ "leaveFrom", Types.TIMESTAMP },
 			{ "leaveTo", Types.TIMESTAMP },
 			{ "actualTo", Types.TIMESTAMP },
@@ -84,7 +85,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 			{ "deleted", Types.BOOLEAN },
 			{ "status", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_VacationLeave (vacationLeaveId LONG not null primary key,empId LONG,leaveType VARCHAR(75) null,leaveFrom DATE null,leaveTo DATE null,actualTo DATE null,numberOfHours INTEGER,reason VARCHAR(75) null,description VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,deleted BOOLEAN,status VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_VacationLeave (vacationLeaveId LONG not null primary key,empId LONG,leaveType VARCHAR(75) null,sign VARCHAR(75) null,leaveFrom DATE null,leaveTo DATE null,actualTo DATE null,numberOfHours INTEGER,reason VARCHAR(75) null,description VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,deleted BOOLEAN,status VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table eco_em_portlet_VacationLeave";
 	public static final String ORDER_BY_JPQL = " ORDER BY vacationLeave.vacationLeaveId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_em_portlet_VacationLeave.vacationLeaveId ASC";
@@ -120,6 +121,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		model.setVacationLeaveId(soapModel.getVacationLeaveId());
 		model.setEmpId(soapModel.getEmpId());
 		model.setLeaveType(soapModel.getLeaveType());
+		model.setSign(soapModel.getSign());
 		model.setLeaveFrom(soapModel.getLeaveFrom());
 		model.setLeaveTo(soapModel.getLeaveTo());
 		model.setActualTo(soapModel.getActualTo());
@@ -201,6 +203,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		attributes.put("vacationLeaveId", getVacationLeaveId());
 		attributes.put("empId", getEmpId());
 		attributes.put("leaveType", getLeaveType());
+		attributes.put("sign", getSign());
 		attributes.put("leaveFrom", getLeaveFrom());
 		attributes.put("leaveTo", getLeaveTo());
 		attributes.put("actualTo", getActualTo());
@@ -237,6 +240,12 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 
 		if (leaveType != null) {
 			setLeaveType(leaveType);
+		}
+
+		String sign = (String)attributes.get("sign");
+
+		if (sign != null) {
+			setSign(sign);
 		}
 
 		Date leaveFrom = (Date)attributes.get("leaveFrom");
@@ -382,6 +391,22 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 
 	public String getOriginalLeaveType() {
 		return GetterUtil.getString(_originalLeaveType);
+	}
+
+	@JSON
+	@Override
+	public String getSign() {
+		if (_sign == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _sign;
+		}
+	}
+
+	@Override
+	public void setSign(String sign) {
+		_sign = sign;
 	}
 
 	@JSON
@@ -607,6 +632,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		vacationLeaveImpl.setVacationLeaveId(getVacationLeaveId());
 		vacationLeaveImpl.setEmpId(getEmpId());
 		vacationLeaveImpl.setLeaveType(getLeaveType());
+		vacationLeaveImpl.setSign(getSign());
 		vacationLeaveImpl.setLeaveFrom(getLeaveFrom());
 		vacationLeaveImpl.setLeaveTo(getLeaveTo());
 		vacationLeaveImpl.setActualTo(getActualTo());
@@ -696,6 +722,14 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 
 		if ((leaveType != null) && (leaveType.length() == 0)) {
 			vacationLeaveCacheModel.leaveType = null;
+		}
+
+		vacationLeaveCacheModel.sign = getSign();
+
+		String sign = vacationLeaveCacheModel.sign;
+
+		if ((sign != null) && (sign.length() == 0)) {
+			vacationLeaveCacheModel.sign = null;
 		}
 
 		Date leaveFrom = getLeaveFrom();
@@ -790,7 +824,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{vacationLeaveId=");
 		sb.append(getVacationLeaveId());
@@ -798,6 +832,8 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		sb.append(getEmpId());
 		sb.append(", leaveType=");
 		sb.append(getLeaveType());
+		sb.append(", sign=");
+		sb.append(getSign());
 		sb.append(", leaveFrom=");
 		sb.append(getLeaveFrom());
 		sb.append(", leaveTo=");
@@ -833,7 +869,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.VacationLeave");
@@ -850,6 +886,10 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 		sb.append(
 			"<column><column-name>leaveType</column-name><column-value><![CDATA[");
 		sb.append(getLeaveType());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>sign</column-name><column-value><![CDATA[");
+		sb.append(getSign());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>leaveFrom</column-name><column-value><![CDATA[");
@@ -923,6 +963,7 @@ public class VacationLeaveModelImpl extends BaseModelImpl<VacationLeave>
 	private boolean _setOriginalEmpId;
 	private String _leaveType;
 	private String _originalLeaveType;
+	private String _sign;
 	private Date _leaveFrom;
 	private Date _leaveTo;
 	private Date _actualTo;

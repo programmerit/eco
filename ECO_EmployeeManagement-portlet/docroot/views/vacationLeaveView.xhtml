@@ -90,6 +90,25 @@
 						</p:cellEditor>
 					</p:column>
 
+					<p:column headerText="Leave Type">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{l.sign}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu id="leaveTypeSelect" required="true"
+									requiredMessage="Leave Type required" value="#{l.type}" var="t">
+									<f:selectItem itemLabel="Select Leave Type" itemValue="" />
+									<f:selectItems value="#{leaveViewBean.leaveTypes}" var="t"
+										itemLabel="#{i18n[localeKeyBean.getLeaveTypeKey(t)]}"
+										itemValue="#{t}">
+										<p:column>#{localeKeyBean.getLeaveTypeKey(t)}</p:column>
+									</f:selectItems>
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
 					<p:column headerText="Leave From">
 						<p:cellEditor>
 							<f:facet name="output">

@@ -332,17 +332,15 @@ public class VacationLeaveLocalServiceImpl extends
 			final Query leaveByDepartmentQuery = empLocalService
 					.createStringListQuery(EmpField.DEPARTMENT,
 							departmentNames, searchContext);
-
-			// final BooleanQuery pendingRequestQuery = BooleanQueryFactoryUtil
-			// .create(searchContext);
-			// pendingRequestQuery.addExactTerm(VacationLeaveField.STATUS,
-			// empLocalService
-			// .removeDashChar(VacationLeaveStatus.PENDING_REQUEST
-			// .toString()));
-
-			// add to list
 			queries.add(leaveByDepartmentQuery);
-			// queries.add(pendingRequestQuery);
+
+			final BooleanQuery pendingRequestQuery = BooleanQueryFactoryUtil
+					.create(searchContext);
+			pendingRequestQuery.addExactTerm(VacationLeaveField.STATUS,
+					empLocalService
+							.removeDashChar(VacationLeaveStatus.PENDING_REQUEST
+									.toString()));
+			queries.add(pendingRequestQuery);
 
 			return searchAllUnDeletedDocuments(searchContext, queries,
 					companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);

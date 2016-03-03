@@ -6,6 +6,7 @@ import javax.faces.context.FacesContext;
 import vn.com.ecopharma.hrm.tt.bean.LeaveRequestBean;
 import vn.com.ecopharma.hrm.tt.bean.OrganizationFilterBean;
 import vn.com.ecopharma.hrm.tt.bean.TimeTrackingFilterBean;
+import vn.com.ecopharma.hrm.tt.bean.filter.VacationLeaveFilterBean;
 
 public class BeanUtils {
 
@@ -14,6 +15,8 @@ public class BeanUtils {
 	private static final String ORGANIZATION_FILTER_BEAN = "organizationFilterBean";
 
 	private static final String LEAVE_REQUEST_BEAN = "leaveRequestBean";
+
+	private static final String VACATION_LEAVE_FILTER_BEAN = "leaveFilterBean";
 
 	/**
 	 * @param name
@@ -35,6 +38,10 @@ public class BeanUtils {
 
 	public static LeaveRequestBean getLeaveRequestBean() {
 		return (LeaveRequestBean) getBackingBeanByName(LEAVE_REQUEST_BEAN);
+	}
+
+	public static VacationLeaveFilterBean getLeaveFilterBean() {
+		return (VacationLeaveFilterBean) getBackingBeanByName(VACATION_LEAVE_FILTER_BEAN);
 	}
 
 }
