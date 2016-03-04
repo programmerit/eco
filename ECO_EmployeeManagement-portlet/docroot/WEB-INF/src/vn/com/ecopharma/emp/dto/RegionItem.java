@@ -1,11 +1,18 @@
 package vn.com.ecopharma.emp.dto;
 
+import java.io.Serializable;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Region;
 import com.liferay.portal.service.RegionServiceUtil;
 
-public class RegionItem implements Comparable<RegionItem> {
+public class RegionItem implements Comparable<RegionItem>, Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private Region region;
 
@@ -49,6 +56,14 @@ public class RegionItem implements Comparable<RegionItem> {
 	@Override
 	public int compareTo(RegionItem o) {
 		return this.index - o.index;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof RegionItem))
+			return false;
+		RegionItem that = (RegionItem) obj;
+		return this.region.getRegionId() == that.getRegion().getRegionId();
 	}
 
 }

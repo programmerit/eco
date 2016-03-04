@@ -281,6 +281,19 @@ public interface VacationLeaveLocalService extends BaseLocalService,
 	public vn.com.ecopharma.emp.model.VacationLeave addVacationLeave(
 		long empId, vn.com.ecopharma.emp.model.VacationLeave leave);
 
+	public vn.com.ecopharma.emp.model.VacationLeave updateVacationLeave(
+		long id, java.lang.String leaveType, java.lang.String sign,
+		java.util.Date leaveFrom, java.util.Date leaveTo,
+		java.util.Date actualLeaveTo, java.lang.String reason,
+		java.lang.String description, java.lang.String status);
+
+	public vn.com.ecopharma.emp.model.VacationLeave setManagerApproval(
+		long leaveId, com.liferay.portal.service.ServiceContext serviceContext);
+
+	public vn.com.ecopharma.emp.model.VacationLeave setManagerApproval(
+		vn.com.ecopharma.emp.model.VacationLeave vacationLeave,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
 	public int countAllUnDeletedDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
@@ -308,6 +321,17 @@ public interface VacationLeaveLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.search.Document> searchPendingRequestsOfManager(
 		long managerId,
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.kernel.search.Document> searchByStatuses(
+		java.util.List<java.lang.String> statuses,
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.kernel.search.Document> searchManagerApprovalList(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		long companyId);
 

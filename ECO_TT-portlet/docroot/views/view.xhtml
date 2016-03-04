@@ -11,17 +11,40 @@
 	<h:head />
 	<h:body>
 		<eco:ajaxIndicator />
-
-		<p:link outcome="report" value="Report" /> | 
+		<h:form id="mainForm">
+			<p:link outcome="report" value="Report" /> | 
 		
-		<p:link outcome="timetracking" value="Detail TimeTracking" /> | 
-		
-		<p:link outcome="vacationLeaveView" value="View All Leaves" />
+			<p:link outcome="timetracking" value="Detail TimeTracking" /> | 
+			
+			<p:link outcome="vacationLeaveView" value="View All Leaves"
+				rendered="#{mainBean.hr}" /> |
 
-		<h:panelGroup rendered="#{mainBean.currentManager}"
-			style="display: block;">
-			<h:outputText
-				value="You have #{mainBean.pendingVacationLeaveRequests.size()} PENDING REQUESTS" />
+
+			<p:commandLink value="Request Leave"
+				actionListener="#{mainBean.onRequestLeave}"
+				update=":includedDialogPanelGroup"
+				oncomplete="PF('wLeaveRequestDialog').show();" />
+
+
+			<h:panelGroup rendered="#{mainBean.currentManager}"
+				style="display: block;">
+				<h:outputText value="You have " />
+				<p:link
+					value="#{mainBean.managerPendingVacationLeaveRequests} PENDING REQUESTS"
+					outcome="managerPendingRequestView" />
+			</h:panelGroup>
+
+			<h:panelGroup rendered="#{mainBean.currentManager}"
+				style="display: block;">
+				<h:outputText value="HR you have " />
+				<p:link
+					value="#{mainBean.hrPendingVacationLeaveRequests} PENDING REQUESTS"
+					outcome="hrPendingRequestView" />
+			</h:panelGroup>
+		</h:form>
+		<!-- Dialog -->
+		<h:panelGroup id="includedDialogPanelGroup">
+			<ui:include src="#{mainBean.includedDialog}" />
 		</h:panelGroup>
 
 

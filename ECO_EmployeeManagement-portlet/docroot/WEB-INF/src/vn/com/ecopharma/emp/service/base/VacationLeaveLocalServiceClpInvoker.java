@@ -156,69 +156,109 @@ public class VacationLeaveLocalServiceClpInvoker {
 				"long", "vn.com.ecopharma.emp.model.VacationLeave"
 			};
 
-		_methodName193 = "countAllUnDeletedDocuments";
+		_methodName193 = "updateVacationLeave";
 
 		_methodParameterTypes193 = new String[] {
+				"long", "java.lang.String", "java.lang.String", "java.util.Date",
+				"java.util.Date", "java.util.Date", "java.lang.String",
+				"java.lang.String", "java.lang.String"
+			};
+
+		_methodName194 = "updateVacationLeave";
+
+		_methodParameterTypes194 = new String[] {
+				"vn.com.ecopharma.emp.model.VacationLeave"
+			};
+
+		_methodName195 = "setManagerApproval";
+
+		_methodParameterTypes195 = new String[] {
+				"long", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName196 = "setManagerApproval";
+
+		_methodParameterTypes196 = new String[] {
+				"vn.com.ecopharma.emp.model.VacationLeave",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName197 = "countAllUnDeletedDocuments";
+
+		_methodParameterTypes197 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort"
 			};
 
-		_methodName194 = "searchAllUnDeletedDocuments";
+		_methodName198 = "searchAllUnDeletedDocuments";
 
-		_methodParameterTypes194 = new String[] {
+		_methodParameterTypes198 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName195 = "filterByFields";
+		_methodName199 = "filterByFields";
 
-		_methodParameterTypes195 = new String[] {
+		_methodParameterTypes199 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long",
 				"int", "int"
 			};
 
-		_methodName196 = "countFilterByFields";
+		_methodName200 = "countFilterByFields";
 
-		_methodParameterTypes196 = new String[] {
+		_methodParameterTypes200 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long"
 			};
 
-		_methodName197 = "searchPendingRequestsOfManager";
+		_methodName201 = "searchPendingRequestsOfManager";
 
-		_methodParameterTypes197 = new String[] {
+		_methodParameterTypes201 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 
-		_methodName198 = "reindexAll";
+		_methodName202 = "searchByStatuses";
 
-		_methodParameterTypes198 = new String[] {  };
-
-		_methodName199 = "removeAllIndexes";
-
-		_methodParameterTypes199 = new String[] {
+		_methodParameterTypes202 = new String[] {
+				"java.util.List",
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 
-		_methodName200 = "getIndexedDocument";
+		_methodName203 = "searchManagerApprovalList";
 
-		_methodParameterTypes200 = new String[] {
+		_methodParameterTypes203 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext", "long"
+			};
+
+		_methodName204 = "reindexAll";
+
+		_methodParameterTypes204 = new String[] {  };
+
+		_methodName205 = "removeAllIndexes";
+
+		_methodParameterTypes205 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext", "long"
+			};
+
+		_methodName206 = "getIndexedDocument";
+
+		_methodParameterTypes206 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName201 = "getIndexedDocument";
+		_methodName207 = "getIndexedDocument";
 
-		_methodParameterTypes201 = new String[] {
+		_methodParameterTypes207 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName202 = "indexAll";
+		_methodName208 = "indexAll";
 
-		_methodParameterTypes202 = new String[] {  };
+		_methodParameterTypes208 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -373,14 +413,40 @@ public class VacationLeaveLocalServiceClpInvoker {
 
 		if (_methodName193.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes193, parameterTypes)) {
+			return VacationLeaveLocalServiceUtil.updateVacationLeave(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				(java.util.Date)arguments[3], (java.util.Date)arguments[4],
+				(java.util.Date)arguments[5], (java.lang.String)arguments[6],
+				(java.lang.String)arguments[7], (java.lang.String)arguments[8]);
+		}
+
+		if (_methodName194.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes194, parameterTypes)) {
+			return VacationLeaveLocalServiceUtil.updateVacationLeave((vn.com.ecopharma.emp.model.VacationLeave)arguments[0]);
+		}
+
+		if (_methodName195.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes195, parameterTypes)) {
+			return VacationLeaveLocalServiceUtil.setManagerApproval(((Long)arguments[0]).longValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[1]);
+		}
+
+		if (_methodName196.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes196, parameterTypes)) {
+			return VacationLeaveLocalServiceUtil.setManagerApproval((vn.com.ecopharma.emp.model.VacationLeave)arguments[0],
+				(com.liferay.portal.service.ServiceContext)arguments[1]);
+		}
+
+		if (_methodName197.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes197, parameterTypes)) {
 			return VacationLeaveLocalServiceUtil.countAllUnDeletedDocuments((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
 				((Long)arguments[2]).longValue(),
 				(com.liferay.portal.kernel.search.Sort)arguments[3]);
 		}
 
-		if (_methodName194.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes194, parameterTypes)) {
+		if (_methodName198.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes198, parameterTypes)) {
 			return VacationLeaveLocalServiceUtil.searchAllUnDeletedDocuments((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -389,8 +455,8 @@ public class VacationLeaveLocalServiceClpInvoker {
 				((Integer)arguments[5]).intValue());
 		}
 
-		if (_methodName195.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes195, parameterTypes)) {
+		if (_methodName199.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes199, parameterTypes)) {
 			return VacationLeaveLocalServiceUtil.filterByFields((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.Map<java.lang.String, java.lang.Object>)arguments[1],
 				(com.liferay.portal.kernel.search.Sort)arguments[2],
@@ -399,50 +465,63 @@ public class VacationLeaveLocalServiceClpInvoker {
 				((Integer)arguments[5]).intValue());
 		}
 
-		if (_methodName196.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes196, parameterTypes)) {
+		if (_methodName200.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes200, parameterTypes)) {
 			return VacationLeaveLocalServiceUtil.countFilterByFields((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.Map<java.lang.String, java.lang.Object>)arguments[1],
 				(com.liferay.portal.kernel.search.Sort)arguments[2],
 				((Long)arguments[3]).longValue());
 		}
 
-		if (_methodName197.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes197, parameterTypes)) {
+		if (_methodName201.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes201, parameterTypes)) {
 			return VacationLeaveLocalServiceUtil.searchPendingRequestsOfManager(((Long)arguments[0]).longValue(),
 				(com.liferay.portal.kernel.search.SearchContext)arguments[1],
 				((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName198.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes198, parameterTypes)) {
+		if (_methodName202.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes202, parameterTypes)) {
+			return VacationLeaveLocalServiceUtil.searchByStatuses((java.util.List<java.lang.String>)arguments[0],
+				(com.liferay.portal.kernel.search.SearchContext)arguments[1],
+				((Long)arguments[2]).longValue());
+		}
+
+		if (_methodName203.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes203, parameterTypes)) {
+			return VacationLeaveLocalServiceUtil.searchManagerApprovalList((com.liferay.portal.kernel.search.SearchContext)arguments[0],
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName204.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes204, parameterTypes)) {
 			VacationLeaveLocalServiceUtil.reindexAll();
 
 			return null;
 		}
 
-		if (_methodName199.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes199, parameterTypes)) {
+		if (_methodName205.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes205, parameterTypes)) {
 			VacationLeaveLocalServiceUtil.removeAllIndexes((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				((Long)arguments[1]).longValue());
 
 			return null;
 		}
 
-		if (_methodName200.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes200, parameterTypes)) {
+		if (_methodName206.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes206, parameterTypes)) {
 			return VacationLeaveLocalServiceUtil.getIndexedDocument((java.lang.String)arguments[0],
 				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
 		}
 
-		if (_methodName201.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes201, parameterTypes)) {
+		if (_methodName207.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes207, parameterTypes)) {
 			return VacationLeaveLocalServiceUtil.getIndexedDocument(((Long)arguments[0]).longValue(),
 				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
 		}
 
-		if (_methodName202.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes202, parameterTypes)) {
+		if (_methodName208.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes208, parameterTypes)) {
 			VacationLeaveLocalServiceUtil.indexAll();
 
 			return null;
@@ -521,4 +600,16 @@ public class VacationLeaveLocalServiceClpInvoker {
 	private String[] _methodParameterTypes201;
 	private String _methodName202;
 	private String[] _methodParameterTypes202;
+	private String _methodName203;
+	private String[] _methodParameterTypes203;
+	private String _methodName204;
+	private String[] _methodParameterTypes204;
+	private String _methodName205;
+	private String[] _methodParameterTypes205;
+	private String _methodName206;
+	private String[] _methodParameterTypes206;
+	private String _methodName207;
+	private String[] _methodParameterTypes207;
+	private String _methodName208;
+	private String[] _methodParameterTypes208;
 }

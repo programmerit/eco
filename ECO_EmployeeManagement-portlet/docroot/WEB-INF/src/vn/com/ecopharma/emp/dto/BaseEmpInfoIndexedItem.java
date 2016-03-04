@@ -31,6 +31,10 @@ public abstract class BaseEmpInfoIndexedItem extends AbstractIndexedItem {
 		return checkNullFieldAndReturnEmptyString(EmpField.VN_FULL_NAME);
 	}
 
+	public String getEmail() {
+		return checkNullFieldAndReturnEmptyString(EmpField.EMAIL);
+	}
+
 	public long getDevisionId() {
 		return checkNullFieldAndReturnLongValue(EmpField.DEVISION_ID);
 	}

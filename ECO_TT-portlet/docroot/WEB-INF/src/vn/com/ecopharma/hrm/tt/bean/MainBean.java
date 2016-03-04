@@ -1,9 +1,5 @@
 package vn.com.ecopharma.hrm.tt.bean;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -12,15 +8,16 @@ import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpOrgRelationshipLocalServiceUtil;
 import vn.com.ecopharma.emp.service.VacationLeaveLocalServiceUtil;
-import vn.com.ecopharma.hrm.tt.dto.VacationLeaveIndexedItem;
+import vn.com.ecopharma.hrm.tt.dto.EmpIndexedItem;
+import vn.com.ecopharma.hrm.tt.dto.EmpLeaveRequestItem;
+import vn.com.ecopharma.hrm.tt.utils.BeanUtils;
 import vn.com.ecopharma.hrm.tt.utils.TTUtils;
 
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.service.ServiceContext;
 
 @ManagedBean
 @ViewScoped
-public class MainBean implements Serializable {
+public class MainBean extends BaseDialogBean {
 
 	/**
 	 * 
@@ -32,28 +29,53 @@ public class MainBean implements Serializable {
 
 	}
 
+	public void onRequestLeave() {
+		long requestUserId = TTUtils.getServiceContext().getUserId();
+		Emp emp = EmpLocalServiceUtil.findByUser(requestUserId);
+		if (emp != null) {
+			EmpIndexedItem empIndexedItem = new EmpIndexedItem(
+					EmpLocalServiceUtil.getIndexedEmp(emp.getEmpId(),
+							getSearchContext()));
+			if (empIndexedItem != null) {
+				LeaveRequestBean requestBean = BeanUtils.getLeaveRequestBean();
+				requestBean.setRequestItem(new EmpLeaveRequestItem(
+						empIndexedItem));
+				setIncludedDialog("/views/dialogs/leaveRequestDialog.xhtml");
+			}
+		}
+
+	}
+
 	public boolean isCurrentManager() {
 		long currentUserId = TTUtils.getServiceContext().getUserId();
 		return EmpOrgRelationshipLocalServiceUtil
 				.isHeadOfAtLeastOneDepartment(currentUserId);
 	}
 
-	public List<VacationLeaveIndexedItem> getPendingVacationLeaveRequests() {
-		final List<VacationLeaveIndexedItem> result = new ArrayList<>();
+	public boolean isHr() {
+		return BeanUtils.getEmployeeModelPermission().isHrPermission();
+	}
+
+	public int getManagerPendingVacationLeaveRequests() {
+		ServiceContext serviceContext = TTUtils.getServiceContext();
 		if (isCurrentManager()) {
-			ServiceContext serviceContext = TTUtils.getServiceContext();
 			long currentUserId = serviceContext.getUserId();
 			Emp emp = EmpLocalServiceUtil.findByUser(currentUserId);
-			List<Document> pendingRequests = VacationLeaveLocalServiceUtil
+			return VacationLeaveLocalServiceUtil
 					.searchPendingRequestsOfManager(emp.getEmpId(),
 							TTUtils.getCurrentSearchContext(),
-							serviceContext.getCompanyId());
-
-			for (Document r : pendingRequests) {
-				result.add(new VacationLeaveIndexedItem(r));
-			}
+							serviceContext.getCompanyId()).size();
 		}
-		return result;
+		return 0;
+	}
+
+	public int getHrPendingVacationLeaveRequests() {
+		ServiceContext serviceContext = TTUtils.getServiceContext();
+		if (isHr()) {
+			return VacationLeaveLocalServiceUtil.searchManagerApprovalList(
+					getSearchContext(), serviceContext.getCompanyId()).size();
+		}
+		return 0;
 	}
 
 }

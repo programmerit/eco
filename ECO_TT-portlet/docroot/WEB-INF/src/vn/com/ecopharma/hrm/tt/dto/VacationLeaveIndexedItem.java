@@ -27,15 +27,20 @@ public class VacationLeaveIndexedItem extends BaseEmpInfoIndexedItem {
 
 	private String description;
 
+	private String status;
+
 	public VacationLeaveIndexedItem(Document document) {
 		super(document);
 		this.type = checkNullFieldAndReturnEmptyString(VacationLeaveField.LEAVE_TYPE);
+		this.type = this.type.replaceAll(" ", "_");
 		this.sign = checkNullFieldAndReturnEmptyString(VacationLeaveField.SIGN);
 		this.leaveFrom = checkNullFieldAndReturnNullDate(VacationLeaveField.LEAVE_FROM);
 		this.leaveTo = checkNullFieldAndReturnNullDate(VacationLeaveField.LEAVE_TO);
 		this.actualTo = checkNullFieldAndReturnNullDate(VacationLeaveField.ACTUAL_TO);
 		this.reason = checkNullFieldAndReturnEmptyString(VacationLeaveField.REASON);
 		this.description = checkNullFieldAndReturnEmptyString(VacationLeaveField.DESCRIPTION);
+		this.status = checkNullFieldAndReturnEmptyString(VacationLeaveField.STATUS);
+		this.status = this.status.replaceAll(" ", "_");
 	}
 
 	@Override
@@ -95,6 +100,14 @@ public class VacationLeaveIndexedItem extends BaseEmpInfoIndexedItem {
 		return getParseDateString(actualTo);
 	}
 
+	public String getLeaveFromDayMonthString() {
+		return getParseDateDayMonthString(leaveFrom);
+	}
+
+	public String getLeaveToDayMonthString() {
+		return getParseDateDayMonthString(leaveTo);
+	}
+
 	public String getReason() {
 		return reason;
 	}
@@ -109,6 +122,20 @@ public class VacationLeaveIndexedItem extends BaseEmpInfoIndexedItem {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getFormattedString() {
+		return getEmployeeCode() + " | " + getFullNameVi() + " | " + getType()
+				+ " | " + getSign() + " | " + getLeaveFromDayMonthString()
+				+ "-" + getLeaveToDayMonthString();
 	}
 
 }

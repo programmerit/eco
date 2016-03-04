@@ -7,6 +7,7 @@ import vn.com.ecopharma.hrm.tt.bean.LeaveRequestBean;
 import vn.com.ecopharma.hrm.tt.bean.OrganizationFilterBean;
 import vn.com.ecopharma.hrm.tt.bean.TimeTrackingFilterBean;
 import vn.com.ecopharma.hrm.tt.bean.filter.VacationLeaveFilterBean;
+import vn.com.ecopharma.hrm.tt.permission.EmployeeModelPermission;
 
 public class BeanUtils {
 
@@ -17,6 +18,8 @@ public class BeanUtils {
 	private static final String LEAVE_REQUEST_BEAN = "leaveRequestBean";
 
 	private static final String VACATION_LEAVE_FILTER_BEAN = "leaveFilterBean";
+
+	private static final String EMP_MODEL_PERMISSION_BEAN = "employeeModelPermission";
 
 	/**
 	 * @param name
@@ -42,6 +45,10 @@ public class BeanUtils {
 
 	public static VacationLeaveFilterBean getLeaveFilterBean() {
 		return (VacationLeaveFilterBean) getBackingBeanByName(VACATION_LEAVE_FILTER_BEAN);
+	}
+
+	public static EmployeeModelPermission getEmployeeModelPermission() {
+		return (EmployeeModelPermission) getBackingBeanByName(EMP_MODEL_PERMISSION_BEAN);
 	}
 
 }

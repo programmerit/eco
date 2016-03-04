@@ -19,7 +19,10 @@ public abstract class AbstractIndexedItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final String SOURCE_DATETIME_FORMAT = "yyyyMMddhhmmss";
+
 	private static final String DESTINATION_DATETIME_FORMAT = "dd/MM/yyyy";
+
+	private static final String DAY_MONTH_FORMAT = "dd/MM";
 
 	protected static final Log LOGGER = LogFactoryUtil
 			.getLog(AbstractIndexedItem.class);
@@ -103,6 +106,13 @@ public abstract class AbstractIndexedItem implements Serializable {
 			return StringUtils.EMPTY;
 		SimpleDateFormat desSdf = new SimpleDateFormat(
 				DESTINATION_DATETIME_FORMAT);
+		return desSdf.format(date);
+	}
+
+	public String getParseDateDayMonthString(Date date) {
+		if (date == null)
+			return StringUtils.EMPTY;
+		SimpleDateFormat desSdf = new SimpleDateFormat(DAY_MONTH_FORMAT);
 		return desSdf.format(date);
 	}
 

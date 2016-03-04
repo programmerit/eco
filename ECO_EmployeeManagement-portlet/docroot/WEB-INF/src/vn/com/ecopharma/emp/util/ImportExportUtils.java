@@ -1,14 +1,8 @@
 package vn.com.ecopharma.emp.util;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.portlet.PortletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -50,9 +44,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Region;
 import com.liferay.portal.model.User;
@@ -60,9 +51,6 @@ import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.RegionServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 public class ImportExportUtils {
 
@@ -79,7 +67,8 @@ public class ImportExportUtils {
 
 	@SuppressWarnings("unchecked")
 	public static Workbook generateAndGetExportExcelWorkbook(
-			EmployeeExportType type, List<?> employees) {
+			EmployeeExportType type, List<?> employees,
+			List<ColumnItem> selectedColumns) {
 		Workbook wb = null;
 		Sheet ws;
 		switch (type) {
@@ -94,7 +83,7 @@ public class ImportExportUtils {
 		}
 		ws = wb.createSheet("Sheet1");
 
-		createExportHeaderRow(wb, ws);
+		createExportHeaderRow(wb, ws, selectedColumns);
 		int rowNum = 5;
 		if (employees.get(0) instanceof Emp) {
 
@@ -104,7 +93,7 @@ public class ImportExportUtils {
 			}
 		} else {
 			for (EmpIndexedItem eii : (List<EmpIndexedItem>) employees) {
-				createRow(wb, ws, rowNum, rowNum - 4, eii);
+				createRow(wb, ws, rowNum, rowNum - 4, eii, selectedColumns);
 				rowNum++;
 			}
 		}
@@ -131,7 +120,7 @@ public class ImportExportUtils {
 	 * @param wb
 	 * @param ws
 	 */
-	public static void createExportHeaderRow(Workbook wb, Sheet ws) {
+	public static void createExportHeaderRow1(Workbook wb, Sheet ws) {
 		Row row = ws.createRow(1);
 		row.createCell(16).setCellValue("Thông Tin Nhân Viên");
 		CellStyle titleCellStyle = wb.createCellStyle();
@@ -211,6 +200,54 @@ public class ImportExportUtils {
 
 		row = ws.createRow(4);
 		for (int i = 0; i <= 49; i++) {
+			int k = i + 1;
+			row.createCell(i).setCellValue(k);
+		}
+
+		CellStyle cellStyle1 = wb.createCellStyle();
+		cellStyle1.setBorderTop((short) 0x7);
+		cellStyle1.setBorderBottom((short) 0x7);
+		cellStyle1.setBorderRight((short) 0x1);
+		cellStyle1.setBorderLeft((short) 0x1);
+		cellStyle1.setAlignment((short) 2);
+
+		setEntireRowStyle(row, cellStyle1);
+	}
+
+	public static void createExportHeaderRow(Workbook wb, Sheet ws,
+			List<ColumnItem> selecColumnItems) {
+		Row row = ws.createRow(1);
+		row.createCell(16).setCellValue("Thông Tin Nhân Viên");
+		CellStyle titleCellStyle = wb.createCellStyle();
+		Font headerFont = wb.createFont();
+		headerFont.setBoldweight((short) 0x2bc);
+		titleCellStyle.setFont(headerFont);
+		row.getCell(16).setCellStyle(titleCellStyle);
+
+		row = ws.createRow(3);
+
+		row.createCell(0).setCellValue("STT");
+		int actualColumnCount = 1;
+		for (ColumnItem item : selecColumnItems) {
+			row.createCell(actualColumnCount).setCellValue(
+					item.getPropertyViName());
+			actualColumnCount++;
+		}
+
+		CellStyle cellStyle = wb.createCellStyle();
+		cellStyle.setBorderTop((short) 0x1);// BorderStyle.THIN
+		cellStyle.setBorderRight((short) 0x1);
+		cellStyle.setBorderLeft((short) 0x1);
+		cellStyle.setAlignment((short) 0x2); // ALIGN_CENTER
+
+		Font font = wb.createFont();
+		font.setBoldweight((short) 0x2bc);
+
+		cellStyle.setFont(font);
+		setEntireRowStyle(row, cellStyle);
+
+		row = ws.createRow(4);
+		for (int i = 0; i <= selecColumnItems.size(); i++) {
 			int k = i + 1;
 			row.createCell(i).setCellValue(k);
 		}
@@ -399,25 +436,25 @@ public class ImportExportUtils {
 		return null;
 	}
 
-	private static String getBankNoCellInfo(int sizeCheck,
+	public static String getBankNoCellInfo(int sizeCheck,
 			List<BankInfoObject> objList) {
 		return objList.size() > sizeCheck ? objList.get(sizeCheck)
 				.getEmpBankInfo().getBankAccountNo() : StringUtils.EMPTY;
 	}
 
-	private static String getBankNameCellInfo(int sizeCheck,
+	public static String getBankNameCellInfo(int sizeCheck,
 			List<BankInfoObject> objList) {
 		return objList.size() > sizeCheck ? objList.get(sizeCheck)
 				.getEmpBankInfo().getBankName() : StringUtils.EMPTY;
 	}
 
-	private static String getBankBranchCellInfo(int sizeCheck,
+	public static String getBankBranchCellInfo(int sizeCheck,
 			List<BankInfoObject> objList) {
 		return objList.size() > sizeCheck ? objList.get(sizeCheck)
 				.getEmpBankInfo().getBranchName() : StringUtils.EMPTY;
 	}
 
-	public static Row createRow(Workbook wb, Sheet ws, int rowNum,
+	public static Row createRow1(Workbook wb, Sheet ws, int rowNum,
 			int recordNo, EmpIndexedItem employee) {
 
 		final SimpleDateFormat destSdf = new SimpleDateFormat(
@@ -563,82 +600,31 @@ public class ImportExportUtils {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Deprecated
-	public static String generateAndGetExportExcelFileURL(long folderId,
-			String exportFilename, EmployeeExportType type, List<?> employees,
-			ServiceContext serviceContext) {
+	public static Row createRow(Workbook wb, Sheet ws, int rowNum,
+			int recordNo, EmpIndexedItem employee,
+			List<ColumnItem> selectedColumns) {
 
-		if (employees == null || employees.isEmpty())
-			return StringUtils.EMPTY;
+		final Row row = ws.createRow(rowNum);
 
-		String fileExt = StringUtils.EMPTY;
-		Workbook wb = null;
-		Sheet ws = null;
-		try {
-			switch (type) {
-			case XLS:
-				fileExt = ".xls";
-				wb = new HSSFWorkbook();
-				break;
-			case XLSX:
-				fileExt = ".xlsx";
-				wb = new XSSFWorkbook();
-				break;
-			default:
-				break;
-			}
-			ws = wb.createSheet("Sheet1");
-
-			createExportHeaderRow(wb, ws);
-			int rowNum = 5;
-			if (employees.get(0) instanceof Emp) {
-				for (Emp employee : (List<Emp>) employees) {
-					createRow(wb, ws, rowNum, rowNum - 4, employee);
-					rowNum++;
-				}
-			} else {
-				for (EmpIndexedItem eii : (List<EmpIndexedItem>) employees) {
-					createRow(wb, ws, rowNum, rowNum - 4, eii);
-					rowNum++;
-				}
-			}
-
-			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			wb.write(outputStream);
-
-			final File tmpfile = FileUtil.createTempFile(outputStream
-					.toByteArray());
-			final File newFile = new File(tmpfile.getParent(), exportFilename
-					+ fileExt);
-			Files.move(tmpfile.toPath(), newFile.toPath());
-
-			final PortletRequest pRequest = (PortletRequest) LiferayFacesContext
-					.getCurrentInstance().getExternalContext().getRequest();
-
-			final DLFileEntry dlFileEntry = DLUtils.uploadFile(pRequest,
-					newFile, exportFilename, StringUtils.EMPTY,
-					StringUtils.EMPTY, folderId, serviceContext);
-			newFile.delete();
-
-			final FileEntry fe = DLUtils.getUploadFileEntry(dlFileEntry);
-
-			return DLUtil
-					.getPreviewURL(fe, fe.getFileVersion(),
-							(ThemeDisplay) pRequest
-									.getAttribute(WebKeys.THEME_DISPLAY),
-							StringUtils.EMPTY, false, true);
-		} catch (IOException e) {
-			LOGGER.info(e);
-		} catch (PortalException e) {
-			LOGGER.info(e);
-		} catch (SystemException e) {
-			LOGGER.info(e);
+		row.createCell(0).setCellValue(recordNo);
+		int i = 1;
+		for (ColumnItem item : selectedColumns) {
+			row.createCell(i).setCellValue(
+					employee.getItemKeyValueMap(item.isBankField(),
+							item.isAddressField()).get(item.getPropertyName())
+							.toString());
+			i++;
 		}
-		return StringUtils.EMPTY;
+		CellStyle cellStyle = wb.createCellStyle();
+		cellStyle.setBorderTop((short) 0x7);
+		cellStyle.setBorderBottom((short) 0x7);
+		cellStyle.setBorderRight((short) 0x1);
+		cellStyle.setBorderLeft((short) 0x1);
+		setEntireRowStyle(row, cellStyle);
+		return row;
 	}
 
-	private static String getAddressStringFromAddressObj(Address address) {
+	public static String getAddressStringFromAddressObj(Address address) {
 		return address.getStreet1() + ", " + address.getStreet3().split("_")[1]
 				+ ", " + address.getRegion().getName();
 	}
@@ -704,7 +690,6 @@ public class ImportExportUtils {
 
 	public static List<ColumnItem> createDefaultColumnItems() {
 		final List<ColumnItem> result = new ArrayList<>();
-		result.add(new ColumnItem(0, "Stt", "STT"));
 		result.add(new ColumnItem(1, EmpField.EMP_CODE, "Mã NV"));
 		result.add(new ColumnItem(2, EmpField.VN_FULL_NAME, "Họ và Tên"));
 		result.add(new ColumnItem(3, EmpField.TITLES, "Chức danh"));
@@ -733,8 +718,10 @@ public class ImportExportUtils {
 		result.add(new ColumnItem(22, EmpField.IDENTITY_CARD_NO, "Số CMND"));
 		result.add(new ColumnItem(23, EmpField.ISSUED_DATE, "Ngày cấp"));
 		result.add(new ColumnItem(24, EmpField.ISSUED_PLACE, "Nơi Cấp"));
-		result.add(new ColumnItem(25, EmpField.TITLES, "Địa chỉ Thường trú"));
-		result.add(new ColumnItem(26, EmpField.TITLES, "Địa Chỉ Tạm Trú"));
+		result.add(new ColumnItem(25, EmpAdditionalFieds.PRESENT_ADDRESS,
+				"Địa chỉ Thường trú", false, true));
+		result.add(new ColumnItem(26, EmpAdditionalFieds.PRESENT_ADDRESS,
+				"Địa Chỉ Tạm Trú", false, true));
 		result.add(new ColumnItem(27, EmpField.CONTACT_NUMBER, "Số ĐT Liên lạc"));
 		result.add(new ColumnItem(28, EmpField.PERSONAL_EMAIL_ADDRESS,
 				"Email cá nhân"));
@@ -749,25 +736,25 @@ public class ImportExportUtils {
 		result.add(new ColumnItem(34, EmpField.HEALTH_INSURANCE_NO,
 				"Số Thẻ BHYT"));
 		result.add(new ColumnItem(35, EmpAdditionalFieds.BANK_ACCOUNT_NO1,
-				"Số Tài khoản NH 1"));
+				"Số Tài khoản NH 1", true, false));
 		result.add(new ColumnItem(36, EmpAdditionalFieds.BANK_NAME1,
-				"Tên Ngân Hàng 1"));
+				"Tên Ngân Hàng 1", true, false));
 		result.add(new ColumnItem(37, EmpAdditionalFieds.BANK_BRANCH_NAME1,
-				"Tên Chi nhánh Ngân Hàng 1"));
+				"Tên Chi nhánh Ngân Hàng 1", true, false));
 
 		result.add(new ColumnItem(38, EmpAdditionalFieds.BANK_ACCOUNT_NO2,
-				"Số Tài khoản NH 2"));
+				"Số Tài khoản NH 2", true, false));
 		result.add(new ColumnItem(39, EmpAdditionalFieds.BANK_NAME2,
-				"Tên Ngân Hàng 2"));
+				"Tên Ngân Hàng 2", true, false));
 		result.add(new ColumnItem(40, EmpAdditionalFieds.BANK_BRANCH_NAME2,
-				"Tên Chi nhánh Ngân Hàng 2"));
+				"Tên Chi nhánh Ngân Hàng 2", true, false));
 
 		result.add(new ColumnItem(41, EmpAdditionalFieds.BANK_ACCOUNT_NO3,
-				"Số Tài khoản NH 3"));
+				"Số Tài khoản NH 3", true, false));
 		result.add(new ColumnItem(42, EmpAdditionalFieds.BANK_NAME3,
-				"Tên Ngân Hàng 3"));
+				"Tên Ngân Hàng 3", true, false));
 		result.add(new ColumnItem(43, EmpAdditionalFieds.BANK_BRANCH_NAME3,
-				"Tên Chi nhánh Ngân Hàng 3"));
+				"Tên Chi nhánh Ngân Hàng 3", true, false));
 		result.add(new ColumnItem(44, EmpField.BASE_WAGE_RATES, "Lương căn bản"));
 		result.add(new ColumnItem(45, EmpField.POSITION_WAGE_RATES,
 				"Lương vị trí"));
@@ -776,7 +763,6 @@ public class ImportExportUtils {
 		result.add(new ColumnItem(47, EmpField.TOTAL_SALARY, "Tổng lương"));
 		result.add(new ColumnItem(48, EmpField.BONUS, "Thưởng thành tích"));
 		result.add(new ColumnItem(49, EmpField.RESIGNED_DATE, "Ngày nghỉ việc"));
-
 		return result;
 	}
 

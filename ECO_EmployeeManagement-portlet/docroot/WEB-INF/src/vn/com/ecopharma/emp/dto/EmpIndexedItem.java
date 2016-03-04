@@ -1,7 +1,9 @@
 package vn.com.ecopharma.emp.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -9,8 +11,14 @@ import org.apache.commons.lang3.StringUtils;
 import vn.com.ecopharma.emp.constant.EmpAdditionalFieds;
 import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
+import vn.com.ecopharma.emp.model.Emp;
+import vn.com.ecopharma.emp.util.EmployeeUtils;
+import vn.com.ecopharma.emp.util.ImportExportUtils;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.model.Address;
+import com.liferay.portal.service.AddressLocalServiceUtil;
 
 public class EmpIndexedItem extends BaseEmpInfoIndexedItem {
 
@@ -174,6 +182,10 @@ public class EmpIndexedItem extends BaseEmpInfoIndexedItem {
 		return checkNullFieldAndReturnNullDate(EmpField.RESIGNED_DATE);
 	}
 
+	public String getResignedDateString() {
+		return getParseDateString(getResignedDate());
+	}
+
 	public String getStatus() {
 		return checkNullFieldAndReturnEmptyString(EmpField.STATUS);
 	}
@@ -203,12 +215,79 @@ public class EmpIndexedItem extends BaseEmpInfoIndexedItem {
 				: StringUtils.EMPTY;
 	}
 
+	public List<Address> getAddresses() {
+		try {
+			return AddressLocalServiceUtil.getAddresses(EmployeeUtils
+					.getServiceContext().getCompanyId(), Emp.class.getName(),
+					getId());
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return new ArrayList<>();
+	}
+
+	public String getPresentAddress() {
+		if (getAddresses().isEmpty())
+			return StringUtils.EMPTY;
+		return ImportExportUtils.getAddressStringFromAddressObj(getAddresses()
+				.get(0));
+	}
+
+	public String getTempAddress() {
+		if (getAddresses().size() < 2)
+			return StringUtils.EMPTY;
+		return ImportExportUtils.getAddressStringFromAddressObj(getAddresses()
+				.get(1));
+
+	}
+
+	public List<BankInfoObject> getBankInfos() {
+		return EmployeeUtils.getBankInfoObjectsFromEmp(getId());
+	}
+
+	public String getBankNo1() {
+		return ImportExportUtils.getBankNoCellInfo(0, getBankInfos());
+	}
+
+	public String getBankNo2() {
+		return ImportExportUtils.getBankNoCellInfo(1, getBankInfos());
+	}
+
+	public String getBankNo3() {
+		return ImportExportUtils.getBankNoCellInfo(2, getBankInfos());
+	}
+
+	public String getBankName1() {
+		return ImportExportUtils.getBankNameCellInfo(0, getBankInfos());
+	}
+
+	public String getBankName2() {
+		return ImportExportUtils.getBankNameCellInfo(1, getBankInfos());
+	}
+
+	public String getBankName3() {
+		return ImportExportUtils.getBankNameCellInfo(2, getBankInfos());
+	}
+
+	public String getBankBranch1() {
+		return ImportExportUtils.getBankBranchCellInfo(0, getBankInfos());
+	}
+
+	public String getBankBranch2() {
+		return ImportExportUtils.getBankBranchCellInfo(1, getBankInfos());
+	}
+
+	public String getBankBranch3() {
+		return ImportExportUtils.getBankBranchCellInfo(2, getBankInfos());
+	}
+
 	@Override
 	protected String getIdFieldName() {
 		return EmpField.EMP_ID;
 	}
 
-	public Map<String, Object> getItemKeyValueMap() {
+	public Map<String, Object> getItemKeyValueMap(boolean bankField,
+			boolean addressField) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put(EmpField.EMP_CODE, getEmployeeCode());
 		result.put(EmpField.VN_FULL_NAME, getFullNameVi());
@@ -236,36 +315,39 @@ public class EmpIndexedItem extends BaseEmpInfoIndexedItem {
 		result.put(EmpField.IDENTITY_CARD_NO, getIdentityCardNo());
 		result.put(EmpField.ISSUED_DATE, getIssuedDateString());
 		result.put(EmpField.ISSUED_PLACE, getIssuedPlace());
-		result.put(EmpAdditionalFieds.PRESENT_ADDRESS, "Địa chỉ Thường trú");
-		result.put(EmpAdditionalFieds.TEMP_ADDRESS, "Địa Chỉ Tạm Trú");
+		if (addressField) {
+			result.put(EmpAdditionalFieds.PRESENT_ADDRESS, getPresentAddress());
+			result.put(EmpAdditionalFieds.TEMP_ADDRESS, getTempAddress());
+		}
 		result.put(EmpField.CONTACT_NUMBER, getContactNumber());
 		result.put(EmpField.PERSONAL_EMAIL_ADDRESS, getPersonalEmail());
-		result.put(EmpField.EMAIL, "");
-		result.put(EmpField.TAX_CODE, "");
+		result.put(EmpField.EMAIL, getEmail());
+		result.put(EmpField.TAX_CODE, getPersonalTaxCode());
 		result.put(EmpField.NUMBER_OF_DEPENDENTS, getNumberOfDependents());
 		result.put(EmpField.DEPENDENT_NAMES, getDependentNames());
 		result.put(EmpField.SOCIAL_INSURANCE_NO, getSocialInsuranceNo());
 		result.put(EmpField.HEALTH_INSURANCE_NO, getHealthInsuranceNo());
-		result.put(EmpAdditionalFieds.BANK_ACCOUNT_NO1, "Số Tài khoản NH 1");
-		result.put(EmpAdditionalFieds.BANK_NAME1, "Tên Ngân Hàng 1");
-		result.put(EmpAdditionalFieds.BANK_BRANCH_NAME1,
-				"Tên Chi nhánh Ngân Hàng 1");
 
-		result.put(EmpAdditionalFieds.BANK_ACCOUNT_NO2, "Số Tài khoản NH 2");
-		result.put(EmpAdditionalFieds.BANK_NAME2, "Tên Ngân Hàng 2");
-		result.put(EmpAdditionalFieds.BANK_BRANCH_NAME2,
-				"Tên Chi nhánh Ngân Hàng 2");
+		if (bankField) {
+			result.put(EmpAdditionalFieds.BANK_ACCOUNT_NO1, getBankNo1());
+			result.put(EmpAdditionalFieds.BANK_NAME1, getBankName1());
+			result.put(EmpAdditionalFieds.BANK_BRANCH_NAME1, getBankBranch1());
 
-		result.put(EmpAdditionalFieds.BANK_ACCOUNT_NO3, "Số Tài khoản NH 3");
-		result.put(EmpAdditionalFieds.BANK_NAME3, "Tên Ngân Hàng 3");
-		result.put(EmpAdditionalFieds.BANK_BRANCH_NAME3,
-				"Tên Chi nhánh Ngân Hàng 3");
-		result.put(EmpField.BASE_WAGE_RATES, "Lương căn bản");
-		result.put(EmpField.POSITION_WAGE_RATES, "Lương vị trí");
-		result.put(EmpField.CAPACITY_SALARY, "Lương năng lực");
-		result.put(EmpField.TOTAL_SALARY, "Tổng lương");
-		result.put(EmpField.BONUS, "Thưởng thành tích");
-		result.put(EmpField.RESIGNED_DATE, "Ngày nghỉ việc");
+			result.put(EmpAdditionalFieds.BANK_ACCOUNT_NO2, getBankNo2());
+			result.put(EmpAdditionalFieds.BANK_NAME2, getBankName2());
+			result.put(EmpAdditionalFieds.BANK_BRANCH_NAME2, getBankBranch2());
+
+			result.put(EmpAdditionalFieds.BANK_ACCOUNT_NO3, getBankNo3());
+			result.put(EmpAdditionalFieds.BANK_NAME3, getBankName3());
+			result.put(EmpAdditionalFieds.BANK_BRANCH_NAME3, getBankBranch3());
+		}
+
+		result.put(EmpField.BASE_WAGE_RATES, 0);
+		result.put(EmpField.POSITION_WAGE_RATES, 0);
+		result.put(EmpField.CAPACITY_SALARY, 0);
+		result.put(EmpField.TOTAL_SALARY, 0);
+		result.put(EmpField.BONUS, 0);
+		result.put(EmpField.RESIGNED_DATE, getResignedDateString());
 		return result;
 	}
 }

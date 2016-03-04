@@ -341,6 +341,31 @@ public class VacationLeaveLocalServiceWrapper
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.VacationLeave updateVacationLeave(
+		long id, java.lang.String leaveType, java.lang.String sign,
+		java.util.Date leaveFrom, java.util.Date leaveTo,
+		java.util.Date actualLeaveTo, java.lang.String reason,
+		java.lang.String description, java.lang.String status) {
+		return _vacationLeaveLocalService.updateVacationLeave(id, leaveType,
+			sign, leaveFrom, leaveTo, actualLeaveTo, reason, description, status);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.VacationLeave setManagerApproval(
+		long leaveId, com.liferay.portal.service.ServiceContext serviceContext) {
+		return _vacationLeaveLocalService.setManagerApproval(leaveId,
+			serviceContext);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.VacationLeave setManagerApproval(
+		vn.com.ecopharma.emp.model.VacationLeave vacationLeave,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _vacationLeaveLocalService.setManagerApproval(vacationLeave,
+			serviceContext);
+	}
+
+	@Override
 	public int countAllUnDeletedDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
@@ -386,6 +411,23 @@ public class VacationLeaveLocalServiceWrapper
 		long companyId) {
 		return _vacationLeaveLocalService.searchPendingRequestsOfManager(managerId,
 			searchContext, companyId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Document> searchByStatuses(
+		java.util.List<java.lang.String> statuses,
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		long companyId) {
+		return _vacationLeaveLocalService.searchByStatuses(statuses,
+			searchContext, companyId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Document> searchManagerApprovalList(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		long companyId) {
+		return _vacationLeaveLocalService.searchManagerApprovalList(searchContext,
+			companyId);
 	}
 
 	@Override

@@ -73,36 +73,35 @@
 					<p:column headerText="Leave Type">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText
-									value="#{i18n[localeKeyBean.getLeaveTypeKey(l.type)]}" />
+								<h:outputText value="#{l.type}" />
 							</f:facet>
 							<f:facet name="input">
 								<p:selectOneMenu id="leaveTypeSelect" required="true"
 									requiredMessage="Leave Type required" value="#{l.type}" var="t">
-									<f:selectItem itemLabel="Select Leave Type" itemValue="" />
+									<p:ajax update="signSelect" />
+									<f:selectItem itemLabel="Leave Type" itemValue="" />
 									<f:selectItems value="#{leaveViewBean.leaveTypes}" var="t"
-										itemLabel="#{i18n[localeKeyBean.getLeaveTypeKey(t)]}"
-										itemValue="#{t}">
-										<p:column>#{localeKeyBean.getLeaveTypeKey(t)}</p:column>
+										itemLabel="#{t}" itemValue="#{t}">
+`										<p:column>#{t}</p:column>
 									</f:selectItems>
 								</p:selectOneMenu>
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
 
-					<p:column headerText="Leave Type">
+					<p:column headerText="Sign">
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="#{l.sign}" />
 							</f:facet>
 							<f:facet name="input">
 								<p:selectOneMenu id="signSelect" required="true"
-									requiredMessage="Leave Type required" value="#{l.type}" var="t">
-									<f:selectItem itemLabel="Select Leave Type" itemValue="" />
-									<f:selectItems value="#{leaveViewBean.leaveTypes}" var="t"
-										itemLabel="#{i18n[localeKeyBean.getLeaveTypeKey(t)]}"
-										itemValue="#{t}">
-										<p:column>#{localeKeyBean.getLeaveTypeKey(t)}</p:column>
+									requiredMessage="Leave Type required" value="#{l.sign}" var="s">
+									<f:selectItem itemLabel="Leave Type" itemValue="" />
+									<f:selectItems
+										value="#{leaveViewBean.getLeaveSignsByType(l.type)}" var="s"
+										itemLabel="#{s}" itemValue="#{s}">
+										<p:column>#{s}</p:column>
 									</f:selectItems>
 								</p:selectOneMenu>
 							</f:facet>
@@ -160,6 +159,22 @@
 							</f:facet>
 							<f:facet name="input">
 								<p:inputText value="#{l.description}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Status">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{l.status}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu id="statusSelect" value="#{l.status}" var="s">
+									<f:selectItems value="#{leaveViewBean.statuses}" var="s"
+										itemLabel="#{s}" itemValue="#{s}">
+										<p:column>#{s}</p:column>
+									</f:selectItems>
+								</p:selectOneMenu>
 							</f:facet>
 						</p:cellEditor>
 					</p:column>

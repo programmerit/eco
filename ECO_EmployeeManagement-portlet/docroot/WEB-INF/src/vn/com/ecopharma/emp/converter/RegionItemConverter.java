@@ -18,7 +18,8 @@ public class RegionItemConverter implements Converter {
 	@Override
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
 		try {
-			return new RegionItem(Long.valueOf(arg2));
+			if (!StringUtils.EMPTY.equalsIgnoreCase(arg2))
+				return new RegionItem(Long.valueOf(arg2));
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (PortalException e) {

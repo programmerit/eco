@@ -15,6 +15,7 @@
 package vn.com.ecopharma.emp.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -201,6 +202,79 @@ public class VacationLeaveLocalServiceImpl extends
 		return null;
 	}
 
+	public VacationLeave updateVacationLeave(long id, String leaveType,
+			String sign, Date leaveFrom, Date leaveTo, Date actualLeaveTo,
+			String reason, String description, String status) {
+		try {
+			VacationLeave leave = fetchVacationLeave(id);
+			leave.setLeaveType(leaveType);
+			leave.setSign(sign);
+			leave.setLeaveFrom(leaveFrom);
+			leave.setLeaveTo(leaveTo);
+			leave.setActualTo(actualLeaveTo);
+			leave.setReason(reason);
+			leave.setDescription(description);
+			leave.setStatus(status);
+			return this.updateVacationLeave(leave);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
+	public VacationLeave updateVacationLeave(VacationLeave vacationLeave) {
+		vacationLeave.setModifiedDate(new Date());
+		try {
+			vacationLeave = super.updateVacationLeave(vacationLeave);
+			final Indexer indexer = IndexerRegistryUtil
+					.nullSafeGetIndexer(VacationLeave.class.getName());
+
+			indexer.reindex(VacationLeave.class.getName(),
+					vacationLeave.getVacationLeaveId());
+
+			return vacationLeave;
+
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		} catch (SearchException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
+	public VacationLeave setManagerApproval(long leaveId,
+			ServiceContext serviceContext) {
+		try {
+			return setManagerApproval(fetchVacationLeave(leaveId),
+					serviceContext);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
+	public VacationLeave setManagerApproval(VacationLeave vacationLeave,
+			ServiceContext serviceContext) {
+		if (!vacationLeave.getStatus().equalsIgnoreCase(
+				VacationLeaveStatus.PENDING_REQUEST.toString()))
+			return null;
+		try {
+			vacationLeave.setModifiedDate(new Date());
+
+			vacationLeave.setUserName(userLocalService.fetchUser(
+					serviceContext.getUserId()).getFullName());
+
+			vacationLeave.setStatus(VacationLeaveStatus.MANAGER_APPROVED
+					.toString());
+
+			return updateVacationLeave(vacationLeave);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
+
+	}
+
 	public int countAllUnDeletedDocuments(SearchContext searchContext,
 			List<Query> filterQueries, long companyId, Sort sort) {
 		return searchAllUnDeletedDocuments(searchContext, filterQueries,
@@ -351,6 +425,29 @@ public class VacationLeaveLocalServiceImpl extends
 			LOGGER.info(e);
 		}
 		return new ArrayList<>();
+	}
+
+	public List<Document> searchByStatuses(List<String> statuses,
+			SearchContext searchContext, long companyId) {
+
+		final List<Query> queries = new ArrayList<>();
+		try {
+			final Query statusesQuery = empLocalService.createStringListQuery(
+					VacationLeaveField.STATUS, statuses, searchContext);
+			queries.add(statusesQuery);
+			return searchAllUnDeletedDocuments(searchContext, queries,
+					companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		} catch (ParseException e) {
+			LOGGER.info(e);
+		}
+		return new ArrayList<>();
+	}
+
+	public List<Document> searchManagerApprovalList(
+			SearchContext searchContext, long companyId) {
+		return searchByStatuses(
+				Arrays.asList(VacationLeaveStatus.MANAGER_APPROVED.toString()),
+				searchContext, companyId);
 	}
 
 	public void reindexAll() {

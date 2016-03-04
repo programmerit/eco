@@ -117,6 +117,7 @@
 					<p:row>
 						<p:column rowspan="3" headerText="Emp Code" width="50" />
 						<p:column rowspan="3" headerText="Name" width="100" />
+						<p:column rowspan="3" headerText="Dept" width="100" />
 						<p:column rowspan="3" headerText="Values" width="80" />
 						<p:column colspan="#{timeTrackingReportBean.getDatesSize(7)}"
 							headerText="TIME TRACKING RECORDS 2015" width="2000" />
@@ -146,6 +147,10 @@
 
 				<p:column width="100">
 					<h:outputText value="#{t.emp.fullNameVi}" />
+				</p:column>
+
+				<p:column width="100">
+					<h:outputText value="#{t.emp.department}" />
 				</p:column>
 
 				<p:column>

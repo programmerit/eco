@@ -320,6 +320,27 @@ public class VacationLeaveLocalServiceUtil {
 		return getService().addVacationLeave(empId, leave);
 	}
 
+	public static vn.com.ecopharma.emp.model.VacationLeave updateVacationLeave(
+		long id, java.lang.String leaveType, java.lang.String sign,
+		java.util.Date leaveFrom, java.util.Date leaveTo,
+		java.util.Date actualLeaveTo, java.lang.String reason,
+		java.lang.String description, java.lang.String status) {
+		return getService()
+				   .updateVacationLeave(id, leaveType, sign, leaveFrom,
+			leaveTo, actualLeaveTo, reason, description, status);
+	}
+
+	public static vn.com.ecopharma.emp.model.VacationLeave setManagerApproval(
+		long leaveId, com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService().setManagerApproval(leaveId, serviceContext);
+	}
+
+	public static vn.com.ecopharma.emp.model.VacationLeave setManagerApproval(
+		vn.com.ecopharma.emp.model.VacationLeave vacationLeave,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService().setManagerApproval(vacationLeave, serviceContext);
+	}
+
 	public static int countAllUnDeletedDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
@@ -365,6 +386,19 @@ public class VacationLeaveLocalServiceUtil {
 		return getService()
 				   .searchPendingRequestsOfManager(managerId, searchContext,
 			companyId);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.search.Document> searchByStatuses(
+		java.util.List<java.lang.String> statuses,
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		long companyId) {
+		return getService().searchByStatuses(statuses, searchContext, companyId);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.search.Document> searchManagerApprovalList(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		long companyId) {
+		return getService().searchManagerApprovalList(searchContext, companyId);
 	}
 
 	public static void reindexAll() {

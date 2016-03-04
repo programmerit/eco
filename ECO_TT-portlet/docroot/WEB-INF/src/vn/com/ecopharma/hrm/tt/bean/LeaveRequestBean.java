@@ -87,6 +87,10 @@ public class LeaveRequestBean implements Serializable {
 		return leaveType.getSigns();
 	}
 
+	public boolean isTimeAvailable() {
+		return requestItem.getLeave().getSign().contains("1/2");
+	}
+
 	public EmpLeaveRequestItem getRequestItem() {
 		return requestItem;
 	}

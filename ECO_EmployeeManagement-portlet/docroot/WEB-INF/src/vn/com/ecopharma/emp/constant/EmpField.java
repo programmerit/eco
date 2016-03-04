@@ -2,6 +2,7 @@ package vn.com.ecopharma.emp.constant;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.liferay.portal.kernel.log.Log;
@@ -134,6 +135,11 @@ public class EmpField {
 	public static final String JOINED_DATE_TO = "joinedDateTo";
 
 	private EmpField() {
+	}
+
+	public static List<String> defaultExportFields() {
+		return Arrays.asList(EMP_CODE, VN_FULL_NAME, TITLES, DEPARTMENT,
+				JOINED_DATE, LABOR_CONTRACT_SIGNED_DATE);
 	}
 
 	public static List<String> getAllFields() {

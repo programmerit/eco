@@ -15,12 +15,23 @@ public class ColumnItem implements Serializable {
 
 	private String propertyViName;
 
-	private Object value;
+	private boolean bankField = Boolean.FALSE;
+
+	private boolean addressField = Boolean.FALSE;
 
 	public ColumnItem(int index, String propertyName, String propertyViName) {
 		this.index = index;
 		this.propertyName = propertyName;
 		this.propertyViName = propertyViName;
+	}
+
+	public ColumnItem(int index, String propertyName, String propertyViName,
+			boolean bankField, boolean addressField) {
+		this.index = index;
+		this.propertyName = propertyName;
+		this.propertyViName = propertyViName;
+		this.bankField = bankField;
+		this.addressField = addressField;
 	}
 
 	public int getIndex() {
@@ -47,11 +58,20 @@ public class ColumnItem implements Serializable {
 		this.propertyViName = propertyViName;
 	}
 
-	public Object getValue() {
-		return value;
+	public boolean isBankField() {
+		return bankField;
 	}
 
-	public void setValue(Object value) {
-		this.value = value;
+	public void setBankField(boolean bankField) {
+		this.bankField = bankField;
 	}
+
+	public boolean isAddressField() {
+		return addressField;
+	}
+
+	public void setAddressField(boolean addressField) {
+		this.addressField = addressField;
+	}
+
 }

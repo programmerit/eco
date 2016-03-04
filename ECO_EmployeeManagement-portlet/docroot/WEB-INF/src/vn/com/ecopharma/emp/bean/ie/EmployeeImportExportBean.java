@@ -27,8 +27,8 @@ import org.primefaces.model.SortOrder;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
+import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.dto.ColumnItem;
-import vn.com.ecopharma.emp.dto.EmpIndexedItem;
 import vn.com.ecopharma.emp.dto.FilterDTO;
 import vn.com.ecopharma.emp.dto.ImportExportEmployeeDTO;
 import vn.com.ecopharma.emp.enumeration.EmployeeExportType;
@@ -112,13 +112,14 @@ public class EmployeeImportExportBean implements Serializable {
 		possiblyDuplicationList = new ArrayList<>();
 		failedImportList = new ArrayList<>();
 		columns = ImportExportUtils.createDefaultColumnItems();
-		columnStrings = new ArrayList<String>();
+		columnStrings = new ArrayList<>();
 		for (ColumnItem item : columns) {
 			columnStrings.add(item.getPropertyName());
 		}
+		selectedColumnStrings = new ArrayList<>(EmpField.defaultExportFields());
 	}
 
-	public void onShowSelectedColumn() {
+	public List<ColumnItem> getSelectedColumnItems() {
 		selectedColumns = new ArrayList<>();
 		for (String column : selectedColumnStrings) {
 			for (ColumnItem item : columns) {
@@ -128,19 +129,7 @@ public class EmployeeImportExportBean implements Serializable {
 				}
 			}
 		}
-
-		EmpIndexedItem indexedItem = new EmpIndexedItem(
-				EmpLocalServiceUtil.getIndexedEmp(187616,
-						EmployeeUtils.getCurrentSearchContext()));
-
-		for (ColumnItem item : selectedColumns) {
-			System.out.println(item.getPropertyName() + "  "
-					+ item.getPropertyViName() + "  " + item.getIndex());
-
-			System.out.println(indexedItem.getItemKeyValueMap().get(
-					item.getPropertyName()));
-		}
-
+		return selectedColumns;
 	}
 
 	public List<String> completeColumns(String query) {
@@ -196,7 +185,7 @@ public class EmployeeImportExportBean implements Serializable {
 		final EmployeeExportType exportType = EmployeeExportType
 				.valueOf(presetType.toUpperCase());
 		Workbook wb = ImportExportUtils.generateAndGetExportExcelWorkbook(
-				exportType, exportList);
+				exportType, exportList, getSelectedColumnItems());
 
 		try {
 			final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
