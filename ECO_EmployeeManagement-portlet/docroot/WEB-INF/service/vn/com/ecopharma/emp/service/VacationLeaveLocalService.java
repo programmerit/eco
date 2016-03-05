@@ -294,6 +294,13 @@ public interface VacationLeaveLocalService extends BaseLocalService,
 		vn.com.ecopharma.emp.model.VacationLeave vacationLeave,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
+	public vn.com.ecopharma.emp.model.VacationLeave setHrApproval(
+		long leaveId, com.liferay.portal.service.ServiceContext serviceContext);
+
+	public vn.com.ecopharma.emp.model.VacationLeave setHrApproval(
+		vn.com.ecopharma.emp.model.VacationLeave vacationLeave,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
 	public int countAllUnDeletedDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,

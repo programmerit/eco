@@ -178,82 +178,95 @@ public class VacationLeaveLocalServiceClp implements VacationLeaveLocalService {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName29 = "countAllUnDeletedDocuments";
+		_methodName29 = "setHrApproval";
 
 		_methodParameterTypes29 = new String[] {
+				"long", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName30 = "setHrApproval";
+
+		_methodParameterTypes30 = new String[] {
+				"vn.com.ecopharma.emp.model.VacationLeave",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName31 = "countAllUnDeletedDocuments";
+
+		_methodParameterTypes31 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort"
 			};
 
-		_methodName30 = "searchAllUnDeletedDocuments";
+		_methodName32 = "searchAllUnDeletedDocuments";
 
-		_methodParameterTypes30 = new String[] {
+		_methodParameterTypes32 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName31 = "filterByFields";
+		_methodName33 = "filterByFields";
 
-		_methodParameterTypes31 = new String[] {
+		_methodParameterTypes33 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long",
 				"int", "int"
 			};
 
-		_methodName32 = "countFilterByFields";
+		_methodName34 = "countFilterByFields";
 
-		_methodParameterTypes32 = new String[] {
+		_methodParameterTypes34 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long"
 			};
 
-		_methodName33 = "searchPendingRequestsOfManager";
+		_methodName35 = "searchPendingRequestsOfManager";
 
-		_methodParameterTypes33 = new String[] {
+		_methodParameterTypes35 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 
-		_methodName34 = "searchByStatuses";
+		_methodName36 = "searchByStatuses";
 
-		_methodParameterTypes34 = new String[] {
+		_methodParameterTypes36 = new String[] {
 				"java.util.List",
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 
-		_methodName35 = "searchManagerApprovalList";
-
-		_methodParameterTypes35 = new String[] {
-				"com.liferay.portal.kernel.search.SearchContext", "long"
-			};
-
-		_methodName36 = "reindexAll";
-
-		_methodParameterTypes36 = new String[] {  };
-
-		_methodName37 = "removeAllIndexes";
+		_methodName37 = "searchManagerApprovalList";
 
 		_methodParameterTypes37 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 
-		_methodName38 = "getIndexedDocument";
+		_methodName38 = "reindexAll";
 
-		_methodParameterTypes38 = new String[] {
+		_methodParameterTypes38 = new String[] {  };
+
+		_methodName39 = "removeAllIndexes";
+
+		_methodParameterTypes39 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext", "long"
+			};
+
+		_methodName40 = "getIndexedDocument";
+
+		_methodParameterTypes40 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName39 = "getIndexedDocument";
+		_methodName41 = "getIndexedDocument";
 
-		_methodParameterTypes39 = new String[] {
+		_methodParameterTypes41 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName40 = "indexAll";
+		_methodName42 = "indexAll";
 
-		_methodParameterTypes40 = new String[] {  };
+		_methodParameterTypes42 = new String[] {  };
 	}
 
 	@Override
@@ -1133,6 +1146,65 @@ public class VacationLeaveLocalServiceClp implements VacationLeaveLocalService {
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.VacationLeave setHrApproval(
+		long leaveId, com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
+					new Object[] {
+						leaveId,
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.VacationLeave)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.VacationLeave setHrApproval(
+		vn.com.ecopharma.emp.model.VacationLeave vacationLeave,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
+					new Object[] {
+						ClpSerializer.translateInput(vacationLeave),
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.VacationLeave)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public int countAllUnDeletedDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
@@ -1140,8 +1212,8 @@ public class VacationLeaveLocalServiceClp implements VacationLeaveLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1176,8 +1248,8 @@ public class VacationLeaveLocalServiceClp implements VacationLeaveLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1216,8 +1288,8 @@ public class VacationLeaveLocalServiceClp implements VacationLeaveLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1260,8 +1332,8 @@ public class VacationLeaveLocalServiceClp implements VacationLeaveLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32,
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1299,8 +1371,8 @@ public class VacationLeaveLocalServiceClp implements VacationLeaveLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33,
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35,
 					new Object[] {
 						managerId,
 						
@@ -1332,8 +1404,8 @@ public class VacationLeaveLocalServiceClp implements VacationLeaveLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName34,
-					_methodParameterTypes34,
+			returnObj = _invokableLocalService.invokeMethod(_methodName36,
+					_methodParameterTypes36,
 					new Object[] {
 						ClpSerializer.translateInput(statuses),
 						
@@ -1364,8 +1436,8 @@ public class VacationLeaveLocalServiceClp implements VacationLeaveLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName35,
-					_methodParameterTypes35,
+			returnObj = _invokableLocalService.invokeMethod(_methodName37,
+					_methodParameterTypes37,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1390,8 +1462,8 @@ public class VacationLeaveLocalServiceClp implements VacationLeaveLocalService {
 	@Override
 	public void reindexAll() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName36,
-				_methodParameterTypes36, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName38,
+				_methodParameterTypes38, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1411,8 +1483,8 @@ public class VacationLeaveLocalServiceClp implements VacationLeaveLocalService {
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		long companyId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName37,
-				_methodParameterTypes37,
+			_invokableLocalService.invokeMethod(_methodName39,
+				_methodParameterTypes39,
 				new Object[] {
 					ClpSerializer.translateInput(searchContext),
 					
@@ -1439,8 +1511,8 @@ public class VacationLeaveLocalServiceClp implements VacationLeaveLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName38,
-					_methodParameterTypes38,
+			returnObj = _invokableLocalService.invokeMethod(_methodName40,
+					_methodParameterTypes40,
 					new Object[] {
 						ClpSerializer.translateInput(id),
 						
@@ -1468,8 +1540,8 @@ public class VacationLeaveLocalServiceClp implements VacationLeaveLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName39,
-					_methodParameterTypes39,
+			returnObj = _invokableLocalService.invokeMethod(_methodName41,
+					_methodParameterTypes41,
 					new Object[] { id, ClpSerializer.translateInput(
 							searchContext) });
 		}
@@ -1491,8 +1563,8 @@ public class VacationLeaveLocalServiceClp implements VacationLeaveLocalService {
 	@Override
 	public void indexAll() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName40,
-				_methodParameterTypes40, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName42,
+				_methodParameterTypes42, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1588,4 +1660,8 @@ public class VacationLeaveLocalServiceClp implements VacationLeaveLocalService {
 	private String[] _methodParameterTypes39;
 	private String _methodName40;
 	private String[] _methodParameterTypes40;
+	private String _methodName41;
+	private String[] _methodParameterTypes41;
+	private String _methodName42;
+	private String[] _methodParameterTypes42;
 }

@@ -19,7 +19,7 @@ public class ReportTimeItem implements Serializable {
 
 	private Date maxOut;
 
-	private boolean isLeaveApplied;
+	private VacationLeaveIndexedItem leaveIndexedItem;
 
 	public ReportTimeItem(Date minIn, Date maxOut) {
 		super();
@@ -45,9 +45,6 @@ public class ReportTimeItem implements Serializable {
 
 	public String getFormattedMinIn() {
 		final SimpleDateFormat sdf = new SimpleDateFormat(FORMATTED_HOUR);
-		if (isLeaveApplied && minIn == null)
-			return "LEAVE";
-
 		return minIn != null ? sdf.format(minIn) : EMPTY_TIME;
 	}
 
@@ -56,12 +53,16 @@ public class ReportTimeItem implements Serializable {
 		return maxOut != null ? sdf.format(maxOut) : EMPTY_TIME;
 	}
 
-	public boolean isLeaveApplied() {
-		return isLeaveApplied;
+	public VacationLeaveIndexedItem getLeaveIndexedItem() {
+		return leaveIndexedItem;
 	}
 
-	public void setLeaveApplied(boolean isLeaveApplied) {
-		this.isLeaveApplied = isLeaveApplied;
+	public void setLeaveIndexedItem(VacationLeaveIndexedItem leaveIndexedItem) {
+		this.leaveIndexedItem = leaveIndexedItem;
+	}
+
+	public boolean isLeaveRefAvailable() {
+		return getLeaveIndexedItem() != null;
 	}
 
 }

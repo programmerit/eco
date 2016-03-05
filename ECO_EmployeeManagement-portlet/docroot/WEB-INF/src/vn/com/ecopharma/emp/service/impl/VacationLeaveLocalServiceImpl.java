@@ -272,7 +272,36 @@ public class VacationLeaveLocalServiceImpl extends
 			LOGGER.info(e);
 		}
 		return null;
+	}
 
+	public VacationLeave setHrApproval(long leaveId,
+			ServiceContext serviceContext) {
+		try {
+			return setHrApproval(fetchVacationLeave(leaveId), serviceContext);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
+	public VacationLeave setHrApproval(VacationLeave vacationLeave,
+			ServiceContext serviceContext) {
+		if (!vacationLeave.getStatus().equalsIgnoreCase(
+				VacationLeaveStatus.MANAGER_APPROVED.toString()))
+			return null;
+		try {
+			vacationLeave.setModifiedDate(new Date());
+
+			vacationLeave.setUserName(userLocalService.fetchUser(
+					serviceContext.getUserId()).getFullName());
+
+			vacationLeave.setStatus(VacationLeaveStatus.HR_APPROVED.toString());
+
+			return updateVacationLeave(vacationLeave);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
 	}
 
 	public int countAllUnDeletedDocuments(SearchContext searchContext,

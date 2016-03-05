@@ -48,7 +48,7 @@ public class ManagerPendingRequestActionBean extends AbstractPendingRequestBean 
 						getServiceContext());
 				LOGGER.info(item.getFullNameVi() + " was approved");
 			} catch (SystemException e) {
-				e.printStackTrace();
+				LOGGER.info(e);
 			}
 
 		}

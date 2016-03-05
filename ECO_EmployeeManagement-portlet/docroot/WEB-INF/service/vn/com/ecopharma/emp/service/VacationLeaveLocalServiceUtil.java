@@ -341,6 +341,17 @@ public class VacationLeaveLocalServiceUtil {
 		return getService().setManagerApproval(vacationLeave, serviceContext);
 	}
 
+	public static vn.com.ecopharma.emp.model.VacationLeave setHrApproval(
+		long leaveId, com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService().setHrApproval(leaveId, serviceContext);
+	}
+
+	public static vn.com.ecopharma.emp.model.VacationLeave setHrApproval(
+		vn.com.ecopharma.emp.model.VacationLeave vacationLeave,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService().setHrApproval(vacationLeave, serviceContext);
+	}
+
 	public static int countAllUnDeletedDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,

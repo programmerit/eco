@@ -366,6 +366,20 @@ public class VacationLeaveLocalServiceWrapper
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.VacationLeave setHrApproval(
+		long leaveId, com.liferay.portal.service.ServiceContext serviceContext) {
+		return _vacationLeaveLocalService.setHrApproval(leaveId, serviceContext);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.VacationLeave setHrApproval(
+		vn.com.ecopharma.emp.model.VacationLeave vacationLeave,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _vacationLeaveLocalService.setHrApproval(vacationLeave,
+			serviceContext);
+	}
+
+	@Override
 	public int countAllUnDeletedDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,

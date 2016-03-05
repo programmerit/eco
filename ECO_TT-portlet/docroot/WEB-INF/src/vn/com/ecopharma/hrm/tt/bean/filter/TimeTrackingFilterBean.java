@@ -1,4 +1,4 @@
-package vn.com.ecopharma.hrm.tt.bean;
+package vn.com.ecopharma.hrm.tt.bean.filter;
 
 import java.text.DateFormatSymbols;
 import java.util.Arrays;
@@ -18,7 +18,7 @@ import vn.com.ecopharma.hrm.tt.enumeration.ValueFilterType;
 
 @ManagedBean
 @ViewScoped
-public class TimeTrackingFilterBean extends OrganizationFilterBean {
+public class TimeTrackingFilterBean extends BaseEmpFilterBean {
 
 	/**
 	 * 
@@ -26,8 +26,6 @@ public class TimeTrackingFilterBean extends OrganizationFilterBean {
 	private static final long serialVersionUID = 1L;
 
 	private String globalString = StringUtils.EMPTY;
-	private String employeeCode = StringUtils.EMPTY;
-	private String fullName = StringUtils.EMPTY;
 
 	private Date filteredDateFrom;
 	private Date filteredDateTo;
@@ -64,14 +62,6 @@ public class TimeTrackingFilterBean extends OrganizationFilterBean {
 		this.globalString = globalString;
 	}
 
-	public String getFullName() {
-		return fullName;
-	}
-
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
-
 	public Date getFilteredDateFrom() {
 		return filteredDateFrom;
 	}
@@ -86,14 +76,6 @@ public class TimeTrackingFilterBean extends OrganizationFilterBean {
 
 	public void setFilteredDateTo(Date filteredDateTo) {
 		this.filteredDateTo = filteredDateTo;
-	}
-
-	public String getEmployeeCode() {
-		return employeeCode;
-	}
-
-	public void setEmployeeCode(String employeeCode) {
-		this.employeeCode = employeeCode;
 	}
 
 	public int getMonth() {

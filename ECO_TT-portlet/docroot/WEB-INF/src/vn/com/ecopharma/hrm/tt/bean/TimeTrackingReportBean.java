@@ -17,9 +17,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import vn.com.ecopharma.hrm.tt.bean.filter.TimeTrackingFilterBean;
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
 import vn.com.ecopharma.hrm.tt.dm.TimeTrackingReportLazyDataModel;
-import vn.com.ecopharma.hrm.tt.dto.EmpLeaveRequestItem;
 import vn.com.ecopharma.hrm.tt.dto.EmpTimeTrackingIndexedItem;
 import vn.com.ecopharma.hrm.tt.utils.BeanUtils;
 import vn.com.ecopharma.hrm.tt.utils.FilterUtils;
@@ -67,7 +67,7 @@ public class TimeTrackingReportBean implements Serializable {
 						filterBean.getFullName(), filters);
 
 				TTUtils.checkAndAddFilterValue(TimeTrackingField.EMP_CODE,
-						filterBean.getEmployeeCode(), filters);
+						filterBean.getEmpCode(), filters);
 
 				FilterUtils.bindOrgFilters(filterBean, filters);
 
@@ -99,8 +99,8 @@ public class TimeTrackingReportBean implements Serializable {
 	public void onAddLeaveRequest(ActionEvent event) {
 		if (selectedEmpTimeTrackingIndexedItem != null) {
 			LeaveRequestBean requestBean = BeanUtils.getLeaveRequestBean();
-			requestBean.setRequestItem(new EmpLeaveRequestItem(
-					selectedEmpTimeTrackingIndexedItem.getEmp()));
+			// requestBean.setRequestItem(new EmpLeaveRequestItem(
+			// selectedEmpTimeTrackingIndexedItem.getEmp()));
 
 			includedDialog = "/views/dialogs/leaveRequestDialog.xhtml";
 		}

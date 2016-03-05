@@ -1,11 +1,14 @@
 package vn.com.ecopharma.hrm.tt.dto;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
-public class EmpTimeTrackingIndexedItem implements Serializable {
+import vn.com.ecopharma.hrm.tt.constant.EmpField;
+
+import com.liferay.portal.kernel.search.Document;
+
+public class EmpTimeTrackingIndexedItem extends BaseEmpInfoIndexedItem {
 
 	private static final long serialVersionUID = 1L;
 
@@ -13,34 +16,20 @@ public class EmpTimeTrackingIndexedItem implements Serializable {
 
 	private static final String HOUR_MIN_FORMAT = "HH:mm";
 
-	private EmpIndexedItem emp;
-
 	private Map<String, ReportTimeItem> reportTimeMap;
 
 	private Date grandTotalMinInTime;
 
 	private Date grandTotalMaxOutTime;
 
-	public EmpTimeTrackingIndexedItem(EmpIndexedItem emp) {
-		this.emp = emp;
+	public EmpTimeTrackingIndexedItem(Document document) {
+		super(document);
 	}
 
 	/** GETTER & SETTER **/
 
-	public long getId() {
-		return this.emp.getEmpId();
-	}
-
 	public Map<String, ReportTimeItem> getReportTimeMap() {
 		return reportTimeMap;
-	}
-
-	public EmpIndexedItem getEmp() {
-		return emp;
-	}
-
-	public void setEmp(EmpIndexedItem emp) {
-		this.emp = emp;
 	}
 
 	public void setReportTimeMap(Map<String, ReportTimeItem> reportTimeMap) {
@@ -75,5 +64,10 @@ public class EmpTimeTrackingIndexedItem implements Serializable {
 
 	public void setGrandTotalMaxOutTime(Date grandTotalMaxOutTime) {
 		this.grandTotalMaxOutTime = grandTotalMaxOutTime;
+	}
+
+	@Override
+	protected String getIdFieldName() {
+		return EmpField.EMP_ID;
 	}
 }

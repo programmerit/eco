@@ -1,6 +1,7 @@
 package vn.com.ecopharma.hrm.tt.bean;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -11,8 +12,12 @@ import javax.faces.event.ActionEvent;
 
 import org.primefaces.model.DualListModel;
 
+import vn.com.ecopharma.emp.model.VacationLeave;
 import vn.com.ecopharma.emp.service.VacationLeaveLocalServiceUtil;
 import vn.com.ecopharma.hrm.tt.dto.VacationLeaveIndexedItem;
+import vn.com.ecopharma.hrm.tt.enumeration.VacationLeaveStatus;
+import vn.com.ecopharma.hrm.tt.model.TimeTracking;
+import vn.com.ecopharma.hrm.tt.service.TimeTrackingLocalServiceUtil;
 import vn.com.ecopharma.hrm.tt.utils.BeanUtils;
 import vn.com.ecopharma.hrm.tt.utils.TTUtils;
 
@@ -36,11 +41,50 @@ public class HrPendingRequestActionBean extends AbstractPendingRequestBean {
 	@Override
 	public void onConfirmApproval(ActionEvent event) {
 		for (VacationLeaveIndexedItem item : getPendingRequests().getTarget()) {
-			LOGGER.info(item.getFullNameVi() + " was approved");
+			long id = item.getId();
+			VacationLeave result = VacationLeaveLocalServiceUtil.setHrApproval(
+					id, getServiceContext());
+			if (result != null
+					&& result.getStatus().equalsIgnoreCase(
+							VacationLeaveStatus.HR_APPROVED.toString())) {
+				Date dateFrom = result.getLeaveFrom();
+				Date dateTo = result.getLeaveTo();
+				long empId = item.getEmpId();
+				long leaveId = result.getVacationLeaveId();
+				// request 1 DAY, 1/2 DAY leave
+				if (dateFrom.compareTo(dateTo) == 0) {
+					addOrUpdateLeave(empId, dateFrom, leaveId);
+				} else {
+					final List<Date> vacationLeaveRange = TimeTrackingLocalServiceUtil
+							.getDatesBetweenTwoDates(dateFrom, dateTo, false,
+									true);
+					for (Date date : vacationLeaveRange) {
+						addOrUpdateLeave(empId, date, leaveId);
+					}
+				}
+			}
+			LOGGER.info(item.getFullNameVi() + " was approved by HR");
 		}
 		FacesMessage message = new FacesMessage("Notice!", getPendingRequests()
-				.getTarget().size() + " was approved");
+				.getTarget().size() + " was approved by HR");
 		FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+
+	public TimeTracking addOrUpdateLeave(long empId, Date date, long leaveId) {
+		TimeTracking result = null;
+		TimeTracking checkedTimeTracking = TimeTrackingLocalServiceUtil
+				.findByEmpAndDate(empId, date);
+
+		// late-request -> just update leave ref...
+		if (checkedTimeTracking != null) {
+			result = TimeTrackingLocalServiceUtil.setLeaveForTimeTracking(
+					checkedTimeTracking, leaveId);
+		} else { // request before leave...
+			result = TimeTrackingLocalServiceUtil.addTimeTracking(empId, date,
+					null, null, null, null, null, null, leaveId,
+					getServiceContext());
+		}
+		return result;
 	}
 
 	@Override

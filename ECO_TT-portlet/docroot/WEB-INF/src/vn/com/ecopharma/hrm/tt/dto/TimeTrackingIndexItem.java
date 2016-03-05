@@ -3,8 +3,10 @@ package vn.com.ecopharma.hrm.tt.dto;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import vn.com.ecopharma.emp.service.VacationLeaveLocalServiceUtil;
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
 import vn.com.ecopharma.hrm.tt.constant.VacationLeaveField;
+import vn.com.ecopharma.hrm.tt.utils.TTUtils;
 
 import com.liferay.portal.kernel.search.Document;
 
@@ -30,6 +32,8 @@ public class TimeTrackingIndexItem extends BaseEmpInfoIndexedItem {
 
 	private Document document;
 
+	private VacationLeaveIndexedItem leaveIndexedItem;
+
 	public TimeTrackingIndexItem(Document document) {
 		super(document);
 		this.in1 = checkNullFieldAndReturnNullDate(TimeTrackingField.IN_1);
@@ -38,15 +42,14 @@ public class TimeTrackingIndexItem extends BaseEmpInfoIndexedItem {
 		this.out2 = checkNullFieldAndReturnNullDate(TimeTrackingField.OUT_2);
 		this.in3 = checkNullFieldAndReturnNullDate(TimeTrackingField.IN_3);
 		this.out3 = checkNullFieldAndReturnNullDate(TimeTrackingField.OUT_3);
-
+		long leaveRefId = checkNullFieldAndReturnLongValue(VacationLeaveField.ID);
+		this.leaveIndexedItem = leaveRefId != 0 ? new VacationLeaveIndexedItem(
+				VacationLeaveLocalServiceUtil.getIndexedDocument(leaveRefId,
+						TTUtils.getCurrentSearchContext())) : null;
 	}
 
-	public long getVacationLeaveId() {
-		return checkNullFieldAndReturnLongValue(VacationLeaveField.ID);
-	}
-
-	public boolean isVacationLeaveApplied() {
-		return getVacationLeaveId() != 0;
+	public VacationLeaveIndexedItem getLeaveIndexedItem() {
+		return leaveIndexedItem;
 	}
 
 	public Document getDocument() {
@@ -119,7 +122,8 @@ public class TimeTrackingIndexItem extends BaseEmpInfoIndexedItem {
 	}
 
 	public String getIn1Formatted() {
-		return isVacationLeaveApplied() ? "Leave" : formattedTime(getIn1());
+		return leaveIndexedItem != null ? leaveIndexedItem.getSign()
+				: formattedTime(getIn1());
 	}
 
 	public String getIn2Formatted() {

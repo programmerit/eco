@@ -6,15 +6,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
+import vn.com.ecopharma.hrm.tt.bean.filter.TimeTrackingFilterBean;
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
-import vn.com.ecopharma.hrm.tt.dto.EmpIndexedItem;
 import vn.com.ecopharma.hrm.tt.dto.EmpTimeTrackingIndexedItem;
 import vn.com.ecopharma.hrm.tt.dto.ReportTimeItem;
 import vn.com.ecopharma.hrm.tt.dto.TimeTrackingIndexItem;
+import vn.com.ecopharma.hrm.tt.utils.BeanUtils;
 import vn.com.ecopharma.hrm.tt.utils.TTUtils;
 
 import com.liferay.portal.kernel.log.Log;
@@ -23,8 +23,9 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
 
-public class TimeTrackingReportLazyDataModel extends
-		LazyDataModel<EmpTimeTrackingIndexedItem> {
+public class TimeTrackingReportLazyDataModel
+		extends
+		AbstractEmpBaseLazyDataModel<EmpTimeTrackingIndexedItem, TimeTrackingFilterBean> {
 
 	/**
 	 * 
@@ -39,10 +40,12 @@ public class TimeTrackingReportLazyDataModel extends
 	@Override
 	public List<EmpTimeTrackingIndexedItem> load(int first, int pageSize,
 			String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-		try {
-			final SearchContext searchContext = TTUtils
-					.getCurrentSearchContext();
+		super.bindOrganizationFilterFields(filters,
+				BeanUtils.getTimeTrackingFilterBean());
 
+		final SearchContext searchContext = getSearchContext();
+
+		try {
 			final List<Document> empDocs = EmpLocalServiceUtil
 					.filterEmployeeByFields(TTUtils.getCurrentSearchContext(),
 							filters, null, TTUtils.getCompanyId(), first, first
@@ -51,20 +54,20 @@ public class TimeTrackingReportLazyDataModel extends
 
 			for (Document document : empDocs) {
 				final EmpTimeTrackingIndexedItem empTimeTrackingIndexedItem = new EmpTimeTrackingIndexedItem(
-						new EmpIndexedItem(document));
+						document);
 				final int month = (Integer) filters
 						.get(TimeTrackingField.MONTH);
 
 				final int year = (Integer) filters.get(TimeTrackingField.YEAR);
 
 				final List<TimeTrackingIndexItem> timeTrackingIndexItems = TTUtils
-						.getTimeTrackingIndexItems(empTimeTrackingIndexedItem
-								.getEmp().getEmployeeCode(), month, year, true,
-								true);
+						.getTimeTrackingIndexItems(
+								empTimeTrackingIndexedItem.getEmployeeCode(),
+								month, year, true, true);
 
 				LOGGER.info(empTimeTrackingIndexedItem.getId() + "   "
-						+ empTimeTrackingIndexedItem.getEmp().getFullNameVi()
-						+ "    " + timeTrackingIndexItems.size());
+						+ empTimeTrackingIndexedItem.getFullNameVi() + "    "
+						+ timeTrackingIndexItems.size());
 
 				// final Map<String, Date> minInMap =
 				// getMinInMap(timeTrackingIndexItems);
@@ -118,8 +121,9 @@ public class TimeTrackingReportLazyDataModel extends
 
 	@Override
 	public EmpTimeTrackingIndexedItem getRowData(String rowKey) {
-		return new EmpTimeTrackingIndexedItem(new EmpIndexedItem(
-				EmpLocalServiceUtil.getIndexedEmp(rowKey, getSearchContext())));
+		return new EmpTimeTrackingIndexedItem(
+				EmpLocalServiceUtil.getIndexedEmp(Long.valueOf(rowKey),
+						searchContext));
 	}
 
 	@Override
@@ -177,7 +181,7 @@ public class TimeTrackingReportLazyDataModel extends
 			ReportTimeItem timeItem = new ReportTimeItem(
 					TTUtils.compareAndGetMinTime(0, min, inArray),
 					TTUtils.compareAndGetMaxTime(0, max, outArray, inArray));
-			timeItem.setLeaveApplied(item.isVacationLeaveApplied());
+			timeItem.setLeaveIndexedItem(item.getLeaveIndexedItem());
 			result.put(item.getDateFormatted(), timeItem);
 		}
 		return result;

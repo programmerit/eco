@@ -14,7 +14,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import vn.com.ecopharma.hrm.tt.constant.EmpField;
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
-import vn.com.ecopharma.hrm.tt.dto.EmpIndexedItem;
 import vn.com.ecopharma.hrm.tt.dto.EmpTimeTrackingIndexedItem;
 import vn.com.ecopharma.hrm.tt.dto.TimeTrackingIndexItem;
 import vn.com.ecopharma.hrm.tt.dto.TimeTrackingReport;
@@ -41,8 +40,6 @@ import com.liferay.portal.util.PortalUtil;
 public class TTUtils {
 
 	private static final String RANGE_DATE_FORMAT = "yyyyMMddhhmmss";
-	
-	
 
 	private TTUtils() {
 	}
@@ -101,8 +98,7 @@ public class TTUtils {
 		final List<EmpTimeTrackingIndexedItem> results = new ArrayList<>(
 				documents.size());
 		for (final Document document : documents) {
-			results.add(new EmpTimeTrackingIndexedItem(new EmpIndexedItem(
-					document)));
+			results.add(new EmpTimeTrackingIndexedItem(document));
 		}
 		return results;
 	}

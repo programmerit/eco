@@ -19,6 +19,7 @@ import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import vn.com.ecopharma.hrm.tt.bean.filter.TimeTrackingFilterBean;
 import vn.com.ecopharma.hrm.tt.constant.EmpField;
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
 import vn.com.ecopharma.hrm.tt.dm.TimeTrackingLazyDataModel;
@@ -82,7 +83,7 @@ public class TimeTrackingBean implements Serializable {
 						filterBean.getFullName(), filters);
 
 				TTUtils.checkAndAddFilterValue(TimeTrackingField.EMP_CODE,
-						filterBean.getEmployeeCode(), filters);
+						filterBean.getEmpCode(), filters);
 
 				FilterUtils.bindOrgFilters(filterBean, filters);
 

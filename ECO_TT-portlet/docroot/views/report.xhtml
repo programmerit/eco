@@ -11,13 +11,6 @@
 	<h:head />
 	<h:body>
 		<eco:ajaxIndicator />
-		<h:panelGroup rendered="#{mainBean.currentManager}"
-			style="display: inline-block;">
-			<h:outputText
-				value="There are #{mainBean.pendingVacationLeaveRequests.size()} PENDING REQUESTS" />
-		</h:panelGroup>
-
-
 		<h:link outcome="importExport" value="Import/Export " /> | 
 		<h:link outcome="timetracking" value="Detail TimeTracking " />
 		<h:form id="searchForm">
@@ -57,7 +50,7 @@
 
 					<h:panelGroup>
 						<p:inputText id="filter_empCode"
-							value="#{timeTrackingFilterBean.employeeCode}"
+							value="#{timeTrackingFilterBean.empCode}"
 							placeholder="Employee Code" style="width: 150px">
 							<p:ajax event="keyup" delay="1000"
 								oncomplete="refreshReports(); refreshFooter();" />
@@ -142,15 +135,15 @@
 
 
 				<p:column width="80">
-					<h:outputText value="#{t.emp.employeeCode}" />
+					<h:outputText value="#{t.employeeCode}" />
 				</p:column>
 
 				<p:column width="100">
-					<h:outputText value="#{t.emp.fullNameVi}" />
+					<h:outputText value="#{t.fullNameVi}" />
 				</p:column>
 
 				<p:column width="100">
-					<h:outputText value="#{t.emp.department}" />
+					<h:outputText value="#{t.department}" />
 				</p:column>
 
 				<p:column>
@@ -161,17 +154,19 @@
 
 				<p:columns value="#{timeTrackingReportBean.datesOfMonthStrings}"
 					var="d">
-					<h:panelGroup>
-						<h:outputText id="leaveOutput" value="P" style="color: red;"
-							rendered="#{t.getReportTimeItem(d).leaveApplied}" />
-						<p:tooltip for="leaveOutput" value="Annual leave" />
+					<h:panelGroup
+						rendered="#{t.getReportTimeItem(d).leaveRefAvailable}">
+						ON LEAVE
 					</h:panelGroup>
-					<h:outputText value="#{t.getReportTimeItem(d).formattedMinIn}"
-						style="color: blue;"
-						rendered="#{not t.getReportTimeItem(d).leaveApplied}" />
-					<p:separator style="width: 100px; margin-left: -10px;" />
-					<h:outputText value="#{t.getReportTimeItem(d).formattedMaxOut}"
-						style="color: black;" />
+
+					<h:panelGroup
+						rendered="#{not t.getReportTimeItem(d).leaveRefAvailable}">
+						<h:outputText value="#{t.getReportTimeItem(d).formattedMinIn}"
+							style="color: blue;" />
+						<p:separator style="width: 100px; margin-left: -10px;" />
+						<h:outputText value="#{t.getReportTimeItem(d).formattedMaxOut}"
+							style="color: black;" />
+					</h:panelGroup>
 				</p:columns>
 
 				<p:column>

@@ -5,7 +5,7 @@ import javax.faces.context.FacesContext;
 
 import vn.com.ecopharma.hrm.tt.bean.LeaveRequestBean;
 import vn.com.ecopharma.hrm.tt.bean.OrganizationFilterBean;
-import vn.com.ecopharma.hrm.tt.bean.TimeTrackingFilterBean;
+import vn.com.ecopharma.hrm.tt.bean.filter.TimeTrackingFilterBean;
 import vn.com.ecopharma.hrm.tt.bean.filter.VacationLeaveFilterBean;
 import vn.com.ecopharma.hrm.tt.permission.EmployeeModelPermission;
 
