@@ -144,7 +144,9 @@ create table eco_em_portlet_Emp (
 create table eco_em_portlet_EmpAnnualLeave (
 	empAnnualLeaveId LONG not null primary key,
 	empId LONG,
-	noOfAnualLeave DOUBLE,
+	totalAnualLeaveLeft DOUBLE,
+	totalAnnualLeave INTEGER,
+	totalPreviousYearLeavesLeft DOUBLE,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,

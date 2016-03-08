@@ -38,14 +38,18 @@ public class EmpAnnualLeaveCacheModel implements CacheModel<EmpAnnualLeave>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{empAnnualLeaveId=");
 		sb.append(empAnnualLeaveId);
 		sb.append(", empId=");
 		sb.append(empId);
-		sb.append(", noOfAnualLeave=");
-		sb.append(noOfAnualLeave);
+		sb.append(", totalAnualLeaveLeft=");
+		sb.append(totalAnualLeaveLeft);
+		sb.append(", totalAnnualLeave=");
+		sb.append(totalAnnualLeave);
+		sb.append(", totalPreviousYearLeavesLeft=");
+		sb.append(totalPreviousYearLeavesLeft);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -69,7 +73,9 @@ public class EmpAnnualLeaveCacheModel implements CacheModel<EmpAnnualLeave>,
 
 		empAnnualLeaveImpl.setEmpAnnualLeaveId(empAnnualLeaveId);
 		empAnnualLeaveImpl.setEmpId(empId);
-		empAnnualLeaveImpl.setNoOfAnualLeave(noOfAnualLeave);
+		empAnnualLeaveImpl.setTotalAnualLeaveLeft(totalAnualLeaveLeft);
+		empAnnualLeaveImpl.setTotalAnnualLeave(totalAnnualLeave);
+		empAnnualLeaveImpl.setTotalPreviousYearLeavesLeft(totalPreviousYearLeavesLeft);
 		empAnnualLeaveImpl.setGroupId(groupId);
 		empAnnualLeaveImpl.setCompanyId(companyId);
 		empAnnualLeaveImpl.setUserId(userId);
@@ -104,7 +110,9 @@ public class EmpAnnualLeaveCacheModel implements CacheModel<EmpAnnualLeave>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		empAnnualLeaveId = objectInput.readLong();
 		empId = objectInput.readLong();
-		noOfAnualLeave = objectInput.readDouble();
+		totalAnualLeaveLeft = objectInput.readDouble();
+		totalAnnualLeave = objectInput.readInt();
+		totalPreviousYearLeavesLeft = objectInput.readDouble();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
@@ -118,7 +126,9 @@ public class EmpAnnualLeaveCacheModel implements CacheModel<EmpAnnualLeave>,
 		throws IOException {
 		objectOutput.writeLong(empAnnualLeaveId);
 		objectOutput.writeLong(empId);
-		objectOutput.writeDouble(noOfAnualLeave);
+		objectOutput.writeDouble(totalAnualLeaveLeft);
+		objectOutput.writeInt(totalAnnualLeave);
+		objectOutput.writeDouble(totalPreviousYearLeavesLeft);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
@@ -136,7 +146,9 @@ public class EmpAnnualLeaveCacheModel implements CacheModel<EmpAnnualLeave>,
 
 	public long empAnnualLeaveId;
 	public long empId;
-	public double noOfAnualLeave;
+	public double totalAnualLeaveLeft;
+	public int totalAnnualLeave;
+	public double totalPreviousYearLeavesLeft;
 	public long groupId;
 	public long companyId;
 	public long userId;

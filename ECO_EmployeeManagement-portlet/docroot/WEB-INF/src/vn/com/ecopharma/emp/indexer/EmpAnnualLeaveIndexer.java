@@ -2,11 +2,11 @@ package vn.com.ecopharma.emp.indexer;
 
 import java.util.Collection;
 
-import vn.com.ecopharma.emp.constant.EmpDisciplineField;
+import vn.com.ecopharma.emp.constant.EmpAnnualLeaveField;
+import vn.com.ecopharma.emp.model.EmpAnnualLeave;
 import vn.com.ecopharma.emp.model.EmpDiscipline;
-import vn.com.ecopharma.emp.permission.EmpDisciplinePermission;
-import vn.com.ecopharma.emp.service.EmpDisciplineLocalServiceUtil;
-import vn.com.ecopharma.emp.service.persistence.EmpDisciplineActionableDynamicQuery;
+import vn.com.ecopharma.emp.service.EmpAnnualLeaveLocalServiceUtil;
+import vn.com.ecopharma.emp.service.persistence.EmpAnnualLeaveActionableDynamicQuery;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -15,16 +15,18 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
-import com.liferay.portal.security.permission.PermissionChecker;
 
-public class EmpDisciplineIndexer extends
-		AbstractBaseEmpInfoModelIndexer<EmpDiscipline> {
+public class EmpAnnualLeaveIndexer extends
+		AbstractBaseEmpInfoModelIndexer<EmpAnnualLeave> {
 
-	private String[] CLASS_NAMES = new String[] { EmpDiscipline.class.getName() };
+	@Override
+	protected long getEmpId(EmpAnnualLeave t) {
+		return t.getEmpId();
+	}
 
 	@Override
 	public String[] getClassNames() {
-		return CLASS_NAMES;
+		return new String[] { EmpAnnualLeave.class.getName() };
 	}
 
 	@Override
@@ -34,17 +36,16 @@ public class EmpDisciplineIndexer extends
 
 	@Override
 	protected Document doGetDocument(Object obj) throws Exception {
-		final EmpDiscipline o = (EmpDiscipline) obj;
+		final EmpAnnualLeave o = (EmpAnnualLeave) obj;
 		final Document document = super.doGetDocument(o);
-		document.addNumber(EmpDisciplineField.ID, o.getEmpDisciplineId());
-		document.addText(EmpDisciplineField.DECISION_NO, o.getDecisionNo());
-		document.addText(EmpDisciplineField.CONTENT, o.getContent());
-		document.addText(EmpDisciplineField.TYPE, o.getDisciplineType());
-		document.addDate(EmpDisciplineField.EFFECTIVE_DATE,
-				o.getEffectiveDate());
-		document.addText(EmpDisciplineField.ADDITIONAL_DISCIPLINE,
-				o.getAdditionalDisciplineType());
-		document.addText(EmpDisciplineField.DESC, o.getDescription());
+
+		document.addNumber(EmpAnnualLeaveField.ID, o.getEmpAnnualLeaveId());
+		document.addNumber(EmpAnnualLeaveField.TOTAL_LEAVE,
+				o.getTotalAnnualLeave());
+		document.addNumber(EmpAnnualLeaveField.TOTAL_LEAVE_LEFT,
+				o.getTotalAnualLeaveLeft());
+		document.addNumber(EmpAnnualLeaveField.TOTAL_PREVIOUS_YEAR_LEAVE,
+				o.getTotalPreviousYearLeavesLeft());
 
 		document.addText(Field.TITLE, EmpDiscipline.class.getName());
 		document.addDate(Field.CREATE_DATE, o.getCreateDate());
@@ -56,35 +57,24 @@ public class EmpDisciplineIndexer extends
 
 	@Override
 	protected void doReindex(Object obj) throws Exception {
-		EmpDiscipline e = (EmpDiscipline) obj;
+		EmpAnnualLeave e = (EmpAnnualLeave) obj;
 		Document document = getDocument(e);
 
 		SearchEngineUtil.updateDocument(getSearchEngineId(), e.getCompanyId(),
 				document);
-
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		EmpDiscipline e = EmpDisciplineLocalServiceUtil
-				.fetchEmpDiscipline(classPK);
+		EmpAnnualLeave e = EmpAnnualLeaveLocalServiceUtil
+				.fetchEmpAnnualLeave(classPK);
 		doReindex(e);
-	}
-
-	@Override
-	public boolean hasPermission(PermissionChecker permissionChecker,
-			String entryClassName, long entryClassPK, String actionId)
-			throws Exception {
-
-		return EmpDisciplinePermission.contains(permissionChecker,
-				entryClassPK, actionId);
-
 	}
 
 	@Override
 	protected BaseActionableDynamicQuery getActionableDynamicQuery(
 			final Collection<Document> documents) throws SystemException {
-		return new EmpDisciplineActionableDynamicQuery() {
+		return new EmpAnnualLeaveActionableDynamicQuery() {
 
 			@Override
 			protected void addCriteria(DynamicQuery dynamicQuery) {
@@ -94,16 +84,11 @@ public class EmpDisciplineIndexer extends
 			@Override
 			protected void performAction(Object object) throws PortalException,
 					SystemException {
-				EmpDiscipline e = (EmpDiscipline) object;
+				EmpAnnualLeave e = (EmpAnnualLeave) object;
 				Document document = getDocument(e);
 				documents.add(document);
 			}
 		};
-	}
-
-	@Override
-	protected long getEmpId(EmpDiscipline t) {
-		return t.getEmpId();
 	}
 
 }

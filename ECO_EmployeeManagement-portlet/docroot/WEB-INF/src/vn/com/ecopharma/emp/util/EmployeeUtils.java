@@ -178,7 +178,7 @@ public class EmployeeUtils {
 			List<BankInfoObject> items) {
 		final Map<EmpBankInfo, Boolean> resultMap = new HashMap<>();
 		for (BankInfoObject obj : items) {
-			resultMap.put(obj.getEmpBankInfo(), obj.isUIDeleted());
+			resultMap.put(obj.getObject(), obj.isUIDeleted());
 		}
 
 		return resultMap;

@@ -749,7 +749,9 @@
 
 		<!-- Group instance -->
         <column name="empId" type="long"></column>
-        <column name="noOfAnualLeave" type="double"></column>
+        <column name="totalAnualLeaveLeft" type="double"></column>
+        <column name="totalAnnualLeave" type="int"></column>
+        <column name="totalPreviousYearLeavesLeft" type="double"></column>
 
 		<column name="groupId" type="long"></column>
 
@@ -760,6 +762,9 @@
 		<column name="userName" type="String"></column>
 		<column name="createDate" type="Date"></column>
         <column name="modifiedDate" type="Date"></column>
+        <finder name="emp" return-type="EmpAnnualLeave">
+            <finder-column name="empId"></finder-column>
+        </finder>
 	</entity>
 
 </service-builder>

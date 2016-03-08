@@ -297,16 +297,108 @@ public class EmpAnnualLeaveLocalServiceUtil {
 
 	public static vn.com.ecopharma.emp.model.EmpAnnualLeave addEmpAnnualLeave(
 		vn.com.ecopharma.emp.model.EmpAnnualLeave prePersistedEntity,
-		long empId, double numberOfLeave) {
+		long empId, int totalLeave, double totalLeaveLeft,
+		double totalOldLeavesLeft) {
 		return getService()
-				   .addEmpAnnualLeave(prePersistedEntity, empId, numberOfLeave);
+				   .addEmpAnnualLeave(prePersistedEntity, empId, totalLeave,
+			totalLeaveLeft, totalOldLeavesLeft);
 	}
 
 	public static vn.com.ecopharma.emp.model.EmpAnnualLeave addEmpAnnualLeave(
-		long empId, double numberOfLeave,
+		long empId, int totalLeave, double totalLeaveLeft,
+		double totalOldLeavesLeft,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
-				   .addEmpAnnualLeave(empId, numberOfLeave, serviceContext);
+				   .addEmpAnnualLeave(empId, totalLeave, totalLeaveLeft,
+			totalOldLeavesLeft, serviceContext);
+	}
+
+	public static void scanAndAutoAddVacationLeave(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		getService().scanAndAutoAddVacationLeave(serviceContext);
+	}
+
+	public static int calculateTotalAnnualLeaveByJoinedDate(
+		java.util.Date joinedDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().calculateTotalAnnualLeaveByJoinedDate(joinedDate);
+	}
+
+	public static int getMonthsBetweenTwoDate(java.util.Date startDate,
+		java.util.Date endDate) {
+		return getService().getMonthsBetweenTwoDate(startDate, endDate);
+	}
+
+	public static vn.com.ecopharma.emp.model.EmpAnnualLeave fetchByEmp(
+		long empId) {
+		return getService().fetchByEmp(empId);
+	}
+
+	public static java.util.List<java.util.Date> getDatesBetweenTwoDates(
+		java.util.Date date1, java.util.Date date2, boolean includedHolidays,
+		boolean includedLowerTerm) {
+		return getService()
+				   .getDatesBetweenTwoDates(date1, date2, includedHolidays,
+			includedLowerTerm);
+	}
+
+	public static int countAllDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort) {
+		return getService()
+				   .countAllDocuments(searchContext, filterQueries, companyId,
+			sort);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.search.Document> searchAllDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
+		int end) {
+		return getService()
+				   .searchAllDocuments(searchContext, filterQueries, companyId,
+			sort, start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.search.Document> filterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end) throws com.liferay.portal.kernel.search.ParseException {
+		return getService()
+				   .filterByFields(searchContext, filters, sort, companyId,
+			start, end);
+	}
+
+	public static int countFilterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
+		throws com.liferay.portal.kernel.search.ParseException {
+		return getService()
+				   .countFilterByFields(searchContext, filters, sort, companyId);
+	}
+
+	public static com.liferay.portal.kernel.search.Document getIndexedDocument(
+		java.lang.String id,
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().getIndexedDocument(id, searchContext);
+	}
+
+	public static com.liferay.portal.kernel.search.Document getIndexedDocument(
+		long id, com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().getIndexedDocument(id, searchContext);
+	}
+
+	public static void indexAll() {
+		getService().indexAll();
+	}
+
+	public static void removeAllIndexes(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		long companyId) {
+		getService().removeAllIndexes(searchContext, companyId);
 	}
 
 	public static void clearService() {

@@ -438,20 +438,20 @@ public class ImportExportUtils {
 
 	public static String getBankNoCellInfo(int sizeCheck,
 			List<BankInfoObject> objList) {
-		return objList.size() > sizeCheck ? objList.get(sizeCheck)
-				.getEmpBankInfo().getBankAccountNo() : StringUtils.EMPTY;
+		return objList.size() > sizeCheck ? objList.get(sizeCheck).getObject()
+				.getBankAccountNo() : StringUtils.EMPTY;
 	}
 
 	public static String getBankNameCellInfo(int sizeCheck,
 			List<BankInfoObject> objList) {
-		return objList.size() > sizeCheck ? objList.get(sizeCheck)
-				.getEmpBankInfo().getBankName() : StringUtils.EMPTY;
+		return objList.size() > sizeCheck ? objList.get(sizeCheck).getObject()
+				.getBankName() : StringUtils.EMPTY;
 	}
 
 	public static String getBankBranchCellInfo(int sizeCheck,
 			List<BankInfoObject> objList) {
-		return objList.size() > sizeCheck ? objList.get(sizeCheck)
-				.getEmpBankInfo().getBranchName() : StringUtils.EMPTY;
+		return objList.size() > sizeCheck ? objList.get(sizeCheck).getObject()
+				.getBranchName() : StringUtils.EMPTY;
 	}
 
 	public static Row createRow1(Workbook wb, Sheet ws, int rowNum,

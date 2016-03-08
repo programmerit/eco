@@ -217,15 +217,23 @@
 				
 				<p:link value="Location Tree" outcome="locationView" /> | 
 				
-				<p:link value="Specialized Tree" outcome="specializedView" /> |
+				<p:link value="Specialized Tree" outcome="specializedView" /> | 
 				
+				<p:link value="Leaves Manage" outcome="annualLeaveView" />
+
 				<p:commandLink value="Test send mail"
 					actionListener="#{empView.onTestSendMail}"
 					update=":includedDialogPanelGroup"
-					oncomplete="PF('wNotifyDialog').show();" /> |
-					
+					oncomplete="PF('wNotifyDialog').show();"
+					rendered="#{empView.testEnabled}" style="margin-left: 3px;" />
+
 				<p:commandLink value="Fix labor contract signed date"
-					actionListener="#{empView.onTestUpdateLaborContractSignedDate}" />
+					actionListener="#{empView.onTestUpdateLaborContractSignedDate}"
+					rendered="#{empView.testEnabled}" style="margin-left: 3px;" />
+
+				<p:commandLink value="Add Annual Leave Days"
+					actionListener="#{empView.onTestAddAnnualLeaveDays}"
+					rendered="#{empView.testEnabled}" style="margin-left: 3px;" />
 
 
 

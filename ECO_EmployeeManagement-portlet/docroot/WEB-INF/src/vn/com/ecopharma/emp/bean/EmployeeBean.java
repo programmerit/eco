@@ -51,6 +51,7 @@ import vn.com.ecopharma.emp.model.University;
 import vn.com.ecopharma.emp.permission.EmpPermission;
 import vn.com.ecopharma.emp.service.DistrictLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
+import vn.com.ecopharma.emp.service.EmpAnnualLeaveLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpOrgRelationshipLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
@@ -86,6 +87,8 @@ public class EmployeeBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final Log LOGGER = LogFactoryUtil.getLog(EmployeeBean.class);
+
+	private static final boolean IS_TEST_ENV = true;
 
 	private static final String EMPLOYEE_VIEW_PAGE = "/views/employees.xhtml";
 
@@ -179,6 +182,11 @@ public class EmployeeBean implements Serializable {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void onTestAddAnnualLeaveDays() {
+		EmpAnnualLeaveLocalServiceUtil
+				.scanAndAutoAddVacationLeave(EmployeeUtils.getServiceContext());
 	}
 
 	public void addOneAddress() {
@@ -817,6 +825,10 @@ public class EmployeeBean implements Serializable {
 
 	public void setSelectedDocumentType(String selectedDocumentType) {
 		this.selectedDocumentType = selectedDocumentType;
+	}
+
+	public boolean isTestEnabled() {
+		return IS_TEST_ENV;
 	}
 
 }

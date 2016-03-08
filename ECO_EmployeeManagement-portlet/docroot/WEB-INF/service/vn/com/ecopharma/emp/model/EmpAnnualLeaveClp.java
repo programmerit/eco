@@ -77,7 +77,10 @@ public class EmpAnnualLeaveClp extends BaseModelImpl<EmpAnnualLeave>
 
 		attributes.put("empAnnualLeaveId", getEmpAnnualLeaveId());
 		attributes.put("empId", getEmpId());
-		attributes.put("noOfAnualLeave", getNoOfAnualLeave());
+		attributes.put("totalAnualLeaveLeft", getTotalAnualLeaveLeft());
+		attributes.put("totalAnnualLeave", getTotalAnnualLeave());
+		attributes.put("totalPreviousYearLeavesLeft",
+			getTotalPreviousYearLeavesLeft());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -102,10 +105,24 @@ public class EmpAnnualLeaveClp extends BaseModelImpl<EmpAnnualLeave>
 			setEmpId(empId);
 		}
 
-		Double noOfAnualLeave = (Double)attributes.get("noOfAnualLeave");
+		Double totalAnualLeaveLeft = (Double)attributes.get(
+				"totalAnualLeaveLeft");
 
-		if (noOfAnualLeave != null) {
-			setNoOfAnualLeave(noOfAnualLeave);
+		if (totalAnualLeaveLeft != null) {
+			setTotalAnualLeaveLeft(totalAnualLeaveLeft);
+		}
+
+		Integer totalAnnualLeave = (Integer)attributes.get("totalAnnualLeave");
+
+		if (totalAnnualLeave != null) {
+			setTotalAnnualLeave(totalAnnualLeave);
+		}
+
+		Double totalPreviousYearLeavesLeft = (Double)attributes.get(
+				"totalPreviousYearLeavesLeft");
+
+		if (totalPreviousYearLeavesLeft != null) {
+			setTotalPreviousYearLeavesLeft(totalPreviousYearLeavesLeft);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -193,22 +210,71 @@ public class EmpAnnualLeaveClp extends BaseModelImpl<EmpAnnualLeave>
 	}
 
 	@Override
-	public double getNoOfAnualLeave() {
-		return _noOfAnualLeave;
+	public double getTotalAnualLeaveLeft() {
+		return _totalAnualLeaveLeft;
 	}
 
 	@Override
-	public void setNoOfAnualLeave(double noOfAnualLeave) {
-		_noOfAnualLeave = noOfAnualLeave;
+	public void setTotalAnualLeaveLeft(double totalAnualLeaveLeft) {
+		_totalAnualLeaveLeft = totalAnualLeaveLeft;
 
 		if (_empAnnualLeaveRemoteModel != null) {
 			try {
 				Class<?> clazz = _empAnnualLeaveRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setNoOfAnualLeave",
+				Method method = clazz.getMethod("setTotalAnualLeaveLeft",
 						double.class);
 
-				method.invoke(_empAnnualLeaveRemoteModel, noOfAnualLeave);
+				method.invoke(_empAnnualLeaveRemoteModel, totalAnualLeaveLeft);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public int getTotalAnnualLeave() {
+		return _totalAnnualLeave;
+	}
+
+	@Override
+	public void setTotalAnnualLeave(int totalAnnualLeave) {
+		_totalAnnualLeave = totalAnnualLeave;
+
+		if (_empAnnualLeaveRemoteModel != null) {
+			try {
+				Class<?> clazz = _empAnnualLeaveRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setTotalAnnualLeave", int.class);
+
+				method.invoke(_empAnnualLeaveRemoteModel, totalAnnualLeave);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public double getTotalPreviousYearLeavesLeft() {
+		return _totalPreviousYearLeavesLeft;
+	}
+
+	@Override
+	public void setTotalPreviousYearLeavesLeft(
+		double totalPreviousYearLeavesLeft) {
+		_totalPreviousYearLeavesLeft = totalPreviousYearLeavesLeft;
+
+		if (_empAnnualLeaveRemoteModel != null) {
+			try {
+				Class<?> clazz = _empAnnualLeaveRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setTotalPreviousYearLeavesLeft",
+						double.class);
+
+				method.invoke(_empAnnualLeaveRemoteModel,
+					totalPreviousYearLeavesLeft);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -437,7 +503,9 @@ public class EmpAnnualLeaveClp extends BaseModelImpl<EmpAnnualLeave>
 
 		clone.setEmpAnnualLeaveId(getEmpAnnualLeaveId());
 		clone.setEmpId(getEmpId());
-		clone.setNoOfAnualLeave(getNoOfAnualLeave());
+		clone.setTotalAnualLeaveLeft(getTotalAnualLeaveLeft());
+		clone.setTotalAnnualLeave(getTotalAnnualLeave());
+		clone.setTotalPreviousYearLeavesLeft(getTotalPreviousYearLeavesLeft());
 		clone.setGroupId(getGroupId());
 		clone.setCompanyId(getCompanyId());
 		clone.setUserId(getUserId());
@@ -496,14 +564,18 @@ public class EmpAnnualLeaveClp extends BaseModelImpl<EmpAnnualLeave>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{empAnnualLeaveId=");
 		sb.append(getEmpAnnualLeaveId());
 		sb.append(", empId=");
 		sb.append(getEmpId());
-		sb.append(", noOfAnualLeave=");
-		sb.append(getNoOfAnualLeave());
+		sb.append(", totalAnualLeaveLeft=");
+		sb.append(getTotalAnualLeaveLeft());
+		sb.append(", totalAnnualLeave=");
+		sb.append(getTotalAnnualLeave());
+		sb.append(", totalPreviousYearLeavesLeft=");
+		sb.append(getTotalPreviousYearLeavesLeft());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
@@ -523,7 +595,7 @@ public class EmpAnnualLeaveClp extends BaseModelImpl<EmpAnnualLeave>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.EmpAnnualLeave");
@@ -538,8 +610,16 @@ public class EmpAnnualLeaveClp extends BaseModelImpl<EmpAnnualLeave>
 		sb.append(getEmpId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>noOfAnualLeave</column-name><column-value><![CDATA[");
-		sb.append(getNoOfAnualLeave());
+			"<column><column-name>totalAnualLeaveLeft</column-name><column-value><![CDATA[");
+		sb.append(getTotalAnualLeaveLeft());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>totalAnnualLeave</column-name><column-value><![CDATA[");
+		sb.append(getTotalAnnualLeave());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>totalPreviousYearLeavesLeft</column-name><column-value><![CDATA[");
+		sb.append(getTotalPreviousYearLeavesLeft());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -573,7 +653,9 @@ public class EmpAnnualLeaveClp extends BaseModelImpl<EmpAnnualLeave>
 
 	private long _empAnnualLeaveId;
 	private long _empId;
-	private double _noOfAnualLeave;
+	private double _totalAnualLeaveLeft;
+	private int _totalAnnualLeave;
+	private double _totalPreviousYearLeavesLeft;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

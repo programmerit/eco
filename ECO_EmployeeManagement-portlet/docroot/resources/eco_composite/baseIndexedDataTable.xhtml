@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
+
+	<composite:interface>
+		<composite:attribute name="name" required="true" />
+		<composite:attribute name="wVar" required="true" />
+		<composite:attribute name="var" required="true" />
+		<composite:attribute name="bean" type="java.lang.Object"
+			required="true" />
+		<composite:attribute name="lazyDataModel"
+			type="org.primefaces.model.LazyDataModel" required="true" />
+
+		<composite:attribute name="editable" type="java.lang.Boolean"
+			default="false" required="true" />
+
+		<composite:attribute name="selection"
+			type="vn.com.ecopharma.emp.dto.BaseIndexedModel" required="true" />
+
+		<composite:attribute name="onRowEdit"
+			method-signature="void actionListener(org.primefaces.event.RowEditEvent)" />
+
+		<composite:attribute name="onRowEditCancel"
+			method-signature="void actionListener(org.primefaces.event.RowEditEvent)" />
+
+	</composite:interface>
+
+	<composite:implementation>
+		<p:dataTable id="#{cc.attrs.name}" var="#{cc.attrs.var}"
+			widgetVar="#{cc.attrs.wVar}" value="#{cc.attrs.lazyDataModel}"
+			paginatorAlwaysVisible="true" paginator="true" rows="50"
+			paginatorPosition="bottom"
+			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="10,25,50" lazy="true" selectionMode="single"
+			selection="#{cc.attrs.selection}" rowKey="#{cc.attrs.var.id}"
+			editable="true" emptyMessage="No records found">
+
+			<p:ajax event="rowEdit" listener="#{cc.attrs.onRowEdit}" />
+			<p:ajax event="rowEditCancel" listener="#{cc.attrs.onRowEditCancel}" />
+
+			<p:column headerText="Name">
+				<h:outputText value="#{l.fullNameVi}" />
+			</p:column>
+
+			<p:column headerText="Employee Code">
+				<h:outputText value="#{l.employeeCode}" />
+			</p:column>
+
+			<p:column headerText="Total leaves">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{l.totalLeave}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputTextarea value="#{l.totalLeave}" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column headerText="Total leaves left">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{l.totalLeaveLeft}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputTextarea value="#{l.totalLeaveLeft}" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column headerText="Total leaves">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{l.totalPreviousYearLeave}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputTextarea value="#{l.totalPreviousYearLeave}" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column style="width:32px">
+				<p:rowEditor />
+			</p:column>
+
+			<f:facet name="footer">
+		        		In total there are of <h:outputText id="totalFilteredCount"
+					value="#{cc.attrs.lazyDataModel.rowCount}" /> records.
+		   			 </f:facet>
+		</p:dataTable>
+	</composite:implementation>
+
+
+	<style type="text/css">
+</style>
+</f:view>

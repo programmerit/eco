@@ -1,6 +1,5 @@
 package vn.com.ecopharma.emp.dto;
 
-import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,7 +10,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 
-public abstract class AbstractIndexedItem implements Serializable {
+public abstract class AbstractIndexedItem implements BaseIndexedModel {
 
 	/**
 	 * 
@@ -34,6 +33,7 @@ public abstract class AbstractIndexedItem implements Serializable {
 		this.document = document;
 	}
 
+	@Override
 	public long getId() {
 		return Long.valueOf(document.getField(getIdFieldName()).getValue());
 	}

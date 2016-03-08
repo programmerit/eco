@@ -111,6 +111,73 @@ public class EmpAnnualLeaveUtil {
 	}
 
 	/**
+	* Returns the emp annual leave where empId = &#63; or throws a {@link vn.com.ecopharma.emp.NoSuchEmpAnnualLeaveException} if it could not be found.
+	*
+	* @param empId the emp ID
+	* @return the matching emp annual leave
+	* @throws vn.com.ecopharma.emp.NoSuchEmpAnnualLeaveException if a matching emp annual leave could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.EmpAnnualLeave findByemp(
+		long empId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.emp.NoSuchEmpAnnualLeaveException {
+		return getPersistence().findByemp(empId);
+	}
+
+	/**
+	* Returns the emp annual leave where empId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param empId the emp ID
+	* @return the matching emp annual leave, or <code>null</code> if a matching emp annual leave could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.EmpAnnualLeave fetchByemp(
+		long empId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByemp(empId);
+	}
+
+	/**
+	* Returns the emp annual leave where empId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param empId the emp ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching emp annual leave, or <code>null</code> if a matching emp annual leave could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.EmpAnnualLeave fetchByemp(
+		long empId, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByemp(empId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the emp annual leave where empId = &#63; from the database.
+	*
+	* @param empId the emp ID
+	* @return the emp annual leave that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.emp.model.EmpAnnualLeave removeByemp(
+		long empId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.emp.NoSuchEmpAnnualLeaveException {
+		return getPersistence().removeByemp(empId);
+	}
+
+	/**
+	* Returns the number of emp annual leaves where empId = &#63;.
+	*
+	* @param empId the emp ID
+	* @return the number of matching emp annual leaves
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByemp(long empId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByemp(empId);
+	}
+
+	/**
 	* Caches the emp annual leave in the entity cache if it is enabled.
 	*
 	* @param empAnnualLeave the emp annual leave

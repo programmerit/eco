@@ -150,6 +150,7 @@ public class ResignationHistoryLocalServiceImpl extends
 				// update employee status
 				Emp employee = EmpLocalServiceUtil.getEmp(resignationHistory
 						.getEmployeeId());
+				employee.setResignedDate(resignationHistory.getResignedDate());
 				employee.setStatus(EmployeeStatus.RESIGNED.toString());
 				empLocalService.updateEmp(employee);
 

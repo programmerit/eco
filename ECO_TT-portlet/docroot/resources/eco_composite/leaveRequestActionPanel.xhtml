@@ -35,39 +35,41 @@
 	</composite:interface>
 
 	<composite:implementation>
-		<p:contextMenu for="pendingList">
-			<p:menuitem value="View Detail"
-				actionListener="#{cc.attrs.onViewDetail}" />
-		</p:contextMenu>
-
-		<p:outputPanel autoUpdate="true">
-			<p:pickList id="pendingList" value="#{cc.attrs.bean.pendingRequests}"
-				var="r" effect="bounce" itemValue="#{r}"
-				itemLabel="#{r.formattedString}" showSourceControls="true"
-				showTargetControls="true" showCheckbox="false" responsive="true"
-				showSourceFilter="true" showTargetFilter="true"
-				filterMatchMode="contains" converter="vacationIndexItemConverter">
-
-				<f:facet name="sourceCaption">Pending</f:facet>
-				<f:facet name="targetCaption">Approved</f:facet>
-
-				<p:ajax event="transfer" listener="#{cc.attrs.onTransfer}" />
-				<p:ajax event="select" listener="#{cc.attrs.onSelect}" />
-				<p:ajax event="unselect" listener="#{cc.attrs.onUnselect}" />
-				<p:ajax event="reorder" listener="#{cc.attrs.onReorder}" />
-
-				<p:column id="pendingRequestOutput" style="width:90%;">
-					<h:outputText value="#{r.formattedString}" />
-				</p:column>
-				<p:tooltip for="pendingRequestOutput" value="#{r.department}" />
-			</p:pickList>
-
-			<h:panelGroup layout="block"
-				style="display:inline-block; margin-top: 10px; width: 100%;">
-				<p:commandButton value="Confirm Approval!" style="float: right;"
-					actionListener="#{cc.attrs.onConfirmApproval}" update="pendingList" />
-			</h:panelGroup>
-		</p:outputPanel>
+		<h:form id="form">
+			<p:contextMenu for="pendingList">
+				<p:menuitem value="View Detail"
+					actionListener="#{cc.attrs.onViewDetail}" />
+			</p:contextMenu>
+	
+			<p:outputPanel>
+				<p:pickList id="pendingList" value="#{cc.attrs.bean.pendingRequests}"
+					var="r" effect="bounce" itemValue="#{r}"
+					itemLabel="#{r.formattedString}" showSourceControls="true"
+					showTargetControls="true" showCheckbox="false" responsive="true"
+					showSourceFilter="true" showTargetFilter="true"
+					filterMatchMode="contains" converter="vacationIndexItemConverter">
+	
+					<f:facet name="sourceCaption">Pending</f:facet>
+					<f:facet name="targetCaption">Approved</f:facet>
+	
+					<p:ajax event="transfer" listener="#{cc.attrs.onTransfer}" />
+					<p:ajax event="select" listener="#{cc.attrs.onSelect}" />
+					<p:ajax event="unselect" listener="#{cc.attrs.onUnselect}" />
+					<p:ajax event="reorder" listener="#{cc.attrs.onReorder}" />
+	
+					<p:column id="pendingRequestOutput" style="width:90%;">
+						<h:outputText value="#{r.formattedString}" />
+					</p:column>
+					<p:tooltip for="pendingRequestOutput" value="#{r.department}" />
+				</p:pickList>
+	
+				<h:panelGroup layout="block"
+					style="display:inline-block; margin-top: 10px; width: 100%;">
+					<p:commandButton value="Confirm Approval!" style="float: right;"
+						actionListener="#{cc.attrs.onConfirmApproval}" update="pendingList" />
+				</h:panelGroup>
+			</p:outputPanel>
+		</h:form>
 	</composite:implementation>
 
 

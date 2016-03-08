@@ -3,6 +3,7 @@ package vn.com.ecopharma.hrm.tt.dto;
 import java.io.Serializable;
 
 import vn.com.ecopharma.emp.model.VacationLeave;
+import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.VacationLeaveLocalServiceUtil;
 import vn.com.ecopharma.hrm.tt.utils.TTUtils;
 
@@ -25,6 +26,11 @@ public class EmpLeaveRequestItem implements Serializable {
 	public EmpLeaveRequestItem(EmpIndexedItem emp) {
 		this(emp, VacationLeaveLocalServiceUtil
 				.createPrePersistedEntity(TTUtils.getServiceContext()));
+	}
+
+	public EmpLeaveRequestItem(long empId) {
+		this(new EmpIndexedItem(EmpLocalServiceUtil.getIndexedEmp(empId,
+				TTUtils.getCurrentSearchContext())));
 	}
 
 	public EmpIndexedItem getEmp() {

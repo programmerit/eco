@@ -91,18 +91,47 @@ public interface EmpAnnualLeaveModel extends BaseModel<EmpAnnualLeave>,
 	public void setEmpId(long empId);
 
 	/**
-	 * Returns the no of anual leave of this emp annual leave.
+	 * Returns the total anual leave left of this emp annual leave.
 	 *
-	 * @return the no of anual leave of this emp annual leave
+	 * @return the total anual leave left of this emp annual leave
 	 */
-	public double getNoOfAnualLeave();
+	public double getTotalAnualLeaveLeft();
 
 	/**
-	 * Sets the no of anual leave of this emp annual leave.
+	 * Sets the total anual leave left of this emp annual leave.
 	 *
-	 * @param noOfAnualLeave the no of anual leave of this emp annual leave
+	 * @param totalAnualLeaveLeft the total anual leave left of this emp annual leave
 	 */
-	public void setNoOfAnualLeave(double noOfAnualLeave);
+	public void setTotalAnualLeaveLeft(double totalAnualLeaveLeft);
+
+	/**
+	 * Returns the total annual leave of this emp annual leave.
+	 *
+	 * @return the total annual leave of this emp annual leave
+	 */
+	public int getTotalAnnualLeave();
+
+	/**
+	 * Sets the total annual leave of this emp annual leave.
+	 *
+	 * @param totalAnnualLeave the total annual leave of this emp annual leave
+	 */
+	public void setTotalAnnualLeave(int totalAnnualLeave);
+
+	/**
+	 * Returns the total previous year leaves left of this emp annual leave.
+	 *
+	 * @return the total previous year leaves left of this emp annual leave
+	 */
+	public double getTotalPreviousYearLeavesLeft();
+
+	/**
+	 * Sets the total previous year leaves left of this emp annual leave.
+	 *
+	 * @param totalPreviousYearLeavesLeft the total previous year leaves left of this emp annual leave
+	 */
+	public void setTotalPreviousYearLeavesLeft(
+		double totalPreviousYearLeavesLeft);
 
 	/**
 	 * Returns the group ID of this emp annual leave.

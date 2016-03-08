@@ -28,6 +28,8 @@ create index IX_9C3E31DE on eco_em_portlet_Emp (empUserId);
 create index IX_D6D1DE66 on eco_em_portlet_Emp (status);
 create index IX_F272A48A on eco_em_portlet_Emp (titlesId);
 
+create index IX_3AD6E3AF on eco_em_portlet_EmpAnnualLeave (empId);
+
 create index IX_90AA9689 on eco_em_portlet_EmpBankInfo (empId);
 
 create index IX_9FE130A5 on eco_em_portlet_EmpNotifyEmail (status);

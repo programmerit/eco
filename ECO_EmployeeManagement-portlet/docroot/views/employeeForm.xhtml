@@ -403,21 +403,21 @@
 						<h:panelGrid columns="4">
 							<h:outputText value="Bank No" />
 							<p:inputText id="bankNo" placeholder="Bank No"
-								value="#{empView.modifyEmployeeInfoItem.bankInfos[0].empBankInfo.bankAccountNo}" />
+								value="#{empView.modifyEmployeeInfoItem.bankInfos[0].object.bankAccountNo}" />
 							<p:message for="bankNo" display="icon" />
 							<p:tooltip for="bankNo" value="Bank No" showEffect="clip"
 								hideEffect="explode" />
 
 							<h:outputText value="Bank Name" />
 							<p:inputText id="bankName" placeholder="Bank Name"
-								value="#{empView.modifyEmployeeInfoItem.bankInfos[0].empBankInfo.bankName}" />
+								value="#{empView.modifyEmployeeInfoItem.bankInfos[0].object.bankName}" />
 							<p:message for="bankName" display="icon" />
 							<p:tooltip for="bankName" value="Bank Name" showEffect="clip"
 								hideEffect="explode" />
 
 							<h:outputText value="Branch" />
 							<p:inputText id="bankBranch" placeholder="Bank Branch"
-								value="#{empView.modifyEmployeeInfoItem.bankInfos[0].empBankInfo.branchName}" />
+								value="#{empView.modifyEmployeeInfoItem.bankInfos[0].object.branchName}" />
 							<p:message for="bankBranch" display="icon" />
 							<p:tooltip for="bankBranch" value="Bank Branch" showEffect="clip"
 								hideEffect="explode" />
@@ -561,14 +561,13 @@
 
 								<p:panelGrid columns="2">
 									<h:outputText value="Bank No" />
-									<p:inputText id="bankNo" value="#{b.empBankInfo.bankAccountNo}" />
+									<p:inputText id="bankNo" value="#{b.object.bankAccountNo}" />
 
 									<h:outputText value="Bank Name" />
-									<p:inputText id="bankName" value="#{b.empBankInfo.bankName}" />
+									<p:inputText id="bankName" value="#{b.object.bankName}" />
 
 									<h:outputText value="Branch" />
-									<p:inputText id="bankBranch"
-										value="#{b.empBankInfo.branchName}" />
+									<p:inputText id="bankBranch" value="#{b.object.branchName}" />
 
 								</p:panelGrid>
 							</h:panelGroup>
@@ -577,7 +576,6 @@
 					</h:panelGrid>
 				</p:outputPanel>
 				<p:commandButton value="Save" styleClass="GreenButton RaisedButton"
-					actionListener="#{empView.onSaveBankInfoChanges}"
 					update=":modifyForm" oncomplete="PF('wBankInfoDialog').hide()" /> |
 					
 				<p:commandLink actionListener="#{empView.addOneBankInfo}"

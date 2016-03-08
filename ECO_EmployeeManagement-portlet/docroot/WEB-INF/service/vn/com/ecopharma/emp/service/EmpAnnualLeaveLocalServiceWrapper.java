@@ -315,17 +315,115 @@ public class EmpAnnualLeaveLocalServiceWrapper
 	@Override
 	public vn.com.ecopharma.emp.model.EmpAnnualLeave addEmpAnnualLeave(
 		vn.com.ecopharma.emp.model.EmpAnnualLeave prePersistedEntity,
-		long empId, double numberOfLeave) {
+		long empId, int totalLeave, double totalLeaveLeft,
+		double totalOldLeavesLeft) {
 		return _empAnnualLeaveLocalService.addEmpAnnualLeave(prePersistedEntity,
-			empId, numberOfLeave);
+			empId, totalLeave, totalLeaveLeft, totalOldLeavesLeft);
 	}
 
 	@Override
 	public vn.com.ecopharma.emp.model.EmpAnnualLeave addEmpAnnualLeave(
-		long empId, double numberOfLeave,
+		long empId, int totalLeave, double totalLeaveLeft,
+		double totalOldLeavesLeft,
 		com.liferay.portal.service.ServiceContext serviceContext) {
-		return _empAnnualLeaveLocalService.addEmpAnnualLeave(empId,
-			numberOfLeave, serviceContext);
+		return _empAnnualLeaveLocalService.addEmpAnnualLeave(empId, totalLeave,
+			totalLeaveLeft, totalOldLeavesLeft, serviceContext);
+	}
+
+	@Override
+	public void scanAndAutoAddVacationLeave(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		_empAnnualLeaveLocalService.scanAndAutoAddVacationLeave(serviceContext);
+	}
+
+	@Override
+	public int calculateTotalAnnualLeaveByJoinedDate(java.util.Date joinedDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _empAnnualLeaveLocalService.calculateTotalAnnualLeaveByJoinedDate(joinedDate);
+	}
+
+	@Override
+	public int getMonthsBetweenTwoDate(java.util.Date startDate,
+		java.util.Date endDate) {
+		return _empAnnualLeaveLocalService.getMonthsBetweenTwoDate(startDate,
+			endDate);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.EmpAnnualLeave fetchByEmp(long empId) {
+		return _empAnnualLeaveLocalService.fetchByEmp(empId);
+	}
+
+	@Override
+	public java.util.List<java.util.Date> getDatesBetweenTwoDates(
+		java.util.Date date1, java.util.Date date2, boolean includedHolidays,
+		boolean includedLowerTerm) {
+		return _empAnnualLeaveLocalService.getDatesBetweenTwoDates(date1,
+			date2, includedHolidays, includedLowerTerm);
+	}
+
+	@Override
+	public int countAllDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort) {
+		return _empAnnualLeaveLocalService.countAllDocuments(searchContext,
+			filterQueries, companyId, sort);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Document> searchAllDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
+		int end) {
+		return _empAnnualLeaveLocalService.searchAllDocuments(searchContext,
+			filterQueries, companyId, sort, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Document> filterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end) throws com.liferay.portal.kernel.search.ParseException {
+		return _empAnnualLeaveLocalService.filterByFields(searchContext,
+			filters, sort, companyId, start, end);
+	}
+
+	@Override
+	public int countFilterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
+		throws com.liferay.portal.kernel.search.ParseException {
+		return _empAnnualLeaveLocalService.countFilterByFields(searchContext,
+			filters, sort, companyId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Document getIndexedDocument(
+		java.lang.String id,
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return _empAnnualLeaveLocalService.getIndexedDocument(id, searchContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Document getIndexedDocument(
+		long id, com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return _empAnnualLeaveLocalService.getIndexedDocument(id, searchContext);
+	}
+
+	@Override
+	public void indexAll() {
+		_empAnnualLeaveLocalService.indexAll();
+	}
+
+	@Override
+	public void removeAllIndexes(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		long companyId) {
+		_empAnnualLeaveLocalService.removeAllIndexes(searchContext, companyId);
 	}
 
 	/**

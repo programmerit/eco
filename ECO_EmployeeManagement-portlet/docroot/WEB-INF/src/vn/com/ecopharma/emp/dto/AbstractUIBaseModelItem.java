@@ -7,6 +7,14 @@ import vn.com.ecopharma.emp.util.EmployeeUtils;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceContext;
 
+/**
+ * @author TaoTran
+ * @version 1.0
+ * @since 2015/11/22
+ * @category Base class of User Interface Removable BaseModel item(UI)
+ * @param <T>
+ *            BaseModel
+ */
 public abstract class AbstractUIBaseModelItem<T extends BaseModel<T>>
 		implements Serializable {
 

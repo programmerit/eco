@@ -268,9 +268,68 @@ public interface EmpAnnualLeaveLocalService extends BaseLocalService,
 
 	public vn.com.ecopharma.emp.model.EmpAnnualLeave addEmpAnnualLeave(
 		vn.com.ecopharma.emp.model.EmpAnnualLeave prePersistedEntity,
-		long empId, double numberOfLeave);
+		long empId, int totalLeave, double totalLeaveLeft,
+		double totalOldLeavesLeft);
 
 	public vn.com.ecopharma.emp.model.EmpAnnualLeave addEmpAnnualLeave(
-		long empId, double numberOfLeave,
+		long empId, int totalLeave, double totalLeaveLeft,
+		double totalOldLeavesLeft,
 		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public void scanAndAutoAddVacationLeave(
+		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public int calculateTotalAnnualLeaveByJoinedDate(java.util.Date joinedDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMonthsBetweenTwoDate(java.util.Date startDate,
+		java.util.Date endDate);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public vn.com.ecopharma.emp.model.EmpAnnualLeave fetchByEmp(long empId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.util.Date> getDatesBetweenTwoDates(
+		java.util.Date date1, java.util.Date date2, boolean includedHolidays,
+		boolean includedLowerTerm);
+
+	public int countAllDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.kernel.search.Document> searchAllDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
+		int end);
+
+	public java.util.List<com.liferay.portal.kernel.search.Document> filterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end) throws com.liferay.portal.kernel.search.ParseException;
+
+	public int countFilterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
+		throws com.liferay.portal.kernel.search.ParseException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.search.Document getIndexedDocument(
+		java.lang.String id,
+		com.liferay.portal.kernel.search.SearchContext searchContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.search.Document getIndexedDocument(
+		long id, com.liferay.portal.kernel.search.SearchContext searchContext);
+
+	public void indexAll();
+
+	public void removeAllIndexes(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		long companyId);
 }

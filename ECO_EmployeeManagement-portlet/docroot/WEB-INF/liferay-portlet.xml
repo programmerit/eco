@@ -10,6 +10,7 @@
 		<indexer-class>vn.com.ecopharma.emp.indexer.ResignationIndexer</indexer-class>
 		<indexer-class>vn.com.ecopharma.emp.indexer.EmpIndexer</indexer-class>
 		<indexer-class>vn.com.ecopharma.emp.indexer.VacationLeaveIndexer</indexer-class>
+		<indexer-class>vn.com.ecopharma.emp.indexer.EmpAnnualLeaveIndexer</indexer-class>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 		<ajaxable>false</ajaxable>
 		<header-portlet-css>/css/main.css</header-portlet-css>

@@ -12,17 +12,14 @@
 
 	<h:body>
 		<eco:ajaxIndicator />
-		<h:form id="form">
-			<p:growl id="growl" showDetail="true" sticky="false" life="4000" />
-			<eco:leaveRequestActionPanel
-				bean="#{managerPendingRequestActionBean}"
-				onConfirmApproval="#{managerPendingRequestActionBean.onConfirmApproval}"
-				onViewDetail="#{managerPendingRequestActionBean.onViewDetail}"
-				onTransfer="#{managerPendingRequestActionBean.onTransfer}"
-				onSelect="#{managerPendingRequestActionBean.onSelect}"
-				onUnSelect="#{managerPendingRequestActionBean.onUnSelect}"
-				approvedUpdate="growl" />
-		</h:form>
+		<p:growl id="growl" showDetail="true" sticky="false" life="4000" />
+		<eco:leaveRequestActionPanel bean="#{managerPendingRequestActionBean}"
+			onConfirmApproval="#{managerPendingRequestActionBean.onConfirmApproval}"
+			onViewDetail="#{managerPendingRequestActionBean.onViewDetail}"
+			onTransfer="#{managerPendingRequestActionBean.onTransfer}"
+			onSelect="#{managerPendingRequestActionBean.onSelect}"
+			onUnSelect="#{managerPendingRequestActionBean.onUnSelect}"
+			approvedUpdate="growl" />
 	</h:body>
 
 	<style type="text/css">

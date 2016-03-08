@@ -129,7 +129,9 @@
 	<model name="vn.com.ecopharma.emp.model.EmpAnnualLeave">
 		<field name="empAnnualLeaveId" type="long" />
 		<field name="empId" type="long" />
-		<field name="noOfAnualLeave" type="double" />
+		<field name="totalAnualLeaveLeft" type="double" />
+		<field name="totalAnnualLeave" type="int" />
+		<field name="totalPreviousYearLeavesLeft" type="double" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

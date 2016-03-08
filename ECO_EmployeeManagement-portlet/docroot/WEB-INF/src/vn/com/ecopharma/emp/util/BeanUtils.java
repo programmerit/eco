@@ -9,6 +9,7 @@ import vn.com.ecopharma.emp.bean.EmployeeIndexedBean;
 import vn.com.ecopharma.emp.bean.OrganizationPanelBean;
 import vn.com.ecopharma.emp.bean.OrganizationTreeViewBean;
 import vn.com.ecopharma.emp.bean.TitlesBean;
+import vn.com.ecopharma.emp.bean.filter.EmpAnnualLeaveFilterBean;
 import vn.com.ecopharma.emp.bean.filter.EmpDisciplineFilterBean;
 import vn.com.ecopharma.emp.bean.filter.EmployeeFilterView;
 import vn.com.ecopharma.emp.bean.filter.OrganizationFilterBean;
@@ -45,6 +46,8 @@ public class BeanUtils {
 	private static final String VACATION_LEAVE_FILTER_BEAN = "leaveFilterBean";
 
 	private static final String PROMOTION_FILTER_BEAN = "promotionFilterBean";
+
+	private static final String EMP_ANNUAL_LEAVE_FILTER_BEAN = "annualLeaveFilterBean";
 
 	private static final String EMP_FILTER_HOLDER_BEAN = "empGlobalFilterHolderBean";
 
@@ -87,6 +90,10 @@ public class BeanUtils {
 
 	public static EmpDisciplineFilterBean getDisciplineFilterBean() {
 		return (EmpDisciplineFilterBean) getBackingBeanByName(DISCIPLINE_FILTER_BEAN);
+	}
+
+	public static EmpAnnualLeaveFilterBean getAnnualLeaveFilterBean() {
+		return (EmpAnnualLeaveFilterBean) getBackingBeanByName(EMP_ANNUAL_LEAVE_FILTER_BEAN);
 	}
 
 	public static ResignationFilterBean getResignationFilterBean() {

@@ -15,9 +15,15 @@
 package vn.com.ecopharma.emp.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 
+import vn.com.ecopharma.emp.constant.EMInfo;
+import vn.com.ecopharma.emp.constant.EmpAnnualLeaveField;
+import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpAnnualLeave;
 import vn.com.ecopharma.emp.service.base.EmpAnnualLeaveLocalServiceBaseImpl;
 
@@ -25,6 +31,20 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.ParseException;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
@@ -96,11 +116,12 @@ public class EmpAnnualLeaveLocalServiceImpl extends
 	}
 
 	public EmpAnnualLeave addEmpAnnualLeave(EmpAnnualLeave prePersistedEntity,
-			long empId, double numberOfLeave) {
+			long empId, int totalLeave, double totalLeaveLeft,
+			double totalOldLeavesLeft) {
 
 		prePersistedEntity.setEmpId(empId);
-		prePersistedEntity.setNoOfAnualLeave(numberOfLeave);
-
+		prePersistedEntity.setTotalAnnualLeave(totalLeave);
+		prePersistedEntity.setTotalAnualLeaveLeft(totalLeaveLeft);
 		try {
 			EmpAnnualLeave result = super.addEmpAnnualLeave(prePersistedEntity);
 			return result;
@@ -110,9 +131,274 @@ public class EmpAnnualLeaveLocalServiceImpl extends
 		return null;
 	}
 
-	public EmpAnnualLeave addEmpAnnualLeave(long empId, double numberOfLeave,
+	public EmpAnnualLeave addEmpAnnualLeave(long empId, int totalLeave,
+			double totalLeaveLeft, double totalOldLeavesLeft,
 			ServiceContext serviceContext) {
-		return addEmpAnnualLeave(empId, numberOfLeave, serviceContext);
+		return addEmpAnnualLeave(createPrePersistedEntity(serviceContext),
+				empId, totalLeave, totalLeaveLeft, totalOldLeavesLeft);
+	}
+
+	public void scanAndAutoAddVacationLeave(ServiceContext serviceContext) {
+		List<Emp> allEmps = empLocalService.findAll();
+		for (Emp emp : allEmps) {
+			LOGGER.info("Emp " + emp.getEmpCode() + " joined date: "
+					+ emp.getJoinedDate());
+			try {
+				int numberOfAnnualLeaves = calculateTotalAnnualLeaveByJoinedDate(emp
+						.getJoinedDate());
+				LOGGER.info("	 	Has " + numberOfAnnualLeaves + " Annual Leave");
+
+				addEmpAnnualLeave(emp.getEmpId(), numberOfAnnualLeaves, 0.0,
+						0.0, serviceContext);
+
+			} catch (SystemException e) {
+				LOGGER.info(e);
+			}
+		}
+	}
+
+	public int calculateTotalAnnualLeaveByJoinedDate(Date joinedDate)
+			throws SystemException {
+		if (joinedDate == null) {
+			throw new SystemException("joinedDate was null");
+		}
+		Calendar calendar = Calendar.getInstance();
+		int calTotalLeaves = 0;
+		Date today = new Date();
+
+		calendar.setTime(today);
+		int thisYear = calendar.get(Calendar.YEAR);
+		int thisMonth = calendar.get(Calendar.MONTH);
+		int thisDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+		calendar.setTime(joinedDate);
+		int joinedDateYear = calendar.get(Calendar.YEAR);
+		int joinedDateDay = calendar.get(Calendar.DAY_OF_MONTH);
+		LOGGER.info("thisYear: " + thisYear + "  vs  " + joinedDateYear);
+		if (thisYear == joinedDateYear) {
+			if (joinedDateDay > 15) {
+				calendar.add(Calendar.MONTH, 1);
+				calendar.set(Calendar.DAY_OF_MONTH, 1);
+			}
+			// new calculate-joinedMonth
+			int joinedDateMonth = calendar.get(Calendar.MONTH);
+			LOGGER.info("thisMonth: " + thisMonth + "  vs  " + joinedDateMonth);
+			if (thisMonth == joinedDateMonth)
+				return 0;
+
+		} else {
+			calendar.set(thisYear, 00, 01);
+		}
+
+		// total month = total leaves incase today is larger than 15
+		int totalMonth = getMonthsBetweenTwoDate(calendar.getTime(), today);
+		LOGGER.info("No Of Months Btw 2 Dates: " + totalMonth);
+		// calTotalLeaves = thisDayOfMonth > 15 ? totalMonth : totalMonth - 1;
+
+		return totalMonth;
+	}
+
+	public int getMonthsBetweenTwoDate(Date startDate, Date endDate) {
+		Calendar startCalendar = new GregorianCalendar();
+		startCalendar.setTime(startDate);
+		Calendar endCalendar = new GregorianCalendar();
+		endCalendar.setTime(endDate);
+
+		int diffYear = endCalendar.get(Calendar.YEAR)
+				- startCalendar.get(Calendar.YEAR);
+		int diffMonth = diffYear * 12 + endCalendar.get(Calendar.MONTH)
+				- startCalendar.get(Calendar.MONTH);
+		return diffMonth;
+	}
+
+	public EmpAnnualLeave fetchByEmp(long empId) {
+		try {
+			return empAnnualLeavePersistence.fetchByemp(empId);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
+	public List<Date> getDatesBetweenTwoDates(Date date1, Date date2,
+			boolean includedHolidays, boolean includedLowerTerm) {
+		List<Date> dates = new ArrayList<>();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date1);
+		while (calendar.getTime().before(date2)) {
+			calendar.add(Calendar.DATE, 1);
+			if (includedHolidays) {
+				dates.add(calendar.getTime());
+			} else {
+				if (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
+					dates.add(calendar.getTime());
+			}
+		}
+
+		if (includedLowerTerm)
+			dates.add(date1);
+
+		return dates;
+	}
+
+	// / SEARCH ENGINE PART
+
+	public int countAllDocuments(SearchContext searchContext,
+			List<Query> filterQueries, long companyId, Sort sort) {
+		return searchAllDocuments(searchContext, filterQueries, companyId,
+				sort, QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
+	}
+
+	public List<Document> searchAllDocuments(SearchContext searchContext,
+			List<Query> filterQueries, long companyId, Sort sort, int start,
+			int end) {
+
+		LOGGER.info("FilterQueries size: " + filterQueries.size());
+		final BooleanQuery fullQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		final BooleanQuery allEntriesBooleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+
+		allEntriesBooleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME,
+				EmpAnnualLeave.class.getName());
+
+		try {
+			// add filter queries
+			fullQuery.add(allEntriesBooleanQuery, BooleanClauseOccur.MUST);
+			if (filterQueries != null && filterQueries.size() > 0) {
+				for (Query query : filterQueries) {
+					fullQuery.add(query, BooleanClauseOccur.MUST);
+				}
+			}
+
+			final List<Document> documents = SearchEngineUtil.search(
+					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
+					fullQuery, sort, start, end).toList();
+			LOGGER.info("RESULT SIZE: " + documents.size());
+
+			return documents;
+
+		} catch (SearchException e) {
+			LogFactoryUtil.getLog(EmpDisciplineLocalServiceImpl.class).info(e);
+		} catch (ParseException e) {
+			LogFactoryUtil.getLog(EmpDisciplineLocalServiceImpl.class).info(e);
+		}
+		return new ArrayList<>();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Document> filterByFields(SearchContext searchContext,
+			Map<String, Object> filters, Sort sort, long companyId, int start,
+			int end) throws ParseException {
+		final List<Query> queries = new ArrayList<>();
+		if (filters != null) {
+
+			for (Map.Entry<String, Object> filter : filters.entrySet()) {
+				final String filterProperty = filter.getKey();
+				final Object filterValue = filter.getValue();
+				LOGGER.info("Filter Property: " + filterProperty);
+
+				if (filterValue instanceof String) {
+					LOGGER.info("Filter Property Value: " + filterValue);
+					// TODO
+					BooleanQuery stringFilterQuery = BooleanQueryFactoryUtil
+							.create(searchContext);
+					stringFilterQuery
+							.addTerm(filterProperty, (String) filterValue,
+									true, BooleanClauseOccur.MUST);
+					queries.add(stringFilterQuery);
+
+				} else if (filterValue instanceof List<?>) {
+					queries.add(empLocalService.createStringListQuery(
+							filterProperty, (List<String>) filterValue,
+							searchContext));
+				} else if (filterValue instanceof Date) {
+					// Query effectiveDateQuery = empLocalService
+					// .createDateTermRangeQuery(
+					// EmpAnnualLeaveField.EFFECTIVE_DATE,
+					// effectiveDateFrom, effectiveDateTo, true,
+					// true, searchContext);
+					// if (effectiveDateQuery != null) {
+					// queries.add(effectiveDateQuery);
+					// }
+				}
+			}
+		}
+		/* SORT */
+		if (sort == null) {
+			sort = new Sort(EmpAnnualLeaveField.ID, false);
+		}
+		return searchAllDocuments(searchContext, queries, companyId, sort,
+				start, end);
+	}
+
+	public int countFilterByFields(SearchContext searchContext,
+			Map<String, Object> filters, Sort sort, long companyId)
+			throws ParseException {
+		return filterByFields(searchContext, filters, sort, companyId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS).size();
+	}
+
+	public Document getIndexedDocument(String id, SearchContext searchContext) {
+		return getIndexedDocument(Long.valueOf(id), searchContext);
+	}
+
+	public Document getIndexedDocument(long id, SearchContext searchContext) {
+		searchContext.setPortletIds(new String[] { EMInfo.PORTLET_ID });
+		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
+		BooleanQuery booleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME,
+				EmpAnnualLeave.class.getName());
+		booleanQuery.addExactTerm(EmpAnnualLeaveField.ID, id);
+
+		try {
+			fullQuery.add(booleanQuery, BooleanClauseOccur.MUST);
+			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
+			return !hits.toList().isEmpty() ? hits.toList().get(0) : null;
+		} catch (ParseException e) {
+			LogFactoryUtil.getLog(EmpDisciplineLocalServiceImpl.class).info(e);
+		} catch (SearchException e) {
+			LogFactoryUtil.getLog(EmpDisciplineLocalServiceImpl.class).info(e);
+		}
+
+		return null;
+	}
+
+	public void indexAll() {
+		final Indexer indexer = IndexerRegistryUtil
+				.nullSafeGetIndexer(EmpAnnualLeave.class.getName());
+		final List<EmpAnnualLeave> all = findAll();
+		for (EmpAnnualLeave item : all) {
+			// index employee
+			try {
+				indexer.reindex(item);
+			} catch (SearchException e) {
+				LOGGER.info(e);
+			}
+		}
+	}
+
+	public void removeAllIndexes(SearchContext searchContext, long companyId) {
+		final BooleanQuery booleanQuery = BooleanQueryFactoryUtil
+				.create(searchContext);
+		booleanQuery.addExactTerm(Field.ENTRY_CLASS_NAME,
+				EmpAnnualLeave.class.getName());
+		try {
+			final Hits hits = SearchEngineUtil.search(
+					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
+					booleanQuery, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			final List<Document> docs = hits.toList();
+			for (Document doc : docs) {
+				LOGGER.info("DELETE EmpAnnualLeave Index UID: " + doc.getUID());
+				SearchEngineUtil.deleteDocument(
+						SearchEngineUtil.getDefaultSearchEngineId(), companyId,
+						doc.getUID());
+
+			}
+		} catch (SearchException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

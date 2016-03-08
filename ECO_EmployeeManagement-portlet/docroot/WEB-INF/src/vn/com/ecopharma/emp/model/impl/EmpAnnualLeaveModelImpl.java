@@ -68,7 +68,9 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "empAnnualLeaveId", Types.BIGINT },
 			{ "empId", Types.BIGINT },
-			{ "noOfAnualLeave", Types.DOUBLE },
+			{ "totalAnualLeaveLeft", Types.DOUBLE },
+			{ "totalAnnualLeave", Types.INTEGER },
+			{ "totalPreviousYearLeavesLeft", Types.DOUBLE },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
@@ -76,7 +78,7 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_EmpAnnualLeave (empAnnualLeaveId LONG not null primary key,empId LONG,noOfAnualLeave DOUBLE,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_EmpAnnualLeave (empAnnualLeaveId LONG not null primary key,empId LONG,totalAnualLeaveLeft DOUBLE,totalAnnualLeave INTEGER,totalPreviousYearLeavesLeft DOUBLE,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table eco_em_portlet_EmpAnnualLeave";
 	public static final String ORDER_BY_JPQL = " ORDER BY empAnnualLeave.empAnnualLeaveId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_em_portlet_EmpAnnualLeave.empAnnualLeaveId ASC";
@@ -89,7 +91,11 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.vn.com.ecopharma.emp.model.EmpAnnualLeave"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.column.bitmask.enabled.vn.com.ecopharma.emp.model.EmpAnnualLeave"),
+			true);
+	public static long EMPID_COLUMN_BITMASK = 1L;
+	public static long EMPANNUALLEAVEID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -106,7 +112,9 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 
 		model.setEmpAnnualLeaveId(soapModel.getEmpAnnualLeaveId());
 		model.setEmpId(soapModel.getEmpId());
-		model.setNoOfAnualLeave(soapModel.getNoOfAnualLeave());
+		model.setTotalAnualLeaveLeft(soapModel.getTotalAnualLeaveLeft());
+		model.setTotalAnnualLeave(soapModel.getTotalAnnualLeave());
+		model.setTotalPreviousYearLeavesLeft(soapModel.getTotalPreviousYearLeavesLeft());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -179,7 +187,10 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 
 		attributes.put("empAnnualLeaveId", getEmpAnnualLeaveId());
 		attributes.put("empId", getEmpId());
-		attributes.put("noOfAnualLeave", getNoOfAnualLeave());
+		attributes.put("totalAnualLeaveLeft", getTotalAnualLeaveLeft());
+		attributes.put("totalAnnualLeave", getTotalAnnualLeave());
+		attributes.put("totalPreviousYearLeavesLeft",
+			getTotalPreviousYearLeavesLeft());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -204,10 +215,24 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 			setEmpId(empId);
 		}
 
-		Double noOfAnualLeave = (Double)attributes.get("noOfAnualLeave");
+		Double totalAnualLeaveLeft = (Double)attributes.get(
+				"totalAnualLeaveLeft");
 
-		if (noOfAnualLeave != null) {
-			setNoOfAnualLeave(noOfAnualLeave);
+		if (totalAnualLeaveLeft != null) {
+			setTotalAnualLeaveLeft(totalAnualLeaveLeft);
+		}
+
+		Integer totalAnnualLeave = (Integer)attributes.get("totalAnnualLeave");
+
+		if (totalAnnualLeave != null) {
+			setTotalAnnualLeave(totalAnnualLeave);
+		}
+
+		Double totalPreviousYearLeavesLeft = (Double)attributes.get(
+				"totalPreviousYearLeavesLeft");
+
+		if (totalPreviousYearLeavesLeft != null) {
+			setTotalPreviousYearLeavesLeft(totalPreviousYearLeavesLeft);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -266,18 +291,53 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 
 	@Override
 	public void setEmpId(long empId) {
+		_columnBitmask |= EMPID_COLUMN_BITMASK;
+
+		if (!_setOriginalEmpId) {
+			_setOriginalEmpId = true;
+
+			_originalEmpId = _empId;
+		}
+
 		_empId = empId;
+	}
+
+	public long getOriginalEmpId() {
+		return _originalEmpId;
 	}
 
 	@JSON
 	@Override
-	public double getNoOfAnualLeave() {
-		return _noOfAnualLeave;
+	public double getTotalAnualLeaveLeft() {
+		return _totalAnualLeaveLeft;
 	}
 
 	@Override
-	public void setNoOfAnualLeave(double noOfAnualLeave) {
-		_noOfAnualLeave = noOfAnualLeave;
+	public void setTotalAnualLeaveLeft(double totalAnualLeaveLeft) {
+		_totalAnualLeaveLeft = totalAnualLeaveLeft;
+	}
+
+	@JSON
+	@Override
+	public int getTotalAnnualLeave() {
+		return _totalAnnualLeave;
+	}
+
+	@Override
+	public void setTotalAnnualLeave(int totalAnnualLeave) {
+		_totalAnnualLeave = totalAnnualLeave;
+	}
+
+	@JSON
+	@Override
+	public double getTotalPreviousYearLeavesLeft() {
+		return _totalPreviousYearLeavesLeft;
+	}
+
+	@Override
+	public void setTotalPreviousYearLeavesLeft(
+		double totalPreviousYearLeavesLeft) {
+		_totalPreviousYearLeavesLeft = totalPreviousYearLeavesLeft;
 	}
 
 	@JSON
@@ -361,6 +421,10 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
@@ -390,7 +454,9 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 
 		empAnnualLeaveImpl.setEmpAnnualLeaveId(getEmpAnnualLeaveId());
 		empAnnualLeaveImpl.setEmpId(getEmpId());
-		empAnnualLeaveImpl.setNoOfAnualLeave(getNoOfAnualLeave());
+		empAnnualLeaveImpl.setTotalAnualLeaveLeft(getTotalAnualLeaveLeft());
+		empAnnualLeaveImpl.setTotalAnnualLeave(getTotalAnnualLeave());
+		empAnnualLeaveImpl.setTotalPreviousYearLeavesLeft(getTotalPreviousYearLeavesLeft());
 		empAnnualLeaveImpl.setGroupId(getGroupId());
 		empAnnualLeaveImpl.setCompanyId(getCompanyId());
 		empAnnualLeaveImpl.setUserId(getUserId());
@@ -447,6 +513,13 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 
 	@Override
 	public void resetOriginalValues() {
+		EmpAnnualLeaveModelImpl empAnnualLeaveModelImpl = this;
+
+		empAnnualLeaveModelImpl._originalEmpId = empAnnualLeaveModelImpl._empId;
+
+		empAnnualLeaveModelImpl._setOriginalEmpId = false;
+
+		empAnnualLeaveModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -457,7 +530,11 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 
 		empAnnualLeaveCacheModel.empId = getEmpId();
 
-		empAnnualLeaveCacheModel.noOfAnualLeave = getNoOfAnualLeave();
+		empAnnualLeaveCacheModel.totalAnualLeaveLeft = getTotalAnualLeaveLeft();
+
+		empAnnualLeaveCacheModel.totalAnnualLeave = getTotalAnnualLeave();
+
+		empAnnualLeaveCacheModel.totalPreviousYearLeavesLeft = getTotalPreviousYearLeavesLeft();
 
 		empAnnualLeaveCacheModel.groupId = getGroupId();
 
@@ -496,14 +573,18 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{empAnnualLeaveId=");
 		sb.append(getEmpAnnualLeaveId());
 		sb.append(", empId=");
 		sb.append(getEmpId());
-		sb.append(", noOfAnualLeave=");
-		sb.append(getNoOfAnualLeave());
+		sb.append(", totalAnualLeaveLeft=");
+		sb.append(getTotalAnualLeaveLeft());
+		sb.append(", totalAnnualLeave=");
+		sb.append(getTotalAnnualLeave());
+		sb.append(", totalPreviousYearLeavesLeft=");
+		sb.append(getTotalPreviousYearLeavesLeft());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
@@ -523,7 +604,7 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.emp.model.EmpAnnualLeave");
@@ -538,8 +619,16 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 		sb.append(getEmpId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>noOfAnualLeave</column-name><column-value><![CDATA[");
-		sb.append(getNoOfAnualLeave());
+			"<column><column-name>totalAnualLeaveLeft</column-name><column-value><![CDATA[");
+		sb.append(getTotalAnualLeaveLeft());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>totalAnnualLeave</column-name><column-value><![CDATA[");
+		sb.append(getTotalAnnualLeave());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>totalPreviousYearLeavesLeft</column-name><column-value><![CDATA[");
+		sb.append(getTotalPreviousYearLeavesLeft());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -577,7 +666,11 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 		};
 	private long _empAnnualLeaveId;
 	private long _empId;
-	private double _noOfAnualLeave;
+	private long _originalEmpId;
+	private boolean _setOriginalEmpId;
+	private double _totalAnualLeaveLeft;
+	private int _totalAnnualLeave;
+	private double _totalPreviousYearLeavesLeft;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
@@ -585,5 +678,6 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _columnBitmask;
 	private EmpAnnualLeave _escapedModel;
 }

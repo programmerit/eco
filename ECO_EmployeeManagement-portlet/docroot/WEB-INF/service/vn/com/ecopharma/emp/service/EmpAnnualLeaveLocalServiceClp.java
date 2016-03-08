@@ -138,13 +138,95 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 		_methodName23 = "addEmpAnnualLeave";
 
 		_methodParameterTypes23 = new String[] {
-				"vn.com.ecopharma.emp.model.EmpAnnualLeave", "long", "double"
+				"vn.com.ecopharma.emp.model.EmpAnnualLeave", "long", "int",
+				"double", "double"
 			};
 
 		_methodName24 = "addEmpAnnualLeave";
 
 		_methodParameterTypes24 = new String[] {
-				"long", "double", "com.liferay.portal.service.ServiceContext"
+				"long", "int", "double", "double",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName25 = "scanAndAutoAddVacationLeave";
+
+		_methodParameterTypes25 = new String[] {
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName26 = "calculateTotalAnnualLeaveByJoinedDate";
+
+		_methodParameterTypes26 = new String[] { "java.util.Date" };
+
+		_methodName27 = "getMonthsBetweenTwoDate";
+
+		_methodParameterTypes27 = new String[] {
+				"java.util.Date", "java.util.Date"
+			};
+
+		_methodName28 = "fetchByEmp";
+
+		_methodParameterTypes28 = new String[] { "long" };
+
+		_methodName29 = "getDatesBetweenTwoDates";
+
+		_methodParameterTypes29 = new String[] {
+				"java.util.Date", "java.util.Date", "boolean", "boolean"
+			};
+
+		_methodName30 = "countAllDocuments";
+
+		_methodParameterTypes30 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.List", "long",
+				"com.liferay.portal.kernel.search.Sort"
+			};
+
+		_methodName31 = "searchAllDocuments";
+
+		_methodParameterTypes31 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.List", "long",
+				"com.liferay.portal.kernel.search.Sort", "int", "int"
+			};
+
+		_methodName32 = "filterByFields";
+
+		_methodParameterTypes32 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long",
+				"int", "int"
+			};
+
+		_methodName33 = "countFilterByFields";
+
+		_methodParameterTypes33 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext",
+				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long"
+			};
+
+		_methodName34 = "getIndexedDocument";
+
+		_methodParameterTypes34 = new String[] {
+				"java.lang.String",
+				"com.liferay.portal.kernel.search.SearchContext"
+			};
+
+		_methodName35 = "getIndexedDocument";
+
+		_methodParameterTypes35 = new String[] {
+				"long", "com.liferay.portal.kernel.search.SearchContext"
+			};
+
+		_methodName36 = "indexAll";
+
+		_methodParameterTypes36 = new String[] {  };
+
+		_methodName37 = "removeAllIndexes";
+
+		_methodParameterTypes37 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 	}
 
@@ -805,7 +887,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 	@Override
 	public vn.com.ecopharma.emp.model.EmpAnnualLeave addEmpAnnualLeave(
 		vn.com.ecopharma.emp.model.EmpAnnualLeave prePersistedEntity,
-		long empId, double numberOfLeave) {
+		long empId, int totalLeave, double totalLeaveLeft,
+		double totalOldLeavesLeft) {
 		Object returnObj = null;
 
 		try {
@@ -816,7 +899,11 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 						
 					empId,
 						
-					numberOfLeave
+					totalLeave,
+						
+					totalLeaveLeft,
+						
+					totalOldLeavesLeft
 					});
 		}
 		catch (Throwable t) {
@@ -836,7 +923,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 
 	@Override
 	public vn.com.ecopharma.emp.model.EmpAnnualLeave addEmpAnnualLeave(
-		long empId, double numberOfLeave,
+		long empId, int totalLeave, double totalLeaveLeft,
+		double totalOldLeavesLeft,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
 
@@ -846,7 +934,11 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 					new Object[] {
 						empId,
 						
-					numberOfLeave,
+					totalLeave,
+						
+					totalLeaveLeft,
+						
+					totalOldLeavesLeft,
 						
 					ClpSerializer.translateInput(serviceContext)
 					});
@@ -864,6 +956,402 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 		}
 
 		return (vn.com.ecopharma.emp.model.EmpAnnualLeave)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public void scanAndAutoAddVacationLeave(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		try {
+			_invokableLocalService.invokeMethod(_methodName25,
+				_methodParameterTypes25,
+				new Object[] { ClpSerializer.translateInput(serviceContext) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public int calculateTotalAnnualLeaveByJoinedDate(java.util.Date joinedDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
+					new Object[] { ClpSerializer.translateInput(joinedDate) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
+	public int getMonthsBetweenTwoDate(java.util.Date startDate,
+		java.util.Date endDate) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
+					new Object[] {
+						ClpSerializer.translateInput(startDate),
+						
+					ClpSerializer.translateInput(endDate)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.EmpAnnualLeave fetchByEmp(long empId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28, new Object[] { empId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.EmpAnnualLeave)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<java.util.Date> getDatesBetweenTwoDates(
+		java.util.Date date1, java.util.Date date2, boolean includedHolidays,
+		boolean includedLowerTerm) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
+					new Object[] {
+						ClpSerializer.translateInput(date1),
+						
+					ClpSerializer.translateInput(date2),
+						
+					includedHolidays,
+						
+					includedLowerTerm
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<java.util.Date>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public int countAllDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
+					new Object[] {
+						ClpSerializer.translateInput(searchContext),
+						
+					ClpSerializer.translateInput(filterQueries),
+						
+					companyId,
+						
+					ClpSerializer.translateInput(sort)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Document> searchAllDocuments(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
+		long companyId, com.liferay.portal.kernel.search.Sort sort, int start,
+		int end) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
+					new Object[] {
+						ClpSerializer.translateInput(searchContext),
+						
+					ClpSerializer.translateInput(filterQueries),
+						
+					companyId,
+						
+					ClpSerializer.translateInput(sort),
+						
+					start,
+						
+					end
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.portal.kernel.search.Document>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Document> filterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
+		int end) throws com.liferay.portal.kernel.search.ParseException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
+					new Object[] {
+						ClpSerializer.translateInput(searchContext),
+						
+					ClpSerializer.translateInput(filters),
+						
+					ClpSerializer.translateInput(sort),
+						
+					companyId,
+						
+					start,
+						
+					end
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.search.ParseException) {
+				throw (com.liferay.portal.kernel.search.ParseException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.portal.kernel.search.Document>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public int countFilterByFields(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.Sort sort, long companyId)
+		throws com.liferay.portal.kernel.search.ParseException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
+					new Object[] {
+						ClpSerializer.translateInput(searchContext),
+						
+					ClpSerializer.translateInput(filters),
+						
+					ClpSerializer.translateInput(sort),
+						
+					companyId
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.search.ParseException) {
+				throw (com.liferay.portal.kernel.search.ParseException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Document getIndexedDocument(
+		java.lang.String id,
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
+					new Object[] {
+						ClpSerializer.translateInput(id),
+						
+					ClpSerializer.translateInput(searchContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portal.kernel.search.Document)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Document getIndexedDocument(
+		long id, com.liferay.portal.kernel.search.SearchContext searchContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35,
+					new Object[] { id, ClpSerializer.translateInput(
+							searchContext) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portal.kernel.search.Document)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public void indexAll() {
+		try {
+			_invokableLocalService.invokeMethod(_methodName36,
+				_methodParameterTypes36, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public void removeAllIndexes(
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		long companyId) {
+		try {
+			_invokableLocalService.invokeMethod(_methodName37,
+				_methodParameterTypes37,
+				new Object[] {
+					ClpSerializer.translateInput(searchContext),
+					
+				companyId
+				});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
 	}
 
 	private InvokableLocalService _invokableLocalService;
@@ -915,4 +1403,30 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 	private String[] _methodParameterTypes23;
 	private String _methodName24;
 	private String[] _methodParameterTypes24;
+	private String _methodName25;
+	private String[] _methodParameterTypes25;
+	private String _methodName26;
+	private String[] _methodParameterTypes26;
+	private String _methodName27;
+	private String[] _methodParameterTypes27;
+	private String _methodName28;
+	private String[] _methodParameterTypes28;
+	private String _methodName29;
+	private String[] _methodParameterTypes29;
+	private String _methodName30;
+	private String[] _methodParameterTypes30;
+	private String _methodName31;
+	private String[] _methodParameterTypes31;
+	private String _methodName32;
+	private String[] _methodParameterTypes32;
+	private String _methodName33;
+	private String[] _methodParameterTypes33;
+	private String _methodName34;
+	private String[] _methodParameterTypes34;
+	private String _methodName35;
+	private String[] _methodParameterTypes35;
+	private String _methodName36;
+	private String[] _methodParameterTypes36;
+	private String _methodName37;
+	private String[] _methodParameterTypes37;
 }

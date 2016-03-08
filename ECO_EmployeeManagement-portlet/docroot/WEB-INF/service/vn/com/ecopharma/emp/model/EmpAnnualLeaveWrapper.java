@@ -52,7 +52,10 @@ public class EmpAnnualLeaveWrapper implements EmpAnnualLeave,
 
 		attributes.put("empAnnualLeaveId", getEmpAnnualLeaveId());
 		attributes.put("empId", getEmpId());
-		attributes.put("noOfAnualLeave", getNoOfAnualLeave());
+		attributes.put("totalAnualLeaveLeft", getTotalAnualLeaveLeft());
+		attributes.put("totalAnnualLeave", getTotalAnnualLeave());
+		attributes.put("totalPreviousYearLeavesLeft",
+			getTotalPreviousYearLeavesLeft());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -77,10 +80,24 @@ public class EmpAnnualLeaveWrapper implements EmpAnnualLeave,
 			setEmpId(empId);
 		}
 
-		Double noOfAnualLeave = (Double)attributes.get("noOfAnualLeave");
+		Double totalAnualLeaveLeft = (Double)attributes.get(
+				"totalAnualLeaveLeft");
 
-		if (noOfAnualLeave != null) {
-			setNoOfAnualLeave(noOfAnualLeave);
+		if (totalAnualLeaveLeft != null) {
+			setTotalAnualLeaveLeft(totalAnualLeaveLeft);
+		}
+
+		Integer totalAnnualLeave = (Integer)attributes.get("totalAnnualLeave");
+
+		if (totalAnnualLeave != null) {
+			setTotalAnnualLeave(totalAnnualLeave);
+		}
+
+		Double totalPreviousYearLeavesLeft = (Double)attributes.get(
+				"totalPreviousYearLeavesLeft");
+
+		if (totalPreviousYearLeavesLeft != null) {
+			setTotalPreviousYearLeavesLeft(totalPreviousYearLeavesLeft);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -181,23 +198,64 @@ public class EmpAnnualLeaveWrapper implements EmpAnnualLeave,
 	}
 
 	/**
-	* Returns the no of anual leave of this emp annual leave.
+	* Returns the total anual leave left of this emp annual leave.
 	*
-	* @return the no of anual leave of this emp annual leave
+	* @return the total anual leave left of this emp annual leave
 	*/
 	@Override
-	public double getNoOfAnualLeave() {
-		return _empAnnualLeave.getNoOfAnualLeave();
+	public double getTotalAnualLeaveLeft() {
+		return _empAnnualLeave.getTotalAnualLeaveLeft();
 	}
 
 	/**
-	* Sets the no of anual leave of this emp annual leave.
+	* Sets the total anual leave left of this emp annual leave.
 	*
-	* @param noOfAnualLeave the no of anual leave of this emp annual leave
+	* @param totalAnualLeaveLeft the total anual leave left of this emp annual leave
 	*/
 	@Override
-	public void setNoOfAnualLeave(double noOfAnualLeave) {
-		_empAnnualLeave.setNoOfAnualLeave(noOfAnualLeave);
+	public void setTotalAnualLeaveLeft(double totalAnualLeaveLeft) {
+		_empAnnualLeave.setTotalAnualLeaveLeft(totalAnualLeaveLeft);
+	}
+
+	/**
+	* Returns the total annual leave of this emp annual leave.
+	*
+	* @return the total annual leave of this emp annual leave
+	*/
+	@Override
+	public int getTotalAnnualLeave() {
+		return _empAnnualLeave.getTotalAnnualLeave();
+	}
+
+	/**
+	* Sets the total annual leave of this emp annual leave.
+	*
+	* @param totalAnnualLeave the total annual leave of this emp annual leave
+	*/
+	@Override
+	public void setTotalAnnualLeave(int totalAnnualLeave) {
+		_empAnnualLeave.setTotalAnnualLeave(totalAnnualLeave);
+	}
+
+	/**
+	* Returns the total previous year leaves left of this emp annual leave.
+	*
+	* @return the total previous year leaves left of this emp annual leave
+	*/
+	@Override
+	public double getTotalPreviousYearLeavesLeft() {
+		return _empAnnualLeave.getTotalPreviousYearLeavesLeft();
+	}
+
+	/**
+	* Sets the total previous year leaves left of this emp annual leave.
+	*
+	* @param totalPreviousYearLeavesLeft the total previous year leaves left of this emp annual leave
+	*/
+	@Override
+	public void setTotalPreviousYearLeavesLeft(
+		double totalPreviousYearLeavesLeft) {
+		_empAnnualLeave.setTotalPreviousYearLeavesLeft(totalPreviousYearLeavesLeft);
 	}
 
 	/**

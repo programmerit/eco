@@ -33,7 +33,9 @@ public class EmpAnnualLeaveSoap implements Serializable {
 
 		soapModel.setEmpAnnualLeaveId(model.getEmpAnnualLeaveId());
 		soapModel.setEmpId(model.getEmpId());
-		soapModel.setNoOfAnualLeave(model.getNoOfAnualLeave());
+		soapModel.setTotalAnualLeaveLeft(model.getTotalAnualLeaveLeft());
+		soapModel.setTotalAnnualLeave(model.getTotalAnnualLeave());
+		soapModel.setTotalPreviousYearLeavesLeft(model.getTotalPreviousYearLeavesLeft());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -108,12 +110,29 @@ public class EmpAnnualLeaveSoap implements Serializable {
 		_empId = empId;
 	}
 
-	public double getNoOfAnualLeave() {
-		return _noOfAnualLeave;
+	public double getTotalAnualLeaveLeft() {
+		return _totalAnualLeaveLeft;
 	}
 
-	public void setNoOfAnualLeave(double noOfAnualLeave) {
-		_noOfAnualLeave = noOfAnualLeave;
+	public void setTotalAnualLeaveLeft(double totalAnualLeaveLeft) {
+		_totalAnualLeaveLeft = totalAnualLeaveLeft;
+	}
+
+	public int getTotalAnnualLeave() {
+		return _totalAnnualLeave;
+	}
+
+	public void setTotalAnnualLeave(int totalAnnualLeave) {
+		_totalAnnualLeave = totalAnnualLeave;
+	}
+
+	public double getTotalPreviousYearLeavesLeft() {
+		return _totalPreviousYearLeavesLeft;
+	}
+
+	public void setTotalPreviousYearLeavesLeft(
+		double totalPreviousYearLeavesLeft) {
+		_totalPreviousYearLeavesLeft = totalPreviousYearLeavesLeft;
 	}
 
 	public long getGroupId() {
@@ -166,7 +185,9 @@ public class EmpAnnualLeaveSoap implements Serializable {
 
 	private long _empAnnualLeaveId;
 	private long _empId;
-	private double _noOfAnualLeave;
+	private double _totalAnualLeaveLeft;
+	private int _totalAnnualLeave;
+	private double _totalPreviousYearLeavesLeft;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

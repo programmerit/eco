@@ -215,7 +215,9 @@
 		<attributes>
 			<id name="empAnnualLeaveId" />
 			<basic name="empId" />
-			<basic name="noOfAnualLeave" />
+			<basic name="totalAnualLeaveLeft" />
+			<basic name="totalAnnualLeave" />
+			<basic name="totalPreviousYearLeavesLeft" />
 			<basic name="groupId" />
 			<basic name="companyId" />
 			<basic name="userId" />

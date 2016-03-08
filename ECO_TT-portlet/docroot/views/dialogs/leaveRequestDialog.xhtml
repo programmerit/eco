@@ -67,6 +67,7 @@
 
 						<h:outputText value="Number of Hours(Optional):" />
 						<p:inputText style="width: 60px;"
+							disabled="#{not leaveRequestBean.timeAvailable}"
 							value="#{leaveRequestBean.requestItem.leave.numberOfHours}" />
 
 						<h:outputText value="Reason" />
