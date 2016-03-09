@@ -86,7 +86,8 @@ public class VacationLeaveBean implements Serializable {
 			this.emp = emp;
 			this.leave = VacationLeaveLocalServiceUtil
 					.createPrePersistedEntity(EmployeeUtils.getServiceContext());
-			this.leave.setLeaveType(VacationLeaveType.MATERNITY.toString());
+			this.leave.setLeaveType(VacationLeaveType.POLICY_LEAVE.toString());
+			this.leave.setSign("TS");
 		}
 
 		public VacationLeave getLeave() {

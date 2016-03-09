@@ -3,6 +3,8 @@ package vn.com.ecopharma.hrm.tt.enumeration;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 public enum VacationLeaveStatus {
 
 	PENDING_REQUEST, MANAGER_APPROVED, HR_APPROVED;
@@ -23,5 +25,19 @@ public enum VacationLeaveStatus {
 			result.add(status.toString());
 		}
 		return result;
+	}
+
+	public String getCSS() {
+		switch (this) {
+		case PENDING_REQUEST:
+			return "status-grey";
+		case MANAGER_APPROVED:
+			return "status-yellow";
+		case HR_APPROVED:
+			return "status-green";
+		default:
+			break;
+		}
+		return StringUtils.EMPTY;
 	}
 }

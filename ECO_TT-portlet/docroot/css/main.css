@@ -14,7 +14,6 @@
 span.currentStatus {
 	/* right: 20px; */
 	display: block;
-	position: absolute;
 	margin: 0;
 	font-size: 11px;
 	line-height: 20px;
@@ -25,6 +24,29 @@ span.currentStatus {
 	white-space: nowrap;
 	vertical-align: baseline;
 	border-radius: .25em;
+	/* addition for leave */
+	/* position: absolute; */
+	margin-right: -10px;
+	margin-top: -40px;
+}
+
+span.currentStatus1 {
+	/* right: 20px; */
+	display: block;
+	margin: 0;
+	font-size: 11px;
+	line-height: 20px;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, .2);
+	padding: 0 6px;
+	float: right !important;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: .25em;
+	/* addition for leave */
+	/* position: absolute; */
+	margin-right: 3px;
+	margin-top: -40px;
 }
 
 .status-green {
@@ -45,4 +67,9 @@ span.currentStatus {
 .status-yellow {
 	color: #fff;
 	background: #f4b04f;
+}
+
+.status-explain {
+	margin-right: 0px !important;
+	margin-top: 0px !important;
 }

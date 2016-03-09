@@ -331,25 +331,6 @@ public class EmpAnnualLeaveLocalServiceWrapper
 	}
 
 	@Override
-	public void scanAndAutoAddVacationLeave(
-		com.liferay.portal.service.ServiceContext serviceContext) {
-		_empAnnualLeaveLocalService.scanAndAutoAddVacationLeave(serviceContext);
-	}
-
-	@Override
-	public int calculateTotalAnnualLeaveByJoinedDate(java.util.Date joinedDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _empAnnualLeaveLocalService.calculateTotalAnnualLeaveByJoinedDate(joinedDate);
-	}
-
-	@Override
-	public int getMonthsBetweenTwoDate(java.util.Date startDate,
-		java.util.Date endDate) {
-		return _empAnnualLeaveLocalService.getMonthsBetweenTwoDate(startDate,
-			endDate);
-	}
-
-	@Override
 	public vn.com.ecopharma.emp.model.EmpAnnualLeave fetchByEmp(long empId) {
 		return _empAnnualLeaveLocalService.fetchByEmp(empId);
 	}
@@ -424,6 +405,33 @@ public class EmpAnnualLeaveLocalServiceWrapper
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		long companyId) {
 		_empAnnualLeaveLocalService.removeAllIndexes(searchContext, companyId);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.EmpAnnualLeave applyLeaveForEmp(
+		long empId, double numberOfLeaves,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _empAnnualLeaveLocalService.applyLeaveForEmp(empId,
+			numberOfLeaves, serviceContext);
+	}
+
+	@Override
+	public void scanAndAutoAddVacationLeave(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		_empAnnualLeaveLocalService.scanAndAutoAddVacationLeave(serviceContext);
+	}
+
+	@Override
+	public int calculateTotalAnnualLeaveByJoinedDate(java.util.Date joinedDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _empAnnualLeaveLocalService.calculateTotalAnnualLeaveByJoinedDate(joinedDate);
+	}
+
+	@Override
+	public int getMonthsBetweenTwoDate(java.util.Date startDate,
+		java.util.Date endDate) {
+		return _empAnnualLeaveLocalService.getMonthsBetweenTwoDate(startDate,
+			endDate);
 	}
 
 	/**

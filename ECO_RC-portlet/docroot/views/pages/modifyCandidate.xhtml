@@ -123,7 +123,7 @@
 									rendered="#{candidateBean.candidateItem.emptyDocuments}">
 									<h:outputText styleClass="no-item-label" value="No Documents" />
 									<br />
-									<p:commandLink value="Upload Document"
+									<p:commandLink value="Upload"
 										onclick="PF('wUploadDocumentDialog').show();" />
 								</h:panelGroup>
 
@@ -158,11 +158,12 @@
 							<ui:repeat var="e"
 								value="#{candidateBean.candidateItem.experiences}"
 								varStatus="status">
-								<h:panelGroup id="experienceItem" rendered="#{not e.UIDeleted}">
+								<h:panelGroup id="experienceItem" rendered="#{not e.UIDeleted}"
+									styleClass="experiences">
 									<p:commandLink value="Remove"
 										actionListener="#{candidateBean.removeOneExperience(status.index)}"
 										immediate="true" ajax="true" />
-									<p:panelGrid columns="2" styleClass="experiences">
+									<p:panelGrid columns="2">
 										<h:panelGroup>
 											<p:panelGrid columns="2">
 												<p:panelGrid columns="2">
@@ -336,6 +337,10 @@
 		</h:form>
 	</h:body>
 	<style type="text/css">
+/* .experiences .ui-panelgrid tbody tr td {
+	border: none !important;
+}
+ */
 .experiences .ui-panelgrid tbody tr td {
 	border: none !important;
 }

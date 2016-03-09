@@ -23,9 +23,8 @@
 			<p:commandLink value="Request Leave"
 				actionListener="#{mainBean.onRequestLeave}"
 				update=":includedDialogPanelGroup"
-				oncomplete="PF('wLeaveRequestDialog').show();" />
-
-
+				oncomplete="PF('wLeaveRequestDialog').show();" /> |
+				
 			<h:panelGroup rendered="#{mainBean.currentManager}"
 				style="display: block;">
 				<h:outputText value="You have " />
@@ -34,7 +33,7 @@
 					outcome="managerPendingRequestView" />
 			</h:panelGroup>
 
-			<h:panelGroup rendered="#{mainBean.currentManager}"
+			<h:panelGroup rendered="#{mainBean.hr}"
 				style="display: block;">
 				<h:outputText value="HR you have " />
 				<p:link

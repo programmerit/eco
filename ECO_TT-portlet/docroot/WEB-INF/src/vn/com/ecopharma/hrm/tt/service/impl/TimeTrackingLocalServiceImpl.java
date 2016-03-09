@@ -19,10 +19,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import vn.com.ecopharma.emp.model.VacationLeave;
 import vn.com.ecopharma.hrm.tt.constant.ECO_TT_Info;
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
 import vn.com.ecopharma.hrm.tt.model.TimeTracking;
 import vn.com.ecopharma.hrm.tt.service.base.TimeTrackingLocalServiceBaseImpl;
+import vn.com.ecopharma.hrm.tt.utils.TTUtils;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -317,6 +319,38 @@ public class TimeTrackingLocalServiceImpl extends
 			long leaveRefId) {
 		timeTracking.setLeaveRefId(leaveRefId);
 		return this.updateTimeTracking(timeTracking);
+	}
+
+	public void addOrUpdateTimeTrackingByLeaveRequest(VacationLeave leaveRequest) {
+		if (leaveRequest == null)
+			return;
+
+		List<Date> vacationRange = getDatesBetweenTwoDates(
+				leaveRequest.getLeaveFrom(), leaveRequest.getLeaveTo(), false,
+				true);
+		for (Date date : vacationRange) {
+
+			final TimeTracking checkedTimeTracking = findByEmpAndDate(
+					leaveRequest.getEmpId(), date);
+
+			if (checkedTimeTracking == null) {
+				LOGGER.info("Adding timetracking Date: " + date);
+				addTimeTracking(leaveRequest.getEmpId(), date, null, null,
+						null, null, null, null,
+						leaveRequest.getVacationLeaveId(),
+						TTUtils.getServiceContext());
+			} else {
+				LOGGER.info("Update timetracking Date: " + date);
+				setLeaveForTimeTracking(checkedTimeTracking,
+						leaveRequest.getVacationLeaveId());
+			}
+		}
+	}
+
+	public void scanAndAddMissingDataByLeaveRequests(List<VacationLeave> list) {
+		for (VacationLeave leaveRequest : list) {
+			addOrUpdateTimeTrackingByLeaveRequest(leaveRequest);
+		}
 	}
 
 	/*

@@ -276,16 +276,6 @@ public interface EmpAnnualLeaveLocalService extends BaseLocalService,
 		double totalOldLeavesLeft,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
-	public void scanAndAutoAddVacationLeave(
-		com.liferay.portal.service.ServiceContext serviceContext);
-
-	public int calculateTotalAnnualLeaveByJoinedDate(java.util.Date joinedDate)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMonthsBetweenTwoDate(java.util.Date startDate,
-		java.util.Date endDate);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public vn.com.ecopharma.emp.model.EmpAnnualLeave fetchByEmp(long empId);
 
@@ -332,4 +322,18 @@ public interface EmpAnnualLeaveLocalService extends BaseLocalService,
 	public void removeAllIndexes(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		long companyId);
+
+	public vn.com.ecopharma.emp.model.EmpAnnualLeave applyLeaveForEmp(
+		long empId, double numberOfLeaves,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public void scanAndAutoAddVacationLeave(
+		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public int calculateTotalAnnualLeaveByJoinedDate(java.util.Date joinedDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMonthsBetweenTwoDate(java.util.Date startDate,
+		java.util.Date endDate);
 }

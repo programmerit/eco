@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import vn.com.ecopharma.hrm.tt.enumeration.VacationLeaveStatus;
+
 public class ReportTimeItem implements Serializable {
 
 	/**
@@ -63,6 +65,12 @@ public class ReportTimeItem implements Serializable {
 
 	public boolean isLeaveRefAvailable() {
 		return getLeaveIndexedItem() != null;
+	}
+
+	public String getLeaveStatusCss() {
+		VacationLeaveStatus status = VacationLeaveStatus
+				.valueOf(this.leaveIndexedItem.getStatus());
+		return status.getCSS();
 	}
 
 }

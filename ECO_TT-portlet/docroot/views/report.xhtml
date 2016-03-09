@@ -87,7 +87,17 @@
 			</h:panelGroup>
 		</h:form>
 
+		<h:panelGroup layout="block" style="margin-bottom: 5px;">
+			<h:outputText value="Requested"
+				styleClass="currentStatus status-grey status-explain" />
 
+			<h:outputText value="Manager approved"
+				styleClass="currentStatus status-yellow status-explain" />
+
+			<h:outputText value="Leave applied"
+				styleClass="currentStatus status-green status-explain" />
+
+		</h:panelGroup>
 		<h:form id="reportForm">
 			<p:contextMenu id="reportContext" for="reports">
 				<p:menuitem value="Add Leave Request"
@@ -156,7 +166,12 @@
 					var="d">
 					<h:panelGroup
 						rendered="#{t.getReportTimeItem(d).leaveRefAvailable}">
-						ON LEAVE
+						<h:outputText id="leaveSign"
+							styleClass="currentStatus #{t.getReportTimeItem(d).leaveStatusCss}"
+							value="#{t.getReportTimeItem(d).leaveIndexedItem.sign}" />
+						<h:outputText id="leaveOutput" value="LEAVE" />
+						<p:tooltip for="leaveOutput"
+							value="#{t.getReportTimeItem(d).leaveIndexedItem.type}" />
 					</h:panelGroup>
 
 					<h:panelGroup

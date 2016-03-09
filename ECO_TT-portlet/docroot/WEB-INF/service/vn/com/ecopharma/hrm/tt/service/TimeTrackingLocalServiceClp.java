@@ -193,13 +193,23 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 				"vn.com.ecopharma.hrm.tt.model.TimeTracking", "long"
 			};
 
-		_methodName32 = "completelyRemoveAllTimeTrackings";
+		_methodName32 = "addOrUpdateTimeTrackingByLeaveRequest";
 
-		_methodParameterTypes32 = new String[] {  };
+		_methodParameterTypes32 = new String[] {
+				"vn.com.ecopharma.emp.model.VacationLeave"
+			};
 
-		_methodName33 = "getDatesBetweenTwoDates";
+		_methodName33 = "scanAndAddMissingDataByLeaveRequests";
 
-		_methodParameterTypes33 = new String[] {
+		_methodParameterTypes33 = new String[] { "java.util.List" };
+
+		_methodName34 = "completelyRemoveAllTimeTrackings";
+
+		_methodParameterTypes34 = new String[] {  };
+
+		_methodName35 = "getDatesBetweenTwoDates";
+
+		_methodParameterTypes35 = new String[] {
 				"java.util.Date", "java.util.Date", "boolean", "boolean"
 			};
 	}
@@ -1171,10 +1181,52 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 	}
 
 	@Override
-	public void completelyRemoveAllTimeTrackings() {
+	public void addOrUpdateTimeTrackingByLeaveRequest(
+		vn.com.ecopharma.emp.model.VacationLeave leaveRequest) {
 		try {
 			_invokableLocalService.invokeMethod(_methodName32,
-				_methodParameterTypes32, new Object[] {  });
+				_methodParameterTypes32,
+				new Object[] { ClpSerializer.translateInput(leaveRequest) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public void scanAndAddMissingDataByLeaveRequests(
+		java.util.List<vn.com.ecopharma.emp.model.VacationLeave> list) {
+		try {
+			_invokableLocalService.invokeMethod(_methodName33,
+				_methodParameterTypes33,
+				new Object[] { ClpSerializer.translateInput(list) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public void completelyRemoveAllTimeTrackings() {
+		try {
+			_invokableLocalService.invokeMethod(_methodName34,
+				_methodParameterTypes34, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1196,8 +1248,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33,
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35,
 					new Object[] {
 						ClpSerializer.translateInput(date1),
 						
@@ -1290,4 +1342,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 	private String[] _methodParameterTypes32;
 	private String _methodName33;
 	private String[] _methodParameterTypes33;
+	private String _methodName34;
+	private String[] _methodParameterTypes34;
+	private String _methodName35;
+	private String[] _methodParameterTypes35;
 }

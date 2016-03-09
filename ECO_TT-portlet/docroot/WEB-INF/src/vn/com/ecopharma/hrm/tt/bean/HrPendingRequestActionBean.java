@@ -40,7 +40,10 @@ public class HrPendingRequestActionBean extends AbstractPendingRequestBean {
 
 	@Override
 	public void onConfirmApproval(ActionEvent event) {
-		for (VacationLeaveIndexedItem item : getPendingRequests().getTarget()) {
+		List<VacationLeaveIndexedItem> approvedList = getPendingRequests()
+				.getTarget();
+		for (int i = 0; i < approvedList.size(); i++) {
+			VacationLeaveIndexedItem item = approvedList.get(i);
 			long id = item.getId();
 			VacationLeave result = VacationLeaveLocalServiceUtil.setHrApproval(
 					id, getServiceContext());
@@ -62,6 +65,7 @@ public class HrPendingRequestActionBean extends AbstractPendingRequestBean {
 						addOrUpdateLeave(empId, date, leaveId);
 					}
 				}
+				approvedList.remove(item);
 			}
 			LOGGER.info(item.getFullNameVi() + " was approved by HR");
 		}

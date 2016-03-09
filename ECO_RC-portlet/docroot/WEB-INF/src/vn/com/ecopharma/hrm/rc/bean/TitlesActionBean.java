@@ -34,18 +34,11 @@ public class TitlesActionBean {
 	}
 
 	public List<Titles> getTitlesList() {
-		if (unit == null) {
-			return department != null ? TitlesLocalServiceUtil
-					.findByDepartmentOnly(department.getDepartmentId())
-					: new ArrayList<Titles>();
-		} else {
-			if (unitGroup != null) {
-				return TitlesLocalServiceUtil.findByUnitGroupOnly(unitGroup
-						.getUnitGroupId());
-			} else {
-				return TitlesLocalServiceUtil.findByUnitOnly(unit.getUnitId());
-			}
+		if (department != null) {
+			return TitlesLocalServiceUtil.findAllByDepartment(department
+					.getDepartmentId());
 		}
+		return new ArrayList<>();
 	}
 
 	public List<UnitGroup> getUnitGroups() {
@@ -54,9 +47,8 @@ public class TitlesActionBean {
 	}
 
 	public List<Unit> getUnits() {
-		final Department empDepartment = department;
-		return empDepartment != null ? UnitLocalServiceUtil
-				.findByDepartment(empDepartment.getDepartmentId())
+		return department != null ? UnitLocalServiceUtil
+				.findByDepartment(department.getDepartmentId())
 				: new ArrayList<Unit>();
 	}
 

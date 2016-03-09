@@ -388,6 +388,18 @@ public class TimeTrackingLocalServiceWrapper implements TimeTrackingLocalService
 	}
 
 	@Override
+	public void addOrUpdateTimeTrackingByLeaveRequest(
+		vn.com.ecopharma.emp.model.VacationLeave leaveRequest) {
+		_timeTrackingLocalService.addOrUpdateTimeTrackingByLeaveRequest(leaveRequest);
+	}
+
+	@Override
+	public void scanAndAddMissingDataByLeaveRequests(
+		java.util.List<vn.com.ecopharma.emp.model.VacationLeave> list) {
+		_timeTrackingLocalService.scanAndAddMissingDataByLeaveRequests(list);
+	}
+
+	@Override
 	public void completelyRemoveAllTimeTrackings() {
 		_timeTrackingLocalService.completelyRemoveAllTimeTrackings();
 	}

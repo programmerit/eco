@@ -16,6 +16,7 @@ package vn.com.ecopharma.emp.service.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -146,7 +147,9 @@ public class VacationLeaveLocalServiceImpl extends
 					result.getVacationLeaveId());
 
 			// set status to employee
-			if (leaveType.equals(VacationLeaveType.MATERNITY.toString())) {
+			if (result.getLeaveType().equals(
+					VacationLeaveType.POLICY_LEAVE.toString())
+					&& result.getSign().equalsIgnoreCase("TS")) {
 				Emp emp = empLocalService.fetchEmp(empId);
 				emp.setStatus(EmployeeStatus.MATERNITY_LEAVE.toString());
 				empLocalService.updateEmp(emp);
@@ -187,7 +190,8 @@ public class VacationLeaveLocalServiceImpl extends
 
 			// set status to employee
 			if (result.getLeaveType().equals(
-					VacationLeaveType.MATERNITY.toString())) {
+					VacationLeaveType.POLICY_LEAVE.toString())
+					&& result.getSign().equalsIgnoreCase("TS")) {
 				Emp emp = empLocalService.fetchEmp(empId);
 				emp.setStatus(EmployeeStatus.MATERNITY_LEAVE.toString());
 				empLocalService.updateEmp(emp);
@@ -286,22 +290,79 @@ public class VacationLeaveLocalServiceImpl extends
 
 	public VacationLeave setHrApproval(VacationLeave vacationLeave,
 			ServiceContext serviceContext) {
+		long empId = vacationLeave.getEmpId();
 		if (!vacationLeave.getStatus().equalsIgnoreCase(
 				VacationLeaveStatus.MANAGER_APPROVED.toString()))
 			return null;
 		try {
+			// find current number of annual leave of Emp
 			vacationLeave.setModifiedDate(new Date());
-
 			vacationLeave.setUserName(userLocalService.fetchUser(
 					serviceContext.getUserId()).getFullName());
 
 			vacationLeave.setStatus(VacationLeaveStatus.HR_APPROVED.toString());
 
-			return updateVacationLeave(vacationLeave);
+			VacationLeave result = updateVacationLeave(vacationLeave);
+			// do more actions base on result
+			if (result != null) {
+				if (result.getLeaveType().equalsIgnoreCase(
+						VacationLeaveType.ANNUAL_LEAVE.toString())) {
+					double numberOfActualLeaves = calculateNumberOfAnnualLeavesBtwTwoDates(
+							vacationLeave.getLeaveFrom(),
+							vacationLeave.getLeaveTo(), vacationLeave.getSign());
+					empAnnualLeaveLocalService.applyLeaveForEmp(empId,
+							numberOfActualLeaves, serviceContext);
+				}
+			}
+			return result;
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}
 		return null;
+	}
+
+	public double calculateNumberOfAnnualLeavesBtwTwoDates(Date dateFrom,
+			Date dateTo, String additionLeaveSign) {
+		if (dateFrom.compareTo(dateTo) == 0) {
+			if (additionLeaveSign.contains("1/2")) {
+				return 0.5D;
+			} else {
+				return 1.0D;
+			}
+		} else {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(dateFrom);
+			double numberOfLeaves = 1D;
+			while (calendar.getTime().before(dateTo)) {
+				if (calendar.get(Calendar.DAY_OF_WEEK) == 1) {
+					numberOfLeaves += 0D;
+				} else if (calendar.get(Calendar.DAY_OF_WEEK) == 7) {
+					numberOfLeaves += 0.5D;
+				} else {
+					numberOfLeaves += 1D;
+				}
+				calendar.add(Calendar.DATE, 1);
+			}
+			return numberOfLeaves;
+		}
+	}
+
+	public List<Date> getDatesBetweenTwoDates(Date date1, Date date2,
+			boolean includedHolidays, boolean includedLowerTerm) {
+		List<Date> dates = new ArrayList<>();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date1);
+		while (calendar.getTime().before(date2)) {
+			calendar.add(Calendar.DATE, 1);
+			if (includedHolidays) {
+				dates.add(calendar.getTime());
+			} else {
+				if (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
+					dates.add(calendar.getTime());
+			}
+		}
+
+		return dates;
 	}
 
 	public int countAllUnDeletedDocuments(SearchContext searchContext,
@@ -555,5 +616,4 @@ public class VacationLeaveLocalServiceImpl extends
 			}
 		}
 	}
-
 }

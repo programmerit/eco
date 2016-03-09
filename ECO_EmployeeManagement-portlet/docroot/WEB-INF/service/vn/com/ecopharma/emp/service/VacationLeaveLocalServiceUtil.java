@@ -352,6 +352,22 @@ public class VacationLeaveLocalServiceUtil {
 		return getService().setHrApproval(vacationLeave, serviceContext);
 	}
 
+	public static double calculateNumberOfAnnualLeavesBtwTwoDates(
+		java.util.Date dateFrom, java.util.Date dateTo,
+		java.lang.String additionLeaveSign) {
+		return getService()
+				   .calculateNumberOfAnnualLeavesBtwTwoDates(dateFrom, dateTo,
+			additionLeaveSign);
+	}
+
+	public static java.util.List<java.util.Date> getDatesBetweenTwoDates(
+		java.util.Date date1, java.util.Date date2, boolean includedHolidays,
+		boolean includedLowerTerm) {
+		return getService()
+				   .getDatesBetweenTwoDates(date1, date2, includedHolidays,
+			includedLowerTerm);
+	}
+
 	public static int countAllUnDeletedDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,

@@ -360,6 +360,16 @@ public class TimeTrackingLocalServiceUtil {
 		return getService().setLeaveForTimeTracking(timeTracking, leaveRefId);
 	}
 
+	public static void addOrUpdateTimeTrackingByLeaveRequest(
+		vn.com.ecopharma.emp.model.VacationLeave leaveRequest) {
+		getService().addOrUpdateTimeTrackingByLeaveRequest(leaveRequest);
+	}
+
+	public static void scanAndAddMissingDataByLeaveRequests(
+		java.util.List<vn.com.ecopharma.emp.model.VacationLeave> list) {
+		getService().scanAndAddMissingDataByLeaveRequests(list);
+	}
+
 	public static void completelyRemoveAllTimeTrackings() {
 		getService().completelyRemoveAllTimeTrackings();
 	}

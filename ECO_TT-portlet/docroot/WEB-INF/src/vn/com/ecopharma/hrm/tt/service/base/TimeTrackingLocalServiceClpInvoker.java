@@ -198,13 +198,23 @@ public class TimeTrackingLocalServiceClpInvoker {
 				"vn.com.ecopharma.hrm.tt.model.TimeTracking", "long"
 			};
 
-		_methodName54 = "completelyRemoveAllTimeTrackings";
+		_methodName54 = "addOrUpdateTimeTrackingByLeaveRequest";
 
-		_methodParameterTypes54 = new String[] {  };
+		_methodParameterTypes54 = new String[] {
+				"vn.com.ecopharma.emp.model.VacationLeave"
+			};
 
-		_methodName55 = "getDatesBetweenTwoDates";
+		_methodName55 = "scanAndAddMissingDataByLeaveRequests";
 
-		_methodParameterTypes55 = new String[] {
+		_methodParameterTypes55 = new String[] { "java.util.List" };
+
+		_methodName56 = "completelyRemoveAllTimeTrackings";
+
+		_methodParameterTypes56 = new String[] {  };
+
+		_methodName57 = "getDatesBetweenTwoDates";
+
+		_methodParameterTypes57 = new String[] {
 				"java.util.Date", "java.util.Date", "boolean", "boolean"
 			};
 	}
@@ -409,13 +419,27 @@ public class TimeTrackingLocalServiceClpInvoker {
 
 		if (_methodName54.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
-			TimeTrackingLocalServiceUtil.completelyRemoveAllTimeTrackings();
+			TimeTrackingLocalServiceUtil.addOrUpdateTimeTrackingByLeaveRequest((vn.com.ecopharma.emp.model.VacationLeave)arguments[0]);
 
 			return null;
 		}
 
 		if (_methodName55.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
+			TimeTrackingLocalServiceUtil.scanAndAddMissingDataByLeaveRequests((java.util.List<vn.com.ecopharma.emp.model.VacationLeave>)arguments[0]);
+
+			return null;
+		}
+
+		if (_methodName56.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
+			TimeTrackingLocalServiceUtil.completelyRemoveAllTimeTrackings();
+
+			return null;
+		}
+
+		if (_methodName57.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes57, parameterTypes)) {
 			return TimeTrackingLocalServiceUtil.getDatesBetweenTwoDates((java.util.Date)arguments[0],
 				(java.util.Date)arguments[1],
 				((Boolean)arguments[2]).booleanValue(),
@@ -493,4 +517,8 @@ public class TimeTrackingLocalServiceClpInvoker {
 	private String[] _methodParameterTypes54;
 	private String _methodName55;
 	private String[] _methodParameterTypes55;
+	private String _methodName56;
+	private String[] _methodParameterTypes56;
+	private String _methodName57;
+	private String[] _methodParameterTypes57;
 }

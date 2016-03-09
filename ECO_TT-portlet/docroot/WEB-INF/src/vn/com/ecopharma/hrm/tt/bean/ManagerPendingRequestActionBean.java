@@ -39,19 +39,25 @@ public class ManagerPendingRequestActionBean extends AbstractPendingRequestBean 
 
 	@Override
 	public void onConfirmApproval(ActionEvent event) {
-		for (VacationLeaveIndexedItem item : getPendingRequests().getTarget()) {
+		final List<VacationLeaveIndexedItem> approvedList = getPendingRequests()
+				.getTarget();
+		for (int i = 0; i < approvedList.size(); i++) {
+			VacationLeaveIndexedItem item = approvedList.get(i);
+
 			try {
 				LOGGER.info("On Approving " + item.getFullNameVi());
 				VacationLeave vacationLeave = VacationLeaveLocalServiceUtil
 						.fetchVacationLeave(item.getId());
-				VacationLeaveLocalServiceUtil.setManagerApproval(vacationLeave,
-						getServiceContext());
-				LOGGER.info(item.getFullNameVi() + " was approved");
+				if (VacationLeaveLocalServiceUtil.setManagerApproval(
+						vacationLeave, getServiceContext()) != null) {
+					approvedList.remove(item);
+					LOGGER.info(item.getFullNameVi() + " was approved");
+				}
 			} catch (SystemException e) {
 				LOGGER.info(e);
 			}
-
 		}
+
 		FacesMessage message = new FacesMessage("Notice!", getPendingRequests()
 				.getTarget().size() + " was approved");
 		FacesContext.getCurrentInstance().addMessage(null, message);

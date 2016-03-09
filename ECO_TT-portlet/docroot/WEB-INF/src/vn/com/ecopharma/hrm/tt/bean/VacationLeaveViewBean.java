@@ -20,6 +20,8 @@ import vn.com.ecopharma.hrm.tt.dm.VacationLeaveIndexLazyDataModel;
 import vn.com.ecopharma.hrm.tt.dto.VacationLeaveIndexedItem;
 import vn.com.ecopharma.hrm.tt.enumeration.VacationLeaveStatus;
 import vn.com.ecopharma.hrm.tt.enumeration.VacationLeaveType;
+import vn.com.ecopharma.hrm.tt.service.TimeTrackingLocalServiceUtil;
+import vn.com.ecopharma.hrm.tt.utils.TTUtils;
 
 @ManagedBean(name = "leaveViewBean")
 @ViewScoped
@@ -42,7 +44,7 @@ public class VacationLeaveViewBean implements Serializable {
 	public void onRowEdit(RowEditEvent event) {
 		final VacationLeaveIndexedItem obj = (VacationLeaveIndexedItem) event
 				.getObject();
-		try { 
+		try {
 			VacationLeave oldVacationLeave = VacationLeaveLocalServiceUtil
 					.fetchVacationLeave(obj.getId());
 			String oldStatus = oldVacationLeave.getStatus();
@@ -67,7 +69,15 @@ public class VacationLeaveViewBean implements Serializable {
 	}
 
 	public void onRemoveAllIndex() {
+		VacationLeaveLocalServiceUtil.removeAllIndexes(TTUtils
+				.getCurrentSearchContext(), TTUtils.getCurrentSearchContext()
+				.getCompanyId());
+	}
 
+	public void onAddMissingTimeTrackingData() {
+		TimeTrackingLocalServiceUtil
+				.scanAndAddMissingDataByLeaveRequests(VacationLeaveLocalServiceUtil
+						.findAll());
 	}
 
 	public List<String> getLeaveTypes() {

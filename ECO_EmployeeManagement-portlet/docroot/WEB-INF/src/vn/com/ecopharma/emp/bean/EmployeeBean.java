@@ -88,7 +88,7 @@ public class EmployeeBean implements Serializable {
 
 	private static final Log LOGGER = LogFactoryUtil.getLog(EmployeeBean.class);
 
-	private static final boolean IS_TEST_ENV = true;
+	private static final boolean IS_TEST_ENV = false;
 
 	private static final String EMPLOYEE_VIEW_PAGE = "/views/employees.xhtml";
 

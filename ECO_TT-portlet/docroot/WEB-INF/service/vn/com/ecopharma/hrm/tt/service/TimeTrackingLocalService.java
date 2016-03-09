@@ -312,6 +312,12 @@ public interface TimeTrackingLocalService extends BaseLocalService,
 	public vn.com.ecopharma.hrm.tt.model.TimeTracking setLeaveForTimeTracking(
 		vn.com.ecopharma.hrm.tt.model.TimeTracking timeTracking, long leaveRefId);
 
+	public void addOrUpdateTimeTrackingByLeaveRequest(
+		vn.com.ecopharma.emp.model.VacationLeave leaveRequest);
+
+	public void scanAndAddMissingDataByLeaveRequests(
+		java.util.List<vn.com.ecopharma.emp.model.VacationLeave> list);
+
 	public void completelyRemoveAllTimeTrackings();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

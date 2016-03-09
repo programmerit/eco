@@ -13,7 +13,7 @@
 		<h:form>
 			<p:dialog id="leaveRequestDialog" widgetVar="wLeaveRequestDialog"
 				modal="true" header="Add Leave Request">
-				<p:outputPanel autoUpdate="true" id="leaveRequestOutputPanel">
+				<p:outputPanel autoUpdate="false" id="leaveRequestOutputPanel">
 					<h:panelGrid columns="2">
 						<h:outputText value="Fullname: " />
 						<h:outputText
@@ -30,40 +30,45 @@
 						<h:outputText
 							value="#{leaveRequestBean.requestItem.emp.department}" />
 
+						<h:outputText value="Number of leaves left: " />
+						<h:outputText
+							value="#{leaveRequestBean.requestItem.annualLeave.totalAnualLeaveLeft}" />
+
 						<h:outputText value="Leave Type:" />
 						<h:panelGroup>
-							<p:outputPanel autoUpdate="true">
-								<p:selectOneMenu id="leaveTypeSelect"
-									value="#{leaveRequestBean.requestItem.leave.leaveType}"
-									label="Leave Type" var="t">
-									<p:ajax update="signSelect" />
-									<f:selectItem itemLabel="Leave Type" itemValue="" />
-									<f:selectItems value="#{leaveRequestBean.allTypes}" var="t"
-										itemLabel="#{t}" itemValue="#{t}" />
-									<p:column>#{t}</p:column>
-								</p:selectOneMenu>
+							<p:selectOneMenu id="leaveTypeSelect"
+								value="#{leaveRequestBean.requestItem.leave.leaveType}"
+								label="Leave Type" var="t">
+								<p:ajax update="signSelect" />
+								<f:selectItem itemLabel="Leave Type" itemValue="" />
+								<f:selectItems value="#{leaveRequestBean.allTypes}" var="t"
+									itemLabel="#{t}" itemValue="#{t}" />
+								<p:column>#{t}</p:column>
+							</p:selectOneMenu>
 
-								<p:selectOneMenu id="signSelect"
-									value="#{leaveRequestBean.requestItem.leave.sign}" label="Sign"
-									var="s">
-									<f:selectItems value="#{leaveRequestBean.signs}" var="s"
-										itemLabel="#{s}" itemValue="#{s}" />
-									<p:column>#{s}</p:column>
-								</p:selectOneMenu>
-							</p:outputPanel>
+							<p:selectOneMenu id="signSelect"
+								value="#{leaveRequestBean.requestItem.leave.sign}" label="Sign"
+								var="s">
+								<p:ajax />
+								<f:selectItems value="#{leaveRequestBean.signs}" var="s"
+									itemLabel="#{s}" itemValue="#{s}" />
+								<p:column>#{s}</p:column>
+							</p:selectOneMenu>
 						</h:panelGroup>
-
-
 
 						<h:outputText value="Time:" />
-						<h:panelGroup>
+						<p:outputPanel autoUpdate="true">
 							<p:calendar
 								value="#{leaveRequestBean.requestItem.leave.leaveFrom}"
-								pattern="dd/MM/yyyy" styleClass="calendarClass" required="true" /> 
+								pattern="dd/MM/yyyy" styleClass="calendarClass" required="true">
+								<p:ajax event="dateSelect"
+									listener="#{leaveRequestBean.onLeaveFromSelect}" />
+							</p:calendar>	 
 							- 
-						<p:calendar value="#{leaveRequestBean.requestItem.leave.leaveTo}"
+						<p:calendar id="leaveTo"
+								value="#{leaveRequestBean.requestItem.leave.leaveTo}"
 								pattern="dd/MM/yyyy" styleClass="calendarClass" required="true" />
-						</h:panelGroup>
+						</p:outputPanel>
 
 						<h:outputText value="Number of Hours(Optional):" />
 						<p:inputText style="width: 60px;"

@@ -82,7 +82,7 @@
 											rendered="#{vacancyBean.vacancyItem.emptyDocuments}">
 											<h:outputText styleClass="no-item-label" value="No Documents" />
 											<br />
-											<p:commandLink value="Upload Document"
+											<p:commandLink value="Upload"
 												onclick="PF('wUploadDocumentDialog').show();" />
 										</h:panelGroup>
 
@@ -186,7 +186,7 @@
 						<p:selectOneMenu id="unitSelect" value="#{titlesActionBean.unit}"
 							converter="unitConverter" effect="fade" filter="true"
 							filterMatchMode="contains" var="u">
-							<p:ajax update="unitGroupSelect titlesSelect"
+							<p:ajax update="unitGroupSelect"
 								listener="#{titlesActionBean.onUnitChanged}" />
 
 							<f:selectItem itemLabel="Unit" itemValue="" />
@@ -202,8 +202,7 @@
 							value="#{titlesActionBean.unitGroup}"
 							converter="unitGroupConverter" effect="fade" filter="true"
 							filterMatchMode="contains" var="g">
-							<p:ajax update="titlesSelect"
-								listener="#{titlesActionBean.onUnitGroupChanged}" />
+							<p:ajax listener="#{titlesActionBean.onUnitGroupChanged}" />
 
 							<f:selectItem itemLabel="Group" itemValue="" />
 							<f:selectItems value="#{titlesActionBean.unitGroups}" var="g"

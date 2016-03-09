@@ -138,77 +138,20 @@ public class EmpAnnualLeaveLocalServiceImpl extends
 				empId, totalLeave, totalLeaveLeft, totalOldLeavesLeft);
 	}
 
-	public void scanAndAutoAddVacationLeave(ServiceContext serviceContext) {
-		List<Emp> allEmps = empLocalService.findAll();
-		for (Emp emp : allEmps) {
-			LOGGER.info("Emp " + emp.getEmpCode() + " joined date: "
-					+ emp.getJoinedDate());
-			try {
-				int numberOfAnnualLeaves = calculateTotalAnnualLeaveByJoinedDate(emp
-						.getJoinedDate());
-				LOGGER.info("	 	Has " + numberOfAnnualLeaves + " Annual Leave");
-
-				addEmpAnnualLeave(emp.getEmpId(), numberOfAnnualLeaves, 0.0,
-						0.0, serviceContext);
-
-			} catch (SystemException e) {
-				LOGGER.info(e);
-			}
+	public EmpAnnualLeave updateEmpAnnualLeave(EmpAnnualLeave empAnnualLeave) {
+		try {
+			empAnnualLeave.setModifiedDate(new Date());
+			EmpAnnualLeave result = super.updateEmpAnnualLeave(empAnnualLeave);
+			Indexer indexer = IndexerRegistryUtil
+					.nullSafeGetIndexer(EmpAnnualLeave.class.getName());
+			indexer.reindex(result);
+			return result;
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		} catch (SearchException e) {
+			LOGGER.info(e);
 		}
-	}
-
-	public int calculateTotalAnnualLeaveByJoinedDate(Date joinedDate)
-			throws SystemException {
-		if (joinedDate == null) {
-			throw new SystemException("joinedDate was null");
-		}
-		Calendar calendar = Calendar.getInstance();
-		int calTotalLeaves = 0;
-		Date today = new Date();
-
-		calendar.setTime(today);
-		int thisYear = calendar.get(Calendar.YEAR);
-		int thisMonth = calendar.get(Calendar.MONTH);
-		int thisDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-
-		calendar.setTime(joinedDate);
-		int joinedDateYear = calendar.get(Calendar.YEAR);
-		int joinedDateDay = calendar.get(Calendar.DAY_OF_MONTH);
-		LOGGER.info("thisYear: " + thisYear + "  vs  " + joinedDateYear);
-		if (thisYear == joinedDateYear) {
-			if (joinedDateDay > 15) {
-				calendar.add(Calendar.MONTH, 1);
-				calendar.set(Calendar.DAY_OF_MONTH, 1);
-			}
-			// new calculate-joinedMonth
-			int joinedDateMonth = calendar.get(Calendar.MONTH);
-			LOGGER.info("thisMonth: " + thisMonth + "  vs  " + joinedDateMonth);
-			if (thisMonth == joinedDateMonth)
-				return 0;
-
-		} else {
-			calendar.set(thisYear, 00, 01);
-		}
-
-		// total month = total leaves incase today is larger than 15
-		int totalMonth = getMonthsBetweenTwoDate(calendar.getTime(), today);
-		LOGGER.info("No Of Months Btw 2 Dates: " + totalMonth);
-		// calTotalLeaves = thisDayOfMonth > 15 ? totalMonth : totalMonth - 1;
-
-		return totalMonth;
-	}
-
-	public int getMonthsBetweenTwoDate(Date startDate, Date endDate) {
-		Calendar startCalendar = new GregorianCalendar();
-		startCalendar.setTime(startDate);
-		Calendar endCalendar = new GregorianCalendar();
-		endCalendar.setTime(endDate);
-
-		int diffYear = endCalendar.get(Calendar.YEAR)
-				- startCalendar.get(Calendar.YEAR);
-		int diffMonth = diffYear * 12 + endCalendar.get(Calendar.MONTH)
-				- startCalendar.get(Calendar.MONTH);
-		return diffMonth;
+		return null;
 	}
 
 	public EmpAnnualLeave fetchByEmp(long empId) {
@@ -398,6 +341,123 @@ public class EmpAnnualLeaveLocalServiceImpl extends
 			}
 		} catch (SearchException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public EmpAnnualLeave applyLeaveForEmp(long empId, double numberOfLeaves,
+			ServiceContext serviceContext) {
+		final EmpAnnualLeave currentAnnualLeave = fetchByEmp(empId);
+		if (currentAnnualLeave == null)
+			return null;
+
+		double totalLeavesLeft = currentAnnualLeave.getTotalAnualLeaveLeft();
+		double totalPreviousYearLeaveLeft = currentAnnualLeave
+				.getTotalPreviousYearLeavesLeft();
+
+		Date today = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2016, 04, 01);
+
+		if (today.after(calendar.getTime())) {
+			totalLeavesLeft -= numberOfLeaves;
+		} else {
+			if (totalPreviousYearLeaveLeft > 0) {
+				if (totalPreviousYearLeaveLeft > numberOfLeaves) {
+					totalPreviousYearLeaveLeft -= numberOfLeaves;
+				} else {
+					double temp = numberOfLeaves - totalPreviousYearLeaveLeft;
+					totalPreviousYearLeaveLeft -= totalPreviousYearLeaveLeft;
+					totalLeavesLeft -= temp;
+				}
+			} else {
+				totalLeavesLeft -= numberOfLeaves;
+			}
+		}
+
+		currentAnnualLeave.setTotalAnualLeaveLeft(totalLeavesLeft);
+		currentAnnualLeave
+				.setTotalPreviousYearLeavesLeft(totalPreviousYearLeaveLeft);
+
+		return updateEmpAnnualLeave(currentAnnualLeave);
+
+	}
+
+	public void scanAndAutoAddVacationLeave(ServiceContext serviceContext) {
+		List<Emp> allEmps = empLocalService.findAll();
+		for (Emp emp : allEmps) {
+			LOGGER.info("Emp " + emp.getEmpCode() + " joined date: "
+					+ emp.getJoinedDate());
+			try {
+				int numberOfAnnualLeaves = calculateTotalAnnualLeaveByJoinedDate(emp
+						.getJoinedDate());
+				LOGGER.info("	 	Has " + numberOfAnnualLeaves + " Annual Leave");
+
+				addEmpAnnualLeave(emp.getEmpId(), numberOfAnnualLeaves, 0.0,
+						0.0, serviceContext);
+
+			} catch (SystemException e) {
+				LOGGER.info(e);
+			}
+		}
+	}
+
+	public int calculateTotalAnnualLeaveByJoinedDate(Date joinedDate)
+			throws SystemException {
+		if (joinedDate == null) {
+			throw new SystemException("joinedDate was null");
+		}
+		Calendar calendar = Calendar.getInstance();
+		int calTotalLeaves = 0;
+		Date today = new Date();
+
+		calendar.setTime(today);
+		int thisYear = calendar.get(Calendar.YEAR);
+		int thisMonth = calendar.get(Calendar.MONTH);
+		int thisDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+		calendar.setTime(joinedDate);
+		int joinedDateYear = calendar.get(Calendar.YEAR);
+		int joinedDateDay = calendar.get(Calendar.DAY_OF_MONTH);
+		LOGGER.info("thisYear: " + thisYear + "  vs  " + joinedDateYear);
+		if (thisYear == joinedDateYear) {
+			if (joinedDateDay > 15) {
+				calendar.add(Calendar.MONTH, 1);
+				calendar.set(Calendar.DAY_OF_MONTH, 1);
+			}
+			// new calculate-joinedMonth
+			int joinedDateMonth = calendar.get(Calendar.MONTH);
+			LOGGER.info("thisMonth: " + thisMonth + "  vs  " + joinedDateMonth);
+			if (thisMonth == joinedDateMonth)
+				return 0;
+
+		} else {
+			calendar.set(thisYear, 00, 01);
+		}
+
+		// total month = total leaves incase today is larger than 15
+		int totalMonth = getMonthsBetweenTwoDate(calendar.getTime(), today);
+		LOGGER.info("No Of Months Btw 2 Dates: " + totalMonth);
+		// calTotalLeaves = thisDayOfMonth > 15 ? totalMonth : totalMonth - 1;
+
+		return totalMonth;
+	}
+
+	public int getMonthsBetweenTwoDate(Date startDate, Date endDate) {
+		Calendar startCalendar = new GregorianCalendar();
+		startCalendar.setTime(startDate);
+		Calendar endCalendar = new GregorianCalendar();
+		endCalendar.setTime(endDate);
+
+		int diffYear = endCalendar.get(Calendar.YEAR)
+				- startCalendar.get(Calendar.YEAR);
+		int diffMonth = diffYear * 12 + endCalendar.get(Calendar.MONTH)
+				- startCalendar.get(Calendar.MONTH);
+		return diffMonth;
+	}
+	
+	public void addOneDayForEachEmp() {
+		for (EmpAnnualLeave annualLeave: findAll()) {
+			
 		}
 	}
 

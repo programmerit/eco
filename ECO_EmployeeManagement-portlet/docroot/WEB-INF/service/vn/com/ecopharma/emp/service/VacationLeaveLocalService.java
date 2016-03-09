@@ -301,6 +301,15 @@ public interface VacationLeaveLocalService extends BaseLocalService,
 		vn.com.ecopharma.emp.model.VacationLeave vacationLeave,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
+	public double calculateNumberOfAnnualLeavesBtwTwoDates(
+		java.util.Date dateFrom, java.util.Date dateTo,
+		java.lang.String additionLeaveSign);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.util.Date> getDatesBetweenTwoDates(
+		java.util.Date date1, java.util.Date date2, boolean includedHolidays,
+		boolean includedLowerTerm);
+
 	public int countAllUnDeletedDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,

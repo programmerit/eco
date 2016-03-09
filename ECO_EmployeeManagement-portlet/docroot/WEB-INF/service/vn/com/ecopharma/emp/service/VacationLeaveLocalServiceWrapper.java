@@ -380,6 +380,22 @@ public class VacationLeaveLocalServiceWrapper
 	}
 
 	@Override
+	public double calculateNumberOfAnnualLeavesBtwTwoDates(
+		java.util.Date dateFrom, java.util.Date dateTo,
+		java.lang.String additionLeaveSign) {
+		return _vacationLeaveLocalService.calculateNumberOfAnnualLeavesBtwTwoDates(dateFrom,
+			dateTo, additionLeaveSign);
+	}
+
+	@Override
+	public java.util.List<java.util.Date> getDatesBetweenTwoDates(
+		java.util.Date date1, java.util.Date date2, boolean includedHolidays,
+		boolean includedLowerTerm) {
+		return _vacationLeaveLocalService.getDatesBetweenTwoDates(date1, date2,
+			includedHolidays, includedLowerTerm);
+	}
+
+	@Override
 	public int countAllUnDeletedDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
