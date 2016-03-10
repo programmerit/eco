@@ -273,10 +273,16 @@ public interface EmpNotifyEmailLocalService extends BaseLocalService,
 		long empId, java.lang.String type, java.lang.String status);
 
 	public vn.com.ecopharma.emp.model.EmpNotifyEmail updateEmpNotifyEmail(
+		vn.com.ecopharma.emp.model.EmpNotifyEmail obj, java.lang.String status);
+
+	public vn.com.ecopharma.emp.model.EmpNotifyEmail updateEmpNotifyEmail(
 		long empNotifyEmailId, java.lang.String status);
 
 	public vn.com.ecopharma.emp.model.EmpNotifyEmail updateSentMailNotify(
 		long empNotifyEmailId);
+
+	public vn.com.ecopharma.emp.model.EmpNotifyEmail updateSentMailNotify(
+		vn.com.ecopharma.emp.model.EmpNotifyEmail obj);
 
 	public void updateSentMailNotifications(
 		java.util.List<vn.com.ecopharma.emp.model.EmpNotifyEmail> items);

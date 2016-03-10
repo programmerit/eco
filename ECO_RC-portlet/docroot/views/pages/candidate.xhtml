@@ -6,7 +6,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 	<h:head />
 	<h:body>
 		<eco:ajaxIndicator />
@@ -14,6 +15,7 @@
 		<h:panelGroup id="CandidatePanelGroup">
 			<h:form id="notificationForm">
 				<p:growl id="growl" life="3000" />
+				<pe:blockPanel />
 			</h:form>
 			<ui:include src="#{candidateViewBean.currentNav}" />
 		</h:panelGroup>

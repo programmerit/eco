@@ -762,6 +762,11 @@ public class EmpLocalServiceUtil {
 		return getService().sendNewEmpsNotificationEmail(emps);
 	}
 
+	public static boolean testSendNewEmpsNotificationEmail(
+		java.util.List<vn.com.ecopharma.emp.model.Emp> emps) {
+		return getService().testSendNewEmpsNotificationEmail(emps);
+	}
+
 	public static void fixLaborContractSignedDate()
 		throws com.liferay.portal.kernel.exception.SystemException,
 			java.text.ParseException {

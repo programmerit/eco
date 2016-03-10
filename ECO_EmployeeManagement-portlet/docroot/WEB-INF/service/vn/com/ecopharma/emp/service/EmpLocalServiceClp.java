@@ -451,9 +451,13 @@ public class EmpLocalServiceClp implements EmpLocalService {
 
 		_methodParameterTypes78 = new String[] { "java.util.List" };
 
-		_methodName79 = "fixLaborContractSignedDate";
+		_methodName79 = "testSendNewEmpsNotificationEmail";
 
-		_methodParameterTypes79 = new String[] {  };
+		_methodParameterTypes79 = new String[] { "java.util.List" };
+
+		_methodName80 = "fixLaborContractSignedDate";
+
+		_methodParameterTypes80 = new String[] {  };
 	}
 
 	@Override
@@ -3007,12 +3011,37 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	}
 
 	@Override
+	public boolean testSendNewEmpsNotificationEmail(
+		java.util.List<vn.com.ecopharma.emp.model.Emp> emps) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName79,
+					_methodParameterTypes79,
+					new Object[] { ClpSerializer.translateInput(emps) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Boolean)returnObj).booleanValue();
+	}
+
+	@Override
 	public void fixLaborContractSignedDate()
 		throws com.liferay.portal.kernel.exception.SystemException,
 			java.text.ParseException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName79,
-				_methodParameterTypes79, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName80,
+				_methodParameterTypes80, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -3194,4 +3223,6 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	private String[] _methodParameterTypes78;
 	private String _methodName79;
 	private String[] _methodParameterTypes79;
+	private String _methodName80;
+	private String[] _methodParameterTypes80;
 }

@@ -434,6 +434,11 @@ public class EmpAnnualLeaveLocalServiceWrapper
 			endDate);
 	}
 
+	@Override
+	public void addOneDayForEachEmp() {
+		_empAnnualLeaveLocalService.addOneDayForEachEmp();
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

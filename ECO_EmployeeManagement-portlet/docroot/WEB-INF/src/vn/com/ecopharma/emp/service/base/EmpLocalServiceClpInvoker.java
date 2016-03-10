@@ -453,9 +453,13 @@ public class EmpLocalServiceClpInvoker {
 
 		_methodParameterTypes247 = new String[] { "java.util.List" };
 
-		_methodName248 = "fixLaborContractSignedDate";
+		_methodName248 = "testSendNewEmpsNotificationEmail";
 
-		_methodParameterTypes248 = new String[] {  };
+		_methodParameterTypes248 = new String[] { "java.util.List" };
+
+		_methodName249 = "fixLaborContractSignedDate";
+
+		_methodParameterTypes249 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -1033,6 +1037,11 @@ public class EmpLocalServiceClpInvoker {
 
 		if (_methodName248.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes248, parameterTypes)) {
+			return EmpLocalServiceUtil.testSendNewEmpsNotificationEmail((java.util.List<vn.com.ecopharma.emp.model.Emp>)arguments[0]);
+		}
+
+		if (_methodName249.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes249, parameterTypes)) {
 			EmpLocalServiceUtil.fixLaborContractSignedDate();
 
 			return null;
@@ -1199,4 +1208,6 @@ public class EmpLocalServiceClpInvoker {
 	private String[] _methodParameterTypes247;
 	private String _methodName248;
 	private String[] _methodParameterTypes248;
+	private String _methodName249;
+	private String[] _methodParameterTypes249;
 }

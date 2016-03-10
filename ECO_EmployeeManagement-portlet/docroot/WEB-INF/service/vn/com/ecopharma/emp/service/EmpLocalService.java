@@ -585,6 +585,9 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 	public boolean sendNewEmpsNotificationEmail(
 		java.util.List<vn.com.ecopharma.emp.model.Emp> emps);
 
+	public boolean testSendNewEmpsNotificationEmail(
+		java.util.List<vn.com.ecopharma.emp.model.Emp> emps);
+
 	public void fixLaborContractSignedDate()
 		throws com.liferay.portal.kernel.exception.SystemException,
 			java.text.ParseException;

@@ -106,12 +106,21 @@ public class EmpNotifyEmailLocalServiceImpl extends
 		return null;
 	}
 
+	public EmpNotifyEmail updateEmpNotifyEmail(EmpNotifyEmail obj, String status) {
+		try {
+			obj.setStatus(status);
+			return super.updateEmpNotifyEmail(obj);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
 	public EmpNotifyEmail updateEmpNotifyEmail(long empNotifyEmailId,
 			String status) {
 		try {
-			EmpNotifyEmail obj = fetchEmpNotifyEmail(empNotifyEmailId);
-			obj.setStatus(status);
-			return super.updateEmpNotifyEmail(obj);
+			return updateEmpNotifyEmail(fetchEmpNotifyEmail(empNotifyEmailId),
+					status);
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}
@@ -123,9 +132,13 @@ public class EmpNotifyEmailLocalServiceImpl extends
 				EmployeeNotifyType.SENT.toString());
 	}
 
+	public EmpNotifyEmail updateSentMailNotify(EmpNotifyEmail obj) {
+		return updateEmpNotifyEmail(obj, EmployeeNotifyType.SENT.toString());
+	}
+
 	public void updateSentMailNotifications(List<EmpNotifyEmail> items) {
 		for (EmpNotifyEmail item : items) {
-			item.setStatus(EmployeeNotifyType.SENT.toString());
+			updateSentMailNotify(item);
 		}
 	}
 

@@ -59,6 +59,7 @@ public class TitlesBean extends AbstractOrganizationBean {
 				onCheckDuplicateTitles();
 				if (!isTitlesExisted) {
 					result = TitlesLocalServiceUtil.addTitles(titles,
+							unitGroup, unit, department,
 							EmployeeUtils.getServiceContext());
 
 				} else {

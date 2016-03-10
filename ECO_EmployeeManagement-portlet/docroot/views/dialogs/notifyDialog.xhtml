@@ -25,7 +25,8 @@
 					</h:panelGroup>
 
 					<p:commandButton value="Send Notification Email"
-						actionListener="#{empNotifyBean.onSendNotificationEmail}" /> 
+						actionListener="#{empNotifyBean.onSendNotificationEmail}"
+						oncomplete="PF('wNotifyDialog').hide();" /> 
 					|
 					<p:commandLink value="Ignore and send later"
 						onclick="PF('wNotifyDialog').hide()" />

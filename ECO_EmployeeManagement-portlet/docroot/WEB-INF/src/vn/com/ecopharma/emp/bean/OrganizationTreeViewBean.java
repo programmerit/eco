@@ -282,6 +282,13 @@ public class OrganizationTreeViewBean implements Serializable {
 		return selectedNodes != null && selectedNodes.length == 1;
 	}
 
+	public boolean isAddTitlesContextAvailable() {
+		String currentSelectedLevel = getCurrentSelectedLevel();
+		return currentSelectedLevel.equalsIgnoreCase("Department")
+				|| currentSelectedLevel.equalsIgnoreCase("Unit")
+				|| currentSelectedLevel.equalsIgnoreCase("UnitGroup");
+	}
+
 	public String getDialog() {
 		return dialog;
 	}

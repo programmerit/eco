@@ -144,19 +144,31 @@ public class EmpNotifyEmailLocalServiceClpInvoker {
 
 		_methodName192 = "updateEmpNotifyEmail";
 
-		_methodParameterTypes192 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes192 = new String[] {
+				"vn.com.ecopharma.emp.model.EmpNotifyEmail", "java.lang.String"
+			};
 
-		_methodName193 = "updateSentMailNotify";
+		_methodName193 = "updateEmpNotifyEmail";
 
-		_methodParameterTypes193 = new String[] { "long" };
+		_methodParameterTypes193 = new String[] { "long", "java.lang.String" };
 
-		_methodName194 = "updateSentMailNotifications";
+		_methodName194 = "updateSentMailNotify";
 
-		_methodParameterTypes194 = new String[] { "java.util.List" };
+		_methodParameterTypes194 = new String[] { "long" };
 
-		_methodName195 = "removeEmpNotifyEmail";
+		_methodName195 = "updateSentMailNotify";
 
-		_methodParameterTypes195 = new String[] { "long" };
+		_methodParameterTypes195 = new String[] {
+				"vn.com.ecopharma.emp.model.EmpNotifyEmail"
+			};
+
+		_methodName196 = "updateSentMailNotifications";
+
+		_methodParameterTypes196 = new String[] { "java.util.List" };
+
+		_methodName197 = "removeEmpNotifyEmail";
+
+		_methodParameterTypes197 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -296,24 +308,35 @@ public class EmpNotifyEmailLocalServiceClpInvoker {
 
 		if (_methodName192.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes192, parameterTypes)) {
-			return EmpNotifyEmailLocalServiceUtil.updateEmpNotifyEmail(((Long)arguments[0]).longValue(),
+			return EmpNotifyEmailLocalServiceUtil.updateEmpNotifyEmail((vn.com.ecopharma.emp.model.EmpNotifyEmail)arguments[0],
 				(java.lang.String)arguments[1]);
 		}
 
 		if (_methodName193.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes193, parameterTypes)) {
-			return EmpNotifyEmailLocalServiceUtil.updateSentMailNotify(((Long)arguments[0]).longValue());
+			return EmpNotifyEmailLocalServiceUtil.updateEmpNotifyEmail(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
 		}
 
 		if (_methodName194.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes194, parameterTypes)) {
+			return EmpNotifyEmailLocalServiceUtil.updateSentMailNotify(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName195.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes195, parameterTypes)) {
+			return EmpNotifyEmailLocalServiceUtil.updateSentMailNotify((vn.com.ecopharma.emp.model.EmpNotifyEmail)arguments[0]);
+		}
+
+		if (_methodName196.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes196, parameterTypes)) {
 			EmpNotifyEmailLocalServiceUtil.updateSentMailNotifications((java.util.List<vn.com.ecopharma.emp.model.EmpNotifyEmail>)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName195.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes195, parameterTypes)) {
+		if (_methodName197.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes197, parameterTypes)) {
 			return EmpNotifyEmailLocalServiceUtil.removeEmpNotifyEmail(((Long)arguments[0]).longValue());
 		}
 
@@ -376,4 +399,8 @@ public class EmpNotifyEmailLocalServiceClpInvoker {
 	private String[] _methodParameterTypes194;
 	private String _methodName195;
 	private String[] _methodParameterTypes195;
+	private String _methodName196;
+	private String[] _methodParameterTypes196;
+	private String _methodName197;
+	private String[] _methodParameterTypes197;
 }

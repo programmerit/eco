@@ -816,6 +816,12 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 	}
 
 	@Override
+	public boolean testSendNewEmpsNotificationEmail(
+		java.util.List<vn.com.ecopharma.emp.model.Emp> emps) {
+		return _empLocalService.testSendNewEmpsNotificationEmail(emps);
+	}
+
+	@Override
 	public void fixLaborContractSignedDate()
 		throws com.liferay.portal.kernel.exception.SystemException,
 			java.text.ParseException {

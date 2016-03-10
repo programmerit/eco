@@ -166,3 +166,12 @@ select.ui-helper-hidden {
 	line-height: inherit;
 	margin: 0 0 9px;
 }
+
+/* For pe:timepicker */
+.ui-timepicker-minutes td {
+	background-color: navy;
+}
+
+.ui-timepicker-table td {
+	background-color: navy;
+}

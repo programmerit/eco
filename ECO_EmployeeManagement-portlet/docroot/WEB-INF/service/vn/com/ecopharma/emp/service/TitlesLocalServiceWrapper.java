@@ -324,6 +324,17 @@ public class TitlesLocalServiceWrapper implements TitlesLocalService,
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.Titles addTitles(
+		vn.com.ecopharma.emp.model.Titles titles,
+		vn.com.ecopharma.emp.model.UnitGroup unitGroup,
+		vn.com.ecopharma.emp.model.Unit unit,
+		vn.com.ecopharma.emp.model.Department department,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _titlesLocalService.addTitles(titles, unitGroup, unit,
+			department, serviceContext);
+	}
+
+	@Override
 	public java.util.List<vn.com.ecopharma.emp.model.Titles> findByDepartmentUnitUnitGroup(
 		long departmentId, long unitId, long unitGroupId) {
 		return _titlesLocalService.findByDepartmentUnitUnitGroup(departmentId,

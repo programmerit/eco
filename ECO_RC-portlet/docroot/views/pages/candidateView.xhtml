@@ -5,8 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 	<h:head />
 	<h:body>
 		<h:form id="candidateSearchForm"
@@ -161,7 +160,9 @@
 					<p:menuitem
 						value="#{i18n[candidateViewBean.getLocalizedStatus('INTERVIEW_SCHEDULED')]}"
 						rendered="#{candidateBean.isExistedInSameAvailableStatuses('INTERVIEW_SCHEDULED')}"
-						onclick="window.location.hash = '#scheduleInterview';" />
+						action="#{candidateBean.onChangeMultipleItemStatus('INTERVIEW_SCHEDULED')}" 
+						update=":CandidatePanelGroup"
+						/>
 
 					<p:menuitem
 						value="#{i18n[candidateViewBean.getLocalizedStatus('JOB_OFFERED')]}"

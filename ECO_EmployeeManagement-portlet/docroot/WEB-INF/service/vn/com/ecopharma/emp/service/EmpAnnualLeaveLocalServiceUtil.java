@@ -408,6 +408,10 @@ public class EmpAnnualLeaveLocalServiceUtil {
 		return getService().getMonthsBetweenTwoDate(startDate, endDate);
 	}
 
+	public static void addOneDayForEachEmp() {
+		getService().addOneDayForEachEmp();
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
+	<h:head />
+	<h:body>
+		<h:form>
+			<p:dialog id="leaveRequestDialog" widgetVar="wLeaveRequestDialog"
+				modal="true" header="Add Leave Request">
+				<p:outputPanel autoUpdate="false" id="leaveRequestOutputPanel">
+					<h:panelGrid columns="2">
+						<h:outputText value="Fullname: " />
+						<h:outputText
+							value="#{leaveRequestBean.requestItem.emp.fullNameVi}" />
+
+						<h:outputText value="Emp Code: " />
+						<h:outputText
+							value="#{leaveRequestBean.requestItem.emp.employeeCode}" />
+
+						<h:outputText value="Titles: " />
+						<h:outputText value="#{leaveRequestBean.requestItem.emp.titles}" />
+
+						<h:outputText value="Department: " />
+						<h:outputText
+							value="#{leaveRequestBean.requestItem.emp.department}" />
+
+						<h:outputText value="Number of leaves left: " />
+						<h:outputText
+							value="#{leaveRequestBean.requestItem.annualLeave.totalAnualLeaveLeft}" />
+
+						<h:outputText value="Leave Type:" />
+						<h:panelGroup>
+							<p:selectOneMenu id="leaveTypeSelect"
+								value="#{leaveRequestBean.requestItem.leave.leaveType}"
+								label="Leave Type" var="t">
+								<p:ajax update="signSelect" />
+								<f:selectItem itemLabel="Leave Type" itemValue="" />
+								<f:selectItems value="#{leaveRequestBean.allTypes}" var="t"
+									itemLabel="#{t}" itemValue="#{t}" />
+								<p:column>#{t}</p:column>
+							</p:selectOneMenu>
+
+							<p:selectOneMenu id="signSelect"
+								value="#{leaveRequestBean.requestItem.leave.sign}" label="Sign"
+								var="s">
+								<p:ajax />
+								<f:selectItems value="#{leaveRequestBean.signs}" var="s"
+									itemLabel="#{s}" itemValue="#{s}" />
+								<p:column>#{s}</p:column>
+							</p:selectOneMenu>
+						</h:panelGroup>
+
+						<h:outputText value="Time:" />
+						<p:outputPanel autoUpdate="true">
+							<p:calendar
+								value="#{leaveRequestBean.requestItem.leave.leaveFrom}"
+								pattern="dd/MM/yyyy" styleClass="calendarClass" required="true">
+								<p:ajax event="dateSelect"
+									listener="#{leaveRequestBean.onLeaveFromSelect}" />
+							</p:calendar>	 
+							- 
+						<p:calendar id="leaveTo"
+								value="#{leaveRequestBean.requestItem.leave.leaveTo}"
+								pattern="dd/MM/yyyy" styleClass="calendarClass" required="true" />
+						</p:outputPanel>
+
+						<h:outputText value="Number of Hours(Optional):" />
+						<p:inputText style="width: 60px;"
+							disabled="#{not leaveRequestBean.timeAvailable}"
+							value="#{leaveRequestBean.requestItem.leave.numberOfHours}" />
+
+						<h:outputText value="Reason" />
+						<p:inputTextarea id="reasonTextarea"
+							value="#{leaveRequestBean.requestItem.leave.reason}" />
+					</h:panelGrid>
+
+					<p:commandButton value="Add Request"
+						actionListener="#{leaveRequestBean.onAddRequest}"
+						oncomplete="PF('wLeaveRequestDialog').hide();" />
+					<p:commandLink value="Cancel" style="margin-left: 3px;"
+						onclick="PF('wLeaveRequestDialog').hide();" />
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</h:body>
+	<style type="text/css">
+.calendarClass>input {
+	width: 70px !important;
+}
+</style>
+</f:view>

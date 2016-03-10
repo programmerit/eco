@@ -1679,6 +1679,51 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		}
 		return false;
 	}
+	
+	public boolean testSendNewEmpsNotificationEmail(List<Emp> emps) {
+
+		try {
+			Set<String> managerEmails = getManagerEmailsForNewEmpsNotification(emps);
+			LOGGER.info("Managers : " + managerEmails);
+			List<String> receivers = new ArrayList<>();
+
+			receivers.addAll(Arrays.asList("tvtao@ecopharma.com.vn"));
+			//receivers.addAll(managerEmails);
+
+			InternetAddress[] to = new InternetAddress[receivers.size()];
+			int i = 0;
+			for (String s : receivers) {
+				to[i] = new InternetAddress(s);
+				i++;
+			}
+			// if (LOGGER.isDebugEnabled())
+			LOGGER.info(to);
+
+			InternetAddress[] cc = new InternetAddress[] {
+					new InternetAddress("tvtao@ecopharma.com.vn") };
+
+			InternetAddress from = new InternetAddress("tvtao@ecopharma.com.vn");
+
+			String emailContent = getEntireNewEmployeesHtmlMailContent(emps);
+
+			MailEngine.send(from, to, cc, "Thông tin nhân sự sắp nhận việc",
+					emailContent, true);
+
+			LOGGER.info("TO: " + to.toString());
+			LOGGER.info("CC: " + cc.toString());
+			LOGGER.info("CONTENT: " + emailContent);
+
+			return true;
+
+		} catch (AddressException e) {
+			LOGGER.info(e);
+		} catch (MailEngineException e) {
+			LOGGER.info(e);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return false;
+	}
 
 	public void fixLaborContractSignedDate() throws java.text.ParseException,
 			SystemException {

@@ -306,6 +306,11 @@ public class EmpNotifyEmailLocalServiceUtil {
 	}
 
 	public static vn.com.ecopharma.emp.model.EmpNotifyEmail updateEmpNotifyEmail(
+		vn.com.ecopharma.emp.model.EmpNotifyEmail obj, java.lang.String status) {
+		return getService().updateEmpNotifyEmail(obj, status);
+	}
+
+	public static vn.com.ecopharma.emp.model.EmpNotifyEmail updateEmpNotifyEmail(
 		long empNotifyEmailId, java.lang.String status) {
 		return getService().updateEmpNotifyEmail(empNotifyEmailId, status);
 	}
@@ -313,6 +318,11 @@ public class EmpNotifyEmailLocalServiceUtil {
 	public static vn.com.ecopharma.emp.model.EmpNotifyEmail updateSentMailNotify(
 		long empNotifyEmailId) {
 		return getService().updateSentMailNotify(empNotifyEmailId);
+	}
+
+	public static vn.com.ecopharma.emp.model.EmpNotifyEmail updateSentMailNotify(
+		vn.com.ecopharma.emp.model.EmpNotifyEmail obj) {
+		return getService().updateSentMailNotify(obj);
 	}
 
 	public static void updateSentMailNotifications(

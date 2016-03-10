@@ -239,6 +239,10 @@ public class EmpAnnualLeaveLocalServiceClpInvoker {
 		_methodParameterTypes206 = new String[] {
 				"java.util.Date", "java.util.Date"
 			};
+
+		_methodName207 = "addOneDayForEachEmp";
+
+		_methodParameterTypes207 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -489,6 +493,13 @@ public class EmpAnnualLeaveLocalServiceClpInvoker {
 				(java.util.Date)arguments[1]);
 		}
 
+		if (_methodName207.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes207, parameterTypes)) {
+			EmpAnnualLeaveLocalServiceUtil.addOneDayForEachEmp();
+
+			return null;
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -570,4 +581,6 @@ public class EmpAnnualLeaveLocalServiceClpInvoker {
 	private String[] _methodParameterTypes205;
 	private String _methodName206;
 	private String[] _methodParameterTypes206;
+	private String _methodName207;
+	private String[] _methodParameterTypes207;
 }

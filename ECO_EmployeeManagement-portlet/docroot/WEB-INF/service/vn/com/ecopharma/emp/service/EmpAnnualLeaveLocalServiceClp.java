@@ -234,6 +234,10 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 		_methodParameterTypes38 = new String[] {
 				"java.util.Date", "java.util.Date"
 			};
+
+		_methodName39 = "addOneDayForEachEmp";
+
+		_methodParameterTypes39 = new String[] {  };
 	}
 
 	@Override
@@ -1392,6 +1396,25 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 		return ((Integer)returnObj).intValue();
 	}
 
+	@Override
+	public void addOneDayForEachEmp() {
+		try {
+			_invokableLocalService.invokeMethod(_methodName39,
+				_methodParameterTypes39, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -1469,4 +1492,6 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 	private String[] _methodParameterTypes37;
 	private String _methodName38;
 	private String[] _methodParameterTypes38;
+	private String _methodName39;
+	private String[] _methodParameterTypes39;
 }

@@ -327,6 +327,12 @@ public class EmpNotifyEmailLocalServiceWrapper
 
 	@Override
 	public vn.com.ecopharma.emp.model.EmpNotifyEmail updateEmpNotifyEmail(
+		vn.com.ecopharma.emp.model.EmpNotifyEmail obj, java.lang.String status) {
+		return _empNotifyEmailLocalService.updateEmpNotifyEmail(obj, status);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.EmpNotifyEmail updateEmpNotifyEmail(
 		long empNotifyEmailId, java.lang.String status) {
 		return _empNotifyEmailLocalService.updateEmpNotifyEmail(empNotifyEmailId,
 			status);
@@ -336,6 +342,12 @@ public class EmpNotifyEmailLocalServiceWrapper
 	public vn.com.ecopharma.emp.model.EmpNotifyEmail updateSentMailNotify(
 		long empNotifyEmailId) {
 		return _empNotifyEmailLocalService.updateSentMailNotify(empNotifyEmailId);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.EmpNotifyEmail updateSentMailNotify(
+		vn.com.ecopharma.emp.model.EmpNotifyEmail obj) {
+		return _empNotifyEmailLocalService.updateSentMailNotify(obj);
 	}
 
 	@Override

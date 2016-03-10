@@ -73,3 +73,12 @@ span.currentStatus1 {
 	margin-right: 0px !important;
 	margin-top: 0px !important;
 }
+
+/* For pe:timepicker */
+.ui-timepicker-minutes td {
+	background-color: navy;
+}
+
+.ui-timepicker-table td {
+	background-color: navy;
+}

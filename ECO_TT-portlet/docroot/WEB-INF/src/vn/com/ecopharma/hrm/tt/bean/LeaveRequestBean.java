@@ -3,6 +3,7 @@ package vn.com.ecopharma.hrm.tt.bean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -49,8 +50,39 @@ public class LeaveRequestBean implements Serializable {
 		}
 	}
 
+	public void onInOutDateChange() {
+		final Date timeFrom = requestItem.getLeave().getLeaveFrom();
+		final Date timeTo = requestItem.getLeave().getLeaveTo();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(requestItem.getInOutDate());
+		int year = calendar.get(Calendar.YEAR);
+		int month = calendar.get(Calendar.MONTH);
+		int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+		if (timeFrom != null) {
+			calendar.setTime(timeFrom);
+			calendar.set(Calendar.YEAR, year);
+			calendar.set(Calendar.MONTH, month);
+			calendar.set(Calendar.DAY_OF_MONTH, day);
+		}
+		requestItem.getLeave().setLeaveFrom(calendar.getTime());
+
+		if (timeTo != null) {
+			calendar.setTime(timeTo);
+			calendar.set(Calendar.YEAR, year);
+			calendar.set(Calendar.MONTH, month);
+			calendar.set(Calendar.DAY_OF_MONTH, day);
+		}
+		requestItem.getLeave().setLeaveTo(calendar.getTime());
+	}
+
 	public List<String> getAllTypes() {
 		return VacationLeaveType.getAll();
+	}
+
+	public String getHardCodeVneseTypeString(String leaveType) {
+		return StringUtils.EMPTY.equals(leaveType) ? StringUtils.EMPTY
+				: VacationLeaveType.valueOf(leaveType).getHardCodeVneseString();
 	}
 
 	public List<String> getSigns() {
@@ -68,6 +100,21 @@ public class LeaveRequestBean implements Serializable {
 		return leaveType.getSigns();
 	}
 
+	public List<String> getReasons() {
+		if (requestItem.getLeave() == null)
+			return new ArrayList<>();
+
+		if (requestItem.getLeave().getLeaveType() == null
+				|| requestItem.getLeave().getLeaveType()
+						.equalsIgnoreCase(StringUtils.EMPTY)
+				|| !isInOutRequest())
+			return new ArrayList<>();
+
+		VacationLeaveType leaveType = VacationLeaveType.valueOf(requestItem
+				.getLeave().getLeaveType());
+		return leaveType.getReasons();
+	}
+
 	public boolean isTimeAvailable() {
 		return requestItem.getLeave().getSign().contains("1/2");
 	}
@@ -78,6 +125,54 @@ public class LeaveRequestBean implements Serializable {
 
 	public void setRequestItem(EmpLeaveRequestItem requestItem) {
 		this.requestItem = requestItem;
+	}
+
+	public String getQaSignTooltip() {
+		if (getSigns().isEmpty())
+			return StringUtils.EMPTY;
+
+		StringBuilder result = new StringBuilder();
+		for (String sign : getSigns()) {
+			if (sign.equalsIgnoreCase("TS")) {
+				result.append(" TS: Thai Sản;");
+			} else if (sign.equalsIgnoreCase("CD")) {
+				result.append(" CD: Chế Độ;");
+			} else if (sign.equalsIgnoreCase("OD")) {
+				result.append(" OD: Ốm đau;");
+			} else if (sign.equalsIgnoreCase("CO")) {
+				result.append(" CO: Con ốm;");
+			} else if (sign.equalsIgnoreCase("NB")) {
+				result.append(" NB: Nguyên ngày;");
+			} else if (sign.equalsIgnoreCase("1/2NB")) {
+				result.append(" 1/2NB: Nửa ngày;");
+			} else if (sign.equalsIgnoreCase("P")) {
+				result.append(" P: Nguyên ngày;");
+			} else if (sign.equalsIgnoreCase("1/2P")) {
+				result.append(" 1/2P: Nửa ngày;");
+			} else if (sign.equalsIgnoreCase("N")) {
+				result.append(" N: Nguyên ngày;");
+			} else if (sign.equalsIgnoreCase("1/2N")) {
+				result.append(" 1/2N: Nửa ngày;");
+			}
+		}
+		return result.toString();
+	}
+
+	public boolean isInOutRequest() {
+		return requestItem.getLeave().getLeaveType()
+				.equalsIgnoreCase(VacationLeaveType.IN.toString())
+				|| requestItem.getLeave().getLeaveType()
+						.equalsIgnoreCase(VacationLeaveType.OUT.toString());
+	}
+
+	public boolean isInRequest() {
+		return requestItem.getLeave().getLeaveType()
+				.equalsIgnoreCase(VacationLeaveType.IN.toString());
+	}
+
+	public boolean isOutRequest() {
+		return requestItem.getLeave().getLeaveType()
+				.equalsIgnoreCase(VacationLeaveType.IN.toString());
 	}
 
 }

@@ -1,6 +1,7 @@
 package vn.com.ecopharma.hrm.tt.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import vn.com.ecopharma.emp.model.EmpAnnualLeave;
 import vn.com.ecopharma.emp.model.VacationLeave;
@@ -21,6 +22,8 @@ public class EmpLeaveRequestItem implements Serializable {
 	private VacationLeave leave;
 
 	private EmpAnnualLeave annualLeave;
+
+	private Date inOutDate;
 
 	public EmpLeaveRequestItem(EmpIndexedItem emp, VacationLeave leave) {
 		this.emp = emp;
@@ -61,6 +64,14 @@ public class EmpLeaveRequestItem implements Serializable {
 
 	public void setAnnualLeave(EmpAnnualLeave annualLeave) {
 		this.annualLeave = annualLeave;
+	}
+
+	public Date getInOutDate() {
+		return inOutDate;
+	}
+
+	public void setInOutDate(Date inOutDate) {
+		this.inOutDate = inOutDate;
 	}
 
 }

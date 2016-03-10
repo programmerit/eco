@@ -336,4 +336,6 @@ public interface EmpAnnualLeaveLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMonthsBetweenTwoDate(java.util.Date startDate,
 		java.util.Date endDate);
+
+	public void addOneDayForEachEmp();
 }

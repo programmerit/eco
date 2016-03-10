@@ -119,7 +119,6 @@ public class CandidateBean implements Serializable {
 			public List<CandidateIndexItem> load(int first, int pageSize,
 					String sortField, SortOrder sortOrder,
 					Map<String, Object> filters) {
-				System.out.println("HEREEEEEE");
 				CandidateFilterBean filterBean = BeanUtils
 						.getCandidateFilterBean();
 				if (!filterBean.getGlobal().equals(StringUtils.EMPTY)) {

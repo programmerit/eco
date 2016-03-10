@@ -141,7 +141,8 @@
 		</h:form>
 
 		<h:form id="employeesForm">
-			<p:contextMenu id="employeeContext" for="employees">
+			<p:contextMenu id="employeeContext" for="employees"
+				rendered="#{employeeModelPermission.checkPermission('UPDATE')}">
 				<p:menuitem value="Promote New Position"
 					update=":includedDialogPanelGroup #{empView.includedDialogOutputPanel}"
 					actionListener="#{empView.onPromotionNewPosition}"
@@ -160,7 +161,7 @@
 					oncomplete="PF('wDisciplineDialog').show()"
 					disabled="#{not employeeIndexedBean.disciplineValid}" />
 
-				<p:menuitem value="Maternity Leave"
+				<p:menuitem value="Maternity Leave" rendered="false"
 					actionListener="#{empView.onSetMaternityLeave}"
 					update=":includedDialogPanelGroup #{empView.includedDialogOutputPanel}"
 					oncomplete="PF('wLeaveDialog').show()"

@@ -106,8 +106,8 @@ public class CandidateViewBean extends EntityViewBean {
 				bean.setInterviewScheduleItems(Arrays
 						.asList(new InterviewScheduleItem(item)));
 				bean.setInterviewScheduleForAllItem(new InterviewScheduleForAllItem());
-				RequestContext.getCurrentInstance().execute(
-						"window.location.hash = '#scheduleInterview';");
+				// RequestContext.getCurrentInstance().execute(
+				// "window.location.hash = '#scheduleInterview';");
 				switchMode(CandidateNavigation.SCHEDULE_INTERVIEW);
 				break;
 			case HIRE:

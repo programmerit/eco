@@ -151,6 +151,22 @@ public class TitlesLocalServiceImpl extends TitlesLocalServiceBaseImpl {
 		return null;
 	}
 
+	public Titles addTitles(Titles titles, UnitGroup unitGroup, Unit unit,
+			Department department, ServiceContext serviceContext) {
+		if (department == null) {
+			return null;
+		}
+
+		Titles result = this.addTitles(titles, serviceContext);
+
+		titlesDepartmentUnitUnitGroupLocalService
+				.addTitlesDepartmentUnitUnitGroup(titles, department, unit,
+						unitGroup, serviceContext);
+
+		return result;
+
+	}
+
 	public List<Titles> findByDepartmentUnitUnitGroup(long departmentId,
 			long unitId, long unitGroupId) {
 		try {

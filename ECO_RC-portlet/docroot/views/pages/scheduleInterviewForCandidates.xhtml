@@ -10,8 +10,8 @@
 
 	<h:head />
 	<h:body>
-		<h:form id="interviewScheduleForCandidatesForm">
-
+		<h:form id="interviewScheduleForCandidatesForm"
+			rendered="#{candidateViewBean.currentMode==5}">
 			<h:outputText value="For All:" styleClass="label" />
 			<p:panelGrid columns="1" style="width: 100%;">
 				<p:panelGrid columns="3" layout="grid"
@@ -108,8 +108,7 @@
 			<p:outputPanel id="interviewSchedulesOutputPanel">
 				<p:dataTable id="interviewSchedules"
 					selection="#{scheduleInterviewForCandidatesBean.selectedInterviewScheduleItems}"
-					selectionMode="multiple"
-					rowKey="#{s.candidateIndexItem.candidateId}"
+					selectionMode="multiple" rowKey="#{s.candidateIndexItem.id}"
 					value="#{scheduleInterviewForCandidatesBean.interviewScheduleItems}"
 					var="s" widgetVar="wInterviewSchedules" editable="true">
 					<f:facet name="header">

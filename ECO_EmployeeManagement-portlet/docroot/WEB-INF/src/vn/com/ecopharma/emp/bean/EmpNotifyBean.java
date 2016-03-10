@@ -55,6 +55,7 @@ public class EmpNotifyBean implements Serializable {
 				EmpNotifyEmailLocalServiceUtil
 						.updateSentMailNotifications(empNotifyEmails);
 			}
+
 		}
 
 	}
