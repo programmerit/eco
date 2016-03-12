@@ -14,6 +14,7 @@
 
 package vn.com.ecopharma.hrm.rc.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +23,8 @@ import vn.com.ecopharma.hrm.rc.service.base.EvaluationCriteriaLocalServiceBaseIm
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
@@ -54,6 +57,9 @@ public class EvaluationCriteriaLocalServiceImpl extends
 	 * access the evaluation criteria local service.
 	 */
 
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(EvaluationCriteriaLocalServiceImpl.class);
+
 	public List<EvaluationCriteria> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
@@ -68,18 +74,18 @@ public class EvaluationCriteriaLocalServiceImpl extends
 			return evaluationCriteriaPersistence.findAll(start, end,
 					orderByComparator);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
-	public EvaluationCriteria findByType(String type) {
+	public List<EvaluationCriteria> findByType(String type) {
 		try {
-			return evaluationCriteriaPersistence.fetchByType(type);
+			return evaluationCriteriaPersistence.findByType(type);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	public EvaluationCriteria createPrePersistedEntity() {
@@ -89,7 +95,7 @@ public class EvaluationCriteriaLocalServiceImpl extends
 					.create(id);
 			return o;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -112,7 +118,7 @@ public class EvaluationCriteriaLocalServiceImpl extends
 			return evaluationCriteriaPersistence.update(o);
 
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}

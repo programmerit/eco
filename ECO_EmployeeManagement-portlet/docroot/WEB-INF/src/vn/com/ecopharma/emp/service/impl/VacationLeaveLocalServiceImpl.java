@@ -21,6 +21,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 import vn.com.ecopharma.emp.constant.EMInfo;
 import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.constant.VacationLeaveField;
@@ -53,7 +56,11 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.EmailAddress;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.util.mail.MailEngine;
+import com.liferay.util.mail.MailEngineException;
 
 /**
  * The implementation of the vacation leave local service.
@@ -313,12 +320,39 @@ public class VacationLeaveLocalServiceImpl extends
 					empAnnualLeaveLocalService.applyLeaveForEmp(empId,
 							numberOfActualLeaves, serviceContext);
 				}
+				// send email to requester
+				empLocalService.sendNewEmpsNotificationEmail(emps)
+				
 			}
 			return result;
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}
 		return null;
+	}
+
+	private boolean sendNotificationEmaiToEmp(long empId, String emailContent,
+			String subject) {
+		try {
+			Emp emp = empLocalService.fetchEmp(empId);
+			User empUser = userLocalService.fetchUser(emp.getEmpUserId());
+			InternetAddress[] receivers = new InternetAddress[] { new InternetAddress(
+					empUser.getEmailAddress()) };
+
+			InternetAddress[] cc = new InternetAddress[] { new InternetAddress(
+					"tvtao@ecopharma.com.vn") };
+
+			MailEngine.send(new InternetAddress("admin@ecopharma.com.vn"),
+					receivers, cc, subject, emailContent, true);
+			return true;
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		} catch (AddressException e) {
+			LOGGER.info(e);
+		} catch (MailEngineException e) {
+			LOGGER.info(e);
+		}
+		return false;
 	}
 
 	public double calculateNumberOfAnnualLeavesBtwTwoDates(Date dateFrom,

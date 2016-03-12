@@ -1,6 +1,8 @@
 package vn.com.ecopharma.hrm.rc.bean;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,7 +16,9 @@ import vn.com.ecopharma.hrm.rc.constant.CandidateNavigation;
 import vn.com.ecopharma.hrm.rc.dto.CandidateIndexItem;
 import vn.com.ecopharma.hrm.rc.dto.InterviewScheduleForAllItem;
 import vn.com.ecopharma.hrm.rc.dto.InterviewScheduleItem;
+import vn.com.ecopharma.hrm.rc.dto.evaluate.EvaluationItem;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
+import vn.com.ecopharma.hrm.rc.enumeration.EvaluationCriteriaType;
 import vn.com.ecopharma.hrm.rc.enumeration.InterviewScheduleStatus;
 import vn.com.ecopharma.hrm.rc.model.Candidate;
 import vn.com.ecopharma.hrm.rc.model.InterviewSchedule;
@@ -42,6 +46,8 @@ public class CandidateViewBean extends EntityViewBean {
 	private String currentNav = StringUtils.EMPTY;
 
 	private String selectedStatus = StringUtils.EMPTY;
+
+	private String includedDialog;
 
 	@PostConstruct
 	public void init() {
@@ -110,6 +116,10 @@ public class CandidateViewBean extends EntityViewBean {
 				// "window.location.hash = '#scheduleInterview';");
 				switchMode(CandidateNavigation.SCHEDULE_INTERVIEW);
 				break;
+
+			case EVALUATE_CANDIDATE:
+				onEvaluateCandidates(Arrays.asList(item));
+				break;
 			case HIRE:
 				EmployeeBean employeeBean = (EmployeeBean) BeanUtils
 						.getBackingBeanByName("employeeBean");
@@ -143,13 +153,13 @@ public class CandidateViewBean extends EntityViewBean {
 						"PF('wRejectConfirmDialog').show()");
 				break;
 			case JOB_OFFERED:
-				EvaluationBean evaluationBean = (EvaluationBean) BeanUtils
-						.getBackingBeanByName("evaluationBean");
-				evaluationBean.setCandidateIndexItems(Arrays.asList(item));
-				evaluationBean.setEvaluationItems(evaluationBean
-						.getEvaluationItemsFromEvaluationCriteria());
-				RequestContext.getCurrentInstance().execute(
-						"PF('wEvaluationDialog').show()");
+				// EvaluationBean evaluationBean = (EvaluationBean) BeanUtils
+				// .getBackingBeanByName("evaluationBean");
+				// evaluationBean.setCandidateIndexItems(Arrays.asList(item));
+				// evaluationBean.setEvaluationItems(evaluationBean
+				// .getEvaluationItemsFromEvaluationCriteria());
+				// RequestContext.getCurrentInstance().execute(
+				// "PF('wEvaluationDialog').show()");
 				break;
 			default:
 				final Candidate candidate = CandidateLocalServiceUtil
@@ -165,6 +175,27 @@ public class CandidateViewBean extends EntityViewBean {
 			LOGGER.info(e);
 		}
 
+	}
+
+	public void onEvaluateCandidates(List<CandidateIndexItem> candidates) {
+		EvaluationBean evaluationBean = (EvaluationBean) BeanUtils
+				.getBackingBeanByName("evaluationBean");
+		evaluationBean.setCandidateIndexItems(candidates);
+		evaluationBean.setEvaluationItems(initEvaluationItems());
+		this.includedDialog = "/views/dialogs/evaluation.xhtml";
+		RequestContext.getCurrentInstance().execute(
+				"PF('wEvaluationDialog').show();");
+	}
+
+	public List<EvaluationItem> initEvaluationItems() {
+		final List<String> types = new ArrayList<>(new HashSet<>(
+				EvaluationCriteriaType.getAll()));
+		final List<EvaluationItem> results = new ArrayList<>();
+
+		for (String type : types) {
+			results.add(new EvaluationItem(type));
+		}
+		return results;
 	}
 
 	public String getSelectedStatus() {
@@ -186,4 +217,13 @@ public class CandidateViewBean extends EntityViewBean {
 	public void setCurrentNav(String currentNav) {
 		this.currentNav = currentNav;
 	}
+
+	public String getIncludedDialog() {
+		return includedDialog;
+	}
+
+	public void setIncludedDialog(String includedDialog) {
+		this.includedDialog = includedDialog;
+	}
+
 }

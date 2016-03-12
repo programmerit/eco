@@ -24,7 +24,8 @@ public class NavigationBean {
 	public List<NavigationItem> getDefaultNavigationItems() {
 		return Arrays.asList(new NavigationItem("candidate", "Candidate"),
 				new NavigationItem("vacancy", "Vacancy"), new NavigationItem(
-						"report", "Report"));
+						"report", "Report"), new NavigationItem(
+						"evaluationCriterias", "Evaluation Criteria"));
 	}
 
 	public List<NavigationItem> getNavigationItems() {
@@ -35,8 +36,8 @@ public class NavigationBean {
 		this.navigationItems = navigationItems;
 	}
 
-	public boolean isLastNavigationItem(NavigationItem nav) {
-		return navigationItems.indexOf(nav) == navigationItems.size() - 1;
+	public boolean notLastNavigationItem(NavigationItem nav) {
+		return !(navigationItems.indexOf(nav) == navigationItems.size() - 1);
 	}
 
 	public static class NavigationItem implements Serializable {

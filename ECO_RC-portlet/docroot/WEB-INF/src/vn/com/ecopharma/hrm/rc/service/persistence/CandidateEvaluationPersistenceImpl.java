@@ -850,7 +850,8 @@ public class CandidateEvaluationPersistenceImpl extends BasePersistenceImpl<Cand
 		candidateEvaluationImpl.setPrimaryKey(candidateEvaluation.getPrimaryKey());
 
 		candidateEvaluationImpl.setCandidateEvaluationId(candidateEvaluation.getCandidateEvaluationId());
-		candidateEvaluationImpl.setEvaluationCriteriaId(candidateEvaluation.getEvaluationCriteriaId());
+		candidateEvaluationImpl.setCandidateId(candidateEvaluation.getCandidateId());
+		candidateEvaluationImpl.setInterviewId(candidateEvaluation.getInterviewId());
 		candidateEvaluationImpl.setEvaluationCriteriaKeyValueId(candidateEvaluation.getEvaluationCriteriaKeyValueId());
 		candidateEvaluationImpl.setRatingPoint(candidateEvaluation.getRatingPoint());
 		candidateEvaluationImpl.setNote(candidateEvaluation.getNote());
@@ -860,7 +861,6 @@ public class CandidateEvaluationPersistenceImpl extends BasePersistenceImpl<Cand
 		candidateEvaluationImpl.setUserName(candidateEvaluation.getUserName());
 		candidateEvaluationImpl.setCreateDate(candidateEvaluation.getCreateDate());
 		candidateEvaluationImpl.setModifiedDate(candidateEvaluation.getModifiedDate());
-		candidateEvaluationImpl.setCandidateId(candidateEvaluation.getCandidateId());
 
 		return candidateEvaluationImpl;
 	}

@@ -14,6 +14,8 @@
 
 package vn.com.ecopharma.hrm.rc.service.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import vn.com.ecopharma.emp.model.Titles;
@@ -22,6 +24,8 @@ import vn.com.ecopharma.hrm.rc.service.base.InterviewLocalServiceBaseImpl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
@@ -52,6 +56,9 @@ public class InterviewLocalServiceImpl extends InterviewLocalServiceBaseImpl {
 	 * interview local service.
 	 */
 
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(InterviewLocalServiceImpl.class);
+
 	public List<Interview> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
@@ -65,9 +72,9 @@ public class InterviewLocalServiceImpl extends InterviewLocalServiceBaseImpl {
 		try {
 			return interviewPersistence.findAll(start, end, orderByComparator);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	public Interview addInterview(Interview interview, Titles titles,
@@ -81,7 +88,7 @@ public class InterviewLocalServiceImpl extends InterviewLocalServiceBaseImpl {
 		try {
 			return interviewPersistence.update(interview);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -91,18 +98,23 @@ public class InterviewLocalServiceImpl extends InterviewLocalServiceBaseImpl {
 		try {
 			return interviewPersistence.update(interview);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
 
-	public Interview createPrePersitedInterview() {
+	public Interview createPrePersitedInterview(ServiceContext serviceContext) {
 		try {
 			final long id = counterLocalService.increment();
+
 			final Interview interview = interviewPersistence.create(id);
+			interview.setUserId(serviceContext.getUserId());
+			interview.setCompanyId(serviceContext.getCompanyId());
+			interview.setGroupId(serviceContext.getScopeGroupId());
+			interview.setCreateDate(new Date());
 			return interview;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}

@@ -290,7 +290,7 @@ public class EvaluationCriteriaLocalServiceUtil {
 		return getService().findAll(start, end, orderByComparator);
 	}
 
-	public static vn.com.ecopharma.hrm.rc.model.EvaluationCriteria findByType(
+	public static java.util.List<vn.com.ecopharma.hrm.rc.model.EvaluationCriteria> findByType(
 		java.lang.String type) {
 		return getService().findByType(type);
 	}

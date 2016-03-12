@@ -96,12 +96,6 @@ public class CandidateBean implements Serializable {
 
 	private long deletedCandidateId;
 
-	private int first;
-
-	private int pageSize;
-
-	private boolean isBackFromOtherPage = false;
-
 	private String rejectReason = StringUtils.EMPTY;// TODO refactor
 
 	private String selectedDocumentType;
@@ -112,6 +106,7 @@ public class CandidateBean implements Serializable {
 	public void init() {
 		selectedItems = new ArrayList<>();
 
+		
 		lazyDataModel = new CandidateLazyDataModel() {
 			private static final long serialVersionUID = 1L;
 
@@ -429,6 +424,9 @@ public class CandidateBean implements Serializable {
 			candidateViewBean
 					.switchMode(CandidateNavigation.SCHEDULE_INTERVIEW);
 			break;
+		case EVALUATE_CANDIDATE:
+			candidateViewBean.onEvaluateCandidates(selectedItems);
+			break;
 		case MARK_INTERVIEW_PASS:
 		case MARK_INTERVIEW_FAIL:
 			for (CandidateIndexItem item : selectedItems) {
@@ -451,13 +449,13 @@ public class CandidateBean implements Serializable {
 
 			break;
 		case JOB_OFFERED:
-			EvaluationBean evaluationBean = (EvaluationBean) BeanUtils
-					.getBackingBeanByName("evaluationBean");
-			evaluationBean.setCandidateIndexItems(selectedItems);
-			evaluationBean.setEvaluationItems(evaluationBean
-					.getEvaluationItemsFromEvaluationCriteria());
-			RequestContext.getCurrentInstance().execute(
-					"PF('wEvaluationDialog').show()");
+			// EvaluationBean evaluationBean = (EvaluationBean) BeanUtils
+			// .getBackingBeanByName("evaluationBean");
+			// evaluationBean.setCandidateIndexItems(selectedItems);
+			// evaluationBean.setEvaluationItems(evaluationBean
+			// .getEvaluationItemsFromEvaluationCriteria());
+			// RequestContext.getCurrentInstance().execute(
+			// "PF('wEvaluationDialog').show()");
 			break;
 		case DECLINE_OFFERED:
 
@@ -678,30 +676,6 @@ public class CandidateBean implements Serializable {
 			LOGGER.info(e);
 		}
 		return StringUtils.EMPTY;
-	}
-
-	public int getFirst() {
-		return first;
-	}
-
-	public void setFirst(int first) {
-		this.first = first;
-	}
-
-	public int getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
-
-	public boolean isBackFromOtherPage() {
-		return isBackFromOtherPage;
-	}
-
-	public void setBackFromOtherPage(boolean isBackFromOtherPage) {
-		this.isBackFromOtherPage = isBackFromOtherPage;
 	}
 
 	public String getRejectReason() {

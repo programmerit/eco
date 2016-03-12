@@ -2,6 +2,7 @@ package vn.com.ecopharma.hrm.rc.bean;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +27,7 @@ import vn.com.ecopharma.hrm.rc.constant.VacancyField;
 import vn.com.ecopharma.hrm.rc.constant.VacancyNavigation;
 import vn.com.ecopharma.hrm.rc.dm.VacancyLazyDM;
 import vn.com.ecopharma.hrm.rc.dto.DocumentItem;
+import vn.com.ecopharma.hrm.rc.dto.RegionItem;
 import vn.com.ecopharma.hrm.rc.dto.VacancyIndexItem;
 import vn.com.ecopharma.hrm.rc.dto.VacancyItem;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateCertificateType;
@@ -37,11 +39,15 @@ import vn.com.ecopharma.hrm.rc.util.BeanUtils;
 import vn.com.ecopharma.hrm.rc.util.RCUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.model.Region;
+import com.liferay.portal.service.RegionServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 
 @ManagedBean
 @ViewScoped
@@ -109,13 +115,17 @@ public class VacancyBean extends PersistableBean {
 		try {
 			ServiceContext serviceContext = LiferayFacesContext.getInstance()
 					.getServiceContext();
-			Vacancy vacancy = VacancyLocalServiceUtil.fetchVacancy(vacancyItem
-					.getObject().getVacancyId());
-			if (vacancy == null) { // create new
-				vacancy = vacancyItem.getObject();
+			final Vacancy vacancy = vacancyItem.getObject();
+			boolean isCreateNew = VacancyLocalServiceUtil
+					.fetchVacancy(vacancyItem.getObject().getVacancyId()) == null;
+			// set changed fields
+			vacancy.setWorkPlaceId(vacancyItem.getWorkingPlace() != null ? vacancyItem
+					.getWorkingPlace().getRegion().getRegionId()
+					: 0L);
+
+			if (isCreateNew) { // create new
 				vacancy.setTitlesId(vacancyItem.getTitles() != null ? vacancyItem
 						.getTitles().getTitlesId() : 0);
-
 				VacancyLocalServiceUtil.addVacancy(vacancy, 0, fileEntryIds,
 						serviceContext);
 			} else {
@@ -160,26 +170,28 @@ public class VacancyBean extends PersistableBean {
 			;
 		} catch (SystemException e) {
 			LOGGER.info(e);
+		} catch (PortalException e) {
+			LOGGER.info(e);
 		}
 	}
 
 	public void onCancel(ActionEvent event) {
-		// for (DocumentItem documentItem : vacancyItem.getDocumentItems()) {
-		// if (documentItem.getDocumentId() == 0) {
-		// try {
-		// DLFileEntryLocalServiceUtil.deleteDLFileEntry(documentItem
-		// .getFileEntryId());
-		// LOGGER.info("### sucessfully deleted FILE ENTRY "
-		// + documentItem.getFileEntryId());
-		// } catch (PortalException e) {
-		// LOGGER.info(e);
-		// } catch (SystemException e) {
-		// LOGGER.info(e);
-		// }
-		// }
-		// }
-		// VacancyViewBean vacancyViewBean = BeanUtils.getVacancyViewBean();
-		// vacancyViewBean.switchMode(VacancyNavigation.VIEW);
+		for (DocumentItem documentItem : vacancyItem.getDocuments()) {
+			// if (documentItem.g == 0) {
+			try {
+				DLFileEntryLocalServiceUtil.deleteDLFileEntry(documentItem
+						.getFileEntry().getFileEntryId());
+				LOGGER.info("### sucessfully deleted FILE ENTRY "
+						+ documentItem.getFileEntry().getFileEntryId());
+			} catch (PortalException e) {
+				LOGGER.info(e);
+			} catch (SystemException e) {
+				LOGGER.info(e);
+			}
+			// }
+		}
+		VacancyViewBean vacancyViewBean = BeanUtils.getVacancyViewBean();
+		vacancyViewBean.switchMode(VacancyNavigation.VIEW);
 	}
 
 	public void onPreviewFile(long fileEntryId) {
@@ -207,7 +219,24 @@ public class VacancyBean extends PersistableBean {
 			BeanUtils.getVacancyViewBean().switchMode(VacancyNavigation.EDIT);
 		} catch (SystemException e) {
 			LOGGER.info(e);
+		} catch (PortalException e) {
+			LOGGER.info(e);
 		}
+	}
+
+	public List<RegionItem> getWorkingPlaces() {
+		try {
+			final List<Region> vnRegions = RegionServiceUtil.getRegions(17L);
+			final List<RegionItem> regionItems = new ArrayList<>();
+			for (Region region : vnRegions) {
+				regionItems.add(new RegionItem(region));
+			}
+			Collections.sort(regionItems);
+			return regionItems;
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return new ArrayList<>();
 	}
 
 	public String getCurrentTitlesName() {

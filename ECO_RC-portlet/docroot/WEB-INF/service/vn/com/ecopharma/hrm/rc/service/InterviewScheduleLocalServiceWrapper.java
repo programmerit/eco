@@ -323,6 +323,12 @@ public class InterviewScheduleLocalServiceWrapper
 	}
 
 	@Override
+	public vn.com.ecopharma.hrm.rc.model.InterviewSchedule findInProgressByVacancyCandidate(
+		long vacancyCandidateId) {
+		return _interviewScheduleLocalService.findInProgressByVacancyCandidate(vacancyCandidateId);
+	}
+
+	@Override
 	public java.util.List<vn.com.ecopharma.hrm.rc.model.InterviewSchedule> findByVacancyCandidate(
 		long vacancyCandidateId) {
 		return _interviewScheduleLocalService.findByVacancyCandidate(vacancyCandidateId);

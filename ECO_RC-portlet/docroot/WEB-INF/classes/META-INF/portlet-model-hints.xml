@@ -47,7 +47,8 @@
 	</model>
 	<model name="vn.com.ecopharma.hrm.rc.model.CandidateEvaluation">
 		<field name="candidateEvaluationId" type="long" />
-		<field name="evaluationCriteriaId" type="long" />
+		<field name="candidateId" type="long" />
+		<field name="interviewId" type="long" />
 		<field name="evaluationCriteriaKeyValueId" type="long" />
 		<field name="ratingPoint" type="int" />
 		<field name="note" type="String" />
@@ -57,7 +58,6 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="candidateId" type="long" />
 	</model>
 	<model name="vn.com.ecopharma.hrm.rc.model.Certificate">
 		<field name="certificateId" type="long" />
@@ -186,7 +186,7 @@
 		<field name="numberOfReplacedRecruitment" type="int" />
 		<field name="expectedSalary" type="double" />
 		<field name="expectedJoinedDate" type="Date" />
-		<field name="workingPlace" type="String" />
+		<field name="workPlaceId" type="long" />
 		<field name="description" type="String" />
 		<field name="requiredGender" type="String" />
 		<field name="certificateType" type="String" />

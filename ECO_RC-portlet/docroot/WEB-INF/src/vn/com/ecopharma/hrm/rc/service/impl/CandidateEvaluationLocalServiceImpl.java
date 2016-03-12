@@ -14,6 +14,8 @@
 
 package vn.com.ecopharma.hrm.rc.service.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import vn.com.ecopharma.hrm.rc.model.CandidateEvaluation;
@@ -21,6 +23,8 @@ import vn.com.ecopharma.hrm.rc.service.base.CandidateEvaluationLocalServiceBaseI
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
@@ -52,6 +56,10 @@ public class CandidateEvaluationLocalServiceImpl extends
 	 * vn.com.ecopharma.hrm.rc.service.CandidateEvaluationLocalServiceUtil} to
 	 * access the candidate evaluation local service.
 	 */
+
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(CandidateEvaluationLocalServiceImpl.class);
+
 	public List<CandidateEvaluation> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
@@ -66,50 +74,52 @@ public class CandidateEvaluationLocalServiceImpl extends
 			return candidateEvaluationPersistence.findAll(start, end,
 					orderByComparator);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	public List<CandidateEvaluation> findByCandidate(long candidateId) {
 		try {
 			return candidateEvaluationPersistence.findByCandidate(candidateId);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
-	public CandidateEvaluation createPrePersistedEntity() {
+	public CandidateEvaluation createPrePersistedEntity(
+			ServiceContext serviceContext) {
 		try {
 			long id = counterLocalService.increment();
 			final CandidateEvaluation o = candidateEvaluationPersistence
 					.create(id);
+			o.setCreateDate(new Date());
+			o.setUserId(serviceContext.getUserId());
+			o.setGroupId(serviceContext.getScopeGroupId());
+			o.setCompanyId(serviceContext.getCompanyId());
 			return o;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
 
 	public CandidateEvaluation addCandidateEvaluation(long candidateId,
-			long evaluationCriteriaId, long evaluationCriteriaKeyValueId,
-			int ratingPoint, ServiceContext serviceContext) {
-		CandidateEvaluation candidateEvaluation = createPrePersistedEntity();
+			long interviewId, long evaluationCriteriaId,
+			long evaluationCriteriaKeyValueId, int ratingPoint,
+			ServiceContext serviceContext) {
+		CandidateEvaluation candidateEvaluation = createPrePersistedEntity(serviceContext);
 		candidateEvaluation.setCandidateId(candidateId);
-		candidateEvaluation.setEvaluationCriteriaId(evaluationCriteriaId);
+		candidateEvaluation.setInterviewId(interviewId);
 		candidateEvaluation
 				.setEvaluationCriteriaKeyValueId(evaluationCriteriaKeyValueId);
 		candidateEvaluation.setRatingPoint(ratingPoint);
 
-		candidateEvaluation.setCompanyId(serviceContext.getCompanyId());
-		candidateEvaluation.setGroupId(serviceContext.getScopeGroupId());
-		candidateEvaluation.setUserId(serviceContext.getUserId());
-
 		try {
 			return candidateEvaluationPersistence.update(candidateEvaluation);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}

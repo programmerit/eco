@@ -309,7 +309,7 @@ public class EvaluationCriteriaLocalServiceWrapper
 	}
 
 	@Override
-	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteria findByType(
+	public java.util.List<vn.com.ecopharma.hrm.rc.model.EvaluationCriteria> findByType(
 		java.lang.String type) {
 		return _evaluationCriteriaLocalService.findByType(type);
 	}

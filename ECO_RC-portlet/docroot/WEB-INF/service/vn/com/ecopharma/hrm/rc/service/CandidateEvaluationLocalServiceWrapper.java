@@ -316,18 +316,19 @@ public class CandidateEvaluationLocalServiceWrapper
 	}
 
 	@Override
-	public vn.com.ecopharma.hrm.rc.model.CandidateEvaluation createPrePersistedEntity() {
-		return _candidateEvaluationLocalService.createPrePersistedEntity();
+	public vn.com.ecopharma.hrm.rc.model.CandidateEvaluation createPrePersistedEntity(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _candidateEvaluationLocalService.createPrePersistedEntity(serviceContext);
 	}
 
 	@Override
 	public vn.com.ecopharma.hrm.rc.model.CandidateEvaluation addCandidateEvaluation(
-		long candidateId, long evaluationCriteriaId,
+		long candidateId, long interviewId, long evaluationCriteriaId,
 		long evaluationCriteriaKeyValueId, int ratingPoint,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return _candidateEvaluationLocalService.addCandidateEvaluation(candidateId,
-			evaluationCriteriaId, evaluationCriteriaKeyValueId, ratingPoint,
-			serviceContext);
+			interviewId, evaluationCriteriaId, evaluationCriteriaKeyValueId,
+			ratingPoint, serviceContext);
 	}
 
 	/**

@@ -134,12 +134,14 @@ public class CandidateEvaluationLocalServiceClpInvoker {
 
 		_methodName120 = "createPrePersistedEntity";
 
-		_methodParameterTypes120 = new String[] {  };
+		_methodParameterTypes120 = new String[] {
+				"com.liferay.portal.service.ServiceContext"
+			};
 
 		_methodName121 = "addCandidateEvaluation";
 
 		_methodParameterTypes121 = new String[] {
-				"long", "long", "long", "int",
+				"long", "long", "long", "long", "int",
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -270,7 +272,7 @@ public class CandidateEvaluationLocalServiceClpInvoker {
 
 		if (_methodName120.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
-			return CandidateEvaluationLocalServiceUtil.createPrePersistedEntity();
+			return CandidateEvaluationLocalServiceUtil.createPrePersistedEntity((com.liferay.portal.service.ServiceContext)arguments[0]);
 		}
 
 		if (_methodName121.equals(name) &&
@@ -278,8 +280,9 @@ public class CandidateEvaluationLocalServiceClpInvoker {
 			return CandidateEvaluationLocalServiceUtil.addCandidateEvaluation(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
-				((Integer)arguments[3]).intValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[4]);
+				((Long)arguments[3]).longValue(),
+				((Integer)arguments[4]).intValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[5]);
 		}
 
 		throw new UnsupportedOperationException();

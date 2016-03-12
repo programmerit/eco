@@ -83,7 +83,8 @@
 	<mapped-superclass class="vn.com.ecopharma.hrm.rc.model.impl.CandidateEvaluationModelImpl">
 		<attributes>
 			<id name="candidateEvaluationId" />
-			<basic name="evaluationCriteriaId" />
+			<basic name="candidateId" />
+			<basic name="interviewId" />
 			<basic name="evaluationCriteriaKeyValueId" />
 			<basic name="ratingPoint" />
 			<basic name="note" />
@@ -97,7 +98,6 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="candidateId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -330,7 +330,7 @@
 			<basic name="expectedJoinedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="workingPlace" />
+			<basic name="workPlaceId" />
 			<basic name="description" />
 			<basic name="requiredGender" />
 			<basic name="certificateType" />

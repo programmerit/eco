@@ -24,10 +24,11 @@ public enum VacationLeaveType {
 
 	HOLIDAYS(Arrays.asList("L"), new ArrayList<String>()), // Nghỉ lễ
 
-	IN(Arrays.asList(""), Arrays.asList("MISSED_IN_FINGER_PRINT", "LATE",
+	IN(new ArrayList<String>(), Arrays.asList("MISSED_IN_FINGER_PRINT", "LATE",
 			"BUSINESS", "OTHER")), // Vào
 
-	OUT(Arrays.asList(""), Arrays.asList("MISSED_OUT_FINGER_PRINT", "OTHER")), // Ra
+	OUT(new ArrayList<String>(), Arrays.asList("MISSED_OUT_FINGER_PRINT",
+			"OTHER")), // Ra
 
 	OTHERS(Arrays.asList("O"), new ArrayList<String>()); // Khác
 

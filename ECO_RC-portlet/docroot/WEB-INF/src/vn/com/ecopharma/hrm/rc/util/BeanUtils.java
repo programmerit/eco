@@ -5,6 +5,7 @@ import javax.faces.context.FacesContext;
 
 import vn.com.ecopharma.hrm.rc.bean.CandidateBean;
 import vn.com.ecopharma.hrm.rc.bean.CandidateViewBean;
+import vn.com.ecopharma.hrm.rc.bean.EvaluationBean;
 import vn.com.ecopharma.hrm.rc.bean.InterviewManagementFilterBean;
 import vn.com.ecopharma.hrm.rc.bean.RCViewBean;
 import vn.com.ecopharma.hrm.rc.bean.TitlesActionBean;
@@ -30,6 +31,8 @@ public class BeanUtils {
 	private static final String INTERVIEWS_MANAGEMENT_BEAN = "interviewManagementFilterBean";
 
 	private static final String TITLES_ACTION_BEAN = "titlesActionBean";
+
+	private static final String EVALUATION_BEAN = "evaluationBean";
 
 	/**
 	 * @param name
@@ -75,6 +78,10 @@ public class BeanUtils {
 
 	public static TitlesActionBean getTitlesActionBean() {
 		return (TitlesActionBean) getBackingBeanByName(TITLES_ACTION_BEAN);
+	}
+
+	public EvaluationBean getEvaluationBean() {
+		return (EvaluationBean) getBackingBeanByName(EVALUATION_BEAN);
 	}
 
 }

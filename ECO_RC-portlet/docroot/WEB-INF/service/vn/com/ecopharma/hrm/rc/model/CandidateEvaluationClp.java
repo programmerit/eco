@@ -76,7 +76,8 @@ public class CandidateEvaluationClp extends BaseModelImpl<CandidateEvaluation>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("candidateEvaluationId", getCandidateEvaluationId());
-		attributes.put("evaluationCriteriaId", getEvaluationCriteriaId());
+		attributes.put("candidateId", getCandidateId());
+		attributes.put("interviewId", getInterviewId());
 		attributes.put("evaluationCriteriaKeyValueId",
 			getEvaluationCriteriaKeyValueId());
 		attributes.put("ratingPoint", getRatingPoint());
@@ -87,7 +88,6 @@ public class CandidateEvaluationClp extends BaseModelImpl<CandidateEvaluation>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("candidateId", getCandidateId());
 
 		return attributes;
 	}
@@ -101,10 +101,16 @@ public class CandidateEvaluationClp extends BaseModelImpl<CandidateEvaluation>
 			setCandidateEvaluationId(candidateEvaluationId);
 		}
 
-		Long evaluationCriteriaId = (Long)attributes.get("evaluationCriteriaId");
+		Long candidateId = (Long)attributes.get("candidateId");
 
-		if (evaluationCriteriaId != null) {
-			setEvaluationCriteriaId(evaluationCriteriaId);
+		if (candidateId != null) {
+			setCandidateId(candidateId);
+		}
+
+		Long interviewId = (Long)attributes.get("interviewId");
+
+		if (interviewId != null) {
+			setInterviewId(interviewId);
 		}
 
 		Long evaluationCriteriaKeyValueId = (Long)attributes.get(
@@ -161,12 +167,6 @@ public class CandidateEvaluationClp extends BaseModelImpl<CandidateEvaluation>
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
 		}
-
-		Long candidateId = (Long)attributes.get("candidateId");
-
-		if (candidateId != null) {
-			setCandidateId(candidateId);
-		}
 	}
 
 	@Override
@@ -195,23 +195,44 @@ public class CandidateEvaluationClp extends BaseModelImpl<CandidateEvaluation>
 	}
 
 	@Override
-	public long getEvaluationCriteriaId() {
-		return _evaluationCriteriaId;
+	public long getCandidateId() {
+		return _candidateId;
 	}
 
 	@Override
-	public void setEvaluationCriteriaId(long evaluationCriteriaId) {
-		_evaluationCriteriaId = evaluationCriteriaId;
+	public void setCandidateId(long candidateId) {
+		_candidateId = candidateId;
 
 		if (_candidateEvaluationRemoteModel != null) {
 			try {
 				Class<?> clazz = _candidateEvaluationRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setEvaluationCriteriaId",
-						long.class);
+				Method method = clazz.getMethod("setCandidateId", long.class);
 
-				method.invoke(_candidateEvaluationRemoteModel,
-					evaluationCriteriaId);
+				method.invoke(_candidateEvaluationRemoteModel, candidateId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getInterviewId() {
+		return _interviewId;
+	}
+
+	@Override
+	public void setInterviewId(long interviewId) {
+		_interviewId = interviewId;
+
+		if (_candidateEvaluationRemoteModel != null) {
+			try {
+				Class<?> clazz = _candidateEvaluationRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setInterviewId", long.class);
+
+				method.invoke(_candidateEvaluationRemoteModel, interviewId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -439,29 +460,6 @@ public class CandidateEvaluationClp extends BaseModelImpl<CandidateEvaluation>
 		}
 	}
 
-	@Override
-	public long getCandidateId() {
-		return _candidateId;
-	}
-
-	@Override
-	public void setCandidateId(long candidateId) {
-		_candidateId = candidateId;
-
-		if (_candidateEvaluationRemoteModel != null) {
-			try {
-				Class<?> clazz = _candidateEvaluationRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setCandidateId", long.class);
-
-				method.invoke(_candidateEvaluationRemoteModel, candidateId);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
 	public BaseModel<?> getCandidateEvaluationRemoteModel() {
 		return _candidateEvaluationRemoteModel;
 	}
@@ -534,7 +532,8 @@ public class CandidateEvaluationClp extends BaseModelImpl<CandidateEvaluation>
 		CandidateEvaluationClp clone = new CandidateEvaluationClp();
 
 		clone.setCandidateEvaluationId(getCandidateEvaluationId());
-		clone.setEvaluationCriteriaId(getEvaluationCriteriaId());
+		clone.setCandidateId(getCandidateId());
+		clone.setInterviewId(getInterviewId());
 		clone.setEvaluationCriteriaKeyValueId(getEvaluationCriteriaKeyValueId());
 		clone.setRatingPoint(getRatingPoint());
 		clone.setNote(getNote());
@@ -544,7 +543,6 @@ public class CandidateEvaluationClp extends BaseModelImpl<CandidateEvaluation>
 		clone.setUserName(getUserName());
 		clone.setCreateDate(getCreateDate());
 		clone.setModifiedDate(getModifiedDate());
-		clone.setCandidateId(getCandidateId());
 
 		return clone;
 	}
@@ -601,8 +599,10 @@ public class CandidateEvaluationClp extends BaseModelImpl<CandidateEvaluation>
 
 		sb.append("{candidateEvaluationId=");
 		sb.append(getCandidateEvaluationId());
-		sb.append(", evaluationCriteriaId=");
-		sb.append(getEvaluationCriteriaId());
+		sb.append(", candidateId=");
+		sb.append(getCandidateId());
+		sb.append(", interviewId=");
+		sb.append(getInterviewId());
 		sb.append(", evaluationCriteriaKeyValueId=");
 		sb.append(getEvaluationCriteriaKeyValueId());
 		sb.append(", ratingPoint=");
@@ -621,8 +621,6 @@ public class CandidateEvaluationClp extends BaseModelImpl<CandidateEvaluation>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", candidateId=");
-		sb.append(getCandidateId());
 		sb.append("}");
 
 		return sb.toString();
@@ -641,8 +639,12 @@ public class CandidateEvaluationClp extends BaseModelImpl<CandidateEvaluation>
 		sb.append(getCandidateEvaluationId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>evaluationCriteriaId</column-name><column-value><![CDATA[");
-		sb.append(getEvaluationCriteriaId());
+			"<column><column-name>candidateId</column-name><column-value><![CDATA[");
+		sb.append(getCandidateId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>interviewId</column-name><column-value><![CDATA[");
+		sb.append(getInterviewId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>evaluationCriteriaKeyValueId</column-name><column-value><![CDATA[");
@@ -680,10 +682,6 @@ public class CandidateEvaluationClp extends BaseModelImpl<CandidateEvaluation>
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>candidateId</column-name><column-value><![CDATA[");
-		sb.append(getCandidateId());
-		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -691,7 +689,8 @@ public class CandidateEvaluationClp extends BaseModelImpl<CandidateEvaluation>
 	}
 
 	private long _candidateEvaluationId;
-	private long _evaluationCriteriaId;
+	private long _candidateId;
+	private long _interviewId;
 	private long _evaluationCriteriaKeyValueId;
 	private int _ratingPoint;
 	private String _note;
@@ -702,7 +701,6 @@ public class CandidateEvaluationClp extends BaseModelImpl<CandidateEvaluation>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _candidateId;
 	private BaseModel<?> _candidateEvaluationRemoteModel;
 	private Class<?> _clpSerializerClass = vn.com.ecopharma.hrm.rc.service.ClpSerializer.class;
 }

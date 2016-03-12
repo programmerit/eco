@@ -263,7 +263,7 @@ public interface EvaluationCriteriaLocalService extends BaseLocalService,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
-	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteria findByType(
+	public java.util.List<vn.com.ecopharma.hrm.rc.model.EvaluationCriteria> findByType(
 		java.lang.String type);
 
 	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteria createPrePersistedEntity();

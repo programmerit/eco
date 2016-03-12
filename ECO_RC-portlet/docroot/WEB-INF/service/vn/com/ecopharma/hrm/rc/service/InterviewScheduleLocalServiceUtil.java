@@ -303,6 +303,11 @@ public class InterviewScheduleLocalServiceUtil {
 				   .findByVacancyCandidateAndStatus(vacancyCandidateId, status);
 	}
 
+	public static vn.com.ecopharma.hrm.rc.model.InterviewSchedule findInProgressByVacancyCandidate(
+		long vacancyCandidateId) {
+		return getService().findInProgressByVacancyCandidate(vacancyCandidateId);
+	}
+
 	public static java.util.List<vn.com.ecopharma.hrm.rc.model.InterviewSchedule> findByVacancyCandidate(
 		long vacancyCandidateId) {
 		return getService().findByVacancyCandidate(vacancyCandidateId);

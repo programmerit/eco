@@ -43,7 +43,7 @@
 								<f:selectItem itemLabel="Nhấn chọn" itemValue="" />
 								<f:selectItems value="#{leaveRequestBean.allTypes}" var="t"
 									itemLabel="#{leaveRequestBean.getHardCodeVneseTypeString(t)}"
-									itemValue="#{t}" />
+									itemValue="#{t}" itemDisabled="#{t eq 'IN' or t eq 'OUT'}"/>
 								<p:column>#{leaveRequestBean.getHardCodeVneseTypeString(t)}</p:column>
 							</p:selectOneMenu>
 

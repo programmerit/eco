@@ -83,7 +83,7 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 			getNumberOfReplacedRecruitment());
 		attributes.put("expectedSalary", getExpectedSalary());
 		attributes.put("expectedJoinedDate", getExpectedJoinedDate());
-		attributes.put("workingPlace", getWorkingPlace());
+		attributes.put("workPlaceId", getWorkPlaceId());
 		attributes.put("description", getDescription());
 		attributes.put("requiredGender", getRequiredGender());
 		attributes.put("certificateType", getCertificateType());
@@ -164,10 +164,10 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 			setExpectedJoinedDate(expectedJoinedDate);
 		}
 
-		String workingPlace = (String)attributes.get("workingPlace");
+		Long workPlaceId = (Long)attributes.get("workPlaceId");
 
-		if (workingPlace != null) {
-			setWorkingPlace(workingPlace);
+		if (workPlaceId != null) {
+			setWorkPlaceId(workPlaceId);
 		}
 
 		String description = (String)attributes.get("description");
@@ -494,21 +494,21 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 	}
 
 	@Override
-	public String getWorkingPlace() {
-		return _workingPlace;
+	public long getWorkPlaceId() {
+		return _workPlaceId;
 	}
 
 	@Override
-	public void setWorkingPlace(String workingPlace) {
-		_workingPlace = workingPlace;
+	public void setWorkPlaceId(long workPlaceId) {
+		_workPlaceId = workPlaceId;
 
 		if (_vacancyRemoteModel != null) {
 			try {
 				Class<?> clazz = _vacancyRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setWorkingPlace", String.class);
+				Method method = clazz.getMethod("setWorkPlaceId", long.class);
 
-				method.invoke(_vacancyRemoteModel, workingPlace);
+				method.invoke(_vacancyRemoteModel, workPlaceId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -1119,7 +1119,7 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 		clone.setNumberOfReplacedRecruitment(getNumberOfReplacedRecruitment());
 		clone.setExpectedSalary(getExpectedSalary());
 		clone.setExpectedJoinedDate(getExpectedJoinedDate());
-		clone.setWorkingPlace(getWorkingPlace());
+		clone.setWorkPlaceId(getWorkPlaceId());
 		clone.setDescription(getDescription());
 		clone.setRequiredGender(getRequiredGender());
 		clone.setCertificateType(getCertificateType());
@@ -1212,8 +1212,8 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 		sb.append(getExpectedSalary());
 		sb.append(", expectedJoinedDate=");
 		sb.append(getExpectedJoinedDate());
-		sb.append(", workingPlace=");
-		sb.append(getWorkingPlace());
+		sb.append(", workPlaceId=");
+		sb.append(getWorkPlaceId());
 		sb.append(", description=");
 		sb.append(getDescription());
 		sb.append(", requiredGender=");
@@ -1304,8 +1304,8 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 		sb.append(getExpectedJoinedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>workingPlace</column-name><column-value><![CDATA[");
-		sb.append(getWorkingPlace());
+			"<column><column-name>workPlaceId</column-name><column-value><![CDATA[");
+		sb.append(getWorkPlaceId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>description</column-name><column-value><![CDATA[");
@@ -1409,7 +1409,7 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 	private int _numberOfReplacedRecruitment;
 	private double _expectedSalary;
 	private Date _expectedJoinedDate;
-	private String _workingPlace;
+	private long _workPlaceId;
 	private String _description;
 	private String _requiredGender;
 	private String _certificateType;

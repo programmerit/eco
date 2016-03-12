@@ -43,9 +43,7 @@
 					value="#{cc.attrs.empEntity.emp.birthday}"
 					maxdate="#{cc.attrs.empBean.maxBirthdayDate}" mask="true"
 					pattern="dd/MM/yyyy" required="true"
-					validatorMessage="Date of Birth required">
-					<f:convertDateTime pattern="dd/MM/yyyy" />
-				</p:calendar>
+					validatorMessage="Date of Birth required" />
 				<p:message for="birthday" display="icon" />
 
 				<h:outputText value="Place of Birth" />

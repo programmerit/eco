@@ -42,8 +42,10 @@ public class CandidateEvaluationCacheModel implements CacheModel<CandidateEvalua
 
 		sb.append("{candidateEvaluationId=");
 		sb.append(candidateEvaluationId);
-		sb.append(", evaluationCriteriaId=");
-		sb.append(evaluationCriteriaId);
+		sb.append(", candidateId=");
+		sb.append(candidateId);
+		sb.append(", interviewId=");
+		sb.append(interviewId);
 		sb.append(", evaluationCriteriaKeyValueId=");
 		sb.append(evaluationCriteriaKeyValueId);
 		sb.append(", ratingPoint=");
@@ -62,8 +64,6 @@ public class CandidateEvaluationCacheModel implements CacheModel<CandidateEvalua
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", candidateId=");
-		sb.append(candidateId);
 		sb.append("}");
 
 		return sb.toString();
@@ -74,7 +74,8 @@ public class CandidateEvaluationCacheModel implements CacheModel<CandidateEvalua
 		CandidateEvaluationImpl candidateEvaluationImpl = new CandidateEvaluationImpl();
 
 		candidateEvaluationImpl.setCandidateEvaluationId(candidateEvaluationId);
-		candidateEvaluationImpl.setEvaluationCriteriaId(evaluationCriteriaId);
+		candidateEvaluationImpl.setCandidateId(candidateId);
+		candidateEvaluationImpl.setInterviewId(interviewId);
 		candidateEvaluationImpl.setEvaluationCriteriaKeyValueId(evaluationCriteriaKeyValueId);
 		candidateEvaluationImpl.setRatingPoint(ratingPoint);
 
@@ -110,8 +111,6 @@ public class CandidateEvaluationCacheModel implements CacheModel<CandidateEvalua
 			candidateEvaluationImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		candidateEvaluationImpl.setCandidateId(candidateId);
-
 		candidateEvaluationImpl.resetOriginalValues();
 
 		return candidateEvaluationImpl;
@@ -120,7 +119,8 @@ public class CandidateEvaluationCacheModel implements CacheModel<CandidateEvalua
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		candidateEvaluationId = objectInput.readLong();
-		evaluationCriteriaId = objectInput.readLong();
+		candidateId = objectInput.readLong();
+		interviewId = objectInput.readLong();
 		evaluationCriteriaKeyValueId = objectInput.readLong();
 		ratingPoint = objectInput.readInt();
 		note = objectInput.readUTF();
@@ -130,14 +130,14 @@ public class CandidateEvaluationCacheModel implements CacheModel<CandidateEvalua
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		candidateId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(candidateEvaluationId);
-		objectOutput.writeLong(evaluationCriteriaId);
+		objectOutput.writeLong(candidateId);
+		objectOutput.writeLong(interviewId);
 		objectOutput.writeLong(evaluationCriteriaKeyValueId);
 		objectOutput.writeInt(ratingPoint);
 
@@ -161,11 +161,11 @@ public class CandidateEvaluationCacheModel implements CacheModel<CandidateEvalua
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
-		objectOutput.writeLong(candidateId);
 	}
 
 	public long candidateEvaluationId;
-	public long evaluationCriteriaId;
+	public long candidateId;
+	public long interviewId;
 	public long evaluationCriteriaKeyValueId;
 	public int ratingPoint;
 	public String note;
@@ -175,5 +175,4 @@ public class CandidateEvaluationCacheModel implements CacheModel<CandidateEvalua
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long candidateId;
 }

@@ -5,7 +5,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd"
 >
-	<info module="portlet_primefaces_tmpl" organisation="com.liferay" />
+	<info module="portlet_jsf_tmpl" organisation="com.liferay" />
 
 	<dependencies defaultconf="default">
 		<dependency org="org.jboss.spec.javax.el" name="jboss-el-api_2.2_spec" rev="1.0.0.Final"/>

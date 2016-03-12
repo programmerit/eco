@@ -272,5 +272,6 @@ public interface InterviewLocalService extends BaseLocalService,
 		vn.com.ecopharma.hrm.rc.model.Interview interview,
 		vn.com.ecopharma.emp.model.Titles titles);
 
-	public vn.com.ecopharma.hrm.rc.model.Interview createPrePersitedInterview();
+	public vn.com.ecopharma.hrm.rc.model.Interview createPrePersitedInterview(
+		com.liferay.portal.service.ServiceContext serviceContext);
 }

@@ -55,8 +55,8 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 		sb.append(expectedSalary);
 		sb.append(", expectedJoinedDate=");
 		sb.append(expectedJoinedDate);
-		sb.append(", workingPlace=");
-		sb.append(workingPlace);
+		sb.append(", workPlaceId=");
+		sb.append(workPlaceId);
 		sb.append(", description=");
 		sb.append(description);
 		sb.append(", requiredGender=");
@@ -125,12 +125,7 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 			vacancyImpl.setExpectedJoinedDate(new Date(expectedJoinedDate));
 		}
 
-		if (workingPlace == null) {
-			vacancyImpl.setWorkingPlace(StringPool.BLANK);
-		}
-		else {
-			vacancyImpl.setWorkingPlace(workingPlace);
-		}
+		vacancyImpl.setWorkPlaceId(workPlaceId);
 
 		if (description == null) {
 			vacancyImpl.setDescription(StringPool.BLANK);
@@ -274,7 +269,7 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 		numberOfReplacedRecruitment = objectInput.readInt();
 		expectedSalary = objectInput.readDouble();
 		expectedJoinedDate = objectInput.readLong();
-		workingPlace = objectInput.readUTF();
+		workPlaceId = objectInput.readLong();
 		description = objectInput.readUTF();
 		requiredGender = objectInput.readUTF();
 		certificateType = objectInput.readUTF();
@@ -310,13 +305,7 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 		objectOutput.writeInt(numberOfReplacedRecruitment);
 		objectOutput.writeDouble(expectedSalary);
 		objectOutput.writeLong(expectedJoinedDate);
-
-		if (workingPlace == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(workingPlace);
-		}
+		objectOutput.writeLong(workPlaceId);
 
 		if (description == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -430,7 +419,7 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 	public int numberOfReplacedRecruitment;
 	public double expectedSalary;
 	public long expectedJoinedDate;
-	public String workingPlace;
+	public long workPlaceId;
 	public String description;
 	public String requiredGender;
 	public String certificateType;

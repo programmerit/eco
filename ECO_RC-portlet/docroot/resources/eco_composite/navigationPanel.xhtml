@@ -21,7 +21,7 @@
 				disabled="#{cc.attrs.current eq nav.value}"
 				outcome="#{cc.attrs.pathToFile}#{nav.outCome}" />
 			<h:outputText value="|" style="margin-right: 3px;"
-				rendered="#{not navigationBean.isLastNavigationItem(nav)}" />
+				rendered="#{navigationBean.notLastNavigationItem(nav)}" />
 		</ui:repeat>
 	</composite:implementation>
 </f:view>

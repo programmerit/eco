@@ -13,14 +13,15 @@
 		<h:form id="interviewScheduleForCandidatesForm"
 			rendered="#{candidateViewBean.currentMode==5}">
 			<h:outputText value="For All:" styleClass="label" />
-			<p:panelGrid columns="1" style="width: 100%;">
+			<p:outputPanel id="forAllOutputPanel" style="width: 100%;"
+				autoUpdate="false">
 				<p:panelGrid columns="3" layout="grid"
 					style="margin-bottom: 7px!important;">
 					<h:panelGroup>
 						<p:selectBooleanCheckbox
 							value="#{scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.setInterviewForAll}">
 							<p:ajax event="change"
-								update="interviewSelectForAll applyForAllButton applyForSelectedButton addNewInterviewLink" />
+								update=":interviewScheduleForCandidatesForm:forAllOutputPanel" />
 						</p:selectBooleanCheckbox>
 						<p:selectOneMenu id="interviewSelectForAll"
 							converter="interviewConverter"
@@ -33,6 +34,7 @@
 								itemValue="#{interview}" />
 						</p:selectOneMenu>
 						<p:commandLink id="addNewInterviewLink" value="+"
+							styleClass="currentStatus status-green"
 							onclick="PF('wInterviewDialog').show()"
 							disabled="#{not scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.setInterviewForAll}" />
 					</h:panelGroup>
@@ -41,7 +43,7 @@
 						<p:selectBooleanCheckbox
 							value="#{scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.setInterviewDateForAll}">
 							<p:ajax event="change"
-								update="dateForAll applyForAllButton applyForSelectedButton" />
+								update=":interviewScheduleForCandidatesForm:forAllOutputPanel" />
 						</p:selectBooleanCheckbox>
 						<p:calendar id="dateForAll"
 							disabled="#{not scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.setInterviewDateForAll}"
@@ -51,7 +53,7 @@
 						<p:selectBooleanCheckbox
 							value="#{scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.setInterviewTimeForAll}">
 							<p:ajax event="change"
-								update="timeFromForAll timeToForAll applyForAllButton applyForSelectedButton timeStep" />
+								update=":interviewScheduleForCandidatesForm:forAllOutputPanel" />
 						</p:selectBooleanCheckbox>
 						<pe:timePicker id="timeFromForAll" mode="popup"
 							disabled="#{not scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.setInterviewTimeForAll}"
@@ -71,7 +73,7 @@
 						<p:selectBooleanCheckbox
 							value="#{scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.setInterviewersForAll}">
 							<p:ajax event="change"
-								update="interviewersForAll applyForAllButton applyForSelectedButton" />
+								update=":interviewScheduleForCandidatesForm:forAllOutputPanel" />
 						</p:selectBooleanCheckbox>
 						<p:autoComplete id="interviewersForAll" multiple="true"
 							styleClass="interview-schedule" scrollHeight="300"
@@ -100,7 +102,10 @@
 
 					<p:commandButton value="Clear" />
 				</h:panelGroup>
-			</p:panelGrid>
+			</p:outputPanel>
+
+			<br />
+			<br />
 
 			<h:outputText
 				value="SELECT and press 'Delete' key to delete candidates"
@@ -205,7 +210,7 @@
 				action="#{scheduleInterviewForCandidatesBean.onSavingAll}" />
 
 			<p:commandButton id="cancel" value="Cancel"
-				onclick="window.location.hash = '#vCandidate';"
+				actionListener="#{scheduleInterviewForCandidatesBean.onCancel}"
 				update=":CandidatePanelGroup" />
 		</h:form>
 
@@ -224,7 +229,7 @@
 				</p:panelGrid>
 				<p:commandButton value="Save" icon="fa fa-save Fs16 White"
 					actionListener="#{interviewBean.save}"
-					oncomplete="PF('wInterviewDialog').hide()" ajax="true"
+					oncomplete="PF('wInterviewDialog').hide()"
 					update=":interviewScheduleForCandidatesForm:interviewSelectForAll" />
 				<p:commandButton value="Cancel"
 					onclick="PF('wInterviewDialog').hide()">

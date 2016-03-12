@@ -113,3 +113,10 @@ span.currentStatus {
 select.ui-helper-hidden {
   display: none; }
 
+/* For pe:timepicker */
+.ui-timepicker-minutes td {
+  background-color: navy; }
+
+.ui-timepicker-table td {
+  background-color: navy; }
+

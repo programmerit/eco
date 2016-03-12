@@ -5,13 +5,18 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 	<h:head />
 	<h:body>
+		<!-- tricky load primefaces extension -->
+		<pe:blockPanel />
+
 		<h:form id="candidateSearchForm"
 			rendered="#{candidateViewBean.currentMode==1}">
 			<h:link value="Show/Hide filter" styleClass="label"
-				onclick="toggle('#{requestScope.filterGrid.clientId}'); return false;" />
+				onclick="toggle('#{requestScope.filterGrid.clientId}'); return false;"
+				onmouseover="toggle('#{requestScope.filterGrid.clientId}'); return false;" />
 			<h:panelGroup binding="#{requestScope.filterGrid}" id="filterGroup"
 				style="display: none;">
 				<p:panelGrid columns="4" layout="grid" id="filterPanel"
@@ -160,9 +165,8 @@
 					<p:menuitem
 						value="#{i18n[candidateViewBean.getLocalizedStatus('INTERVIEW_SCHEDULED')]}"
 						rendered="#{candidateBean.isExistedInSameAvailableStatuses('INTERVIEW_SCHEDULED')}"
-						action="#{candidateBean.onChangeMultipleItemStatus('INTERVIEW_SCHEDULED')}" 
-						update=":CandidatePanelGroup"
-						/>
+						action="#{candidateBean.onChangeMultipleItemStatus('INTERVIEW_SCHEDULED')}"
+						update=":CandidatePanelGroup" />
 
 					<p:menuitem
 						value="#{i18n[candidateViewBean.getLocalizedStatus('JOB_OFFERED')]}"
@@ -174,6 +178,12 @@
 						rendered="#{candidateBean.isExistedInSameAvailableStatuses('DECLINE_OFFERED')}"
 						action="#{candidateBean.onChangeMultipleItemStatus('DECLINE_OFFERED')}"
 						oncomplete="updateCandidatesAndGrowl();" />
+
+					<p:menuitem
+						value="#{i18n[candidateViewBean.getLocalizedStatus('EVALUATE_CANDIDATE')]}"
+						rendered="#{candidateBean.isExistedInSameAvailableStatuses('EVALUATE_CANDIDATE')}"
+						action="#{candidateBean.onChangeMultipleItemStatus('EVALUATE_CANDIDATE')}"
+						update=":includedDialog" />
 					<p:menuitem value="No Actions Available" disabled="true"
 						rendered="#{candidateBean.noneAvailableStatus}" />
 				</p:submenu>
@@ -262,14 +272,15 @@
 						cancel="false" styleClass="candidate-rating" />
 				</p:column>
 
-				<p:column headerText="Status" sortBy="#{candidateFilterBean.status}">
+				<p:column headerText="Status">
 					<h:outputText id="candidateStatus"
 						styleClass="currentStatus #{candidateViewBean.currentStatusCSS(candidate.status)}"
 						value="#{i18n[candidate.localizedStatus]}" />
 					<p:selectOneMenu id="candidateStatusSelect"
 						style="margin-top:20px;"
 						value="#{candidateViewBean.selectedStatus}">
-						<!-- eliminate oncomplete update if current status is JOB_OFFERED, b/c changing to HIRE status will make AJAX cannot complete on updating candidates table -->
+						<!-- eliminate oncomplete update if current status is JOB_OFFERED, 
+						b/c changing to HIRE status will make AJAX cannot complete on updating candidates table -->
 						<p:ajax update=":CandidatePanelGroup candidateStatusSelect"
 							listener="#{candidateViewBean.onStatusChange(candidate)}"
 							oncomplete="#{candidate.status != 'JOB_OFFERED' ? 'updateCandidatesAndGrowl();' : ''}">
@@ -359,7 +370,6 @@
 					</ui:repeat> -->
 					<h:panelGroup>
 						<p:commandLink value="View Detail" style="float:right"
-							onclick="window.location.hash = '#vCandidate/id=#{candidate.id}';"
 							rendered="#{candidatePermission.checkPermission(candidate.id, 'UPDATE')}" />
 					</h:panelGroup>
 				</p:rowExpansion>
@@ -407,82 +417,10 @@
 			</p:dialog>
 		</h:form>
 
-		<h:form id="interviewScheduleForm">
-			<p:dialog id="interviewScheduleDialog"
-				widgetVar="wInterviewScheduleDialog" header="Schedule Interview"
-				modal="true">
-				<p:ajax event="close" oncomplete="refreshCandidateTable()" />
-				<p:outputPanel id="interviewScheduleOutputPanel">
-					<p:panelGrid columns="2" layout="grid">
-						<h:panelGroup>
-							<p:panelGrid columns="2">
-								<h:outputText value="Interview" />
-								<h:panelGroup>
-									<p:selectOneMenu id="interviewSelect"
-										converter="interviewConverter"
-										value="#{interviewScheduleBean.interviewScheduleItem.selectedInterview}">
-										<f:selectItem itemLabel="Select..." itemValue="" />
-										<f:selectItems itemDisabled="false"
-											value="#{interviewScheduleBean.interviewScheduleItem.interviews}"
-											var="interview" itemLabel="#{interview.name} "
-											itemValue="#{interview}" />
-									</p:selectOneMenu>
-									<p:commandButton id="iAddNewButton"
-										icon="fa fa-plus Fs16 White"
-										onclick="PF('wInterviewDialog').show()" />
-									<p:message for="interviewSelect" id="interviewSelect_msg"
-										display="icon" />
-								</h:panelGroup>
-								<h:outputText value="Date" />
-								<h:panelGroup>
-									<p:calendar id="interviewDate"
-										value="#{interviewScheduleBean.interviewScheduleItem.interviewSchedule.interviewDate}"
-										mindate="#{interviewScheduleBean.minDate}"
-										pattern="dd/MM/yyyy" />
-									<p:message for="interviewDate" id="interviewDate_msg"
-										display="icon" />
-								</h:panelGroup>
+		<!-- <ui:include src="/views/dialogs/import_export.xhtml" /> -->
 
-								<h:outputText value="Time" />
-								<h:panelGroup>
-									<p:inputText id="timeFrom"
-										value="#{interviewScheduleBean.interviewScheduleItem.timeFrom}"
-										style="width: 50px;" />
-										-
-										<p:inputText id="timeTo"
-										value="#{interviewScheduleBean.interviewScheduleItem.timeTo}"
-										style="width: 50px;" />
-								</h:panelGroup>
-							</p:panelGrid>
-
-						</h:panelGroup>
-						<h:panelGroup>
-							<h:outputText value="Interviewers" />
-							<p:autoComplete id="interviewers" multiple="true"
-								minQueryLength="2"
-								value="#{interviewScheduleBean.interviewScheduleItem.interviewers}"
-								completeMethod="#{interviewScheduleBean.completeInterviewers}"
-								var="interviewer" itemLabel="#{interviewer.displayName}"
-								itemValue="#{interviewer}" converter="interviewerConverter"
-								autoHighlight="true" forceSelection="true"
-								placeholder="Type to show hints...">
-							</p:autoComplete>
-							<p:message for="interviewers" id="interviewers_msg"
-								display="icon" />
-						</h:panelGroup>
-					</p:panelGrid>
-					<p:commandButton id="interviewScheduleSave" value="Save"
-						actionListener="#{interviewScheduleBean.saveInterviewSchedule}"
-						oncomplete="refreshCandidateTable();" />
-					<p:commandButton value="Cancel"
-						onclick="PF('wInterviewScheduleDialog').hide()" />
-				</p:outputPanel>
-			</p:dialog>
-		</h:form>
-
-		<!-- <ui:include src="/views/dialogs/evaluation.xhtml" /> -->
-
-		<ui:include src="/views/dialogs/import_export.xhtml" />
+		<ui:include id="includedDialog"
+			src="#{candidateViewBean.includedDialog}" />
 	</h:body>
 	<script type="text/javascript">
 		function toggle(id) {

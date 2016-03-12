@@ -67,7 +67,8 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 	public static final String TABLE_NAME = "eco_rcp_CandidateEvaluation";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "candidateEvaluationId", Types.BIGINT },
-			{ "evaluationCriteriaId", Types.BIGINT },
+			{ "candidateId", Types.BIGINT },
+			{ "interviewId", Types.BIGINT },
 			{ "evaluationCriteriaKeyValueId", Types.BIGINT },
 			{ "ratingPoint", Types.INTEGER },
 			{ "note", Types.VARCHAR },
@@ -76,10 +77,9 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
-			{ "candidateId", Types.BIGINT }
+			{ "modifiedDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_rcp_CandidateEvaluation (candidateEvaluationId LONG not null primary key,evaluationCriteriaId LONG,evaluationCriteriaKeyValueId LONG,ratingPoint INTEGER,note VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,candidateId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table eco_rcp_CandidateEvaluation (candidateEvaluationId LONG not null primary key,candidateId LONG,interviewId LONG,evaluationCriteriaKeyValueId LONG,ratingPoint INTEGER,note VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table eco_rcp_CandidateEvaluation";
 	public static final String ORDER_BY_JPQL = " ORDER BY candidateEvaluation.candidateEvaluationId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_rcp_CandidateEvaluation.candidateEvaluationId ASC";
@@ -112,7 +112,8 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 		CandidateEvaluation model = new CandidateEvaluationImpl();
 
 		model.setCandidateEvaluationId(soapModel.getCandidateEvaluationId());
-		model.setEvaluationCriteriaId(soapModel.getEvaluationCriteriaId());
+		model.setCandidateId(soapModel.getCandidateId());
+		model.setInterviewId(soapModel.getInterviewId());
 		model.setEvaluationCriteriaKeyValueId(soapModel.getEvaluationCriteriaKeyValueId());
 		model.setRatingPoint(soapModel.getRatingPoint());
 		model.setNote(soapModel.getNote());
@@ -122,7 +123,6 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCandidateId(soapModel.getCandidateId());
 
 		return model;
 	}
@@ -189,7 +189,8 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("candidateEvaluationId", getCandidateEvaluationId());
-		attributes.put("evaluationCriteriaId", getEvaluationCriteriaId());
+		attributes.put("candidateId", getCandidateId());
+		attributes.put("interviewId", getInterviewId());
 		attributes.put("evaluationCriteriaKeyValueId",
 			getEvaluationCriteriaKeyValueId());
 		attributes.put("ratingPoint", getRatingPoint());
@@ -200,7 +201,6 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("candidateId", getCandidateId());
 
 		return attributes;
 	}
@@ -214,10 +214,16 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 			setCandidateEvaluationId(candidateEvaluationId);
 		}
 
-		Long evaluationCriteriaId = (Long)attributes.get("evaluationCriteriaId");
+		Long candidateId = (Long)attributes.get("candidateId");
 
-		if (evaluationCriteriaId != null) {
-			setEvaluationCriteriaId(evaluationCriteriaId);
+		if (candidateId != null) {
+			setCandidateId(candidateId);
+		}
+
+		Long interviewId = (Long)attributes.get("interviewId");
+
+		if (interviewId != null) {
+			setInterviewId(interviewId);
 		}
 
 		Long evaluationCriteriaKeyValueId = (Long)attributes.get(
@@ -274,12 +280,6 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
 		}
-
-		Long candidateId = (Long)attributes.get("candidateId");
-
-		if (candidateId != null) {
-			setCandidateId(candidateId);
-		}
 	}
 
 	@JSON
@@ -295,13 +295,36 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 
 	@JSON
 	@Override
-	public long getEvaluationCriteriaId() {
-		return _evaluationCriteriaId;
+	public long getCandidateId() {
+		return _candidateId;
 	}
 
 	@Override
-	public void setEvaluationCriteriaId(long evaluationCriteriaId) {
-		_evaluationCriteriaId = evaluationCriteriaId;
+	public void setCandidateId(long candidateId) {
+		_columnBitmask |= CANDIDATEID_COLUMN_BITMASK;
+
+		if (!_setOriginalCandidateId) {
+			_setOriginalCandidateId = true;
+
+			_originalCandidateId = _candidateId;
+		}
+
+		_candidateId = candidateId;
+	}
+
+	public long getOriginalCandidateId() {
+		return _originalCandidateId;
+	}
+
+	@JSON
+	@Override
+	public long getInterviewId() {
+		return _interviewId;
+	}
+
+	@Override
+	public void setInterviewId(long interviewId) {
+		_interviewId = interviewId;
 	}
 
 	@JSON
@@ -424,29 +447,6 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 		_modifiedDate = modifiedDate;
 	}
 
-	@JSON
-	@Override
-	public long getCandidateId() {
-		return _candidateId;
-	}
-
-	@Override
-	public void setCandidateId(long candidateId) {
-		_columnBitmask |= CANDIDATEID_COLUMN_BITMASK;
-
-		if (!_setOriginalCandidateId) {
-			_setOriginalCandidateId = true;
-
-			_originalCandidateId = _candidateId;
-		}
-
-		_candidateId = candidateId;
-	}
-
-	public long getOriginalCandidateId() {
-		return _originalCandidateId;
-	}
-
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -479,7 +479,8 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 		CandidateEvaluationImpl candidateEvaluationImpl = new CandidateEvaluationImpl();
 
 		candidateEvaluationImpl.setCandidateEvaluationId(getCandidateEvaluationId());
-		candidateEvaluationImpl.setEvaluationCriteriaId(getEvaluationCriteriaId());
+		candidateEvaluationImpl.setCandidateId(getCandidateId());
+		candidateEvaluationImpl.setInterviewId(getInterviewId());
 		candidateEvaluationImpl.setEvaluationCriteriaKeyValueId(getEvaluationCriteriaKeyValueId());
 		candidateEvaluationImpl.setRatingPoint(getRatingPoint());
 		candidateEvaluationImpl.setNote(getNote());
@@ -489,7 +490,6 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 		candidateEvaluationImpl.setUserName(getUserName());
 		candidateEvaluationImpl.setCreateDate(getCreateDate());
 		candidateEvaluationImpl.setModifiedDate(getModifiedDate());
-		candidateEvaluationImpl.setCandidateId(getCandidateId());
 
 		candidateEvaluationImpl.resetOriginalValues();
 
@@ -555,7 +555,9 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 
 		candidateEvaluationCacheModel.candidateEvaluationId = getCandidateEvaluationId();
 
-		candidateEvaluationCacheModel.evaluationCriteriaId = getEvaluationCriteriaId();
+		candidateEvaluationCacheModel.candidateId = getCandidateId();
+
+		candidateEvaluationCacheModel.interviewId = getInterviewId();
 
 		candidateEvaluationCacheModel.evaluationCriteriaKeyValueId = getEvaluationCriteriaKeyValueId();
 
@@ -601,8 +603,6 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 			candidateEvaluationCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		candidateEvaluationCacheModel.candidateId = getCandidateId();
-
 		return candidateEvaluationCacheModel;
 	}
 
@@ -612,8 +612,10 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 
 		sb.append("{candidateEvaluationId=");
 		sb.append(getCandidateEvaluationId());
-		sb.append(", evaluationCriteriaId=");
-		sb.append(getEvaluationCriteriaId());
+		sb.append(", candidateId=");
+		sb.append(getCandidateId());
+		sb.append(", interviewId=");
+		sb.append(getInterviewId());
 		sb.append(", evaluationCriteriaKeyValueId=");
 		sb.append(getEvaluationCriteriaKeyValueId());
 		sb.append(", ratingPoint=");
@@ -632,8 +634,6 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", candidateId=");
-		sb.append(getCandidateId());
 		sb.append("}");
 
 		return sb.toString();
@@ -652,8 +652,12 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 		sb.append(getCandidateEvaluationId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>evaluationCriteriaId</column-name><column-value><![CDATA[");
-		sb.append(getEvaluationCriteriaId());
+			"<column><column-name>candidateId</column-name><column-value><![CDATA[");
+		sb.append(getCandidateId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>interviewId</column-name><column-value><![CDATA[");
+		sb.append(getInterviewId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>evaluationCriteriaKeyValueId</column-name><column-value><![CDATA[");
@@ -691,10 +695,6 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>candidateId</column-name><column-value><![CDATA[");
-		sb.append(getCandidateId());
-		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -706,7 +706,10 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 			CandidateEvaluation.class
 		};
 	private long _candidateEvaluationId;
-	private long _evaluationCriteriaId;
+	private long _candidateId;
+	private long _originalCandidateId;
+	private boolean _setOriginalCandidateId;
+	private long _interviewId;
 	private long _evaluationCriteriaKeyValueId;
 	private int _ratingPoint;
 	private String _note;
@@ -717,9 +720,6 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _candidateId;
-	private long _originalCandidateId;
-	private boolean _setOriginalCandidateId;
 	private long _columnBitmask;
 	private CandidateEvaluation _escapedModel;
 }

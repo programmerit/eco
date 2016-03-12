@@ -32,7 +32,8 @@ public class CandidateEvaluationSoap implements Serializable {
 		CandidateEvaluationSoap soapModel = new CandidateEvaluationSoap();
 
 		soapModel.setCandidateEvaluationId(model.getCandidateEvaluationId());
-		soapModel.setEvaluationCriteriaId(model.getEvaluationCriteriaId());
+		soapModel.setCandidateId(model.getCandidateId());
+		soapModel.setInterviewId(model.getInterviewId());
 		soapModel.setEvaluationCriteriaKeyValueId(model.getEvaluationCriteriaKeyValueId());
 		soapModel.setRatingPoint(model.getRatingPoint());
 		soapModel.setNote(model.getNote());
@@ -42,7 +43,6 @@ public class CandidateEvaluationSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setCandidateId(model.getCandidateId());
 
 		return soapModel;
 	}
@@ -106,12 +106,20 @@ public class CandidateEvaluationSoap implements Serializable {
 		_candidateEvaluationId = candidateEvaluationId;
 	}
 
-	public long getEvaluationCriteriaId() {
-		return _evaluationCriteriaId;
+	public long getCandidateId() {
+		return _candidateId;
 	}
 
-	public void setEvaluationCriteriaId(long evaluationCriteriaId) {
-		_evaluationCriteriaId = evaluationCriteriaId;
+	public void setCandidateId(long candidateId) {
+		_candidateId = candidateId;
+	}
+
+	public long getInterviewId() {
+		return _interviewId;
+	}
+
+	public void setInterviewId(long interviewId) {
+		_interviewId = interviewId;
 	}
 
 	public long getEvaluationCriteriaKeyValueId() {
@@ -187,16 +195,9 @@ public class CandidateEvaluationSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public long getCandidateId() {
-		return _candidateId;
-	}
-
-	public void setCandidateId(long candidateId) {
-		_candidateId = candidateId;
-	}
-
 	private long _candidateEvaluationId;
-	private long _evaluationCriteriaId;
+	private long _candidateId;
+	private long _interviewId;
 	private long _evaluationCriteriaKeyValueId;
 	private int _ratingPoint;
 	private String _note;
@@ -206,5 +207,4 @@ public class CandidateEvaluationSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _candidateId;
 }

@@ -786,7 +786,7 @@ public class EvaluationCriteriaLocalServiceClp
 	}
 
 	@Override
-	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteria findByType(
+	public java.util.List<vn.com.ecopharma.hrm.rc.model.EvaluationCriteria> findByType(
 		java.lang.String type) {
 		Object returnObj = null;
 
@@ -807,7 +807,7 @@ public class EvaluationCriteriaLocalServiceClp
 			}
 		}
 
-		return (vn.com.ecopharma.hrm.rc.model.EvaluationCriteria)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<vn.com.ecopharma.hrm.rc.model.EvaluationCriteria>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override

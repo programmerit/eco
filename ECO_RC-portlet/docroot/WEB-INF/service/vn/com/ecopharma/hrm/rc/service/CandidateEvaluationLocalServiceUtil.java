@@ -295,17 +295,19 @@ public class CandidateEvaluationLocalServiceUtil {
 		return getService().findByCandidate(candidateId);
 	}
 
-	public static vn.com.ecopharma.hrm.rc.model.CandidateEvaluation createPrePersistedEntity() {
-		return getService().createPrePersistedEntity();
+	public static vn.com.ecopharma.hrm.rc.model.CandidateEvaluation createPrePersistedEntity(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService().createPrePersistedEntity(serviceContext);
 	}
 
 	public static vn.com.ecopharma.hrm.rc.model.CandidateEvaluation addCandidateEvaluation(
-		long candidateId, long evaluationCriteriaId,
+		long candidateId, long interviewId, long evaluationCriteriaId,
 		long evaluationCriteriaKeyValueId, int ratingPoint,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
-				   .addCandidateEvaluation(candidateId, evaluationCriteriaId,
-			evaluationCriteriaKeyValueId, ratingPoint, serviceContext);
+				   .addCandidateEvaluation(candidateId, interviewId,
+			evaluationCriteriaId, evaluationCriteriaKeyValueId, ratingPoint,
+			serviceContext);
 	}
 
 	public static void clearService() {

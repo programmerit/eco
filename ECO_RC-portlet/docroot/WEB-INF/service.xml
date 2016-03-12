@@ -66,7 +66,7 @@
         <column name="numberOfReplacedRecruitment" type="int"></column>
         <column name="expectedSalary" type="double"></column>
         <column name="expectedJoinedDate" type="Date"></column>
-        <column name="workingPlace" type="String"></column>
+        <column name="workPlaceId" type="long"></column>
         <column name="description" type="String"></column>
         <column name="requiredGender" type="String"></column>
         <column name="certificateType" type="String"></column>
@@ -363,7 +363,7 @@
 		<column name="userName" type="String"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
-        <finder name="Type" return-type="EvaluationCriteria">
+        <finder name="Type" return-type="Collection">
             <finder-column name="type"></finder-column>
         </finder>
 	</entity>
@@ -428,7 +428,8 @@
     	</column>
 
     	<!-- Group instance -->
-        <column name="evaluationCriteriaId" type="long"></column>
+        <column name="candidateId" type="long"></column>
+        <column name="interviewId" type="long"></column>
         <column name="evaluationCriteriaKeyValueId" type="long"></column>
         <column name="ratingPoint" type="int"></column>
         <column name="note" type="String"></column>
@@ -442,7 +443,6 @@
     	<column name="userName" type="String"></column>
     	<column name="createDate" type="Date"></column>
     	<column name="modifiedDate" type="Date"></column>
-        <column name="candidateId" type="long"></column>
         <finder name="Candidate" return-type="Collection">
             <finder-column name="candidateId"></finder-column>
         </finder>

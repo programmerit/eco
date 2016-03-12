@@ -49,11 +49,21 @@
 
 									<h:outputText value="Expected Joined Date" />
 									<p:calendar
-										value="#{vacancyBean.vacancyItem.object.expectedJoinedDate}" />
+										value="#{vacancyBean.vacancyItem.object.expectedJoinedDate}"
+										pattern="dd/MM/yyyy" />
 
 									<h:outputText value="Working Place" />
-									<p:inputText
-										value="#{vacancyBean.vacancyItem.object.workingPlace}" />
+									<p:selectOneMenu id="regionSelect"
+										value="#{vacancyBean.vacancyItem.workingPlace}"
+										converter="regionItemConverter" effect="fade" filter="true"
+										filterMatchMode="contains" var="r">
+										<f:selectItem itemLabel="Select Place" itemValue="" />
+										<f:selectItems value="#{vacancyBean.workingPlaces}" var="r"
+											itemLabel="#{r.region.name}" itemValue="#{r}" />
+										<p:column>
+											#{r.region.name}
+										</p:column>
+									</p:selectOneMenu>
 
 									<h:outputText value="Required Education: " />
 									<p:selectOneMenu id="certificateTypeSelect"

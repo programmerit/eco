@@ -174,19 +174,18 @@ public interface VacancyModel extends BaseModel<Vacancy>, GroupedModel {
 	public void setExpectedJoinedDate(Date expectedJoinedDate);
 
 	/**
-	 * Returns the working place of this vacancy.
+	 * Returns the work place ID of this vacancy.
 	 *
-	 * @return the working place of this vacancy
+	 * @return the work place ID of this vacancy
 	 */
-	@AutoEscape
-	public String getWorkingPlace();
+	public long getWorkPlaceId();
 
 	/**
-	 * Sets the working place of this vacancy.
+	 * Sets the work place ID of this vacancy.
 	 *
-	 * @param workingPlace the working place of this vacancy
+	 * @param workPlaceId the work place ID of this vacancy
 	 */
-	public void setWorkingPlace(String workingPlace);
+	public void setWorkPlaceId(long workPlaceId);
 
 	/**
 	 * Returns the description of this vacancy.

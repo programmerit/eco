@@ -16,7 +16,7 @@ public enum CandidateStatus {
 	REJECT, // reject
 	SHORTLIST, // shorted list
 	INTERVIEW_SCHEDULED, // schedule for interviewing
-	JOB_OFFERED, // offer job
+	EVALUATE_CANDIDATE, JOB_OFFERED, // offer job
 	DECLINE_OFFERED, // decline
 	HIRE, // hire
 	MARK_INTERVIEW_PASS, // mark pass
@@ -36,7 +36,7 @@ public enum CandidateStatus {
 			return Arrays.asList(REJECT, SHORTLIST);
 		case INTERVIEW_SCHEDULED:
 			return Arrays.asList(REJECT, MARK_INTERVIEW_FAIL,
-					MARK_INTERVIEW_PASS);
+					MARK_INTERVIEW_PASS, EVALUATE_CANDIDATE);
 		case SHORTLIST:
 			return Arrays.asList(REJECT, INTERVIEW_SCHEDULED);
 		case MARK_INTERVIEW_PASS:
@@ -46,9 +46,8 @@ public enum CandidateStatus {
 		case JOB_OFFERED:
 			return Arrays.asList(DECLINE_OFFERED, HIRE, REJECT);
 		case REJECT:
-			return new ArrayList<CandidateStatus>();
 		default:
-			return new ArrayList<CandidateStatus>();
+			return new ArrayList<>();
 		}
 	}
 
@@ -63,7 +62,7 @@ public enum CandidateStatus {
 	public static List<String> getAvailableStatus_(String status) {
 		final CandidateStatus statusEnum = CandidateStatus.valueOf(status);
 		final List<CandidateStatus> statuses = getAvailableStatus(statusEnum);
-		final List<String> statusStringList = new ArrayList<String>();
+		final List<String> statusStringList = new ArrayList<>();
 		for (CandidateStatus c : statuses) {
 			statusStringList.add(c.toString());
 		}
@@ -86,8 +85,8 @@ public enum CandidateStatus {
 		}
 
 		if (index == 1) {
-			List<CandidateStatus> result = new ArrayList<CandidateStatus>(
-					statuses.get(0).getAvailableStatus());
+			List<CandidateStatus> result = new ArrayList<>(statuses.get(0)
+					.getAvailableStatus());
 			// check in case there are only 2 statuses -> retain the first & the
 			// second status
 			result.retainAll(retainList != null ? retainList : statuses.get(1)
@@ -97,7 +96,7 @@ public enum CandidateStatus {
 
 		// for the first time temp = list of first available statuses element
 		// otherwise temp = the retainment list from last retaining
-		List<CandidateStatus> temp = index != statuses.size() - 1 ? new ArrayList<CandidateStatus>(
+		List<CandidateStatus> temp = index != statuses.size() - 1 ? new ArrayList<>(
 				retainList) : new ArrayList<CandidateStatus>(statuses
 				.get(index).getAvailableStatus());
 		temp.retainAll(statuses.get(index - 1).getAvailableStatus());

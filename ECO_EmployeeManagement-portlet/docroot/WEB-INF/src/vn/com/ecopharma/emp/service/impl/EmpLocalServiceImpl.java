@@ -375,14 +375,23 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 
 		final String defaultDateToString = sdf.format(getCurrentDateNextYear());
 
-		final String filterDateFrom = dateFrom != null ? sdf.format(dateFrom)
-				: defaultDateFromString;
+		// TODO: check the reason why filter by date 30/11/2000 does not include
+		// this day.
+		final String filterDateFrom = dateFrom != null ? sdf
+				.format(subtract1Date(dateFrom)) : defaultDateFromString;
 
 		final String filterDateTo = dateTo != null ? sdf.format(dateTo)
 				: defaultDateToString;
 
 		return TermRangeQueryFactoryUtil.create(searchContext, field,
 				filterDateFrom, filterDateTo, includesLower, includesUpper);
+	}
+
+	private Date subtract1Date(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		return calendar.getTime();
 	}
 
 	public Query createStringListQuery(String property, List<String> values,
@@ -1679,7 +1688,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		}
 		return false;
 	}
-	
+
 	public boolean testSendNewEmpsNotificationEmail(List<Emp> emps) {
 
 		try {
@@ -1688,7 +1697,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			List<String> receivers = new ArrayList<>();
 
 			receivers.addAll(Arrays.asList("tvtao@ecopharma.com.vn"));
-			//receivers.addAll(managerEmails);
+			// receivers.addAll(managerEmails);
 
 			InternetAddress[] to = new InternetAddress[receivers.size()];
 			int i = 0;
@@ -1699,8 +1708,8 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			// if (LOGGER.isDebugEnabled())
 			LOGGER.info(to);
 
-			InternetAddress[] cc = new InternetAddress[] {
-					new InternetAddress("tvtao@ecopharma.com.vn") };
+			InternetAddress[] cc = new InternetAddress[] { new InternetAddress(
+					"tvtao@ecopharma.com.vn") };
 
 			InternetAddress from = new InternetAddress("tvtao@ecopharma.com.vn");
 

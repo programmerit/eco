@@ -32,6 +32,8 @@ import vn.com.ecopharma.hrm.rc.service.base.InterviewScheduleLocalServiceBaseImp
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
@@ -78,6 +80,9 @@ public class InterviewScheduleLocalServiceImpl extends
 	 * access the interview schedule local service.
 	 */
 
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(InterviewScheduleLocalServiceImpl.class);
+
 	public List<InterviewSchedule> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
@@ -92,9 +97,9 @@ public class InterviewScheduleLocalServiceImpl extends
 			return interviewSchedulePersistence.findAll(start, end,
 					orderByComparator);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	public InterviewSchedule findByVacancyCandidateAndInterview(
@@ -104,9 +109,9 @@ public class InterviewScheduleLocalServiceImpl extends
 					.findByVacancyCandidateAndInterview(vacancyCandidateId,
 							interviewId);
 		} catch (NoSuchInterviewScheduleException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -117,11 +122,17 @@ public class InterviewScheduleLocalServiceImpl extends
 			return interviewSchedulePersistence
 					.findByVacancyCandidateAndStatus(vacancyCandidateId, status);
 		} catch (NoSuchInterviewScheduleException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
+	}
+
+	public InterviewSchedule findInProgressByVacancyCandidate(
+			long vacancyCandidateId) {
+		return findByVacancyCandidateAndStatus(vacancyCandidateId,
+				InterviewScheduleStatus.PROCESSING.toString());
 	}
 
 	public List<InterviewSchedule> findByVacancyCandidate(
@@ -130,9 +141,9 @@ public class InterviewScheduleLocalServiceImpl extends
 			return interviewSchedulePersistence
 					.findByVacancyCandidate(vacancyCandidateId);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	public List<Long> findInterviewIdsByVacancyCandidate(long vacancyCandidateId) {
@@ -168,7 +179,7 @@ public class InterviewScheduleLocalServiceImpl extends
 								.getInterviewScheduleId());
 			}
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -229,9 +240,9 @@ public class InterviewScheduleLocalServiceImpl extends
 
 			return interviewSchedule;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (PortalException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -247,9 +258,9 @@ public class InterviewScheduleLocalServiceImpl extends
 			indexer.reindex(interviewSchedule);
 			return interviewSchedule;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -262,7 +273,7 @@ public class InterviewScheduleLocalServiceImpl extends
 			interviewSchedule.setInterviewDate(new Date());
 			return interviewSchedule;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -300,11 +311,11 @@ public class InterviewScheduleLocalServiceImpl extends
 					SearchEngineUtil.getDefaultSearchEngineId(), companyId,
 					fullQuery, s, start, end).toList();
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	public List<Document> searchByVacancyCandidateId(
@@ -343,7 +354,7 @@ public class InterviewScheduleLocalServiceImpl extends
 			try {
 				indexer.reindex(item);
 			} catch (SearchException e) {
-				e.printStackTrace();
+				LOGGER.info(e);
 			}
 		}
 	}
@@ -365,7 +376,7 @@ public class InterviewScheduleLocalServiceImpl extends
 
 			}
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 	}
 
@@ -383,9 +394,9 @@ public class InterviewScheduleLocalServiceImpl extends
 			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
 			return !hits.toList().isEmpty() ? hits.toList().get(0) : null;
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (SearchException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 
 		return null;

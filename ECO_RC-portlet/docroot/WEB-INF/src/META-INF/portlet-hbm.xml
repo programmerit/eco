@@ -71,7 +71,8 @@
 		<id name="candidateEvaluationId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property name="evaluationCriteriaId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="candidateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="interviewId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="evaluationCriteriaKeyValueId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="ratingPoint" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="note" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -81,7 +82,6 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="candidateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="vn.com.ecopharma.hrm.rc.model.impl.CertificateImpl" table="eco_rcp_Certificate">
 		<cache usage="read-write" />
@@ -237,7 +237,7 @@
 		<property name="numberOfReplacedRecruitment" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="expectedSalary" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="expectedJoinedDate" type="org.hibernate.type.TimestampType" />
-		<property name="workingPlace" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="workPlaceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="requiredGender" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="certificateType" type="com.liferay.portal.dao.orm.hibernate.StringType" />

@@ -136,12 +136,14 @@ public class CandidateEvaluationLocalServiceClp
 
 		_methodName23 = "createPrePersistedEntity";
 
-		_methodParameterTypes23 = new String[] {  };
+		_methodParameterTypes23 = new String[] {
+				"com.liferay.portal.service.ServiceContext"
+			};
 
 		_methodName24 = "addCandidateEvaluation";
 
 		_methodParameterTypes24 = new String[] {
-				"long", "long", "long", "int",
+				"long", "long", "long", "long", "int",
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -810,12 +812,14 @@ public class CandidateEvaluationLocalServiceClp
 	}
 
 	@Override
-	public vn.com.ecopharma.hrm.rc.model.CandidateEvaluation createPrePersistedEntity() {
+	public vn.com.ecopharma.hrm.rc.model.CandidateEvaluation createPrePersistedEntity(
+		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23, new Object[] {  });
+					_methodParameterTypes23,
+					new Object[] { ClpSerializer.translateInput(serviceContext) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -834,7 +838,7 @@ public class CandidateEvaluationLocalServiceClp
 
 	@Override
 	public vn.com.ecopharma.hrm.rc.model.CandidateEvaluation addCandidateEvaluation(
-		long candidateId, long evaluationCriteriaId,
+		long candidateId, long interviewId, long evaluationCriteriaId,
 		long evaluationCriteriaKeyValueId, int ratingPoint,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
@@ -844,6 +848,8 @@ public class CandidateEvaluationLocalServiceClp
 					_methodParameterTypes24,
 					new Object[] {
 						candidateId,
+						
+					interviewId,
 						
 					evaluationCriteriaId,
 						

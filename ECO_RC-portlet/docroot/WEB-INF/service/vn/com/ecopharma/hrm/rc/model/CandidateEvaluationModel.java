@@ -77,18 +77,32 @@ public interface CandidateEvaluationModel extends BaseModel<CandidateEvaluation>
 	public void setCandidateEvaluationId(long candidateEvaluationId);
 
 	/**
-	 * Returns the evaluation criteria ID of this candidate evaluation.
+	 * Returns the candidate ID of this candidate evaluation.
 	 *
-	 * @return the evaluation criteria ID of this candidate evaluation
+	 * @return the candidate ID of this candidate evaluation
 	 */
-	public long getEvaluationCriteriaId();
+	public long getCandidateId();
 
 	/**
-	 * Sets the evaluation criteria ID of this candidate evaluation.
+	 * Sets the candidate ID of this candidate evaluation.
 	 *
-	 * @param evaluationCriteriaId the evaluation criteria ID of this candidate evaluation
+	 * @param candidateId the candidate ID of this candidate evaluation
 	 */
-	public void setEvaluationCriteriaId(long evaluationCriteriaId);
+	public void setCandidateId(long candidateId);
+
+	/**
+	 * Returns the interview ID of this candidate evaluation.
+	 *
+	 * @return the interview ID of this candidate evaluation
+	 */
+	public long getInterviewId();
+
+	/**
+	 * Sets the interview ID of this candidate evaluation.
+	 *
+	 * @param interviewId the interview ID of this candidate evaluation
+	 */
+	public void setInterviewId(long interviewId);
 
 	/**
 	 * Returns the evaluation criteria key value ID of this candidate evaluation.
@@ -247,20 +261,6 @@ public interface CandidateEvaluationModel extends BaseModel<CandidateEvaluation>
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
-
-	/**
-	 * Returns the candidate ID of this candidate evaluation.
-	 *
-	 * @return the candidate ID of this candidate evaluation
-	 */
-	public long getCandidateId();
-
-	/**
-	 * Sets the candidate ID of this candidate evaluation.
-	 *
-	 * @param candidateId the candidate ID of this candidate evaluation
-	 */
-	public void setCandidateId(long candidateId);
 
 	@Override
 	public boolean isNew();

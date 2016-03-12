@@ -9,68 +9,62 @@
 	<h:head />
 	<h:body>
 		<h:form id="evaluationForm">
-
 			<p:remoteCommand name="refreshKeyValuePanel"
 				update=":evaluationForm:evaluationContentGroup" />
-
 			<p:dialog widgetVar="wEvaluationDialog" header="Evaluation"
-				modal="true" resizable="false">
-				<p:outputPanel id="evaluationOutputPanel" autoUpdate="true"
-					style="width:280px">
-					<h:panelGroup id="evaluationContentGroup">
+				modal="true" resizable="true" width="400">
+				<h:panelGroup layout="block">
+
+					<h:panelGroup id="evaluationContentGroup" layout="block">
 						<ui:repeat id="evaluationItems" var="e"
 							value="#{evaluationBean.evaluationItems}" varStatus="status">
-							<h:outputText value="#{e.evaluationCriteria.type}"
-								style="font-weight: bold;" />
+							<h:outputText value="#{e.type}" style="font-weight: bold;" />
 							<br />
-							<ui:repeat id="evaluationKeyValues" var="i"
-								value="#{e.evaluationKeyValueItems}" varStatus="status1">
-
-								<h:panelGrid id="ratingKeyValuePanel" columns="1" width="100%">
-									<h:outputText value="#{i.key}" style="font-size: 14px" />
-									<h:panelGroup id="ratingPanel">
-										<p:rating stars="#{i.maxValue}" value="#{i.value}"
-											cancel="false">
-											<p:ajax event="rate" oncomplete="refreshKeyValuePanel();" />
+							<ui:repeat var="ec" value="#{e.evaluationCriteriaItems}"
+								varStatus="status1">
+								<h:outputText value="#{ec.crit.name}" style="margin-left: 5px" />
+								<br />
+								<ui:repeat var="kv" value="#{ec.keyValueItems}"
+									varStatus="status2">
+									<h:outputText value="#{status2.index + 1}.#{kv.object.key}"
+										style="font-size: 14px; margin-left: 8px;" />
+									<br />
+									<h:panelGroup id="ratingPanel" style="margin-left: 10px;"
+										layout="block">
+										<p:rating stars="#{kv.object.value}"
+											value="#{kv.evaluateValue}" cancel="false">
+											<p:ajax event="rate" listener="#{evaluationBean.onRating}"
+												oncomplete="refreshKeyValuePanel();" />
 										</p:rating>
 										<h:outputText id="currentRatingValue"
 											styleClass="currentStatus status-green"
-											style="display: inherit!important;"
-											value="#{i.value}/#{i.maxValue}" />
-										<c:if test="#{status.index == e.evaluationKeyValueItems}">
-											<p:commandLink value="Add" />
-										</c:if>
+											style="display: inherit!important; margin-left: 120px"
+											value="#{kv.evaluateValue}/#{kv.object.value}" />
 									</h:panelGroup>
-								</h:panelGrid>
+									<br />
+								</ui:repeat>
+								<br />
 							</ui:repeat>
 							<br />
 						</ui:repeat>
 						<h:outputText value="No Evaluation Criteria Available"
 							rendered="#{evaluationBean.evaluationItems.size() eq 0}" />
 					</h:panelGroup>
-				</p:outputPanel>
-				<br />
-				<br />
-				<p:commandButton value="OFFER" styleClass="RedButton RaisedButton"
-					ajax="true" actionListener="#{evaluationBean.onOffer}"
-					oncomplete="refreshCandidateTable(); PF('wEvaluationDialog').hide();"
-					rendered="#{evaluationBean.evaluationItems.size() gt 0}" />
 
-				<h:outputText value="|"
-					rendered="#{evaluationBean.evaluationItems.size() gt 0}"
-					style="color: grey;margin-left:3px; margin-right:3px" />
-				<p:commandButton value="Offer W/O Rating"
-					styleClass="GreenButton RaisedButton" ajax="true"
-					actionListener="#{evaluationBean.onOfferWORating}"
-					oncomplete="refreshCandidateTable();PF('wEvaluationDialog').hide();" />
+					<p:commandButton value="Evaluate"
+						styleClass="RedButton RaisedButton" ajax="true"
+						actionListener="#{evaluationBean.onEvaluate}"
+						oncomplete="refreshCandidateTable(); PF('wEvaluationDialog').hide();"
+						rendered="#{evaluationBean.evaluationItems.size() gt 0}" />
 
 
-				<h:outputText value="|" style="color: grey; margin-left:3px;" />
-				<p:commandLink value="Cancel"
-					actionListener="#{evaluationBean.onCancel}"
-					oncomplete="PF('wEvaluationDialog').hide()"
-					style="margin-left:3px;">
-				</p:commandLink>
+					<h:outputText value="|" style="color: grey; margin-left:3px;" />
+					<p:commandLink value="Cancel"
+						actionListener="#{evaluationBean.onCancel}"
+						oncomplete="PF('wEvaluationDialog').hide()"
+						style="margin-left:3px;">
+					</p:commandLink>
+				</h:panelGroup>
 			</p:dialog>
 		</h:form>
 	</h:body>

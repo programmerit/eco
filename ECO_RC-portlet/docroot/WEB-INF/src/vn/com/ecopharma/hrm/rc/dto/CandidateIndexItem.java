@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.constant.CandidateField;
-import vn.com.ecopharma.hrm.rc.dto.EvaluationItem.EvaluationKeyValueItem;
+import vn.com.ecopharma.hrm.rc.dto.evaluate.EvaluationItem;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
 import vn.com.ecopharma.hrm.rc.enumeration.VacancyCandidateType;
 import vn.com.ecopharma.hrm.rc.model.CandidateEvaluation;
@@ -131,32 +131,32 @@ public class CandidateIndexItem extends AbstractIndexedItem {
 				return result;
 			}
 			final List<Long> evaluationCriteriaIds = new ArrayList<Long>();
-			for (CandidateEvaluation item : candidateEvaluations) {
-				try {
-					final EvaluationItem evaluationItem = new EvaluationItem(
-							EvaluationCriteriaLocalServiceUtil
-									.fetchEvaluationCriteria(item
-											.getEvaluationCriteriaId()));
-					if (!evaluationCriteriaIds.contains(item
-							.getEvaluationCriteriaId())) {
-						result.add(evaluationItem);
-						evaluationCriteriaIds.add(item
-								.getEvaluationCriteriaId());
-					}
+			// for (CandidateEvaluation item : candidateEvaluations) {
+			// try {
+			// final EvaluationItem evaluationItem = new EvaluationItem(
+			// EvaluationCriteriaLocalServiceUtil
+			// .fetchEvaluationCriteria(item
+			// .getEvaluationCriteriaId()));
+			// if (!evaluationCriteriaIds.contains(item
+			// .getEvaluationCriteriaId())) {
+			// result.add(evaluationItem);
+			// evaluationCriteriaIds.add(item
+			// .getEvaluationCriteriaId());
+			// }
 
-					for (EvaluationKeyValueItem item1 : evaluationItem
-							.getEvaluationKeyValueItems()) {
-						// if (item1.getEvaluationCriteriaKeyValue()
-						// .getEvaluationCriteriaKeyValueId() == item
-						// .getEvaluationCriteriaKeyValueId()) {
-						item1.setValue(item.getRatingPoint());
-						// }
-					}
+			// for (EvaluationKeyValueItem item1 : evaluationItem
+			// .getEvaluationKeyValueItems()) {
+			// if (item1.getEvaluationCriteriaKeyValue()
+			// .getEvaluationCriteriaKeyValueId() == item
+			// .getEvaluationCriteriaKeyValueId()) {
+			// item1.setValue(item.getRatingPoint());
+			// }
+			// }
 
-				} catch (SystemException e) {
-					e.printStackTrace();
-				}
-			}
+			// } catch (SystemException e) {
+			// e.printStackTrace();
+			// }
+			// }
 		}
 
 		return result;

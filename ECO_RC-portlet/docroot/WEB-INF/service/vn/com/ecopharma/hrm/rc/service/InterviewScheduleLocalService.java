@@ -269,6 +269,9 @@ public interface InterviewScheduleLocalService extends BaseLocalService,
 	public vn.com.ecopharma.hrm.rc.model.InterviewSchedule findByVacancyCandidateAndStatus(
 		long vacancyCandidateId, java.lang.String status);
 
+	public vn.com.ecopharma.hrm.rc.model.InterviewSchedule findInProgressByVacancyCandidate(
+		long vacancyCandidateId);
+
 	public java.util.List<vn.com.ecopharma.hrm.rc.model.InterviewSchedule> findByVacancyCandidate(
 		long vacancyCandidateId);
 

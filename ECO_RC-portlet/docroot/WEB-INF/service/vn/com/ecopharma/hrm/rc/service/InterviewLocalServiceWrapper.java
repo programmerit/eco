@@ -321,8 +321,9 @@ public class InterviewLocalServiceWrapper implements InterviewLocalService,
 	}
 
 	@Override
-	public vn.com.ecopharma.hrm.rc.model.Interview createPrePersitedInterview() {
-		return _interviewLocalService.createPrePersitedInterview();
+	public vn.com.ecopharma.hrm.rc.model.Interview createPrePersitedInterview(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _interviewLocalService.createPrePersitedInterview(serviceContext);
 	}
 
 	/**

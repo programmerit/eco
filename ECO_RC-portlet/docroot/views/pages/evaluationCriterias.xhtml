@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
+	<h:head />
+	<h:body>
+		<eco:navigationPanel current="Evaluation Criteria" />
+		<h:form id="evaluationMainForm">
+			<p:contextMenu id="evaluationContextMenu" for="evalCriteriaTree">
+				<p:menuitem value="Add Criteria"
+					rendered="#{evaluationCriteriaBean.typeNodeSelected}" />
+
+				<p:menuitem value="Add Key"
+					rendered="#{evaluationCriteriaBean.criteriaNodeSelected}" />
+
+				<p:menuitem value="View Key"
+					rendered="#{evaluationCriteriaBean.keyValNodeSelected}" />
+
+				<p:menuitem value="Delete Key"
+					rendered="#{evaluationCriteriaBean.keyValNodeSelected}" />
+
+			</p:contextMenu>
+
+			<p:tree value="#{evaluationCriteriaBean.root}" var="s"
+				id="evalCriteriaTree" selectionMode="single"
+				selection="#{evaluationCriteriaBean.selectedNode}" animate="true"
+				draggable="true" droppable="true" highlight="true"
+				showUnselectableCheckbox="true">
+				<p:ajax event="select"
+					update=":evaluationMainForm:evaluationContextMenu" />
+
+				<p:treeNode type="EvalType" expandedIcon="ui-icon-folder-open"
+					collapsedIcon="ui-icon-folder-collapsed">
+					<h:outputText value="#{s}" />
+				</p:treeNode>
+				<p:treeNode type="CriteriaType" expandedIcon="ui-icon-folder-open"
+					collapsedIcon="ui-icon-folder-collapsed">
+					<h:outputText value="#{s.name}" />
+				</p:treeNode>
+
+				<p:treeNode type="CriteriaKeyValType" icon="ui-icon-document">
+					<h:outputText value="#{s.key}" />
+				</p:treeNode>
+			</p:tree>
+		</h:form>
+	</h:body>
+</f:view>

@@ -58,7 +58,7 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 			getNumberOfReplacedRecruitment());
 		attributes.put("expectedSalary", getExpectedSalary());
 		attributes.put("expectedJoinedDate", getExpectedJoinedDate());
-		attributes.put("workingPlace", getWorkingPlace());
+		attributes.put("workPlaceId", getWorkPlaceId());
 		attributes.put("description", getDescription());
 		attributes.put("requiredGender", getRequiredGender());
 		attributes.put("certificateType", getCertificateType());
@@ -139,10 +139,10 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 			setExpectedJoinedDate(expectedJoinedDate);
 		}
 
-		String workingPlace = (String)attributes.get("workingPlace");
+		Long workPlaceId = (Long)attributes.get("workPlaceId");
 
-		if (workingPlace != null) {
-			setWorkingPlace(workingPlace);
+		if (workPlaceId != null) {
+			setWorkPlaceId(workPlaceId);
 		}
 
 		String description = (String)attributes.get("description");
@@ -459,23 +459,23 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 	}
 
 	/**
-	* Returns the working place of this vacancy.
+	* Returns the work place ID of this vacancy.
 	*
-	* @return the working place of this vacancy
+	* @return the work place ID of this vacancy
 	*/
 	@Override
-	public java.lang.String getWorkingPlace() {
-		return _vacancy.getWorkingPlace();
+	public long getWorkPlaceId() {
+		return _vacancy.getWorkPlaceId();
 	}
 
 	/**
-	* Sets the working place of this vacancy.
+	* Sets the work place ID of this vacancy.
 	*
-	* @param workingPlace the working place of this vacancy
+	* @param workPlaceId the work place ID of this vacancy
 	*/
 	@Override
-	public void setWorkingPlace(java.lang.String workingPlace) {
-		_vacancy.setWorkingPlace(workingPlace);
+	public void setWorkPlaceId(long workPlaceId) {
+		_vacancy.setWorkPlaceId(workPlaceId);
 	}
 
 	/**

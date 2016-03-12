@@ -8,9 +8,11 @@ import vn.com.ecopharma.hrm.rc.enumeration.VacancyStatus;
 import vn.com.ecopharma.hrm.rc.model.Vacancy;
 import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.service.RegionServiceUtil;
 
 public class VacancyItem extends AbstractDocumentableBaseModelItem<Vacancy> {
 
@@ -20,14 +22,18 @@ public class VacancyItem extends AbstractDocumentableBaseModelItem<Vacancy> {
 
 	private Titles titles;
 
+	private RegionItem workingPlace;
+
 	public VacancyItem() {
 		super();
 		this.getObject().setPostedDate(new Date(System.currentTimeMillis()));
 		this.getObject().setStatus(VacancyStatus.NEW.toString());
 	}
 
-	public VacancyItem(Vacancy vacancy) {
+	public VacancyItem(Vacancy vacancy) throws PortalException, SystemException {
 		super(vacancy);
+		workingPlace = vacancy.getWorkPlaceId() != 0L ? new RegionItem(
+				RegionServiceUtil.getRegion(vacancy.getWorkPlaceId())) : null;
 	}
 
 	public Titles getTitles() {
@@ -50,4 +56,13 @@ public class VacancyItem extends AbstractDocumentableBaseModelItem<Vacancy> {
 	public Vacancy createPrepersistedEntity() {
 		return VacancyLocalServiceUtil.createPrePersistedVacancy();
 	}
+
+	public RegionItem getWorkingPlace() {
+		return workingPlace;
+	}
+
+	public void setWorkingPlace(RegionItem workingPlace) {
+		this.workingPlace = workingPlace;
+	}
+
 }

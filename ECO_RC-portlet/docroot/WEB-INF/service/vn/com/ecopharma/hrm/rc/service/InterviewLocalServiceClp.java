@@ -145,7 +145,9 @@ public class InterviewLocalServiceClp implements InterviewLocalService {
 
 		_methodName24 = "createPrePersitedInterview";
 
-		_methodParameterTypes24 = new String[] {  };
+		_methodParameterTypes24 = new String[] {
+				"com.liferay.portal.service.ServiceContext"
+			};
 	}
 
 	@Override
@@ -841,12 +843,14 @@ public class InterviewLocalServiceClp implements InterviewLocalService {
 	}
 
 	@Override
-	public vn.com.ecopharma.hrm.rc.model.Interview createPrePersitedInterview() {
+	public vn.com.ecopharma.hrm.rc.model.Interview createPrePersitedInterview(
+		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24, new Object[] {  });
+					_methodParameterTypes24,
+					new Object[] { ClpSerializer.translateInput(serviceContext) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

@@ -138,75 +138,79 @@ public class InterviewScheduleLocalServiceClp
 
 		_methodParameterTypes23 = new String[] { "long", "java.lang.String" };
 
-		_methodName24 = "findByVacancyCandidate";
+		_methodName24 = "findInProgressByVacancyCandidate";
 
 		_methodParameterTypes24 = new String[] { "long" };
 
-		_methodName25 = "findInterviewIdsByVacancyCandidate";
+		_methodName25 = "findByVacancyCandidate";
 
 		_methodParameterTypes25 = new String[] { "long" };
 
-		_methodName26 = "addInterviewSchedule";
+		_methodName26 = "findInterviewIdsByVacancyCandidate";
 
-		_methodParameterTypes26 = new String[] {
+		_methodParameterTypes26 = new String[] { "long" };
+
+		_methodName27 = "addInterviewSchedule";
+
+		_methodParameterTypes27 = new String[] {
 				"vn.com.ecopharma.hrm.rc.model.InterviewSchedule",
 				"vn.com.ecopharma.hrm.rc.model.VacancyCandidate",
 				"java.util.List", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName27 = "addInterviewSchedule";
+		_methodName28 = "addInterviewSchedule";
 
-		_methodParameterTypes27 = new String[] {
+		_methodParameterTypes28 = new String[] {
 				"vn.com.ecopharma.hrm.rc.model.InterviewSchedule", "long",
 				"java.util.List", "long",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName28 = "createPrePersitedEntity";
+		_methodName29 = "createPrePersitedEntity";
 
-		_methodParameterTypes28 = new String[] {  };
+		_methodParameterTypes29 = new String[] {  };
 
-		_methodName29 = "countAllIndexedDocuments";
+		_methodName30 = "countAllIndexedDocuments";
 
-		_methodParameterTypes29 = new String[] {
+		_methodParameterTypes30 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort"
 			};
 
-		_methodName30 = "searchAllIndexedDocuments";
+		_methodName31 = "searchAllIndexedDocuments";
 
-		_methodParameterTypes30 = new String[] {
+		_methodParameterTypes31 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName31 = "searchByVacancyCandidateId";
-
-		_methodParameterTypes31 = new String[] {
-				"com.liferay.portal.kernel.search.SearchContext", "long", "long"
-			};
-
-		_methodName32 = "getAllInterviewRoundIdsByVacancyCandidateId";
+		_methodName32 = "searchByVacancyCandidateId";
 
 		_methodParameterTypes32 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long", "long"
 			};
 
-		_methodName33 = "indexAll";
+		_methodName33 = "getAllInterviewRoundIdsByVacancyCandidateId";
 
-		_methodParameterTypes33 = new String[] {  };
+		_methodParameterTypes33 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext", "long", "long"
+			};
 
-		_methodName34 = "removeAllIndexes";
+		_methodName34 = "indexAll";
 
-		_methodParameterTypes34 = new String[] {
+		_methodParameterTypes34 = new String[] {  };
+
+		_methodName35 = "removeAllIndexes";
+
+		_methodParameterTypes35 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 
-		_methodName35 = "getIndexDocument";
+		_methodName36 = "getIndexDocument";
 
-		_methodParameterTypes35 = new String[] {
+		_methodParameterTypes36 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 	}
@@ -900,13 +904,37 @@ public class InterviewScheduleLocalServiceClp
 	}
 
 	@Override
-	public java.util.List<vn.com.ecopharma.hrm.rc.model.InterviewSchedule> findByVacancyCandidate(
+	public vn.com.ecopharma.hrm.rc.model.InterviewSchedule findInProgressByVacancyCandidate(
 		long vacancyCandidateId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName24,
 					_methodParameterTypes24, new Object[] { vacancyCandidateId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.hrm.rc.model.InterviewSchedule)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<vn.com.ecopharma.hrm.rc.model.InterviewSchedule> findByVacancyCandidate(
+		long vacancyCandidateId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25, new Object[] { vacancyCandidateId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -929,8 +957,8 @@ public class InterviewScheduleLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25, new Object[] { vacancyCandidateId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26, new Object[] { vacancyCandidateId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -956,8 +984,8 @@ public class InterviewScheduleLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] {
 						ClpSerializer.translateInput(interviewSchedule),
 						
@@ -992,8 +1020,8 @@ public class InterviewScheduleLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] {
 						ClpSerializer.translateInput(interviewSchedule),
 						
@@ -1026,8 +1054,8 @@ public class InterviewScheduleLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28, new Object[] {  });
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1052,8 +1080,8 @@ public class InterviewScheduleLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1088,8 +1116,8 @@ public class InterviewScheduleLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1126,8 +1154,8 @@ public class InterviewScheduleLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1158,8 +1186,8 @@ public class InterviewScheduleLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32,
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1186,8 +1214,8 @@ public class InterviewScheduleLocalServiceClp
 	@Override
 	public void indexAll() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName33,
-				_methodParameterTypes33, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName34,
+				_methodParameterTypes34, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1207,8 +1235,8 @@ public class InterviewScheduleLocalServiceClp
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		long companyId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName34,
-				_methodParameterTypes34,
+			_invokableLocalService.invokeMethod(_methodName35,
+				_methodParameterTypes35,
 				new Object[] {
 					ClpSerializer.translateInput(searchContext),
 					
@@ -1234,8 +1262,8 @@ public class InterviewScheduleLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName35,
-					_methodParameterTypes35,
+			returnObj = _invokableLocalService.invokeMethod(_methodName36,
+					_methodParameterTypes36,
 					new Object[] { id, ClpSerializer.translateInput(
 							searchContext) });
 		}
@@ -1325,4 +1353,6 @@ public class InterviewScheduleLocalServiceClp
 	private String[] _methodParameterTypes34;
 	private String _methodName35;
 	private String[] _methodParameterTypes35;
+	private String _methodName36;
+	private String[] _methodParameterTypes36;
 }

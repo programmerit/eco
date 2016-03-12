@@ -46,7 +46,8 @@ create table eco_rcp_CandidateActionHistory (
 
 create table eco_rcp_CandidateEvaluation (
 	candidateEvaluationId LONG not null primary key,
-	evaluationCriteriaId LONG,
+	candidateId LONG,
+	interviewId LONG,
 	evaluationCriteriaKeyValueId LONG,
 	ratingPoint INTEGER,
 	note VARCHAR(75) null,
@@ -55,8 +56,7 @@ create table eco_rcp_CandidateEvaluation (
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
-	modifiedDate DATE null,
-	candidateId LONG
+	modifiedDate DATE null
 );
 
 create table eco_rcp_Certificate (
@@ -209,7 +209,7 @@ create table eco_rcp_Vacancy (
 	numberOfReplacedRecruitment INTEGER,
 	expectedSalary DOUBLE,
 	expectedJoinedDate DATE null,
-	workingPlace VARCHAR(75) null,
+	workPlaceId LONG,
 	description VARCHAR(75) null,
 	requiredGender VARCHAR(75) null,
 	certificateType VARCHAR(75) null,

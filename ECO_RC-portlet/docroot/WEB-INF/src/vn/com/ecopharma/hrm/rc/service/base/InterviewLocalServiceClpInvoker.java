@@ -145,7 +145,9 @@ public class InterviewLocalServiceClpInvoker {
 
 		_methodName121 = "createPrePersitedInterview";
 
-		_methodParameterTypes121 = new String[] {  };
+		_methodParameterTypes121 = new String[] {
+				"com.liferay.portal.service.ServiceContext"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -282,7 +284,7 @@ public class InterviewLocalServiceClpInvoker {
 
 		if (_methodName121.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
-			return InterviewLocalServiceUtil.createPrePersitedInterview();
+			return InterviewLocalServiceUtil.createPrePersitedInterview((com.liferay.portal.service.ServiceContext)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();

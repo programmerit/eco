@@ -119,9 +119,9 @@ public class RCViewBean implements Serializable {
 			int pageSize = Integer.valueOf(orgHashtag.split("&")[1]);
 
 			System.out.println("first " + first + "   pagesize " + pageSize);
-			candidateBean.setFirst(first);
-			candidateBean.setPageSize(pageSize);
-			candidateBean.setBackFromOtherPage(true);
+			// candidateBean.setFirst(first);
+			// candidateBean.setPageSize(pageSize);
+			// candidateBean.setBackFromOtherPage(true);
 			// switchPage(1);
 			candidateViewBean.switchMode(CandidateNavigation.VIEW);
 			RequestContext.getCurrentInstance().update("CandidatePanelGroup");

@@ -303,8 +303,9 @@ public class InterviewLocalServiceUtil {
 		return getService().updateInterview(interview, titles);
 	}
 
-	public static vn.com.ecopharma.hrm.rc.model.Interview createPrePersitedInterview() {
-		return getService().createPrePersitedInterview();
+	public static vn.com.ecopharma.hrm.rc.model.Interview createPrePersitedInterview(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService().createPrePersitedInterview(serviceContext);
 	}
 
 	public static void clearService() {

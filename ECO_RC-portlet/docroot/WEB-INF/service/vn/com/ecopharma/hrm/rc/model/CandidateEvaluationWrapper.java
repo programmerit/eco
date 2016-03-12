@@ -51,7 +51,8 @@ public class CandidateEvaluationWrapper implements CandidateEvaluation,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("candidateEvaluationId", getCandidateEvaluationId());
-		attributes.put("evaluationCriteriaId", getEvaluationCriteriaId());
+		attributes.put("candidateId", getCandidateId());
+		attributes.put("interviewId", getInterviewId());
 		attributes.put("evaluationCriteriaKeyValueId",
 			getEvaluationCriteriaKeyValueId());
 		attributes.put("ratingPoint", getRatingPoint());
@@ -62,7 +63,6 @@ public class CandidateEvaluationWrapper implements CandidateEvaluation,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("candidateId", getCandidateId());
 
 		return attributes;
 	}
@@ -76,10 +76,16 @@ public class CandidateEvaluationWrapper implements CandidateEvaluation,
 			setCandidateEvaluationId(candidateEvaluationId);
 		}
 
-		Long evaluationCriteriaId = (Long)attributes.get("evaluationCriteriaId");
+		Long candidateId = (Long)attributes.get("candidateId");
 
-		if (evaluationCriteriaId != null) {
-			setEvaluationCriteriaId(evaluationCriteriaId);
+		if (candidateId != null) {
+			setCandidateId(candidateId);
+		}
+
+		Long interviewId = (Long)attributes.get("interviewId");
+
+		if (interviewId != null) {
+			setInterviewId(interviewId);
 		}
 
 		Long evaluationCriteriaKeyValueId = (Long)attributes.get(
@@ -136,12 +142,6 @@ public class CandidateEvaluationWrapper implements CandidateEvaluation,
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
 		}
-
-		Long candidateId = (Long)attributes.get("candidateId");
-
-		if (candidateId != null) {
-			setCandidateId(candidateId);
-		}
 	}
 
 	/**
@@ -185,23 +185,43 @@ public class CandidateEvaluationWrapper implements CandidateEvaluation,
 	}
 
 	/**
-	* Returns the evaluation criteria ID of this candidate evaluation.
+	* Returns the candidate ID of this candidate evaluation.
 	*
-	* @return the evaluation criteria ID of this candidate evaluation
+	* @return the candidate ID of this candidate evaluation
 	*/
 	@Override
-	public long getEvaluationCriteriaId() {
-		return _candidateEvaluation.getEvaluationCriteriaId();
+	public long getCandidateId() {
+		return _candidateEvaluation.getCandidateId();
 	}
 
 	/**
-	* Sets the evaluation criteria ID of this candidate evaluation.
+	* Sets the candidate ID of this candidate evaluation.
 	*
-	* @param evaluationCriteriaId the evaluation criteria ID of this candidate evaluation
+	* @param candidateId the candidate ID of this candidate evaluation
 	*/
 	@Override
-	public void setEvaluationCriteriaId(long evaluationCriteriaId) {
-		_candidateEvaluation.setEvaluationCriteriaId(evaluationCriteriaId);
+	public void setCandidateId(long candidateId) {
+		_candidateEvaluation.setCandidateId(candidateId);
+	}
+
+	/**
+	* Returns the interview ID of this candidate evaluation.
+	*
+	* @return the interview ID of this candidate evaluation
+	*/
+	@Override
+	public long getInterviewId() {
+		return _candidateEvaluation.getInterviewId();
+	}
+
+	/**
+	* Sets the interview ID of this candidate evaluation.
+	*
+	* @param interviewId the interview ID of this candidate evaluation
+	*/
+	@Override
+	public void setInterviewId(long interviewId) {
+		_candidateEvaluation.setInterviewId(interviewId);
 	}
 
 	/**
@@ -405,26 +425,6 @@ public class CandidateEvaluationWrapper implements CandidateEvaluation,
 	@Override
 	public void setModifiedDate(java.util.Date modifiedDate) {
 		_candidateEvaluation.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	* Returns the candidate ID of this candidate evaluation.
-	*
-	* @return the candidate ID of this candidate evaluation
-	*/
-	@Override
-	public long getCandidateId() {
-		return _candidateEvaluation.getCandidateId();
-	}
-
-	/**
-	* Sets the candidate ID of this candidate evaluation.
-	*
-	* @param candidateId the candidate ID of this candidate evaluation
-	*/
-	@Override
-	public void setCandidateId(long candidateId) {
-		_candidateEvaluation.setCandidateId(candidateId);
 	}
 
 	@Override

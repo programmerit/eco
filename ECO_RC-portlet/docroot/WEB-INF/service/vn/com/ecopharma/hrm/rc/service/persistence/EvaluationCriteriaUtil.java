@@ -112,59 +112,151 @@ public class EvaluationCriteriaUtil {
 	}
 
 	/**
-	* Returns the evaluation criteria where type = &#63; or throws a {@link vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaException} if it could not be found.
+	* Returns all the evaluation criterias where type = &#63;.
 	*
 	* @param type the type
-	* @return the matching evaluation criteria
-	* @throws vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaException if a matching evaluation criteria could not be found
+	* @return the matching evaluation criterias
 	* @throws SystemException if a system exception occurred
 	*/
-	public static vn.com.ecopharma.hrm.rc.model.EvaluationCriteria findByType(
+	public static java.util.List<vn.com.ecopharma.hrm.rc.model.EvaluationCriteria> findByType(
 		java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().findByType(type);
 	}
 
 	/**
-	* Returns the evaluation criteria where type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns a range of all the evaluation criterias where type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.rc.model.impl.EvaluationCriteriaModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
 	*
 	* @param type the type
-	* @return the matching evaluation criteria, or <code>null</code> if a matching evaluation criteria could not be found
+	* @param start the lower bound of the range of evaluation criterias
+	* @param end the upper bound of the range of evaluation criterias (not inclusive)
+	* @return the range of matching evaluation criterias
 	* @throws SystemException if a system exception occurred
 	*/
-	public static vn.com.ecopharma.hrm.rc.model.EvaluationCriteria fetchByType(
-		java.lang.String type)
+	public static java.util.List<vn.com.ecopharma.hrm.rc.model.EvaluationCriteria> findByType(
+		java.lang.String type, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByType(type);
+		return getPersistence().findByType(type, start, end);
 	}
 
 	/**
-	* Returns the evaluation criteria where type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns an ordered range of all the evaluation criterias where type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.rc.model.impl.EvaluationCriteriaModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
 	*
 	* @param type the type
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching evaluation criteria, or <code>null</code> if a matching evaluation criteria could not be found
+	* @param start the lower bound of the range of evaluation criterias
+	* @param end the upper bound of the range of evaluation criterias (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching evaluation criterias
 	* @throws SystemException if a system exception occurred
 	*/
-	public static vn.com.ecopharma.hrm.rc.model.EvaluationCriteria fetchByType(
-		java.lang.String type, boolean retrieveFromCache)
+	public static java.util.List<vn.com.ecopharma.hrm.rc.model.EvaluationCriteria> findByType(
+		java.lang.String type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByType(type, retrieveFromCache);
+		return getPersistence().findByType(type, start, end, orderByComparator);
 	}
 
 	/**
-	* Removes the evaluation criteria where type = &#63; from the database.
+	* Returns the first evaluation criteria in the ordered set where type = &#63;.
 	*
 	* @param type the type
-	* @return the evaluation criteria that was removed
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching evaluation criteria
+	* @throws vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaException if a matching evaluation criteria could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static vn.com.ecopharma.hrm.rc.model.EvaluationCriteria removeByType(
-		java.lang.String type)
+	public static vn.com.ecopharma.hrm.rc.model.EvaluationCriteria findByType_First(
+		java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaException {
-		return getPersistence().removeByType(type);
+		return getPersistence().findByType_First(type, orderByComparator);
+	}
+
+	/**
+	* Returns the first evaluation criteria in the ordered set where type = &#63;.
+	*
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching evaluation criteria, or <code>null</code> if a matching evaluation criteria could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.hrm.rc.model.EvaluationCriteria fetchByType_First(
+		java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByType_First(type, orderByComparator);
+	}
+
+	/**
+	* Returns the last evaluation criteria in the ordered set where type = &#63;.
+	*
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching evaluation criteria
+	* @throws vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaException if a matching evaluation criteria could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.hrm.rc.model.EvaluationCriteria findByType_Last(
+		java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaException {
+		return getPersistence().findByType_Last(type, orderByComparator);
+	}
+
+	/**
+	* Returns the last evaluation criteria in the ordered set where type = &#63;.
+	*
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching evaluation criteria, or <code>null</code> if a matching evaluation criteria could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.hrm.rc.model.EvaluationCriteria fetchByType_Last(
+		java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByType_Last(type, orderByComparator);
+	}
+
+	/**
+	* Returns the evaluation criterias before and after the current evaluation criteria in the ordered set where type = &#63;.
+	*
+	* @param evaluationCriteriaId the primary key of the current evaluation criteria
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next evaluation criteria
+	* @throws vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaException if a evaluation criteria with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.hrm.rc.model.EvaluationCriteria[] findByType_PrevAndNext(
+		long evaluationCriteriaId, java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaException {
+		return getPersistence()
+				   .findByType_PrevAndNext(evaluationCriteriaId, type,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the evaluation criterias where type = &#63; from the database.
+	*
+	* @param type the type
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByType(java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByType(type);
 	}
 
 	/**

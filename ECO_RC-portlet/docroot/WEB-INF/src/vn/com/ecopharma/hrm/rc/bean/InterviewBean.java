@@ -12,6 +12,7 @@ import org.primefaces.context.RequestContext;
 
 import vn.com.ecopharma.hrm.rc.model.Interview;
 import vn.com.ecopharma.hrm.rc.service.InterviewLocalServiceUtil;
+import vn.com.ecopharma.hrm.rc.util.RCUtils;
 
 import com.liferay.portal.kernel.exception.SystemException;
 
@@ -24,7 +25,8 @@ public class InterviewBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		interview = InterviewLocalServiceUtil.createPrePersitedInterview();
+		interview = InterviewLocalServiceUtil
+				.createPrePersitedInterview(RCUtils.getServiceContext());
 	}
 
 	public void save() {
