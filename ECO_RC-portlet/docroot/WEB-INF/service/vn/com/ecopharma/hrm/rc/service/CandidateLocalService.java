@@ -305,6 +305,17 @@ public interface CandidateLocalService extends BaseLocalService,
 		long candidateId, java.lang.String status,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
+	public void changeMultipleCandidateStatus(
+		java.util.List<java.lang.Long> ids, java.lang.String status,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public vn.com.ecopharma.hrm.rc.model.Candidate setShortListCandidate(
+		long candidateId,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public void setShortListCandidates(java.util.List<java.lang.Long> ids,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
 	public vn.com.ecopharma.hrm.rc.model.Candidate markDeleted(
 		vn.com.ecopharma.hrm.rc.model.Candidate candidate,
 		com.liferay.portal.service.ServiceContext serviceContext);

@@ -324,6 +324,9 @@
 			<basic name="approvedNumberOfPosition" />
 			<basic name="currentNumberOfEmployee" />
 			<basic name="titlesId" />
+			<basic name="unitGroupId" />
+			<basic name="unitId" />
+			<basic name="departmentId" />
 			<basic name="numberOfNewRecruitment" />
 			<basic name="numberOfReplacedRecruitment" />
 			<basic name="expectedSalary" />

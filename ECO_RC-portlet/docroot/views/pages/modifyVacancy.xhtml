@@ -23,7 +23,7 @@
 									<h:panelGroup id="titlesNameGroup">
 										<h:outputText value="#{vacancyBean.currentTitlesName}" />
 										<p:commandLink style="margin-left: 15px;"
-											value="#{vacancyBean.vacancyItem.titles != null ? 'change...' : 'choose...'}"
+											value="#{organizationPanelBean.selectedTitles != null ? 'change...' : 'choose...'}"
 											onclick="PF('titlesSelectDialog').show();" />
 									</h:panelGroup>
 
@@ -59,9 +59,9 @@
 										filterMatchMode="contains" var="r">
 										<f:selectItem itemLabel="Select Place" itemValue="" />
 										<f:selectItems value="#{vacancyBean.workingPlaces}" var="r"
-											itemLabel="#{r.region.name}" itemValue="#{r}" />
+											itemLabel="#{r.object.name}" itemValue="#{r}" />
 										<p:column>
-											#{r.region.name}
+											#{r.object.name}
 										</p:column>
 									</p:selectOneMenu>
 
@@ -159,88 +159,13 @@
 				modal="true">
 				<p:outputPanel>
 					<h:panelGrid columns="2">
-						<h:outputText value="Devision" />
-						<p:selectOneMenu id="devisionSelect"
-							value="#{titlesActionBean.devision}"
-							converter="devisionConverter" effect="fade" filter="true"
-							filterMatchMode="contains" var="d">
-							<p:ajax
-								update="departmentSelect unitSelect unitGroupSelect titlesSelect"
-								listener="#{titlesActionBean.onDevisionChanged}" />
-
-							<f:selectItem itemLabel="Devision" itemValue="" />
-							<f:selectItems value="#{titlesActionBean.devisions}" var="d"
-								itemLabel="#{d.name}" itemValue="#{d}" />
-							<p:column>
-					                #{d.name}
-					            </p:column>
-						</p:selectOneMenu>
-
-						<h:outputText value="Department" />
-						<p:selectOneMenu id="departmentSelect"
-							value="#{titlesActionBean.department}"
-							converter="departmentConverter" effect="fade" filter="true"
-							filterMatchMode="contains" var="d">
-							<p:ajax update="unitSelect unitGroupSelect titlesSelect"
-								listener="#{titlesActionBean.onDepartmentChanged}" />
-
-							<f:selectItem itemLabel="Department" itemValue="" />
-							<f:selectItems value="#{titlesActionBean.departments}" var="d"
-								itemLabel="#{d.name}" itemValue="#{d}" />
-							<p:column>
-					                #{d.name}
-					            </p:column>
-						</p:selectOneMenu>
-
-						<h:outputText value="Unit" />
-						<p:selectOneMenu id="unitSelect" value="#{titlesActionBean.unit}"
-							converter="unitConverter" effect="fade" filter="true"
-							filterMatchMode="contains" var="u">
-							<p:ajax update="unitGroupSelect"
-								listener="#{titlesActionBean.onUnitChanged}" />
-
-							<f:selectItem itemLabel="Unit" itemValue="" />
-							<f:selectItems value="#{titlesActionBean.units}" var="u"
-								itemLabel="#{u.name}" itemValue="#{u}" />
-							<p:column>
-					                #{u.name}
-					            </p:column>
-						</p:selectOneMenu>
-
-						<h:outputText value="Group" />
-						<p:selectOneMenu id="unitGroupSelect"
-							value="#{titlesActionBean.unitGroup}"
-							converter="unitGroupConverter" effect="fade" filter="true"
-							filterMatchMode="contains" var="g">
-							<p:ajax listener="#{titlesActionBean.onUnitGroupChanged}" />
-
-							<f:selectItem itemLabel="Group" itemValue="" />
-							<f:selectItems value="#{titlesActionBean.unitGroups}" var="g"
-								itemLabel="#{g.name}" itemValue="#{g}" />
-							<p:column>
-					                #{g.name}
-					            </p:column>
-						</p:selectOneMenu>
-
-						<h:outputText value="Titles" />
-						<p:selectOneMenu id="titlesSelect"
-							value="#{titlesActionBean.titles}" converter="titlesConverter"
-							effect="fade" filter="true" filterMatchMode="contains" var="t"
-							required="true" validatorMessage="[Titles] is required">
-
-							<f:selectItem itemLabel="Titles" itemValue="" />
-							<f:selectItems value="#{titlesActionBean.titlesList}" var="t"
-								itemLabel="#{t.name}" itemValue="#{t}" />
-							<p:column>
-					        	#{t.name}
-					        </p:column>
-						</p:selectOneMenu>
+						<eco:organizationPanel levelIncluded="false" />
 					</h:panelGrid>
 				</p:outputPanel>
 				<br />
 				<br />
 				<p:commandLink value="Update Titles"
-					actionListener="#{titlesActionBean.onUpdateTitles}"
+					actionListener="#{vacancyBean.onUpdateTitles}"
 					update=":modifyVacancy:accordion:titlesNameGroup"
 					oncomplete="PF('titlesSelectDialog').hide();" /> |
 				<p:commandLink value="Cancel" style="margin-left: 2px;"

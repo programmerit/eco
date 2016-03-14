@@ -1,47 +1,42 @@
 package vn.com.ecopharma.hrm.rc.util;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PipedOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 
 import vn.com.ecopharma.emp.model.District;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
+import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpBankInfoLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
-import vn.com.ecopharma.hrm.rc.constant.EmpField;
+import vn.com.ecopharma.emp.service.EmployeeLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.dto.AddressObjectItem;
 import vn.com.ecopharma.hrm.rc.dto.BankInfoObject;
 import vn.com.ecopharma.hrm.rc.dto.DependentName;
+import vn.com.ecopharma.hrm.rc.dto.DocumentItem;
 import vn.com.ecopharma.hrm.rc.dto.EmpIndexedItem;
-import vn.com.ecopharma.hrm.rc.dto.EmpInfoItem;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.ParseException;
-import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchContextFactory;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.AddressLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
 
 /**
  * @author TaoTran
@@ -53,52 +48,12 @@ public class EmployeeUtils {
 
 	private static final String EMAIL_SUFFIX = "@ecopharma.com.vn";
 
-	private static final String BLANK_SPACE = " ";
-
-	/**
-	 * @param documents
-	 * @return
-	 */
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(EmployeeUtils.class);
 
 	private EmployeeUtils() {
-
 	}
 
-	public static List<EmpIndexedItem> getEmployeeIndexedItemsFromIndexedDocuments(
-			List<Document> documents) {
-
-		final List<EmpIndexedItem> results = new ArrayList<>(documents.size());
-		for (final Document document : documents) {
-			results.add(new EmpIndexedItem(document));
-		}
-		return results;
-	}
-
-	/**
-	 * @param clazzName
-	 * @param primaryKey
-	 * @param companyId
-	 * @return
-	 */
-	public static List<AddressObjectItem> getAddressObjectItemsFromClassNameAndPK(
-			String clazzName, long primaryKey, long companyId) {
-		final List<AddressObjectItem> results = new ArrayList<>();
-		try {
-			for (Address address : AddressLocalServiceUtil.getAddresses(
-					companyId, clazzName, primaryKey)) {
-				results.add(new AddressObjectItem(address, false));
-			}
-			return results;
-		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmployeeUtils.class).info(e);
-		}
-		return results;
-	}
-
-	/**
-	 * @param items
-	 * @return
-	 */
 	/**
 	 * @param items
 	 * @return
@@ -115,9 +70,11 @@ public class EmployeeUtils {
 					.getRegionId() : address.getRegionId();
 			address.setCountryId(countryId);
 			address.setRegionId(regionId);
-			if (StringUtils.trimToNull(address.getStreet3()) == null)
+			// if (StringUtils.trimToNull(address.getStreet3()) == null)
+			if (district != null)
 				address.setStreet3(item.isUIDeleted() ? StringUtils.EMPTY
 						: district.getRegionCode() + "_" + district.getName());
+
 			address.setZip(ZIP_CODE);
 			resultMap.put(address, item.isUIDeleted());
 		}
@@ -135,6 +92,50 @@ public class EmployeeUtils {
 		for (DependentName item : items) {
 			resultMap.put(item.getName(), item.isUIDeleted());
 		}
+		return resultMap;
+	}
+
+	public static List<BankInfoObject> getBankInfoObjectsFromEmp(long empId) {
+		final List<BankInfoObject> result = new ArrayList<>();
+		final List<EmpBankInfo> empBankInfos = EmpBankInfoLocalServiceUtil
+				.findByEmp(empId);
+		if (empBankInfos.isEmpty()) {
+			result.add(new BankInfoObject());
+			return result;
+		}
+
+		for (EmpBankInfo item : empBankInfos) {
+			result.add(new BankInfoObject(item));
+		}
+		return result;
+	}
+
+	public static List<DocumentItem> getDocumentItemsFromEmp(long empId) {
+		final List<DocumentItem> result = new ArrayList<>();
+		final List<vn.com.ecopharma.emp.model.Document> documents = DocumentLocalServiceUtil
+				.findByClassNameAndClassPK(Emp.class.getName(), empId);
+		for (vn.com.ecopharma.emp.model.Document document : documents)
+			result.add(new DocumentItem(document));
+		return result;
+	}
+
+	public static Map<EmpBankInfo, Boolean> transferBankInfoObjectListToBankInfoMap(
+			List<BankInfoObject> items) {
+		final Map<EmpBankInfo, Boolean> resultMap = new HashMap<>();
+		for (BankInfoObject obj : items) {
+			resultMap.put(obj.getObject(), obj.isUIDeleted());
+		}
+
+		return resultMap;
+	}
+
+	public static Map<EmpBankInfo, Boolean> transferEmpBankInfoListToBankInfoMap(
+			List<EmpBankInfo> items) {
+		final Map<EmpBankInfo, Boolean> resultMap = new HashMap<>();
+		for (EmpBankInfo obj : items) {
+			resultMap.put(obj, false);
+		}
+
 		return resultMap;
 	}
 
@@ -163,64 +164,15 @@ public class EmployeeUtils {
 		return result;
 	}
 
-	public static List<BankInfoObject> getBankInfoObjectsFromEmp(long empId) {
-		final List<BankInfoObject> result = new ArrayList<>();
-		final List<EmpBankInfo> empBankInfos = EmpBankInfoLocalServiceUtil
-				.findByEmp(empId);
-		if (empBankInfos.isEmpty())
-			result.add(new BankInfoObject());
-
-		for (EmpBankInfo item : empBankInfos) {
-			result.add(new BankInfoObject(item));
-		}
-		return result;
-	}
-
-	public static Map<EmpBankInfo, Boolean> transferBankInfoObjectListToBankInfoMap(
-			List<BankInfoObject> items) {
-		final Map<EmpBankInfo, Boolean> resultMap = new HashMap<>();
-		for (BankInfoObject obj : items) {
-			resultMap.put(obj.getEmpBankInfo(), obj.isUIDeleted());
-		}
-
-		return resultMap;
-	}
-
-	public static Map<EmpBankInfo, Boolean> transferEmpBankInfoListToBankInfoMap(
-			List<EmpBankInfo> items) {
-		final Map<EmpBankInfo, Boolean> resultMap = new HashMap<>();
-		for (EmpBankInfo obj : items) {
-			resultMap.put(obj, false);
-		}
-
-		return resultMap;
-	}
-
-	/**
-	 * @return
-	 */
-	public static SearchContext getCurrentSearchContext() {
-		final LiferayFacesContext liferayFacesContext = LiferayFacesContext
-				.getInstance();
-
-		final PortletRequest req = (PortletRequest) liferayFacesContext
-				.getExternalContext().getRequest();
-
-		final HttpServletRequest httpServletRequest = PortalUtil
-				.getOriginalServletRequest(PortalUtil
-						.getHttpServletRequest(req));
-		return SearchContextFactory.getInstance(httpServletRequest);
-	}
-
 	public static String getFullnameFromUser(User user) {
-		return StringUtils.trimToEmpty(user.getLastName()) + BLANK_SPACE
-				+ StringUtils.trimToEmpty(user.getMiddleName()) + BLANK_SPACE
+		return StringUtils.trimToEmpty(user.getLastName()) + " "
+				+ StringUtils.trimToEmpty(user.getMiddleName()) + " "
 				+ StringUtils.trimToEmpty(user.getFirstName());
 	}
 
 	public static String getViFullnameFromUser(User user) {
-		return StringUtils.trimToEmpty(user.getLastName()) + BLANK_SPACE
-				+ StringUtils.trimToEmpty(user.getMiddleName()) + BLANK_SPACE
+		return StringUtils.trimToEmpty(user.getLastName()) + " "
+				+ StringUtils.trimToEmpty(user.getMiddleName()) + " "
 				+ StringUtils.trimToEmpty(user.getFirstName());
 	}
 
@@ -237,11 +189,11 @@ public class EmployeeUtils {
 	 * @param fullname
 	 * @return
 	 */
-	public static String getMiddleNameFromFullname(String fullname) {
+	public static String getMiddleName(String fullname) {
 		if (StringUtils.trimToNull(fullname) == null)
 			return StringUtils.EMPTY;
 
-		String[] fullnameArr = fullname.split(BLANK_SPACE);
+		String[] fullnameArr = fullname.split(" ");
 		int length = fullnameArr.length;
 		// check if employee just have first and last name only
 		if (length == 2) {
@@ -249,7 +201,7 @@ public class EmployeeUtils {
 		}
 		String middleName = StringUtils.EMPTY;
 		for (int i = 1; i < length - 1; i++) {
-			middleName += fullnameArr[i] + BLANK_SPACE;
+			middleName += fullnameArr[i] + " ";
 		}
 		return middleName;
 	}
@@ -261,8 +213,39 @@ public class EmployeeUtils {
 	public static String getFirstName(String fullname) {
 		if (StringUtils.trimToNull(fullname) == null)
 			return StringUtils.EMPTY;
-		String[] fullnameArr = fullname.split(BLANK_SPACE);
+		String[] fullnameArr = fullname.split(" ");
 		return fullnameArr[fullnameArr.length - 1];
+	}
+
+	/**
+	 * @param fullname
+	 * @return
+	 */
+	public static String generateUsername1(String fullname) {
+		if (StringUtils.trimToNull(fullname) == null)
+			return StringUtils.EMPTY;
+
+		fullname = VNCharacterUtils.removeAccent(fullname).toLowerCase(); // NOSONAR
+		StringBuilder resultBuilder = new StringBuilder();
+		char firstChar = getLastName(fullname).toCharArray()[0];
+
+		String[] middleNameArr = getMiddleName(fullname).split(" ");
+		char[] middleNameChars;
+		if (middleNameArr.length > 0 && middleNameArr[0] != StringUtils.EMPTY) {
+			middleNameChars = new char[middleNameArr.length];
+			for (int i = 0; i < middleNameChars.length; i++) {
+				middleNameChars[i] = middleNameArr[i].charAt(0);
+			}
+		} else {
+			middleNameChars = null;
+		}
+
+		resultBuilder.append(firstChar);
+		if (middleNameChars != null) {
+			resultBuilder.append(middleNameChars);
+		}
+		resultBuilder.append(getFirstName(fullname));
+		return resultBuilder.toString();
 	}
 
 	public static String generateOriginalUsername(String fullname) {
@@ -275,8 +258,7 @@ public class EmployeeUtils {
 		StringBuilder resultBuilder = new StringBuilder();
 		char firstChar = getLastName(fullname).toCharArray()[0];
 
-		String[] middleNameArr = getMiddleNameFromFullname(fullname).split(
-				BLANK_SPACE);
+		String[] middleNameArr = getMiddleName(fullname).split(" ");
 		char[] middleNameChars;
 		if (middleNameArr.length > 0 && middleNameArr[0] != StringUtils.EMPTY) {
 			middleNameChars = new char[middleNameArr.length];
@@ -308,6 +290,72 @@ public class EmployeeUtils {
 		return regenerateUsername(resultString, 1);
 	}
 
+	/**
+	 * @param id
+	 * @return
+	 */
+	public static Emp getEmployeeById(long id) {
+		try {
+			return EmpLocalServiceUtil.getEmp(id);
+		} catch (PortalException e) {
+			LOGGER.info(e);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	public static Emp getEmpById(long id) {
+		try {
+			return EmpLocalServiceUtil.getEmp(id);
+		} catch (PortalException e) {
+			LOGGER.info(e);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
+	public static void deleteAllEmployeeAndEmployeeUser() {
+		for (Emp employee : EmpLocalServiceUtil.findAll()) {
+			try {
+				UserLocalServiceUtil.deleteUser(employee.getEmpUserId());
+
+				EmployeeLocalServiceUtil.deleteEmployee(employee.getEmpId());
+			} catch (PortalException e) {
+				LOGGER.info(e);
+			} catch (SystemException e) {
+				LOGGER.info(e);
+			}
+		}
+	}
+
+	public static List<Long> getIdsFromBasedModelList(List<BaseModel<?>> list) {
+		final List<Long> ids = new ArrayList<>();
+		for (BaseModel<?> obj : list) {
+			ids.add(new Long(obj.getPrimaryKeyObj().toString()));
+		}
+		return ids;
+	}
+
+	public static ServiceContext getServiceContext() {
+		return LiferayFacesContext.getInstance().getServiceContext();
+	}
+
+	public static long getCompanyId() {
+		return getServiceContext().getCompanyId();
+	}
+
+	public static long getBaseModelPrimaryKey(BaseModel<?> model) {
+		if (model == null)
+			return 0;
+		return Long.valueOf(String.valueOf(model.getPrimaryKeyObj()));
+	}
+
 	public static String generateEmailByUsername(String username) {
 		return username + EMAIL_SUFFIX;
 	}
@@ -316,9 +364,8 @@ public class EmployeeUtils {
 			int increment) {
 
 		try {
-			if (UserLocalServiceUtil.fetchUserByScreenName(LiferayFacesContext
-					.getInstance().getServiceContext().getCompanyId(),
-					currentUsername) == null) {
+			if (UserLocalServiceUtil.fetchUserByScreenName(getServiceContext()
+					.getCompanyId(), currentUsername) == null) {
 				return currentUsername;
 			}
 
@@ -332,24 +379,32 @@ public class EmployeeUtils {
 			increment += 1; // NOSONAR
 			return regenerateUsername(currentUsername, increment);
 		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmployeeUtils.class).info(e);
+			LOGGER.info(e);
 		}
 		return currentUsername;
 	}
 
-	/**
-	 * @param id
-	 * @return
-	 */
-	public static Emp getEmpById(long id) {
+	public static void writeOutputStreamToPipedOutputStream(
+			ByteArrayOutputStream originOut, PipedOutputStream pipedOutputStream) {
 		try {
-			return EmpLocalServiceUtil.getEmp(id);
-		} catch (PortalException e) {
+			originOut.writeTo(pipedOutputStream);
+			originOut.flush();
+		} catch (IOException e) {
 			LogFactoryUtil.getLog(EmployeeUtils.class).info(e);
-		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmployeeUtils.class).info(e);
+		} finally {
+			closeOutputStream(originOut);
+			closeOutputStream(pipedOutputStream);
 		}
-		return null;
+	}
+
+	private static void closeOutputStream(OutputStream outputStream) {
+		if (outputStream != null) {
+			try {
+				outputStream.close();
+			} catch (IOException e) {
+				LogFactoryUtil.getLog(EmployeeUtils.class).info(e);
+			}
+		}
 	}
 
 	/**
@@ -359,53 +414,28 @@ public class EmployeeUtils {
 	 * @return
 	 */
 	public static List<EmpIndexedItem> searchEmpByName(String query) {
-		final List<EmpIndexedItem> filteredItems = new ArrayList<>();
-		final SearchContext searchContext = RCUtils.getCurrentSearchContext();
 		try {
-			final BooleanQuery fullNameFilterBooleanQuery = BooleanQueryFactoryUtil
-					.create(searchContext);
-			fullNameFilterBooleanQuery.addTerm(EmpField.FULL_NAME, query, true,
-					BooleanClauseOccur.MUST);
-			final List<Query> queries = new ArrayList<>();
-
-			queries.add(fullNameFilterBooleanQuery);
-			Sort sort = new Sort();
-			sort.setFieldName(EmpField.EMP_ID);
-			final List<Document> docs = EmpLocalServiceUtil
-					.searchAllUnDeletedEmpIndexedDocument(searchContext,
-							queries, searchContext.getCompanyId(), sort,
-							QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-			for (Document doc : docs) {
-				filteredItems.add(new EmpIndexedItem(doc));
-			}
-			return filteredItems;
+			return getEmployeeIndexedItemsFromIndexedDocuments(EmpLocalServiceUtil
+					.filterEmployeeByAutocompleteQuery(query,
+							RCUtils.getCurrentSearchContext(),
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 		} catch (ParseException e) {
 			LogFactoryUtil.getLog(EmployeeUtils.class).info(e);
 		}
-		return filteredItems;
+		return new ArrayList<>();
 	}
 
-	public static long getBaseModelPrimaryKey(BaseModel<?> model) {
-		if (model == null)
-			return 0;
-		return Long.valueOf(String.valueOf(model.getPrimaryKeyObj()));
+	/**
+	 * @param documents
+	 * @return
+	 */
+	public static List<EmpIndexedItem> getEmployeeIndexedItemsFromIndexedDocuments(
+			List<Document> documents) {
+
+		final List<EmpIndexedItem> results = new ArrayList<>(documents.size());
+		for (final Document document : documents) {
+			results.add(new EmpIndexedItem(document));
+		}
+		return results;
 	}
-
-	public static void setAttributesToEmpFromEditItem(Emp employee,
-			EmpInfoItem empInfoItem) {
-		employee.setTitlesId(getBaseModelPrimaryKey(empInfoItem.getTitles()));
-
-		employee.setUnitGroupId(getBaseModelPrimaryKey(empInfoItem
-				.getUnitGroup()));
-
-		employee.setUnitId(getBaseModelPrimaryKey(empInfoItem.getUnit()));
-
-		employee.setDepartmentId(getBaseModelPrimaryKey(empInfoItem
-				.getDepartment()));
-
-		employee.setLevelId(getBaseModelPrimaryKey(empInfoItem.getLevel()));
-		employee.setUniversityId(getBaseModelPrimaryKey(empInfoItem
-				.getUniversity()));
-	}
-
 }

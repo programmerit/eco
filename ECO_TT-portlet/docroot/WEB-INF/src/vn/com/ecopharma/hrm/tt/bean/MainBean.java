@@ -13,6 +13,8 @@ import vn.com.ecopharma.hrm.tt.dto.EmpLeaveRequestItem;
 import vn.com.ecopharma.hrm.tt.utils.BeanUtils;
 import vn.com.ecopharma.hrm.tt.utils.TTUtils;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.service.ServiceContext;
 
 @ManagedBean
@@ -23,10 +25,11 @@ public class MainBean extends BaseDialogBean {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final Log LOGGER = LogFactoryUtil.getLog(ManagedBean.class);
 
 	@PostConstruct
 	public void init() {
-
+		LOGGER.info("calling MainBean");
 	}
 
 	public void onRequestLeave() {

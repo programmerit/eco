@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -29,6 +30,7 @@ import java.util.Set;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import vn.com.ecopharma.emp.constant.EMInfo;
@@ -70,12 +72,15 @@ import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermQueryFactoryUtil;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.TermRangeQueryFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Region;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoColumn;
@@ -329,6 +334,26 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 				companyId, sort, start, end);
 	}
 
+	/**
+	 * @param query
+	 * @param searchContext
+	 * @param start
+	 * @param end
+	 * @return
+	 * @throws ParseException
+	 */
+	public List<Document> filterEmployeeByAutocompleteQuery(String query,
+			SearchContext searchContext, int start, int end)
+			throws ParseException {
+		final Map<String, Object> filters = new HashMap<>();
+		filters.put(EmpField.FULL_NAME, query);
+		filters.put(EmpField.VN_FULL_NAME, query);
+		filters.put(EmpField.EMP_CODE, query);
+		filters.put(EmpField.EMAIL, query);
+		return filterEmployeeByFields(searchContext, filters, null,
+				searchContext.getCompanyId(), start, end);
+	}
+
 	public boolean isOrganizationFilter(String filterProperty) {
 		return filterProperty.equalsIgnoreCase(EmpField.DEVISION)
 				|| filterProperty.equalsIgnoreCase(EmpField.DEPARTMENT)
@@ -510,36 +535,64 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	 * @throws SystemException
 	 * @throws PortalException
 	 */
-	public Emp addEmp(Emp employee, boolean autoPassword, String password1,
-			String password2, boolean autoScreenName, String screenName,
-			String emailAddress, long facebookId, String openId, Locale locale,
-			String firstName, String middleName, String lastName, int prefixId,
-			int suffixId, boolean male, int birthdayMonth, int birthdayDay,
-			int birthdayYear, long[] groupIds,
-			long[] organizationIds,
-			long[] roleIds,
-			long[] userGroupIds,
+	public Emp addEmp(Emp employee, User generatedUser, boolean autoPassword,
+			String password1, String password2,
+			boolean autoScreenName,
+			String screenName,
+			boolean male,
 			boolean sendEmail, // End user part
 			Map<Address, Boolean> addresses,
 			Map<String, Boolean> dependentNameMap,
 			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isImportAction,
 			ServiceContext serviceContext) throws SystemException,
 			PortalException {
-		// Add User Part
+		// bind fields
+		final Calendar cal = Calendar.getInstance();
+		cal.setTime(employee.getBirthday());
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		int month = cal.get(Calendar.MONTH);
+		int year = cal.get(Calendar.YEAR);
+
+		// group id: User Personal Site
+		long[] groups = new long[] { GroupLocalServiceUtil.getGroup(
+				serviceContext.getCompanyId(), "User Personal Site")
+				.getGroupId() };
+		// role id: User
+		long[] roles = new long[] { RoleLocalServiceUtil.getRole(
+				serviceContext.getCompanyId(), "User").getRoleId() };
+
+		final long[] organizationIds = null;
+		final long[] userGroupIds = null;
+
+		String generatePwd = RandomStringUtils.randomAlphabetic(8);
+		String pwd1 = !autoPassword ? password1 : generatePwd;
+		String pwd2 = !autoPassword ? password2 : generatePwd;
+		String email = generatedUser.getEmailAddress();
+
+		final long facebookId = 0L;
+		final int prefixId = 0;
+		final int suffixId = 0;
+		final String openId = StringUtils.EMPTY;
+		final Locale defaultLocale = LocaleUtil.getDefault();
+
+		// add User Part
+		// TODO: refactor (removed ??)
 		if (userLocalService.fetchUserByEmailAddress(
-				serviceContext.getCompanyId(), emailAddress) != null) {
-			emailAddress = regenerateDuplicateEmailAddress(emailAddress, 1, // NOSONAR
+				serviceContext.getCompanyId(), email) != null) {
+			email = regenerateDuplicateEmailAddress(email, 1, // NOSONAR
 					serviceContext.getCompanyId());
 		}
-		final User user = UserLocalServiceUtil.addUser(
-				serviceContext.getUserId(), serviceContext.getCompanyId(),
-				autoPassword, password1, password2, autoScreenName, screenName,
-				emailAddress, facebookId, openId, locale, firstName,
-				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
-				birthdayDay, birthdayYear,
-				titlesLocalService.getTitles(employee.getTitlesId()).getName(),
-				groupIds, organizationIds, roleIds, userGroupIds, sendEmail,
-				serviceContext);
+		final User user = UserLocalServiceUtil
+				.addUser(serviceContext.getUserId(), serviceContext
+						.getCompanyId(), autoPassword, pwd1, pwd2,
+						autoScreenName, screenName, email, facebookId, openId,
+						defaultLocale, generatedUser.getFirstName(),
+						generatedUser.getMiddleName(), generatedUser
+								.getLastName(), prefixId, suffixId, male,
+						month, day, year,
+						titlesLocalService.getTitles(employee.getTitlesId())
+								.getName(), groups, organizationIds, roles,
+						userGroupIds, sendEmail, serviceContext);
 
 		// add employee code expando value to user
 		addOrUpdateUserEmployeeCodeValue(employee.getEmpCode(),
@@ -549,8 +602,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		employee.setUserId(serviceContext.getUserId());
 		employee.setGroupId(serviceContext.getScopeGroupId());
 		employee.setCompanyId(serviceContext.getCompanyId());
-		employee.setCreateDate(new Date(System.currentTimeMillis()));
-		employee.setModifiedDate(new Date(System.currentTimeMillis()));
+		employee.setCreateDate(new Date());
 
 		employee.setStatus(EmployeeStatus.NEWLY_ADDED.toString());
 
@@ -705,6 +757,110 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		// index new employee
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Emp.class);
 		indexer.reindex(Emp.class.getName(), result.getEmpId());
+		return result;
+	}
+
+	public Emp addEmp(Emp employee, boolean autoPassword, String password1,
+			String password2, boolean autoScreenName, String screenName,
+			String emailAddress, long facebookId, String openId, Locale locale,
+			String firstName, String middleName, String lastName, int prefixId,
+			int suffixId, boolean male, int birthdayMonth, int birthdayDay,
+			int birthdayYear, long[] groupIds,
+			long[] organizationIds,
+			long[] roleIds,
+			long[] userGroupIds,
+			boolean sendEmail, // End user part
+			Map<Address, Boolean> addresses,
+			Map<String, Boolean> dependentNameMap,
+			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isImportAction,
+			ServiceContext serviceContext) throws SystemException,
+			PortalException {
+		// Add User Part
+		if (userLocalService.fetchUserByEmailAddress(
+				serviceContext.getCompanyId(), emailAddress) != null) {
+			emailAddress = regenerateDuplicateEmailAddress(emailAddress, 1, // NOSONAR
+					serviceContext.getCompanyId());
+		}
+		final User user = UserLocalServiceUtil.addUser(
+				serviceContext.getUserId(), serviceContext.getCompanyId(),
+				autoPassword, password1, password2, autoScreenName, screenName,
+				emailAddress, facebookId, openId, locale, firstName,
+				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+				birthdayDay, birthdayYear,
+				titlesLocalService.getTitles(employee.getTitlesId()).getName(),
+				groupIds, organizationIds, roleIds, userGroupIds, sendEmail,
+				serviceContext);
+
+		// add employee code expando value to user
+		addOrUpdateUserEmployeeCodeValue(employee.getEmpCode(),
+				user.getUserId(), serviceContext.getCompanyId());
+
+		employee.setEmpUserId(user.getUserId());
+		employee.setUserId(serviceContext.getUserId());
+		employee.setGroupId(serviceContext.getScopeGroupId());
+		employee.setCompanyId(serviceContext.getCompanyId());
+		employee.setCreateDate(new Date(System.currentTimeMillis()));
+		employee.setModifiedDate(new Date(System.currentTimeMillis()));
+
+		employee.setStatus(EmployeeStatus.NEWLY_ADDED.toString());
+
+		// Add employee's addresses
+		for (Map.Entry<Address, Boolean> address : addresses.entrySet()) {
+			// check UIDeleted flag
+			if (!address.getValue()) {
+				final Address addressEntity = address.getKey();
+				addressEntity.setClassName(Emp.class.getName());
+				addressEntity.setClassPK(employee.getEmpId());
+				addressEntity.setCompanyId(serviceContext.getCompanyId());
+				AddressLocalServiceUtil.addAddress(addressEntity);
+			}
+		}
+
+		// Add employee's dependences
+		final StringBuilder namesBuilder = new StringBuilder();
+		int dependentNamesCount = 0;
+		for (Map.Entry<String, Boolean> entry : dependentNameMap.entrySet()) {
+			if (!entry.getValue()
+					&& StringUtils.trimToNull(entry.getKey()) != null) {
+				namesBuilder.append(entry.getKey());
+				namesBuilder.append(";");
+				dependentNamesCount++;
+			}
+		}
+		// set back to employee
+		employee.setNumberOfDependents(dependentNamesCount);
+		employee.setDependentNames(namesBuilder.toString());
+
+		// Add employee's banking info
+		for (Map.Entry<EmpBankInfo, Boolean> entry : bankInfoMap.entrySet()) {
+			final EmpBankInfo empBankInfo = entry.getKey();
+			if (!entry.getValue()
+					&& StringUtils.trimToNull(empBankInfo.getBankAccountNo()) != null
+					&& StringUtils.trimToNull(empBankInfo.getBankName()) != null) {
+				empBankInfo.setEmpId(employee.getEmpId());
+				empBankInfoLocalService.addEmpBankInfo(empBankInfo,
+						serviceContext);
+			}
+
+		}
+
+		// persist to DB
+		Emp result = super.addEmp(employee);
+
+		// add permission
+		resourceLocalService.addResources(employee.getCompanyId(),
+				employee.getGroupId(), serviceContext.getUserId(),
+				Emp.class.getName(), employee.getEmpId(), false, true, true);
+
+		// index new employee
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Emp.class);
+		indexer.reindex(Emp.class.getName(), result.getEmpId());
+
+		// add to notify (if isImportAction false)
+		if (!isImportAction) {
+			empNotifyEmailLocalService.createEmpNotifyEmail(result.getEmpId(),
+					StringUtils.EMPTY, EmployeeNotifyType.WAITING.toString());
+		}
 		return result;
 	}
 
@@ -1627,7 +1783,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		builder.append("<body style='font-family: arial; font-size: 14px;'>");
 		builder.append("<p>Phòng HCNS trân trọng thông báo thông tin nhân sự sắp nhận việc đến các Đơn vị/Bộ phận có liên quan như sau:</p>");
 		builder.append(getNewEmployeesHtmlTable(emps));
-		builder.append("<p>Đề nghị các đơn vị có liên quan thực hiện công tác  chuẩn bị thật chu đáo và hoàn tất trước ngày nhân sự nhận việc ít nhất 3 ngày ");
+		builder.append("<p>Đề nghị các đơn vị có liên quan thực hiện công tác chuẩn bị thật chu đáo và hoàn tất trước ngày nhân sự nhận việc ít nhất 3 ngày ");
 		builder.append("(trừ trường hợp nhận việc ngay) để thể hiện sự chuyên nghiệp, thân thiện của Công ty và sự tôn trọng đối với nhân sự mới.</p>");
 		builder.append("Trân trọng,<br />");
 		builder.append("Phòng HCNS");

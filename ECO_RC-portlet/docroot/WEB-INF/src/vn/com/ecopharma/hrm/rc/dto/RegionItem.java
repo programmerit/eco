@@ -7,14 +7,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Region;
 import com.liferay.portal.service.RegionServiceUtil;
 
-public class RegionItem implements Comparable<RegionItem>, Serializable {
+public class RegionItem extends AbstractBaseModelItem<Region> implements
+		Comparable<RegionItem>, Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	private Region region;
 
 	private int index;
 
@@ -23,7 +22,7 @@ public class RegionItem implements Comparable<RegionItem>, Serializable {
 	}
 
 	public RegionItem(Region region) {
-		this.region = region;
+		super(region);
 		if (region.getRegionCode().equalsIgnoreCase("VN-65")) {
 			this.index = 1;
 		} else if (region.getRegionCode().equalsIgnoreCase("VN-64")) {
@@ -31,18 +30,6 @@ public class RegionItem implements Comparable<RegionItem>, Serializable {
 		} else {
 			this.index = 3;
 		}
-	}
-
-	public Region getRegion() {
-		return region;
-	}
-
-	public void setRegion(Region region) {
-		this.region = region;
-	}
-
-	public long getId() {
-		return this.region.getRegionId();
 	}
 
 	public int getIndex() {
@@ -59,11 +46,8 @@ public class RegionItem implements Comparable<RegionItem>, Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof RegionItem))
-			return false;
-		RegionItem that = (RegionItem) obj;
-		return this.region.getRegionId() == that.getRegion().getRegionId();
+	public Region createPrepersistedEntity() {
+		return null;
 	}
 
 }

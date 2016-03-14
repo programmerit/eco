@@ -192,10 +192,10 @@
 									filterMatchMode="contains" var="r">
 									<f:selectItem itemLabel="Select Place" itemValue="" />
 									<f:selectItems value="#{empView.workingPlaces}" var="r"
-										itemLabel="#{r.region.name}" itemValue="#{r}" />
+										itemLabel="#{r.object.name}" itemValue="#{r}" />
 
 									<p:column>
-					                			#{r.region.name} (#{r.region.regionCode})
+					                			#{r.object.name} (#{r.object.regionCode})
 					            			</p:column>
 								</p:selectOneMenu>
 

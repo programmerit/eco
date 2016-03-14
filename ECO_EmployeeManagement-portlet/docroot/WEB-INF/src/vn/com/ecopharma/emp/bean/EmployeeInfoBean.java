@@ -133,7 +133,7 @@ public class EmployeeInfoBean implements Serializable {
 			modifyEmployeeInfoItem.getEmp().setSpecializeId(specializedId);
 
 			long workingPlaceId = modifyEmployeeInfoItem.getWorkingPlace() != null ? modifyEmployeeInfoItem
-					.getWorkingPlace().getRegion().getRegionId()
+					.getWorkingPlace().getId()
 					: 0L;
 			modifyEmployeeInfoItem.getEmp().setWorkingPlaceId(workingPlaceId);
 

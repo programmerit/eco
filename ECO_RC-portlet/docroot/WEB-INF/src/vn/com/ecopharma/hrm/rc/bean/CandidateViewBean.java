@@ -65,7 +65,7 @@ public class CandidateViewBean extends EntityViewBean {
 			currentNav = "/views/pages/modifyCandidate.xhtml";
 			break;
 		case CandidateNavigation.TRANSFER_TO_EMPLOYEE:
-			currentNav = "/views/pages/employee.xhtml";
+			currentNav = "/views/pages/employeeForm.xhtml";
 			break;
 		case CandidateNavigation.SCHEDULE_INTERVIEW:
 			currentNav = "/views/pages/scheduleInterviewForCandidates.xhtml";
@@ -97,23 +97,11 @@ public class CandidateViewBean extends EntityViewBean {
 
 			switch (status) {
 			case INTERVIEW_SCHEDULED:
-				/* Old interview schedule for single candidate */
-				// InterviewScheduleBean interviewScheduleBean =
-				// (InterviewScheduleBean) BeanUtils
-				// .getBackingBeanByName("interviewScheduleBean");
-				// interviewScheduleBean
-				// .setInterviewScheduleItem(new InterviewScheduleItem(
-				// item));
-				// RequestContext.getCurrentInstance().execute(
-				// "PF('wInterviewScheduleDialog').show()");
-				/**********************/
 				ScheduleInterviewForCandidatesBean bean = (ScheduleInterviewForCandidatesBean) BeanUtils
 						.getBackingBeanByName("scheduleInterviewForCandidatesBean");
 				bean.setInterviewScheduleItems(Arrays
 						.asList(new InterviewScheduleItem(item)));
 				bean.setInterviewScheduleForAllItem(new InterviewScheduleForAllItem());
-				// RequestContext.getCurrentInstance().execute(
-				// "window.location.hash = '#scheduleInterview';");
 				switchMode(CandidateNavigation.SCHEDULE_INTERVIEW);
 				break;
 
@@ -152,15 +140,6 @@ public class CandidateViewBean extends EntityViewBean {
 				RequestContext.getCurrentInstance().execute(
 						"PF('wRejectConfirmDialog').show()");
 				break;
-			case JOB_OFFERED:
-				// EvaluationBean evaluationBean = (EvaluationBean) BeanUtils
-				// .getBackingBeanByName("evaluationBean");
-				// evaluationBean.setCandidateIndexItems(Arrays.asList(item));
-				// evaluationBean.setEvaluationItems(evaluationBean
-				// .getEvaluationItemsFromEvaluationCriteria());
-				// RequestContext.getCurrentInstance().execute(
-				// "PF('wEvaluationDialog').show()");
-				break;
 			default:
 				final Candidate candidate = CandidateLocalServiceUtil
 						.fetchCandidate(item.getId());
@@ -183,6 +162,8 @@ public class CandidateViewBean extends EntityViewBean {
 		evaluationBean.setCandidateIndexItems(candidates);
 		evaluationBean.setEvaluationItems(initEvaluationItems());
 		this.includedDialog = "/views/dialogs/evaluation.xhtml";
+		RequestContext.getCurrentInstance().update(
+				":CandidatePanelGroup:includedDialog");
 		RequestContext.getCurrentInstance().execute(
 				"PF('wEvaluationDialog').show();");
 	}

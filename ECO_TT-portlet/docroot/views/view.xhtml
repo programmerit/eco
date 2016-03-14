@@ -12,19 +12,25 @@
 	<h:body>
 		<eco:ajaxIndicator />
 		<h:form id="mainForm">
-			<p:link outcome="report" value="Report" /> | 
-		
-			<p:link outcome="timetracking" value="Detail TimeTracking" /> | 
-			
+			<p:link outcome="report" value="Report" />
+
+			<h:outputText value="|" />
+
+			<p:link outcome="timetracking" value="Detail TimeTracking" />
+
+			<h:outputText value="|" rendered="#{mainBean.hr}" />
+
 			<p:link outcome="vacationLeaveView" value="View All Leaves"
-				rendered="#{mainBean.hr}" /> |
+				rendered="#{mainBean.hr}" />
+
+			<h:outputText value="|" />
 
 
 			<p:commandLink value="Request Leave"
 				actionListener="#{mainBean.onRequestLeave}"
 				update=":includedDialogPanelGroup"
-				oncomplete="PF('wLeaveRequestDialog').show();" /> |
-				
+				oncomplete="PF('wLeaveRequestDialog').show();" />
+
 			<h:panelGroup rendered="#{mainBean.currentManager}"
 				style="display: block;">
 				<h:outputText value="You have " />
@@ -33,8 +39,7 @@
 					outcome="managerPendingRequestView" />
 			</h:panelGroup>
 
-			<h:panelGroup rendered="#{mainBean.hr}"
-				style="display: block;">
+			<h:panelGroup rendered="#{mainBean.hr}" style="display: block;">
 				<h:outputText value="HR you have " />
 				<p:link
 					value="#{mainBean.hrPendingVacationLeaveRequests} PENDING REQUESTS"

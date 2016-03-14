@@ -182,6 +182,9 @@
 		<field name="approvedNumberOfPosition" type="int" />
 		<field name="currentNumberOfEmployee" type="int" />
 		<field name="titlesId" type="long" />
+		<field name="unitGroupId" type="long" />
+		<field name="unitId" type="long" />
+		<field name="departmentId" type="long" />
 		<field name="numberOfNewRecruitment" type="int" />
 		<field name="numberOfReplacedRecruitment" type="int" />
 		<field name="expectedSalary" type="double" />

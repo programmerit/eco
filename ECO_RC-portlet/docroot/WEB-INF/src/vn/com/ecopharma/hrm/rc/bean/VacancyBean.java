@@ -107,7 +107,7 @@ public class VacancyBean extends PersistableBean {
 						filters);
 			}
 		};
-		fileEntryIds = new ArrayList<Long>();
+		fileEntryIds = new ArrayList<>();
 	}
 
 	@Override
@@ -120,23 +120,31 @@ public class VacancyBean extends PersistableBean {
 					.fetchVacancy(vacancyItem.getObject().getVacancyId()) == null;
 			// set changed fields
 			vacancy.setWorkPlaceId(vacancyItem.getWorkingPlace() != null ? vacancyItem
-					.getWorkingPlace().getRegion().getRegionId()
+					.getWorkingPlace().getObject().getRegionId()
 					: 0L);
 
+			Vacancy result = null;
 			if (isCreateNew) { // create new
-				vacancy.setTitlesId(vacancyItem.getTitles() != null ? vacancyItem
-						.getTitles().getTitlesId() : 0);
-				VacancyLocalServiceUtil.addVacancy(vacancy, 0, fileEntryIds,
-						serviceContext);
-			} else {
-				VacancyLocalServiceUtil.updateVacancy(vacancyItem.getObject(),
+				result = VacancyLocalServiceUtil.addVacancy(vacancy, 0,
 						fileEntryIds, serviceContext);
+			} else {
+				result = VacancyLocalServiceUtil.updateVacancy(
+						vacancyItem.getObject(), fileEntryIds, serviceContext);
 			}
-			BeanUtils.getVacancyViewBean().switchMode(VacancyNavigation.VIEW);
-			;
+			if (result != null) {
+				BeanUtils.getOrganizationPanelBean()
+						.afterSetOrganizationToEntity();
+				BeanUtils.getVacancyViewBean().switchMode(
+						VacancyNavigation.VIEW);
+			}
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}
+	}
+
+	public void onUpdateTitles() {
+		BeanUtils.getOrganizationPanelBean().setSelectedValuesToVacancy(
+				vacancyItem.getObject());
 	}
 
 	public void handleDocumentUpload(FileUploadEvent event) {
@@ -166,6 +174,8 @@ public class VacancyBean extends PersistableBean {
 			this.vacancyItem = new VacancyItem(
 					VacancyLocalServiceUtil.fetchVacancy(vacancyIndexItem
 							.getId()));
+			BeanUtils.getOrganizationPanelBean()
+					.setSelectedValuesFromVacancyIndexedItem(vacancyIndexItem);
 			BeanUtils.getVacancyViewBean().switchMode(VacancyNavigation.EDIT);
 			;
 		} catch (SystemException e) {
@@ -209,19 +219,9 @@ public class VacancyBean extends PersistableBean {
 	}
 
 	public void onRowDblSelect(SelectEvent selectEvent) {
-		try {
-			final VacancyIndexItem vacancyIndexItem = (VacancyIndexItem) selectEvent
-					.getObject();
-
-			this.vacancyItem = new VacancyItem(
-					VacancyLocalServiceUtil.fetchVacancy(vacancyIndexItem
-							.getId()));
-			BeanUtils.getVacancyViewBean().switchMode(VacancyNavigation.EDIT);
-		} catch (SystemException e) {
-			LOGGER.info(e);
-		} catch (PortalException e) {
-			LOGGER.info(e);
-		}
+		final VacancyIndexItem vacancyIndexItem = (VacancyIndexItem) selectEvent
+				.getObject();
+		this.editVacancy(vacancyIndexItem);
 	}
 
 	public List<RegionItem> getWorkingPlaces() {
@@ -240,7 +240,8 @@ public class VacancyBean extends PersistableBean {
 	}
 
 	public String getCurrentTitlesName() {
-		final Titles currentTitles = vacancyItem.getTitles();
+		final Titles currentTitles = BeanUtils.getOrganizationPanelBean()
+				.getSelectedTitles();
 		return currentTitles != null ? currentTitles.getName() : "(Empty)";
 	}
 

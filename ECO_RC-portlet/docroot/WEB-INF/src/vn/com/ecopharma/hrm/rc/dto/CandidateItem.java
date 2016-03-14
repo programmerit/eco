@@ -47,6 +47,7 @@ public class CandidateItem extends AbstractDocumentableBaseModelItem<Candidate> 
 		this.certificates = new ArrayList<>();
 		this.desiredVacancies = new ArrayList<>();
 		this.nationality = RCUtils.getDefaultCountry();
+		this.getObject().setGender("Male");
 	}
 
 	public CandidateItem(Candidate candidate) {

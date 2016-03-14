@@ -35,6 +35,9 @@ public class VacancySoap implements Serializable {
 		soapModel.setApprovedNumberOfPosition(model.getApprovedNumberOfPosition());
 		soapModel.setCurrentNumberOfEmployee(model.getCurrentNumberOfEmployee());
 		soapModel.setTitlesId(model.getTitlesId());
+		soapModel.setUnitGroupId(model.getUnitGroupId());
+		soapModel.setUnitId(model.getUnitId());
+		soapModel.setDepartmentId(model.getDepartmentId());
 		soapModel.setNumberOfNewRecruitment(model.getNumberOfNewRecruitment());
 		soapModel.setNumberOfReplacedRecruitment(model.getNumberOfReplacedRecruitment());
 		soapModel.setExpectedSalary(model.getExpectedSalary());
@@ -144,6 +147,30 @@ public class VacancySoap implements Serializable {
 
 	public void setTitlesId(long titlesId) {
 		_titlesId = titlesId;
+	}
+
+	public long getUnitGroupId() {
+		return _unitGroupId;
+	}
+
+	public void setUnitGroupId(long unitGroupId) {
+		_unitGroupId = unitGroupId;
+	}
+
+	public long getUnitId() {
+		return _unitId;
+	}
+
+	public void setUnitId(long unitId) {
+		_unitId = unitId;
+	}
+
+	public long getDepartmentId() {
+		return _departmentId;
+	}
+
+	public void setDepartmentId(long departmentId) {
+		_departmentId = departmentId;
 	}
 
 	public int getNumberOfNewRecruitment() {
@@ -370,6 +397,9 @@ public class VacancySoap implements Serializable {
 	private int _approvedNumberOfPosition;
 	private int _currentNumberOfEmployee;
 	private long _titlesId;
+	private long _unitGroupId;
+	private long _unitId;
+	private long _departmentId;
 	private int _numberOfNewRecruitment;
 	private int _numberOfReplacedRecruitment;
 	private double _expectedSalary;

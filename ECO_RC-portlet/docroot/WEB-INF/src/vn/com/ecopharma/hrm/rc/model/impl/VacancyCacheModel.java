@@ -37,7 +37,7 @@ import java.util.Date;
 public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(69);
 
 		sb.append("{vacancyId=");
 		sb.append(vacancyId);
@@ -47,6 +47,12 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 		sb.append(currentNumberOfEmployee);
 		sb.append(", titlesId=");
 		sb.append(titlesId);
+		sb.append(", unitGroupId=");
+		sb.append(unitGroupId);
+		sb.append(", unitId=");
+		sb.append(unitId);
+		sb.append(", departmentId=");
+		sb.append(departmentId);
 		sb.append(", numberOfNewRecruitment=");
 		sb.append(numberOfNewRecruitment);
 		sb.append(", numberOfReplacedRecruitment=");
@@ -114,6 +120,9 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 		vacancyImpl.setApprovedNumberOfPosition(approvedNumberOfPosition);
 		vacancyImpl.setCurrentNumberOfEmployee(currentNumberOfEmployee);
 		vacancyImpl.setTitlesId(titlesId);
+		vacancyImpl.setUnitGroupId(unitGroupId);
+		vacancyImpl.setUnitId(unitId);
+		vacancyImpl.setDepartmentId(departmentId);
 		vacancyImpl.setNumberOfNewRecruitment(numberOfNewRecruitment);
 		vacancyImpl.setNumberOfReplacedRecruitment(numberOfReplacedRecruitment);
 		vacancyImpl.setExpectedSalary(expectedSalary);
@@ -265,6 +274,9 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 		approvedNumberOfPosition = objectInput.readInt();
 		currentNumberOfEmployee = objectInput.readInt();
 		titlesId = objectInput.readLong();
+		unitGroupId = objectInput.readLong();
+		unitId = objectInput.readLong();
+		departmentId = objectInput.readLong();
 		numberOfNewRecruitment = objectInput.readInt();
 		numberOfReplacedRecruitment = objectInput.readInt();
 		expectedSalary = objectInput.readDouble();
@@ -301,6 +313,9 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 		objectOutput.writeInt(approvedNumberOfPosition);
 		objectOutput.writeInt(currentNumberOfEmployee);
 		objectOutput.writeLong(titlesId);
+		objectOutput.writeLong(unitGroupId);
+		objectOutput.writeLong(unitId);
+		objectOutput.writeLong(departmentId);
 		objectOutput.writeInt(numberOfNewRecruitment);
 		objectOutput.writeInt(numberOfReplacedRecruitment);
 		objectOutput.writeDouble(expectedSalary);
@@ -415,6 +430,9 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 	public int approvedNumberOfPosition;
 	public int currentNumberOfEmployee;
 	public long titlesId;
+	public long unitGroupId;
+	public long unitId;
+	public long departmentId;
 	public int numberOfNewRecruitment;
 	public int numberOfReplacedRecruitment;
 	public double expectedSalary;

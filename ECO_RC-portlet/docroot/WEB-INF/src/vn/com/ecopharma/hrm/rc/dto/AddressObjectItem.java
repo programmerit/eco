@@ -11,10 +11,12 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.model.Region;
 import com.liferay.portal.service.AddressLocalServiceUtil;
+import com.liferay.portal.service.CountryServiceUtil;
 import com.liferay.portal.service.RegionServiceUtil;
 
 /**
@@ -24,6 +26,7 @@ import com.liferay.portal.service.RegionServiceUtil;
 public class AddressObjectItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private long id;
 	private Region selectedRegion;
 	private Region region;
 	private List<Region> regions;
@@ -32,34 +35,15 @@ public class AddressObjectItem implements Serializable {
 	private Country country;
 	private boolean UIDeleted;
 	private Address address;
+	private static final String DEFAULT_COUNTRY_NAME = "vietnam";
 
 	public AddressObjectItem() {
 		this.region = null;
-		this.country = null; // getDefaultCountry();
+		this.country = getDefaultCountry();
 		this.UIDeleted = false;
-		// this.regions = getRegionByCountryId(country != null ? country
-		// .getCountryId() : 0L);
-		this.regions = new ArrayList<Region>();
+		this.regions = getRegionByCountryId();
 		this.address = createNewAddress();
-	}
-
-	public AddressObjectItem(Address address, boolean isImportAction) {
-		this.address = address;
-		this.region = address.getRegion();
-		this.district = getDistrictByStreet3(address, isImportAction); // TODO
-																		// baddd!
-																		// use
-																		// address3
-																		// to
-																		// store
-																		// district
-																		// info.
-																		// Eg.:VN-65_Binh
-																		// Chanh
-		this.country = address.getCountry();
-		this.UIDeleted = false;
-		this.regions = getRegionByCountryId(country.getCountryId());
-		this.districts = getDistrictsByRegionCode(this.region.getRegionCode());
+		this.id = address.getAddressId();
 	}
 
 	/**
@@ -74,16 +58,33 @@ public class AddressObjectItem implements Serializable {
 		this.address = createNewAddress(countryId, regionId, district, street);
 	}
 
-	// private Country getDefaultCountry() {
-	// try {
-	// return CountryServiceUtil.getCountryByName(DEFAULT_COUNTRY);
-	// } catch (PortalException e) {
-	// e.printStackTrace();
-	// } catch (SystemException e) {
-	// e.printStackTrace();
-	// }
-	// return null;
-	// }
+	private Country getDefaultCountry() {
+		try {
+			return CountryServiceUtil.getCountryByName(DEFAULT_COUNTRY_NAME);
+		} catch (PortalException e) {
+			LogFactoryUtil.getLog(AddressObjectItem.class).info(e);
+		} catch (SystemException e) {
+			LogFactoryUtil.getLog(AddressObjectItem.class).info(e);
+		}
+		return null;
+	}
+
+	@Override
+	public int hashCode() {
+		int prime = 31;
+		int result = 1;
+		result = prime
+				* result
+				* (this.getId() == 0 ? 0 : Long.valueOf(this.getId())
+						.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		final AddressObjectItem that = (AddressObjectItem) obj;
+		return this.id == that.getId();
+	}
 
 	public Address getAddress() {
 		return address;
@@ -91,6 +92,14 @@ public class AddressObjectItem implements Serializable {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public Country getCountry() {
@@ -138,7 +147,7 @@ public class AddressObjectItem implements Serializable {
 			final long generatedId = CounterLocalServiceUtil.increment();
 			return AddressLocalServiceUtil.createAddress(generatedId);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(AddressObjectItem.class).info(e);
 		}
 		return null;
 	}
@@ -152,55 +161,40 @@ public class AddressObjectItem implements Serializable {
 	 */
 	private final Address createNewAddress(long countryId, long regionId,
 			String district, String street) {
-		final Address address = createNewAddress();
-		if (address != null) {
+		final Address a = createNewAddress();
+		if (a != null) {
 			try {
-				Region region = RegionServiceUtil.getRegion(regionId);
-				address.setRegionId(regionId);
-				address.setCountryId(countryId);
-				address.setStreet1(street);
-				checkAndCreateDistrict(region.getRegionCode(), district);
-				address.setStreet3(region.getRegionCode() + "_" + district);
-				return address;
+				Region r = RegionServiceUtil.getRegion(regionId);
+				a.setRegionId(regionId);
+				a.setCountryId(countryId);
+				a.setStreet1(street);
+				checkAndCreateDistrict(r.getRegionCode(), district);
+				a.setStreet3(r.getRegionCode() + "_" + district);
+				return a;
 			} catch (PortalException e) {
-				e.printStackTrace();
+				LogFactoryUtil.getLog(AddressObjectItem.class).info(e);
 			} catch (SystemException e) {
-				e.printStackTrace();
+				LogFactoryUtil.getLog(AddressObjectItem.class).info(e);
 			}
 		}
 		return null;
 	}
 
-	private void checkAndCreateDistrict(String regionCode, String districtName) {
+	private static void checkAndCreateDistrict(String regionCode,
+			String districtName) {
 		if (DistrictLocalServiceUtil.findByRegionCodeAndName(regionCode,
 				districtName) == null)
 			DistrictLocalServiceUtil.addDistrict(districtName, regionCode,
 					LiferayFacesContext.getInstance().getServiceContext());
 	}
 
-	/**
-	 * @param street3
-	 *            VN-65_Bình Tân
-	 * @return
-	 */
-	private District getDistrictByStreet3(Address address,
-			boolean isImportAction) {
-		final String[] districtArr = address.getStreet3().split("_");
-		return DistrictLocalServiceUtil.findByRegionCodeAndName(districtArr[0],
-				districtArr[1]);
-	}
-
-	private List<Region> getRegionByCountryId(long countryId) {
+	private List<Region> getRegionByCountryId() {
 		try {
 			return RegionServiceUtil.getRegions(country.getCountryId());
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LogFactoryUtil.getLog(AddressObjectItem.class).info(e);
 		}
-		return null;
-	}
-
-	private List<District> getDistrictsByRegionCode(String regionCode) {
-		return DistrictLocalServiceUtil.findByRegionCode(regionCode);
+		return new ArrayList<>();
 	}
 
 	public List<District> getDistricts() {

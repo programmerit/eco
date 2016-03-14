@@ -28,7 +28,14 @@ public abstract class AbstractBaseModelItem<T extends BaseModel<T>> implements
 
 	public long getId() {
 		return new Long(t.getPrimaryKeyObj().toString());
-		// return (long) t.getPrimaryKeyObj();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof AbstractBaseModelItem<?>))
+			return false;
+		AbstractBaseModelItem<?> that = (AbstractBaseModelItem<?>) obj;
+		return this.getId() == that.getId();
 	}
 
 }

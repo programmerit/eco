@@ -53,6 +53,9 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 		attributes.put("approvedNumberOfPosition", getApprovedNumberOfPosition());
 		attributes.put("currentNumberOfEmployee", getCurrentNumberOfEmployee());
 		attributes.put("titlesId", getTitlesId());
+		attributes.put("unitGroupId", getUnitGroupId());
+		attributes.put("unitId", getUnitId());
+		attributes.put("departmentId", getDepartmentId());
 		attributes.put("numberOfNewRecruitment", getNumberOfNewRecruitment());
 		attributes.put("numberOfReplacedRecruitment",
 			getNumberOfReplacedRecruitment());
@@ -111,6 +114,24 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 
 		if (titlesId != null) {
 			setTitlesId(titlesId);
+		}
+
+		Long unitGroupId = (Long)attributes.get("unitGroupId");
+
+		if (unitGroupId != null) {
+			setUnitGroupId(unitGroupId);
+		}
+
+		Long unitId = (Long)attributes.get("unitId");
+
+		if (unitId != null) {
+			setUnitId(unitId);
+		}
+
+		Long departmentId = (Long)attributes.get("departmentId");
+
+		if (departmentId != null) {
+			setDepartmentId(departmentId);
 		}
 
 		Integer numberOfNewRecruitment = (Integer)attributes.get(
@@ -376,6 +397,66 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 	@Override
 	public void setTitlesId(long titlesId) {
 		_vacancy.setTitlesId(titlesId);
+	}
+
+	/**
+	* Returns the unit group ID of this vacancy.
+	*
+	* @return the unit group ID of this vacancy
+	*/
+	@Override
+	public long getUnitGroupId() {
+		return _vacancy.getUnitGroupId();
+	}
+
+	/**
+	* Sets the unit group ID of this vacancy.
+	*
+	* @param unitGroupId the unit group ID of this vacancy
+	*/
+	@Override
+	public void setUnitGroupId(long unitGroupId) {
+		_vacancy.setUnitGroupId(unitGroupId);
+	}
+
+	/**
+	* Returns the unit ID of this vacancy.
+	*
+	* @return the unit ID of this vacancy
+	*/
+	@Override
+	public long getUnitId() {
+		return _vacancy.getUnitId();
+	}
+
+	/**
+	* Sets the unit ID of this vacancy.
+	*
+	* @param unitId the unit ID of this vacancy
+	*/
+	@Override
+	public void setUnitId(long unitId) {
+		_vacancy.setUnitId(unitId);
+	}
+
+	/**
+	* Returns the department ID of this vacancy.
+	*
+	* @return the department ID of this vacancy
+	*/
+	@Override
+	public long getDepartmentId() {
+		return _vacancy.getDepartmentId();
+	}
+
+	/**
+	* Sets the department ID of this vacancy.
+	*
+	* @param departmentId the department ID of this vacancy
+	*/
+	@Override
+	public void setDepartmentId(long departmentId) {
+		_vacancy.setDepartmentId(departmentId);
 	}
 
 	/**

@@ -5,35 +5,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import vn.com.ecopharma.emp.model.Certificate;
-import vn.com.ecopharma.emp.model.Department;
-import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Emp;
-import vn.com.ecopharma.emp.model.Level;
-import vn.com.ecopharma.emp.model.Titles;
-import vn.com.ecopharma.emp.model.Unit;
-import vn.com.ecopharma.emp.model.UnitGroup;
+import vn.com.ecopharma.emp.model.Specialized;
 import vn.com.ecopharma.emp.model.University;
-import vn.com.ecopharma.emp.service.CertificateLocalServiceUtil;
-import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
-import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
-import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
-import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
-import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
-import vn.com.ecopharma.hrm.rc.enumeration.CertificateType;
 import vn.com.ecopharma.hrm.rc.enumeration.LaborContractType;
-import vn.com.ecopharma.hrm.rc.util.EmployeeUtils;
+import vn.com.ecopharma.hrm.rc.util.RCUtils;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
-import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 /**
@@ -47,15 +35,10 @@ public class EmpInfoItem implements Serializable {
 	private static final Log LOGGER = LogFactoryUtil.getLog(EmpInfoItem.class);
 
 	private static final String MALE = "Male";
+	private String fullName = StringUtils.EMPTY;
 	private Emp employee;
 	private User user;
 	private University university;
-	private Titles titles;
-	private Level level;
-	private Devision devision;
-	private Department department;
-	private Unit unit;
-	private UnitGroup unitGroup;
 
 	private List<Certificate> majorCertificates;
 
@@ -72,83 +55,36 @@ public class EmpInfoItem implements Serializable {
 
 	private List<BankInfoObject> bankInfos;
 
-	public EmpInfoItem(Emp employee) {
+	private List<DocumentItem> documents;
 
-		this.employee = employee;
-		LiferayFacesContext liferayFacesContext = LiferayFacesContext
-				.getInstance();
-		final ServiceContext serviceContext = liferayFacesContext
-				.getServiceContext();
+	private Specialized specialized;
 
-		this.dependentNames = new ArrayList<>();
-		addresses = EmployeeUtils.getAddressObjectItemsFromClassNameAndPK(
-				Emp.class.getName(), employee.getEmpId(),
-				serviceContext.getCompanyId());
+	private RegionItem workingPlace;
 
-		dependentNames = EmployeeUtils.getDependentNamesFromString(employee
-				.getDependentNames());
+	private String userImgURL;
 
-		majorCertificates = CertificateLocalServiceUtil
-				.findByClassNameClassPKAndType(Emp.class.getName(),
-						employee.getEmpId(), CertificateType.MAJOR.toString());
-		vocationalCertificates = CertificateLocalServiceUtil
-				.findByClassNameClassPKAndType(Emp.class.getName(),
-						employee.getEmpId(),
-						CertificateType.VOCATIONAL.toString());
-		bankInfos = EmployeeUtils
-				.getBankInfoObjectsFromEmp(employee.getEmpId());
-
-		try {
-			user = UserLocalServiceUtil.fetchUser(employee.getEmpUserId());
-			titles = TitlesLocalServiceUtil.getTitles(employee.getTitlesId());
-			unitGroup = employee.getUnitGroupId() != 0 ? UnitGroupLocalServiceUtil
-					.getUnitGroup(employee.getUnitGroupId()) : null;
-			unit = employee.getUnitId() != 0 ? UnitLocalServiceUtil
-					.getUnit(employee.getUnitId()) : null;
-			department = employee.getDepartmentId() != 0 ? DepartmentLocalServiceUtil
-					.getDepartment(employee.getDepartmentId()) : null;
-			devision = department != null ? DevisionLocalServiceUtil
-					.getDevision(department.getDevisionId()) : null;
-
-		} catch (PortalException e) {
-			LOGGER.info(e);
-		} catch (SystemException e) {
-			LOGGER.info(e);
-		}
-
-	}
-
-	public EmpInfoItem(long employeeId) {
-		this(EmployeeUtils.getEmpById(employeeId));
-	}
-
-	public EmpInfoItem(String employeeIdString) {
-		this(Long.valueOf(employeeIdString));
-	}
+	private boolean isEdit = false;
 
 	public EmpInfoItem() {
 		this.user = createNewUser();
 		this.employee = createNewEmp();
+		this.isEdit = false;
 	}
 
 	private Emp createNewEmp() {
-		try {
-			this.employee = EmpLocalServiceUtil
-					.createEmp(CounterLocalServiceUtil.increment());
-			// set default "Male" for employee
-			employee.setGender(MALE);
-			employee.setLaborContractType(LaborContractType.INDEFINITE_TERMS
-					.toString());
-			this.addresses = new ArrayList<>();
-			this.dependentNames = new ArrayList<>();
-			this.majorCertificates = new ArrayList<>();
-			this.vocationalCertificates = new ArrayList<>();
-			this.bankInfos = new ArrayList<>(
-					Arrays.asList(new BankInfoObject()));
+		this.employee = EmpLocalServiceUtil.createPrePersistedEntity(RCUtils
+				.getServiceContext());
+		// set default "Male" for employee
+		employee.setGender(MALE);
+		employee.setLaborContractType(LaborContractType.INDEFINITE_TERMS
+				.toString());
+		this.addresses = new ArrayList<>();
+		this.dependentNames = new ArrayList<>();
+		this.majorCertificates = new ArrayList<>();
+		this.vocationalCertificates = new ArrayList<>();
+		this.bankInfos = new ArrayList<>(Arrays.asList(new BankInfoObject()));
+		this.documents = new ArrayList<DocumentItem>();
 
-		} catch (SystemException e) {
-			LOGGER.info(e);
-		}
 		return employee;
 	}
 
@@ -185,18 +121,6 @@ public class EmpInfoItem implements Serializable {
 		return university;
 	}
 
-	public Devision getDevision() {
-		return devision;
-	}
-
-	public Titles getTitles() {
-		return titles;
-	}
-
-	public Level getLevel() {
-		return level;
-	}
-
 	public boolean isEmptyOrAllDeletedDependentNames() {
 		if (dependentNames.isEmpty())
 			return true;
@@ -217,24 +141,8 @@ public class EmpInfoItem implements Serializable {
 		this.user = user;
 	}
 
-	public void setTitles(Titles titles) {
-		this.titles = titles;
-	}
-
-	public void setLevel(Level level) {
-		this.level = level;
-	}
-
 	public void setUniversity(University university) {
 		this.university = university;
-	}
-
-	public long getTitlesId() {
-		return titles != null ? titles.getTitlesId() : 0;
-	}
-
-	public long getLevelId() {
-		return level != null ? level.getLevelId() : 0;
 	}
 
 	public long getUniversityId() {
@@ -281,34 +189,6 @@ public class EmpInfoItem implements Serializable {
 		this.dependentNames = dependentNames;
 	}
 
-	public void setDevision(Devision devision) {
-		this.devision = devision;
-	}
-
-	public Unit getUnit() {
-		return unit;
-	}
-
-	public void setUnit(Unit unit) {
-		this.unit = unit;
-	}
-
-	public UnitGroup getUnitGroup() {
-		return unitGroup;
-	}
-
-	public void setUnitGroup(UnitGroup unitGroup) {
-		this.unitGroup = unitGroup;
-	}
-
-	public Department getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(Department department) {
-		this.department = department;
-	}
-
 	public List<Certificate> getMajorCertificates() {
 		return majorCertificates;
 	}
@@ -341,8 +221,56 @@ public class EmpInfoItem implements Serializable {
 		this.bankInfos = bankInfos;
 	}
 
+	public Specialized getSpecialized() {
+		return specialized;
+	}
+
+	public void setSpecialized(Specialized specialized) {
+		this.specialized = specialized;
+	}
+
+	public RegionItem getWorkingPlace() {
+		return workingPlace;
+	}
+
+	public void setWorkingPlace(RegionItem workingPlace) {
+		this.workingPlace = workingPlace;
+	}
+
 	public String getLocalizedLaborContractType(String laborContractType) {
 		return LaborContractType.valueOf(laborContractType)
 				.getLocalizedString();
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getUserImgURL() {
+		return userImgURL;
+	}
+
+	public void setUserImgURL(String userImgURL) {
+		this.userImgURL = userImgURL;
+	}
+
+	public boolean isEdit() {
+		return isEdit;
+	}
+
+	public void setEdit(boolean isEdit) {
+		this.isEdit = isEdit;
+	}
+
+	public List<DocumentItem> getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(List<DocumentItem> documents) {
+		this.documents = documents;
 	}
 }

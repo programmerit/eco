@@ -15,20 +15,44 @@ public class VacancyIndexItem extends AbstractIndexedItem {
 		super(document);
 	}
 
-	public int getNumberOfPosition() {
-		return checkNullFieldAndReturnIntegerValue(VacancyField.NUMBER_OF_POSITION);
+	public long getTitlesId() {
+		return checkNullFieldAndReturnLongValue(VacancyField.TITLES_ID);
+	}
+
+	public long getUnitGroupId() {
+		return checkNullFieldAndReturnLongValue(VacancyField.UNITGROUP_ID);
+	}
+
+	public long getUnitId() {
+		return checkNullFieldAndReturnLongValue(VacancyField.UNIT_ID);
+	}
+
+	public long getDepartmentId() {
+		return checkNullFieldAndReturnLongValue(VacancyField.DEPARTMENT_ID);
+	}
+
+	public String getUnit() {
+		return checkNullFieldAndReturnEmptyString(VacancyField.UNIT);
+	}
+
+	public String getDepartment() {
+		return checkNullFieldAndReturnEmptyString(VacancyField.DEPARTMENT);
+	}
+
+	public String getUnitGroup() {
+		return checkNullFieldAndReturnEmptyString(VacancyField.UNIT_GROUP);
 	}
 
 	public String getTitles() {
 		return checkNullFieldAndReturnEmptyString(VacancyField.TITLES);
 	}
 
-	public String getDescription() {
-		return getDocument().getField(VacancyField.DESCRIPTION).getValue();
+	public int getNumberOfPosition() {
+		return checkNullFieldAndReturnIntegerValue(VacancyField.NUMBER_OF_POSITION);
 	}
 
-	public long getTitlesId() {
-		return checkNullFieldAndReturnLongValue(VacancyField.TITLES_ID);
+	public String getDescription() {
+		return getDocument().getField(VacancyField.DESCRIPTION).getValue();
 	}
 
 	public String getStatus() {

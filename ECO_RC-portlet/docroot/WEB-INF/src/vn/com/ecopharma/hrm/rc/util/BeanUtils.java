@@ -7,8 +7,8 @@ import vn.com.ecopharma.hrm.rc.bean.CandidateBean;
 import vn.com.ecopharma.hrm.rc.bean.CandidateViewBean;
 import vn.com.ecopharma.hrm.rc.bean.EvaluationBean;
 import vn.com.ecopharma.hrm.rc.bean.InterviewManagementFilterBean;
+import vn.com.ecopharma.hrm.rc.bean.OrganizationPanelBean;
 import vn.com.ecopharma.hrm.rc.bean.RCViewBean;
-import vn.com.ecopharma.hrm.rc.bean.TitlesActionBean;
 import vn.com.ecopharma.hrm.rc.bean.VacancyBean;
 import vn.com.ecopharma.hrm.rc.bean.VacancyViewBean;
 import vn.com.ecopharma.hrm.rc.bean.filter.CandidateFilterBean;
@@ -30,9 +30,9 @@ public class BeanUtils {
 
 	private static final String INTERVIEWS_MANAGEMENT_BEAN = "interviewManagementFilterBean";
 
-	private static final String TITLES_ACTION_BEAN = "titlesActionBean";
-
 	private static final String EVALUATION_BEAN = "evaluationBean";
+
+	private static final String ORGANIZATION_PANEL_BEAN = "organizationPanelBean";
 
 	/**
 	 * @param name
@@ -76,12 +76,12 @@ public class BeanUtils {
 		return (InterviewManagementFilterBean) getBackingBeanByName(INTERVIEWS_MANAGEMENT_BEAN);
 	}
 
-	public static TitlesActionBean getTitlesActionBean() {
-		return (TitlesActionBean) getBackingBeanByName(TITLES_ACTION_BEAN);
-	}
-
 	public EvaluationBean getEvaluationBean() {
 		return (EvaluationBean) getBackingBeanByName(EVALUATION_BEAN);
+	}
+
+	public static OrganizationPanelBean getOrganizationPanelBean() {
+		return (OrganizationPanelBean) getBackingBeanByName(ORGANIZATION_PANEL_BEAN);
 	}
 
 }

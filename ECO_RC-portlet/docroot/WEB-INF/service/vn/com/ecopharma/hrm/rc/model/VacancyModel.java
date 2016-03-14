@@ -118,6 +118,48 @@ public interface VacancyModel extends BaseModel<Vacancy>, GroupedModel {
 	public void setTitlesId(long titlesId);
 
 	/**
+	 * Returns the unit group ID of this vacancy.
+	 *
+	 * @return the unit group ID of this vacancy
+	 */
+	public long getUnitGroupId();
+
+	/**
+	 * Sets the unit group ID of this vacancy.
+	 *
+	 * @param unitGroupId the unit group ID of this vacancy
+	 */
+	public void setUnitGroupId(long unitGroupId);
+
+	/**
+	 * Returns the unit ID of this vacancy.
+	 *
+	 * @return the unit ID of this vacancy
+	 */
+	public long getUnitId();
+
+	/**
+	 * Sets the unit ID of this vacancy.
+	 *
+	 * @param unitId the unit ID of this vacancy
+	 */
+	public void setUnitId(long unitId);
+
+	/**
+	 * Returns the department ID of this vacancy.
+	 *
+	 * @return the department ID of this vacancy
+	 */
+	public long getDepartmentId();
+
+	/**
+	 * Sets the department ID of this vacancy.
+	 *
+	 * @param departmentId the department ID of this vacancy
+	 */
+	public void setDepartmentId(long departmentId);
+
+	/**
 	 * Returns the number of new recruitment of this vacancy.
 	 *
 	 * @return the number of new recruitment of this vacancy

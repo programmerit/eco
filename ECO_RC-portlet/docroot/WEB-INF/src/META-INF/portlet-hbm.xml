@@ -233,6 +233,9 @@
 		<property name="approvedNumberOfPosition" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="currentNumberOfEmployee" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="titlesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="unitGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="unitId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="departmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="numberOfNewRecruitment" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="numberOfReplacedRecruitment" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="expectedSalary" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />

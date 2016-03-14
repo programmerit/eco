@@ -62,6 +62,9 @@
         <column name="approvedNumberOfPosition" type="int"></column>
         <column name="currentNumberOfEmployee" type="int"></column>
         <column name="titlesId" type="long"></column>
+        <column name="unitGroupId" type="long"></column>
+        <column name="unitId" type="long"></column>
+        <column name="departmentId" type="long"></column>
         <column name="numberOfNewRecruitment" type="int"></column>
         <column name="numberOfReplacedRecruitment" type="int"></column>
         <column name="expectedSalary" type="double"></column>

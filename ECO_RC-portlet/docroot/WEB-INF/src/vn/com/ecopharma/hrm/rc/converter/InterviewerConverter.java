@@ -6,7 +6,6 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
-import vn.com.ecopharma.hrm.rc.constant.EmpField;
 import vn.com.ecopharma.hrm.rc.dto.EmpIndexedItem;
 import vn.com.ecopharma.hrm.rc.util.RCUtils;
 
@@ -23,8 +22,7 @@ public class InterviewerConverter implements Converter {
 
 	@Override
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2) {
-		return ((EmpIndexedItem) arg2).getEmployeeDocument()
-				.getField(EmpField.EMP_ID).getValue().trim();
+		return ((EmpIndexedItem) arg2).getIdAsString();
 	}
 
 }

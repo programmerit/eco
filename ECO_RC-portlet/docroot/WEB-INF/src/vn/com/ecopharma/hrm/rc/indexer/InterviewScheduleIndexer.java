@@ -58,7 +58,7 @@ public class InterviewScheduleIndexer extends BaseIndexer {
 
 	@Override
 	protected void doDelete(Object obj) throws Exception {
-		final InterviewSchedule o = (InterviewSchedule) obj;
+		// final InterviewSchedule o = (InterviewSchedule) obj;
 		// vacancy.setDeleted(true);
 		// doReindex(vacancy);
 	}
@@ -171,7 +171,7 @@ public class InterviewScheduleIndexer extends BaseIndexer {
 		final List<EmpIndexedItem> employeeIndexedItems = getInterviewersByInterviewSchedule(interviewSchedule);
 		final Long[] result = new Long[employeeIndexedItems.size()];
 		for (int i = 0; i < employeeIndexedItems.size(); i++) {
-			result[i] = employeeIndexedItems.get(i).getEmployeeId();
+			result[i] = employeeIndexedItems.get(i).getId();
 		}
 		return result;
 	}

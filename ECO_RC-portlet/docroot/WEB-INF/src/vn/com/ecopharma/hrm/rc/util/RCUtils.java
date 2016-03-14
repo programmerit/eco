@@ -3,13 +3,13 @@ package vn.com.ecopharma.hrm.rc.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.el.ELContext;
-import javax.faces.context.FacesContext;
 import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import vn.com.ecopharma.hrm.rc.dto.AbstractIndexedItem;
+import vn.com.ecopharma.hrm.rc.dto.CandidateIndexItem;
 import vn.com.ecopharma.hrm.rc.dto.IndexedEntity;
+import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,14 +34,28 @@ public class RCUtils {
 
 	}
 
-	/**
-	 * @param name
-	 * @return
-	 */
-	public static Object getBackingBeanByName(String name) {
-		ELContext elContext = FacesContext.getCurrentInstance().getELContext();
-		return FacesContext.getCurrentInstance().getApplication()
-				.getELResolver().getValue(elContext, null, name);
+	@SuppressWarnings("unchecked")
+	public static void onStatusProcessing(CandidateStatus status, Object entity) {
+		boolean isMultipleCandidates = entity instanceof List<?>;
+		StringBuilder messageBuilder = new StringBuilder();
+		messageBuilder.append("State of ");
+		if (isMultipleCandidates) {
+			int size = ((List<CandidateIndexItem>) entity).size();
+			messageBuilder.append(size
+					+ (size > 1 ? " Candidates were " : " Candidate was ")
+					+ " changed to ");
+		} else {
+			CandidateIndexItem candidate = (CandidateIndexItem) entity;
+			messageBuilder.append(" Candidate [" + candidate.getFullName()
+					+ "] was changed to");
+		}
+		switch (status) {
+		case SHORTLIST:
+			messageBuilder.append(CandidateStatus.SHORTLIST.toString());
+			break;
+		default:
+			break;
+		}
 	}
 
 	/**

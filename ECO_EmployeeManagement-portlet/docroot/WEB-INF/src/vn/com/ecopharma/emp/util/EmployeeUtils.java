@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 
-import vn.com.ecopharma.emp.constant.EmpField;
+import vn.com.ecopharma.emp.dto.AbstractBaseModelItem;
 import vn.com.ecopharma.emp.dto.AddressObjectItem;
 import vn.com.ecopharma.emp.dto.BankInfoObject;
 import vn.com.ecopharma.emp.dto.DependentName;
@@ -36,14 +36,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.ParseException;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.User;
@@ -427,6 +423,12 @@ public class EmployeeUtils {
 		return Long.valueOf(String.valueOf(model.getPrimaryKeyObj()));
 	}
 
+	public static long getBaseModelItemPrimaryKey(AbstractBaseModelItem<?> model) {
+		if (model == null)
+			return 0;
+		return model.getId();
+	}
+
 	public static String generateEmailByUsername(String username) {
 		return username + EMAIL_SUFFIX;
 	}
@@ -537,29 +539,15 @@ public class EmployeeUtils {
 	 * @return
 	 */
 	public static List<EmpIndexedItem> searchEmpByName(String query) {
-		final List<EmpIndexedItem> filteredItems = new ArrayList<>();
-		final SearchContext searchContext = getCurrentSearchContext();
 		try {
-			final List<Query> queries = new ArrayList<>();
-			final BooleanQuery filterBooleanQuery = BooleanQueryFactoryUtil
-					.create(searchContext);
-			filterBooleanQuery.addTerms(new String[] { EmpField.FULL_NAME,
-					EmpField.VN_FULL_NAME, EmpField.EMP_CODE }, query, true);
-			Sort sort = new Sort();
-			sort.setFieldName(EmpField.EMP_ID);
-			queries.add(filterBooleanQuery);
-			final List<Document> docs = EmpLocalServiceUtil
-					.searchAllUnDeletedEmpIndexedDocument(searchContext,
-							queries, searchContext.getCompanyId(), sort,
-							QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-			for (Document doc : docs) {
-				filteredItems.add(new EmpIndexedItem(doc));
-			}
-			return filteredItems;
+			return getEmployeeIndexedItemsFromIndexedDocuments(EmpLocalServiceUtil
+					.filterEmployeeByAutocompleteQuery(query,
+							getCurrentSearchContext(), QueryUtil.ALL_POS,
+							QueryUtil.ALL_POS));
 		} catch (ParseException e) {
 			LogFactoryUtil.getLog(EmployeeUtils.class).info(e);
 		}
-		return filteredItems;
+		return new ArrayList<>();
 	}
 
 	public static String getShortenDisplayFullName(String fullName) {

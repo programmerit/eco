@@ -359,6 +359,24 @@ public class CandidateLocalServiceUtil {
 				   .changeCandidateStatus(candidateId, status, serviceContext);
 	}
 
+	public static void changeMultipleCandidateStatus(
+		java.util.List<java.lang.Long> ids, java.lang.String status,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		getService().changeMultipleCandidateStatus(ids, status, serviceContext);
+	}
+
+	public static vn.com.ecopharma.hrm.rc.model.Candidate setShortListCandidate(
+		long candidateId,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService().setShortListCandidate(candidateId, serviceContext);
+	}
+
+	public static void setShortListCandidates(
+		java.util.List<java.lang.Long> ids,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		getService().setShortListCandidates(ids, serviceContext);
+	}
+
 	public static vn.com.ecopharma.hrm.rc.model.Candidate markDeleted(
 		vn.com.ecopharma.hrm.rc.model.Candidate candidate,
 		com.liferay.portal.service.ServiceContext serviceContext) {

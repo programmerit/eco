@@ -182,91 +182,110 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName31 = "markDeleted";
+		_methodName31 = "changeMultipleCandidateStatus";
 
 		_methodParameterTypes31 = new String[] {
-				"vn.com.ecopharma.hrm.rc.model.Candidate",
+				"java.util.List", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName32 = "markDeleted";
+		_methodName32 = "setShortListCandidate";
 
 		_methodParameterTypes32 = new String[] {
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName33 = "countAllUnDeletedIndexedCandidateDocuments";
+		_methodName33 = "setShortListCandidates";
 
 		_methodParameterTypes33 = new String[] {
+				"java.util.List", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName34 = "markDeleted";
+
+		_methodParameterTypes34 = new String[] {
+				"vn.com.ecopharma.hrm.rc.model.Candidate",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName35 = "markDeleted";
+
+		_methodParameterTypes35 = new String[] {
+				"long", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName36 = "countAllUnDeletedIndexedCandidateDocuments";
+
+		_methodParameterTypes36 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort"
 			};
 
-		_methodName34 = "searchAllUnDeletedCandidatesIndexedDocument";
+		_methodName37 = "searchAllUnDeletedCandidatesIndexedDocument";
 
-		_methodParameterTypes34 = new String[] {
+		_methodParameterTypes37 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName35 = "filterByFields";
+		_methodName38 = "filterByFields";
 
-		_methodParameterTypes35 = new String[] {
+		_methodParameterTypes38 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long",
 				"int", "int"
 			};
 
-		_methodName36 = "countFilterByFields";
+		_methodName39 = "countFilterByFields";
 
-		_methodParameterTypes36 = new String[] {
+		_methodParameterTypes39 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long"
 			};
 
-		_methodName37 = "createDateTermRangeQuery";
+		_methodName40 = "createDateTermRangeQuery";
 
-		_methodParameterTypes37 = new String[] {
+		_methodParameterTypes40 = new String[] {
 				"java.lang.String", "java.util.Date", "java.util.Date",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName38 = "getCurrentDateNextYear";
+		_methodName41 = "getCurrentDateNextYear";
 
-		_methodParameterTypes38 = new String[] {  };
+		_methodParameterTypes41 = new String[] {  };
 
-		_methodName39 = "getIndexCandidateDocument";
+		_methodName42 = "getIndexCandidateDocument";
 
-		_methodParameterTypes39 = new String[] {
+		_methodParameterTypes42 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName40 = "getIndexCandidateDocument";
+		_methodName43 = "getIndexCandidateDocument";
 
-		_methodParameterTypes40 = new String[] {
+		_methodParameterTypes43 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName41 = "indexAllCandidates";
+		_methodName44 = "indexAllCandidates";
 
-		_methodParameterTypes41 = new String[] {  };
+		_methodParameterTypes44 = new String[] {  };
 
-		_methodName42 = "removeAllCandidateIndexes";
+		_methodName45 = "removeAllCandidateIndexes";
 
-		_methodParameterTypes42 = new String[] {
+		_methodParameterTypes45 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 
-		_methodName43 = "hasAlreadyScheduleForInterview";
+		_methodName46 = "hasAlreadyScheduleForInterview";
 
-		_methodParameterTypes43 = new String[] { "long", "long", "long" };
+		_methodParameterTypes46 = new String[] { "long", "long", "long" };
 
-		_methodName44 = "hasAlreadyScheduleForInterview";
+		_methodName47 = "hasAlreadyScheduleForInterview";
 
-		_methodParameterTypes44 = new String[] { "long", "long" };
+		_methodParameterTypes47 = new String[] { "long", "long" };
 	}
 
 	@Override
@@ -1197,19 +1216,19 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 	}
 
 	@Override
-	public vn.com.ecopharma.hrm.rc.model.Candidate markDeleted(
-		vn.com.ecopharma.hrm.rc.model.Candidate candidate,
+	public void changeMultipleCandidateStatus(
+		java.util.List<java.lang.Long> ids, java.lang.String status,
 		com.liferay.portal.service.ServiceContext serviceContext) {
-		Object returnObj = null;
-
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
-					new Object[] {
-						ClpSerializer.translateInput(candidate),
-						
-					ClpSerializer.translateInput(serviceContext)
-					});
+			_invokableLocalService.invokeMethod(_methodName31,
+				_methodParameterTypes31,
+				new Object[] {
+					ClpSerializer.translateInput(ids),
+					
+				ClpSerializer.translateInput(status),
+					
+				ClpSerializer.translateInput(serviceContext)
+				});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1222,12 +1241,10 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 					" is not a valid exception");
 			}
 		}
-
-		return (vn.com.ecopharma.hrm.rc.model.Candidate)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public vn.com.ecopharma.hrm.rc.model.Candidate markDeleted(
+	public vn.com.ecopharma.hrm.rc.model.Candidate setShortListCandidate(
 		long candidateId,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
@@ -1257,6 +1274,91 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 	}
 
 	@Override
+	public void setShortListCandidates(java.util.List<java.lang.Long> ids,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		try {
+			_invokableLocalService.invokeMethod(_methodName33,
+				_methodParameterTypes33,
+				new Object[] {
+					ClpSerializer.translateInput(ids),
+					
+				ClpSerializer.translateInput(serviceContext)
+				});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public vn.com.ecopharma.hrm.rc.model.Candidate markDeleted(
+		vn.com.ecopharma.hrm.rc.model.Candidate candidate,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
+					new Object[] {
+						ClpSerializer.translateInput(candidate),
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.hrm.rc.model.Candidate)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public vn.com.ecopharma.hrm.rc.model.Candidate markDeleted(
+		long candidateId,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35,
+					new Object[] {
+						candidateId,
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.hrm.rc.model.Candidate)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public int countAllUnDeletedIndexedCandidateDocuments(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> filterQueries,
@@ -1264,8 +1366,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33,
+			returnObj = _invokableLocalService.invokeMethod(_methodName36,
+					_methodParameterTypes36,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1300,8 +1402,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName34,
-					_methodParameterTypes34,
+			returnObj = _invokableLocalService.invokeMethod(_methodName37,
+					_methodParameterTypes37,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1340,8 +1442,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName35,
-					_methodParameterTypes35,
+			returnObj = _invokableLocalService.invokeMethod(_methodName38,
+					_methodParameterTypes38,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1384,8 +1486,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName36,
-					_methodParameterTypes36,
+			returnObj = _invokableLocalService.invokeMethod(_methodName39,
+					_methodParameterTypes39,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1422,8 +1524,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName37,
-					_methodParameterTypes37,
+			returnObj = _invokableLocalService.invokeMethod(_methodName40,
+					_methodParameterTypes40,
 					new Object[] {
 						ClpSerializer.translateInput(field),
 						
@@ -1454,8 +1556,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName38,
-					_methodParameterTypes38, new Object[] {  });
+			returnObj = _invokableLocalService.invokeMethod(_methodName41,
+					_methodParameterTypes41, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1478,8 +1580,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName39,
-					_methodParameterTypes39,
+			returnObj = _invokableLocalService.invokeMethod(_methodName42,
+					_methodParameterTypes42,
 					new Object[] { id, ClpSerializer.translateInput(
 							searchContext) });
 		}
@@ -1505,8 +1607,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName40,
-					_methodParameterTypes40,
+			returnObj = _invokableLocalService.invokeMethod(_methodName43,
+					_methodParameterTypes43,
 					new Object[] {
 						ClpSerializer.translateInput(id),
 						
@@ -1531,8 +1633,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 	@Override
 	public void indexAllCandidates() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName41,
-				_methodParameterTypes41, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName44,
+				_methodParameterTypes44, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1552,8 +1654,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		long companyId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName42,
-				_methodParameterTypes42,
+			_invokableLocalService.invokeMethod(_methodName45,
+				_methodParameterTypes45,
 				new Object[] {
 					ClpSerializer.translateInput(searchContext),
 					
@@ -1579,8 +1681,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName43,
-					_methodParameterTypes43,
+			returnObj = _invokableLocalService.invokeMethod(_methodName46,
+					_methodParameterTypes46,
 					new Object[] { candidateId, vacancyId, interviewId });
 		}
 		catch (Throwable t) {
@@ -1604,8 +1706,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName44,
-					_methodParameterTypes44,
+			returnObj = _invokableLocalService.invokeMethod(_methodName47,
+					_methodParameterTypes47,
 					new Object[] { vacancyCandidateId, interviewId });
 		}
 		catch (Throwable t) {
@@ -1712,4 +1814,10 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 	private String[] _methodParameterTypes43;
 	private String _methodName44;
 	private String[] _methodParameterTypes44;
+	private String _methodName45;
+	private String[] _methodParameterTypes45;
+	private String _methodName46;
+	private String[] _methodParameterTypes46;
+	private String _methodName47;
+	private String[] _methodParameterTypes47;
 }

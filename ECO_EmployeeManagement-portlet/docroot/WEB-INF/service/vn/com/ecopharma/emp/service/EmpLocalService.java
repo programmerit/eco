@@ -296,6 +296,20 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		com.liferay.portal.kernel.search.Sort sort, long companyId, int start,
 		int end) throws com.liferay.portal.kernel.search.ParseException;
 
+	/**
+	* @param query
+	* @param searchContext
+	* @param start
+	* @param end
+	* @return
+	* @throws ParseException
+	*/
+	public java.util.List<com.liferay.portal.kernel.search.Document> filterEmployeeByAutocompleteQuery(
+		java.lang.String query,
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		int start, int end)
+		throws com.liferay.portal.kernel.search.ParseException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isOrganizationFilter(java.lang.String filterProperty);
 
@@ -362,15 +376,10 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 	* @throws PortalException
 	*/
 	public vn.com.ecopharma.emp.model.Emp addEmp(
-		vn.com.ecopharma.emp.model.Emp employee, boolean autoPassword,
+		vn.com.ecopharma.emp.model.Emp employee,
+		com.liferay.portal.model.User generatedUser, boolean autoPassword,
 		java.lang.String password1, java.lang.String password2,
-		boolean autoScreenName, java.lang.String screenName,
-		java.lang.String emailAddress, long facebookId,
-		java.lang.String openId, java.util.Locale locale,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, int prefixId, int suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear, long[] groupIds,
-		long[] organizationIds, long[] roleIds, long[] userGroupIds,
+		boolean autoScreenName, java.lang.String screenName, boolean male,
 		boolean sendEmail,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addresses,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
@@ -386,6 +395,25 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public vn.com.ecopharma.emp.model.Emp addEmp(
+		vn.com.ecopharma.emp.model.Emp employee, boolean autoPassword,
+		java.lang.String password1, java.lang.String password2,
+		boolean autoScreenName, java.lang.String screenName,
+		java.lang.String emailAddress, long facebookId,
+		java.lang.String openId, java.util.Locale locale,
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, int prefixId, int suffixId, boolean male,
+		int birthdayMonth, int birthdayDay, int birthdayYear, long[] groupIds,
+		long[] organizationIds, long[] roleIds, long[] userGroupIds,
+		boolean sendEmail,
+		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addresses,
+		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

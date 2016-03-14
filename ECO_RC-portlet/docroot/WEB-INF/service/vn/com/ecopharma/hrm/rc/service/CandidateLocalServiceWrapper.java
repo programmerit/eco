@@ -381,6 +381,28 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
 	}
 
 	@Override
+	public void changeMultipleCandidateStatus(
+		java.util.List<java.lang.Long> ids, java.lang.String status,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		_candidateLocalService.changeMultipleCandidateStatus(ids, status,
+			serviceContext);
+	}
+
+	@Override
+	public vn.com.ecopharma.hrm.rc.model.Candidate setShortListCandidate(
+		long candidateId,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _candidateLocalService.setShortListCandidate(candidateId,
+			serviceContext);
+	}
+
+	@Override
+	public void setShortListCandidates(java.util.List<java.lang.Long> ids,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		_candidateLocalService.setShortListCandidates(ids, serviceContext);
+	}
+
+	@Override
 	public vn.com.ecopharma.hrm.rc.model.Candidate markDeleted(
 		vn.com.ecopharma.hrm.rc.model.Candidate candidate,
 		com.liferay.portal.service.ServiceContext serviceContext) {

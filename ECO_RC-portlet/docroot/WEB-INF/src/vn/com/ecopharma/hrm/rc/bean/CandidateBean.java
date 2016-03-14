@@ -106,7 +106,6 @@ public class CandidateBean implements Serializable {
 	public void init() {
 		selectedItems = new ArrayList<>();
 
-		
 		lazyDataModel = new CandidateLazyDataModel() {
 			private static final long serialVersionUID = 1L;
 
@@ -434,9 +433,7 @@ public class CandidateBean implements Serializable {
 						.findByVacancyCandidateAndStatus(
 								item.getVacancyCandidateId(),
 								InterviewScheduleStatus.PROCESSING.toString());
-				is.setStatus(candidateStatus
-						.equals(CandidateStatus.MARK_INTERVIEW_PASS) ? InterviewScheduleStatus.PASSED
-						.toString() : InterviewScheduleStatus.FAILED.toString());
+				is.setStatus(candidateStatus.toString());
 				try {
 					InterviewScheduleLocalServiceUtil
 							.updateInterviewSchedule(is);
@@ -449,13 +446,9 @@ public class CandidateBean implements Serializable {
 
 			break;
 		case JOB_OFFERED:
-			// EvaluationBean evaluationBean = (EvaluationBean) BeanUtils
-			// .getBackingBeanByName("evaluationBean");
-			// evaluationBean.setCandidateIndexItems(selectedItems);
-			// evaluationBean.setEvaluationItems(evaluationBean
-			// .getEvaluationItemsFromEvaluationCriteria());
-			// RequestContext.getCurrentInstance().execute(
-			// "PF('wEvaluationDialog').show()");
+			
+			// call Offered
+			
 			break;
 		case DECLINE_OFFERED:
 

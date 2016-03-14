@@ -1,34 +1,47 @@
 package vn.com.ecopharma.hrm.rc.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.application.FacesMessage;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.portlet.PortletRequest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
 
+import vn.com.ecopharma.emp.model.Document;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.model.Level;
+import vn.com.ecopharma.emp.model.Specialized;
 import vn.com.ecopharma.emp.model.University;
+import vn.com.ecopharma.emp.service.DistrictLocalServiceUtil;
+import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
+import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
-import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
+import vn.com.ecopharma.emp.service.SpecializedLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.dto.AddressObjectItem;
 import vn.com.ecopharma.hrm.rc.dto.BankInfoObject;
 import vn.com.ecopharma.hrm.rc.dto.CandidateIndexItem;
 import vn.com.ecopharma.hrm.rc.dto.CandidateItem;
 import vn.com.ecopharma.hrm.rc.dto.DependentName;
+import vn.com.ecopharma.hrm.rc.dto.DocumentItem;
 import vn.com.ecopharma.hrm.rc.dto.EmpInfoItem;
-import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
+import vn.com.ecopharma.hrm.rc.dto.RegionItem;
+import vn.com.ecopharma.hrm.rc.enumeration.DocumentType;
+import vn.com.ecopharma.hrm.rc.enumeration.EducationType;
 import vn.com.ecopharma.hrm.rc.enumeration.LaborContractType;
 import vn.com.ecopharma.hrm.rc.enumeration.VacancyCandidateType;
 import vn.com.ecopharma.hrm.rc.model.Candidate;
@@ -40,18 +53,18 @@ import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.util.BeanUtils;
 import vn.com.ecopharma.hrm.rc.util.CandidateUtils;
 import vn.com.ecopharma.hrm.rc.util.EmployeeUtils;
+import vn.com.ecopharma.hrm.rc.util.RCUtils;
 
-import com.liferay.faces.portal.context.LiferayFacesContext;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Country;
+import com.liferay.portal.model.Region;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CountryServiceUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RegionServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
 
 @ManagedBean
 @ViewScoped
@@ -59,7 +72,7 @@ public class EmployeeBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String DEFAULT_PW = "123";
+	private static final Log LOGGER = LogFactoryUtil.getLog(EmployeeBean.class);
 
 	private static final String MALE = "male";
 
@@ -67,9 +80,96 @@ public class EmployeeBean implements Serializable {
 
 	private List<Country> countries;
 
-	private Candidate candidate;
-
 	private boolean autoPassword = true;
+
+	// DOCUMENT PART
+	private int deletedDocumentIndex = -1;
+	private String selectedDocumentType = DocumentType.LABOR_CONTRACT
+			.toString(); // default
+
+	@PostConstruct
+	public void init() {
+		try {
+			countries = CountryServiceUtil.getCountries(true);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+	}
+
+	public void save() {
+		final Emp employee = modifyEmployeeInfoItem.getEmp();
+
+		final User generatedUser = modifyEmployeeInfoItem.getUser();
+
+		final Map<Address, Boolean> addressMap = EmployeeUtils
+				.transferAddressObjectListToAddressMap(modifyEmployeeInfoItem
+						.getAddresses());
+		final Map<String, Boolean> dependentMap = EmployeeUtils
+				.transferDependentNameObjectListToDependentNameMap(modifyEmployeeInfoItem
+						.getDependentNames());
+
+		final Map<EmpBankInfo, Boolean> bankInfoMap = EmployeeUtils
+				.transferBankInfoObjectListToBankInfoMap(modifyEmployeeInfoItem
+						.getBankInfos());
+
+		generatedUser.setFirstName(EmployeeUtils
+				.getFirstName(modifyEmployeeInfoItem.getFullName()));
+		generatedUser.setMiddleName(EmployeeUtils
+				.getMiddleName(modifyEmployeeInfoItem.getFullName()));
+		generatedUser.setLastName(EmployeeUtils
+				.getLastName(modifyEmployeeInfoItem.getFullName()));
+		long specializedId = EmployeeUtils
+				.getBaseModelPrimaryKey(modifyEmployeeInfoItem.getSpecialized());
+		modifyEmployeeInfoItem.getEmp().setSpecializeId(specializedId);
+
+		long workingPlaceId = modifyEmployeeInfoItem.getWorkingPlace() != null ? modifyEmployeeInfoItem
+				.getWorkingPlace().getId() : 0L;
+		modifyEmployeeInfoItem.getEmp().setWorkingPlaceId(workingPlaceId);
+
+		BeanUtils.getOrganizationPanelBean().setSelectedValuesToEmp(
+				modifyEmployeeInfoItem.getEmp());
+
+		try {
+			EmpLocalServiceUtil.addEmp(employee, generatedUser, false,
+					modifyEmployeeInfoItem.getUserPassword1(),
+					modifyEmployeeInfoItem.getUserPassword2(), false,
+					modifyEmployeeInfoItem.getUserName(), employee.getGender()
+							.equalsIgnoreCase(MALE) ? true : false, true,
+					addressMap, dependentMap, bankInfoMap, false, RCUtils
+							.getServiceContext());
+		} catch (PortalException e) {
+			LOGGER.info(e);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+
+	}
+
+	public void addOneAddress() {
+		modifyEmployeeInfoItem.getAddresses().add(new AddressObjectItem());
+	}
+
+	public void removeOneAddress(int index) {
+		modifyEmployeeInfoItem.getAddresses().get(index).setUIDeleted(true);
+	}
+
+	public void onPrimaryChanged(AjaxBehaviorEvent event) {
+	}
+
+	public void addOneBankInfo() {
+		if (modifyEmployeeInfoItem.getBankInfos().size() < 3)
+			modifyEmployeeInfoItem.getBankInfos().add(new BankInfoObject());
+	}
+
+	public void removeOneBankInfo(int index) {
+		modifyEmployeeInfoItem.getBankInfos().get(index).setUIDeleted(true);
+	}
+
+	public void cancelModification() {
+		final CandidateViewBean candidateViewBean = BeanUtils
+				.getCandidateViewBean();
+		candidateViewBean.switchMode(1);
+	}
 
 	public void transferCandidateInfo(CandidateItem candidateItem) {
 		try {
@@ -96,7 +196,6 @@ public class EmployeeBean implements Serializable {
 			throws SystemException {
 		final EmpInfoItem employeeInfoItem = new EmpInfoItem();
 		final String fullName = candidate.getFullName();
-		this.candidate = candidate;
 		employeeInfoItem.getUser()
 				.setFirstName(
 						CandidateUtils.getFirstNameFromFullname(candidate
@@ -128,115 +227,67 @@ public class EmployeeBean implements Serializable {
 		Vacancy vacancy = vacancyCandidate != null ? VacancyLocalServiceUtil
 				.fetchVacancy(vacancyCandidate.getVacancyId()) : null;
 
-		employeeInfoItem.setTitles(vacancy != null ? TitlesLocalServiceUtil
-				.fetchTitles(vacancy.getTitlesId()) : null);
-		getCountriesList();
+		BeanUtils.getOrganizationPanelBean().setSelectedValuesFromVacancy(
+				vacancy);
 		return employeeInfoItem;
 	}
 
-	public void addOneAddress() {
-		modifyEmployeeInfoItem.getAddresses().add(new AddressObjectItem());
-	}
-
-	public void removeOneAddress(int index) {
-		modifyEmployeeInfoItem.getAddresses().get(index).setUIDeleted(true);
-	}
-
-	public void addOneBankInfo() {
-		if (modifyEmployeeInfoItem.getBankInfos().size() < 3)
-			modifyEmployeeInfoItem.getBankInfos().add(new BankInfoObject());
-	}
-
-	public void removeOneBankInfo(int index) {
-		modifyEmployeeInfoItem.getBankInfos().get(index).setUIDeleted(true);
-	}
-
-	/**
-	 * @param event
-	 */
-	public void save() {
-		LiferayFacesContext liferayFacesContext = LiferayFacesContext
-				.getInstance();
-		final ServiceContext serviceContext = liferayFacesContext
-				.getServiceContext();
-		FacesMessage msg = null;
+	public void handleDocumentUpload(FileUploadEvent event) {
 		try {
-			final Emp employee = modifyEmployeeInfoItem.getEmp();
-
-			User empUser = modifyEmployeeInfoItem.getUser();
-
-			final Map<Address, Boolean> addressMap = EmployeeUtils
-					.transferAddressObjectListToAddressMap(modifyEmployeeInfoItem
-							.getAddresses());
-			final Map<String, Boolean> dependentMap = EmployeeUtils
-					.transferDependentNameObjectListToDependentNameMap(modifyEmployeeInfoItem
-							.getDependentNames());
-
-			final Map<EmpBankInfo, Boolean> bankInfoMap = EmployeeUtils
-					.transferBankInfoObjectListToBankInfoMap(modifyEmployeeInfoItem
-							.getBankInfos());
-
-			EmployeeUtils.setAttributesToEmpFromEditItem(employee,
-					modifyEmployeeInfoItem);
-
-			final Calendar cal = Calendar.getInstance();
-			cal.setTime(employee.getBirthday());
-			int day = cal.get(Calendar.DAY_OF_MONTH);
-			int month = cal.get(Calendar.MONTH);
-			int year = cal.get(Calendar.YEAR);
-
-			// group id: User Personal Site
-			long[] groups = new long[] { GroupLocalServiceUtil.getGroup(
-					serviceContext.getCompanyId(), "User Personal Site")
-					.getGroupId() };
-			// role id: User
-			long[] roles = new long[] { RoleLocalServiceUtil.getRole(
-					serviceContext.getCompanyId(), "User").getRoleId() };
-
-			final long facebookId = 0L;
-			final int prefixId = 0;
-			final int suffixId = 0;
-
-			final long[] organizationIds = null;
-			final long[] userGroupIds = null;
-
-			final boolean sendEmail = false;
-
-			// Emp result = EmpLocalServiceUtil.addEmp(employee, false,
-			// !autoPassword ? modifyEmployeeInfoItem.getUserPassword1()
-			// : DEFAULT_PW,
-			// !autoPassword ? modifyEmployeeInfoItem.getUserPassword2()
-			// : DEFAULT_PW, false, modifyEmployeeInfoItem
-			// .getUserName(), empUser.getEmailAddress(),
-			// facebookId, StringUtils.EMPTY, LocaleUtil.getDefault(),
-			// empUser.getFirstName(), empUser.getMiddleName(), empUser
-			// .getLastName(), prefixId, suffixId, employee
-			// .getGender().equalsIgnoreCase(MALE) ? true : false,
-			// month, day, year, groups, organizationIds, roles,
-			// userGroupIds, sendEmail, addressMap, dependentMap,
-			// bankInfoMap, serviceContext);
-
-			// if (result != null) {
-			candidate.setStatus(CandidateStatus.HIRE.toString());
-			CandidateLocalServiceUtil.updateCandidate(candidate);
-
-			msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"Create employee successfully", "Employee "
-							+ modifyEmployeeInfoItem.getUser().getFullName()
-							+ " has been created");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-
-			RequestContext.getCurrentInstance().execute(
-					"window.location.hash = '#vCandidate';");
-
-			CandidateViewBean candidateViewBean = BeanUtils
-					.getCandidateViewBean();
-			candidateViewBean.switchMode(1);
-			// }
-
-		} catch (Exception e) {
-			LogFactoryUtil.getLog(EmployeeBean.class).info(e);
+			PortletRequest request = (PortletRequest) FacesContext
+					.getCurrentInstance().getExternalContext().getRequest();
+			final Document uploadDocument = DocumentLocalServiceUtil
+					.uploadAndLinkEntity(modifyEmployeeInfoItem.getEmp(),
+							request, event.getFile().getInputstream(), event
+									.getFile().getFileName(),
+							"EmployeeDocuments", DocumentType.LABOR_CONTRACT
+									.toString(), true, EmployeeUtils
+									.getServiceContext());
+			if (uploadDocument != null)
+				modifyEmployeeInfoItem.getDocuments().add(
+						new DocumentItem(uploadDocument));
+		} catch (IOException e) {
+			LOGGER.info(e);
 		}
+	}
+
+	public void deleteDocument() {
+		if (deletedDocumentIndex != -1) {
+			DocumentItem item = modifyEmployeeInfoItem.getDocuments().get(
+					deletedDocumentIndex);
+			DocumentLocalServiceUtil.completelyDeleteDocuments(item
+					.getFileEntry().getFileEntryId());
+			modifyEmployeeInfoItem.getDocuments().remove(deletedDocumentIndex);
+		}
+	}
+
+	public List<String> getAllDocumentType() {
+		return DocumentType.getAll();
+	}
+
+	public void onCountryChange(int index) {
+		try {
+			modifyEmployeeInfoItem
+					.getAddresses()
+					.get(index)
+					.setRegions(
+							RegionServiceUtil.getRegions(modifyEmployeeInfoItem
+									.getAddresses().get(index).getCountry()
+									.getCountryId()));
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+	}
+
+	public void onRegionChange(int index) {
+		modifyEmployeeInfoItem
+				.getAddresses()
+				.get(index)
+				.setDistricts(
+						DistrictLocalServiceUtil
+								.findByRegionCode(modifyEmployeeInfoItem
+										.getAddresses().get(index).getRegion()
+										.getRegionCode()));
 	}
 
 	/**
@@ -260,73 +311,21 @@ public class EmployeeBean implements Serializable {
 		modifyEmployeeInfoItem.getUser().setEmailAddress(emailAddress);
 	}
 
-	// Dependent Names action part
-	public void onAddDependence() {
-		modifyEmployeeInfoItem.getDependentNames().add(
-				new DependentName("", false));
+	public void onFullNameBlur() {
+		String username = generateUsername();
+		String emailAddress = EmployeeUtils.generateEmailByUsername(username);
+		modifyEmployeeInfoItem.setUserName(username);
+		modifyEmployeeInfoItem.getUser().setEmailAddress(emailAddress);
 	}
 
-	public void onRemoveDependence(int index) {
-		modifyEmployeeInfoItem.getDependentNames().get(index)
-				.setUIDeleted(true);
-	}
+	private String generateUsername() {
+		final String defaultUsername = "user" + System.currentTimeMillis();
 
-	public void onCountryChange(int index) {
-		try {
-			modifyEmployeeInfoItem
-					.getAddresses()
-					.get(index)
-					.setRegions(
-							RegionServiceUtil.getRegions(modifyEmployeeInfoItem
-									.getAddresses().get(index).getCountry()
-									.getCountryId()));
-		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmployeeBean.class).info(e);
-		}
-	}
+		final String generatedUsername = EmployeeUtils
+				.generateUsername(modifyEmployeeInfoItem.getFullName());
+		return StringUtils.trimToNull(generatedUsername) != null ? generatedUsername
+				: defaultUsername;
 
-	public void onDevisionChanged() {
-		modifyEmployeeInfoItem.setDepartment(null);
-		modifyEmployeeInfoItem.setUnit(null);
-		modifyEmployeeInfoItem.setUnitGroup(null);
-		modifyEmployeeInfoItem.setTitles(null);
-	}
-
-	public void onDepartmentChanged() {
-		modifyEmployeeInfoItem.setUnit(null);
-		modifyEmployeeInfoItem.setUnitGroup(null);
-		modifyEmployeeInfoItem.setTitles(null);
-	}
-
-	public void onUnitChanged() {
-		modifyEmployeeInfoItem.setUnitGroup(null);
-		modifyEmployeeInfoItem.setTitles(null);
-	}
-
-	public void onUnitGroupChanged() {
-		modifyEmployeeInfoItem.setTitles(null);
-	}
-
-	public void cancelModification() {
-		final CandidateViewBean candidateViewBean = BeanUtils
-				.getCandidateViewBean();
-		candidateViewBean.switchMode(1);
-	}
-
-	public EmpInfoItem getModifyEmployeeInfoItem() {
-		return modifyEmployeeInfoItem;
-	}
-
-	public void setModifyEmployeeInfoItem(EmpInfoItem modifyEmployeeInfoItem) {
-		this.modifyEmployeeInfoItem = modifyEmployeeInfoItem;
-	}
-
-	public List<Level> getLevels() {
-		return LevelLocalServiceUtil.findAll();
-	}
-
-	public List<University> getUniversities() {
-		return UniversityLocalServiceUtil.findAll();
 	}
 
 	public List<String> getLaborContractTypes() {
@@ -337,18 +336,66 @@ public class EmployeeBean implements Serializable {
 		return results;
 	}
 
-	private void getCountriesList() {
-		try {
-			countries = CountryServiceUtil.getCountries(true);
-		} catch (SystemException e) {
-			LogFactoryUtil.getLog(EmployeeBean.class).info(e);
-		}
+	public List<String> getEducationTypes() {
+		return EducationType.getAllVi();
 	}
 
 	public Date getMaxBirthdayDate() {
 		Calendar now = Calendar.getInstance();
+		// backward 18 years
 		now.add(Calendar.YEAR, -18);
 		return now.getTime();
+	}
+
+	// Dependent Names action part
+	public void onAddDependence(ActionEvent event) {
+		modifyEmployeeInfoItem.getDependentNames().add(
+				new DependentName(StringUtils.EMPTY, false));
+	}
+
+	public void onRemoveDependence(int index) {
+		modifyEmployeeInfoItem.getDependentNames().get(index)
+				.setUIDeleted(true);
+	}
+
+	public List<Level> getLevels() {
+		return LevelLocalServiceUtil.findAll();
+	}
+
+	public List<University> getUniversities() {
+		return UniversityLocalServiceUtil.findAll();
+	}
+
+	public List<Specialized> getSpecializeds() {
+		return SpecializedLocalServiceUtil.findAll();
+	}
+
+	/**
+	 * Default working place in VN
+	 * 
+	 * @return all regions of VN
+	 */
+	public List<RegionItem> getWorkingPlaces() {
+		try {
+			final List<Region> vnRegions = RegionServiceUtil.getRegions(17L);
+			final List<RegionItem> regionItems = new ArrayList<>();
+			for (Region region : vnRegions) {
+				regionItems.add(new RegionItem(region));
+			}
+			Collections.sort(regionItems);
+			return regionItems;
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return new ArrayList<>();
+	}
+
+	public String getSelectedDocumentType() {
+		return selectedDocumentType;
+	}
+
+	public void setSelectedDocumentType(String selectedDocumentType) {
+		this.selectedDocumentType = selectedDocumentType;
 	}
 
 	public List<Country> getCountries() {
@@ -367,21 +414,11 @@ public class EmployeeBean implements Serializable {
 		this.autoPassword = autoPassword;
 	}
 
-	private String generateUsername() {
-		final String defaultUsername = "user" + System.currentTimeMillis();
-		if (modifyEmployeeInfoItem != null
-				&& modifyEmployeeInfoItem.getUser().getFirstName() != null
-				&& modifyEmployeeInfoItem.getUser().getMiddleName() != null
-				&& modifyEmployeeInfoItem.getUser().getLastName() != null) {
-			final String generatedUsername = EmployeeUtils
-					.generateUsername(EmployeeUtils
-							.getFullnameFromUser(modifyEmployeeInfoItem
-									.getUser()));
-			return StringUtils.trimToNull(generatedUsername) != null ? generatedUsername
-					: defaultUsername;
-
-		}
-		return defaultUsername;
+	public EmpInfoItem getModifyEmployeeInfoItem() {
+		return modifyEmployeeInfoItem;
 	}
 
+	public void setModifyEmployeeInfoItem(EmpInfoItem modifyEmployeeInfoItem) {
+		this.modifyEmployeeInfoItem = modifyEmployeeInfoItem;
+	}
 }

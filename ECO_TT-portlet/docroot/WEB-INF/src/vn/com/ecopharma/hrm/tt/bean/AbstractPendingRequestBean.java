@@ -10,6 +10,10 @@ import org.primefaces.model.DualListModel;
 
 import vn.com.ecopharma.hrm.tt.dto.VacationLeaveIndexedItem;
 
+/**
+ * @author TaoTran
+ *
+ */
 public abstract class AbstractPendingRequestBean extends BaseBean {
 
 	/**

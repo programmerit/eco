@@ -6,15 +6,13 @@ import java.util.Locale;
 
 import javax.portlet.PortletURL;
 
-import org.apache.commons.lang.StringUtils;
-
-import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.constant.ECO_RCUtils;
 import vn.com.ecopharma.hrm.rc.constant.VacancyField;
 import vn.com.ecopharma.hrm.rc.model.Vacancy;
 import vn.com.ecopharma.hrm.rc.permission.VacancyPermission;
 import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.persistence.VacancyActionableDynamicQuery;
+import vn.com.ecopharma.hrm.rc.util.SearchEngineUtils;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -51,14 +49,11 @@ public class VacancyIndexer extends BaseIndexer {
 		final Vacancy vacancy = (Vacancy) obj;
 		final Document doc = getBaseModelDocument(ECO_RCUtils.PORTLET_ID,
 				vacancy);
+		SearchEngineUtils.indexOrganizationFields(doc, vacancy);
 		doc.addNumber(VacancyField.VACANCY_ID, vacancy.getVacancyId());
 		// doc.addText(VacancyField.NAME, vacancy.getName());
 		doc.addNumber(VacancyField.NUMBER_OF_POSITION,
 				vacancy.getApprovedNumberOfPosition());
-		doc.addText(
-				VacancyField.TITLES,
-				vacancy.getTitlesId() != 0 ? TitlesLocalServiceUtil.getTitles(
-						vacancy.getTitlesId()).getName() : StringUtils.EMPTY);
 		doc.addText(VacancyField.DESCRIPTION, vacancy.getDescription());
 
 		doc.addNumber(VacancyField.TITLES_ID, vacancy.getTitlesId());

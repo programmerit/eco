@@ -8,11 +8,25 @@ public class VacancyField {
 
 	public static final String NUMBER_OF_POSITION = "numberOfPosition";
 
+	public static final String UNIT = "unit";
+
+	public static final String DEPARTMENT = "department";
+
+	public static final String DEVISION = "devision";
+
+	public static final String UNIT_GROUP = "unitGroup";
+
 	public static final String TITLES = "titles";
 
-	public static final String DESCRIPTION = "description";
+	public static final String UNITGROUP_ID = "unitGroupId";
+
+	public static final String UNIT_ID = "unitId";
+
+	public static final String DEPARTMENT_ID = "departmentId";
 
 	public static final String TITLES_ID = "titlesId";
+
+	public static final String DESCRIPTION = "description";
 
 	public static final String IS_DELETED = "deleted";
 

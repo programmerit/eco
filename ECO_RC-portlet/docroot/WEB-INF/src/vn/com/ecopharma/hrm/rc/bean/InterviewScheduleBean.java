@@ -98,7 +98,7 @@ public class InterviewScheduleBean implements Serializable {
 	private List<Long> getEmpIds(List<EmpIndexedItem> employeeIndexedItems) {
 		final List<Long> ids = new ArrayList<Long>(employeeIndexedItems.size());
 		for (EmpIndexedItem employeeIndexedItem : employeeIndexedItems) {
-			ids.add(employeeIndexedItem.getEmployeeId());
+			ids.add(employeeIndexedItem.getId());
 		}
 		return ids;
 	}

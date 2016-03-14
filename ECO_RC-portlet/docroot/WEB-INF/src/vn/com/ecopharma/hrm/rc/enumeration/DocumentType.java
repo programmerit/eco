@@ -5,7 +5,8 @@ import java.util.List;
 
 public enum DocumentType {
 
-	CANDIDATE_CV, JOB_DESC;
+	CANDIDATE_CV, JOB_DESC, // candidate & vacancy
+	LABOR_CONTRACT, DECISION, OTHER; // employee
 
 	public static List<String> getAll() {
 		final List<String> result = new ArrayList<>();

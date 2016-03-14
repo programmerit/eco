@@ -143,7 +143,8 @@
 						value="#{i18n[candidateViewBean.getLocalizedStatus('HIRE')]}"
 						disabled="#{candidateBean.selectedItems.size() > 1}"
 						rendered="#{candidateBean.isExistedInSameAvailableStatuses('HIRE')}"
-						action="#{candidateBean.onChangeMultipleItemStatus('HIRE')}" />
+						action="#{candidateBean.onChangeMultipleItemStatus('HIRE')}"
+						update=":CandidatePanelGroup" />
 
 					<p:menuitem
 						value="#{i18n[candidateViewBean.getLocalizedStatus('REJECT')]}"
@@ -182,8 +183,7 @@
 					<p:menuitem
 						value="#{i18n[candidateViewBean.getLocalizedStatus('EVALUATE_CANDIDATE')]}"
 						rendered="#{candidateBean.isExistedInSameAvailableStatuses('EVALUATE_CANDIDATE')}"
-						action="#{candidateBean.onChangeMultipleItemStatus('EVALUATE_CANDIDATE')}"
-						update=":includedDialog" />
+						action="#{candidateBean.onChangeMultipleItemStatus('EVALUATE_CANDIDATE')}" />
 					<p:menuitem value="No Actions Available" disabled="true"
 						rendered="#{candidateBean.noneAvailableStatus}" />
 				</p:submenu>

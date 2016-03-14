@@ -16,7 +16,6 @@ import vn.com.ecopharma.hrm.rc.model.Experience;
 import vn.com.ecopharma.hrm.rc.model.Vacancy;
 import vn.com.ecopharma.hrm.rc.model.VacancyCandidate;
 import vn.com.ecopharma.hrm.rc.service.CandidateEvaluationLocalServiceUtil;
-import vn.com.ecopharma.hrm.rc.service.EvaluationCriteriaLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.VacancyCandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
 

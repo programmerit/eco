@@ -14,6 +14,7 @@
 
 package vn.com.ecopharma.emp.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -56,7 +57,6 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.util.mail.MailEngine;
@@ -92,6 +92,8 @@ public class VacationLeaveLocalServiceImpl extends
 
 	private static final Log LOGGER = LogFactoryUtil
 			.getLog(VacationLeaveLocalServiceImpl.class);
+
+	private static final String BASIC_FORMAT_DATE = "dd/MM/yyyy";
 
 	public List<VacationLeave> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -321,8 +323,10 @@ public class VacationLeaveLocalServiceImpl extends
 							numberOfActualLeaves, serviceContext);
 				}
 				// send email to requester
-				empLocalService.sendNewEmpsNotificationEmail(emps)
-				
+				final String emailContent = getHrApprovedEmailContent(result);
+				sendNotificationEmaiToEmp(empId, emailContent,
+						"[Thông báo] Yêu cầu nghỉ phép");
+
 			}
 			return result;
 		} catch (SystemException e) {
@@ -353,6 +357,31 @@ public class VacationLeaveLocalServiceImpl extends
 			LOGGER.info(e);
 		}
 		return false;
+	}
+
+	private String getHrApprovedEmailContent(VacationLeave vacationLeave) {
+		final StringBuilder builder = new StringBuilder();
+
+		final SimpleDateFormat sdf = new SimpleDateFormat(BASIC_FORMAT_DATE);
+		final Date dateFrom = vacationLeave.getLeaveFrom();
+		final Date dateTo = vacationLeave.getLeaveTo();
+		final String leaveType = VacationLeaveType.valueOf(
+				vacationLeave.getLeaveType()).getHardCodeVneseString();
+		final String sign = vacationLeave.getSign();
+
+		builder.append("Yêu cầu nghỉ của bạn đã được duyệt.");
+		builder.append("<p><b>Loại nghỉ: </b>");
+		builder.append(leaveType);
+		builder.append("</p>");
+		builder.append("<p><b>Ngày nghỉ: </b>");
+		builder.append(sdf.format(dateFrom) + " - " + sdf.format(dateTo) + " ("
+				+ sign + ")");
+		builder.append("</p>");
+		builder.append("<p><b>Tình trạng: </b><font color='red'>Đã được duyệt.</p>");
+		builder.append("Trân trọng,<br />");
+		builder.append("Phòng HCNS");
+
+		return builder.toString();
 	}
 
 	public double calculateNumberOfAnnualLeavesBtwTwoDates(Date dateFrom,

@@ -12,22 +12,34 @@ public abstract class AbstractBaseModelItem<T extends BaseModel<T>> implements
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private T object;
+	T t;
 
 	public AbstractBaseModelItem() {
-		this.object = createPrepersistedEntity();
+		this.t = createPrepersistedEntity();
 	}
 
-	public AbstractBaseModelItem(T object) {
-		this.object = object;
+	public AbstractBaseModelItem(T t) {
+		this.t = t;
 	}
 
 	public T getObject() {
-		return object;
+		return t;
 	}
 
-	public void setObject(T object) {
-		this.object = object;
+	public void setObject(T t) {
+		this.t = t;
+	}
+
+	public long getId() {
+		return new Long(t.getPrimaryKeyObj().toString());
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof AbstractBaseModelItem<?>))
+			return false;
+		AbstractBaseModelItem<?> that = (AbstractBaseModelItem<?>) obj;
+		return this.getId() == that.getId();
 	}
 
 	public abstract T createPrepersistedEntity();

@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+	<composite:interface>
+		<composite:attribute name="levelIncluded" type="java.lang.Boolean"
+			required="true" />
+	</composite:interface>
+
+	<composite:implementation>
+		<h:panelGrid columns="2">
+
+			<h:outputText value="Devision" />
+			<p:selectOneMenu id="devisionSelect"
+				value="#{organizationPanelBean.selectedDevision}"
+				converter="devisionConverter" effect="fade" filter="true"
+				filterMatchMode="contains" var="d">
+				<p:ajax
+					update="departmentSelect unitSelect unitGroupSelect titlesSelect"
+					listener="#{organizationPanelBean.onDevisionChanged}" />
+
+				<f:selectItem itemLabel="Devision" itemValue="" />
+				<f:selectItems value="#{organizationPanelBean.devisions}" var="d"
+					itemLabel="#{d.name}" itemValue="#{d}" />
+				<p:column>
+					                #{d.name}
+					            </p:column>
+			</p:selectOneMenu>
+
+
+			<h:outputText value="Department" />
+			<h:panelGroup>
+				<p:selectOneMenu id="departmentSelect"
+					value="#{organizationPanelBean.selectedDepartment}"
+					converter="departmentConverter" effect="fade" filter="true"
+					filterMatchMode="contains" var="d">
+					<p:ajax update="unitSelect unitGroupSelect titlesSelect"
+						listener="#{organizationPanelBean.onDepartmentChanged}" />
+
+					<f:selectItem itemLabel="Department" itemValue="" />
+					<f:selectItems value="#{organizationPanelBean.departments}" var="d"
+						itemLabel="#{d.name}" itemValue="#{d}" />
+					<p:column>
+					                #{d.name}
+					            </p:column>
+				</p:selectOneMenu>
+			</h:panelGroup>
+
+			<h:outputText value="Unit" />
+			<p:selectOneMenu id="unitSelect"
+				value="#{organizationPanelBean.selectedUnit}"
+				converter="unitConverter" effect="fade" filter="true"
+				filterMatchMode="contains" var="u">
+				<p:ajax update="unitGroupSelect"
+					listener="#{organizationPanelBean.onUnitChanged}" />
+
+				<f:selectItem itemLabel="Unit" itemValue="" />
+				<f:selectItems value="#{organizationPanelBean.units}" var="u"
+					itemLabel="#{u.name}" itemValue="#{u}" />
+				<p:column>
+					                #{u.name}
+					            </p:column>
+			</p:selectOneMenu>
+
+			<h:outputText value="Group" />
+			<p:selectOneMenu id="unitGroupSelect"
+				value="#{organizationPanelBean.selectedUnitGroup}"
+				converter="unitGroupConverter" effect="fade" filter="true"
+				filterMatchMode="contains" var="g">
+				<f:selectItem itemLabel="Group" itemValue="" />
+				<f:selectItems value="#{organizationPanelBean.unitGroups}" var="g"
+					itemLabel="#{g.name}" itemValue="#{g}" />
+				<p:column>
+					                #{g.name}
+					            </p:column>
+			</p:selectOneMenu>
+
+			<h:outputText value="Titles" />
+			<p:selectOneMenu id="titlesSelect"
+				value="#{organizationPanelBean.selectedTitles}"
+				converter="titlesConverter" effect="fade" filter="true"
+				filterMatchMode="contains" var="t" required="true"
+				validatorMessage="[Titles] is required">
+				<f:selectItem itemLabel="Titles" itemValue="" />
+				<f:selectItems value="#{organizationPanelBean.titlesList}" var="t"
+					itemLabel="#{t.name}" itemValue="#{t}" />
+				<p:column>
+					                #{t.name}
+					            </p:column>
+			</p:selectOneMenu>
+
+			<h:outputText value="Level" rendered="#{cc.attrs.levelIncluded}" />
+			<p:selectOneMenu id="levelSelect"
+				value="#{organizationPanelBean.selectedLevel}"
+				converter="levelConverter" effect="fade" filter="true"
+				filterMatchMode="contains" var="l"
+				rendered="#{cc.attrs.levelIncluded}">
+
+				<f:selectItem itemLabel="Level" itemValue="" />
+				<f:selectItems value="#{organizationPanelBean.levels}" var="l"
+					itemLabel="#{l.level}" itemValue="#{l}" />
+
+				<p:column>
+					               	#{l.level}
+					            </p:column>
+			</p:selectOneMenu>
+
+			<composite:insertChildren />
+		</h:panelGrid>
+	</composite:implementation>
+</f:view>

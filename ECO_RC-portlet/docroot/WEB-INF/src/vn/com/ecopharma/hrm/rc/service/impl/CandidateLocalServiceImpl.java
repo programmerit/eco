@@ -25,6 +25,7 @@ import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.constant.CandidateField;
 import vn.com.ecopharma.hrm.rc.constant.ECO_RCUtils;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateHistoryActionType;
+import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
 import vn.com.ecopharma.hrm.rc.enumeration.VacancyCandidateType;
 import vn.com.ecopharma.hrm.rc.model.Candidate;
 import vn.com.ecopharma.hrm.rc.model.CandidateActionHistory;
@@ -440,6 +441,25 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			LOGGER.info(e);
 		}
 		return null;
+	}
+
+	public void changeMultipleCandidateStatus(List<Long> ids, String status,
+			ServiceContext serviceContext) {
+		for (long id : ids) {
+			changeCandidateStatus(id, status, serviceContext);
+		}
+	}
+
+	public Candidate setShortListCandidate(long candidateId,
+			ServiceContext serviceContext) {
+		return changeCandidateStatus(candidateId,
+				CandidateStatus.SHORTLIST.toString(), serviceContext);
+	}
+
+	public void setShortListCandidates(List<Long> ids,
+			ServiceContext serviceContext) {
+		changeMultipleCandidateStatus(ids,
+				CandidateStatus.SHORTLIST.toString(), serviceContext);
 	}
 
 	/*

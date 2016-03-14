@@ -70,6 +70,9 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 			{ "approvedNumberOfPosition", Types.INTEGER },
 			{ "currentNumberOfEmployee", Types.INTEGER },
 			{ "titlesId", Types.BIGINT },
+			{ "unitGroupId", Types.BIGINT },
+			{ "unitId", Types.BIGINT },
+			{ "departmentId", Types.BIGINT },
 			{ "numberOfNewRecruitment", Types.INTEGER },
 			{ "numberOfReplacedRecruitment", Types.INTEGER },
 			{ "expectedSalary", Types.DOUBLE },
@@ -98,7 +101,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "deleted", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_rcp_Vacancy (vacancyId LONG not null primary key,approvedNumberOfPosition INTEGER,currentNumberOfEmployee INTEGER,titlesId LONG,numberOfNewRecruitment INTEGER,numberOfReplacedRecruitment INTEGER,expectedSalary DOUBLE,expectedJoinedDate DATE null,workPlaceId LONG,description VARCHAR(75) null,requiredGender VARCHAR(75) null,certificateType VARCHAR(75) null,specialized VARCHAR(75) null,experiences DOUBLE,foreignLanguages VARCHAR(75) null,skills VARCHAR(75) null,officeSkills VARCHAR(75) null,awayToBusinessType VARCHAR(75) null,workingTimeType VARCHAR(75) null,jobType VARCHAR(75) null,code_ VARCHAR(75) null,status VARCHAR(75) null,postedDate DATE null,expiredDate DATE null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,deleted BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table eco_rcp_Vacancy (vacancyId LONG not null primary key,approvedNumberOfPosition INTEGER,currentNumberOfEmployee INTEGER,titlesId LONG,unitGroupId LONG,unitId LONG,departmentId LONG,numberOfNewRecruitment INTEGER,numberOfReplacedRecruitment INTEGER,expectedSalary DOUBLE,expectedJoinedDate DATE null,workPlaceId LONG,description VARCHAR(75) null,requiredGender VARCHAR(75) null,certificateType VARCHAR(75) null,specialized VARCHAR(75) null,experiences DOUBLE,foreignLanguages VARCHAR(75) null,skills VARCHAR(75) null,officeSkills VARCHAR(75) null,awayToBusinessType VARCHAR(75) null,workingTimeType VARCHAR(75) null,jobType VARCHAR(75) null,code_ VARCHAR(75) null,status VARCHAR(75) null,postedDate DATE null,expiredDate DATE null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,deleted BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table eco_rcp_Vacancy";
 	public static final String ORDER_BY_JPQL = " ORDER BY vacancy.vacancyId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_rcp_Vacancy.vacancyId ASC";
@@ -134,6 +137,9 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		model.setApprovedNumberOfPosition(soapModel.getApprovedNumberOfPosition());
 		model.setCurrentNumberOfEmployee(soapModel.getCurrentNumberOfEmployee());
 		model.setTitlesId(soapModel.getTitlesId());
+		model.setUnitGroupId(soapModel.getUnitGroupId());
+		model.setUnitId(soapModel.getUnitId());
+		model.setDepartmentId(soapModel.getDepartmentId());
 		model.setNumberOfNewRecruitment(soapModel.getNumberOfNewRecruitment());
 		model.setNumberOfReplacedRecruitment(soapModel.getNumberOfReplacedRecruitment());
 		model.setExpectedSalary(soapModel.getExpectedSalary());
@@ -229,6 +235,9 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		attributes.put("approvedNumberOfPosition", getApprovedNumberOfPosition());
 		attributes.put("currentNumberOfEmployee", getCurrentNumberOfEmployee());
 		attributes.put("titlesId", getTitlesId());
+		attributes.put("unitGroupId", getUnitGroupId());
+		attributes.put("unitId", getUnitId());
+		attributes.put("departmentId", getDepartmentId());
 		attributes.put("numberOfNewRecruitment", getNumberOfNewRecruitment());
 		attributes.put("numberOfReplacedRecruitment",
 			getNumberOfReplacedRecruitment());
@@ -287,6 +296,24 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
 		if (titlesId != null) {
 			setTitlesId(titlesId);
+		}
+
+		Long unitGroupId = (Long)attributes.get("unitGroupId");
+
+		if (unitGroupId != null) {
+			setUnitGroupId(unitGroupId);
+		}
+
+		Long unitId = (Long)attributes.get("unitId");
+
+		if (unitId != null) {
+			setUnitId(unitId);
+		}
+
+		Long departmentId = (Long)attributes.get("departmentId");
+
+		if (departmentId != null) {
+			setDepartmentId(departmentId);
 		}
 
 		Integer numberOfNewRecruitment = (Integer)attributes.get(
@@ -496,6 +523,39 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 	@Override
 	public void setTitlesId(long titlesId) {
 		_titlesId = titlesId;
+	}
+
+	@JSON
+	@Override
+	public long getUnitGroupId() {
+		return _unitGroupId;
+	}
+
+	@Override
+	public void setUnitGroupId(long unitGroupId) {
+		_unitGroupId = unitGroupId;
+	}
+
+	@JSON
+	@Override
+	public long getUnitId() {
+		return _unitId;
+	}
+
+	@Override
+	public void setUnitId(long unitId) {
+		_unitId = unitId;
+	}
+
+	@JSON
+	@Override
+	public long getDepartmentId() {
+		return _departmentId;
+	}
+
+	@Override
+	public void setDepartmentId(long departmentId) {
+		_departmentId = departmentId;
 	}
 
 	@JSON
@@ -922,6 +982,9 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		vacancyImpl.setApprovedNumberOfPosition(getApprovedNumberOfPosition());
 		vacancyImpl.setCurrentNumberOfEmployee(getCurrentNumberOfEmployee());
 		vacancyImpl.setTitlesId(getTitlesId());
+		vacancyImpl.setUnitGroupId(getUnitGroupId());
+		vacancyImpl.setUnitId(getUnitId());
+		vacancyImpl.setDepartmentId(getDepartmentId());
 		vacancyImpl.setNumberOfNewRecruitment(getNumberOfNewRecruitment());
 		vacancyImpl.setNumberOfReplacedRecruitment(getNumberOfReplacedRecruitment());
 		vacancyImpl.setExpectedSalary(getExpectedSalary());
@@ -1019,6 +1082,12 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		vacancyCacheModel.currentNumberOfEmployee = getCurrentNumberOfEmployee();
 
 		vacancyCacheModel.titlesId = getTitlesId();
+
+		vacancyCacheModel.unitGroupId = getUnitGroupId();
+
+		vacancyCacheModel.unitId = getUnitId();
+
+		vacancyCacheModel.departmentId = getDepartmentId();
 
 		vacancyCacheModel.numberOfNewRecruitment = getNumberOfNewRecruitment();
 
@@ -1192,7 +1261,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(69);
 
 		sb.append("{vacancyId=");
 		sb.append(getVacancyId());
@@ -1202,6 +1271,12 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		sb.append(getCurrentNumberOfEmployee());
 		sb.append(", titlesId=");
 		sb.append(getTitlesId());
+		sb.append(", unitGroupId=");
+		sb.append(getUnitGroupId());
+		sb.append(", unitId=");
+		sb.append(getUnitId());
+		sb.append(", departmentId=");
+		sb.append(getDepartmentId());
 		sb.append(", numberOfNewRecruitment=");
 		sb.append(getNumberOfNewRecruitment());
 		sb.append(", numberOfReplacedRecruitment=");
@@ -1263,7 +1338,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(97);
+		StringBundler sb = new StringBundler(106);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.hrm.rc.model.Vacancy");
@@ -1284,6 +1359,18 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		sb.append(
 			"<column><column-name>titlesId</column-name><column-value><![CDATA[");
 		sb.append(getTitlesId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>unitGroupId</column-name><column-value><![CDATA[");
+		sb.append(getUnitGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>unitId</column-name><column-value><![CDATA[");
+		sb.append(getUnitId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>departmentId</column-name><column-value><![CDATA[");
+		sb.append(getDepartmentId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>numberOfNewRecruitment</column-name><column-value><![CDATA[");
@@ -1407,6 +1494,9 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 	private int _approvedNumberOfPosition;
 	private int _currentNumberOfEmployee;
 	private long _titlesId;
+	private long _unitGroupId;
+	private long _unitId;
+	private long _departmentId;
 	private int _numberOfNewRecruitment;
 	private int _numberOfReplacedRecruitment;
 	private double _expectedSalary;

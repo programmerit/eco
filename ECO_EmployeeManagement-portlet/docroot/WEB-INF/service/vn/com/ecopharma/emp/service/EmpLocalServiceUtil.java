@@ -349,6 +349,24 @@ public class EmpLocalServiceUtil {
 			companyId, start, end);
 	}
 
+	/**
+	* @param query
+	* @param searchContext
+	* @param start
+	* @param end
+	* @return
+	* @throws ParseException
+	*/
+	public static java.util.List<com.liferay.portal.kernel.search.Document> filterEmployeeByAutocompleteQuery(
+		java.lang.String query,
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		int start, int end)
+		throws com.liferay.portal.kernel.search.ParseException {
+		return getService()
+				   .filterEmployeeByAutocompleteQuery(query, searchContext,
+			start, end);
+	}
+
 	public static boolean isOrganizationFilter(java.lang.String filterProperty) {
 		return getService().isOrganizationFilter(filterProperty);
 	}
@@ -433,6 +451,39 @@ public class EmpLocalServiceUtil {
 	* @throws PortalException
 	*/
 	public static vn.com.ecopharma.emp.model.Emp addEmp(
+		vn.com.ecopharma.emp.model.Emp employee,
+		com.liferay.portal.model.User generatedUser, boolean autoPassword,
+		java.lang.String password1, java.lang.String password2,
+		boolean autoScreenName, java.lang.String screenName, boolean male,
+		boolean sendEmail,
+		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addresses,
+		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		boolean isImportAction,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addEmp(employee, generatedUser, autoPassword, password1,
+			password2, autoScreenName, screenName, male, sendEmail, addresses,
+			dependentNameMap, bankInfoMap, isImportAction, serviceContext);
+	}
+
+	public static vn.com.ecopharma.emp.model.Emp addEmp(
+		vn.com.ecopharma.emp.model.Emp employee,
+		com.liferay.portal.model.User user,
+		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
+		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addEmp(employee, user, addressesMap, dependentNameMap,
+			bankInfoMap, serviceContext);
+	}
+
+	public static vn.com.ecopharma.emp.model.Emp addEmp(
 		vn.com.ecopharma.emp.model.Emp employee, boolean autoPassword,
 		java.lang.String password1, java.lang.String password2,
 		boolean autoScreenName, java.lang.String screenName,
@@ -457,20 +508,6 @@ public class EmpLocalServiceUtil {
 			birthdayMonth, birthdayDay, birthdayYear, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, addresses,
 			dependentNameMap, bankInfoMap, isImportAction, serviceContext);
-	}
-
-	public static vn.com.ecopharma.emp.model.Emp addEmp(
-		vn.com.ecopharma.emp.model.Emp employee,
-		com.liferay.portal.model.User user,
-		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
-		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
-		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .addEmp(employee, user, addressesMap, dependentNameMap,
-			bankInfoMap, serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp update(

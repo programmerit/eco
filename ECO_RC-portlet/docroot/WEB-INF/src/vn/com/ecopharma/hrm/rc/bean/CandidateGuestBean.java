@@ -31,7 +31,6 @@ import vn.com.ecopharma.hrm.rc.model.Certificate;
 import vn.com.ecopharma.hrm.rc.model.Experience;
 import vn.com.ecopharma.hrm.rc.model.Vacancy;
 import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
-import vn.com.ecopharma.hrm.rc.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.util.BeanUtils;
 import vn.com.ecopharma.hrm.rc.util.DLUtils;
