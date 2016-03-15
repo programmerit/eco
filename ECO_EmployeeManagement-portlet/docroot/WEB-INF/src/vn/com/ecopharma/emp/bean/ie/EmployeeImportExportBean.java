@@ -259,7 +259,7 @@ public class EmployeeImportExportBean implements Serializable {
 				serviceContext.getCompanyId(), USER_ROLE).getRoleId() };
 
 		for (ImportExportEmployeeDTO dto : totalList) {
-			String originGeneratedUserScreenName = EmployeeUtils
+			String originGeneratedUserScreenName = EmpLocalServiceUtil
 					.generateOriginalUsername(dto.getFullname());
 
 			final Map<Address, Boolean> addressMap = EmployeeUtils
@@ -278,8 +278,8 @@ public class EmployeeImportExportBean implements Serializable {
 							originGeneratedUserScreenName,
 							dto.getEmployeeCode(), dto.getDob(),
 							EmployeeUtils.getCompanyId())) {
-						originGeneratedUserScreenName = EmployeeUtils
-								.generateUsername(dto.getFullname());
+						originGeneratedUserScreenName = EmpLocalServiceUtil
+								.generateOriginalUsername(dto.getFullname());
 
 						LogFactoryUtil
 								.getLog(EmployeeImportExportBean.class)

@@ -8,6 +8,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import com.liferay.portal.kernel.exception.SystemException;
+
 import vn.com.ecopharma.emp.dto.EmpInfoItem;
 
 @ManagedBean
@@ -28,7 +30,7 @@ public class ProfileViewBean implements Serializable {
 
 	}
 
-	public void onload() {
+	public void onload() throws SystemException {
 		emp = new EmpInfoItem(empId);
 	}
 

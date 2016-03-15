@@ -477,6 +477,41 @@ public class EmpLocalServiceClpInvoker {
 		_methodName252 = "fixLaborContractSignedDate";
 
 		_methodParameterTypes252 = new String[] {  };
+
+		_methodName253 = "generateOriginalUsername";
+
+		_methodParameterTypes253 = new String[] { "java.lang.String" };
+
+		_methodName254 = "regenerateUsername";
+
+		_methodParameterTypes254 = new String[] {
+				"java.lang.String", "int",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName255 = "checkAndGenerateUsernameByFullname";
+
+		_methodParameterTypes255 = new String[] {
+				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName256 = "generateEmailByUsername";
+
+		_methodParameterTypes256 = new String[] {
+				"java.lang.String", "java.lang.String"
+			};
+
+		_methodName257 = "getLastName";
+
+		_methodParameterTypes257 = new String[] { "java.lang.String" };
+
+		_methodName258 = "getMiddleName";
+
+		_methodParameterTypes258 = new String[] { "java.lang.String" };
+
+		_methodName259 = "getFirstName";
+
+		_methodParameterTypes259 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -1089,6 +1124,45 @@ public class EmpLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName253.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes253, parameterTypes)) {
+			return EmpLocalServiceUtil.generateOriginalUsername((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName254.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes254, parameterTypes)) {
+			return EmpLocalServiceUtil.regenerateUsername((java.lang.String)arguments[0],
+				((Integer)arguments[1]).intValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[2]);
+		}
+
+		if (_methodName255.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes255, parameterTypes)) {
+			return EmpLocalServiceUtil.checkAndGenerateUsernameByFullname((java.lang.String)arguments[0],
+				(com.liferay.portal.service.ServiceContext)arguments[1]);
+		}
+
+		if (_methodName256.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes256, parameterTypes)) {
+			return EmpLocalServiceUtil.generateEmailByUsername((java.lang.String)arguments[0],
+				(java.lang.String)arguments[1]);
+		}
+
+		if (_methodName257.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes257, parameterTypes)) {
+			return EmpLocalServiceUtil.getLastName((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName258.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes258, parameterTypes)) {
+			return EmpLocalServiceUtil.getMiddleName((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName259.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes259, parameterTypes)) {
+			return EmpLocalServiceUtil.getFirstName((java.lang.String)arguments[0]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -1256,4 +1330,18 @@ public class EmpLocalServiceClpInvoker {
 	private String[] _methodParameterTypes251;
 	private String _methodName252;
 	private String[] _methodParameterTypes252;
+	private String _methodName253;
+	private String[] _methodParameterTypes253;
+	private String _methodName254;
+	private String[] _methodParameterTypes254;
+	private String _methodName255;
+	private String[] _methodParameterTypes255;
+	private String _methodName256;
+	private String[] _methodParameterTypes256;
+	private String _methodName257;
+	private String[] _methodParameterTypes257;
+	private String _methodName258;
+	private String[] _methodParameterTypes258;
+	private String _methodName259;
+	private String[] _methodParameterTypes259;
 }

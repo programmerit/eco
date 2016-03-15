@@ -12,7 +12,8 @@
 			rendered="#{vacancyViewBean.currentMode==1}">
 
 			<h:link value="Show/Hide filter" styleClass="label"
-				onclick="toggle('#{requestScope.filterGrid.clientId}'); return false;" />
+				onclick="toggle('#{requestScope.filterGrid.clientId}'); return false;"
+				onmouseover="toggle('#{requestScope.filterGrid.clientId}'); return false;" />
 
 			<p:panelGrid columns="4" layout="grid"
 				style="margin-bottom: 7px!important;">
@@ -84,8 +85,7 @@
 
 			<p:commandLink id="addVacancy" value="Add New Vacancy"
 				actionListener="#{vacancyViewBean.switchMode(2)}"
-				action="#{vacancyBean.addVacancy}"
-				update=":VacancyPanelGroup :modifyVacancy:vacancyOutputPanel" /> |
+				action="#{vacancyBean.addVacancy}" update=":VacancyPanelGroup" /> |
 
 				<p:commandLink value="Remove Indexes"
 				actionListener="#{vacancyBean.removeIndexes}" ajax="true" /> |
@@ -105,7 +105,7 @@
 				emptyMessage="No vacancies found">
 				<p:ajax event="rowDblselect"
 					listener="#{vacancyBean.onRowDblSelect}"
-					update=":VacancyPanelGroup :modifyVacancy:vacancyOutputPanel" />
+					update=":VacancyPanelGroup" />
 
 				<p:column headerText="ID">
 					<h:outputText value="#{vacancy.id}" />
@@ -169,7 +169,15 @@
 			</p:confirmDialog>
 		</h:form>
 
-		<ui:include src="/views/pages/modifyVacancy.xhtml" />
-
 	</h:body>
+	<script type="text/javascript">
+		function toggle(id) {
+			var element = document.getElementById(id);
+			if (element.style.display == 'block') {
+				element.style.display = 'none';
+			} else {
+				element.style.display = 'block'
+			}
+		}
+	</script>
 </f:view>

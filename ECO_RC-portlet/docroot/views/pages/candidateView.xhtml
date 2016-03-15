@@ -127,10 +127,17 @@
 		<h:form id="candidateMainForm"
 			rendered="#{candidateViewBean.currentMode==1}">
 			<p:remoteCommand name="updateCandidatesAndGrowl"
-				update=":candidateMainForm:candidates :notificationForm:growl" />
+				update=":candidateMainForm:candidates :growl" />
 
 			<p:remoteCommand name="updateCandidatePanelGroup"
 				update=":CandidatePanelGroup" />
+
+			<p:remoteCommand name="refreshCandidateTable"
+				update=":candidateMainForm:candidates" />
+
+			<p:remoteCommand name="refreshContextMenu"
+				update=":candidateMainForm:candidateContextMenu" />
+
 			<p:contextMenu id="candidateContextMenu" for="candidates">
 				<p:submenu label="Status">
 					<p:menuitem
@@ -183,19 +190,13 @@
 					<p:menuitem
 						value="#{i18n[candidateViewBean.getLocalizedStatus('EVALUATE_CANDIDATE')]}"
 						rendered="#{candidateBean.isExistedInSameAvailableStatuses('EVALUATE_CANDIDATE')}"
-						action="#{candidateBean.onChangeMultipleItemStatus('EVALUATE_CANDIDATE')}" />
+						action="#{candidateBean.onChangeMultipleItemStatus('EVALUATE_CANDIDATE')}"
+						update=":CandidatePanelGroup"
+						oncomplete="PF('wEvaluationDialog').show();" />
 					<p:menuitem value="No Actions Available" disabled="true"
 						rendered="#{candidateBean.noneAvailableStatus}" />
 				</p:submenu>
 			</p:contextMenu>
-
-
-			<p:remoteCommand name="refreshCandidateTable"
-				update=":candidateMainForm:candidates" />
-
-			<p:remoteCommand name="refreshContextMenu"
-				update=":candidateMainForm:candidateContextMenu" />
-
 
 			<h:panelGroup rendered="#{modelPermission.checkPermission('ADD')}">
 				<p:commandLink id="backButton" value="Back"
@@ -218,6 +219,7 @@
 					onclick="PF('wPresetSettingDialog').show()" />
 
 			</h:panelGroup>
+
 			<p:dataTable id="candidates" var="candidate" widgetVar="wCandidates"
 				reflow="true" value="#{candidateBean.lazyDataModel}"
 				paginatorAlwaysVisible="true" paginator="true" rows="10"
@@ -281,10 +283,10 @@
 						value="#{candidateViewBean.selectedStatus}">
 						<!-- eliminate oncomplete update if current status is JOB_OFFERED, 
 						b/c changing to HIRE status will make AJAX cannot complete on updating candidates table -->
-						<p:ajax update=":CandidatePanelGroup candidateStatusSelect"
+						<p:ajax event="change"
+							update="candidateStatusSelect :CandidatePanelGroup"
 							listener="#{candidateViewBean.onStatusChange(candidate)}"
-							oncomplete="#{candidate.status != 'JOB_OFFERED' ? 'updateCandidatesAndGrowl();' : ''}">
-						</p:ajax>
+							oncomplete="updateCandidatesAndGrowl();" />
 						<f:selectItem itemLabel="---" itemValue="" />
 						<f:selectItems
 							value="#{candidateViewBean.getAvailableStatuses(candidate.status)}"

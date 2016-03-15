@@ -12,8 +12,12 @@ import org.apache.commons.lang3.StringUtils;
 
 @ManagedBean
 @ViewScoped
-public class NavigationBean {
+public class NavigationBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<NavigationItem> navigationItems;
 
 	@PostConstruct

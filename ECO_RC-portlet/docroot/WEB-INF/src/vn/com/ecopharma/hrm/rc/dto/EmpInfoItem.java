@@ -76,7 +76,7 @@ public class EmpInfoItem implements Serializable {
 				.getServiceContext());
 		// set default "Male" for employee
 		employee.setGender(MALE);
-		employee.setLaborContractType(LaborContractType.INDEFINITE_TERMS
+		employee.setLaborContractType(LaborContractType.PROBATION_CONTRACT
 				.toString());
 		this.addresses = new ArrayList<>();
 		this.dependentNames = new ArrayList<>();

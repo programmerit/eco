@@ -866,6 +866,68 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 		_empLocalService.fixLaborContractSignedDate();
 	}
 
+	@Override
+	public java.lang.String generateOriginalUsername(java.lang.String fullname) {
+		return _empLocalService.generateOriginalUsername(fullname);
+	}
+
+	/**
+	* recursive generate username in case of duplicating
+	*
+	* @param currentUsername
+	* @param increment
+	* @param serviceContext
+	* @return
+	*/
+	@Override
+	public java.lang.String regenerateUsername(
+		java.lang.String currentUsername, int increment,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _empLocalService.regenerateUsername(currentUsername, increment,
+			serviceContext);
+	}
+
+	@Override
+	public java.lang.String checkAndGenerateUsernameByFullname(
+		java.lang.String fullName,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _empLocalService.checkAndGenerateUsernameByFullname(fullName,
+			serviceContext);
+	}
+
+	@Override
+	public java.lang.String generateEmailByUsername(java.lang.String username,
+		java.lang.String emailSufix) {
+		return _empLocalService.generateEmailByUsername(username, emailSufix);
+	}
+
+	/**
+	* @param fullname
+	* @return
+	*/
+	@Override
+	public java.lang.String getLastName(java.lang.String fullname) {
+		return _empLocalService.getLastName(fullname);
+	}
+
+	/**
+	* @param fullname
+	* @return
+	*/
+	@Override
+	public java.lang.String getMiddleName(java.lang.String fullname) {
+		return _empLocalService.getMiddleName(fullname);
+	}
+
+	/**
+	* @param fullname
+	* @return
+	*/
+	@Override
+	public java.lang.String getFirstName(java.lang.String fullname) {
+		return _empLocalService.getFirstName(fullname);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

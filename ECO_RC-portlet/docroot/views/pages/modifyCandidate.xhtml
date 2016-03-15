@@ -33,6 +33,12 @@
 								<p:ajax update=":modifyCandidateForm:msgs" event="keyup" />
 							</p:inputText>
 
+							<h:outputText value="Birthday" />
+							<p:calendar id="birthday" mask="false" required="true"
+								maxdate="#{candidateBean.maxBirthdayDate}"
+								value="#{candidateBean.candidateItem.object.dateOfBirth}"
+								pattern="dd/MM/yyyy" placeholder="Birthday" />
+
 							<h:outputText value="Contact Number" />
 							<p:inputText id="cContactNumber" placeholder="Contact Number"
 								required="true"

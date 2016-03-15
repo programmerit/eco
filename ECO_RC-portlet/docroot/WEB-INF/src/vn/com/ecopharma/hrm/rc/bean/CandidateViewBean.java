@@ -20,7 +20,6 @@ import vn.com.ecopharma.hrm.rc.dto.evaluate.EvaluationItem;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
 import vn.com.ecopharma.hrm.rc.enumeration.EvaluationCriteriaType;
 import vn.com.ecopharma.hrm.rc.enumeration.InterviewScheduleStatus;
-import vn.com.ecopharma.hrm.rc.model.Candidate;
 import vn.com.ecopharma.hrm.rc.model.InterviewSchedule;
 import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.InterviewScheduleLocalServiceUtil;
@@ -47,7 +46,7 @@ public class CandidateViewBean extends EntityViewBean {
 
 	private String selectedStatus = StringUtils.EMPTY;
 
-	private String includedDialog;
+	private String includedDialog = StringUtils.EMPTY;
 
 	@PostConstruct
 	public void init() {
@@ -76,84 +75,75 @@ public class CandidateViewBean extends EntityViewBean {
 		super.switchMode(mode);
 	}
 
+	public void onStatusChange(CandidateIndexItem item) {
+		final CandidateBean candidateBean = (CandidateBean) BeanUtils
+				.getBackingBeanByName("candidateBean");
+		candidateBean.setSelectedItem(item);
+		final CandidateStatus status = CandidateStatus.valueOf(selectedStatus);
+
+		final ServiceContext serviceContext = LiferayFacesContext.getInstance()
+				.getServiceContext();
+
+		switch (status) {
+		case INTERVIEW_SCHEDULED:
+			ScheduleInterviewForCandidatesBean bean = (ScheduleInterviewForCandidatesBean) BeanUtils
+					.getBackingBeanByName("scheduleInterviewForCandidatesBean");
+			bean.setInterviewScheduleItems(Arrays
+					.asList(new InterviewScheduleItem(item)));
+			bean.setInterviewScheduleForAllItem(new InterviewScheduleForAllItem());
+			switchMode(CandidateNavigation.SCHEDULE_INTERVIEW);
+			break;
+
+		case EVALUATE_CANDIDATE:
+			onEvaluateCandidates(Arrays.asList(item));
+			break;
+		case HIRE:
+			EmployeeBean employeeBean = (EmployeeBean) BeanUtils
+					.getBackingBeanByName("employeeBean");
+			if (employeeBean.transferCandidateInfo(item) != null) {
+				switchMode(4);
+			}
+			break;
+		case MARK_INTERVIEW_PASS:
+		case MARK_INTERVIEW_FAIL:
+			InterviewSchedule is = InterviewScheduleLocalServiceUtil
+					.findByVacancyCandidateAndStatus(
+							item.getVacancyCandidateId(),
+							InterviewScheduleStatus.PROCESSING.toString());
+			is.setStatus(status.equals(CandidateStatus.MARK_INTERVIEW_PASS) ? InterviewScheduleStatus.PASSED
+					.toString() : InterviewScheduleStatus.FAILED.toString());
+			try {
+				InterviewSchedule interviewSchedule = InterviewScheduleLocalServiceUtil
+						.updateInterviewSchedule(is);
+				if (interviewSchedule != null) {
+					CandidateLocalServiceUtil.changeCandidateStatus(
+							item.getId(), status.toString(), serviceContext);
+				}
+			} catch (SystemException e) {
+				LOGGER.info(e);
+			}
+			break;
+		case REJECT:
+			candidateBean.setSelectedItems(Arrays.asList(item));
+			RequestContext.getCurrentInstance().execute(
+					"PF('wRejectConfirmDialog').show()");
+			break;
+		default:
+			CandidateLocalServiceUtil.changeCandidateStatus(item.getId(),
+					selectedStatus, serviceContext);
+			RequestContext.getCurrentInstance().execute(
+					"updateCandidatesAndGrowl();");
+			break;
+		}
+		selectedStatus = StringUtils.EMPTY;
+	}
+
 	public String currentStatusCSS(String status) {
 		return CandidateStatus.getCssClass(CandidateStatus.valueOf(status));
 	}
 
 	public List<String> getAvailableStatuses(String status) {
 		return CandidateStatus.getAvailableStatus_(status);
-	}
-
-	public void onStatusChange(CandidateIndexItem item) {
-		try {
-			final CandidateBean candidateBean = (CandidateBean) BeanUtils
-					.getBackingBeanByName("candidateBean");
-			candidateBean.setSelectedItem(item);
-			final CandidateStatus status = CandidateStatus
-					.valueOf(selectedStatus);
-
-			final ServiceContext serviceContext = LiferayFacesContext
-					.getInstance().getServiceContext();
-
-			switch (status) {
-			case INTERVIEW_SCHEDULED:
-				ScheduleInterviewForCandidatesBean bean = (ScheduleInterviewForCandidatesBean) BeanUtils
-						.getBackingBeanByName("scheduleInterviewForCandidatesBean");
-				bean.setInterviewScheduleItems(Arrays
-						.asList(new InterviewScheduleItem(item)));
-				bean.setInterviewScheduleForAllItem(new InterviewScheduleForAllItem());
-				switchMode(CandidateNavigation.SCHEDULE_INTERVIEW);
-				break;
-
-			case EVALUATE_CANDIDATE:
-				onEvaluateCandidates(Arrays.asList(item));
-				break;
-			case HIRE:
-				EmployeeBean employeeBean = (EmployeeBean) BeanUtils
-						.getBackingBeanByName("employeeBean");
-				if (employeeBean.transferCandidateInfo(item) != null) {
-					switchMode(4);
-				}
-				break;
-			case MARK_INTERVIEW_PASS:
-			case MARK_INTERVIEW_FAIL:
-				InterviewSchedule is = InterviewScheduleLocalServiceUtil
-						.findByVacancyCandidateAndStatus(
-								item.getVacancyCandidateId(),
-								InterviewScheduleStatus.PROCESSING.toString());
-				is.setStatus(status.equals(CandidateStatus.MARK_INTERVIEW_PASS) ? InterviewScheduleStatus.PASSED
-						.toString() : InterviewScheduleStatus.FAILED.toString());
-				try {
-					InterviewSchedule interviewSchedule = InterviewScheduleLocalServiceUtil
-							.updateInterviewSchedule(is);
-					if (interviewSchedule != null) {
-						CandidateLocalServiceUtil
-								.changeCandidateStatus(item.getId(),
-										status.toString(), serviceContext);
-					}
-				} catch (SystemException e) {
-					LOGGER.info(e);
-				}
-				break;
-			case REJECT:
-				candidateBean.setSelectedItems(Arrays.asList(item));
-				RequestContext.getCurrentInstance().execute(
-						"PF('wRejectConfirmDialog').show()");
-				break;
-			default:
-				final Candidate candidate = CandidateLocalServiceUtil
-						.fetchCandidate(item.getId());
-				candidate.setStatus(selectedStatus);
-				CandidateLocalServiceUtil.updateCandidate(candidate);
-				RequestContext.getCurrentInstance().execute(
-						"updateCandidatesAndGrowl();");
-				break;
-			}
-			selectedStatus = StringUtils.EMPTY;
-		} catch (SystemException e) {
-			LOGGER.info(e);
-		}
-
 	}
 
 	public void onEvaluateCandidates(List<CandidateIndexItem> candidates) {

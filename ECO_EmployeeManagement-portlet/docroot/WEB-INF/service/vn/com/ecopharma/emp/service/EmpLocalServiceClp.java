@@ -475,6 +475,41 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		_methodName82 = "fixLaborContractSignedDate";
 
 		_methodParameterTypes82 = new String[] {  };
+
+		_methodName83 = "generateOriginalUsername";
+
+		_methodParameterTypes83 = new String[] { "java.lang.String" };
+
+		_methodName84 = "regenerateUsername";
+
+		_methodParameterTypes84 = new String[] {
+				"java.lang.String", "int",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName85 = "checkAndGenerateUsernameByFullname";
+
+		_methodParameterTypes85 = new String[] {
+				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName86 = "generateEmailByUsername";
+
+		_methodParameterTypes86 = new String[] {
+				"java.lang.String", "java.lang.String"
+			};
+
+		_methodName87 = "getLastName";
+
+		_methodParameterTypes87 = new String[] { "java.lang.String" };
+
+		_methodName88 = "getMiddleName";
+
+		_methodParameterTypes88 = new String[] { "java.lang.String" };
+
+		_methodName89 = "getFirstName";
+
+		_methodParameterTypes89 = new String[] { "java.lang.String" };
 	}
 
 	@Override
@@ -3193,6 +3228,193 @@ public class EmpLocalServiceClp implements EmpLocalService {
 		}
 	}
 
+	@Override
+	public java.lang.String generateOriginalUsername(java.lang.String fullname) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName83,
+					_methodParameterTypes83,
+					new Object[] { ClpSerializer.translateInput(fullname) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.String regenerateUsername(
+		java.lang.String currentUsername, int increment,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName84,
+					_methodParameterTypes84,
+					new Object[] {
+						ClpSerializer.translateInput(currentUsername),
+						
+					increment,
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.String checkAndGenerateUsernameByFullname(
+		java.lang.String fullName,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName85,
+					_methodParameterTypes85,
+					new Object[] {
+						ClpSerializer.translateInput(fullName),
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.String generateEmailByUsername(java.lang.String username,
+		java.lang.String emailSufix) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName86,
+					_methodParameterTypes86,
+					new Object[] {
+						ClpSerializer.translateInput(username),
+						
+					ClpSerializer.translateInput(emailSufix)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.String getLastName(java.lang.String fullname) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName87,
+					_methodParameterTypes87,
+					new Object[] { ClpSerializer.translateInput(fullname) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.String getMiddleName(java.lang.String fullname) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName88,
+					_methodParameterTypes88,
+					new Object[] { ClpSerializer.translateInput(fullname) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.String getFirstName(java.lang.String fullname) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName89,
+					_methodParameterTypes89,
+					new Object[] { ClpSerializer.translateInput(fullname) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -3358,4 +3580,18 @@ public class EmpLocalServiceClp implements EmpLocalService {
 	private String[] _methodParameterTypes81;
 	private String _methodName82;
 	private String[] _methodParameterTypes82;
+	private String _methodName83;
+	private String[] _methodParameterTypes83;
+	private String _methodName84;
+	private String[] _methodParameterTypes84;
+	private String _methodName85;
+	private String[] _methodParameterTypes85;
+	private String _methodName86;
+	private String[] _methodParameterTypes86;
+	private String _methodName87;
+	private String[] _methodParameterTypes87;
+	private String _methodName88;
+	private String[] _methodParameterTypes88;
+	private String _methodName89;
+	private String[] _methodParameterTypes89;
 }

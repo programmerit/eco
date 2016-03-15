@@ -12,8 +12,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
@@ -87,8 +85,6 @@ public class ScheduleInterviewForCandidatesBean implements Serializable {
 				FacesContext.getCurrentInstance().addMessage(null, msg);
 
 			}
-			RequestContext.getCurrentInstance().execute(
-					"window.location.hash = '#vCandidate';");
 			BeanUtils.getCandidateViewBean().switchMode(
 					CandidateNavigation.VIEW);
 			;

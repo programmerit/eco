@@ -346,10 +346,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 			SearchContext searchContext, int start, int end)
 			throws ParseException {
 		final Map<String, Object> filters = new HashMap<>();
-		filters.put(EmpField.FULL_NAME, query);
-		filters.put(EmpField.VN_FULL_NAME, query);
-		filters.put(EmpField.EMP_CODE, query);
-		filters.put(EmpField.EMAIL, query);
+		filters.put(GLOBAL_FILTER, query);
 		return filterEmployeeByFields(searchContext, filters, null,
 				searchContext.getCompanyId(), start, end);
 	}
@@ -635,7 +632,8 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 
 		// Add employee's banking info
 		for (Map.Entry<EmpBankInfo, Boolean> entry : bankInfoMap.entrySet()) {
-			final EmpBankInfo empBankInfo = entry.getKey();
+			EmpBankInfo empBankInfo = entry.getKey();
+
 			if (!entry.getValue()
 					&& StringUtils.trimToNull(empBankInfo.getBankAccountNo()) != null
 					&& StringUtils.trimToNull(empBankInfo.getBankName()) != null) {
@@ -643,7 +641,6 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 				empBankInfoLocalService.addEmpBankInfo(empBankInfo,
 						serviceContext);
 			}
-
 		}
 
 		// persist to DB
@@ -1927,6 +1924,123 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 
 			}
 		}
+	}
+
+	/* Util Functions */
+
+	public String generateOriginalUsername(String fullname) {
+		if (StringUtils.trimToNull(fullname) == null)
+			return StringUtils.EMPTY;
+		fullname = StringUtils.stripAccents(fullname); // NOSONAR
+		LOGGER.info("FULL NAME AFTER STRIPPING ACCENTS: " + fullname);
+
+		StringBuilder resultBuilder = new StringBuilder();
+		char firstChar = getLastName(fullname).toCharArray()[0];
+
+		String[] middleNameArr = getMiddleName(fullname).split(" ");
+		char[] middleNameChars;
+		if (middleNameArr.length > 0 && middleNameArr[0] != StringUtils.EMPTY) {
+			middleNameChars = new char[middleNameArr.length];
+			for (int i = 0; i < middleNameChars.length; i++) {
+				middleNameChars[i] = middleNameArr[i].charAt(0);
+			}
+		} else {
+			middleNameChars = null;
+		}
+
+		resultBuilder.append(firstChar);
+		if (middleNameChars != null) {
+			resultBuilder.append(middleNameChars);
+		}
+		resultBuilder.append(getFirstName(fullname));
+		String resultString = resultBuilder.toString().toLowerCase();
+		resultString = resultString.replaceAll("đ", "d");
+		LOGGER.info("USERNAME AFTER STRIPPING ACCENTS: " + fullname);
+		return resultString;
+	}
+
+	/**
+	 * recursive generate username in case of duplicating
+	 * 
+	 * @param currentUsername
+	 * @param increment
+	 * @param serviceContext
+	 * @return
+	 */
+	public String regenerateUsername(String currentUsername, int increment,
+			ServiceContext serviceContext) {
+
+		try {
+			if (UserLocalServiceUtil.fetchUserByScreenName(
+					serviceContext.getCompanyId(), currentUsername) == null) {
+				return currentUsername;
+			}
+
+			if (increment > 1) {
+				currentUsername = currentUsername.substring(0, // NOSONAR
+						currentUsername.length() - 1) + increment;
+			} else {
+				currentUsername = currentUsername + increment; // NOSONAR
+			}
+
+			increment += 1; // NOSONAR
+			return regenerateUsername(currentUsername, increment,
+					serviceContext);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return currentUsername;
+	}
+
+	public String checkAndGenerateUsernameByFullname(String fullName,
+			ServiceContext serviceContext) {
+		String uncheckedUsername = generateOriginalUsername(fullName);
+		return regenerateUsername(uncheckedUsername, 1, serviceContext);
+	}
+
+	public String generateEmailByUsername(String username, String emailSufix) {
+		return username + emailSufix;
+	}
+
+	/**
+	 * @param fullname
+	 * @return
+	 */
+	public String getLastName(String fullname) {
+		return StringUtils.trimToNull(fullname) == null ? StringUtils.EMPTY
+				: fullname.split(" ")[0];
+	}
+
+	/**
+	 * @param fullname
+	 * @return
+	 */
+	public String getMiddleName(String fullname) {
+		if (StringUtils.trimToNull(fullname) == null)
+			return StringUtils.EMPTY;
+
+		String[] fullnameArr = fullname.split(" ");
+		int length = fullnameArr.length;
+		// check if employee just have first and last name only
+		if (length == 2) {
+			return StringUtils.EMPTY;
+		}
+		String middleName = StringUtils.EMPTY;
+		for (int i = 1; i < length - 1; i++) {
+			middleName += fullnameArr[i] + " ";
+		}
+		return middleName;
+	}
+
+	/**
+	 * @param fullname
+	 * @return
+	 */
+	public String getFirstName(String fullname) {
+		if (StringUtils.trimToNull(fullname) == null)
+			return StringUtils.EMPTY;
+		String[] fullnameArr = fullname.split(" ");
+		return fullnameArr[fullnameArr.length - 1];
 	}
 
 }

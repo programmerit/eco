@@ -619,4 +619,46 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 	public void fixLaborContractSignedDate()
 		throws com.liferay.portal.kernel.exception.SystemException,
 			java.text.ParseException;
+
+	public java.lang.String generateOriginalUsername(java.lang.String fullname);
+
+	/**
+	* recursive generate username in case of duplicating
+	*
+	* @param currentUsername
+	* @param increment
+	* @param serviceContext
+	* @return
+	*/
+	public java.lang.String regenerateUsername(
+		java.lang.String currentUsername, int increment,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public java.lang.String checkAndGenerateUsernameByFullname(
+		java.lang.String fullName,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public java.lang.String generateEmailByUsername(java.lang.String username,
+		java.lang.String emailSufix);
+
+	/**
+	* @param fullname
+	* @return
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getLastName(java.lang.String fullname);
+
+	/**
+	* @param fullname
+	* @return
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getMiddleName(java.lang.String fullname);
+
+	/**
+	* @param fullname
+	* @return
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getFirstName(java.lang.String fullname);
 }

@@ -810,6 +810,63 @@ public class EmpLocalServiceUtil {
 		getService().fixLaborContractSignedDate();
 	}
 
+	public static java.lang.String generateOriginalUsername(
+		java.lang.String fullname) {
+		return getService().generateOriginalUsername(fullname);
+	}
+
+	/**
+	* recursive generate username in case of duplicating
+	*
+	* @param currentUsername
+	* @param increment
+	* @param serviceContext
+	* @return
+	*/
+	public static java.lang.String regenerateUsername(
+		java.lang.String currentUsername, int increment,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService()
+				   .regenerateUsername(currentUsername, increment,
+			serviceContext);
+	}
+
+	public static java.lang.String checkAndGenerateUsernameByFullname(
+		java.lang.String fullName,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService()
+				   .checkAndGenerateUsernameByFullname(fullName, serviceContext);
+	}
+
+	public static java.lang.String generateEmailByUsername(
+		java.lang.String username, java.lang.String emailSufix) {
+		return getService().generateEmailByUsername(username, emailSufix);
+	}
+
+	/**
+	* @param fullname
+	* @return
+	*/
+	public static java.lang.String getLastName(java.lang.String fullname) {
+		return getService().getLastName(fullname);
+	}
+
+	/**
+	* @param fullname
+	* @return
+	*/
+	public static java.lang.String getMiddleName(java.lang.String fullname) {
+		return getService().getMiddleName(fullname);
+	}
+
+	/**
+	* @param fullname
+	* @return
+	*/
+	public static java.lang.String getFirstName(java.lang.String fullname) {
+		return getService().getFirstName(fullname);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

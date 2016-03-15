@@ -144,9 +144,9 @@ public class ImportExportEmployeeDTO implements Serializable {
 		// no = getConvertedIntegerCell(r.getCell(0));
 		employeeCode = getCellValueAsString(r.getCell(1));
 		fullname = getCellValueAsString(r.getCell(2));
-		firstName = EmployeeUtils.getFirstName(fullname);
-		middleName = EmployeeUtils.getMiddleName(fullname);
-		lastName = EmployeeUtils.getLastName(fullname);
+		firstName = EmpLocalServiceUtil.getFirstName(fullname);
+		middleName = EmpLocalServiceUtil.getMiddleName(fullname);
+		lastName = EmpLocalServiceUtil.getLastName(fullname);
 
 		LOGGER.info("============ " + fullname + " =============");
 
@@ -414,12 +414,6 @@ public class ImportExportEmployeeDTO implements Serializable {
 				healthInsurranceCode);
 	}
 
-	private static boolean isNotNullCell(Cell cell) {
-		if (cell == null || cell.getCellType() == 1)
-			return false;
-		return true;
-	}
-
 	private Calendar getBirthDayCalendar() {
 		if (dob == null)
 			return null;
@@ -487,28 +481,6 @@ public class ImportExportEmployeeDTO implements Serializable {
 			}
 		}
 		return StringUtils.EMPTY;
-	}
-
-	/**
-	 * Normalization for some address elements name. Example: "TP.HCM", "HCM",
-	 * "Tp. HCM" -> "Hồ Chí Minh";
-	 * 
-	 * @param name
-	 * @param possibleArr
-	 * @param returnValue
-	 * @return
-	 */
-	private static String replaceNameInPosibleArr(String name,
-			String[] possibleArr, String returnValue) {
-		boolean isExisted = false;
-		for (int i = 0; i < possibleArr.length; i++) {
-			if (name.equalsIgnoreCase(possibleArr[i])) {
-				isExisted = true;
-				break;
-			}
-		}
-		return isExisted ? StringUtils.trimToEmpty(returnValue) : StringUtils
-				.trimToEmpty(name);
 	}
 
 	public int getBirthdayYear() {

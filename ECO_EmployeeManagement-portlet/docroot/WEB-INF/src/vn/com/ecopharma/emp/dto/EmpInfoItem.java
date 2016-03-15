@@ -120,11 +120,12 @@ public class EmpInfoItem implements Serializable {
 		isEdit = true;
 	}
 
-	public EmpInfoItem(long employeeId) {
-		this(EmployeeUtils.getEmpById(employeeId));
+	public EmpInfoItem(long employeeId) throws SystemException {
+		this(EmpLocalServiceUtil.fetchEmp(employeeId));
 	}
 
-	public EmpInfoItem(String employeeIdString) {
+	public EmpInfoItem(String employeeIdString) throws NumberFormatException,
+			SystemException {
 		this(Long.valueOf(employeeIdString));
 	}
 
@@ -139,7 +140,7 @@ public class EmpInfoItem implements Serializable {
 				.createPrePersistedEntity(EmployeeUtils.getServiceContext());
 		// set default "Male" for employee
 		employee.setGender(MALE);
-		employee.setLaborContractType(LaborContractType.INDEFINITE_TERMS
+		employee.setLaborContractType(LaborContractType.PROBATION_CONTRACT
 				.toString());
 		this.addresses = new ArrayList<>();
 		this.dependentNames = new ArrayList<>();

@@ -34,7 +34,6 @@
 								itemValue="#{interview}" />
 						</p:selectOneMenu>
 						<p:commandLink id="addNewInterviewLink" value="+"
-							styleClass="currentStatus status-green"
 							onclick="PF('wInterviewDialog').show()"
 							disabled="#{not scheduleInterviewForCandidatesBean.interviewScheduleForAllItem.setInterviewForAll}" />
 					</h:panelGroup>
@@ -207,7 +206,8 @@
 				</p:dataTable>
 			</p:outputPanel>
 			<p:commandButton id="saveAll" value="Save All"
-				action="#{scheduleInterviewForCandidatesBean.onSavingAll}" />
+				actionListener="#{scheduleInterviewForCandidatesBean.onSavingAll}"
+				update=":CandidatePanelGroup" />
 
 			<p:commandButton id="cancel" value="Cancel"
 				actionListener="#{scheduleInterviewForCandidatesBean.onCancel}"

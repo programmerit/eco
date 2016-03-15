@@ -90,6 +90,8 @@ public class EmployeeBean implements Serializable {
 
 	private static final String MALE = "male";
 
+	private static final String EMAIL_SUFFIX = "@ecopharma.com.vn";
+
 	private EmpInfoItem modifyEmployeeInfoItem;
 
 	private EmpInfoItem selectedEmployeeInfoItem;
@@ -141,17 +143,17 @@ public class EmployeeBean implements Serializable {
 	public void editEmployee(String employeeId) {
 		OrganizationPanelBean organizationPanelBean = BeanUtils
 				.getOrganizationPanelBean();
-		modifyEmployeeInfoItem = new EmpInfoItem(Long.valueOf(employeeId));
-		organizationPanelBean.setSelectedValuesFromEmp(modifyEmployeeInfoItem
-				.getEmp());
-		showUserTab = false;
-		updateString = StringUtils.EMPTY;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay) FacesContext
-				.getCurrentInstance().getExternalContext().getRequestMap()
-				.get(WebKeys.THEME_DISPLAY);
-
 		try {
+			modifyEmployeeInfoItem = new EmpInfoItem(Long.valueOf(employeeId));
+			organizationPanelBean
+					.setSelectedValuesFromEmp(modifyEmployeeInfoItem.getEmp());
+			showUserTab = false;
+			updateString = StringUtils.EMPTY;
+
+			ThemeDisplay themeDisplay = (ThemeDisplay) FacesContext
+					.getCurrentInstance().getExternalContext().getRequestMap()
+					.get(WebKeys.THEME_DISPLAY);
+
 			String url = modifyEmployeeInfoItem.getUser().getPortraitURL(
 					themeDisplay);
 			System.out.println("Portrait URL: " + url);
@@ -206,11 +208,11 @@ public class EmployeeBean implements Serializable {
 					.transferBankInfoObjectListToBankInfoMap(modifyEmployeeInfoItem
 							.getBankInfos());
 
-			generatedUser.setFirstName(EmployeeUtils
+			generatedUser.setFirstName(EmpLocalServiceUtil
 					.getFirstName(modifyEmployeeInfoItem.getFullName()));
-			generatedUser.setMiddleName(EmployeeUtils
+			generatedUser.setMiddleName(EmpLocalServiceUtil
 					.getMiddleName(modifyEmployeeInfoItem.getFullName()));
-			generatedUser.setLastName(EmployeeUtils
+			generatedUser.setLastName(EmpLocalServiceUtil
 					.getLastName(modifyEmployeeInfoItem.getFullName()));
 			long specializedId = EmployeeUtils
 					.getBaseModelPrimaryKey(modifyEmployeeInfoItem
@@ -228,7 +230,7 @@ public class EmployeeBean implements Serializable {
 			if (showUserTab) {
 				final boolean sendEmail = true;
 				Emp result = EmpLocalServiceUtil.addEmp(employee,
-						generatedUser, false, modifyEmployeeInfoItem
+						generatedUser, autoPassword, modifyEmployeeInfoItem
 								.getUserPassword1(), modifyEmployeeInfoItem
 								.getUserPassword2(), false,
 						modifyEmployeeInfoItem.getUserName(), employee
@@ -444,15 +446,16 @@ public class EmployeeBean implements Serializable {
 
 	public void onGenerateEmail() {
 		String username = generateUsername();
-		String emailAddress = EmployeeUtils.generateEmailByUsername(username);
+		String emailAddress = EmpLocalServiceUtil.generateEmailByUsername(
+				username, EMAIL_SUFFIX);
 		modifyEmployeeInfoItem.getUser().setEmailAddress(emailAddress);
 	}
 
 	public void onLastNameBlur() {
 		if (showUserTab) {
 			String username = generateUsername();
-			String emailAddress = EmployeeUtils
-					.generateEmailByUsername(username);
+			String emailAddress = EmpLocalServiceUtil.generateEmailByUsername(
+					username, EMAIL_SUFFIX);
 			modifyEmployeeInfoItem.setUserName(username);
 			modifyEmployeeInfoItem.getUser().setEmailAddress(emailAddress);
 		}
@@ -461,8 +464,8 @@ public class EmployeeBean implements Serializable {
 	public void onFullNameBlur() {
 		if (showUserTab) {
 			String username = generateUsername();
-			String emailAddress = EmployeeUtils
-					.generateEmailByUsername(username);
+			String emailAddress = EmpLocalServiceUtil.generateEmailByUsername(
+					username, EMAIL_SUFFIX);
 			modifyEmployeeInfoItem.setUserName(username);
 			modifyEmployeeInfoItem.getUser().setEmailAddress(emailAddress);
 		}
@@ -472,8 +475,10 @@ public class EmployeeBean implements Serializable {
 	private String generateUsername() {
 		final String defaultUsername = "user" + System.currentTimeMillis();
 
-		final String generatedUsername = EmployeeUtils
-				.generateUsername(modifyEmployeeInfoItem.getFullName());
+		final String generatedUsername = EmpLocalServiceUtil
+				.checkAndGenerateUsernameByFullname(
+						modifyEmployeeInfoItem.getFullName(),
+						EmployeeUtils.getServiceContext());
 		return StringUtils.trimToNull(generatedUsername) != null ? generatedUsername
 				: defaultUsername;
 

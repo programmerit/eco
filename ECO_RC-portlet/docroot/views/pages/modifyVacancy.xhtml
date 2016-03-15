@@ -10,148 +10,145 @@
 		<h:form id="modifyVacancy"
 			rendered="#{vacancyViewBean.currentMode==2 || vacancyViewBean.currentMode==3}">
 
-			<p:outputPanel id="vacancyOutputPanel">
-				<p:messages id="msgs" />
-				<p:accordionPanel id="accordion" multiple="true"
-					style="margin-bottom:20px;" activeIndex="0">
-					<p:tab id="vacancyBasicInfoTab" title="Basic Information">
-						<p:panelGrid columns="2" layout="grid">
-							<h:panelGroup>
-								<p:panelGrid columns="2">
+			<p:messages id="msgs" />
+			<p:accordionPanel id="accordion" multiple="true"
+				style="margin-bottom:20px;" activeIndex="0">
+				<p:tab id="vacancyBasicInfoTab" title="Basic Information">
+					<p:panelGrid columns="2" layout="grid">
+						<h:panelGroup>
+							<p:panelGrid columns="2">
 
-									<h:outputText value="Position: " />
-									<h:panelGroup id="titlesNameGroup">
-										<h:outputText value="#{vacancyBean.currentTitlesName}" />
-										<p:commandLink style="margin-left: 15px;"
-											value="#{organizationPanelBean.selectedTitles != null ? 'change...' : 'choose...'}"
-											onclick="PF('titlesSelectDialog').show();" />
-									</h:panelGroup>
+								<h:outputText value="Position: " />
+								<h:panelGroup id="titlesNameGroup">
+									<h:outputText value="#{vacancyBean.currentTitlesName}" />
+									<p:commandLink style="margin-left: 15px;"
+										value="#{organizationPanelBean.selectedTitles != null ? 'change...' : 'choose...'}"
+										onclick="PF('titlesSelectDialog').show();" />
+								</h:panelGroup>
 
-									<h:outputText value="Number of Approved Position" />
-									<p:inputText
-										value="#{vacancyBean.vacancyItem.object.approvedNumberOfPosition}" />
+								<h:outputText value="Number of Approved Position" />
+								<p:inputText
+									value="#{vacancyBean.vacancyItem.object.approvedNumberOfPosition}" />
 
-									<h:outputText value="Number of Current Employee" />
-									<p:inputText
-										value="#{vacancyBean.vacancyItem.object.currentNumberOfEmployee}" />
+								<h:outputText value="Number of Current Employee" />
+								<p:inputText
+									value="#{vacancyBean.vacancyItem.object.currentNumberOfEmployee}" />
 
-									<h:outputText value="Number of New Recruitment" />
-									<p:inputText
-										value="#{vacancyBean.vacancyItem.object.numberOfNewRecruitment}" />
+								<h:outputText value="Number of New Recruitment" />
+								<p:inputText
+									value="#{vacancyBean.vacancyItem.object.numberOfNewRecruitment}" />
 
-									<h:outputText value="Number of Replaced Recruitment" />
-									<p:inputText
-										value="#{vacancyBean.vacancyItem.object.numberOfReplacedRecruitment}" />
+								<h:outputText value="Number of Replaced Recruitment" />
+								<p:inputText
+									value="#{vacancyBean.vacancyItem.object.numberOfReplacedRecruitment}" />
 
-									<h:outputText value="Expected Salary" />
-									<p:inputText
-										value="#{vacancyBean.vacancyItem.object.expectedSalary}" />
+								<h:outputText value="Expected Salary" />
+								<p:inputText
+									value="#{vacancyBean.vacancyItem.object.expectedSalary}" />
 
-									<h:outputText value="Expected Joined Date" />
-									<p:calendar
-										value="#{vacancyBean.vacancyItem.object.expectedJoinedDate}"
-										pattern="dd/MM/yyyy" />
+								<h:outputText value="Expected Joined Date" />
+								<p:calendar
+									value="#{vacancyBean.vacancyItem.object.expectedJoinedDate}"
+									pattern="dd/MM/yyyy" />
 
-									<h:outputText value="Working Place" />
-									<p:selectOneMenu id="regionSelect"
-										value="#{vacancyBean.vacancyItem.workingPlace}"
-										converter="regionItemConverter" effect="fade" filter="true"
-										filterMatchMode="contains" var="r">
-										<f:selectItem itemLabel="Select Place" itemValue="" />
-										<f:selectItems value="#{vacancyBean.workingPlaces}" var="r"
-											itemLabel="#{r.object.name}" itemValue="#{r}" />
-										<p:column>
+								<h:outputText value="Working Place" />
+								<p:selectOneMenu id="regionSelect"
+									value="#{vacancyBean.vacancyItem.workingPlace}"
+									converter="regionItemConverter" effect="fade" filter="true"
+									filterMatchMode="contains" var="r">
+									<f:selectItem itemLabel="Select Place" itemValue="" />
+									<f:selectItems value="#{vacancyBean.workingPlaces}" var="r"
+										itemLabel="#{r.object.name}" itemValue="#{r}" />
+									<p:column>
 											#{r.object.name}
 										</p:column>
-									</p:selectOneMenu>
+								</p:selectOneMenu>
 
-									<h:outputText value="Required Education: " />
-									<p:selectOneMenu id="certificateTypeSelect"
-										value="#{vacancyBean.vacancyItem.object.certificateType}">
-										<f:selectItem itemLabel="Certificate Type" itemValue="" />
-										<f:selectItems value="#{vacancyBean.certificateTypes}" var="t"
-											itemLabel="#{i18n[vacancyBean.getTypeLocalizedString(t)]}"
-											itemValue="#{t}" />
-									</p:selectOneMenu>
+								<h:outputText value="Required Education: " />
+								<p:selectOneMenu id="certificateTypeSelect"
+									value="#{vacancyBean.vacancyItem.object.certificateType}">
+									<f:selectItem itemLabel="Certificate Type" itemValue="" />
+									<f:selectItems value="#{vacancyBean.certificateTypes}" var="t"
+										itemLabel="#{i18n[vacancyBean.getTypeLocalizedString(t)]}"
+										itemValue="#{t}" />
+								</p:selectOneMenu>
 
-									<h:outputText value="Required Experiences: " />
-									<p:inputText id="experiences"
-										value="#{vacancyBean.vacancyItem.object.experiences}" />
+								<h:outputText value="Required Experiences: " />
+								<p:inputText id="experiences"
+									value="#{vacancyBean.vacancyItem.object.experiences}" />
 
-									<h:outputText value="Description: " />
-									<p:inputTextarea id="vDescription" placeholder="Description..."
-										value="#{vacancyBean.vacancyItem.object.description}" />
-								</p:panelGrid>
-							</h:panelGroup>
+								<h:outputText value="Description: " />
+								<p:inputTextarea id="vDescription" placeholder="Description..."
+									value="#{vacancyBean.vacancyItem.object.description}" />
+							</p:panelGrid>
+						</h:panelGroup>
 
-							<h:panelGroup>
-								<p:panelGrid columns="2">
-									<h:outputText value="Documents" />
-									<p:outputPanel autoUpdate="true" id="documentOutputPanel">
-										<h:panelGroup id="noDocsPanelGroup" styleClass="panel-message"
-											rendered="#{vacancyBean.vacancyItem.emptyDocuments}">
-											<h:outputText styleClass="no-item-label" value="No Documents" />
-											<br />
-											<p:commandLink value="Upload"
-												onclick="PF('wUploadDocumentDialog').show();" />
-										</h:panelGroup>
+						<h:panelGroup>
+							<p:panelGrid columns="2">
+								<h:outputText value="Documents" />
+								<p:outputPanel autoUpdate="true" id="documentOutputPanel">
+									<h:panelGroup id="noDocsPanelGroup" styleClass="panel-message"
+										rendered="#{vacancyBean.vacancyItem.emptyDocuments}">
+										<h:outputText styleClass="no-item-label" value="No Documents" />
+										<br />
+										<p:commandLink value="Upload"
+											onclick="PF('wUploadDocumentDialog').show();" />
+									</h:panelGroup>
 
-										<h:panelGroup
-											rendered="#{not vacancyBean.vacancyItem.emptyDocuments}">
-											<ui:repeat var="doc"
-												value="#{vacancyBean.vacancyItem.documents}"
-												varStatus="status">
-												<h:panelGroup rendered="#{not doc.UIDeleted}">
+									<h:panelGroup
+										rendered="#{not vacancyBean.vacancyItem.emptyDocuments}">
+										<ui:repeat var="doc"
+											value="#{vacancyBean.vacancyItem.documents}"
+											varStatus="status">
+											<h:panelGroup rendered="#{not doc.UIDeleted}">
 
-													<p:commandLink value="#{doc.fileEntry.title}"
-														onclick="window.location = '#{doc.fileURL}'" />
-													<p:commandLink value="[X]" style="margin-left: 5px;"
-														onclick="PF('wDeleteDocumentConfirmDialog').show()">
-														<f:setPropertyActionListener value="#{status.index}"
-															target="#{vacancyBean.deletedDocumentIndex}" />
-													</p:commandLink>
-												</h:panelGroup>
-											</ui:repeat>
-										</h:panelGroup>
-									</p:outputPanel>
+												<p:commandLink value="#{doc.fileEntry.title}"
+													onclick="window.location = '#{doc.fileURL}'" />
+												<p:commandLink value="[X]" style="margin-left: 5px;"
+													onclick="PF('wDeleteDocumentConfirmDialog').show()">
+													<f:setPropertyActionListener value="#{status.index}"
+														target="#{vacancyBean.deletedDocumentIndex}" />
+												</p:commandLink>
+											</h:panelGroup>
+										</ui:repeat>
+									</h:panelGroup>
+								</p:outputPanel>
 
-									<h:outputText value="Posted Date: " />
-									<p:calendar id="vPostedDate" mask="false"
-										widgetVar="wPostedDate"
-										value="#{vacancyBean.vacancyItem.object.postedDate}"
-										pattern="dd/MM/yyyy" styleClass="calendarClass">
-									</p:calendar>
+								<h:outputText value="Posted Date: " />
+								<p:calendar id="vPostedDate" mask="false"
+									widgetVar="wPostedDate"
+									value="#{vacancyBean.vacancyItem.object.postedDate}"
+									pattern="dd/MM/yyyy" styleClass="calendarClass">
+								</p:calendar>
 
-									<h:outputText value="Expired Date: " />
-									<p:calendar id="vExpiredDate" mask="false"
-										widgetVar="wExpiredDate"
-										value="#{vacancyBean.vacancyItem.object.expiredDate}"
-										pattern="dd/MM/yyyy" styleClass="calendarClass">
-									</p:calendar>
+								<h:outputText value="Expired Date: " />
+								<p:calendar id="vExpiredDate" mask="false"
+									widgetVar="wExpiredDate"
+									value="#{vacancyBean.vacancyItem.object.expiredDate}"
+									pattern="dd/MM/yyyy" styleClass="calendarClass">
+								</p:calendar>
 
-									<h:outputText value="Status: " />
-									<p:selectOneMenu id="vStatusSelect"
-										value="#{vacancyBean.vacancyItem.object.status}">
-										<f:selectItem itemLabel="Status" itemValue="" />
-										<f:selectItems value="#{vacancyBean.vacancyStatuses}"
-											var="status" itemValue="#{status}" itemLabel="#{status}" />
-									</p:selectOneMenu>
-								</p:panelGrid>
-							</h:panelGroup>
-						</p:panelGrid>
-					</p:tab>
-					<p:tab id="evaluationInfoTab" title="Evaluation Information"
-						rendered="false">
+								<h:outputText value="Status: " />
+								<p:selectOneMenu id="vStatusSelect"
+									value="#{vacancyBean.vacancyItem.object.status}">
+									<f:selectItem itemLabel="Status" itemValue="" />
+									<f:selectItems value="#{vacancyBean.vacancyStatuses}"
+										var="status" itemValue="#{status}" itemLabel="#{status}" />
+								</p:selectOneMenu>
+							</p:panelGrid>
+						</h:panelGroup>
+					</p:panelGrid>
+				</p:tab>
+				<p:tab id="evaluationInfoTab" title="Evaluation Information"
+					rendered="false">
 
-					</p:tab>
-				</p:accordionPanel>
-				<p:commandButton id="vSave" value="Save"
-					action="#{vacancyBean.onSave}"
-					update=":VacancyPanelGroup vacancyOutputPanel" /> |
+				</p:tab>
+			</p:accordionPanel>
+			<p:commandButton id="vSave" value="Save"
+				action="#{vacancyBean.onSave}" update=":VacancyPanelGroup" /> |
 				<p:commandLink id="vCancel" style="margin-left: 3px;"
-					actionListener="#{vacancyBean.onCancel}" immediate="true"
-					update=":VacancyPanelGroup" value="Cancel" />
-			</p:outputPanel>
+				actionListener="#{vacancyBean.onCancel}" immediate="true"
+				update=":VacancyPanelGroup" value="Cancel" />
 		</h:form>
 
 		<h:form>

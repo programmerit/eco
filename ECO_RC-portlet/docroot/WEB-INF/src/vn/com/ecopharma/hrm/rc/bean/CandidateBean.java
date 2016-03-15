@@ -3,6 +3,9 @@ package vn.com.ecopharma.hrm.rc.bean;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,9 +42,11 @@ import vn.com.ecopharma.hrm.rc.dto.ExperienceObjectItem;
 import vn.com.ecopharma.hrm.rc.dto.InterviewScheduleForAllItem;
 import vn.com.ecopharma.hrm.rc.dto.InterviewScheduleItem;
 import vn.com.ecopharma.hrm.rc.dto.VacancyIndexItem;
+import vn.com.ecopharma.hrm.rc.dto.evaluate.EvaluationItem;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateCertificateType;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
 import vn.com.ecopharma.hrm.rc.enumeration.DocumentType;
+import vn.com.ecopharma.hrm.rc.enumeration.EvaluationCriteriaType;
 import vn.com.ecopharma.hrm.rc.enumeration.InterviewScheduleStatus;
 import vn.com.ecopharma.hrm.rc.model.Candidate;
 import vn.com.ecopharma.hrm.rc.model.Certificate;
@@ -53,8 +58,8 @@ import vn.com.ecopharma.hrm.rc.service.ExperienceLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.InterviewScheduleLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.util.BeanUtils;
+import vn.com.ecopharma.hrm.rc.util.EmployeeUtils;
 import vn.com.ecopharma.hrm.rc.util.RCUtils;
-import vn.com.ecopharma.hrm.rc.util.VacancyUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -155,34 +160,11 @@ public class CandidateBean implements Serializable {
 					filters.put(CandidateField.APPLY_DATE_TO,
 							filterBean.getApplyDateTo());
 				}
-
-				// if (isBackFromOtherPage) {
-				// CandidateBean.this.first = first;
-				// CandidateBean.this.pageSize = pageSize;
-				// System.out.println("LOAD BACK FROM OTHER PAGE");
-				// isBackFromOtherPage = false;
-				// return super.load(CandidateBean.this.first,
-				// CandidateBean.this.pageSize, sortField, sortOrder,
-				// filters);
-				// }
-				// CandidateBean.this.first = first;
-				// CandidateBean.this.pageSize = pageSize;
 				return super.load(first, pageSize, sortField, sortOrder,
 						filters);
 
 			}
 		};
-
-		final SearchContext searchContext = RCUtils.getCurrentSearchContext();
-		final Sort sort = new Sort(VacancyField.VACANCY_ID, false);
-		vacancyIndexItems = VacancyUtils
-				.getVacancyIndexItemsFromDocument(VacancyLocalServiceUtil
-						.searchAllUnDeletedVacanciesIndexedDocument(
-								RCUtils.getCurrentSearchContext(),
-								new ArrayList<Query>(),
-								searchContext.getCompanyId(), sort,
-								QueryUtil.ALL_POS, QueryUtil.ALL_POS));
-
 		fileEntryIds = new ArrayList<>();
 	}
 
@@ -211,8 +193,10 @@ public class CandidateBean implements Serializable {
 
 			if (candidate == null) { // create new
 				candidate = candidateItem.getObject();
-				candidate.setNationalityId(candidateItem.getNationality()
-						.getCountryId());
+				candidate
+						.setNationalityId(EmployeeUtils
+								.getBaseModelPrimaryKey(candidateItem
+										.getNationality()));
 				CandidateLocalServiceUtil.addCandidate(candidate, 0,
 						candidateItem.getVacancyIndexItem().getId(),
 						candidateItem.getPossibleDesiredVacancies(),
@@ -220,7 +204,8 @@ public class CandidateBean implements Serializable {
 						serviceContext);
 			} else { // update
 				candidateItem.getObject().setNationalityId(
-						candidateItem.getNationality().getCountryId());
+						EmployeeUtils.getBaseModelPrimaryKey(candidateItem
+								.getNationality()));
 				CandidateLocalServiceUtil.updateCandidate(candidateItem
 						.getObject(), candidateItem.getVacancyIndexItem()
 						.getId(), candidateItem.getPossibleDesiredVacancies(),
@@ -308,7 +293,6 @@ public class CandidateBean implements Serializable {
 	}
 
 	public void handleDocumentUpload(FileUploadEvent event) {
-		System.out.println("TEST");
 		try {
 			PortletRequest request = (PortletRequest) FacesContext
 					.getCurrentInstance().getExternalContext().getRequest();
@@ -424,7 +408,12 @@ public class CandidateBean implements Serializable {
 					.switchMode(CandidateNavigation.SCHEDULE_INTERVIEW);
 			break;
 		case EVALUATE_CANDIDATE:
-			candidateViewBean.onEvaluateCandidates(selectedItems);
+			EvaluationBean evaluationBean = (EvaluationBean) BeanUtils
+					.getBackingBeanByName("evaluationBean");
+			evaluationBean.setCandidateIndexItems(selectedItems);
+			evaluationBean.setEvaluationItems(initEvaluationItems());
+			candidateViewBean
+					.setIncludedDialog("/views/dialogs/evaluation.xhtml");
 			break;
 		case MARK_INTERVIEW_PASS:
 		case MARK_INTERVIEW_FAIL:
@@ -446,9 +435,9 @@ public class CandidateBean implements Serializable {
 
 			break;
 		case JOB_OFFERED:
-			
+
 			// call Offered
-			
+
 			break;
 		case DECLINE_OFFERED:
 
@@ -474,6 +463,17 @@ public class CandidateBean implements Serializable {
 		// candidate.setStatus(status);
 		// CandidateLocalServiceUtil.updateCandidate(candidate);
 		// }
+	}
+
+	public List<EvaluationItem> initEvaluationItems() {
+		final List<String> types = new ArrayList<>(new HashSet<>(
+				EvaluationCriteriaType.getAll()));
+		final List<EvaluationItem> results = new ArrayList<>();
+
+		for (String type : types) {
+			results.add(new EvaluationItem(type));
+		}
+		return results;
 	}
 
 	public void onRejectConfirm(ActionEvent event) {
@@ -706,5 +706,12 @@ public class CandidateBean implements Serializable {
 			LOGGER.info(e);
 		}
 		return new ArrayList<>();
+	}
+
+	public Date getMaxBirthdayDate() {
+		Calendar now = Calendar.getInstance();
+		// backward 18 years
+		now.add(Calendar.YEAR, -18);
+		return now.getTime();
 	}
 }

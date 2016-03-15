@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -51,6 +52,9 @@ public class EmployeeIndexedBean implements Serializable {
 	private static final Log LOGGER = LogFactoryUtil
 			.getLog(EmployeeIndexedBean.class);
 
+	@ManagedProperty(value = "#{empFilterBean}")
+	private transient EmployeeFilterView filterBean;
+
 	private static final List<String> VALID_COLUMNS = Arrays.asList(
 			"employeeCode", "fullName", "fullNameVi", "titles", "gender",
 			"birthdayString", "joinedDateString", "promotedDateString",
@@ -88,8 +92,6 @@ public class EmployeeIndexedBean implements Serializable {
 			public List<EmpIndexedItem> load(int first, int pageSize,
 					String sortField, SortOrder sortOrder,
 					Map<String, Object> filters) {
-				final EmployeeFilterView filterBean = (EmployeeFilterView) BeanUtils
-						.getBackingBeanByName("empFilterBean");
 
 				if (filterBean.getGlobalString() != StringUtils.EMPTY) {
 					filters.put(GLOBAL_STRING, filterBean.getGlobalString());
@@ -157,7 +159,7 @@ public class EmployeeIndexedBean implements Serializable {
 		}
 		return filteredItem;
 	}
-	
+
 	public void updateColumns() {
 		final UIComponent table = FacesContext.getCurrentInstance()
 				.getViewRoot().findComponent(":employeesForm:employees");
@@ -294,6 +296,10 @@ public class EmployeeIndexedBean implements Serializable {
 
 	public String getEmpClassName() {
 		return Emp.class.getName();
+	}
+
+	public void setFilterBean(EmployeeFilterView filterBean) {
+		this.filterBean = filterBean;
 	}
 
 	public static class ColumnModel implements Serializable {

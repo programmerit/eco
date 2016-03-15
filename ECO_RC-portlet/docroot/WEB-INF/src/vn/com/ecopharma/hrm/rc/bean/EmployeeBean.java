@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -32,6 +34,7 @@ import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
 import vn.com.ecopharma.emp.service.SpecializedLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
+import vn.com.ecopharma.hrm.rc.constant.CandidateNavigation;
 import vn.com.ecopharma.hrm.rc.dto.AddressObjectItem;
 import vn.com.ecopharma.hrm.rc.dto.BankInfoObject;
 import vn.com.ecopharma.hrm.rc.dto.CandidateIndexItem;
@@ -40,6 +43,7 @@ import vn.com.ecopharma.hrm.rc.dto.DependentName;
 import vn.com.ecopharma.hrm.rc.dto.DocumentItem;
 import vn.com.ecopharma.hrm.rc.dto.EmpInfoItem;
 import vn.com.ecopharma.hrm.rc.dto.RegionItem;
+import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
 import vn.com.ecopharma.hrm.rc.enumeration.DocumentType;
 import vn.com.ecopharma.hrm.rc.enumeration.EducationType;
 import vn.com.ecopharma.hrm.rc.enumeration.LaborContractType;
@@ -51,7 +55,6 @@ import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.VacancyCandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.util.BeanUtils;
-import vn.com.ecopharma.hrm.rc.util.CandidateUtils;
 import vn.com.ecopharma.hrm.rc.util.EmployeeUtils;
 import vn.com.ecopharma.hrm.rc.util.RCUtils;
 
@@ -65,6 +68,7 @@ import com.liferay.portal.model.Region;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CountryServiceUtil;
 import com.liferay.portal.service.RegionServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 
 @ManagedBean
 @ViewScoped
@@ -77,6 +81,8 @@ public class EmployeeBean implements Serializable {
 	private static final String MALE = "male";
 
 	private EmpInfoItem modifyEmployeeInfoItem;
+
+	private Candidate transferCandidate;
 
 	private List<Country> countries;
 
@@ -97,6 +103,8 @@ public class EmployeeBean implements Serializable {
 	}
 
 	public void save() {
+		final ServiceContext serviceContext = RCUtils.getServiceContext();
+
 		final Emp employee = modifyEmployeeInfoItem.getEmp();
 
 		final User generatedUser = modifyEmployeeInfoItem.getUser();
@@ -112,11 +120,11 @@ public class EmployeeBean implements Serializable {
 				.transferBankInfoObjectListToBankInfoMap(modifyEmployeeInfoItem
 						.getBankInfos());
 
-		generatedUser.setFirstName(EmployeeUtils
+		generatedUser.setFirstName(EmpLocalServiceUtil
 				.getFirstName(modifyEmployeeInfoItem.getFullName()));
-		generatedUser.setMiddleName(EmployeeUtils
+		generatedUser.setMiddleName(EmpLocalServiceUtil
 				.getMiddleName(modifyEmployeeInfoItem.getFullName()));
-		generatedUser.setLastName(EmployeeUtils
+		generatedUser.setLastName(EmpLocalServiceUtil
 				.getLastName(modifyEmployeeInfoItem.getFullName()));
 		long specializedId = EmployeeUtils
 				.getBaseModelPrimaryKey(modifyEmployeeInfoItem.getSpecialized());
@@ -130,13 +138,27 @@ public class EmployeeBean implements Serializable {
 				modifyEmployeeInfoItem.getEmp());
 
 		try {
-			EmpLocalServiceUtil.addEmp(employee, generatedUser, false,
-					modifyEmployeeInfoItem.getUserPassword1(),
+			Emp result = EmpLocalServiceUtil.addEmp(employee, generatedUser,
+					autoPassword, modifyEmployeeInfoItem.getUserPassword1(),
 					modifyEmployeeInfoItem.getUserPassword2(), false,
 					modifyEmployeeInfoItem.getUserName(), employee.getGender()
 							.equalsIgnoreCase(MALE) ? true : false, true,
-					addressMap, dependentMap, bankInfoMap, false, RCUtils
-							.getServiceContext());
+					addressMap, dependentMap,
+					new HashMap<EmpBankInfo, Boolean>(), false, serviceContext);
+
+			if (result != null) {
+				CandidateLocalServiceUtil.changeCandidateStatus(
+						transferCandidate, CandidateStatus.HIRE.toString(),
+						serviceContext);
+				FacesMessage message = new FacesMessage(
+						"Action's taken successfully",
+						"Candidate has successfully set as Employee!");
+				FacesContext.getCurrentInstance().addMessage(null, message);
+
+				BeanUtils.getCandidateViewBean().switchMode(
+						CandidateNavigation.VIEW);
+
+			}
 		} catch (PortalException e) {
 			LOGGER.info(e);
 		} catch (SystemException e) {
@@ -196,26 +218,30 @@ public class EmployeeBean implements Serializable {
 			throws SystemException {
 		final EmpInfoItem employeeInfoItem = new EmpInfoItem();
 		final String fullName = candidate.getFullName();
-		employeeInfoItem.getUser()
-				.setFirstName(
-						CandidateUtils.getFirstNameFromFullname(candidate
-								.getFullName()));
-		employeeInfoItem.getUser().setMiddleName(
-				CandidateUtils.getMiddleNameFromFullname(candidate
-						.getFullName()));
-		employeeInfoItem.getUser()
-				.setLastName(
-						CandidateUtils.getLastNameFromFullname(candidate
-								.getFullName()));
-		employeeInfoItem.getUser().setEmailAddress(candidate.getEmailAddress());
+		final String generatedUsername = EmpLocalServiceUtil
+				.checkAndGenerateUsernameByFullname(fullName,
+						RCUtils.getServiceContext());
+		this.transferCandidate = candidate;
+		employeeInfoItem.setFullName(fullName);
+		employeeInfoItem.getEmp().setPersonalEmail(candidate.getEmailAddress());
+
 		employeeInfoItem.getEmp().setIdentityCardNo(
 				candidate.getIdentityCardNo());
 		employeeInfoItem.getEmp()
 				.setContactNumber(candidate.getContactNumber());
 		employeeInfoItem.getEmp().setBirthday(candidate.getDateOfBirth());
-		employeeInfoItem.getEmp().setJoinedDate(
-				new Date(System.currentTimeMillis()));
-		employeeInfoItem.setUserName(EmployeeUtils.generateUsername(fullName));
+		employeeInfoItem.setUserName(generatedUsername);
+
+		employeeInfoItem.getUser().setEmailAddress(
+				EmpLocalServiceUtil.generateEmailByUsername(generatedUsername,
+						"@ecopharma.com.vn"));
+
+		employeeInfoItem.getEmp().setIdentityCardNo(
+				candidate.getIdentityCardNo());
+
+		employeeInfoItem.getEmp().setEthnic(candidate.getEthnic());
+
+		employeeInfoItem.getEmp().setReligion(candidate.getReligion());
 
 		final List<VacancyCandidate> vacancyCandidates = VacancyCandidateLocalServiceUtil
 				.findByCandidateAndType(candidate.getCandidateId(),
@@ -321,8 +347,10 @@ public class EmployeeBean implements Serializable {
 	private String generateUsername() {
 		final String defaultUsername = "user" + System.currentTimeMillis();
 
-		final String generatedUsername = EmployeeUtils
-				.generateUsername(modifyEmployeeInfoItem.getFullName());
+		final String generatedUsername = EmpLocalServiceUtil
+				.checkAndGenerateUsernameByFullname(
+						modifyEmployeeInfoItem.getFullName(),
+						RCUtils.getServiceContext());
 		return StringUtils.trimToNull(generatedUsername) != null ? generatedUsername
 				: defaultUsername;
 
