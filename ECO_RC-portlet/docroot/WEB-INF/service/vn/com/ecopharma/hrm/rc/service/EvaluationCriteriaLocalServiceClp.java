@@ -134,13 +134,19 @@ public class EvaluationCriteriaLocalServiceClp
 
 		_methodParameterTypes22 = new String[] { "java.lang.String" };
 
-		_methodName23 = "createPrePersistedEntity";
+		_methodName23 = "findByNameAndType";
 
-		_methodParameterTypes23 = new String[] {  };
+		_methodParameterTypes23 = new String[] {
+				"java.lang.String", "java.lang.String"
+			};
 
-		_methodName24 = "addEvaluationCriteria";
+		_methodName24 = "createPrePersistedEntity";
 
-		_methodParameterTypes24 = new String[] {
+		_methodParameterTypes24 = new String[] {  };
+
+		_methodName25 = "addEvaluationCriteria";
+
+		_methodParameterTypes25 = new String[] {
 				"java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -811,12 +817,41 @@ public class EvaluationCriteriaLocalServiceClp
 	}
 
 	@Override
-	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteria createPrePersistedEntity() {
+	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteria findByNameAndType(
+		java.lang.String name, java.lang.String type) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23, new Object[] {  });
+					_methodParameterTypes23,
+					new Object[] {
+						ClpSerializer.translateInput(name),
+						
+					ClpSerializer.translateInput(type)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.hrm.rc.model.EvaluationCriteria)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteria createPrePersistedEntity() {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -840,8 +875,8 @@ public class EvaluationCriteriaLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
 						ClpSerializer.translateInput(type),
 						
@@ -914,4 +949,6 @@ public class EvaluationCriteriaLocalServiceClp
 	private String[] _methodParameterTypes23;
 	private String _methodName24;
 	private String[] _methodParameterTypes24;
+	private String _methodName25;
+	private String[] _methodParameterTypes25;
 }

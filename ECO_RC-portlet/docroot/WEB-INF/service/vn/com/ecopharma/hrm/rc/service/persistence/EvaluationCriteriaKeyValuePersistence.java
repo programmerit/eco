@@ -176,143 +176,57 @@ public interface EvaluationCriteriaKeyValuePersistence extends BasePersistence<E
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the evaluation criteria key values where evaluationCriteriaId = &#63; and key = &#63;.
+	* Returns the evaluation criteria key value where evaluationCriteriaId = &#63; and key = &#63; or throws a {@link vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaKeyValueException} if it could not be found.
 	*
 	* @param evaluationCriteriaId the evaluation criteria ID
 	* @param key the key
-	* @return the matching evaluation criteria key values
+	* @return the matching evaluation criteria key value
+	* @throws vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaKeyValueException if a matching evaluation criteria key value could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue> findByEvaluationCriteriaAndKey(
+	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue findByEvaluationCriteriaAndKey(
+		long evaluationCriteriaId, java.lang.String key)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaKeyValueException;
+
+	/**
+	* Returns the evaluation criteria key value where evaluationCriteriaId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param evaluationCriteriaId the evaluation criteria ID
+	* @param key the key
+	* @return the matching evaluation criteria key value, or <code>null</code> if a matching evaluation criteria key value could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue fetchByEvaluationCriteriaAndKey(
 		long evaluationCriteriaId, java.lang.String key)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the evaluation criteria key values where evaluationCriteriaId = &#63; and key = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.rc.model.impl.EvaluationCriteriaKeyValueModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
+	* Returns the evaluation criteria key value where evaluationCriteriaId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param evaluationCriteriaId the evaluation criteria ID
 	* @param key the key
-	* @param start the lower bound of the range of evaluation criteria key values
-	* @param end the upper bound of the range of evaluation criteria key values (not inclusive)
-	* @return the range of matching evaluation criteria key values
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching evaluation criteria key value, or <code>null</code> if a matching evaluation criteria key value could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue> findByEvaluationCriteriaAndKey(
-		long evaluationCriteriaId, java.lang.String key, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns an ordered range of all the evaluation criteria key values where evaluationCriteriaId = &#63; and key = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.rc.model.impl.EvaluationCriteriaKeyValueModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param evaluationCriteriaId the evaluation criteria ID
-	* @param key the key
-	* @param start the lower bound of the range of evaluation criteria key values
-	* @param end the upper bound of the range of evaluation criteria key values (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching evaluation criteria key values
-	* @throws SystemException if a system exception occurred
-	*/
-	public java.util.List<vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue> findByEvaluationCriteriaAndKey(
-		long evaluationCriteriaId, java.lang.String key, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the first evaluation criteria key value in the ordered set where evaluationCriteriaId = &#63; and key = &#63;.
-	*
-	* @param evaluationCriteriaId the evaluation criteria ID
-	* @param key the key
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching evaluation criteria key value
-	* @throws vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaKeyValueException if a matching evaluation criteria key value could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue findByEvaluationCriteriaAndKey_First(
+	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue fetchByEvaluationCriteriaAndKey(
 		long evaluationCriteriaId, java.lang.String key,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the evaluation criteria key value where evaluationCriteriaId = &#63; and key = &#63; from the database.
+	*
+	* @param evaluationCriteriaId the evaluation criteria ID
+	* @param key the key
+	* @return the evaluation criteria key value that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue removeByEvaluationCriteriaAndKey(
+		long evaluationCriteriaId, java.lang.String key)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaKeyValueException;
-
-	/**
-	* Returns the first evaluation criteria key value in the ordered set where evaluationCriteriaId = &#63; and key = &#63;.
-	*
-	* @param evaluationCriteriaId the evaluation criteria ID
-	* @param key the key
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching evaluation criteria key value, or <code>null</code> if a matching evaluation criteria key value could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue fetchByEvaluationCriteriaAndKey_First(
-		long evaluationCriteriaId, java.lang.String key,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the last evaluation criteria key value in the ordered set where evaluationCriteriaId = &#63; and key = &#63;.
-	*
-	* @param evaluationCriteriaId the evaluation criteria ID
-	* @param key the key
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching evaluation criteria key value
-	* @throws vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaKeyValueException if a matching evaluation criteria key value could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue findByEvaluationCriteriaAndKey_Last(
-		long evaluationCriteriaId, java.lang.String key,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaKeyValueException;
-
-	/**
-	* Returns the last evaluation criteria key value in the ordered set where evaluationCriteriaId = &#63; and key = &#63;.
-	*
-	* @param evaluationCriteriaId the evaluation criteria ID
-	* @param key the key
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching evaluation criteria key value, or <code>null</code> if a matching evaluation criteria key value could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue fetchByEvaluationCriteriaAndKey_Last(
-		long evaluationCriteriaId, java.lang.String key,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the evaluation criteria key values before and after the current evaluation criteria key value in the ordered set where evaluationCriteriaId = &#63; and key = &#63;.
-	*
-	* @param evaluationCriteriaKeyValueId the primary key of the current evaluation criteria key value
-	* @param evaluationCriteriaId the evaluation criteria ID
-	* @param key the key
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next evaluation criteria key value
-	* @throws vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaKeyValueException if a evaluation criteria key value with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue[] findByEvaluationCriteriaAndKey_PrevAndNext(
-		long evaluationCriteriaKeyValueId, long evaluationCriteriaId,
-		java.lang.String key,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaKeyValueException;
-
-	/**
-	* Removes all the evaluation criteria key values where evaluationCriteriaId = &#63; and key = &#63; from the database.
-	*
-	* @param evaluationCriteriaId the evaluation criteria ID
-	* @param key the key
-	* @throws SystemException if a system exception occurred
-	*/
-	public void removeByEvaluationCriteriaAndKey(long evaluationCriteriaId,
-		java.lang.String key)
-		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the number of evaluation criteria key values where evaluationCriteriaId = &#63; and key = &#63;.

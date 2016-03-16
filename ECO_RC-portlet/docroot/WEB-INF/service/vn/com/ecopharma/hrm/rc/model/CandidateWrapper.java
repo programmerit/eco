@@ -67,7 +67,6 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
 		attributes.put("religion", getReligion());
 		attributes.put("applicationDate", getApplicationDate());
 		attributes.put("status", getStatus());
-		attributes.put("locationId", getLocationId());
 		attributes.put("deleted", getDeleted());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -188,12 +187,6 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
 
 		if (status != null) {
 			setStatus(status);
-		}
-
-		Long locationId = (Long)attributes.get("locationId");
-
-		if (locationId != null) {
-			setLocationId(locationId);
 		}
 
 		Boolean deleted = (Boolean)attributes.get("deleted");
@@ -623,26 +616,6 @@ public class CandidateWrapper implements Candidate, ModelWrapper<Candidate> {
 	@Override
 	public void setStatus(java.lang.String status) {
 		_candidate.setStatus(status);
-	}
-
-	/**
-	* Returns the location ID of this candidate.
-	*
-	* @return the location ID of this candidate
-	*/
-	@Override
-	public long getLocationId() {
-		return _candidate.getLocationId();
-	}
-
-	/**
-	* Sets the location ID of this candidate.
-	*
-	* @param locationId the location ID of this candidate
-	*/
-	@Override
-	public void setLocationId(long locationId) {
-		_candidate.setLocationId(locationId);
 	}
 
 	/**

@@ -295,6 +295,11 @@ public class EvaluationCriteriaLocalServiceUtil {
 		return getService().findByType(type);
 	}
 
+	public static vn.com.ecopharma.hrm.rc.model.EvaluationCriteria findByNameAndType(
+		java.lang.String name, java.lang.String type) {
+		return getService().findByNameAndType(name, type);
+	}
+
 	public static vn.com.ecopharma.hrm.rc.model.EvaluationCriteria createPrePersistedEntity() {
 		return getService().createPrePersistedEntity();
 	}

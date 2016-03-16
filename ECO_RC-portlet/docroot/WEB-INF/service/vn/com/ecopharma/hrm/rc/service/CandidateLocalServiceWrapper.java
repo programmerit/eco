@@ -339,15 +339,15 @@ public class CandidateLocalServiceWrapper implements CandidateLocalService,
 
 	@Override
 	public vn.com.ecopharma.hrm.rc.model.Candidate addCandidate(
-		vn.com.ecopharma.hrm.rc.model.Candidate candidate, long locationId,
-		long vacancyId, java.util.List<java.lang.Long> desireVacancies,
+		vn.com.ecopharma.hrm.rc.model.Candidate candidate, long vacancyId,
+		java.util.List<java.lang.Long> desireVacancies,
 		java.util.List<java.lang.Long> fileEntryIds,
 		java.util.Map<vn.com.ecopharma.hrm.rc.model.Experience, java.lang.Boolean> experienceMap,
 		java.util.Map<vn.com.ecopharma.hrm.rc.model.Certificate, java.lang.Boolean> certificateMap,
 		com.liferay.portal.service.ServiceContext serviceContext) {
-		return _candidateLocalService.addCandidate(candidate, locationId,
-			vacancyId, desireVacancies, fileEntryIds, experienceMap,
-			certificateMap, serviceContext);
+		return _candidateLocalService.addCandidate(candidate, vacancyId,
+			desireVacancies, fileEntryIds, experienceMap, certificateMap,
+			serviceContext);
 	}
 
 	@Override

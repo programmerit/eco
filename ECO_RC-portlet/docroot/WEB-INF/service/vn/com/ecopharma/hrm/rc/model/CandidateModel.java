@@ -326,20 +326,6 @@ public interface CandidateModel extends BaseModel<Candidate>, GroupedModel {
 	public void setStatus(String status);
 
 	/**
-	 * Returns the location ID of this candidate.
-	 *
-	 * @return the location ID of this candidate
-	 */
-	public long getLocationId();
-
-	/**
-	 * Sets the location ID of this candidate.
-	 *
-	 * @param locationId the location ID of this candidate
-	 */
-	public void setLocationId(long locationId);
-
-	/**
 	 * Returns the deleted of this candidate.
 	 *
 	 * @return the deleted of this candidate

@@ -155,7 +155,7 @@ public class CandidateLocalServiceClpInvoker {
 		_methodName124 = "addCandidate";
 
 		_methodParameterTypes124 = new String[] {
-				"vn.com.ecopharma.hrm.rc.model.Candidate", "long", "long",
+				"vn.com.ecopharma.hrm.rc.model.Candidate", "long",
 				"java.util.List", "java.util.List", "java.util.Map",
 				"java.util.Map", "com.liferay.portal.service.ServiceContext"
 			};
@@ -441,12 +441,11 @@ public class CandidateLocalServiceClpInvoker {
 				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
 			return CandidateLocalServiceUtil.addCandidate((vn.com.ecopharma.hrm.rc.model.Candidate)arguments[0],
 				((Long)arguments[1]).longValue(),
-				((Long)arguments[2]).longValue(),
+				(java.util.List<java.lang.Long>)arguments[2],
 				(java.util.List<java.lang.Long>)arguments[3],
-				(java.util.List<java.lang.Long>)arguments[4],
-				(java.util.Map<vn.com.ecopharma.hrm.rc.model.Experience, java.lang.Boolean>)arguments[5],
-				(java.util.Map<vn.com.ecopharma.hrm.rc.model.Certificate, java.lang.Boolean>)arguments[6],
-				(com.liferay.portal.service.ServiceContext)arguments[7]);
+				(java.util.Map<vn.com.ecopharma.hrm.rc.model.Experience, java.lang.Boolean>)arguments[4],
+				(java.util.Map<vn.com.ecopharma.hrm.rc.model.Certificate, java.lang.Boolean>)arguments[5],
+				(com.liferay.portal.service.ServiceContext)arguments[6]);
 		}
 
 		if (_methodName125.equals(name) &&

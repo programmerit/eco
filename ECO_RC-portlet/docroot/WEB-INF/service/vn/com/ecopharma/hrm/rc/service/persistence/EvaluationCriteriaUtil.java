@@ -272,6 +272,80 @@ public class EvaluationCriteriaUtil {
 	}
 
 	/**
+	* Returns the evaluation criteria where name = &#63; and type = &#63; or throws a {@link vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaException} if it could not be found.
+	*
+	* @param name the name
+	* @param type the type
+	* @return the matching evaluation criteria
+	* @throws vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaException if a matching evaluation criteria could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.hrm.rc.model.EvaluationCriteria findByNameAndType(
+		java.lang.String name, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaException {
+		return getPersistence().findByNameAndType(name, type);
+	}
+
+	/**
+	* Returns the evaluation criteria where name = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param name the name
+	* @param type the type
+	* @return the matching evaluation criteria, or <code>null</code> if a matching evaluation criteria could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.hrm.rc.model.EvaluationCriteria fetchByNameAndType(
+		java.lang.String name, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByNameAndType(name, type);
+	}
+
+	/**
+	* Returns the evaluation criteria where name = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param name the name
+	* @param type the type
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching evaluation criteria, or <code>null</code> if a matching evaluation criteria could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.hrm.rc.model.EvaluationCriteria fetchByNameAndType(
+		java.lang.String name, java.lang.String type, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByNameAndType(name, type, retrieveFromCache);
+	}
+
+	/**
+	* Removes the evaluation criteria where name = &#63; and type = &#63; from the database.
+	*
+	* @param name the name
+	* @param type the type
+	* @return the evaluation criteria that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.hrm.rc.model.EvaluationCriteria removeByNameAndType(
+		java.lang.String name, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaException {
+		return getPersistence().removeByNameAndType(name, type);
+	}
+
+	/**
+	* Returns the number of evaluation criterias where name = &#63; and type = &#63;.
+	*
+	* @param name the name
+	* @param type the type
+	* @return the number of matching evaluation criterias
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByNameAndType(java.lang.String name,
+		java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByNameAndType(name, type);
+	}
+
+	/**
 	* Caches the evaluation criteria in the entity cache if it is enabled.
 	*
 	* @param evaluationCriteria the evaluation criteria

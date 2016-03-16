@@ -38,7 +38,7 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{candidateId=");
 		sb.append(candidateId);
@@ -76,8 +76,6 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
 		sb.append(applicationDate);
 		sb.append(", status=");
 		sb.append(status);
-		sb.append(", locationId=");
-		sb.append(locationId);
 		sb.append(", deleted=");
 		sb.append(deleted);
 		sb.append(", groupId=");
@@ -213,7 +211,6 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
 			candidateImpl.setStatus(status);
 		}
 
-		candidateImpl.setLocationId(locationId);
 		candidateImpl.setDeleted(deleted);
 		candidateImpl.setGroupId(groupId);
 		candidateImpl.setCompanyId(companyId);
@@ -272,7 +269,6 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
 		religion = objectInput.readUTF();
 		applicationDate = objectInput.readLong();
 		status = objectInput.readUTF();
-		locationId = objectInput.readLong();
 		deleted = objectInput.readBoolean();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
@@ -381,7 +377,6 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
 			objectOutput.writeUTF(status);
 		}
 
-		objectOutput.writeLong(locationId);
 		objectOutput.writeBoolean(deleted);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
@@ -423,7 +418,6 @@ public class CandidateCacheModel implements CacheModel<Candidate>,
 	public String religion;
 	public long applicationDate;
 	public String status;
-	public long locationId;
 	public boolean deleted;
 	public long groupId;
 	public long companyId;

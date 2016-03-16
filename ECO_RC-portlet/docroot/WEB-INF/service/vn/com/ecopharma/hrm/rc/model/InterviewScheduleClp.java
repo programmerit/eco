@@ -78,7 +78,6 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
 		attributes.put("interviewScheduleId", getInterviewScheduleId());
 		attributes.put("vacancyCandidateId", getVacancyCandidateId());
 		attributes.put("interviewId", getInterviewId());
-		attributes.put("locationId", getLocationId());
 		attributes.put("interviewDate", getInterviewDate());
 		attributes.put("interviewTime", getInterviewTime());
 		attributes.put("status", getStatus());
@@ -110,12 +109,6 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
 
 		if (interviewId != null) {
 			setInterviewId(interviewId);
-		}
-
-		Long locationId = (Long)attributes.get("locationId");
-
-		if (locationId != null) {
-			setLocationId(locationId);
 		}
 
 		Date interviewDate = (Date)attributes.get("interviewDate");
@@ -237,29 +230,6 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
 				Method method = clazz.getMethod("setInterviewId", long.class);
 
 				method.invoke(_interviewScheduleRemoteModel, interviewId);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public long getLocationId() {
-		return _locationId;
-	}
-
-	@Override
-	public void setLocationId(long locationId) {
-		_locationId = locationId;
-
-		if (_interviewScheduleRemoteModel != null) {
-			try {
-				Class<?> clazz = _interviewScheduleRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setLocationId", long.class);
-
-				method.invoke(_interviewScheduleRemoteModel, locationId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -558,7 +528,6 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
 		clone.setInterviewScheduleId(getInterviewScheduleId());
 		clone.setVacancyCandidateId(getVacancyCandidateId());
 		clone.setInterviewId(getInterviewId());
-		clone.setLocationId(getLocationId());
 		clone.setInterviewDate(getInterviewDate());
 		clone.setInterviewTime(getInterviewTime());
 		clone.setStatus(getStatus());
@@ -620,7 +589,7 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{interviewScheduleId=");
 		sb.append(getInterviewScheduleId());
@@ -628,8 +597,6 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
 		sb.append(getVacancyCandidateId());
 		sb.append(", interviewId=");
 		sb.append(getInterviewId());
-		sb.append(", locationId=");
-		sb.append(getLocationId());
 		sb.append(", interviewDate=");
 		sb.append(getInterviewDate());
 		sb.append(", interviewTime=");
@@ -655,7 +622,7 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.hrm.rc.model.InterviewSchedule");
@@ -672,10 +639,6 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
 		sb.append(
 			"<column><column-name>interviewId</column-name><column-value><![CDATA[");
 		sb.append(getInterviewId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>locationId</column-name><column-value><![CDATA[");
-		sb.append(getLocationId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>interviewDate</column-name><column-value><![CDATA[");
@@ -722,7 +685,6 @@ public class InterviewScheduleClp extends BaseModelImpl<InterviewSchedule>
 	private long _interviewScheduleId;
 	private long _vacancyCandidateId;
 	private long _interviewId;
-	private long _locationId;
 	private Date _interviewDate;
 	private String _interviewTime;
 	private String _status;

@@ -114,20 +114,26 @@ public class EvaluationCriteriaKeyValueLocalServiceClpInvoker {
 
 		_methodParameterTypes111 = new String[] { "java.lang.String" };
 
-		_methodName116 = "addEvaluationCriteriaKeyValue";
+		_methodName116 = "creatPrePersistedEntity";
 
 		_methodParameterTypes116 = new String[] {
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName117 = "addEvaluationCriteriaKeyValue";
+
+		_methodParameterTypes117 = new String[] {
 				"long", "java.lang.String", "int",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName117 = "findByEvaluationCriteria";
+		_methodName118 = "findByEvaluationCriteria";
 
-		_methodParameterTypes117 = new String[] { "long" };
+		_methodParameterTypes118 = new String[] { "long" };
 
-		_methodName118 = "findByEvaluationCriteriaAndKey";
+		_methodName119 = "findByEvaluationCriteriaAndKey";
 
-		_methodParameterTypes118 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes119 = new String[] { "long", "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -233,19 +239,24 @@ public class EvaluationCriteriaKeyValueLocalServiceClpInvoker {
 
 		if (_methodName116.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
+			return EvaluationCriteriaKeyValueLocalServiceUtil.creatPrePersistedEntity((com.liferay.portal.service.ServiceContext)arguments[0]);
+		}
+
+		if (_methodName117.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
 			return EvaluationCriteriaKeyValueLocalServiceUtil.addEvaluationCriteriaKeyValue(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Integer)arguments[2]).intValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[3]);
 		}
 
-		if (_methodName117.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
+		if (_methodName118.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
 			return EvaluationCriteriaKeyValueLocalServiceUtil.findByEvaluationCriteria(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName118.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
+		if (_methodName119.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
 			return EvaluationCriteriaKeyValueLocalServiceUtil.findByEvaluationCriteriaAndKey(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1]);
 		}
@@ -295,4 +306,6 @@ public class EvaluationCriteriaKeyValueLocalServiceClpInvoker {
 	private String[] _methodParameterTypes117;
 	private String _methodName118;
 	private String[] _methodParameterTypes118;
+	private String _methodName119;
+	private String[] _methodParameterTypes119;
 }

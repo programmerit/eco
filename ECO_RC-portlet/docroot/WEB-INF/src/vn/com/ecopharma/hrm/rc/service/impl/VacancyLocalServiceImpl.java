@@ -14,13 +14,10 @@
 
 package vn.com.ecopharma.hrm.rc.service.impl;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
 
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.constant.CandidateField;
@@ -51,7 +48,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.TermRangeQueryFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
@@ -278,15 +274,15 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 		return vacancy;
 	}
 
-	public Vacancy addVacancy(Vacancy vacancy, long locationId,
-			List<Long> fileEntryIds, ServiceContext serviceContext) {
+	public Vacancy addVacancy(Vacancy vacancy, List<Long> fileEntryIds,
+			ServiceContext serviceContext) {
 		try {
 			vacancy.setUserId(serviceContext.getUserId());
 			vacancy.setGroupId(serviceContext.getScopeGroupId());
 			vacancy.setCompanyId(serviceContext.getCompanyId());
-			vacancy.setCreateDate(new Date(System.currentTimeMillis()));
-			vacancy.setModifiedDate(new Date(System.currentTimeMillis()));
-			Vacancy result = vacancyPersistence.update(vacancy);
+			vacancy.setCreateDate(new Date());
+			vacancy.setModifiedDate(new Date());
+			Vacancy result = super.addVacancy(vacancy);
 			// add permission
 			resourceLocalService.addResources(vacancy.getCompanyId(),
 					vacancy.getGroupId(), vacancy.getUserId(),
@@ -294,10 +290,6 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 					true, true);
 
 			// add documents for candidate
-			for (long fileEntryId : fileEntryIds) {
-				// DocumentLocalServiceUtil.addDocument(Vacancy.class.getName(),
-				// vacancy.getVacancyId(), fileEntryId, serviceContext);
-			}
 
 			// index new employee
 			Indexer indexer = IndexerRegistryUtil
@@ -327,9 +319,9 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 				// }
 			}
 
-			vacancy.setModifiedDate(new Date(System.currentTimeMillis()));
+			vacancy.setModifiedDate(new Date());
 
-			vacancy = vacancyPersistence.update(vacancy);
+			vacancy = super.updateVacancy(vacancy);
 
 			Indexer indexer = IndexerRegistryUtil.getIndexer(Vacancy.class
 					.getName());

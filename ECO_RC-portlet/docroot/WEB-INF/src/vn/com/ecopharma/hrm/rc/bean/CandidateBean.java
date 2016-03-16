@@ -32,6 +32,7 @@ import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.bean.filter.CandidateFilterBean;
 import vn.com.ecopharma.hrm.rc.constant.CandidateField;
 import vn.com.ecopharma.hrm.rc.constant.CandidateNavigation;
+import vn.com.ecopharma.hrm.rc.constant.ECO_RCUtils;
 import vn.com.ecopharma.hrm.rc.constant.VacancyField;
 import vn.com.ecopharma.hrm.rc.dm.CandidateLazyDataModel;
 import vn.com.ecopharma.hrm.rc.dto.CandidateIndexItem;
@@ -166,6 +167,14 @@ public class CandidateBean implements Serializable {
 			}
 		};
 		fileEntryIds = new ArrayList<>();
+		vacancyIndexItems = ECO_RCUtils
+				.getVacancyIndexItems(VacancyLocalServiceUtil
+						.searchAllUnDeletedVacanciesIndexedDocument(RCUtils
+								.getCurrentSearchContext(),
+								new ArrayList<Query>(), RCUtils
+										.getCurrentSearchContext()
+										.getCompanyId(), null,
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 	}
 
 	/**
@@ -197,11 +206,10 @@ public class CandidateBean implements Serializable {
 						.setNationalityId(EmployeeUtils
 								.getBaseModelPrimaryKey(candidateItem
 										.getNationality()));
-				CandidateLocalServiceUtil.addCandidate(candidate, 0,
-						candidateItem.getVacancyIndexItem().getId(),
-						candidateItem.getPossibleDesiredVacancies(),
-						fileEntryIds, experienceMap, certificateMap,
-						serviceContext);
+				CandidateLocalServiceUtil.addCandidate(candidate, candidateItem
+						.getVacancyIndexItem().getId(), candidateItem
+						.getPossibleDesiredVacancies(), fileEntryIds,
+						experienceMap, certificateMap, serviceContext);
 			} else { // update
 				candidateItem.getObject().setNationalityId(
 						EmployeeUtils.getBaseModelPrimaryKey(candidateItem
@@ -218,6 +226,98 @@ public class CandidateBean implements Serializable {
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}
+	}
+
+	public void onChangeMultipleItemStatus(String status) {
+		final CandidateStatus candidateStatus = CandidateStatus.valueOf(status);
+		final ServiceContext serviceContext = LiferayFacesContext.getInstance()
+				.getServiceContext();
+		final FacesMessage msg;
+		final CandidateViewBean candidateViewBean = BeanUtils
+				.getCandidateViewBean();
+		switch (candidateStatus) {
+		case SHORTLIST:
+			for (CandidateIndexItem candidateIndexItem : selectedItems) {
+				CandidateLocalServiceUtil.changeCandidateStatus(
+						candidateIndexItem.getId(),
+						CandidateStatus.SHORTLIST.toString(), serviceContext);
+			}
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Add to SHORTLIST Information", selectedItems.size()
+							+ (selectedItems.size() > 1 ? " were" : " was")
+							+ " added to SHORTLIST");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+			break;
+		case INTERVIEW_SCHEDULED:
+
+			ScheduleInterviewForCandidatesBean bean = (ScheduleInterviewForCandidatesBean) BeanUtils
+					.getBackingBeanByName("scheduleInterviewForCandidatesBean");
+			final List<InterviewScheduleItem> interviewScheduleItems = new ArrayList<>();
+			for (CandidateIndexItem candidateIndexItem : selectedItems) {
+				interviewScheduleItems.add(new InterviewScheduleItem(
+						candidateIndexItem));
+			}
+			bean.setInterviewScheduleItems(interviewScheduleItems);
+			bean.setInterviewScheduleForAllItem(new InterviewScheduleForAllItem());
+			candidateViewBean
+					.switchMode(CandidateNavigation.SCHEDULE_INTERVIEW);
+			break;
+		case EVALUATE_CANDIDATE:
+			EvaluationBean evaluationBean = (EvaluationBean) BeanUtils
+					.getBackingBeanByName("evaluationBean");
+			evaluationBean.setCandidateIndexItems(selectedItems);
+			evaluationBean.setEvaluationItems(initEvaluationItems());
+			candidateViewBean
+					.setIncludedDialog("/views/dialogs/evaluation.xhtml");
+			break;
+		case MARK_INTERVIEW_PASS:
+		case MARK_INTERVIEW_FAIL:
+			for (CandidateIndexItem item : selectedItems) {
+				InterviewSchedule is = InterviewScheduleLocalServiceUtil
+						.findByVacancyCandidateAndStatus(
+								item.getVacancyCandidateId(),
+								InterviewScheduleStatus.PROCESSING.toString());
+				is.setStatus(candidateStatus.toString());
+				try {
+					InterviewScheduleLocalServiceUtil
+							.updateInterviewSchedule(is);
+					CandidateLocalServiceUtil.changeCandidateStatus(
+							item.getId(), status, serviceContext);
+				} catch (SystemException e) {
+					LOGGER.info(e);
+				}
+			}
+
+			break;
+		case JOB_OFFERED:
+
+			// call Offered
+
+			break;
+		case DECLINE_OFFERED:
+
+			break;
+		case HIRE:
+			EmployeeBean employeeBean = (EmployeeBean) BeanUtils
+					.getBackingBeanByName("employeeBean");
+
+			if (employeeBean.transferCandidateInfo(selectedItems.get(0)) != null) {
+				candidateViewBean.switchMode(4);
+			}
+			break;
+		case REJECT:
+			RequestContext.getCurrentInstance().execute(
+					"PF('wRejectConfirmDialog').show()");
+			break;
+		default:
+			break;
+		}
+		// for (CandidateIndexItem item : selectedItems) {
+		// final Candidate candidate = CandidateLocalServiceUtil
+		// .fetchCandidate(item.getId());
+		// candidate.setStatus(status);
+		// CandidateLocalServiceUtil.updateCandidate(candidate);
+		// }
 	}
 
 	public List<VacancyIndexItem> completeVacancies(String query) {
@@ -373,98 +473,6 @@ public class CandidateBean implements Serializable {
 		}
 	}
 
-	public void onChangeMultipleItemStatus(String status) {
-		final CandidateStatus candidateStatus = CandidateStatus.valueOf(status);
-		final ServiceContext serviceContext = LiferayFacesContext.getInstance()
-				.getServiceContext();
-		final FacesMessage msg;
-		final CandidateViewBean candidateViewBean = BeanUtils
-				.getCandidateViewBean();
-		switch (candidateStatus) {
-		case SHORTLIST:
-			for (CandidateIndexItem candidateIndexItem : selectedItems) {
-				CandidateLocalServiceUtil.changeCandidateStatus(
-						candidateIndexItem.getId(),
-						CandidateStatus.SHORTLIST.toString(), serviceContext);
-			}
-			msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"Add to SHORTLIST Information", selectedItems.size()
-							+ (selectedItems.size() > 1 ? " were" : " was")
-							+ " added to SHORTLIST");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-			break;
-		case INTERVIEW_SCHEDULED:
-
-			ScheduleInterviewForCandidatesBean bean = (ScheduleInterviewForCandidatesBean) BeanUtils
-					.getBackingBeanByName("scheduleInterviewForCandidatesBean");
-			final List<InterviewScheduleItem> interviewScheduleItems = new ArrayList<>();
-			for (CandidateIndexItem candidateIndexItem : selectedItems) {
-				interviewScheduleItems.add(new InterviewScheduleItem(
-						candidateIndexItem));
-			}
-			bean.setInterviewScheduleItems(interviewScheduleItems);
-			bean.setInterviewScheduleForAllItem(new InterviewScheduleForAllItem());
-			candidateViewBean
-					.switchMode(CandidateNavigation.SCHEDULE_INTERVIEW);
-			break;
-		case EVALUATE_CANDIDATE:
-			EvaluationBean evaluationBean = (EvaluationBean) BeanUtils
-					.getBackingBeanByName("evaluationBean");
-			evaluationBean.setCandidateIndexItems(selectedItems);
-			evaluationBean.setEvaluationItems(initEvaluationItems());
-			candidateViewBean
-					.setIncludedDialog("/views/dialogs/evaluation.xhtml");
-			break;
-		case MARK_INTERVIEW_PASS:
-		case MARK_INTERVIEW_FAIL:
-			for (CandidateIndexItem item : selectedItems) {
-				InterviewSchedule is = InterviewScheduleLocalServiceUtil
-						.findByVacancyCandidateAndStatus(
-								item.getVacancyCandidateId(),
-								InterviewScheduleStatus.PROCESSING.toString());
-				is.setStatus(candidateStatus.toString());
-				try {
-					InterviewScheduleLocalServiceUtil
-							.updateInterviewSchedule(is);
-					CandidateLocalServiceUtil.changeCandidateStatus(
-							item.getId(), status, serviceContext);
-				} catch (SystemException e) {
-					LOGGER.info(e);
-				}
-			}
-
-			break;
-		case JOB_OFFERED:
-
-			// call Offered
-
-			break;
-		case DECLINE_OFFERED:
-
-			break;
-		case HIRE:
-			EmployeeBean employeeBean = (EmployeeBean) BeanUtils
-					.getBackingBeanByName("employeeBean");
-
-			if (employeeBean.transferCandidateInfo(selectedItems.get(0)) != null) {
-				candidateViewBean.switchMode(4);
-			}
-			break;
-		case REJECT:
-			RequestContext.getCurrentInstance().execute(
-					"PF('wRejectConfirmDialog').show()");
-			break;
-		default:
-			break;
-		}
-		// for (CandidateIndexItem item : selectedItems) {
-		// final Candidate candidate = CandidateLocalServiceUtil
-		// .fetchCandidate(item.getId());
-		// candidate.setStatus(status);
-		// CandidateLocalServiceUtil.updateCandidate(candidate);
-		// }
-	}
-
 	public List<EvaluationItem> initEvaluationItems() {
 		final List<String> types = new ArrayList<>(new HashSet<>(
 				EvaluationCriteriaType.getAll()));
@@ -494,6 +502,7 @@ public class CandidateBean implements Serializable {
 				CandidateLocalServiceUtil.changeCandidateStatus(item.getId(),
 						CandidateStatus.REJECT.toString(), LiferayFacesContext
 								.getInstance().getServiceContext());
+
 			} catch (PortalException e) {
 				LOGGER.info(e);
 			} catch (SystemException e) {

@@ -29,7 +29,8 @@ public class NavigationBean implements Serializable {
 		return Arrays.asList(new NavigationItem("candidate", "Candidate"),
 				new NavigationItem("vacancy", "Vacancy"), new NavigationItem(
 						"report", "Report"), new NavigationItem(
-						"evaluationCriterias", "Evaluation Criteria"));
+						"evaluationCriterias", "Evaluation Criteria"),
+				new NavigationItem("candidateGuest", "Candidate Guest"));
 	}
 
 	public List<NavigationItem> getNavigationItems() {

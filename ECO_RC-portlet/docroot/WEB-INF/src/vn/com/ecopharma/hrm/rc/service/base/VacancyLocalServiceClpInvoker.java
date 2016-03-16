@@ -194,8 +194,8 @@ public class VacancyLocalServiceClpInvoker {
 		_methodName129 = "addVacancy";
 
 		_methodParameterTypes129 = new String[] {
-				"vn.com.ecopharma.hrm.rc.model.Vacancy", "long",
-				"java.util.List", "com.liferay.portal.service.ServiceContext"
+				"vn.com.ecopharma.hrm.rc.model.Vacancy", "java.util.List",
+				"com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName130 = "updateVacancy";
@@ -445,9 +445,8 @@ public class VacancyLocalServiceClpInvoker {
 		if (_methodName129.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
 			return VacancyLocalServiceUtil.addVacancy((vn.com.ecopharma.hrm.rc.model.Vacancy)arguments[0],
-				((Long)arguments[1]).longValue(),
-				(java.util.List<java.lang.Long>)arguments[2],
-				(com.liferay.portal.service.ServiceContext)arguments[3]);
+				(java.util.List<java.lang.Long>)arguments[1],
+				(com.liferay.portal.service.ServiceContext)arguments[2]);
 		}
 
 		if (_methodName130.equals(name) &&

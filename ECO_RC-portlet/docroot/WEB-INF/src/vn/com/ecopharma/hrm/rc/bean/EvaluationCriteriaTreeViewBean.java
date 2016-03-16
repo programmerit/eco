@@ -6,11 +6,15 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 
+import org.apache.commons.lang3.StringUtils;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
+import vn.com.ecopharma.hrm.rc.bean.dialog.CriteriaBean;
 import vn.com.ecopharma.hrm.rc.enumeration.EvaluationCriteriaType;
 import vn.com.ecopharma.hrm.rc.model.EvaluationCriteria;
 import vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue;
@@ -19,7 +23,7 @@ import vn.com.ecopharma.hrm.rc.service.EvaluationCriteriaLocalServiceUtil;
 
 @ManagedBean
 @ViewScoped
-public class EvaluationCriteriaBean implements Serializable {
+public class EvaluationCriteriaTreeViewBean implements Serializable {
 
 	/**
 	 * 
@@ -29,6 +33,11 @@ public class EvaluationCriteriaBean implements Serializable {
 	private TreeNode root;
 
 	private TreeNode selectedNode;
+
+	private String includedDialog = StringUtils.EMPTY;
+
+	@ManagedProperty(value = "#{criteriaBean}")
+	private CriteriaBean criteriaBean;
 
 	@PostConstruct
 	public void init() {
@@ -73,6 +82,24 @@ public class EvaluationCriteriaBean implements Serializable {
 		return root;
 	}
 
+	public void onAddCriteria(ActionEvent event) {
+		String type = (String) selectedNode.getData();
+		criteriaBean.getCriteria().setType(type);
+		this.includedDialog = "/views/dialogs/addCriteria.xhtml";
+	}
+
+	public void onAddKey(ActionEvent event) {
+
+	}
+
+	public void onViewKey(ActionEvent event) {
+
+	}
+
+	public void onDeleteKey(ActionEvent event) {
+
+	}
+
 	public TreeNode getRoot() {
 		return root;
 	}
@@ -102,6 +129,22 @@ public class EvaluationCriteriaBean implements Serializable {
 	public boolean isKeyValNodeSelected() {
 		return selectedNode != null
 				&& (selectedNode.getData() instanceof EvaluationCriteriaKeyValue);
+	}
+
+	public String getIncludedDialog() {
+		return includedDialog;
+	}
+
+	public void setIncludedDialog(String includedDialog) {
+		this.includedDialog = includedDialog;
+	}
+
+	public CriteriaBean getCriteriaBean() {
+		return criteriaBean;
+	}
+
+	public void setCriteriaBean(CriteriaBean criteriaBean) {
+		this.criteriaBean = criteriaBean;
 	}
 
 }

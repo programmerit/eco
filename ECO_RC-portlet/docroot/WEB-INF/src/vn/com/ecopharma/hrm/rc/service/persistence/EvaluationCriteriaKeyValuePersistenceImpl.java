@@ -598,24 +598,11 @@ public class EvaluationCriteriaKeyValuePersistenceImpl
 
 	private static final String _FINDER_COLUMN_EVALUATIONCRITERIA_EVALUATIONCRITERIAID_2 =
 		"evaluationCriteriaKeyValue.evaluationCriteriaId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_EVALUATIONCRITERIAANDKEY =
+	public static final FinderPath FINDER_PATH_FETCH_BY_EVALUATIONCRITERIAANDKEY =
 		new FinderPath(EvaluationCriteriaKeyValueModelImpl.ENTITY_CACHE_ENABLED,
 			EvaluationCriteriaKeyValueModelImpl.FINDER_CACHE_ENABLED,
-			EvaluationCriteriaKeyValueImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByEvaluationCriteriaAndKey",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EVALUATIONCRITERIAANDKEY =
-		new FinderPath(EvaluationCriteriaKeyValueModelImpl.ENTITY_CACHE_ENABLED,
-			EvaluationCriteriaKeyValueModelImpl.FINDER_CACHE_ENABLED,
-			EvaluationCriteriaKeyValueImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByEvaluationCriteriaAndKey",
+			EvaluationCriteriaKeyValueImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByEvaluationCriteriaAndKey",
 			new String[] { Long.class.getName(), String.class.getName() },
 			EvaluationCriteriaKeyValueModelImpl.EVALUATIONCRITERIAID_COLUMN_BITMASK |
 			EvaluationCriteriaKeyValueModelImpl.KEY_COLUMN_BITMASK);
@@ -627,105 +614,91 @@ public class EvaluationCriteriaKeyValuePersistenceImpl
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns all the evaluation criteria key values where evaluationCriteriaId = &#63; and key = &#63;.
+	 * Returns the evaluation criteria key value where evaluationCriteriaId = &#63; and key = &#63; or throws a {@link vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaKeyValueException} if it could not be found.
 	 *
 	 * @param evaluationCriteriaId the evaluation criteria ID
 	 * @param key the key
-	 * @return the matching evaluation criteria key values
+	 * @return the matching evaluation criteria key value
+	 * @throws vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaKeyValueException if a matching evaluation criteria key value could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<EvaluationCriteriaKeyValue> findByEvaluationCriteriaAndKey(
+	public EvaluationCriteriaKeyValue findByEvaluationCriteriaAndKey(
+		long evaluationCriteriaId, String key)
+		throws NoSuchEvaluationCriteriaKeyValueException, SystemException {
+		EvaluationCriteriaKeyValue evaluationCriteriaKeyValue = fetchByEvaluationCriteriaAndKey(evaluationCriteriaId,
+				key);
+
+		if (evaluationCriteriaKeyValue == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("evaluationCriteriaId=");
+			msg.append(evaluationCriteriaId);
+
+			msg.append(", key=");
+			msg.append(key);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchEvaluationCriteriaKeyValueException(msg.toString());
+		}
+
+		return evaluationCriteriaKeyValue;
+	}
+
+	/**
+	 * Returns the evaluation criteria key value where evaluationCriteriaId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param evaluationCriteriaId the evaluation criteria ID
+	 * @param key the key
+	 * @return the matching evaluation criteria key value, or <code>null</code> if a matching evaluation criteria key value could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public EvaluationCriteriaKeyValue fetchByEvaluationCriteriaAndKey(
 		long evaluationCriteriaId, String key) throws SystemException {
-		return findByEvaluationCriteriaAndKey(evaluationCriteriaId, key,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return fetchByEvaluationCriteriaAndKey(evaluationCriteriaId, key, true);
 	}
 
 	/**
-	 * Returns a range of all the evaluation criteria key values where evaluationCriteriaId = &#63; and key = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.rc.model.impl.EvaluationCriteriaKeyValueModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
+	 * Returns the evaluation criteria key value where evaluationCriteriaId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param evaluationCriteriaId the evaluation criteria ID
 	 * @param key the key
-	 * @param start the lower bound of the range of evaluation criteria key values
-	 * @param end the upper bound of the range of evaluation criteria key values (not inclusive)
-	 * @return the range of matching evaluation criteria key values
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching evaluation criteria key value, or <code>null</code> if a matching evaluation criteria key value could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<EvaluationCriteriaKeyValue> findByEvaluationCriteriaAndKey(
-		long evaluationCriteriaId, String key, int start, int end)
+	public EvaluationCriteriaKeyValue fetchByEvaluationCriteriaAndKey(
+		long evaluationCriteriaId, String key, boolean retrieveFromCache)
 		throws SystemException {
-		return findByEvaluationCriteriaAndKey(evaluationCriteriaId, key, start,
-			end, null);
-	}
+		Object[] finderArgs = new Object[] { evaluationCriteriaId, key };
 
-	/**
-	 * Returns an ordered range of all the evaluation criteria key values where evaluationCriteriaId = &#63; and key = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.rc.model.impl.EvaluationCriteriaKeyValueModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param evaluationCriteriaId the evaluation criteria ID
-	 * @param key the key
-	 * @param start the lower bound of the range of evaluation criteria key values
-	 * @param end the upper bound of the range of evaluation criteria key values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching evaluation criteria key values
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public List<EvaluationCriteriaKeyValue> findByEvaluationCriteriaAndKey(
-		long evaluationCriteriaId, String key, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+		Object result = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EVALUATIONCRITERIAANDKEY;
-			finderArgs = new Object[] { evaluationCriteriaId, key };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_EVALUATIONCRITERIAANDKEY;
-			finderArgs = new Object[] {
-					evaluationCriteriaId, key,
-					
-					start, end, orderByComparator
-				};
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_EVALUATIONCRITERIAANDKEY,
+					finderArgs, this);
 		}
 
-		List<EvaluationCriteriaKeyValue> list = (List<EvaluationCriteriaKeyValue>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		if (result instanceof EvaluationCriteriaKeyValue) {
+			EvaluationCriteriaKeyValue evaluationCriteriaKeyValue = (EvaluationCriteriaKeyValue)result;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (EvaluationCriteriaKeyValue evaluationCriteriaKeyValue : list) {
-				if ((evaluationCriteriaId != evaluationCriteriaKeyValue.getEvaluationCriteriaId()) ||
-						!Validator.equals(key,
-							evaluationCriteriaKeyValue.getKey())) {
-					list = null;
-
-					break;
-				}
+			if ((evaluationCriteriaId != evaluationCriteriaKeyValue.getEvaluationCriteriaId()) ||
+					!Validator.equals(key, evaluationCriteriaKeyValue.getKey())) {
+				result = null;
 			}
 		}
 
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(4);
-			}
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
 
 			query.append(_SQL_SELECT_EVALUATIONCRITERIAKEYVALUE_WHERE);
 
@@ -745,15 +718,6 @@ public class EvaluationCriteriaKeyValuePersistenceImpl
 				query.append(_FINDER_COLUMN_EVALUATIONCRITERIAANDKEY_KEY_2);
 			}
 
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(EvaluationCriteriaKeyValueModelImpl.ORDER_BY_JPQL);
-			}
-
 			String sql = query.toString();
 
 			Session session = null;
@@ -771,25 +735,37 @@ public class EvaluationCriteriaKeyValuePersistenceImpl
 					qPos.add(key);
 				}
 
-				if (!pagination) {
-					list = (List<EvaluationCriteriaKeyValue>)QueryUtil.list(q,
-							getDialect(), start, end, false);
+				List<EvaluationCriteriaKeyValue> list = q.list();
 
-					Collections.sort(list);
-
-					list = new UnmodifiableList<EvaluationCriteriaKeyValue>(list);
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_EVALUATIONCRITERIAANDKEY,
+						finderArgs, list);
 				}
 				else {
-					list = (List<EvaluationCriteriaKeyValue>)QueryUtil.list(q,
-							getDialect(), start, end);
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"EvaluationCriteriaKeyValuePersistenceImpl.fetchByEvaluationCriteriaAndKey(long, String, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					EvaluationCriteriaKeyValue evaluationCriteriaKeyValue = list.get(0);
+
+					result = evaluationCriteriaKeyValue;
+
+					cacheResult(evaluationCriteriaKeyValue);
+
+					if ((evaluationCriteriaKeyValue.getEvaluationCriteriaId() != evaluationCriteriaId) ||
+							(evaluationCriteriaKeyValue.getKey() == null) ||
+							!evaluationCriteriaKeyValue.getKey().equals(key)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_EVALUATIONCRITERIAANDKEY,
+							finderArgs, evaluationCriteriaKeyValue);
+					}
 				}
-
-				cacheResult(list);
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_EVALUATIONCRITERIAANDKEY,
+					finderArgs);
 
 				throw processException(e);
 			}
@@ -798,319 +774,30 @@ public class EvaluationCriteriaKeyValuePersistenceImpl
 			}
 		}
 
-		return list;
-	}
-
-	/**
-	 * Returns the first evaluation criteria key value in the ordered set where evaluationCriteriaId = &#63; and key = &#63;.
-	 *
-	 * @param evaluationCriteriaId the evaluation criteria ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching evaluation criteria key value
-	 * @throws vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaKeyValueException if a matching evaluation criteria key value could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public EvaluationCriteriaKeyValue findByEvaluationCriteriaAndKey_First(
-		long evaluationCriteriaId, String key,
-		OrderByComparator orderByComparator)
-		throws NoSuchEvaluationCriteriaKeyValueException, SystemException {
-		EvaluationCriteriaKeyValue evaluationCriteriaKeyValue = fetchByEvaluationCriteriaAndKey_First(evaluationCriteriaId,
-				key, orderByComparator);
-
-		if (evaluationCriteriaKeyValue != null) {
-			return evaluationCriteriaKeyValue;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("evaluationCriteriaId=");
-		msg.append(evaluationCriteriaId);
-
-		msg.append(", key=");
-		msg.append(key);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchEvaluationCriteriaKeyValueException(msg.toString());
-	}
-
-	/**
-	 * Returns the first evaluation criteria key value in the ordered set where evaluationCriteriaId = &#63; and key = &#63;.
-	 *
-	 * @param evaluationCriteriaId the evaluation criteria ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching evaluation criteria key value, or <code>null</code> if a matching evaluation criteria key value could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public EvaluationCriteriaKeyValue fetchByEvaluationCriteriaAndKey_First(
-		long evaluationCriteriaId, String key,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<EvaluationCriteriaKeyValue> list = findByEvaluationCriteriaAndKey(evaluationCriteriaId,
-				key, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last evaluation criteria key value in the ordered set where evaluationCriteriaId = &#63; and key = &#63;.
-	 *
-	 * @param evaluationCriteriaId the evaluation criteria ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching evaluation criteria key value
-	 * @throws vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaKeyValueException if a matching evaluation criteria key value could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public EvaluationCriteriaKeyValue findByEvaluationCriteriaAndKey_Last(
-		long evaluationCriteriaId, String key,
-		OrderByComparator orderByComparator)
-		throws NoSuchEvaluationCriteriaKeyValueException, SystemException {
-		EvaluationCriteriaKeyValue evaluationCriteriaKeyValue = fetchByEvaluationCriteriaAndKey_Last(evaluationCriteriaId,
-				key, orderByComparator);
-
-		if (evaluationCriteriaKeyValue != null) {
-			return evaluationCriteriaKeyValue;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("evaluationCriteriaId=");
-		msg.append(evaluationCriteriaId);
-
-		msg.append(", key=");
-		msg.append(key);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchEvaluationCriteriaKeyValueException(msg.toString());
-	}
-
-	/**
-	 * Returns the last evaluation criteria key value in the ordered set where evaluationCriteriaId = &#63; and key = &#63;.
-	 *
-	 * @param evaluationCriteriaId the evaluation criteria ID
-	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching evaluation criteria key value, or <code>null</code> if a matching evaluation criteria key value could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public EvaluationCriteriaKeyValue fetchByEvaluationCriteriaAndKey_Last(
-		long evaluationCriteriaId, String key,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByEvaluationCriteriaAndKey(evaluationCriteriaId, key);
-
-		if (count == 0) {
+		if (result instanceof List<?>) {
 			return null;
 		}
-
-		List<EvaluationCriteriaKeyValue> list = findByEvaluationCriteriaAndKey(evaluationCriteriaId,
-				key, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
+		else {
+			return (EvaluationCriteriaKeyValue)result;
 		}
-
-		return null;
 	}
 
 	/**
-	 * Returns the evaluation criteria key values before and after the current evaluation criteria key value in the ordered set where evaluationCriteriaId = &#63; and key = &#63;.
+	 * Removes the evaluation criteria key value where evaluationCriteriaId = &#63; and key = &#63; from the database.
 	 *
-	 * @param evaluationCriteriaKeyValueId the primary key of the current evaluation criteria key value
 	 * @param evaluationCriteriaId the evaluation criteria ID
 	 * @param key the key
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next evaluation criteria key value
-	 * @throws vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaKeyValueException if a evaluation criteria key value with the primary key could not be found
+	 * @return the evaluation criteria key value that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public EvaluationCriteriaKeyValue[] findByEvaluationCriteriaAndKey_PrevAndNext(
-		long evaluationCriteriaKeyValueId, long evaluationCriteriaId,
-		String key, OrderByComparator orderByComparator)
+	public EvaluationCriteriaKeyValue removeByEvaluationCriteriaAndKey(
+		long evaluationCriteriaId, String key)
 		throws NoSuchEvaluationCriteriaKeyValueException, SystemException {
-		EvaluationCriteriaKeyValue evaluationCriteriaKeyValue = findByPrimaryKey(evaluationCriteriaKeyValueId);
+		EvaluationCriteriaKeyValue evaluationCriteriaKeyValue = findByEvaluationCriteriaAndKey(evaluationCriteriaId,
+				key);
 
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			EvaluationCriteriaKeyValue[] array = new EvaluationCriteriaKeyValueImpl[3];
-
-			array[0] = getByEvaluationCriteriaAndKey_PrevAndNext(session,
-					evaluationCriteriaKeyValue, evaluationCriteriaId, key,
-					orderByComparator, true);
-
-			array[1] = evaluationCriteriaKeyValue;
-
-			array[2] = getByEvaluationCriteriaAndKey_PrevAndNext(session,
-					evaluationCriteriaKeyValue, evaluationCriteriaId, key,
-					orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected EvaluationCriteriaKeyValue getByEvaluationCriteriaAndKey_PrevAndNext(
-		Session session, EvaluationCriteriaKeyValue evaluationCriteriaKeyValue,
-		long evaluationCriteriaId, String key,
-		OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_EVALUATIONCRITERIAKEYVALUE_WHERE);
-
-		query.append(_FINDER_COLUMN_EVALUATIONCRITERIAANDKEY_EVALUATIONCRITERIAID_2);
-
-		boolean bindKey = false;
-
-		if (key == null) {
-			query.append(_FINDER_COLUMN_EVALUATIONCRITERIAANDKEY_KEY_1);
-		}
-		else if (key.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_EVALUATIONCRITERIAANDKEY_KEY_3);
-		}
-		else {
-			bindKey = true;
-
-			query.append(_FINDER_COLUMN_EVALUATIONCRITERIAANDKEY_KEY_2);
-		}
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(EvaluationCriteriaKeyValueModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(evaluationCriteriaId);
-
-		if (bindKey) {
-			qPos.add(key);
-		}
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(evaluationCriteriaKeyValue);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<EvaluationCriteriaKeyValue> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the evaluation criteria key values where evaluationCriteriaId = &#63; and key = &#63; from the database.
-	 *
-	 * @param evaluationCriteriaId the evaluation criteria ID
-	 * @param key the key
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public void removeByEvaluationCriteriaAndKey(long evaluationCriteriaId,
-		String key) throws SystemException {
-		for (EvaluationCriteriaKeyValue evaluationCriteriaKeyValue : findByEvaluationCriteriaAndKey(
-				evaluationCriteriaId, key, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
-			remove(evaluationCriteriaKeyValue);
-		}
+		return remove(evaluationCriteriaKeyValue);
 	}
 
 	/**
@@ -1209,6 +896,12 @@ public class EvaluationCriteriaKeyValuePersistenceImpl
 			evaluationCriteriaKeyValue.getPrimaryKey(),
 			evaluationCriteriaKeyValue);
 
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_EVALUATIONCRITERIAANDKEY,
+			new Object[] {
+				evaluationCriteriaKeyValue.getEvaluationCriteriaId(),
+				evaluationCriteriaKeyValue.getKey()
+			}, evaluationCriteriaKeyValue);
+
 		evaluationCriteriaKeyValue.resetOriginalValues();
 	}
 
@@ -1269,6 +962,8 @@ public class EvaluationCriteriaKeyValuePersistenceImpl
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(evaluationCriteriaKeyValue);
 	}
 
 	@Override
@@ -1281,6 +976,68 @@ public class EvaluationCriteriaKeyValuePersistenceImpl
 			EntityCacheUtil.removeResult(EvaluationCriteriaKeyValueModelImpl.ENTITY_CACHE_ENABLED,
 				EvaluationCriteriaKeyValueImpl.class,
 				evaluationCriteriaKeyValue.getPrimaryKey());
+
+			clearUniqueFindersCache(evaluationCriteriaKeyValue);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		EvaluationCriteriaKeyValue evaluationCriteriaKeyValue) {
+		if (evaluationCriteriaKeyValue.isNew()) {
+			Object[] args = new Object[] {
+					evaluationCriteriaKeyValue.getEvaluationCriteriaId(),
+					evaluationCriteriaKeyValue.getKey()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_EVALUATIONCRITERIAANDKEY,
+				args, Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_EVALUATIONCRITERIAANDKEY,
+				args, evaluationCriteriaKeyValue);
+		}
+		else {
+			EvaluationCriteriaKeyValueModelImpl evaluationCriteriaKeyValueModelImpl =
+				(EvaluationCriteriaKeyValueModelImpl)evaluationCriteriaKeyValue;
+
+			if ((evaluationCriteriaKeyValueModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_EVALUATIONCRITERIAANDKEY.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						evaluationCriteriaKeyValue.getEvaluationCriteriaId(),
+						evaluationCriteriaKeyValue.getKey()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_EVALUATIONCRITERIAANDKEY,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_EVALUATIONCRITERIAANDKEY,
+					args, evaluationCriteriaKeyValue);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(
+		EvaluationCriteriaKeyValue evaluationCriteriaKeyValue) {
+		EvaluationCriteriaKeyValueModelImpl evaluationCriteriaKeyValueModelImpl = (EvaluationCriteriaKeyValueModelImpl)evaluationCriteriaKeyValue;
+
+		Object[] args = new Object[] {
+				evaluationCriteriaKeyValue.getEvaluationCriteriaId(),
+				evaluationCriteriaKeyValue.getKey()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_EVALUATIONCRITERIAANDKEY,
+			args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_EVALUATIONCRITERIAANDKEY,
+			args);
+
+		if ((evaluationCriteriaKeyValueModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_EVALUATIONCRITERIAANDKEY.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					evaluationCriteriaKeyValueModelImpl.getOriginalEvaluationCriteriaId(),
+					evaluationCriteriaKeyValueModelImpl.getOriginalKey()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_EVALUATIONCRITERIAANDKEY,
+				args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_EVALUATIONCRITERIAANDKEY,
+				args);
 		}
 	}
 
@@ -1448,35 +1205,15 @@ public class EvaluationCriteriaKeyValuePersistenceImpl
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EVALUATIONCRITERIA,
 					args);
 			}
-
-			if ((evaluationCriteriaKeyValueModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EVALUATIONCRITERIAANDKEY.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						evaluationCriteriaKeyValueModelImpl.getOriginalEvaluationCriteriaId(),
-						evaluationCriteriaKeyValueModelImpl.getOriginalKey()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_EVALUATIONCRITERIAANDKEY,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EVALUATIONCRITERIAANDKEY,
-					args);
-
-				args = new Object[] {
-						evaluationCriteriaKeyValueModelImpl.getEvaluationCriteriaId(),
-						evaluationCriteriaKeyValueModelImpl.getKey()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_EVALUATIONCRITERIAANDKEY,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EVALUATIONCRITERIAANDKEY,
-					args);
-			}
 		}
 
 		EntityCacheUtil.putResult(EvaluationCriteriaKeyValueModelImpl.ENTITY_CACHE_ENABLED,
 			EvaluationCriteriaKeyValueImpl.class,
 			evaluationCriteriaKeyValue.getPrimaryKey(),
 			evaluationCriteriaKeyValue);
+
+		clearUniqueFindersCache(evaluationCriteriaKeyValue);
+		cacheUniqueFindersCache(evaluationCriteriaKeyValue);
 
 		return evaluationCriteriaKeyValue;
 	}

@@ -132,13 +132,19 @@ public class EvaluationCriteriaLocalServiceClpInvoker {
 
 		_methodParameterTypes119 = new String[] { "java.lang.String" };
 
-		_methodName120 = "createPrePersistedEntity";
+		_methodName120 = "findByNameAndType";
 
-		_methodParameterTypes120 = new String[] {  };
+		_methodParameterTypes120 = new String[] {
+				"java.lang.String", "java.lang.String"
+			};
 
-		_methodName121 = "addEvaluationCriteria";
+		_methodName121 = "createPrePersistedEntity";
 
-		_methodParameterTypes121 = new String[] {
+		_methodParameterTypes121 = new String[] {  };
+
+		_methodName122 = "addEvaluationCriteria";
+
+		_methodParameterTypes122 = new String[] {
 				"java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -270,11 +276,17 @@ public class EvaluationCriteriaLocalServiceClpInvoker {
 
 		if (_methodName120.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
-			return EvaluationCriteriaLocalServiceUtil.createPrePersistedEntity();
+			return EvaluationCriteriaLocalServiceUtil.findByNameAndType((java.lang.String)arguments[0],
+				(java.lang.String)arguments[1]);
 		}
 
 		if (_methodName121.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
+			return EvaluationCriteriaLocalServiceUtil.createPrePersistedEntity();
+		}
+
+		if (_methodName122.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
 			return EvaluationCriteriaLocalServiceUtil.addEvaluationCriteria((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1],
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
@@ -331,4 +343,6 @@ public class EvaluationCriteriaLocalServiceClpInvoker {
 	private String[] _methodParameterTypes120;
 	private String _methodName121;
 	private String[] _methodParameterTypes121;
+	private String _methodName122;
+	private String[] _methodParameterTypes122;
 }

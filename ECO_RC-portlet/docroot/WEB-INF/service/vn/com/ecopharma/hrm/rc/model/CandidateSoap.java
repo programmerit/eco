@@ -49,7 +49,6 @@ public class CandidateSoap implements Serializable {
 		soapModel.setReligion(model.getReligion());
 		soapModel.setApplicationDate(model.getApplicationDate());
 		soapModel.setStatus(model.getStatus());
-		soapModel.setLocationId(model.getLocationId());
 		soapModel.setDeleted(model.getDeleted());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -254,14 +253,6 @@ public class CandidateSoap implements Serializable {
 		_status = status;
 	}
 
-	public long getLocationId() {
-		return _locationId;
-	}
-
-	public void setLocationId(long locationId) {
-		_locationId = locationId;
-	}
-
 	public boolean getDeleted() {
 		return _deleted;
 	}
@@ -348,7 +339,6 @@ public class CandidateSoap implements Serializable {
 	private String _religion;
 	private Date _applicationDate;
 	private String _status;
-	private long _locationId;
 	private boolean _deleted;
 	private long _groupId;
 	private long _companyId;

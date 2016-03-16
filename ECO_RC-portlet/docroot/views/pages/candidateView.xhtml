@@ -126,6 +126,9 @@
 		</h:form>
 		<h:form id="candidateMainForm"
 			rendered="#{candidateViewBean.currentMode==1}">
+			<p:remoteCommand name="updatePanelGroupCandidatesAndGrowl"
+				update=":CandidatePanelGroup :candidateMainForm:candidates :growl" />
+
 			<p:remoteCommand name="updateCandidatesAndGrowl"
 				update=":candidateMainForm:candidates :growl" />
 
@@ -137,6 +140,9 @@
 
 			<p:remoteCommand name="refreshContextMenu"
 				update=":candidateMainForm:candidateContextMenu" />
+
+			<p:remoteCommand name="refreshStatusGroup"
+				update=":candidateMainForm:candidates:statusOutputPanel" />
 
 			<p:contextMenu id="candidateContextMenu" for="candidates">
 				<p:submenu label="Status">
@@ -219,17 +225,16 @@
 					onclick="PF('wPresetSettingDialog').show()" />
 
 			</h:panelGroup>
-
 			<p:dataTable id="candidates" var="candidate" widgetVar="wCandidates"
 				reflow="true" value="#{candidateBean.lazyDataModel}"
-				paginatorAlwaysVisible="true" paginator="true" rows="10"
+				paginatorAlwaysVisible="true" paginator="true" rows="25"
 				paginatorPosition="bottom"
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="10,25,50" lazy="true" selectionMode="multiple"
 				selection="#{candidateBean.selectedItems}" rowKey="#{candidate.id}"
 				emptyMessage="No candidates found">
 				<!-- Notice [async] -->
-				<p:ajax event="rowDblselect" delay="100"
+				<p:ajax event="rowDblselect" delay="200"
 					listener="#{candidateBean.onRowDblSelect}"
 					update=":CandidatePanelGroup" />
 
@@ -275,24 +280,26 @@
 				</p:column>
 
 				<p:column headerText="Status">
-					<h:outputText id="candidateStatus"
-						styleClass="currentStatus #{candidateViewBean.currentStatusCSS(candidate.status)}"
-						value="#{i18n[candidate.localizedStatus]}" />
-					<p:selectOneMenu id="candidateStatusSelect"
-						style="margin-top:20px;"
-						value="#{candidateViewBean.selectedStatus}">
-						<!-- eliminate oncomplete update if current status is JOB_OFFERED, 
+					<h:panelGroup id="statusOutputPanel">
+						<h:outputText id="candidateStatus"
+							styleClass="currentStatus #{candidateViewBean.currentStatusCSS(candidate.status)}"
+							value="#{i18n[candidate.localizedStatus]}" />
+						<p:selectOneMenu id="candidateStatusSelect"
+							style="margin-top:20px;"
+							value="#{candidateViewBean.selectedStatus}">
+							<!-- eliminate oncomplete update if current status is JOB_OFFERED, 
 						b/c changing to HIRE status will make AJAX cannot complete on updating candidates table -->
-						<p:ajax event="change"
-							update="candidateStatusSelect :CandidatePanelGroup"
-							listener="#{candidateViewBean.onStatusChange(candidate)}"
-							oncomplete="updateCandidatesAndGrowl();" />
-						<f:selectItem itemLabel="---" itemValue="" />
-						<f:selectItems
-							value="#{candidateViewBean.getAvailableStatuses(candidate.status)}"
-							var="status" itemValue="#{status}"
-							itemLabel="#{i18n[candidateViewBean.getLocalizedStatus(status)]}" />
-					</p:selectOneMenu>
+							<p:ajax update=":CandidatePanelGroup candidateStatusSelect"
+								listener="#{candidateViewBean.onStatusChange(candidate)}"
+								oncomplete="#{candidate.status != 'JOB_OFFERED' ? 'updateCandidatesAndGrowl();' : ''}">
+							</p:ajax>
+							<f:selectItem itemLabel="---" itemValue="" />
+							<f:selectItems
+								value="#{candidateViewBean.getAvailableStatuses(candidate.status)}"
+								var="status" itemValue="#{status}"
+								itemLabel="#{i18n[candidateViewBean.getLocalizedStatus(status)]}" />
+						</p:selectOneMenu>
+					</h:panelGroup>
 				</p:column>
 
 				<p:column headerText="Action" width="84">
@@ -375,6 +382,10 @@
 							rendered="#{candidatePermission.checkPermission(candidate.id, 'UPDATE')}" />
 					</h:panelGroup>
 				</p:rowExpansion>
+				<f:facet name="footer">
+		        		In total there are of <h:outputText id="totalFilteredCount"
+						value="#{candidateBean.lazyDataModel.rowCount}" /> candidates.
+		   			 </f:facet>
 			</p:dataTable>
 
 			<!-- DELETE CONFIRMATION DIALOG -->
@@ -411,8 +422,8 @@
 				<h:panelGroup style="float: right">
 					<p:commandButton id="confirmReject" value="Yes"
 						styleClass="RedButton"
-						oncomplete="PF('wRejectConfirmDialog').hide(); updateCandidatesAndGrowl();"
-						actionListener="#{candidateBean.onRejectConfirm}" />
+						actionListener="#{candidateBean.onRejectConfirm}"
+						oncomplete="PF('wRejectConfirmDialog').hide(); updateCandidatesAndGrowl();" />
 					<p:commandButton id="discardReject" value="No"
 						onclick="PF('wRejectConfirmDialog').hide()" />
 				</h:panelGroup>

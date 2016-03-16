@@ -88,6 +88,15 @@ public class EvaluationCriteriaLocalServiceImpl extends
 		return new ArrayList<>();
 	}
 
+	public EvaluationCriteria findByNameAndType(String name, String type) {
+		try {
+			return evaluationCriteriaPersistence.fetchByNameAndType(name, type);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
 	public EvaluationCriteria createPrePersistedEntity() {
 		try {
 			long id = counterLocalService.increment();

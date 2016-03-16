@@ -306,7 +306,7 @@ public interface VacancyLocalService extends BaseLocalService,
 		java.lang.String status);
 
 	public vn.com.ecopharma.hrm.rc.model.Vacancy addVacancy(
-		vn.com.ecopharma.hrm.rc.model.Vacancy vacancy, long locationId,
+		vn.com.ecopharma.hrm.rc.model.Vacancy vacancy,
 		java.util.List<java.lang.Long> fileEntryIds,
 		com.liferay.portal.service.ServiceContext serviceContext);
 

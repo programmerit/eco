@@ -266,6 +266,9 @@ public interface EvaluationCriteriaLocalService extends BaseLocalService,
 	public java.util.List<vn.com.ecopharma.hrm.rc.model.EvaluationCriteria> findByType(
 		java.lang.String type);
 
+	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteria findByNameAndType(
+		java.lang.String name, java.lang.String type);
+
 	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteria createPrePersistedEntity();
 
 	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteria addEvaluationCriteria(

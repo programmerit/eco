@@ -26,7 +26,6 @@ import vn.com.ecopharma.hrm.rc.service.InterviewScheduleLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.util.BeanUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -106,22 +105,14 @@ public class CandidateViewBean extends EntityViewBean {
 			break;
 		case MARK_INTERVIEW_PASS:
 		case MARK_INTERVIEW_FAIL:
-			InterviewSchedule is = InterviewScheduleLocalServiceUtil
+			InterviewSchedule interviewSchedule = InterviewScheduleLocalServiceUtil
 					.findByVacancyCandidateAndStatus(
 							item.getVacancyCandidateId(),
 							InterviewScheduleStatus.PROCESSING.toString());
-			is.setStatus(status.equals(CandidateStatus.MARK_INTERVIEW_PASS) ? InterviewScheduleStatus.PASSED
-					.toString() : InterviewScheduleStatus.FAILED.toString());
-			try {
-				InterviewSchedule interviewSchedule = InterviewScheduleLocalServiceUtil
-						.updateInterviewSchedule(is);
-				if (interviewSchedule != null) {
-					CandidateLocalServiceUtil.changeCandidateStatus(
-							item.getId(), status.toString(), serviceContext);
-				}
-			} catch (SystemException e) {
-				LOGGER.info(e);
-			}
+			InterviewScheduleLocalServiceUtil
+					.setInterviewStatusByCandidateStatus(status.toString(),
+							item.getId(), interviewSchedule, serviceContext);
+
 			break;
 		case REJECT:
 			candidateBean.setSelectedItems(Arrays.asList(item));
@@ -131,11 +122,12 @@ public class CandidateViewBean extends EntityViewBean {
 		default:
 			CandidateLocalServiceUtil.changeCandidateStatus(item.getId(),
 					selectedStatus, serviceContext);
-			RequestContext.getCurrentInstance().execute(
-					"updateCandidatesAndGrowl();");
+			RequestContext.getCurrentInstance().update(
+					":candidateMainForm:candidates");
 			break;
 		}
 		selectedStatus = StringUtils.EMPTY;
+		RequestContext.getCurrentInstance().update("refreshStatusGroup();");
 	}
 
 	public String currentStatusCSS(String status) {

@@ -20,7 +20,6 @@
 		<field name="religion" type="String" />
 		<field name="applicationDate" type="Date" />
 		<field name="status" type="String" />
-		<field name="locationId" type="long" />
 		<field name="deleted" type="boolean" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -154,7 +153,6 @@
 		<field name="interviewScheduleId" type="long" />
 		<field name="vacancyCandidateId" type="long" />
 		<field name="interviewId" type="long" />
-		<field name="locationId" type="long" />
 		<field name="interviewDate" type="Date" />
 		<field name="interviewTime" type="String" />
 		<field name="status" type="String" />

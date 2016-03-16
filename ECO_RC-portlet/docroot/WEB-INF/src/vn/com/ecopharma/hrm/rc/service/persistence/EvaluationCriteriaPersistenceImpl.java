@@ -622,6 +622,308 @@ public class EvaluationCriteriaPersistenceImpl extends BasePersistenceImpl<Evalu
 	private static final String _FINDER_COLUMN_TYPE_TYPE_1 = "evaluationCriteria.type IS NULL";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "evaluationCriteria.type = ?";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_3 = "(evaluationCriteria.type IS NULL OR evaluationCriteria.type = '')";
+	public static final FinderPath FINDER_PATH_FETCH_BY_NAMEANDTYPE = new FinderPath(EvaluationCriteriaModelImpl.ENTITY_CACHE_ENABLED,
+			EvaluationCriteriaModelImpl.FINDER_CACHE_ENABLED,
+			EvaluationCriteriaImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByNameAndType",
+			new String[] { String.class.getName(), String.class.getName() },
+			EvaluationCriteriaModelImpl.NAME_COLUMN_BITMASK |
+			EvaluationCriteriaModelImpl.TYPE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_NAMEANDTYPE = new FinderPath(EvaluationCriteriaModelImpl.ENTITY_CACHE_ENABLED,
+			EvaluationCriteriaModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByNameAndType",
+			new String[] { String.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns the evaluation criteria where name = &#63; and type = &#63; or throws a {@link vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaException} if it could not be found.
+	 *
+	 * @param name the name
+	 * @param type the type
+	 * @return the matching evaluation criteria
+	 * @throws vn.com.ecopharma.hrm.rc.NoSuchEvaluationCriteriaException if a matching evaluation criteria could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public EvaluationCriteria findByNameAndType(String name, String type)
+		throws NoSuchEvaluationCriteriaException, SystemException {
+		EvaluationCriteria evaluationCriteria = fetchByNameAndType(name, type);
+
+		if (evaluationCriteria == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("name=");
+			msg.append(name);
+
+			msg.append(", type=");
+			msg.append(type);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchEvaluationCriteriaException(msg.toString());
+		}
+
+		return evaluationCriteria;
+	}
+
+	/**
+	 * Returns the evaluation criteria where name = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param name the name
+	 * @param type the type
+	 * @return the matching evaluation criteria, or <code>null</code> if a matching evaluation criteria could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public EvaluationCriteria fetchByNameAndType(String name, String type)
+		throws SystemException {
+		return fetchByNameAndType(name, type, true);
+	}
+
+	/**
+	 * Returns the evaluation criteria where name = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param name the name
+	 * @param type the type
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching evaluation criteria, or <code>null</code> if a matching evaluation criteria could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public EvaluationCriteria fetchByNameAndType(String name, String type,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { name, type };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_NAMEANDTYPE,
+					finderArgs, this);
+		}
+
+		if (result instanceof EvaluationCriteria) {
+			EvaluationCriteria evaluationCriteria = (EvaluationCriteria)result;
+
+			if (!Validator.equals(name, evaluationCriteria.getName()) ||
+					!Validator.equals(type, evaluationCriteria.getType())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_EVALUATIONCRITERIA_WHERE);
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_NAMEANDTYPE_NAME_1);
+			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_NAMEANDTYPE_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_NAMEANDTYPE_NAME_2);
+			}
+
+			boolean bindType = false;
+
+			if (type == null) {
+				query.append(_FINDER_COLUMN_NAMEANDTYPE_TYPE_1);
+			}
+			else if (type.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_NAMEANDTYPE_TYPE_3);
+			}
+			else {
+				bindType = true;
+
+				query.append(_FINDER_COLUMN_NAMEANDTYPE_TYPE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindName) {
+					qPos.add(name);
+				}
+
+				if (bindType) {
+					qPos.add(type);
+				}
+
+				List<EvaluationCriteria> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAMEANDTYPE,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"EvaluationCriteriaPersistenceImpl.fetchByNameAndType(String, String, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					EvaluationCriteria evaluationCriteria = list.get(0);
+
+					result = evaluationCriteria;
+
+					cacheResult(evaluationCriteria);
+
+					if ((evaluationCriteria.getName() == null) ||
+							!evaluationCriteria.getName().equals(name) ||
+							(evaluationCriteria.getType() == null) ||
+							!evaluationCriteria.getType().equals(type)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAMEANDTYPE,
+							finderArgs, evaluationCriteria);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAMEANDTYPE,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (EvaluationCriteria)result;
+		}
+	}
+
+	/**
+	 * Removes the evaluation criteria where name = &#63; and type = &#63; from the database.
+	 *
+	 * @param name the name
+	 * @param type the type
+	 * @return the evaluation criteria that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public EvaluationCriteria removeByNameAndType(String name, String type)
+		throws NoSuchEvaluationCriteriaException, SystemException {
+		EvaluationCriteria evaluationCriteria = findByNameAndType(name, type);
+
+		return remove(evaluationCriteria);
+	}
+
+	/**
+	 * Returns the number of evaluation criterias where name = &#63; and type = &#63;.
+	 *
+	 * @param name the name
+	 * @param type the type
+	 * @return the number of matching evaluation criterias
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByNameAndType(String name, String type)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_NAMEANDTYPE;
+
+		Object[] finderArgs = new Object[] { name, type };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_EVALUATIONCRITERIA_WHERE);
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_NAMEANDTYPE_NAME_1);
+			}
+			else if (name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_NAMEANDTYPE_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_NAMEANDTYPE_NAME_2);
+			}
+
+			boolean bindType = false;
+
+			if (type == null) {
+				query.append(_FINDER_COLUMN_NAMEANDTYPE_TYPE_1);
+			}
+			else if (type.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_NAMEANDTYPE_TYPE_3);
+			}
+			else {
+				bindType = true;
+
+				query.append(_FINDER_COLUMN_NAMEANDTYPE_TYPE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindName) {
+					qPos.add(name);
+				}
+
+				if (bindType) {
+					qPos.add(type);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_NAMEANDTYPE_NAME_1 = "evaluationCriteria.name IS NULL AND ";
+	private static final String _FINDER_COLUMN_NAMEANDTYPE_NAME_2 = "evaluationCriteria.name = ? AND ";
+	private static final String _FINDER_COLUMN_NAMEANDTYPE_NAME_3 = "(evaluationCriteria.name IS NULL OR evaluationCriteria.name = '') AND ";
+	private static final String _FINDER_COLUMN_NAMEANDTYPE_TYPE_1 = "evaluationCriteria.type IS NULL";
+	private static final String _FINDER_COLUMN_NAMEANDTYPE_TYPE_2 = "evaluationCriteria.type = ?";
+	private static final String _FINDER_COLUMN_NAMEANDTYPE_TYPE_3 = "(evaluationCriteria.type IS NULL OR evaluationCriteria.type = '')";
 
 	public EvaluationCriteriaPersistenceImpl() {
 		setModelClass(EvaluationCriteria.class);
@@ -637,6 +939,11 @@ public class EvaluationCriteriaPersistenceImpl extends BasePersistenceImpl<Evalu
 		EntityCacheUtil.putResult(EvaluationCriteriaModelImpl.ENTITY_CACHE_ENABLED,
 			EvaluationCriteriaImpl.class, evaluationCriteria.getPrimaryKey(),
 			evaluationCriteria);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAMEANDTYPE,
+			new Object[] {
+				evaluationCriteria.getName(), evaluationCriteria.getType()
+			}, evaluationCriteria);
 
 		evaluationCriteria.resetOriginalValues();
 	}
@@ -695,6 +1002,8 @@ public class EvaluationCriteriaPersistenceImpl extends BasePersistenceImpl<Evalu
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(evaluationCriteria);
 	}
 
 	@Override
@@ -705,6 +1014,61 @@ public class EvaluationCriteriaPersistenceImpl extends BasePersistenceImpl<Evalu
 		for (EvaluationCriteria evaluationCriteria : evaluationCriterias) {
 			EntityCacheUtil.removeResult(EvaluationCriteriaModelImpl.ENTITY_CACHE_ENABLED,
 				EvaluationCriteriaImpl.class, evaluationCriteria.getPrimaryKey());
+
+			clearUniqueFindersCache(evaluationCriteria);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		EvaluationCriteria evaluationCriteria) {
+		if (evaluationCriteria.isNew()) {
+			Object[] args = new Object[] {
+					evaluationCriteria.getName(), evaluationCriteria.getType()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_NAMEANDTYPE, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAMEANDTYPE, args,
+				evaluationCriteria);
+		}
+		else {
+			EvaluationCriteriaModelImpl evaluationCriteriaModelImpl = (EvaluationCriteriaModelImpl)evaluationCriteria;
+
+			if ((evaluationCriteriaModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_NAMEANDTYPE.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						evaluationCriteria.getName(),
+						evaluationCriteria.getType()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_NAMEANDTYPE,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NAMEANDTYPE,
+					args, evaluationCriteria);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(
+		EvaluationCriteria evaluationCriteria) {
+		EvaluationCriteriaModelImpl evaluationCriteriaModelImpl = (EvaluationCriteriaModelImpl)evaluationCriteria;
+
+		Object[] args = new Object[] {
+				evaluationCriteria.getName(), evaluationCriteria.getType()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NAMEANDTYPE, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAMEANDTYPE, args);
+
+		if ((evaluationCriteriaModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_NAMEANDTYPE.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					evaluationCriteriaModelImpl.getOriginalName(),
+					evaluationCriteriaModelImpl.getOriginalType()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NAMEANDTYPE, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NAMEANDTYPE, args);
 		}
 	}
 
@@ -871,6 +1235,9 @@ public class EvaluationCriteriaPersistenceImpl extends BasePersistenceImpl<Evalu
 		EntityCacheUtil.putResult(EvaluationCriteriaModelImpl.ENTITY_CACHE_ENABLED,
 			EvaluationCriteriaImpl.class, evaluationCriteria.getPrimaryKey(),
 			evaluationCriteria);
+
+		clearUniqueFindersCache(evaluationCriteria);
+		cacheUniqueFindersCache(evaluationCriteria);
 
 		return evaluationCriteria;
 	}

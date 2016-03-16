@@ -75,8 +75,7 @@ public class ImportExportBean implements Serializable {
 											cDTO.getStatus());
 
 							CandidateLocalServiceUtil.addCandidate(candidate,
-									0, cDTO.getVacancyId(),
-									new ArrayList<Long>(),
+									cDTO.getVacancyId(), new ArrayList<Long>(),
 									new ArrayList<Long>(),
 									new LinkedHashMap<Experience, Boolean>(),
 									new LinkedHashMap<Certificate, Boolean>(),
@@ -96,7 +95,7 @@ public class ImportExportBean implements Serializable {
 											vDTO.getPostedDate(),
 											vDTO.getExpiredDate(),
 											vDTO.getStatus());
-							VacancyLocalServiceUtil.addVacancy(vacancy, 0,
+							VacancyLocalServiceUtil.addVacancy(vacancy,
 									new ArrayList<Long>(), serviceContext);
 						}
 					}

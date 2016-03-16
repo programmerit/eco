@@ -116,20 +116,26 @@ public class EvaluationCriteriaKeyValueLocalServiceClp
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "addEvaluationCriteriaKeyValue";
+		_methodName19 = "creatPrePersistedEntity";
 
 		_methodParameterTypes19 = new String[] {
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName20 = "addEvaluationCriteriaKeyValue";
+
+		_methodParameterTypes20 = new String[] {
 				"long", "java.lang.String", "int",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName20 = "findByEvaluationCriteria";
+		_methodName21 = "findByEvaluationCriteria";
 
-		_methodParameterTypes20 = new String[] { "long" };
+		_methodParameterTypes21 = new String[] { "long" };
 
-		_methodName21 = "findByEvaluationCriteriaAndKey";
+		_methodName22 = "findByEvaluationCriteriaAndKey";
 
-		_methodParameterTypes21 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes22 = new String[] { "long", "java.lang.String" };
 	}
 
 	@Override
@@ -693,14 +699,44 @@ public class EvaluationCriteriaKeyValueLocalServiceClp
 	}
 
 	@Override
+	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue creatPrePersistedEntity(
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19,
+					new Object[] { ClpSerializer.translateInput(serviceContext) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue addEvaluationCriteriaKeyValue(
 		long evaluationCriteriaId, java.lang.String key, int value,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19,
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
 					new Object[] {
 						evaluationCriteriaId,
 						
@@ -732,8 +768,8 @@ public class EvaluationCriteriaKeyValueLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20,
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
 					new Object[] { evaluationCriteriaId });
 		}
 		catch (Throwable t) {
@@ -752,13 +788,13 @@ public class EvaluationCriteriaKeyValueLocalServiceClp
 	}
 
 	@Override
-	public java.util.List<vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue> findByEvaluationCriteriaAndKey(
+	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue findByEvaluationCriteriaAndKey(
 		long evaluationCriteriaId, java.lang.String key) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21,
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
 					new Object[] {
 						evaluationCriteriaId,
 						
@@ -777,7 +813,7 @@ public class EvaluationCriteriaKeyValueLocalServiceClp
 			}
 		}
 
-		return (java.util.List<vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue>)ClpSerializer.translateOutput(returnObj);
+		return (vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableLocalService _invokableLocalService;
@@ -823,4 +859,6 @@ public class EvaluationCriteriaKeyValueLocalServiceClp
 	private String[] _methodParameterTypes20;
 	private String _methodName21;
 	private String[] _methodParameterTypes21;
+	private String _methodName22;
+	private String[] _methodParameterTypes22;
 }

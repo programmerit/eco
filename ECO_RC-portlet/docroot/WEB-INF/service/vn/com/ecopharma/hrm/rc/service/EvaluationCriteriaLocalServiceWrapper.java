@@ -315,6 +315,12 @@ public class EvaluationCriteriaLocalServiceWrapper
 	}
 
 	@Override
+	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteria findByNameAndType(
+		java.lang.String name, java.lang.String type) {
+		return _evaluationCriteriaLocalService.findByNameAndType(name, type);
+	}
+
+	@Override
 	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteria createPrePersistedEntity() {
 		return _evaluationCriteriaLocalService.createPrePersistedEntity();
 	}

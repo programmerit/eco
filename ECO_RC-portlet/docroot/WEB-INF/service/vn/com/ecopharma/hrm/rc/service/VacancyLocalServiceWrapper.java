@@ -379,11 +379,11 @@ public class VacancyLocalServiceWrapper implements VacancyLocalService,
 
 	@Override
 	public vn.com.ecopharma.hrm.rc.model.Vacancy addVacancy(
-		vn.com.ecopharma.hrm.rc.model.Vacancy vacancy, long locationId,
+		vn.com.ecopharma.hrm.rc.model.Vacancy vacancy,
 		java.util.List<java.lang.Long> fileEntryIds,
 		com.liferay.portal.service.ServiceContext serviceContext) {
-		return _vacancyLocalService.addVacancy(vacancy, locationId,
-			fileEntryIds, serviceContext);
+		return _vacancyLocalService.addVacancy(vacancy, fileEntryIds,
+			serviceContext);
 	}
 
 	@Override

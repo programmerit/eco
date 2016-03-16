@@ -91,7 +91,6 @@ public class CandidateIndexer extends BaseIndexer {
 				vacancyCandidate != null ? vacancyCandidate.getVacancyId() : 0L);
 		doc.addText(CandidateField.VACANCY, titles != null ? titles.getName()
 				: StringUtils.EMPTY);
-		doc.addNumber(CandidateField.LOCATION_ID, candidate.getLocationId());
 		doc.addDate(CandidateField.APPLICATION_DATE,
 				candidate.getApplicationDate());
 		doc.addText(CandidateField.STATUS, candidate.getStatus());

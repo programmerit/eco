@@ -48,7 +48,7 @@ public class VacancyImportExportBean {
 										vDTO.getDescription(),
 										vDTO.getPostedDate(),
 										vDTO.getExpiredDate(), vDTO.getStatus());
-						VacancyLocalServiceUtil.addVacancy(vacancy, 0,
+						VacancyLocalServiceUtil.addVacancy(vacancy,
 								new ArrayList<Long>(), serviceContext);
 					}
 				}

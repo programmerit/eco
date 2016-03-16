@@ -170,51 +170,73 @@ public class InterviewScheduleLocalServiceClpInvoker {
 				"vn.com.ecopharma.hrm.rc.model.InterviewSchedule"
 			};
 
-		_methodName127 = "createPrePersitedEntity";
+		_methodName127 = "setInterviewStatusByCandidateStatus";
 
-		_methodParameterTypes127 = new String[] {  };
+		_methodParameterTypes127 = new String[] {
+				"java.lang.String", "long",
+				"vn.com.ecopharma.hrm.rc.model.InterviewSchedule",
+				"com.liferay.portal.service.ServiceContext"
+			};
 
-		_methodName128 = "countAllIndexedDocuments";
+		_methodName128 = "markInterviewFail";
 
 		_methodParameterTypes128 = new String[] {
+				"long", "vn.com.ecopharma.hrm.rc.model.InterviewSchedule",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName129 = "markInterviewPass";
+
+		_methodParameterTypes129 = new String[] {
+				"long", "vn.com.ecopharma.hrm.rc.model.InterviewSchedule",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName130 = "createPrePersitedEntity";
+
+		_methodParameterTypes130 = new String[] {  };
+
+		_methodName131 = "countAllIndexedDocuments";
+
+		_methodParameterTypes131 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort"
 			};
 
-		_methodName129 = "searchAllIndexedDocuments";
+		_methodName132 = "searchAllIndexedDocuments";
 
-		_methodParameterTypes129 = new String[] {
+		_methodParameterTypes132 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName130 = "searchByVacancyCandidateId";
-
-		_methodParameterTypes130 = new String[] {
-				"com.liferay.portal.kernel.search.SearchContext", "long", "long"
-			};
-
-		_methodName131 = "getAllInterviewRoundIdsByVacancyCandidateId";
-
-		_methodParameterTypes131 = new String[] {
-				"com.liferay.portal.kernel.search.SearchContext", "long", "long"
-			};
-
-		_methodName132 = "indexAll";
-
-		_methodParameterTypes132 = new String[] {  };
-
-		_methodName133 = "removeAllIndexes";
+		_methodName133 = "searchByVacancyCandidateId";
 
 		_methodParameterTypes133 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext", "long", "long"
+			};
+
+		_methodName134 = "getAllInterviewRoundIdsByVacancyCandidateId";
+
+		_methodParameterTypes134 = new String[] {
+				"com.liferay.portal.kernel.search.SearchContext", "long", "long"
+			};
+
+		_methodName135 = "indexAll";
+
+		_methodParameterTypes135 = new String[] {  };
+
+		_methodName136 = "removeAllIndexes";
+
+		_methodParameterTypes136 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 
-		_methodName134 = "getIndexDocument";
+		_methodName137 = "getIndexDocument";
 
-		_methodParameterTypes134 = new String[] {
+		_methodParameterTypes137 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 	}
@@ -389,19 +411,41 @@ public class InterviewScheduleLocalServiceClpInvoker {
 
 		if (_methodName127.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
-			return InterviewScheduleLocalServiceUtil.createPrePersitedEntity();
+			return InterviewScheduleLocalServiceUtil.setInterviewStatusByCandidateStatus((java.lang.String)arguments[0],
+				((Long)arguments[1]).longValue(),
+				(vn.com.ecopharma.hrm.rc.model.InterviewSchedule)arguments[2],
+				(com.liferay.portal.service.ServiceContext)arguments[3]);
 		}
 
 		if (_methodName128.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
+			return InterviewScheduleLocalServiceUtil.markInterviewFail(((Long)arguments[0]).longValue(),
+				(vn.com.ecopharma.hrm.rc.model.InterviewSchedule)arguments[1],
+				(com.liferay.portal.service.ServiceContext)arguments[2]);
+		}
+
+		if (_methodName129.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
+			return InterviewScheduleLocalServiceUtil.markInterviewPass(((Long)arguments[0]).longValue(),
+				(vn.com.ecopharma.hrm.rc.model.InterviewSchedule)arguments[1],
+				(com.liferay.portal.service.ServiceContext)arguments[2]);
+		}
+
+		if (_methodName130.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
+			return InterviewScheduleLocalServiceUtil.createPrePersitedEntity();
+		}
+
+		if (_methodName131.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
 			return InterviewScheduleLocalServiceUtil.countAllIndexedDocuments((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
 				((Long)arguments[2]).longValue(),
 				(com.liferay.portal.kernel.search.Sort)arguments[3]);
 		}
 
-		if (_methodName129.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
+		if (_methodName132.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
 			return InterviewScheduleLocalServiceUtil.searchAllIndexedDocuments((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -410,37 +454,37 @@ public class InterviewScheduleLocalServiceClpInvoker {
 				((Integer)arguments[5]).intValue());
 		}
 
-		if (_methodName130.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
+		if (_methodName133.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
 			return InterviewScheduleLocalServiceUtil.searchByVacancyCandidateId((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName131.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
+		if (_methodName134.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
 			return InterviewScheduleLocalServiceUtil.getAllInterviewRoundIdsByVacancyCandidateId((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName132.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
+		if (_methodName135.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
 			InterviewScheduleLocalServiceUtil.indexAll();
 
 			return null;
 		}
 
-		if (_methodName133.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
+		if (_methodName136.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
 			InterviewScheduleLocalServiceUtil.removeAllIndexes((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				((Long)arguments[1]).longValue());
 
 			return null;
 		}
 
-		if (_methodName134.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
+		if (_methodName137.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
 			return InterviewScheduleLocalServiceUtil.getIndexDocument(((Long)arguments[0]).longValue(),
 				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
 		}
@@ -522,4 +566,10 @@ public class InterviewScheduleLocalServiceClpInvoker {
 	private String[] _methodParameterTypes133;
 	private String _methodName134;
 	private String[] _methodParameterTypes134;
+	private String _methodName135;
+	private String[] _methodParameterTypes135;
+	private String _methodName136;
+	private String[] _methodParameterTypes136;
+	private String _methodName137;
+	private String[] _methodParameterTypes137;
 }

@@ -26,8 +26,6 @@ public class CandidateItem extends AbstractDocumentableBaseModelItem<Candidate> 
 
 	private VacancyIndexItem vacancyIndexItem;
 
-	private VacancyItem vacancyItem;
-
 	private List<VacancyIndexItem> desiredVacancies;
 
 	private List<ExperienceObjectItem> experiences;
@@ -131,14 +129,6 @@ public class CandidateItem extends AbstractDocumentableBaseModelItem<Candidate> 
 
 	public void setCertificates(List<CertificateObjectItem> certificates) {
 		this.certificates = certificates;
-	}
-
-	public VacancyItem getVacancyItem() {
-		return vacancyItem;
-	}
-
-	public void setVacancyItem(VacancyItem vacancyItem) {
-		this.vacancyItem = vacancyItem;
 	}
 
 	public List<VacancyIndexItem> getDesiredVacancies() {

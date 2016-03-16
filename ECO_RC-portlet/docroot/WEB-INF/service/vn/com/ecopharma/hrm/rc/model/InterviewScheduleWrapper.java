@@ -53,7 +53,6 @@ public class InterviewScheduleWrapper implements InterviewSchedule,
 		attributes.put("interviewScheduleId", getInterviewScheduleId());
 		attributes.put("vacancyCandidateId", getVacancyCandidateId());
 		attributes.put("interviewId", getInterviewId());
-		attributes.put("locationId", getLocationId());
 		attributes.put("interviewDate", getInterviewDate());
 		attributes.put("interviewTime", getInterviewTime());
 		attributes.put("status", getStatus());
@@ -85,12 +84,6 @@ public class InterviewScheduleWrapper implements InterviewSchedule,
 
 		if (interviewId != null) {
 			setInterviewId(interviewId);
-		}
-
-		Long locationId = (Long)attributes.get("locationId");
-
-		if (locationId != null) {
-			setLocationId(locationId);
 		}
 
 		Date interviewDate = (Date)attributes.get("interviewDate");
@@ -226,26 +219,6 @@ public class InterviewScheduleWrapper implements InterviewSchedule,
 	@Override
 	public void setInterviewId(long interviewId) {
 		_interviewSchedule.setInterviewId(interviewId);
-	}
-
-	/**
-	* Returns the location ID of this interview schedule.
-	*
-	* @return the location ID of this interview schedule
-	*/
-	@Override
-	public long getLocationId() {
-		return _interviewSchedule.getLocationId();
-	}
-
-	/**
-	* Sets the location ID of this interview schedule.
-	*
-	* @param locationId the location ID of this interview schedule
-	*/
-	@Override
-	public void setLocationId(long locationId) {
-		_interviewSchedule.setLocationId(locationId);
 	}
 
 	/**

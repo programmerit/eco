@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
@@ -19,7 +20,9 @@ import vn.com.ecopharma.hrm.rc.constant.CandidateNavigation;
 import vn.com.ecopharma.hrm.rc.dto.EmpIndexedItem;
 import vn.com.ecopharma.hrm.rc.dto.InterviewScheduleForAllItem;
 import vn.com.ecopharma.hrm.rc.dto.InterviewScheduleItem;
+import vn.com.ecopharma.hrm.rc.model.Interview;
 import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
+import vn.com.ecopharma.hrm.rc.service.InterviewLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.InterviewScheduleLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.util.BeanUtils;
 import vn.com.ecopharma.hrm.rc.util.EmployeeUtils;
@@ -44,6 +47,11 @@ public class ScheduleInterviewForCandidatesBean implements Serializable {
 	private InterviewScheduleForAllItem interviewScheduleForAllItem;
 
 	private List<InterviewScheduleItem> selectedInterviewScheduleItems;
+
+	private boolean isSetInterviewForAll;
+	private boolean isSetInterviewDateForAll;
+	private boolean isSetInterviewTimeForAll;
+	private boolean isSetInterviewersForAll;
 
 	@PostConstruct
 	public void init() {
@@ -127,6 +135,10 @@ public class ScheduleInterviewForCandidatesBean implements Serializable {
 		candidateViewBean.switchMode(CandidateNavigation.VIEW);
 	}
 
+	public void onSetInterviewDateForAll() {
+
+	}
+
 	public void onApplyForAll(ActionEvent actionEvent) {
 		setSameInterviewScheduleForItems(interviewScheduleItems);
 	}
@@ -147,7 +159,7 @@ public class ScheduleInterviewForCandidatesBean implements Serializable {
 		boolean isAvailablePrevInterviewRound = false;
 		FacesMessage message = null;
 		for (InterviewScheduleItem item : items) {
-			if (interviewScheduleForAllItem.isSetInterviewForAll()) {
+			if (isSetInterviewForAll) {
 				isAvailablePrevInterviewRound = CandidateLocalServiceUtil
 						.hasAlreadyScheduleForInterview(item
 								.getCandidateIndexItem().getId(), item
@@ -166,17 +178,17 @@ public class ScheduleInterviewForCandidatesBean implements Serializable {
 				}
 			}
 
-			if (interviewScheduleForAllItem.isSetInterviewersForAll()) {
+			if (isSetInterviewersForAll) {
 				item.setInterviewers(interviewScheduleForAllItem
 						.getInterviewers());
 			}
 
-			if (interviewScheduleForAllItem.isSetInterviewDateForAll()) {
+			if (isSetInterviewDateForAll) {
 				item.getInterviewSchedule().setInterviewDate(
 						interviewScheduleForAllItem.getDate());
 			}
 
-			if (interviewScheduleForAllItem.isSetInterviewTimeForAll()) {
+			if (isSetInterviewTimeForAll) {
 				if (nextTime != null) {
 					calendar.setTime(nextTime);
 					int mins = calendar.get(Calendar.MINUTE);
@@ -240,12 +252,8 @@ public class ScheduleInterviewForCandidatesBean implements Serializable {
 	public boolean isHasAtLeastOneForAll() {
 
 		return interviewScheduleForAllItem != null
-				&& (interviewScheduleForAllItem.isSetInterviewForAll()
-						|| interviewScheduleForAllItem
-								.isSetInterviewDateForAll()
-						|| interviewScheduleForAllItem
-								.isSetInterviewTimeForAll() || interviewScheduleForAllItem
-							.isSetInterviewersForAll());
+				&& (isSetInterviewersForAll || isSetInterviewDateForAll
+						|| isSetInterviewTimeForAll || isSetInterviewersForAll);
 	}
 
 	private List<Long> getEmpIds(List<EmpIndexedItem> employeeIndexedItems) {
@@ -255,4 +263,41 @@ public class ScheduleInterviewForCandidatesBean implements Serializable {
 		}
 		return ids;
 	}
+
+	public List<Interview> getAllInterviews() {
+		return InterviewLocalServiceUtil.findAll();
+	}
+
+	public boolean isSetInterviewForAll() {
+		return isSetInterviewForAll;
+	}
+
+	public void setSetInterviewForAll(boolean isSetInterviewForAll) {
+		this.isSetInterviewForAll = isSetInterviewForAll;
+	}
+
+	public boolean isSetInterviewDateForAll() {
+		return isSetInterviewDateForAll;
+	}
+
+	public void setSetInterviewDateForAll(boolean isSetInterviewDateForAll) {
+		this.isSetInterviewDateForAll = isSetInterviewDateForAll;
+	}
+
+	public boolean isSetInterviewTimeForAll() {
+		return isSetInterviewTimeForAll;
+	}
+
+	public void setSetInterviewTimeForAll(boolean isSetInterviewTimeForAll) {
+		this.isSetInterviewTimeForAll = isSetInterviewTimeForAll;
+	}
+
+	public boolean isSetInterviewersForAll() {
+		return isSetInterviewersForAll;
+	}
+
+	public void setSetInterviewersForAll(boolean isSetInterviewersForAll) {
+		this.isSetInterviewersForAll = isSetInterviewersForAll;
+	}
+
 }

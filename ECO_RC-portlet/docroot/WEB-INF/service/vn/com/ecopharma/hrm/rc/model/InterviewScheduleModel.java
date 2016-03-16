@@ -105,20 +105,6 @@ public interface InterviewScheduleModel extends BaseModel<InterviewSchedule>,
 	public void setInterviewId(long interviewId);
 
 	/**
-	 * Returns the location ID of this interview schedule.
-	 *
-	 * @return the location ID of this interview schedule
-	 */
-	public long getLocationId();
-
-	/**
-	 * Sets the location ID of this interview schedule.
-	 *
-	 * @param locationId the location ID of this interview schedule
-	 */
-	public void setLocationId(long locationId);
-
-	/**
 	 * Returns the interview date of this interview schedule.
 	 *
 	 * @return the interview date of this interview schedule

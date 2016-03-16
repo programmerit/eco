@@ -291,6 +291,13 @@ public class EvaluationCriteriaKeyValueLocalServiceWrapper
 	}
 
 	@Override
+	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue creatPrePersistedEntity(
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _evaluationCriteriaKeyValueLocalService.creatPrePersistedEntity(serviceContext);
+	}
+
+	@Override
 	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue addEvaluationCriteriaKeyValue(
 		long evaluationCriteriaId, java.lang.String key, int value,
 		com.liferay.portal.service.ServiceContext serviceContext) {
@@ -305,7 +312,7 @@ public class EvaluationCriteriaKeyValueLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue> findByEvaluationCriteriaAndKey(
+	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue findByEvaluationCriteriaAndKey(
 		long evaluationCriteriaId, java.lang.String key) {
 		return _evaluationCriteriaKeyValueLocalService.findByEvaluationCriteriaAndKey(evaluationCriteriaId,
 			key);

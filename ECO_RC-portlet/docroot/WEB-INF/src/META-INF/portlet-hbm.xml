@@ -38,7 +38,6 @@
 		<property name="religion" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="applicationDate" type="org.hibernate.type.TimestampType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="locationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="deleted" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -199,7 +198,6 @@
 		</id>
 		<property name="vacancyCandidateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="interviewId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="locationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="interviewDate" type="org.hibernate.type.TimestampType" />
 		<property name="interviewTime" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />

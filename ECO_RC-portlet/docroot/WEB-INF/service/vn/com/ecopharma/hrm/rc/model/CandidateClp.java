@@ -92,7 +92,6 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 		attributes.put("religion", getReligion());
 		attributes.put("applicationDate", getApplicationDate());
 		attributes.put("status", getStatus());
-		attributes.put("locationId", getLocationId());
 		attributes.put("deleted", getDeleted());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -213,12 +212,6 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 
 		if (status != null) {
 			setStatus(status);
-		}
-
-		Long locationId = (Long)attributes.get("locationId");
-
-		if (locationId != null) {
-			setLocationId(locationId);
 		}
 
 		Boolean deleted = (Boolean)attributes.get("deleted");
@@ -686,29 +679,6 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 	}
 
 	@Override
-	public long getLocationId() {
-		return _locationId;
-	}
-
-	@Override
-	public void setLocationId(long locationId) {
-		_locationId = locationId;
-
-		if (_candidateRemoteModel != null) {
-			try {
-				Class<?> clazz = _candidateRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setLocationId", long.class);
-
-				method.invoke(_candidateRemoteModel, locationId);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
 	public boolean getDeleted() {
 		return _deleted;
 	}
@@ -994,7 +964,6 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 		clone.setReligion(getReligion());
 		clone.setApplicationDate(getApplicationDate());
 		clone.setStatus(getStatus());
-		clone.setLocationId(getLocationId());
 		clone.setDeleted(getDeleted());
 		clone.setGroupId(getGroupId());
 		clone.setCompanyId(getCompanyId());
@@ -1055,7 +1024,7 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{candidateId=");
 		sb.append(getCandidateId());
@@ -1093,8 +1062,6 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 		sb.append(getApplicationDate());
 		sb.append(", status=");
 		sb.append(getStatus());
-		sb.append(", locationId=");
-		sb.append(getLocationId());
 		sb.append(", deleted=");
 		sb.append(getDeleted());
 		sb.append(", groupId=");
@@ -1118,7 +1085,7 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(85);
+		StringBundler sb = new StringBundler(82);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.hrm.rc.model.Candidate");
@@ -1197,10 +1164,6 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>locationId</column-name><column-value><![CDATA[");
-		sb.append(getLocationId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>deleted</column-name><column-value><![CDATA[");
 		sb.append(getDeleted());
 		sb.append("]]></column-value></column>");
@@ -1256,7 +1219,6 @@ public class CandidateClp extends BaseModelImpl<Candidate> implements Candidate 
 	private String _religion;
 	private Date _applicationDate;
 	private String _status;
-	private long _locationId;
 	private boolean _deleted;
 	private long _groupId;
 	private long _companyId;

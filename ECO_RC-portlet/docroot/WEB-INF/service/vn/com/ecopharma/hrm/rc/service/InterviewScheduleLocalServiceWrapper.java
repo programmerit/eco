@@ -361,6 +361,33 @@ public class InterviewScheduleLocalServiceWrapper
 	}
 
 	@Override
+	public vn.com.ecopharma.hrm.rc.model.InterviewSchedule setInterviewStatusByCandidateStatus(
+		java.lang.String candidateStatus, long candidateId,
+		vn.com.ecopharma.hrm.rc.model.InterviewSchedule interviewSchedule,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _interviewScheduleLocalService.setInterviewStatusByCandidateStatus(candidateStatus,
+			candidateId, interviewSchedule, serviceContext);
+	}
+
+	@Override
+	public vn.com.ecopharma.hrm.rc.model.InterviewSchedule markInterviewFail(
+		long candidateId,
+		vn.com.ecopharma.hrm.rc.model.InterviewSchedule interviewSchedule,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _interviewScheduleLocalService.markInterviewFail(candidateId,
+			interviewSchedule, serviceContext);
+	}
+
+	@Override
+	public vn.com.ecopharma.hrm.rc.model.InterviewSchedule markInterviewPass(
+		long candidateId,
+		vn.com.ecopharma.hrm.rc.model.InterviewSchedule interviewSchedule,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _interviewScheduleLocalService.markInterviewPass(candidateId,
+			interviewSchedule, serviceContext);
+	}
+
+	@Override
 	public vn.com.ecopharma.hrm.rc.model.InterviewSchedule createPrePersitedEntity() {
 		return _interviewScheduleLocalService.createPrePersitedEntity();
 	}

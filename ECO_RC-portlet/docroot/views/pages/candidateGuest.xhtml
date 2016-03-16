@@ -1,0 +1,241 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
+	<h:head />
+	<h:body>
+		<h:form id="candidateGuestForm" enctype="multipart/form-data">
+			<p:outputPanel id="candidateOutputPanel">
+				<p:messages id="msgs" />
+
+				<p:remoteCommand name="refreshExperiences"
+					update=":candidateGuestForm:accordion:candidateExperiencesGroup" />
+				<p:remoteCommand name="refreshCertificates"
+					update=":candidateGuestForm:accordion:candidateCertificatesGroup" />
+				<p:accordionPanel id="accordion" multiple="true"
+					style="margin-bottom:20px;" activeIndex="0">
+					<p:tab id="candidateBasicInfoTab" title="Thông tin ứng tuyển">
+						<p:panelGrid layout="grid" columns="2">
+							<h:panelGrid columns="2">
+								<h:outputText value="Họ và Tên" />
+								<p:inputText id="cFirstName" placeholder="FullName"
+									required="true" requiredMessage="Fullname is required!"
+									value="#{candidateGuestBean.candidateItem.object.fullName}" />
+
+								<h:outputText value="Năm sinh" />
+								<p:calendar id="birthday" mask="false" required="true"
+									requiredMessage="Birthday is required!"
+									maxdate="#{candidateGuestBean.maxBirthdayDate}"
+									value="#{candidateGuestBean.candidateItem.object.dateOfBirth}"
+									pattern="dd/MM/yyyy" placeholder="Birthday" />
+
+								<h:outputText value="Email" />
+								<p:inputText id="cEmail" placeholder="Email" required="true"
+									requiredMessage="Email is required!"
+									value="#{candidateGuestBean.candidateItem.object.emailAddress}">
+									<f:validator validatorId="emailValidator" />
+									<p:ajax update=":candidateGuestForm:msgs" event="keyup" />
+								</p:inputText>
+
+								<h:outputText value="Số ĐT" />
+								<p:inputText id="cContactNumber" placeholder="Contact Number"
+									required="true" requiredMessage="Contact Number is required!"
+									value="#{candidateGuestBean.candidateItem.object.contactNumber}" />
+
+								<h:outputText value="CMND/Visa" />
+								<p:inputText id="cIdentityCardNo" placeholder="Identity Card No"
+									required="true" requiredMessage="Identity Card No is required!"
+									value="#{candidateGuestBean.candidateItem.object.identityCardNo}" />
+
+								<h:outputText value="Vị trí ứng tuyển" />
+								<p:selectOneMenu id="cVacancySelect"
+									converter="vacancyIndexItemConverter" filter="true"
+									value="#{candidateGuestBean.candidateItem.vacancyIndexItem}"
+									required="true" requiredMessage="Vacancy is required!">
+									<f:selectItem itemLabel="Select Vacancy" itemValue="" />
+									<f:selectItems value="#{candidateGuestBean.vacancyIndexItems}"
+										var="v"
+										itemLabel="#{v.titles} #{v.status == 'UNPUBLISHED' ? '  [UNPUBLISHED]' : ''} "
+										itemValue="#{v}"
+										itemDisabled="#{v.status == 'UNPUBLISHED' || v.status == 'NEW'}" />
+								</p:selectOneMenu>
+
+								<h:outputText value="Vị trí mong muốn khác" />
+								<p:autoComplete id="desiredPositionAutoComplete" multiple="true"
+									styleClass="interview-schedule" minQueryLength="2"
+									value="#{candidateGuestBean.candidateItem.desiredVacancies}"
+									completeMethod="#{candidateGuestBean.completeVacancies}"
+									var="v" itemLabel="#{v.titles}" itemValue="#{v}"
+									converter="vacancyIndexItemConverter" autoHighlight="true"
+									forceSelection="true" placeholder="Type to show hints...">
+								</p:autoComplete>
+							</h:panelGrid>
+
+
+							<h:panelGrid columns="2">
+								<h:outputText value="Tài liệu" />
+								<p:outputPanel autoUpdate="true" id="documentOutputPanel">
+									<h:panelGroup id="noDocsPanelGroup" styleClass="panel-message"
+										rendered="#{candidateGuestBean.candidateItem.emptyDocuments}">
+										<h:outputText styleClass="no-item-label" value="No Documents" />
+										<br />
+										<p:commandLink value="Upload"
+											onclick="PF('wUploadDocumentDialog').show();" />
+									</h:panelGroup>
+
+									<h:panelGroup
+										rendered="#{not candidateGuestBean.candidateItem.emptyDocuments}">
+										<ui:repeat var="doc"
+											value="#{candidateGuestBean.candidateItem.documents}"
+											varStatus="status">
+											<h:panelGroup rendered="#{not doc.UIDeleted}">
+
+												<p:commandLink value="#{doc.fileEntry.title}"
+													onclick="window.location = '#{doc.fileURL}'" />
+												<p:commandLink value="[X]" style="margin-left: 5px;"
+													onclick="PF('wDeleteDocumentConfirmDialog').show()">
+													<f:setPropertyActionListener value="#{status.index}"
+														target="#{candidateGuestBean.deletedDocumentIndex}" />
+												</p:commandLink>
+											</h:panelGroup>
+										</ui:repeat>
+									</h:panelGroup>
+								</p:outputPanel>
+
+							</h:panelGrid>
+
+						</p:panelGrid>
+					</p:tab>
+					<p:tab id="candidateDetailsInformation" title="Thông tin chi tiết">
+						<p:panelGrid columns="2" layout="grid">
+							<h:panelGroup id="candidateExperiencesGroup">
+								<h:outputText value="Kinh nghiệm làm việc"
+									style="font-weight: bold; font-style: italic;" />
+								<br />
+								<br />
+								<ui:repeat var="e"
+									value="#{candidateGuestBean.candidateItem.experiences}"
+									varStatus="status">
+									<h:panelGroup id="experienceItem" rendered="#{not e.UIDeleted}">
+										<p:commandLink value="Xóa"
+											actionListener="#{candidateGuestBean.removeOneExperience(status.index)}"
+											immediate="true" ajax="true"
+											oncomplete="refreshExperiences();" />
+										<p:panelGrid columns="2">
+											<h:outputText value="Công ty/Nơi làm việc" />
+											<p:inputText value="#{e.experience.workingPlace}" />
+
+											<h:outputText value="Số năm" />
+											<p:inputText value="#{e.experience.yearsExperience}" />
+
+											<h:outputText value="Mô tả công việc" />
+											<p:inputTextarea value="#{e.experience.description}" />
+										</p:panelGrid>
+										<p:separator style="width: 430px"
+											rendered="#{candidateGuestBean.candidateItem.experiences.size() - 1 gt status.index}" />
+
+									</h:panelGroup>
+								</ui:repeat>
+								<p:commandLink
+									actionListener="#{candidateGuestBean.addOneExperience}"
+									immediate="true" ajax="true" oncomplete="refreshExperiences();"
+									value="Thêm" />
+							</h:panelGroup>
+
+							<h:panelGroup id="candidateCertificatesGroup">
+								<h:outputText value="Bằng cấp"
+									style="font-weight: bold; font-style: italic;" />
+								<br />
+								<br />
+								<ui:repeat var="c"
+									value="#{candidateGuestBean.candidateItem.certificates}"
+									varStatus="status">
+									<h:panelGroup id="certificateItem"
+										rendered="#{not c.UIDeleted}">
+										<p:commandLink value="Xóa" style="currentStatus status-grey"
+											actionListener="#{candidateGuestBean.removeOneCertificate(status.index)}"
+											immediate="true" ajax="true"
+											oncomplete="refreshCertificates();" />
+										<p:panelGrid columns="2">
+											<h:outputText value="Tên" />
+											<p:inputText value="#{c.object.name}" />
+
+											<h:outputText value="Loại" />
+											<p:selectOneMenu id="certificateTypeSelect"
+												value="#{c.object.certificateType}">
+												<f:selectItem itemLabel="Chọn loại" itemValue="" />
+												<f:selectItems
+													value="#{candidateGuestBean.certificateTypes}" var="t"
+													itemLabel="#{i18n[candidateGuestBean.getTypeLocalizedString(t)]}"
+													itemValue="#{t}" />
+											</p:selectOneMenu>
+
+											<h:outputText value="Trường" />
+											<p:selectOneMenu id="universitySelect"
+												value="#{c.university}" converter="universityConverter"
+												effect="fade" filter="true" filterMatchMode="contains"
+												var="u">
+
+												<f:selectItem itemLabel="Chọn Trường" itemValue="" />
+												<f:selectItems value="#{candidateGuestBean.universities}"
+													var="u" itemLabel="#{u.name}" itemValue="#{u}" />
+												<p:column>
+									                #{u.universityId} - #{u.name}
+									            </p:column>
+											</p:selectOneMenu>
+
+										</p:panelGrid>
+										<p:separator
+											style="width: 1px; height: 300px; background: #A8A8A8;"
+											rendered="#{candidateGuestBean.candidateItem.certificates.size() - 1 gt status.index}" />
+									</h:panelGroup>
+								</ui:repeat>
+								<p:commandLink
+									actionListener="#{candidateGuestBean.addOneCertificate}"
+									immediate="true" ajax="true"
+									oncomplete="refreshCertificates();" value="Thêm" />
+							</h:panelGroup>
+						</p:panelGrid>
+
+
+					</p:tab>
+				</p:accordionPanel>
+
+				<p:commandButton id="cSave" value="Apply" styleClass="RedButton"
+					action="#{candidateGuestBean.onSave}"
+					update=":candidateGuestForm:msgs" />
+			</p:outputPanel>
+
+		</h:form>
+
+		<!-- DIALOGS -->
+		<eco:confirmDialog wDialogVar="wDeleteDocumentConfirmDialog"
+			message="Delete this document?" header="Delete Confirmation"
+			onAction="#{candidateGuestBean.deleteDocument}"
+			oncompleteActions="PF('wDeleteDocumentConfirmDialog').hide();"
+			update="" />
+
+		<h:form id="uploadDocumentForm" enctype="multipart/form-data">
+			<p:dialog widgetVar="wUploadDocumentDialog" modal="true" height="252"
+				showHeader="false" closable="true" closeOnEscape="true">
+				<p:outputPanel autoUpdate="true">
+					<p:panelGrid columns="2">
+						<h:outputText value="Document Type: " />
+						<p:selectOneMenu id="documentTypeSelect" var="t"
+							value="#{candidateGuestBean.selectedDocumentType}">
+							<f:selectItems value="#{candidateGuestBean.allDocumentTypes}"
+								itemLabel="#{t}" itemValue="#{t}" />
+						</p:selectOneMenu>
+					</p:panelGrid>
+					<p:fileUpload
+						fileUploadListener="#{candidateGuestBean.handleDocumentUpload}"
+						dragDropSupport="false" multiple="false" id="documentUploader"
+						sizeLimit="1000000" allowTypes="/(\.|\/)(doc|docx|pdf)$/" />
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</h:body>
+</f:view>

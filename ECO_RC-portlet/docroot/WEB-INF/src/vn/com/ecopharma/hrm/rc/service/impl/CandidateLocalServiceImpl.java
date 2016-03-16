@@ -167,9 +167,9 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 		return candidate;
 	}
 
-	public Candidate addCandidate(Candidate candidate, long locationId,
-			long vacancyId, List<Long> desireVacancies,
-			List<Long> fileEntryIds, Map<Experience, Boolean> experienceMap,
+	public Candidate addCandidate(Candidate candidate, long vacancyId,
+			List<Long> desireVacancies, List<Long> fileEntryIds,
+			Map<Experience, Boolean> experienceMap,
 			Map<Certificate, Boolean> certificateMap,
 			ServiceContext serviceContext) {
 		try {
@@ -178,7 +178,6 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			candidate.setCompanyId(serviceContext.getCompanyId());
 			candidate.setCreateDate(new Date(System.currentTimeMillis()));
 			candidate.setModifiedDate(new Date(System.currentTimeMillis()));
-			candidate.setLocationId(locationId);
 
 			Candidate result = candidatePersistence.update(candidate);
 			if (result != null) {

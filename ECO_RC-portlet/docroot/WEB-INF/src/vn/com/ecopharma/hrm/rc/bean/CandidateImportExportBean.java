@@ -54,7 +54,7 @@ public class CandidateImportExportBean {
 										cDTO.getApplicationDate(),
 										cDTO.getStatus());
 
-						CandidateLocalServiceUtil.addCandidate(candidate, 0,
+						CandidateLocalServiceUtil.addCandidate(candidate,
 								cDTO.getVacancyId(), new ArrayList<Long>(),
 								new ArrayList<Long>(),
 								new LinkedHashMap<Experience, Boolean>(),

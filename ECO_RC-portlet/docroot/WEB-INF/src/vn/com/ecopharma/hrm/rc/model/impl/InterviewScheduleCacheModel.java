@@ -38,7 +38,7 @@ public class InterviewScheduleCacheModel implements CacheModel<InterviewSchedule
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{interviewScheduleId=");
 		sb.append(interviewScheduleId);
@@ -46,8 +46,6 @@ public class InterviewScheduleCacheModel implements CacheModel<InterviewSchedule
 		sb.append(vacancyCandidateId);
 		sb.append(", interviewId=");
 		sb.append(interviewId);
-		sb.append(", locationId=");
-		sb.append(locationId);
 		sb.append(", interviewDate=");
 		sb.append(interviewDate);
 		sb.append(", interviewTime=");
@@ -78,7 +76,6 @@ public class InterviewScheduleCacheModel implements CacheModel<InterviewSchedule
 		interviewScheduleImpl.setInterviewScheduleId(interviewScheduleId);
 		interviewScheduleImpl.setVacancyCandidateId(vacancyCandidateId);
 		interviewScheduleImpl.setInterviewId(interviewId);
-		interviewScheduleImpl.setLocationId(locationId);
 
 		if (interviewDate == Long.MIN_VALUE) {
 			interviewScheduleImpl.setInterviewDate(null);
@@ -136,7 +133,6 @@ public class InterviewScheduleCacheModel implements CacheModel<InterviewSchedule
 		interviewScheduleId = objectInput.readLong();
 		vacancyCandidateId = objectInput.readLong();
 		interviewId = objectInput.readLong();
-		locationId = objectInput.readLong();
 		interviewDate = objectInput.readLong();
 		interviewTime = objectInput.readUTF();
 		status = objectInput.readUTF();
@@ -154,7 +150,6 @@ public class InterviewScheduleCacheModel implements CacheModel<InterviewSchedule
 		objectOutput.writeLong(interviewScheduleId);
 		objectOutput.writeLong(vacancyCandidateId);
 		objectOutput.writeLong(interviewId);
-		objectOutput.writeLong(locationId);
 		objectOutput.writeLong(interviewDate);
 
 		if (interviewTime == null) {
@@ -189,7 +184,6 @@ public class InterviewScheduleCacheModel implements CacheModel<InterviewSchedule
 	public long interviewScheduleId;
 	public long vacancyCandidateId;
 	public long interviewId;
-	public long locationId;
 	public long interviewDate;
 	public String interviewTime;
 	public String status;

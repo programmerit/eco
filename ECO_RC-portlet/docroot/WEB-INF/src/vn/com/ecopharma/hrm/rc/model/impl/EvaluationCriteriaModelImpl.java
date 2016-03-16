@@ -92,8 +92,9 @@ public class EvaluationCriteriaModelImpl extends BaseModelImpl<EvaluationCriteri
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.vn.com.ecopharma.hrm.rc.model.EvaluationCriteria"),
 			true);
-	public static long TYPE_COLUMN_BITMASK = 1L;
-	public static long EVALUATIONCRITERIAID_COLUMN_BITMASK = 2L;
+	public static long NAME_COLUMN_BITMASK = 1L;
+	public static long TYPE_COLUMN_BITMASK = 2L;
+	public static long EVALUATIONCRITERIAID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -302,7 +303,17 @@ public class EvaluationCriteriaModelImpl extends BaseModelImpl<EvaluationCriteri
 
 	@Override
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	@JSON
@@ -480,6 +491,8 @@ public class EvaluationCriteriaModelImpl extends BaseModelImpl<EvaluationCriteri
 
 		evaluationCriteriaModelImpl._originalType = evaluationCriteriaModelImpl._type;
 
+		evaluationCriteriaModelImpl._originalName = evaluationCriteriaModelImpl._name;
+
 		evaluationCriteriaModelImpl._columnBitmask = 0;
 	}
 
@@ -625,6 +638,7 @@ public class EvaluationCriteriaModelImpl extends BaseModelImpl<EvaluationCriteri
 	private String _type;
 	private String _originalType;
 	private String _name;
+	private String _originalName;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

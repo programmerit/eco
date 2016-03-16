@@ -27,7 +27,6 @@
         <column name="religion" type="String"></column>
         <column name="applicationDate" type="Date"></column>
         <column name="status" type="String"></column>
-        <column name="locationId" type="long"></column>
         <column name="deleted" type="boolean"></column>
 
 		<column name="groupId" type="long"></column>
@@ -179,7 +178,6 @@
 		<!-- Group instance -->
         <column name="vacancyCandidateId" type="long"></column>
         <column name="interviewId" type="long"></column>
-        <column name="locationId" type="long"></column>
         <column name="interviewDate" type="Date"></column>
         <column name="interviewTime" type="String"></column>
         <column name="status" type="String"></column>
@@ -369,6 +367,10 @@
         <finder name="Type" return-type="Collection">
             <finder-column name="type"></finder-column>
         </finder>
+        <finder name="NameAndType" return-type="EvaluationCriteria">
+            <finder-column name="name"></finder-column>
+            <finder-column name="type"></finder-column>
+        </finder>
 	</entity>
 	<entity name="EvaluationCriteriaKeyValue" local-service="true">
 
@@ -395,7 +397,7 @@
         <finder name="EvaluationCriteria" return-type="Collection">
             <finder-column name="evaluationCriteriaId"></finder-column>
         </finder>
-        <finder name="EvaluationCriteriaAndKey" return-type="Collection">
+        <finder name="EvaluationCriteriaAndKey" return-type="EvaluationCriteriaKeyValue">
             <finder-column name="evaluationCriteriaId"></finder-column>
             <finder-column name="key"></finder-column>
         </finder>

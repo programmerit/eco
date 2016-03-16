@@ -307,7 +307,9 @@
 				</p:tab>
 			</p:accordionPanel>
 			<p:commandButton id="cSave" value="Save"
-				update=":CandidatePanelGroup" action="#{candidateBean.onSave}" /> | 
+				update=":CandidatePanelGroup :growl"
+				actionListener="#{candidateBean.onSave}"
+				oncomplete="updateCandidatesAndGrowl();" /> | 
 					
 				<p:commandLink id="cCancel" immediate="true"
 				actionListener="#{candidateBean.onCancel}"

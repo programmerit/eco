@@ -194,8 +194,8 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 		_methodName31 = "addVacancy";
 
 		_methodParameterTypes31 = new String[] {
-				"vn.com.ecopharma.hrm.rc.model.Vacancy", "long",
-				"java.util.List", "com.liferay.portal.service.ServiceContext"
+				"vn.com.ecopharma.hrm.rc.model.Vacancy", "java.util.List",
+				"com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName32 = "updateVacancy";
@@ -1200,7 +1200,7 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 
 	@Override
 	public vn.com.ecopharma.hrm.rc.model.Vacancy addVacancy(
-		vn.com.ecopharma.hrm.rc.model.Vacancy vacancy, long locationId,
+		vn.com.ecopharma.hrm.rc.model.Vacancy vacancy,
 		java.util.List<java.lang.Long> fileEntryIds,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
@@ -1210,8 +1210,6 @@ public class VacancyLocalServiceClp implements VacancyLocalService {
 					_methodParameterTypes31,
 					new Object[] {
 						ClpSerializer.translateInput(vacancy),
-						
-					locationId,
 						
 					ClpSerializer.translateInput(fileEntryIds),
 						

@@ -254,6 +254,10 @@ public interface EvaluationCriteriaKeyValueLocalService extends BaseLocalService
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue creatPrePersistedEntity(
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue addEvaluationCriteriaKeyValue(
 		long evaluationCriteriaId, java.lang.String key, int value,
 		com.liferay.portal.service.ServiceContext serviceContext);
@@ -261,6 +265,6 @@ public interface EvaluationCriteriaKeyValueLocalService extends BaseLocalService
 	public java.util.List<vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue> findByEvaluationCriteria(
 		long evaluationCriteriaId);
 
-	public java.util.List<vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue> findByEvaluationCriteriaAndKey(
+	public vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue findByEvaluationCriteriaAndKey(
 		long evaluationCriteriaId, java.lang.String key);
 }

@@ -21,6 +21,8 @@ import vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue;
 import vn.com.ecopharma.hrm.rc.service.base.EvaluationCriteriaKeyValueLocalServiceBaseImpl;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.service.ServiceContext;
 
 /**
@@ -52,6 +54,22 @@ public class EvaluationCriteriaKeyValueLocalServiceImpl extends
 	 * .hrm.rc.service.EvaluationCriteriaKeyValueLocalServiceUtil} to access the
 	 * evaluation criteria key value local service.
 	 */
+
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(EvaluationCriteriaKeyValueLocalServiceImpl.class);
+
+	public EvaluationCriteriaKeyValue creatPrePersistedEntity(
+			ServiceContext serviceContext) throws SystemException {
+		long id = counterLocalService.increment();
+		final EvaluationCriteriaKeyValue obj = evaluationCriteriaKeyValueLocalService
+				.createEvaluationCriteriaKeyValue(id);
+		obj.setCreateDate(new Date());
+		obj.setUserId(serviceContext.getUserId());
+		obj.setGroupId(serviceContext.getScopeGroupId());
+		obj.setCompanyId(serviceContext.getCompanyId());
+
+		return obj;
+	}
 
 	public EvaluationCriteriaKeyValue addEvaluationCriteriaKeyValue(
 			long evaluationCriteriaId, String key, int value,
@@ -90,11 +108,11 @@ public class EvaluationCriteriaKeyValueLocalServiceImpl extends
 		return null;
 	}
 
-	public List<EvaluationCriteriaKeyValue> findByEvaluationCriteriaAndKey(
+	public EvaluationCriteriaKeyValue findByEvaluationCriteriaAndKey(
 			long evaluationCriteriaId, String key) {
 		try {
 			return evaluationCriteriaKeyValuePersistence
-					.findByEvaluationCriteriaAndKey(evaluationCriteriaId, key);
+					.fetchByEvaluationCriteriaAndKey(evaluationCriteriaId, key);
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}

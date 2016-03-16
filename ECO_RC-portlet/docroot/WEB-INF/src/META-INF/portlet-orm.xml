@@ -33,7 +33,6 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="status" />
-			<basic name="locationId" />
 			<basic name="deleted" />
 			<basic name="groupId" />
 			<basic name="companyId" />
@@ -272,7 +271,6 @@
 			<id name="interviewScheduleId" />
 			<basic name="vacancyCandidateId" />
 			<basic name="interviewId" />
-			<basic name="locationId" />
 			<basic name="interviewDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>

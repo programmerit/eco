@@ -155,7 +155,7 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 		_methodName27 = "addCandidate";
 
 		_methodParameterTypes27 = new String[] {
-				"vn.com.ecopharma.hrm.rc.model.Candidate", "long", "long",
+				"vn.com.ecopharma.hrm.rc.model.Candidate", "long",
 				"java.util.List", "java.util.List", "java.util.Map",
 				"java.util.Map", "com.liferay.portal.service.ServiceContext"
 			};
@@ -1062,8 +1062,8 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 
 	@Override
 	public vn.com.ecopharma.hrm.rc.model.Candidate addCandidate(
-		vn.com.ecopharma.hrm.rc.model.Candidate candidate, long locationId,
-		long vacancyId, java.util.List<java.lang.Long> desireVacancies,
+		vn.com.ecopharma.hrm.rc.model.Candidate candidate, long vacancyId,
+		java.util.List<java.lang.Long> desireVacancies,
 		java.util.List<java.lang.Long> fileEntryIds,
 		java.util.Map<vn.com.ecopharma.hrm.rc.model.Experience, java.lang.Boolean> experienceMap,
 		java.util.Map<vn.com.ecopharma.hrm.rc.model.Certificate, java.lang.Boolean> certificateMap,
@@ -1075,8 +1075,6 @@ public class CandidateLocalServiceClp implements CandidateLocalService {
 					_methodParameterTypes27,
 					new Object[] {
 						ClpSerializer.translateInput(candidate),
-						
-					locationId,
 						
 					vacancyId,
 						

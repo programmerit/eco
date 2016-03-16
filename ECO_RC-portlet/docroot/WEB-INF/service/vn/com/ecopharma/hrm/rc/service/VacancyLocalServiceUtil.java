@@ -367,11 +367,10 @@ public class VacancyLocalServiceUtil {
 	}
 
 	public static vn.com.ecopharma.hrm.rc.model.Vacancy addVacancy(
-		vn.com.ecopharma.hrm.rc.model.Vacancy vacancy, long locationId,
+		vn.com.ecopharma.hrm.rc.model.Vacancy vacancy,
 		java.util.List<java.lang.Long> fileEntryIds,
 		com.liferay.portal.service.ServiceContext serviceContext) {
-		return getService()
-				   .addVacancy(vacancy, locationId, fileEntryIds, serviceContext);
+		return getService().addVacancy(vacancy, fileEntryIds, serviceContext);
 	}
 
 	public static vn.com.ecopharma.hrm.rc.model.Vacancy updateVacancy(

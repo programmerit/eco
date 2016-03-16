@@ -22,6 +22,7 @@ create index IX_E3360D5F on eco_rcp_EvaluationCriteria (className, classPK);
 create index IX_6737C9D4 on eco_rcp_EvaluationCriteria (className, classPK, optionalClassName);
 create index IX_BD1F2F0F on eco_rcp_EvaluationCriteria (className, classPK, optionalClassName, optionalClassPK);
 create index IX_86CF80F on eco_rcp_EvaluationCriteria (className, optionalClassName);
+create index IX_D51C20E7 on eco_rcp_EvaluationCriteria (name, type_);
 create index IX_BFFFAE46 on eco_rcp_EvaluationCriteria (type_);
 
 create index IX_C0C66E8B on eco_rcp_EvaluationCriteriaKeyValue (evaluationCriteriaId);

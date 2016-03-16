@@ -84,7 +84,6 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 			{ "religion", Types.VARCHAR },
 			{ "applicationDate", Types.TIMESTAMP },
 			{ "status", Types.VARCHAR },
-			{ "locationId", Types.BIGINT },
 			{ "deleted", Types.BOOLEAN },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -94,7 +93,7 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "description", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_rcp_Candidate (candidateId LONG not null primary key,candidateCode VARCHAR(75) null,fullName VARCHAR(75) null,emailAddress VARCHAR(75) null,contactNumber VARCHAR(75) null,dateOfBirth DATE null,placeOfBirth VARCHAR(75) null,gender VARCHAR(75) null,identityCardNo VARCHAR(75) null,issuedDate DATE null,issuedPlace VARCHAR(75) null,maritalStatus VARCHAR(75) null,numberOfChild INTEGER,nationalityId LONG,ethnic VARCHAR(75) null,religion VARCHAR(75) null,applicationDate DATE null,status VARCHAR(75) null,locationId LONG,deleted BOOLEAN,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table eco_rcp_Candidate (candidateId LONG not null primary key,candidateCode VARCHAR(75) null,fullName VARCHAR(75) null,emailAddress VARCHAR(75) null,contactNumber VARCHAR(75) null,dateOfBirth DATE null,placeOfBirth VARCHAR(75) null,gender VARCHAR(75) null,identityCardNo VARCHAR(75) null,issuedDate DATE null,issuedPlace VARCHAR(75) null,maritalStatus VARCHAR(75) null,numberOfChild INTEGER,nationalityId LONG,ethnic VARCHAR(75) null,religion VARCHAR(75) null,applicationDate DATE null,status VARCHAR(75) null,deleted BOOLEAN,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table eco_rcp_Candidate";
 	public static final String ORDER_BY_JPQL = " ORDER BY candidate.candidateId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_rcp_Candidate.candidateId ASC";
@@ -146,7 +145,6 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 		model.setReligion(soapModel.getReligion());
 		model.setApplicationDate(soapModel.getApplicationDate());
 		model.setStatus(soapModel.getStatus());
-		model.setLocationId(soapModel.getLocationId());
 		model.setDeleted(soapModel.getDeleted());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -237,7 +235,6 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 		attributes.put("religion", getReligion());
 		attributes.put("applicationDate", getApplicationDate());
 		attributes.put("status", getStatus());
-		attributes.put("locationId", getLocationId());
 		attributes.put("deleted", getDeleted());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -358,12 +355,6 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 
 		if (status != null) {
 			setStatus(status);
-		}
-
-		Long locationId = (Long)attributes.get("locationId");
-
-		if (locationId != null) {
-			setLocationId(locationId);
 		}
 
 		Boolean deleted = (Boolean)attributes.get("deleted");
@@ -705,17 +696,6 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 
 	@JSON
 	@Override
-	public long getLocationId() {
-		return _locationId;
-	}
-
-	@Override
-	public void setLocationId(long locationId) {
-		_locationId = locationId;
-	}
-
-	@JSON
-	@Override
 	public boolean getDeleted() {
 		return _deleted;
 	}
@@ -876,7 +856,6 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 		candidateImpl.setReligion(getReligion());
 		candidateImpl.setApplicationDate(getApplicationDate());
 		candidateImpl.setStatus(getStatus());
-		candidateImpl.setLocationId(getLocationId());
 		candidateImpl.setDeleted(getDeleted());
 		candidateImpl.setGroupId(getGroupId());
 		candidateImpl.setCompanyId(getCompanyId());
@@ -1079,8 +1058,6 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 			candidateCacheModel.status = null;
 		}
 
-		candidateCacheModel.locationId = getLocationId();
-
 		candidateCacheModel.deleted = getDeleted();
 
 		candidateCacheModel.groupId = getGroupId();
@@ -1128,7 +1105,7 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{candidateId=");
 		sb.append(getCandidateId());
@@ -1166,8 +1143,6 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 		sb.append(getApplicationDate());
 		sb.append(", status=");
 		sb.append(getStatus());
-		sb.append(", locationId=");
-		sb.append(getLocationId());
 		sb.append(", deleted=");
 		sb.append(getDeleted());
 		sb.append(", groupId=");
@@ -1191,7 +1166,7 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(85);
+		StringBundler sb = new StringBundler(82);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.hrm.rc.model.Candidate");
@@ -1270,10 +1245,6 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>locationId</column-name><column-value><![CDATA[");
-		sb.append(getLocationId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>deleted</column-name><column-value><![CDATA[");
 		sb.append(getDeleted());
 		sb.append("]]></column-value></column>");
@@ -1336,7 +1307,6 @@ public class CandidateModelImpl extends BaseModelImpl<Candidate>
 	private String _religion;
 	private Date _applicationDate;
 	private String _status;
-	private long _locationId;
 	private boolean _deleted;
 	private long _groupId;
 	private long _companyId;

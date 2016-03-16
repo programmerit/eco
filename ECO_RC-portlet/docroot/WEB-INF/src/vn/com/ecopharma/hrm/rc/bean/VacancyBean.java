@@ -125,7 +125,7 @@ public class VacancyBean extends PersistableBean {
 
 			Vacancy result = null;
 			if (isCreateNew) { // create new
-				result = VacancyLocalServiceUtil.addVacancy(vacancy, 0,
+				result = VacancyLocalServiceUtil.addVacancy(vacancy,
 						fileEntryIds, serviceContext);
 			} else {
 				result = VacancyLocalServiceUtil.updateVacancy(

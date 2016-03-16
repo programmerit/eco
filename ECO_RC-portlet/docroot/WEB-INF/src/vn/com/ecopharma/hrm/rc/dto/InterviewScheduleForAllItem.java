@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 import vn.com.ecopharma.hrm.rc.model.Interview;
-import vn.com.ecopharma.hrm.rc.service.InterviewLocalServiceUtil;
 
 public class InterviewScheduleForAllItem implements Serializable {
 
@@ -21,16 +20,10 @@ public class InterviewScheduleForAllItem implements Serializable {
 	private int step = 30;// default 30 mins for each candidate
 	private List<EmpIndexedItem> interviewers;
 
-	private boolean isSetInterviewForAll;
-	private boolean isSetInterviewDateForAll;
-	private boolean isSetInterviewTimeForAll;
-	private boolean isSetInterviewersForAll;
-
 	public InterviewScheduleForAllItem() {
 		selectedInterview = null;
 		date = new Date();
-		interviewers = new ArrayList<EmpIndexedItem>();
-		interviews = InterviewLocalServiceUtil.findAll();
+		interviewers = new ArrayList<>();
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.AM_PM, Calendar.AM);
 		calendar.set(Calendar.HOUR, 9);
@@ -88,38 +81,6 @@ public class InterviewScheduleForAllItem implements Serializable {
 
 	public void setInterviewers(List<EmpIndexedItem> interviewers) {
 		this.interviewers = interviewers;
-	}
-
-	public boolean isSetInterviewForAll() {
-		return isSetInterviewForAll;
-	}
-
-	public void setSetInterviewForAll(boolean isSetInterviewForAll) {
-		this.isSetInterviewForAll = isSetInterviewForAll;
-	}
-
-	public boolean isSetInterviewDateForAll() {
-		return isSetInterviewDateForAll;
-	}
-
-	public void setSetInterviewDateForAll(boolean isSetInterviewDateForAll) {
-		this.isSetInterviewDateForAll = isSetInterviewDateForAll;
-	}
-
-	public boolean isSetInterviewTimeForAll() {
-		return isSetInterviewTimeForAll;
-	}
-
-	public void setSetInterviewTimeForAll(boolean isSetInterviewTimeForAll) {
-		this.isSetInterviewTimeForAll = isSetInterviewTimeForAll;
-	}
-
-	public boolean isSetInterviewersForAll() {
-		return isSetInterviewersForAll;
-	}
-
-	public void setSetInterviewersForAll(boolean isSetInterviewersForAll) {
-		this.isSetInterviewersForAll = isSetInterviewersForAll;
 	}
 
 	public int getStep() {

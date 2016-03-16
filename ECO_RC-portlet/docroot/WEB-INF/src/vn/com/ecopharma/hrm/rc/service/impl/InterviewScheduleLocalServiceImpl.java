@@ -27,6 +27,7 @@ import vn.com.ecopharma.hrm.rc.enumeration.InterviewScheduleStatus;
 import vn.com.ecopharma.hrm.rc.model.EmployeeInterviewSchedule;
 import vn.com.ecopharma.hrm.rc.model.InterviewSchedule;
 import vn.com.ecopharma.hrm.rc.model.VacancyCandidate;
+import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.base.InterviewScheduleLocalServiceBaseImpl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -247,12 +248,11 @@ public class InterviewScheduleLocalServiceImpl extends
 		return null;
 	}
 
-	@Override
 	public InterviewSchedule updateInterviewSchedule(
 			InterviewSchedule interviewSchedule) {
 		try {
-			interviewSchedule = interviewSchedulePersistence
-					.update(interviewSchedule);
+			interviewSchedule = super
+					.updateInterviewSchedule(interviewSchedule);
 			Indexer indexer = IndexerRegistryUtil
 					.getIndexer(InterviewSchedule.class.getName());
 			indexer.reindex(interviewSchedule);
@@ -263,6 +263,44 @@ public class InterviewScheduleLocalServiceImpl extends
 			LOGGER.info(e);
 		}
 		return null;
+	}
+
+	public InterviewSchedule setInterviewStatusByCandidateStatus(
+			String candidateStatus, long candidateId,
+			InterviewSchedule interviewSchedule, ServiceContext serviceContext) {
+		if (candidateStatus
+				.equalsIgnoreCase(CandidateStatus.MARK_INTERVIEW_PASS
+						.toString())) {
+			return markInterviewPass(candidateId, interviewSchedule,
+					serviceContext);
+		} else {
+			return markInterviewFail(candidateId, interviewSchedule,
+					serviceContext);
+		}
+	}
+
+	public InterviewSchedule markInterviewFail(long candidateId,
+			InterviewSchedule interviewSchedule, ServiceContext serviceContext) {
+		interviewSchedule.setStatus(InterviewScheduleStatus.FAILED.toString());
+		InterviewSchedule result = updateInterviewSchedule(interviewSchedule);
+		if (result != null) {
+			CandidateLocalServiceUtil.changeCandidateStatus(candidateId,
+					CandidateStatus.MARK_INTERVIEW_FAIL.toString(),
+					serviceContext);
+		}
+		return result;
+	}
+
+	public InterviewSchedule markInterviewPass(long candidateId,
+			InterviewSchedule interviewSchedule, ServiceContext serviceContext) {
+		interviewSchedule.setStatus(InterviewScheduleStatus.PASSED.toString());
+		InterviewSchedule result = updateInterviewSchedule(interviewSchedule);
+		if (result != null) {
+			CandidateLocalServiceUtil.changeCandidateStatus(candidateId,
+					CandidateStatus.MARK_INTERVIEW_PASS.toString(),
+					serviceContext);
+		}
+		return result;
 	}
 
 	public InterviewSchedule createPrePersitedEntity() {

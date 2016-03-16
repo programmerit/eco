@@ -9,27 +9,37 @@
 	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
 	<h:head />
 	<h:body>
+
+		<eco:ajaxIndicator />
 		<eco:navigationPanel current="Evaluation Criteria" />
+		<p:growl id="growl" />
 		<h:form id="evaluationMainForm">
+
+
 			<p:contextMenu id="evaluationContextMenu" for="evalCriteriaTree">
 				<p:menuitem value="Add Criteria"
-					rendered="#{evaluationCriteriaBean.typeNodeSelected}" />
+					actionListener="#{evaluationCriteriaTreeViewBean.onAddCriteria}"
+					rendered="#{evaluationCriteriaTreeViewBean.typeNodeSelected}"
+					oncomplete="PF('wAddCriteriaDialog').show();" />
 
 				<p:menuitem value="Add Key"
-					rendered="#{evaluationCriteriaBean.criteriaNodeSelected}" />
+					actionListener="#{evaluationCriteriaTreeViewBean.onAddKey}"
+					rendered="#{evaluationCriteriaTreeViewBean.criteriaNodeSelected}" />
 
 				<p:menuitem value="View Key"
-					rendered="#{evaluationCriteriaBean.keyValNodeSelected}" />
+					actionListener="#{evaluationCriteriaTreeViewBean.onViewKey}"
+					rendered="#{evaluationCriteriaTreeViewBean.keyValNodeSelected}" />
 
 				<p:menuitem value="Delete Key"
-					rendered="#{evaluationCriteriaBean.keyValNodeSelected}" />
+					actionListener="#{evaluationCriteriaTreeViewBean.onDeleteKey}"
+					rendered="#{evaluationCriteriaTreeViewBean.keyValNodeSelected}" />
 
 			</p:contextMenu>
 
-			<p:tree value="#{evaluationCriteriaBean.root}" var="s"
+			<p:tree value="#{evaluationCriteriaTreeViewBean.root}" var="s"
 				id="evalCriteriaTree" selectionMode="single"
-				selection="#{evaluationCriteriaBean.selectedNode}" animate="true"
-				draggable="true" droppable="true" highlight="true"
+				selection="#{evaluationCriteriaTreeViewBean.selectedNode}"
+				animate="true" draggable="true" droppable="true" highlight="true"
 				showUnselectableCheckbox="true">
 				<p:ajax event="select"
 					update=":evaluationMainForm:evaluationContextMenu" />
@@ -48,5 +58,8 @@
 				</p:treeNode>
 			</p:tree>
 		</h:form>
+
+		<ui:include id="includedDialog" src="/views/dialogs/addCriteria.xhtml" />
+
 	</h:body>
 </f:view>

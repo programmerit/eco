@@ -82,8 +82,6 @@ public class InterviewScheduleIndexer extends BaseIndexer {
 		doc.addNumber(InterviewScheduleField.VACANCY_ID,
 				vacancyCandidate.getVacancyId());
 
-		doc.addNumber(InterviewScheduleField.LOCATION_ID, o.getLocationId());
-
 		doc.addText(
 				InterviewScheduleField.VACANCY,
 				new VacancyIndexItem(VacancyLocalServiceUtil

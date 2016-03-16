@@ -1493,7 +1493,6 @@ public class CandidatePersistenceImpl extends BasePersistenceImpl<Candidate>
 		candidateImpl.setReligion(candidate.getReligion());
 		candidateImpl.setApplicationDate(candidate.getApplicationDate());
 		candidateImpl.setStatus(candidate.getStatus());
-		candidateImpl.setLocationId(candidate.getLocationId());
 		candidateImpl.setDeleted(candidate.isDeleted());
 		candidateImpl.setGroupId(candidate.getGroupId());
 		candidateImpl.setCompanyId(candidate.getCompanyId());
