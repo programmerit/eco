@@ -10,6 +10,7 @@ import javax.portlet.PortletURL;
 import org.apache.commons.lang.StringUtils;
 
 import vn.com.ecopharma.emp.model.Titles;
+import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.constant.CandidateField;
 import vn.com.ecopharma.hrm.rc.constant.ECO_RCUtils;
@@ -93,7 +94,8 @@ public class CandidateIndexer extends BaseIndexer {
 				: StringUtils.EMPTY);
 		doc.addDate(CandidateField.APPLICATION_DATE,
 				candidate.getApplicationDate());
-		doc.addText(CandidateField.STATUS, candidate.getStatus());
+		doc.addText(CandidateField.STATUS,
+				EmpLocalServiceUtil.removeDashChar(candidate.getStatus()));
 		doc.addText(CandidateField.IS_DELETED, candidate.isDeleted() ? "true"
 				: "false");
 		doc.addKeyword(Field.GROUP_ID, getSiteGroupId(candidate.getGroupId()));

@@ -32,7 +32,7 @@
 					</h:panelGrid>
 					<p:commandButton value="Add" styleClass="RedButton RaisedButton"
 						ajax="true" actionListener="#{criteriaBean.onSave}"
-						oncomplete="PF('wAddCriteriaDialog').hide();" />
+						oncomplete="updateTree(); PF('wAddCriteriaDialog').hide();" />
 
 					<h:outputText value="|" style="color: grey; margin-left:3px;" />
 					<p:commandLink value="Cancel" immediate="true"

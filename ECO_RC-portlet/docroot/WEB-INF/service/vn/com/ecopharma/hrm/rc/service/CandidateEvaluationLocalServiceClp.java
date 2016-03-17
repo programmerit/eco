@@ -134,16 +134,27 @@ public class CandidateEvaluationLocalServiceClp
 
 		_methodParameterTypes22 = new String[] { "long" };
 
-		_methodName23 = "createPrePersistedEntity";
+		_methodName23 = "fetchByCandidateInterviewAndCritKey";
 
-		_methodParameterTypes23 = new String[] {
+		_methodParameterTypes23 = new String[] { "long", "long", "long" };
+
+		_methodName24 = "createPrePersistedEntity";
+
+		_methodParameterTypes24 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName24 = "addCandidateEvaluation";
+		_methodName25 = "addCandidateEvaluation";
 
-		_methodParameterTypes24 = new String[] {
-				"long", "long", "long", "long", "int",
+		_methodParameterTypes25 = new String[] {
+				"long", "long", "long", "int",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName26 = "updateCandidateEvaluation";
+
+		_methodParameterTypes26 = new String[] {
+				"vn.com.ecopharma.hrm.rc.model.CandidateEvaluation", "int",
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -812,13 +823,44 @@ public class CandidateEvaluationLocalServiceClp
 	}
 
 	@Override
-	public vn.com.ecopharma.hrm.rc.model.CandidateEvaluation createPrePersistedEntity(
-		com.liferay.portal.service.ServiceContext serviceContext) {
+	public vn.com.ecopharma.hrm.rc.model.CandidateEvaluation fetchByCandidateInterviewAndCritKey(
+		long candidateId, long interviewId, long evaluationCriteriaKeyValueId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName23,
 					_methodParameterTypes23,
+					new Object[] {
+						candidateId,
+						
+					interviewId,
+						
+					evaluationCriteriaKeyValueId
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.hrm.rc.model.CandidateEvaluation)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public vn.com.ecopharma.hrm.rc.model.CandidateEvaluation createPrePersistedEntity(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] { ClpSerializer.translateInput(serviceContext) });
 		}
 		catch (Throwable t) {
@@ -838,20 +880,18 @@ public class CandidateEvaluationLocalServiceClp
 
 	@Override
 	public vn.com.ecopharma.hrm.rc.model.CandidateEvaluation addCandidateEvaluation(
-		long candidateId, long interviewId, long evaluationCriteriaId,
-		long evaluationCriteriaKeyValueId, int ratingPoint,
+		long candidateId, long interviewId, long evaluationCriteriaKeyValueId,
+		int ratingPoint,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
 						candidateId,
 						
 					interviewId,
-						
-					evaluationCriteriaId,
 						
 					evaluationCriteriaKeyValueId,
 						
@@ -862,6 +902,44 @@ public class CandidateEvaluationLocalServiceClp
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.hrm.rc.model.CandidateEvaluation)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public vn.com.ecopharma.hrm.rc.model.CandidateEvaluation updateCandidateEvaluation(
+		vn.com.ecopharma.hrm.rc.model.CandidateEvaluation candidateEvaluation,
+		int ratingPoint,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
+					new Object[] {
+						ClpSerializer.translateInput(candidateEvaluation),
+						
+					ratingPoint,
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -924,4 +1002,8 @@ public class CandidateEvaluationLocalServiceClp
 	private String[] _methodParameterTypes23;
 	private String _methodName24;
 	private String[] _methodParameterTypes24;
+	private String _methodName25;
+	private String[] _methodParameterTypes25;
+	private String _methodName26;
+	private String[] _methodParameterTypes26;
 }

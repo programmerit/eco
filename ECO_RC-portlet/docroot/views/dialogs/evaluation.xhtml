@@ -12,7 +12,7 @@
 			<p:remoteCommand name="refreshKeyValuePanel"
 				update=":evaluationForm:evaluationContentGroup" />
 			<p:dialog widgetVar="wEvaluationDialog" header="Evaluation"
-				modal="true" resizable="true" width="400">
+				modal="true" resizable="true" width="500" height="500">
 				<h:panelGroup layout="block">
 
 					<h:panelGroup id="evaluationContentGroup" layout="block">
@@ -56,14 +56,25 @@
 						actionListener="#{evaluationBean.onEvaluate}"
 						oncomplete="refreshCandidateTable(); PF('wEvaluationDialog').hide();"
 						rendered="#{evaluationBean.evaluationItems.size() gt 0}" />
+					<h:outputText value="|" style="color: grey; margin-left:3px;" />
 
+					<p:commandLink value="Evaluate &amp; Pass" disabled="true"
+						actionListener="#{evaluationBean.onCancel}"
+						oncomplete="PF('wEvaluationDialog').hide()"
+						style="margin-left:3px;" />
+
+					<h:outputText value="|" style="color: grey; margin-left:3px;" />
+
+					<p:commandLink value="Evaluate &amp; Fail" disabled="true"
+						actionListener="#{evaluationBean.onCancel}"
+						oncomplete="PF('wEvaluationDialog').hide()"
+						style="margin-left:3px;" />
 
 					<h:outputText value="|" style="color: grey; margin-left:3px;" />
 					<p:commandLink value="Cancel"
 						actionListener="#{evaluationBean.onCancel}"
 						oncomplete="PF('wEvaluationDialog').hide()"
-						style="margin-left:3px;">
-					</p:commandLink>
+						style="margin-left:3px;" />
 				</h:panelGroup>
 			</p:dialog>
 		</h:form>

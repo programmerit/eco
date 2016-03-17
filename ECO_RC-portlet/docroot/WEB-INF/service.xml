@@ -451,6 +451,11 @@
         <finder name="Candidate" return-type="Collection">
             <finder-column name="candidateId"></finder-column>
         </finder>
+        <finder name="CandidateInterviewCritKey" return-type="CandidateEvaluation">
+            <finder-column name="candidateId"></finder-column>
+            <finder-column name="interviewId"></finder-column>
+            <finder-column name="evaluationCriteriaKeyValueId"></finder-column>
+        </finder>
     </entity>
     <entity name="Skill">
 

@@ -316,6 +316,13 @@ public class CandidateEvaluationLocalServiceWrapper
 	}
 
 	@Override
+	public vn.com.ecopharma.hrm.rc.model.CandidateEvaluation fetchByCandidateInterviewAndCritKey(
+		long candidateId, long interviewId, long evaluationCriteriaKeyValueId) {
+		return _candidateEvaluationLocalService.fetchByCandidateInterviewAndCritKey(candidateId,
+			interviewId, evaluationCriteriaKeyValueId);
+	}
+
+	@Override
 	public vn.com.ecopharma.hrm.rc.model.CandidateEvaluation createPrePersistedEntity(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return _candidateEvaluationLocalService.createPrePersistedEntity(serviceContext);
@@ -323,11 +330,21 @@ public class CandidateEvaluationLocalServiceWrapper
 
 	@Override
 	public vn.com.ecopharma.hrm.rc.model.CandidateEvaluation addCandidateEvaluation(
-		long candidateId, long interviewId, long evaluationCriteriaId,
-		long evaluationCriteriaKeyValueId, int ratingPoint,
+		long candidateId, long interviewId, long evaluationCriteriaKeyValueId,
+		int ratingPoint,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return _candidateEvaluationLocalService.addCandidateEvaluation(candidateId,
-			interviewId, evaluationCriteriaId, evaluationCriteriaKeyValueId,
+			interviewId, evaluationCriteriaKeyValueId, ratingPoint,
+			serviceContext);
+	}
+
+	@Override
+	public vn.com.ecopharma.hrm.rc.model.CandidateEvaluation updateCandidateEvaluation(
+		vn.com.ecopharma.hrm.rc.model.CandidateEvaluation candidateEvaluation,
+		int ratingPoint,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _candidateEvaluationLocalService.updateCandidateEvaluation(candidateEvaluation,
 			ratingPoint, serviceContext);
 	}
 

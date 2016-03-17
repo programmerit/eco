@@ -30,7 +30,7 @@ public class NavigationBean implements Serializable {
 				new NavigationItem("vacancy", "Vacancy"), new NavigationItem(
 						"report", "Report"), new NavigationItem(
 						"evaluationCriterias", "Evaluation Criteria"),
-				new NavigationItem("candidateGuest", "Candidate Guest"));
+				new NavigationItem("guest", "Candidate Guest"));
 	}
 
 	public List<NavigationItem> getNavigationItems() {

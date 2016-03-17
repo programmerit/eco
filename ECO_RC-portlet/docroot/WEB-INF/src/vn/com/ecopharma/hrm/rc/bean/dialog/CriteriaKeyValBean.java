@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 
 import com.liferay.portal.kernel.exception.SystemException;
 
@@ -24,13 +25,28 @@ public class CriteriaKeyValBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-
 		try {
 			criteriaKeyValue = EvaluationCriteriaKeyValueLocalServiceUtil
 					.creatPrePersistedEntity(RCUtils.getServiceContext());
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void onSave(ActionEvent event) {
+		EvaluationCriteriaKeyValue checked = EvaluationCriteriaKeyValueLocalServiceUtil
+				.findByEvaluationCriteriaAndKey(
+						criteriaKeyValue.getEvaluationCriteriaId(),
+						criteriaKeyValue.getKey());
+		if (checked == null) {
+			try {
+				EvaluationCriteriaKeyValueLocalServiceUtil
+						.addEvaluationCriteriaKeyValue(criteriaKeyValue);
+			} catch (SystemException e) {
+				e.printStackTrace();
+			}
+		}
+
 	}
 
 	public EvaluationCriteriaKeyValue getCriteriaKeyValue() {

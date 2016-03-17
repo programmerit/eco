@@ -266,11 +266,21 @@ public interface CandidateEvaluationLocalService extends BaseLocalService,
 	public java.util.List<vn.com.ecopharma.hrm.rc.model.CandidateEvaluation> findByCandidate(
 		long candidateId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public vn.com.ecopharma.hrm.rc.model.CandidateEvaluation fetchByCandidateInterviewAndCritKey(
+		long candidateId, long interviewId, long evaluationCriteriaKeyValueId);
+
 	public vn.com.ecopharma.hrm.rc.model.CandidateEvaluation createPrePersistedEntity(
 		com.liferay.portal.service.ServiceContext serviceContext);
 
 	public vn.com.ecopharma.hrm.rc.model.CandidateEvaluation addCandidateEvaluation(
-		long candidateId, long interviewId, long evaluationCriteriaId,
-		long evaluationCriteriaKeyValueId, int ratingPoint,
+		long candidateId, long interviewId, long evaluationCriteriaKeyValueId,
+		int ratingPoint,
 		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public vn.com.ecopharma.hrm.rc.model.CandidateEvaluation updateCandidateEvaluation(
+		vn.com.ecopharma.hrm.rc.model.CandidateEvaluation candidateEvaluation,
+		int ratingPoint,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

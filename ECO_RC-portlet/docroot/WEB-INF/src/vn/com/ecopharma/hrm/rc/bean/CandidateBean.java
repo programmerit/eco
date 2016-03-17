@@ -3,6 +3,7 @@ package vn.com.ecopharma.hrm.rc.bean;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.portlet.PortletRequest;
 
 import org.apache.commons.lang3.StringUtils;
@@ -28,6 +30,7 @@ import org.primefaces.model.SortOrder;
 
 import vn.com.ecopharma.emp.model.University;
 import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
+import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.bean.filter.CandidateFilterBean;
 import vn.com.ecopharma.hrm.rc.constant.CandidateField;
@@ -107,6 +110,8 @@ public class CandidateBean implements Serializable {
 	private String selectedDocumentType;
 
 	private int deletedDocumentIndex = -1;
+	
+	private String onCompleteUpdate = StringUtils.EMPTY;
 
 	@PostConstruct
 	public void init() {
@@ -127,6 +132,11 @@ public class CandidateBean implements Serializable {
 
 				if (filterBean.getSelectedStatuses() != null
 						&& !filterBean.getSelectedStatuses().isEmpty()) {
+					List<String> removedDashStatuses = new ArrayList<>();
+					for (String status : filterBean.getSelectedStatuses()) {
+						removedDashStatuses.add(EmpLocalServiceUtil
+								.removeDashChar(status));
+					}
 					filters.put(CandidateField.STATUS,
 							filterBean.getSelectedStatuses());
 				}
@@ -175,6 +185,34 @@ public class CandidateBean implements Serializable {
 										.getCurrentSearchContext()
 										.getCompanyId(), null,
 								QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+	}
+
+	public void onValueChangeListener(ValueChangeEvent event) {
+		System.out.println(lazyDataModel.getRowData().getId());
+		if (event.getNewValue() != null) {
+			String statusString = (String) event.getNewValue();
+			CandidateStatus status = CandidateStatus.valueOf(statusString);
+			switch (status) {
+			case REJECT:
+				setSelectedItems(Arrays.asList(lazyDataModel.getRowData()));
+				RequestContext.getCurrentInstance().execute("PF('wRejectConfirmDialog').show();");
+				this.onCompleteUpdate = "updateCandidatePanelGroupAndCallRejectDialog()";
+				break;
+			case MARK_INTERVIEW_PASS:
+			case MARK_INTERVIEW_FAIL:
+				InterviewSchedule interviewSchedule = InterviewScheduleLocalServiceUtil
+						.findByVacancyCandidateAndStatus(
+								lazyDataModel.getRowData().getVacancyCandidateId(),
+								InterviewScheduleStatus.PROCESSING.toString());
+				InterviewScheduleLocalServiceUtil
+						.setInterviewStatusByCandidateStatus(status.toString(),
+								lazyDataModel.getRowData().getId(), interviewSchedule, RCUtils.getServiceContext());
+				onCompleteUpdate = "updateCandidatesAndGrowl();";
+				break;
+			default: 
+				break;
+			}
+		}
 	}
 
 	/**
@@ -723,4 +761,14 @@ public class CandidateBean implements Serializable {
 		now.add(Calendar.YEAR, -18);
 		return now.getTime();
 	}
+
+	public String getOnCompleteUpdate() {
+		return onCompleteUpdate;
+	}
+
+	public void setOnCompleteUpdate(String onCompleteUpdate) {
+		this.onCompleteUpdate = onCompleteUpdate;
+	}
+	
+	
 }

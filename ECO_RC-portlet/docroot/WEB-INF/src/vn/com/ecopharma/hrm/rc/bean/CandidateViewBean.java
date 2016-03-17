@@ -8,6 +8,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
@@ -26,18 +28,17 @@ import vn.com.ecopharma.hrm.rc.service.InterviewScheduleLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.util.BeanUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.service.ServiceContext;
 
+/**
+ * @author TaoTran
+ *
+ */
 @ManagedBean(name = "candidateViewBean")
 @ViewScoped
 public class CandidateViewBean extends EntityViewBean {
 
 	private static final long serialVersionUID = 1L;
-
-	private static final Log LOGGER = LogFactoryUtil
-			.getLog(CandidateViewBean.class);
 
 	private static final String VIEW = "/views/pages/candidateView.xhtml";
 
@@ -46,6 +47,10 @@ public class CandidateViewBean extends EntityViewBean {
 	private String selectedStatus = StringUtils.EMPTY;
 
 	private String includedDialog = StringUtils.EMPTY;
+
+	private String onCompleteUpdate = StringUtils.EMPTY;
+
+	private CandidateIndexItem selectedCandidate;
 
 	@PostConstruct
 	public void init() {
@@ -74,6 +79,15 @@ public class CandidateViewBean extends EntityViewBean {
 		super.switchMode(mode);
 	}
 
+	public void onValueChangeListener(ValueChangeEvent event) {
+
+		if (selectedCandidate != null) {
+			System.out.println(selectedCandidate.getFullName());
+		}
+		System.out.println(event.getOldValue().toString() + " vs "
+				+ event.getNewValue().toString());
+	}
+
 	public void onStatusChange(CandidateIndexItem item) {
 		final CandidateBean candidateBean = (CandidateBean) BeanUtils
 				.getBackingBeanByName("candidateBean");
@@ -91,6 +105,7 @@ public class CandidateViewBean extends EntityViewBean {
 					.asList(new InterviewScheduleItem(item)));
 			bean.setInterviewScheduleForAllItem(new InterviewScheduleForAllItem());
 			switchMode(CandidateNavigation.SCHEDULE_INTERVIEW);
+			onCompleteUpdate = "updateCandidatePanelGroup();";
 			break;
 
 		case EVALUATE_CANDIDATE:
@@ -102,6 +117,7 @@ public class CandidateViewBean extends EntityViewBean {
 			if (employeeBean.transferCandidateInfo(item) != null) {
 				switchMode(4);
 			}
+			onCompleteUpdate = "updateCandidatePanelGroup();";
 			break;
 		case MARK_INTERVIEW_PASS:
 		case MARK_INTERVIEW_FAIL:
@@ -112,22 +128,20 @@ public class CandidateViewBean extends EntityViewBean {
 			InterviewScheduleLocalServiceUtil
 					.setInterviewStatusByCandidateStatus(status.toString(),
 							item.getId(), interviewSchedule, serviceContext);
-
+			onCompleteUpdate = "updateCandidatesAndGrowl();";
 			break;
 		case REJECT:
 			candidateBean.setSelectedItems(Arrays.asList(item));
-			RequestContext.getCurrentInstance().execute(
-					"PF('wRejectConfirmDialog').show()");
+			onCompleteUpdate = "PF('wRejectConfirmDialog').show();";
 			break;
 		default:
 			CandidateLocalServiceUtil.changeCandidateStatus(item.getId(),
 					selectedStatus, serviceContext);
-			RequestContext.getCurrentInstance().update(
-					":candidateMainForm:candidates");
+			onCompleteUpdate = "updateCandidatesAndGrowl();";
 			break;
 		}
 		selectedStatus = StringUtils.EMPTY;
-		RequestContext.getCurrentInstance().update("refreshStatusGroup();");
+		// RequestContext.getCurrentInstance().update("refreshStatusGroup();");
 	}
 
 	public String currentStatusCSS(String status) {
@@ -187,6 +201,22 @@ public class CandidateViewBean extends EntityViewBean {
 
 	public void setIncludedDialog(String includedDialog) {
 		this.includedDialog = includedDialog;
+	}
+
+	public String getOnCompleteUpdate() {
+		return onCompleteUpdate;
+	}
+
+	public void setOnCompleteUpdate(String onCompleteUpdate) {
+		this.onCompleteUpdate = onCompleteUpdate;
+	}
+
+	public CandidateIndexItem getSelectedCandidate() {
+		return selectedCandidate;
+	}
+
+	public void setSelectedCandidate(CandidateIndexItem selectedCandidate) {
+		this.selectedCandidate = selectedCandidate;
 	}
 
 }

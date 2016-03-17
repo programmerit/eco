@@ -96,7 +96,9 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 				"value.object.column.bitmask.enabled.vn.com.ecopharma.hrm.rc.model.CandidateEvaluation"),
 			true);
 	public static long CANDIDATEID_COLUMN_BITMASK = 1L;
-	public static long CANDIDATEEVALUATIONID_COLUMN_BITMASK = 2L;
+	public static long EVALUATIONCRITERIAKEYVALUEID_COLUMN_BITMASK = 2L;
+	public static long INTERVIEWID_COLUMN_BITMASK = 4L;
+	public static long CANDIDATEEVALUATIONID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -324,7 +326,19 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 
 	@Override
 	public void setInterviewId(long interviewId) {
+		_columnBitmask |= INTERVIEWID_COLUMN_BITMASK;
+
+		if (!_setOriginalInterviewId) {
+			_setOriginalInterviewId = true;
+
+			_originalInterviewId = _interviewId;
+		}
+
 		_interviewId = interviewId;
+	}
+
+	public long getOriginalInterviewId() {
+		return _originalInterviewId;
 	}
 
 	@JSON
@@ -336,7 +350,19 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 	@Override
 	public void setEvaluationCriteriaKeyValueId(
 		long evaluationCriteriaKeyValueId) {
+		_columnBitmask |= EVALUATIONCRITERIAKEYVALUEID_COLUMN_BITMASK;
+
+		if (!_setOriginalEvaluationCriteriaKeyValueId) {
+			_setOriginalEvaluationCriteriaKeyValueId = true;
+
+			_originalEvaluationCriteriaKeyValueId = _evaluationCriteriaKeyValueId;
+		}
+
 		_evaluationCriteriaKeyValueId = evaluationCriteriaKeyValueId;
+	}
+
+	public long getOriginalEvaluationCriteriaKeyValueId() {
+		return _originalEvaluationCriteriaKeyValueId;
 	}
 
 	@JSON
@@ -546,6 +572,14 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 
 		candidateEvaluationModelImpl._setOriginalCandidateId = false;
 
+		candidateEvaluationModelImpl._originalInterviewId = candidateEvaluationModelImpl._interviewId;
+
+		candidateEvaluationModelImpl._setOriginalInterviewId = false;
+
+		candidateEvaluationModelImpl._originalEvaluationCriteriaKeyValueId = candidateEvaluationModelImpl._evaluationCriteriaKeyValueId;
+
+		candidateEvaluationModelImpl._setOriginalEvaluationCriteriaKeyValueId = false;
+
 		candidateEvaluationModelImpl._columnBitmask = 0;
 	}
 
@@ -710,7 +744,11 @@ public class CandidateEvaluationModelImpl extends BaseModelImpl<CandidateEvaluat
 	private long _originalCandidateId;
 	private boolean _setOriginalCandidateId;
 	private long _interviewId;
+	private long _originalInterviewId;
+	private boolean _setOriginalInterviewId;
 	private long _evaluationCriteriaKeyValueId;
+	private long _originalEvaluationCriteriaKeyValueId;
+	private boolean _setOriginalEvaluationCriteriaKeyValueId;
 	private int _ratingPoint;
 	private String _note;
 	private long _groupId;

@@ -11,6 +11,8 @@
 			<p:outputPanel id="candidateOutputPanel">
 				<p:messages id="msgs" />
 
+				<p:remoteCommand name="refreshGuestPanelGroup"
+					update=":GuestPanelGroup" />
 				<p:remoteCommand name="refreshExperiences"
 					update=":candidateGuestForm:accordion:candidateExperiencesGroup" />
 				<p:remoteCommand name="refreshCertificates"
@@ -183,13 +185,12 @@
 												<f:selectItems value="#{candidateGuestBean.universities}"
 													var="u" itemLabel="#{u.name}" itemValue="#{u}" />
 												<p:column>
-									                #{u.universityId} - #{u.name}
+									                 #{u.name}
 									            </p:column>
 											</p:selectOneMenu>
 
 										</p:panelGrid>
-										<p:separator
-											style="width: 1px; height: 300px; background: #A8A8A8;"
+										<p:separator style="width: 430px"
 											rendered="#{candidateGuestBean.candidateItem.certificates.size() - 1 gt status.index}" />
 									</h:panelGroup>
 								</ui:repeat>
@@ -205,8 +206,9 @@
 				</p:accordionPanel>
 
 				<p:commandButton id="cSave" value="Apply" styleClass="RedButton"
-					action="#{candidateGuestBean.onSave}"
-					update=":candidateGuestForm:msgs" />
+					actionListener="#{candidateGuestBean.onSave}"
+					update=":candidateGuestForm:msgs"
+					oncomplete="refreshGuestPanelGroup();" />
 			</p:outputPanel>
 
 		</h:form>
@@ -235,6 +237,14 @@
 						dragDropSupport="false" multiple="false" id="documentUploader"
 						sizeLimit="1000000" allowTypes="/(\.|\/)(doc|docx|pdf)$/" />
 				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+
+		<h:form id="successForm">
+			<p:dialog widgetVar="wSuccessCandidateAdd" header="Thông báo"
+				modal="true" showHeader="false" closable="true" closeOnEscape="true">
+				<h:outputText
+					value="Thông tin ứng tuyển của bạn đã được gửi thành công." />
 			</p:dialog>
 		</h:form>
 	</h:body>

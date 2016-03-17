@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import javax.portlet.PortletURL;
 
+import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.constant.ECO_RCUtils;
 import vn.com.ecopharma.hrm.rc.constant.VacancyField;
 import vn.com.ecopharma.hrm.rc.model.Vacancy;
@@ -59,7 +60,8 @@ public class VacancyIndexer extends BaseIndexer {
 		doc.addNumber(VacancyField.TITLES_ID, vacancy.getTitlesId());
 		doc.addText(VacancyField.IS_DELETED, vacancy.isDeleted() ? "true"
 				: "false");
-		doc.addText(VacancyField.STATUS, vacancy.getStatus());
+		doc.addText(VacancyField.STATUS,
+				EmpLocalServiceUtil.removeDashChar(vacancy.getStatus()));
 		doc.addText(VacancyField.CERTIFICATE_TYPE, vacancy.getCertificateType());
 		doc.addNumber(VacancyField.YEARS_EXPERIENCES, vacancy.getExperiences());
 		return doc;

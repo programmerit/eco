@@ -8,31 +8,27 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	<h:head />
 	<h:body>
-		<h:form id="criteriaForm">
-			<p:dialog widgetVar="wAddCriteriaKeyValDialog" header="Add Criteria"
-				modal="true" resizable="true" width="400">
+		<h:form id="criteriaKeyValForm">
+			<p:dialog widgetVar="wAddCriteriaKeyValDialog"
+				header="Add Criteria Key Value" modal="true" resizable="true"
+				width="400">
 				<p:outputPanel autoUpdate="true">
 					<h:panelGrid columns="3">
 
-						<h:outputText value="Criteria " />
-						<h:outputText value="#{criteriaBean.criteria.type}" />
-						<h:outputText />
-
-						<h:outputText value="Criteria's Name: " />
-						<p:inputText id="critName" value="#{criteriaBean.criteria.name}"
-							required="true">
-							<f:attribute name="critName"
-								value="#{criteriaBean.criteria.name}" />
-							<f:attribute name="type" value="#{criteriaBean.criteria.type}" />
-							<f:validator validatorId="criteriaValidator" />
-							<p:ajax update="critNameMsg" event="blur" />
+						<h:outputText value="Criteria's Key: " />
+						<p:inputText id="critKeyName"
+							value="#{critKeyValBean.criteriaKeyValue.key}" required="true">
 						</p:inputText>
-						<p:message id="critNameMsg" for="critName" display="icon" />
+						<p:message id="critKeyNameMsg" for="critKeyName" display="icon" />
+
+						<h:outputText value="Evaluation point: " />
+						<p:spinner value="#{critKeyValBean.criteriaKeyValue.value}" />
+						<h:outputText />
 
 					</h:panelGrid>
 					<p:commandButton value="Add" styleClass="RedButton RaisedButton"
-						ajax="true" actionListener="#{criteriaBean.onSave}"
-						oncomplete="PF('wAddCriteriaKeyValDialog').hide();" />
+						ajax="true" actionListener="#{critKeyValBean.onSave}"
+						oncomplete="updateTree(); PF('wAddCriteriaKeyValDialog').hide();" />
 
 					<h:outputText value="|" style="color: grey; margin-left:3px;" />
 					<p:commandLink value="Cancel" immediate="true"

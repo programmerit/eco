@@ -580,6 +580,288 @@ public class CandidateEvaluationPersistenceImpl extends BasePersistenceImpl<Cand
 	}
 
 	private static final String _FINDER_COLUMN_CANDIDATE_CANDIDATEID_2 = "candidateEvaluation.candidateId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_CANDIDATEINTERVIEWCRITKEY =
+		new FinderPath(CandidateEvaluationModelImpl.ENTITY_CACHE_ENABLED,
+			CandidateEvaluationModelImpl.FINDER_CACHE_ENABLED,
+			CandidateEvaluationImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByCandidateInterviewCritKey",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			CandidateEvaluationModelImpl.CANDIDATEID_COLUMN_BITMASK |
+			CandidateEvaluationModelImpl.INTERVIEWID_COLUMN_BITMASK |
+			CandidateEvaluationModelImpl.EVALUATIONCRITERIAKEYVALUEID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_CANDIDATEINTERVIEWCRITKEY =
+		new FinderPath(CandidateEvaluationModelImpl.ENTITY_CACHE_ENABLED,
+			CandidateEvaluationModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCandidateInterviewCritKey",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
+
+	/**
+	 * Returns the candidate evaluation where candidateId = &#63; and interviewId = &#63; and evaluationCriteriaKeyValueId = &#63; or throws a {@link vn.com.ecopharma.hrm.rc.NoSuchCandidateEvaluationException} if it could not be found.
+	 *
+	 * @param candidateId the candidate ID
+	 * @param interviewId the interview ID
+	 * @param evaluationCriteriaKeyValueId the evaluation criteria key value ID
+	 * @return the matching candidate evaluation
+	 * @throws vn.com.ecopharma.hrm.rc.NoSuchCandidateEvaluationException if a matching candidate evaluation could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CandidateEvaluation findByCandidateInterviewCritKey(
+		long candidateId, long interviewId, long evaluationCriteriaKeyValueId)
+		throws NoSuchCandidateEvaluationException, SystemException {
+		CandidateEvaluation candidateEvaluation = fetchByCandidateInterviewCritKey(candidateId,
+				interviewId, evaluationCriteriaKeyValueId);
+
+		if (candidateEvaluation == null) {
+			StringBundler msg = new StringBundler(8);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("candidateId=");
+			msg.append(candidateId);
+
+			msg.append(", interviewId=");
+			msg.append(interviewId);
+
+			msg.append(", evaluationCriteriaKeyValueId=");
+			msg.append(evaluationCriteriaKeyValueId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchCandidateEvaluationException(msg.toString());
+		}
+
+		return candidateEvaluation;
+	}
+
+	/**
+	 * Returns the candidate evaluation where candidateId = &#63; and interviewId = &#63; and evaluationCriteriaKeyValueId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param candidateId the candidate ID
+	 * @param interviewId the interview ID
+	 * @param evaluationCriteriaKeyValueId the evaluation criteria key value ID
+	 * @return the matching candidate evaluation, or <code>null</code> if a matching candidate evaluation could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CandidateEvaluation fetchByCandidateInterviewCritKey(
+		long candidateId, long interviewId, long evaluationCriteriaKeyValueId)
+		throws SystemException {
+		return fetchByCandidateInterviewCritKey(candidateId, interviewId,
+			evaluationCriteriaKeyValueId, true);
+	}
+
+	/**
+	 * Returns the candidate evaluation where candidateId = &#63; and interviewId = &#63; and evaluationCriteriaKeyValueId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param candidateId the candidate ID
+	 * @param interviewId the interview ID
+	 * @param evaluationCriteriaKeyValueId the evaluation criteria key value ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching candidate evaluation, or <code>null</code> if a matching candidate evaluation could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CandidateEvaluation fetchByCandidateInterviewCritKey(
+		long candidateId, long interviewId, long evaluationCriteriaKeyValueId,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] {
+				candidateId, interviewId, evaluationCriteriaKeyValueId
+			};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_CANDIDATEINTERVIEWCRITKEY,
+					finderArgs, this);
+		}
+
+		if (result instanceof CandidateEvaluation) {
+			CandidateEvaluation candidateEvaluation = (CandidateEvaluation)result;
+
+			if ((candidateId != candidateEvaluation.getCandidateId()) ||
+					(interviewId != candidateEvaluation.getInterviewId()) ||
+					(evaluationCriteriaKeyValueId != candidateEvaluation.getEvaluationCriteriaKeyValueId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_SELECT_CANDIDATEEVALUATION_WHERE);
+
+			query.append(_FINDER_COLUMN_CANDIDATEINTERVIEWCRITKEY_CANDIDATEID_2);
+
+			query.append(_FINDER_COLUMN_CANDIDATEINTERVIEWCRITKEY_INTERVIEWID_2);
+
+			query.append(_FINDER_COLUMN_CANDIDATEINTERVIEWCRITKEY_EVALUATIONCRITERIAKEYVALUEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(candidateId);
+
+				qPos.add(interviewId);
+
+				qPos.add(evaluationCriteriaKeyValueId);
+
+				List<CandidateEvaluation> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CANDIDATEINTERVIEWCRITKEY,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"CandidateEvaluationPersistenceImpl.fetchByCandidateInterviewCritKey(long, long, long, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					CandidateEvaluation candidateEvaluation = list.get(0);
+
+					result = candidateEvaluation;
+
+					cacheResult(candidateEvaluation);
+
+					if ((candidateEvaluation.getCandidateId() != candidateId) ||
+							(candidateEvaluation.getInterviewId() != interviewId) ||
+							(candidateEvaluation.getEvaluationCriteriaKeyValueId() != evaluationCriteriaKeyValueId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CANDIDATEINTERVIEWCRITKEY,
+							finderArgs, candidateEvaluation);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CANDIDATEINTERVIEWCRITKEY,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CandidateEvaluation)result;
+		}
+	}
+
+	/**
+	 * Removes the candidate evaluation where candidateId = &#63; and interviewId = &#63; and evaluationCriteriaKeyValueId = &#63; from the database.
+	 *
+	 * @param candidateId the candidate ID
+	 * @param interviewId the interview ID
+	 * @param evaluationCriteriaKeyValueId the evaluation criteria key value ID
+	 * @return the candidate evaluation that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CandidateEvaluation removeByCandidateInterviewCritKey(
+		long candidateId, long interviewId, long evaluationCriteriaKeyValueId)
+		throws NoSuchCandidateEvaluationException, SystemException {
+		CandidateEvaluation candidateEvaluation = findByCandidateInterviewCritKey(candidateId,
+				interviewId, evaluationCriteriaKeyValueId);
+
+		return remove(candidateEvaluation);
+	}
+
+	/**
+	 * Returns the number of candidate evaluations where candidateId = &#63; and interviewId = &#63; and evaluationCriteriaKeyValueId = &#63;.
+	 *
+	 * @param candidateId the candidate ID
+	 * @param interviewId the interview ID
+	 * @param evaluationCriteriaKeyValueId the evaluation criteria key value ID
+	 * @return the number of matching candidate evaluations
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByCandidateInterviewCritKey(long candidateId,
+		long interviewId, long evaluationCriteriaKeyValueId)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_CANDIDATEINTERVIEWCRITKEY;
+
+		Object[] finderArgs = new Object[] {
+				candidateId, interviewId, evaluationCriteriaKeyValueId
+			};
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_CANDIDATEEVALUATION_WHERE);
+
+			query.append(_FINDER_COLUMN_CANDIDATEINTERVIEWCRITKEY_CANDIDATEID_2);
+
+			query.append(_FINDER_COLUMN_CANDIDATEINTERVIEWCRITKEY_INTERVIEWID_2);
+
+			query.append(_FINDER_COLUMN_CANDIDATEINTERVIEWCRITKEY_EVALUATIONCRITERIAKEYVALUEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(candidateId);
+
+				qPos.add(interviewId);
+
+				qPos.add(evaluationCriteriaKeyValueId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CANDIDATEINTERVIEWCRITKEY_CANDIDATEID_2 =
+		"candidateEvaluation.candidateId = ? AND ";
+	private static final String _FINDER_COLUMN_CANDIDATEINTERVIEWCRITKEY_INTERVIEWID_2 =
+		"candidateEvaluation.interviewId = ? AND ";
+	private static final String _FINDER_COLUMN_CANDIDATEINTERVIEWCRITKEY_EVALUATIONCRITERIAKEYVALUEID_2 =
+		"candidateEvaluation.evaluationCriteriaKeyValueId = ?";
 
 	public CandidateEvaluationPersistenceImpl() {
 		setModelClass(CandidateEvaluation.class);
@@ -595,6 +877,13 @@ public class CandidateEvaluationPersistenceImpl extends BasePersistenceImpl<Cand
 		EntityCacheUtil.putResult(CandidateEvaluationModelImpl.ENTITY_CACHE_ENABLED,
 			CandidateEvaluationImpl.class, candidateEvaluation.getPrimaryKey(),
 			candidateEvaluation);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CANDIDATEINTERVIEWCRITKEY,
+			new Object[] {
+				candidateEvaluation.getCandidateId(),
+				candidateEvaluation.getInterviewId(),
+				candidateEvaluation.getEvaluationCriteriaKeyValueId()
+			}, candidateEvaluation);
 
 		candidateEvaluation.resetOriginalValues();
 	}
@@ -653,6 +942,8 @@ public class CandidateEvaluationPersistenceImpl extends BasePersistenceImpl<Cand
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache(candidateEvaluation);
 	}
 
 	@Override
@@ -664,6 +955,71 @@ public class CandidateEvaluationPersistenceImpl extends BasePersistenceImpl<Cand
 			EntityCacheUtil.removeResult(CandidateEvaluationModelImpl.ENTITY_CACHE_ENABLED,
 				CandidateEvaluationImpl.class,
 				candidateEvaluation.getPrimaryKey());
+
+			clearUniqueFindersCache(candidateEvaluation);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		CandidateEvaluation candidateEvaluation) {
+		if (candidateEvaluation.isNew()) {
+			Object[] args = new Object[] {
+					candidateEvaluation.getCandidateId(),
+					candidateEvaluation.getInterviewId(),
+					candidateEvaluation.getEvaluationCriteriaKeyValueId()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CANDIDATEINTERVIEWCRITKEY,
+				args, Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CANDIDATEINTERVIEWCRITKEY,
+				args, candidateEvaluation);
+		}
+		else {
+			CandidateEvaluationModelImpl candidateEvaluationModelImpl = (CandidateEvaluationModelImpl)candidateEvaluation;
+
+			if ((candidateEvaluationModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_CANDIDATEINTERVIEWCRITKEY.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						candidateEvaluation.getCandidateId(),
+						candidateEvaluation.getInterviewId(),
+						candidateEvaluation.getEvaluationCriteriaKeyValueId()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CANDIDATEINTERVIEWCRITKEY,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CANDIDATEINTERVIEWCRITKEY,
+					args, candidateEvaluation);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(
+		CandidateEvaluation candidateEvaluation) {
+		CandidateEvaluationModelImpl candidateEvaluationModelImpl = (CandidateEvaluationModelImpl)candidateEvaluation;
+
+		Object[] args = new Object[] {
+				candidateEvaluation.getCandidateId(),
+				candidateEvaluation.getInterviewId(),
+				candidateEvaluation.getEvaluationCriteriaKeyValueId()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CANDIDATEINTERVIEWCRITKEY,
+			args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CANDIDATEINTERVIEWCRITKEY,
+			args);
+
+		if ((candidateEvaluationModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_CANDIDATEINTERVIEWCRITKEY.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					candidateEvaluationModelImpl.getOriginalCandidateId(),
+					candidateEvaluationModelImpl.getOriginalInterviewId(),
+					candidateEvaluationModelImpl.getOriginalEvaluationCriteriaKeyValueId()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CANDIDATEINTERVIEWCRITKEY,
+				args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CANDIDATEINTERVIEWCRITKEY,
+				args);
 		}
 	}
 
@@ -834,6 +1190,9 @@ public class CandidateEvaluationPersistenceImpl extends BasePersistenceImpl<Cand
 		EntityCacheUtil.putResult(CandidateEvaluationModelImpl.ENTITY_CACHE_ENABLED,
 			CandidateEvaluationImpl.class, candidateEvaluation.getPrimaryKey(),
 			candidateEvaluation);
+
+		clearUniqueFindersCache(candidateEvaluation);
+		cacheUniqueFindersCache(candidateEvaluation);
 
 		return candidateEvaluation;
 	}

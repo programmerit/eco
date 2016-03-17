@@ -15,6 +15,8 @@
 		<p:growl id="growl" />
 		<h:form id="evaluationMainForm">
 
+			<p:remoteCommand name="updateTree"
+				update=":evaluationMainForm:evalCriteriaTree" />
 
 			<p:contextMenu id="evaluationContextMenu" for="evalCriteriaTree">
 				<p:menuitem value="Add Criteria"
@@ -23,8 +25,9 @@
 					oncomplete="PF('wAddCriteriaDialog').show();" />
 
 				<p:menuitem value="Add Key"
-					actionListener="#{evaluationCriteriaTreeViewBean.onAddKey}"
-					rendered="#{evaluationCriteriaTreeViewBean.criteriaNodeSelected}" />
+					actionListener="#{evaluationCriteriaTreeViewBean.onAddCriteriaKeyValue}"
+					rendered="#{evaluationCriteriaTreeViewBean.criteriaNodeSelected}"
+					oncomplete="PF('wAddCriteriaKeyValDialog').show();" />
 
 				<p:menuitem value="View Key"
 					actionListener="#{evaluationCriteriaTreeViewBean.onViewKey}"
@@ -60,6 +63,7 @@
 		</h:form>
 
 		<ui:include id="includedDialog" src="/views/dialogs/addCriteria.xhtml" />
+		<ui:include src="/views/dialogs/addCriteriaKeyVal.xhtml" />
 
 	</h:body>
 </f:view>

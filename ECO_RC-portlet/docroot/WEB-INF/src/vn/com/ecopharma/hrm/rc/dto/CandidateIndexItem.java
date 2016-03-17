@@ -69,7 +69,8 @@ public class CandidateIndexItem extends AbstractIndexedItem {
 	}
 
 	public String getStatus() {
-		return checkNullFieldAndReturnEmptyString(CandidateField.STATUS);
+		String status = checkNullFieldAndReturnEmptyString(CandidateField.STATUS);
+		return status.replaceAll(" ", "_");
 	}
 
 	public String isDeleted() {

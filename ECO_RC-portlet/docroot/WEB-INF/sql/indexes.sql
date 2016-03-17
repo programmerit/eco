@@ -7,6 +7,7 @@ create index IX_ACD495E3 on eco_rcp_CandidateActionHistory (candidateId, actionT
 create index IX_BD0B6F0D on eco_rcp_CandidateActionHistory (candidateId, actionType, action);
 
 create index IX_8EE33E17 on eco_rcp_CandidateEvaluation (candidateId);
+create index IX_58D5F051 on eco_rcp_CandidateEvaluation (candidateId, interviewId, evaluationCriteriaKeyValueId);
 
 create index IX_6A8A4944 on eco_rcp_Certificate (className);
 create index IX_9FD2B71F on eco_rcp_Certificate (className, classPK);

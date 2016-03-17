@@ -12,10 +12,12 @@ import javax.faces.context.FacesContext;
 import vn.com.ecopharma.hrm.rc.dto.CandidateItem;
 import vn.com.ecopharma.hrm.rc.dto.CertificateObjectItem;
 import vn.com.ecopharma.hrm.rc.dto.ExperienceObjectItem;
+import vn.com.ecopharma.hrm.rc.enumeration.GuestNavigation;
 import vn.com.ecopharma.hrm.rc.model.Candidate;
 import vn.com.ecopharma.hrm.rc.model.Certificate;
 import vn.com.ecopharma.hrm.rc.model.Experience;
 import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
+import vn.com.ecopharma.hrm.rc.util.BeanUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -41,7 +43,7 @@ public class CandidateGuestBean extends BaseCandidateBean {
 	/**
 	 * 
 	 */
-	public String onSave() {
+	public void onSave() {
 		try {
 			FacesMessage message = null;
 			if (!CandidateLocalServiceUtil.isEmailExisted(getCandidateItem()
@@ -82,6 +84,10 @@ public class CandidateGuestBean extends BaseCandidateBean {
 							getFileEntryIds(), experienceMap, certificateMap,
 							serviceContext);
 				}
+
+				BeanUtils.getGuestViewBean().switchOutcome(
+						GuestNavigation.SUCCESS_ADD);
+
 			} else {
 				message = new FacesMessage("Email Existed",
 						"This email has already existed");
@@ -91,6 +97,5 @@ public class CandidateGuestBean extends BaseCandidateBean {
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}
-		return "candidateGuestSavedSuccess";
 	}
 }

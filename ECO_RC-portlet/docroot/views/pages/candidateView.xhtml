@@ -135,6 +135,10 @@
 			<p:remoteCommand name="updateCandidatePanelGroup"
 				update=":CandidatePanelGroup" />
 
+			<p:remoteCommand name="updateCandidatePanelGroupAndCallRejectDialog"
+				update=":CandidatePanelGroup"
+				oncomplete="PF('wRejectConfirmDialog').show();" />
+
 			<p:remoteCommand name="refreshCandidateTable"
 				update=":candidateMainForm:candidates" />
 
@@ -143,6 +147,9 @@
 
 			<p:remoteCommand name="refreshStatusGroup"
 				update=":candidateMainForm:candidates:statusOutputPanel" />
+
+			<p:remoteCommand name="openRejectDialog"
+				oncomplete="alert('zzz'); PF('wRejectConfirmDialog').show();" />
 
 			<p:contextMenu id="candidateContextMenu" for="candidates">
 				<p:submenu label="Status">
@@ -286,13 +293,14 @@
 							value="#{i18n[candidate.localizedStatus]}" />
 						<p:selectOneMenu id="candidateStatusSelect"
 							style="margin-top:20px;"
+							valueChangeListener="#{candidateBean.onValueChangeListener}"
 							value="#{candidateViewBean.selectedStatus}">
 							<!-- eliminate oncomplete update if current status is JOB_OFFERED, 
 						b/c changing to HIRE status will make AJAX cannot complete on updating candidates table -->
-							<p:ajax update=":CandidatePanelGroup candidateStatusSelect"
-								listener="#{candidateViewBean.onStatusChange(candidate)}"
-								oncomplete="#{candidate.status != 'JOB_OFFERED' ? 'updateCandidatesAndGrowl();' : ''}">
-							</p:ajax>
+							<!-- <p:ajax listener="#{candidateViewBean.onStatusChange(candidate)}"
+								oncomplete="#{candidateViewBean.selectedStatus eq 'REJECT' ? 'openRejectDialog();' : ''}" /> -->
+							<p:ajax event="valueChange" process="@this"
+								oncomplete="#{candidateBean.onCompleteUpdate}" />
 							<f:selectItem itemLabel="---" itemValue="" />
 							<f:selectItems
 								value="#{candidateViewBean.getAvailableStatuses(candidate.status)}"
@@ -403,7 +411,7 @@
 		</h:form>
 
 		<h:form id="rejectConfirmForm">
-			<p:dialog widgetVar="wRejectConfirmDialog"
+			<p:dialog widgetVar="wRejectConfirmDialog" modal="true"
 				header="Reject Confirmation" closeOnEscape="true" showEffect="fade">
 
 				<p:outputPanel id="rejectDeclineOutputPanel" autoUpdate="true">

@@ -132,16 +132,27 @@ public class CandidateEvaluationLocalServiceClpInvoker {
 
 		_methodParameterTypes119 = new String[] { "long" };
 
-		_methodName120 = "createPrePersistedEntity";
+		_methodName120 = "fetchByCandidateInterviewAndCritKey";
 
-		_methodParameterTypes120 = new String[] {
+		_methodParameterTypes120 = new String[] { "long", "long", "long" };
+
+		_methodName121 = "createPrePersistedEntity";
+
+		_methodParameterTypes121 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName121 = "addCandidateEvaluation";
+		_methodName122 = "addCandidateEvaluation";
 
-		_methodParameterTypes121 = new String[] {
-				"long", "long", "long", "long", "int",
+		_methodParameterTypes122 = new String[] {
+				"long", "long", "long", "int",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName123 = "updateCandidateEvaluation";
+
+		_methodParameterTypes123 = new String[] {
+				"vn.com.ecopharma.hrm.rc.model.CandidateEvaluation", "int",
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -272,17 +283,30 @@ public class CandidateEvaluationLocalServiceClpInvoker {
 
 		if (_methodName120.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
-			return CandidateEvaluationLocalServiceUtil.createPrePersistedEntity((com.liferay.portal.service.ServiceContext)arguments[0]);
+			return CandidateEvaluationLocalServiceUtil.fetchByCandidateInterviewAndCritKey(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				((Long)arguments[2]).longValue());
 		}
 
 		if (_methodName121.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
+			return CandidateEvaluationLocalServiceUtil.createPrePersistedEntity((com.liferay.portal.service.ServiceContext)arguments[0]);
+		}
+
+		if (_methodName122.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
 			return CandidateEvaluationLocalServiceUtil.addCandidateEvaluation(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
-				((Long)arguments[3]).longValue(),
-				((Integer)arguments[4]).intValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[5]);
+				((Integer)arguments[3]).intValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[4]);
+		}
+
+		if (_methodName123.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+			return CandidateEvaluationLocalServiceUtil.updateCandidateEvaluation((vn.com.ecopharma.hrm.rc.model.CandidateEvaluation)arguments[0],
+				((Integer)arguments[1]).intValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[2]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -336,4 +360,8 @@ public class CandidateEvaluationLocalServiceClpInvoker {
 	private String[] _methodParameterTypes120;
 	private String _methodName121;
 	private String[] _methodParameterTypes121;
+	private String _methodName122;
+	private String[] _methodParameterTypes122;
+	private String _methodName123;
+	private String[] _methodParameterTypes123;
 }

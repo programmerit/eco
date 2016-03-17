@@ -88,6 +88,19 @@ public class CandidateEvaluationLocalServiceImpl extends
 		return new ArrayList<>();
 	}
 
+	public CandidateEvaluation fetchByCandidateInterviewAndCritKey(
+			long candidateId, long interviewId,
+			long evaluationCriteriaKeyValueId) {
+		try {
+			return candidateEvaluationPersistence
+					.fetchByCandidateInterviewCritKey(candidateId, interviewId,
+							evaluationCriteriaKeyValueId);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
 	public CandidateEvaluation createPrePersistedEntity(
 			ServiceContext serviceContext) {
 		try {
@@ -106,21 +119,43 @@ public class CandidateEvaluationLocalServiceImpl extends
 	}
 
 	public CandidateEvaluation addCandidateEvaluation(long candidateId,
-			long interviewId, long evaluationCriteriaId,
-			long evaluationCriteriaKeyValueId, int ratingPoint,
-			ServiceContext serviceContext) {
-		CandidateEvaluation candidateEvaluation = createPrePersistedEntity(serviceContext);
-		candidateEvaluation.setCandidateId(candidateId);
-		candidateEvaluation.setInterviewId(interviewId);
-		candidateEvaluation
-				.setEvaluationCriteriaKeyValueId(evaluationCriteriaKeyValueId);
-		candidateEvaluation.setRatingPoint(ratingPoint);
-
+			long interviewId, long evaluationCriteriaKeyValueId,
+			int ratingPoint, ServiceContext serviceContext) {
 		try {
-			return candidateEvaluationPersistence.update(candidateEvaluation);
+			CandidateEvaluation candidateEvaluation = createPrePersistedEntity(serviceContext);
+			candidateEvaluation.setCandidateId(candidateId);
+			candidateEvaluation.setInterviewId(interviewId);
+			candidateEvaluation
+					.setEvaluationCriteriaKeyValueId(evaluationCriteriaKeyValueId);
+			candidateEvaluation.setRatingPoint(ratingPoint);
+
+			candidateEvaluation.setCreateDate(new Date());
+			candidateEvaluation.setUserId(serviceContext.getUserId());
+			candidateEvaluation.setUserName(userLocalService.fetchUser(
+					serviceContext.getUserId()).getFullName());
+			candidateEvaluation.setGroupId(serviceContext.getScopeGroupId());
+			candidateEvaluation.setCompanyId(serviceContext.getCompanyId());
+
+			return super.addCandidateEvaluation(candidateEvaluation);
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}
 		return null;
+	}
+
+	public CandidateEvaluation updateCandidateEvaluation(
+			CandidateEvaluation candidateEvaluation, int ratingPoint,
+			ServiceContext serviceContext) throws SystemException {
+		candidateEvaluation.setRatingPoint(ratingPoint);
+		candidateEvaluation.setModifiedDate(new Date());
+		candidateEvaluation.setUserId(serviceContext.getUserId());
+		try {
+			candidateEvaluation.setUserName(userLocalService.fetchUser(
+					serviceContext.getUserId()).getScreenName());
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return super.updateCandidateEvaluation(candidateEvaluation);
+
 	}
 }

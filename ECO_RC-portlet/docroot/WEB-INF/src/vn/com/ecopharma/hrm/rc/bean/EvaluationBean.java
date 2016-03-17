@@ -1,22 +1,32 @@
 package vn.com.ecopharma.hrm.rc.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import org.primefaces.event.CloseEvent;
 import org.primefaces.event.RateEvent;
+
+import com.liferay.portal.kernel.exception.SystemException;
 
 import vn.com.ecopharma.hrm.rc.dto.CandidateIndexItem;
 import vn.com.ecopharma.hrm.rc.dto.evaluate.EvaluationCriteriaItem;
 import vn.com.ecopharma.hrm.rc.dto.evaluate.EvaluationItem;
 import vn.com.ecopharma.hrm.rc.dto.evaluate.KeyValueItem;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
+import vn.com.ecopharma.hrm.rc.enumeration.InterviewScheduleStatus;
+import vn.com.ecopharma.hrm.rc.model.CandidateEvaluation;
+import vn.com.ecopharma.hrm.rc.model.InterviewSchedule;
+import vn.com.ecopharma.hrm.rc.service.CandidateEvaluationLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
+import vn.com.ecopharma.hrm.rc.service.InterviewScheduleLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.util.RCUtils;
 
 @ManagedBean
@@ -24,6 +34,7 @@ import vn.com.ecopharma.hrm.rc.util.RCUtils;
 public class EvaluationBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	private List<CandidateIndexItem> candidateIndexItems;
 
 	private List<EvaluationItem> evaluationItems;
@@ -32,41 +43,57 @@ public class EvaluationBean implements Serializable {
 	public void init() {
 	}
 
-	public void onOffer(ActionEvent event) {
-		// for (CandidateIndexItem item : candidateIndexItems) {
-		// for (EvaluationItem eItem : evaluationItems) {
-		// for (EvaluationKeyValueItem kvItem : eItem
-		// .getEvaluationKeyValueItems()) {
-		// CandidateEvaluation candidateEvaluation =
-		// CandidateEvaluationLocalServiceUtil
-		// .addCandidateEvaluation(item.getId(), eItem
-		// .getEvaluationCriteria()
-		// .getEvaluationCriteriaId(), kvItem
-		// .getEvaluationCriteriaKeyValue()
-		// .getEvaluationCriteriaKeyValueId(), kvItem
-		// .getValue(), RCUtils.getServiceContext());
-		//
-		// if (candidateEvaluation != null) {
-		// CandidateLocalServiceUtil.changeCandidateStatus(
-		// item.getId(),
-		// CandidateStatus.JOB_OFFERED.toString(),
-		// RCUtils.getServiceContext());
-		// }
-		// }
-		// }
-		// }
-	}
-
 	public void onEvaluate(ActionEvent event) {
+		final List<KeyValueItem> evaluatedValues = new ArrayList<>();
+
 		for (EvaluationItem item : evaluationItems) {
-			System.out.println(item.getType());
 			for (EvaluationCriteriaItem item1 : item
 					.getEvaluationCriteriaItems()) {
-				for (KeyValueItem item2 : item1.getKeyValueItems()) {
-					System.out.println(item2.getEvaluateValue());
-				}
+				evaluatedValues.addAll(item1.getKeyValueItems());
 			}
 		}
+		for (CandidateIndexItem candidate : candidateIndexItems) {
+			InterviewSchedule currentProcessingInterviewSchedule = InterviewScheduleLocalServiceUtil
+					.findByVacancyCandidateAndStatus(
+							candidate.getVacancyCandidateId(),
+							InterviewScheduleStatus.PROCESSING.toString());
+			for (KeyValueItem item : evaluatedValues) {
+				long candidateId = candidate.getId();
+				long interviewId = currentProcessingInterviewSchedule
+						.getInterviewId();
+				long critKeyValueId = item.getObject()
+						.getEvaluationCriteriaKeyValueId();
+				int ratingPoint = item.getEvaluateValue();
+
+				CandidateEvaluation evaluation = CandidateEvaluationLocalServiceUtil
+						.fetchByCandidateInterviewAndCritKey(candidateId,
+								interviewId, critKeyValueId);
+				if (evaluation == null) {
+					CandidateEvaluationLocalServiceUtil
+							.addCandidateEvaluation(candidate.getId(),
+									currentProcessingInterviewSchedule
+											.getInterviewId(), item.getObject()
+											.getEvaluationCriteriaKeyValueId(),
+									item.getEvaluateValue(), RCUtils
+											.getServiceContext());
+				} else {
+					try {
+						CandidateEvaluationLocalServiceUtil
+								.updateCandidateEvaluation(evaluation,
+										ratingPoint,
+										RCUtils.getServiceContext());
+					} catch (SystemException e) {
+						e.printStackTrace();
+					}
+				}
+
+			}
+		}
+
+		FacesMessage message = new FacesMessage("Evaluated Info",
+				"Successfully evaluated candidates!");
+		FacesContext.getCurrentInstance().addMessage(null, message);
+
 	}
 
 	public void onOfferWORating(ActionEvent event) {

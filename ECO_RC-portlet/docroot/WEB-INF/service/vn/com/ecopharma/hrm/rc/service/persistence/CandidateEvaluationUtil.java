@@ -277,6 +277,96 @@ public class CandidateEvaluationUtil {
 	}
 
 	/**
+	* Returns the candidate evaluation where candidateId = &#63; and interviewId = &#63; and evaluationCriteriaKeyValueId = &#63; or throws a {@link vn.com.ecopharma.hrm.rc.NoSuchCandidateEvaluationException} if it could not be found.
+	*
+	* @param candidateId the candidate ID
+	* @param interviewId the interview ID
+	* @param evaluationCriteriaKeyValueId the evaluation criteria key value ID
+	* @return the matching candidate evaluation
+	* @throws vn.com.ecopharma.hrm.rc.NoSuchCandidateEvaluationException if a matching candidate evaluation could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.hrm.rc.model.CandidateEvaluation findByCandidateInterviewCritKey(
+		long candidateId, long interviewId, long evaluationCriteriaKeyValueId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.hrm.rc.NoSuchCandidateEvaluationException {
+		return getPersistence()
+				   .findByCandidateInterviewCritKey(candidateId, interviewId,
+			evaluationCriteriaKeyValueId);
+	}
+
+	/**
+	* Returns the candidate evaluation where candidateId = &#63; and interviewId = &#63; and evaluationCriteriaKeyValueId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param candidateId the candidate ID
+	* @param interviewId the interview ID
+	* @param evaluationCriteriaKeyValueId the evaluation criteria key value ID
+	* @return the matching candidate evaluation, or <code>null</code> if a matching candidate evaluation could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.hrm.rc.model.CandidateEvaluation fetchByCandidateInterviewCritKey(
+		long candidateId, long interviewId, long evaluationCriteriaKeyValueId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByCandidateInterviewCritKey(candidateId, interviewId,
+			evaluationCriteriaKeyValueId);
+	}
+
+	/**
+	* Returns the candidate evaluation where candidateId = &#63; and interviewId = &#63; and evaluationCriteriaKeyValueId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param candidateId the candidate ID
+	* @param interviewId the interview ID
+	* @param evaluationCriteriaKeyValueId the evaluation criteria key value ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching candidate evaluation, or <code>null</code> if a matching candidate evaluation could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.hrm.rc.model.CandidateEvaluation fetchByCandidateInterviewCritKey(
+		long candidateId, long interviewId, long evaluationCriteriaKeyValueId,
+		boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByCandidateInterviewCritKey(candidateId, interviewId,
+			evaluationCriteriaKeyValueId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the candidate evaluation where candidateId = &#63; and interviewId = &#63; and evaluationCriteriaKeyValueId = &#63; from the database.
+	*
+	* @param candidateId the candidate ID
+	* @param interviewId the interview ID
+	* @param evaluationCriteriaKeyValueId the evaluation criteria key value ID
+	* @return the candidate evaluation that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static vn.com.ecopharma.hrm.rc.model.CandidateEvaluation removeByCandidateInterviewCritKey(
+		long candidateId, long interviewId, long evaluationCriteriaKeyValueId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			vn.com.ecopharma.hrm.rc.NoSuchCandidateEvaluationException {
+		return getPersistence()
+				   .removeByCandidateInterviewCritKey(candidateId, interviewId,
+			evaluationCriteriaKeyValueId);
+	}
+
+	/**
+	* Returns the number of candidate evaluations where candidateId = &#63; and interviewId = &#63; and evaluationCriteriaKeyValueId = &#63;.
+	*
+	* @param candidateId the candidate ID
+	* @param interviewId the interview ID
+	* @param evaluationCriteriaKeyValueId the evaluation criteria key value ID
+	* @return the number of matching candidate evaluations
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByCandidateInterviewCritKey(long candidateId,
+		long interviewId, long evaluationCriteriaKeyValueId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countByCandidateInterviewCritKey(candidateId, interviewId,
+			evaluationCriteriaKeyValueId);
+	}
+
+	/**
 	* Caches the candidate evaluation in the entity cache if it is enabled.
 	*
 	* @param candidateEvaluation the candidate evaluation

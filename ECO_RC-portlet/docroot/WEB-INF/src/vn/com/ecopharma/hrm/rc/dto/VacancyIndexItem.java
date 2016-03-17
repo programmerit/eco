@@ -56,7 +56,8 @@ public class VacancyIndexItem extends AbstractIndexedItem {
 	}
 
 	public String getStatus() {
-		return checkNullFieldAndReturnEmptyString(VacancyField.STATUS);
+		String status = checkNullFieldAndReturnEmptyString(VacancyField.STATUS);
+		return status.replaceAll(" ", "_");
 	}
 
 	@Override

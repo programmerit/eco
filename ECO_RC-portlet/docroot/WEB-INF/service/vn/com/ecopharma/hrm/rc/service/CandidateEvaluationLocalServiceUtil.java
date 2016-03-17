@@ -295,18 +295,34 @@ public class CandidateEvaluationLocalServiceUtil {
 		return getService().findByCandidate(candidateId);
 	}
 
+	public static vn.com.ecopharma.hrm.rc.model.CandidateEvaluation fetchByCandidateInterviewAndCritKey(
+		long candidateId, long interviewId, long evaluationCriteriaKeyValueId) {
+		return getService()
+				   .fetchByCandidateInterviewAndCritKey(candidateId,
+			interviewId, evaluationCriteriaKeyValueId);
+	}
+
 	public static vn.com.ecopharma.hrm.rc.model.CandidateEvaluation createPrePersistedEntity(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService().createPrePersistedEntity(serviceContext);
 	}
 
 	public static vn.com.ecopharma.hrm.rc.model.CandidateEvaluation addCandidateEvaluation(
-		long candidateId, long interviewId, long evaluationCriteriaId,
-		long evaluationCriteriaKeyValueId, int ratingPoint,
+		long candidateId, long interviewId, long evaluationCriteriaKeyValueId,
+		int ratingPoint,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
 				   .addCandidateEvaluation(candidateId, interviewId,
-			evaluationCriteriaId, evaluationCriteriaKeyValueId, ratingPoint,
+			evaluationCriteriaKeyValueId, ratingPoint, serviceContext);
+	}
+
+	public static vn.com.ecopharma.hrm.rc.model.CandidateEvaluation updateCandidateEvaluation(
+		vn.com.ecopharma.hrm.rc.model.CandidateEvaluation candidateEvaluation,
+		int ratingPoint,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateCandidateEvaluation(candidateEvaluation, ratingPoint,
 			serviceContext);
 	}
 

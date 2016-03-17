@@ -15,6 +15,7 @@ import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
 import vn.com.ecopharma.hrm.rc.bean.dialog.CriteriaBean;
+import vn.com.ecopharma.hrm.rc.bean.dialog.CriteriaKeyValBean;
 import vn.com.ecopharma.hrm.rc.enumeration.EvaluationCriteriaType;
 import vn.com.ecopharma.hrm.rc.model.EvaluationCriteria;
 import vn.com.ecopharma.hrm.rc.model.EvaluationCriteriaKeyValue;
@@ -38,6 +39,9 @@ public class EvaluationCriteriaTreeViewBean implements Serializable {
 
 	@ManagedProperty(value = "#{criteriaBean}")
 	private CriteriaBean criteriaBean;
+
+	@ManagedProperty(value = "#{critKeyValBean}")
+	private CriteriaKeyValBean critKeyValBean;
 
 	@PostConstruct
 	public void init() {
@@ -86,6 +90,13 @@ public class EvaluationCriteriaTreeViewBean implements Serializable {
 		String type = (String) selectedNode.getData();
 		criteriaBean.getCriteria().setType(type);
 		this.includedDialog = "/views/dialogs/addCriteria.xhtml";
+	}
+
+	public void onAddCriteriaKeyValue(ActionEvent event) {
+		EvaluationCriteria criteria = (EvaluationCriteria) selectedNode
+				.getData();
+		critKeyValBean.getCriteriaKeyValue().setEvaluationCriteriaId(
+				criteria.getEvaluationCriteriaId());
 	}
 
 	public void onAddKey(ActionEvent event) {
@@ -145,6 +156,14 @@ public class EvaluationCriteriaTreeViewBean implements Serializable {
 
 	public void setCriteriaBean(CriteriaBean criteriaBean) {
 		this.criteriaBean = criteriaBean;
+	}
+
+	public CriteriaKeyValBean getCritKeyValBean() {
+		return critKeyValBean;
+	}
+
+	public void setCritKeyValBean(CriteriaKeyValBean critKeyValBean) {
+		this.critKeyValBean = critKeyValBean;
 	}
 
 }

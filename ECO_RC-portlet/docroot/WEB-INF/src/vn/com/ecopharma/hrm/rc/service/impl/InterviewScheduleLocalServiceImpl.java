@@ -194,16 +194,13 @@ public class InterviewScheduleLocalServiceImpl extends
 		interviewSchedule.setUserId(serviceContext.getUserId());
 		interviewSchedule.setCreateDate(new Date(System.currentTimeMillis()));
 		interviewSchedule.setModifiedDate(new Date(System.currentTimeMillis()));
-		// interviewSchedule.setStatus(InterviewScheduleStatus.PROCESSING
-		// .toString()); //TODO ??? java.lang.StackOverflowError
-
 		interviewSchedule.setStatus(InterviewScheduleStatus.PROCESSING
 				.toString());
 		try {
 			interviewSchedule = interviewSchedulePersistence
 					.update(interviewSchedule);
 
-			for (Long employeeId : interviewers) {
+			for (long employeeId : interviewers) {
 				EmployeeInterviewSchedule employeeInterviewSchedule = employeeInterviewScheduleLocalService
 						.createPrePersitedEntity();
 				employeeInterviewSchedule.setCompanyId(serviceContext
@@ -211,16 +208,13 @@ public class InterviewScheduleLocalServiceImpl extends
 				employeeInterviewSchedule.setGroupId(serviceContext
 						.getScopeGroupId());
 				employeeInterviewSchedule.setUserId(serviceContext.getUserId());
-				employeeInterviewSchedule.setCreateDate(new Date(System
-						.currentTimeMillis()));
-				employeeInterviewSchedule.setModifiedDate(new Date(System
-						.currentTimeMillis()));
+				employeeInterviewSchedule.setCreateDate(new Date());
 				employeeInterviewSchedule.setEmployeeId(employeeId);
 				employeeInterviewSchedule
 						.setInterviewScheduleId(interviewSchedule
 								.getInterviewScheduleId());
 				employeeInterviewSchedule = employeeInterviewScheduleLocalService
-						.updateEmployeeInterviewSchedule(employeeInterviewSchedule);
+						.addEmployeeInterviewSchedule(employeeInterviewSchedule, serviceContext);
 			}
 			candidateLocalService.changeCandidateStatus(candidateId,
 					CandidateStatus.INTERVIEW_SCHEDULED.toString(),

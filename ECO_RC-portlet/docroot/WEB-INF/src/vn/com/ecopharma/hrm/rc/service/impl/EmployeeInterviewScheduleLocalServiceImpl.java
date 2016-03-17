@@ -14,6 +14,7 @@
 
 package vn.com.ecopharma.hrm.rc.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +23,8 @@ import vn.com.ecopharma.hrm.rc.service.base.EmployeeInterviewScheduleLocalServic
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
@@ -55,6 +58,9 @@ public class EmployeeInterviewScheduleLocalServiceImpl extends
 	 * employee interview schedule local service.
 	 */
 
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(EmployeeInterviewScheduleLocalServiceImpl.class);
+
 	public List<EmployeeInterviewSchedule> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
@@ -69,7 +75,7 @@ public class EmployeeInterviewScheduleLocalServiceImpl extends
 			return employeeInterviewSchedulePersistence.findAll(start, end,
 					orderByComparator);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -80,15 +86,12 @@ public class EmployeeInterviewScheduleLocalServiceImpl extends
 		employeeInterviewSchedule.setCompanyId(serviceContext.getCompanyId());
 		employeeInterviewSchedule.setGroupId(serviceContext.getScopeGroupId());
 		employeeInterviewSchedule.setUserId(serviceContext.getUserId());
-		employeeInterviewSchedule.setCreateDate(new Date(System
-				.currentTimeMillis()));
-		employeeInterviewSchedule.setModifiedDate(new Date(System
-				.currentTimeMillis()));
+		employeeInterviewSchedule.setCreateDate(new Date());
 		try {
 			return employeeInterviewScheduleLocalService
-					.updateEmployeeInterviewSchedule(employeeInterviewSchedule);
+					.addEmployeeInterviewSchedule(employeeInterviewSchedule);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -100,7 +103,7 @@ public class EmployeeInterviewScheduleLocalServiceImpl extends
 					.create(id);
 			return employeeInterviewSchedule;
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -111,9 +114,9 @@ public class EmployeeInterviewScheduleLocalServiceImpl extends
 			return employeeInterviewSchedulePersistence
 					.findByInterviewSchedule(interviewScheduleId);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
-		return null;
+		return new ArrayList<EmployeeInterviewSchedule>();
 	}
 
 }

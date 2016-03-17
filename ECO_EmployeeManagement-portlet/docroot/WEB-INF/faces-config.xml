@@ -5,10 +5,16 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
 	<application>
 		<locale-config>
-			<default-locale>vi_VN</default-locale>
+			<default-locale>en</default-locale>
+			<supported-locale>vi</supported-locale>
 		</locale-config>
+		<resource-bundle>
+			<base-name>vn.com.ecopharma.emp.config.Text</base-name>
+			<var>text</var>
+		</resource-bundle>
 	</application>
 	<lifecycle>
 		<phase-listener>com.liferay.faces.util.lifecycle.DebugPhaseListener</phase-listener>
 	</lifecycle>
+
 </faces-config>

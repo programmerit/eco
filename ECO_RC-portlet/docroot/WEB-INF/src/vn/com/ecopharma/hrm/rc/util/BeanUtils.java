@@ -6,6 +6,7 @@ import javax.faces.context.FacesContext;
 import vn.com.ecopharma.hrm.rc.bean.CandidateBean;
 import vn.com.ecopharma.hrm.rc.bean.CandidateViewBean;
 import vn.com.ecopharma.hrm.rc.bean.EvaluationBean;
+import vn.com.ecopharma.hrm.rc.bean.GuestViewBean;
 import vn.com.ecopharma.hrm.rc.bean.InterviewManagementFilterBean;
 import vn.com.ecopharma.hrm.rc.bean.OrganizationPanelBean;
 import vn.com.ecopharma.hrm.rc.bean.RCViewBean;
@@ -33,6 +34,8 @@ public class BeanUtils {
 	private static final String EVALUATION_BEAN = "evaluationBean";
 
 	private static final String ORGANIZATION_PANEL_BEAN = "organizationPanelBean";
+
+	private static final String GUEST_VIEW_BEAN = "guestViewBean";
 
 	/**
 	 * @param name
@@ -82,6 +85,10 @@ public class BeanUtils {
 
 	public static OrganizationPanelBean getOrganizationPanelBean() {
 		return (OrganizationPanelBean) getBackingBeanByName(ORGANIZATION_PANEL_BEAN);
+	}
+
+	public static GuestViewBean getGuestViewBean() {
+		return (GuestViewBean) getBackingBeanByName(GUEST_VIEW_BEAN);
 	}
 
 }

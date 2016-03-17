@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<h:head />
+	<h:body>
+		<eco:ajaxIndicator />
+		<eco:navigationPanel current="Candidate Guest" />
+		<p:growl id="growl" />
+		<h:panelGroup id="GuestPanelGroup">
+			<ui:include src="#{guestViewBean.navigationOutcome}" />
+		</h:panelGroup>
+	</h:body>
+</f:view>
