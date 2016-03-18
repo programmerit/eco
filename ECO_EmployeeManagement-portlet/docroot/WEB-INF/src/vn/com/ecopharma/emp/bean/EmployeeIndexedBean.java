@@ -257,6 +257,16 @@ public class EmployeeIndexedBean implements Serializable {
 								EmployeeStatus.RESIGNED.toString()));
 	}
 
+	public boolean isConcurrentTitlesValid() {
+		if (selectedEmployeeIndexItems.isEmpty()
+				|| selectedEmployeeIndexItems.size() > 1)
+			return false;
+		EmpIndexedItem singleItem = selectedEmployeeIndexItems.get(0);
+
+		return !singleItem.getStatus().equalsIgnoreCase(
+				EmployeeStatus.RESIGNED.toString());
+	}
+
 	public String getHeaderi18nKey(String header) {
 		return "employee.info." + header;
 	}

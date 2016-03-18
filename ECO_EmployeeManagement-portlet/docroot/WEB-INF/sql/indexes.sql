@@ -32,6 +32,12 @@ create index IX_3AD6E3AF on eco_em_portlet_EmpAnnualLeave (empId);
 
 create index IX_90AA9689 on eco_em_portlet_EmpBankInfo (empId);
 
+create index IX_CC1CD8E1 on eco_em_portlet_EmpConcurrentTitles (empId);
+create index IX_2738D8AB on eco_em_portlet_EmpConcurrentTitles (empId, titlesId);
+create index IX_B1049F5C on eco_em_portlet_EmpConcurrentTitles (titlesId);
+
+create index IX_E3A14325 on eco_em_portlet_EmpLaborContract (empId);
+
 create index IX_9FE130A5 on eco_em_portlet_EmpNotifyEmail (status);
 
 create index IX_574F6C0B on eco_em_portlet_EmpOrgRelationship (empId);

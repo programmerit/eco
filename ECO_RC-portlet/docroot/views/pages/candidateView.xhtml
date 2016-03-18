@@ -292,15 +292,12 @@
 							styleClass="currentStatus #{candidateViewBean.currentStatusCSS(candidate.status)}"
 							value="#{i18n[candidate.localizedStatus]}" />
 						<p:selectOneMenu id="candidateStatusSelect"
-							style="margin-top:20px;"
-							valueChangeListener="#{candidateBean.onValueChangeListener}"
-							value="#{candidateViewBean.selectedStatus}">
+							style="margin-top:20px;" value="#{candidateBean.selectedStatus}">
 							<!-- eliminate oncomplete update if current status is JOB_OFFERED, 
 						b/c changing to HIRE status will make AJAX cannot complete on updating candidates table -->
-							<!-- <p:ajax listener="#{candidateViewBean.onStatusChange(candidate)}"
-								oncomplete="#{candidateViewBean.selectedStatus eq 'REJECT' ? 'openRejectDialog();' : ''}" /> -->
-							<p:ajax event="valueChange" process="@this"
-								oncomplete="#{candidateBean.onCompleteUpdate}" />
+							<p:ajax listener="#{candidateBean.onStatusChange()}"
+								oncomplete="#{candidateViewBean.selectedStatus eq 'REJECT' ? 'openRejectDialog();' : ''}" />
+
 							<f:selectItem itemLabel="---" itemValue="" />
 							<f:selectItems
 								value="#{candidateViewBean.getAvailableStatuses(candidate.status)}"

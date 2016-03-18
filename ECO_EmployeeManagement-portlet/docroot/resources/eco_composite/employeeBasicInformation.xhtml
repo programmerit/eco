@@ -99,26 +99,19 @@
 					</p:inputText>
 					<p:message id="empCodeMsg" for="empCode" display="icon" />
 
-					<h:outputText rendered="#{not cc.attrs.empBean.showUserTab}"
-						value="Username" />
-					<h:outputText rendered="#{not cc.attrs.empBean.showUserTab}"
-						style="margin-left: 10px;"
-						value="#{cc.attrs.empEntity.user.screenName}" />
-					<h:outputText rendered="#{not cc.attrs.empBean.showUserTab}" />
-
 					<h:outputText value="Ethnic " />
-					<p:inputText value="#{cc.attrs.empEntity.emp.ethnic}"
-						style="width: 70px;" />
+					<p:inputText placeholder="Ethnic"
+						value="#{cc.attrs.empEntity.emp.ethnic}" style="width: 70px;" />
 					<h:outputText />
 
 					<h:outputText value="Religion " />
-					<p:inputText value="#{cc.attrs.empEntity.emp.religion}"
-						style="width: 70px;" />
+					<p:inputText placeholder="Religion"
+						value="#{cc.attrs.empEntity.emp.religion}" style="width: 70px;" />
 					<h:outputText />
 
 					<h:outputText value="Nationality " />
-					<p:inputText value="#{cc.attrs.empEntity.emp.nationality}"
-						style="width: 70px;" />
+					<p:inputText placeholder="Nationality"
+						value="#{cc.attrs.empEntity.emp.nationality}" style="width: 70px;" />
 					<h:outputText />
 				</h:panelGrid>
 			</h:panelGrid>

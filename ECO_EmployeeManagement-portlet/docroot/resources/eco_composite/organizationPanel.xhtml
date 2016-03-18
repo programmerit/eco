@@ -12,6 +12,10 @@
 	<composite:interface>
 		<composite:attribute name="levelIncluded" type="java.lang.Boolean"
 			required="true" />
+
+		<composite:attribute name="showConcurrent" type="java.lang.Boolean"
+			default="false" />
+
 	</composite:interface>
 
 	<composite:implementation>
@@ -83,18 +87,25 @@
 			</p:selectOneMenu>
 
 			<h:outputText value="Titles" />
-			<p:selectOneMenu id="titlesSelect"
-				value="#{organizationPanelBean.selectedTitles}"
-				converter="titlesConverter" effect="fade" filter="true"
-				filterMatchMode="contains" var="t" required="true"
-				validatorMessage="[Titles] is required">
-				<f:selectItem itemLabel="Titles" itemValue="" />
-				<f:selectItems value="#{organizationPanelBean.titlesList}" var="t"
-					itemLabel="#{t.name}" itemValue="#{t}" />
-				<p:column>
+			<h:panelGroup>
+				<p:selectOneMenu id="titlesSelect"
+					value="#{organizationPanelBean.selectedTitles}"
+					converter="titlesConverter" effect="fade" filter="true"
+					filterMatchMode="contains" var="t" required="true"
+					validatorMessage="[Titles] is required">
+					<f:selectItem itemLabel="Titles" itemValue="" />
+					<f:selectItems value="#{organizationPanelBean.titlesList}" var="t"
+						itemLabel="#{t.name}" itemValue="#{t}" />
+					<p:column>
 					                #{t.name}
 					            </p:column>
-			</p:selectOneMenu>
+				</p:selectOneMenu>
+				<p:commandLink
+					rendered="#{cc.attrs.showConcurrent and organizationPanelBean.concurrentTitles.size() > 0}"
+					value="+#{organizationPanelBean.concurrentTitles.size()}"
+					style="font-size: 12px; margin-left: 3px;"
+					onclick="PF('wConcurrentTitlesDialog').show();" />
+			</h:panelGroup>
 
 			<h:outputText value="Level" rendered="#{cc.attrs.levelIncluded}" />
 			<p:selectOneMenu id="levelSelect"
@@ -114,5 +125,16 @@
 
 			<composite:insertChildren />
 		</h:panelGrid>
+		<p:dialog widgetVar="wConcurrentTitlesDialog"
+			rendered="#{cc.attrs.showConcurrent}" modal="true" showHeader="false"
+			closeOnEscape="true" closable="true">
+			<ui:repeat var="ct" value="#{organizationPanelBean.concurrentTitles}"
+				varStatus="status">
+				<h:outputText value="#{status.index + 1}. " />
+				<h:outputText
+					value="#{organizationPanelBean.getTitlesName(ct.titlesId)}" />
+			</ui:repeat>
+		</p:dialog>
+
 	</composite:implementation>
 </f:view>

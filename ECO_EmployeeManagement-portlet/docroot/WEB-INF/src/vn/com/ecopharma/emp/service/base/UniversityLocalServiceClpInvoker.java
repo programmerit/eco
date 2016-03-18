@@ -106,42 +106,42 @@ public class UniversityLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.University"
 			};
 
-		_methodName180 = "getBeanIdentifier";
+		_methodName192 = "getBeanIdentifier";
 
-		_methodParameterTypes180 = new String[] {  };
+		_methodParameterTypes192 = new String[] {  };
 
-		_methodName181 = "setBeanIdentifier";
+		_methodName193 = "setBeanIdentifier";
 
-		_methodParameterTypes181 = new String[] { "java.lang.String" };
+		_methodParameterTypes193 = new String[] { "java.lang.String" };
 
-		_methodName186 = "findAll";
+		_methodName198 = "findAll";
 
-		_methodParameterTypes186 = new String[] {  };
+		_methodParameterTypes198 = new String[] {  };
 
-		_methodName187 = "findAll";
+		_methodName199 = "findAll";
 
-		_methodParameterTypes187 = new String[] { "int", "int" };
+		_methodParameterTypes199 = new String[] { "int", "int" };
 
-		_methodName188 = "findAll";
+		_methodName200 = "findAll";
 
-		_methodParameterTypes188 = new String[] {
+		_methodParameterTypes200 = new String[] {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName189 = "addUniversity";
+		_methodName201 = "addUniversity";
 
-		_methodParameterTypes189 = new String[] {
+		_methodParameterTypes201 = new String[] {
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName190 = "findByName";
+		_methodName202 = "findByName";
 
-		_methodParameterTypes190 = new String[] { "java.lang.String" };
+		_methodParameterTypes202 = new String[] { "java.lang.String" };
 
-		_methodName191 = "findByCode";
+		_methodName203 = "findByCode";
 
-		_methodParameterTypes191 = new String[] { "java.lang.String" };
+		_methodParameterTypes203 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -233,50 +233,50 @@ public class UniversityLocalServiceClpInvoker {
 			return UniversityLocalServiceUtil.updateUniversity((vn.com.ecopharma.emp.model.University)arguments[0]);
 		}
 
-		if (_methodName180.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes180, parameterTypes)) {
+		if (_methodName192.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes192, parameterTypes)) {
 			return UniversityLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName181.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes181, parameterTypes)) {
+		if (_methodName193.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes193, parameterTypes)) {
 			UniversityLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName186.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes186, parameterTypes)) {
+		if (_methodName198.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes198, parameterTypes)) {
 			return UniversityLocalServiceUtil.findAll();
 		}
 
-		if (_methodName187.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes187, parameterTypes)) {
+		if (_methodName199.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes199, parameterTypes)) {
 			return UniversityLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName188.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes188, parameterTypes)) {
+		if (_methodName200.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes200, parameterTypes)) {
 			return UniversityLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[2]);
 		}
 
-		if (_methodName189.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes189, parameterTypes)) {
+		if (_methodName201.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes201, parameterTypes)) {
 			return UniversityLocalServiceUtil.addUniversity((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(com.liferay.portal.service.ServiceContext)arguments[3]);
 		}
 
-		if (_methodName190.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes190, parameterTypes)) {
+		if (_methodName202.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes202, parameterTypes)) {
 			return UniversityLocalServiceUtil.findByName((java.lang.String)arguments[0]);
 		}
 
-		if (_methodName191.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes191, parameterTypes)) {
+		if (_methodName203.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes203, parameterTypes)) {
 			return UniversityLocalServiceUtil.findByCode((java.lang.String)arguments[0]);
 		}
 
@@ -315,20 +315,20 @@ public class UniversityLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName180;
-	private String[] _methodParameterTypes180;
-	private String _methodName181;
-	private String[] _methodParameterTypes181;
-	private String _methodName186;
-	private String[] _methodParameterTypes186;
-	private String _methodName187;
-	private String[] _methodParameterTypes187;
-	private String _methodName188;
-	private String[] _methodParameterTypes188;
-	private String _methodName189;
-	private String[] _methodParameterTypes189;
-	private String _methodName190;
-	private String[] _methodParameterTypes190;
-	private String _methodName191;
-	private String[] _methodParameterTypes191;
+	private String _methodName192;
+	private String[] _methodParameterTypes192;
+	private String _methodName193;
+	private String[] _methodParameterTypes193;
+	private String _methodName198;
+	private String[] _methodParameterTypes198;
+	private String _methodName199;
+	private String[] _methodParameterTypes199;
+	private String _methodName200;
+	private String[] _methodParameterTypes200;
+	private String _methodName201;
+	private String[] _methodParameterTypes201;
+	private String _methodName202;
+	private String[] _methodParameterTypes202;
+	private String _methodName203;
+	private String[] _methodParameterTypes203;
 }

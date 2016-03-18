@@ -68,6 +68,24 @@
 		<parameter name="wsdlServicePort" value="Plugin_eco_em_portlet_DistrictService" />
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.emp.ecopharma.com.vn" />
 	</service>
+	<service name="Plugin_eco_em_portlet_DocumentService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.emp.service.http.DocumentServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="DocumentServiceSoap" />
+		<parameter name="wsdlServiceElement" value="DocumentServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_em_portlet_DocumentService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.emp.ecopharma.com.vn" />
+	</service>
+	<service name="Plugin_eco_em_portlet_EmpAnnualLeaveService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.emp.service.http.EmpAnnualLeaveServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="EmpAnnualLeaveServiceSoap" />
+		<parameter name="wsdlServiceElement" value="EmpAnnualLeaveServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_em_portlet_EmpAnnualLeaveService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.emp.ecopharma.com.vn" />
+	</service>
 	<service name="Plugin_eco_em_portlet_EmpBankInfoService" provider="java:RPC" style="rpc" use="encoded">
 		<parameter name="allowedMethods" value="*" />
 		<parameter name="className" value="vn.com.ecopharma.emp.service.http.EmpBankInfoServiceSoap" />
@@ -75,6 +93,42 @@
 		<parameter name="wsdlPortType" value="EmpBankInfoServiceSoap" />
 		<parameter name="wsdlServiceElement" value="EmpBankInfoServiceSoapService" />
 		<parameter name="wsdlServicePort" value="Plugin_eco_em_portlet_EmpBankInfoService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.emp.ecopharma.com.vn" />
+	</service>
+	<service name="Plugin_eco_em_portlet_EmpConcurrentTitlesService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.emp.service.http.EmpConcurrentTitlesServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="EmpConcurrentTitlesServiceSoap" />
+		<parameter name="wsdlServiceElement" value="EmpConcurrentTitlesServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_em_portlet_EmpConcurrentTitlesService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.emp.ecopharma.com.vn" />
+	</service>
+	<service name="Plugin_eco_em_portlet_EmpDisciplineService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.emp.service.http.EmpDisciplineServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="EmpDisciplineServiceSoap" />
+		<parameter name="wsdlServiceElement" value="EmpDisciplineServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_em_portlet_EmpDisciplineService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.emp.ecopharma.com.vn" />
+	</service>
+	<service name="Plugin_eco_em_portlet_EmpNotifyEmailService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.emp.service.http.EmpNotifyEmailServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="EmpNotifyEmailServiceSoap" />
+		<parameter name="wsdlServiceElement" value="EmpNotifyEmailServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_em_portlet_EmpNotifyEmailService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.emp.ecopharma.com.vn" />
+	</service>
+	<service name="Plugin_eco_em_portlet_EmpOrgRelationshipService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.emp.service.http.EmpOrgRelationshipServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="EmpOrgRelationshipServiceSoap" />
+		<parameter name="wsdlServiceElement" value="EmpOrgRelationshipServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_em_portlet_EmpOrgRelationshipService" />
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.emp.ecopharma.com.vn" />
 	</service>
 	<service name="Plugin_eco_em_portlet_EmpService" provider="java:RPC" style="rpc" use="encoded">
@@ -149,6 +203,15 @@
 		<parameter name="wsdlServicePort" value="Plugin_eco_em_portlet_ResourceConfigService" />
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.emp.ecopharma.com.vn" />
 	</service>
+	<service name="Plugin_eco_em_portlet_SpecializedService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.emp.service.http.SpecializedServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="SpecializedServiceSoap" />
+		<parameter name="wsdlServiceElement" value="SpecializedServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_em_portlet_SpecializedService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.emp.ecopharma.com.vn" />
+	</service>
 	<service name="Plugin_eco_em_portlet_StaffService" provider="java:RPC" style="rpc" use="encoded">
 		<parameter name="allowedMethods" value="*" />
 		<parameter name="className" value="vn.com.ecopharma.emp.service.http.StaffServiceSoap" />
@@ -156,6 +219,15 @@
 		<parameter name="wsdlPortType" value="StaffServiceSoap" />
 		<parameter name="wsdlServiceElement" value="StaffServiceSoapService" />
 		<parameter name="wsdlServicePort" value="Plugin_eco_em_portlet_StaffService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.emp.ecopharma.com.vn" />
+	</service>
+	<service name="Plugin_eco_em_portlet_TitlesDepartmentUnitUnitGroupService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.emp.service.http.TitlesDepartmentUnitUnitGroupServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="TitlesDepartmentUnitUnitGroupServiceSoap" />
+		<parameter name="wsdlServiceElement" value="TitlesDepartmentUnitUnitGroupServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_em_portlet_TitlesDepartmentUnitUnitGroupService" />
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.emp.ecopharma.com.vn" />
 	</service>
 	<service name="Plugin_eco_em_portlet_TitlesService" provider="java:RPC" style="rpc" use="encoded">
@@ -192,6 +264,15 @@
 		<parameter name="wsdlPortType" value="UniversityServiceSoap" />
 		<parameter name="wsdlServiceElement" value="UniversityServiceSoapService" />
 		<parameter name="wsdlServicePort" value="Plugin_eco_em_portlet_UniversityService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.emp.ecopharma.com.vn" />
+	</service>
+	<service name="Plugin_eco_em_portlet_VacationLeaveService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="vn.com.ecopharma.emp.service.http.VacationLeaveServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="VacationLeaveServiceSoap" />
+		<parameter name="wsdlServiceElement" value="VacationLeaveServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_eco_em_portlet_VacationLeaveService" />
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.emp.ecopharma.com.vn" />
 	</service>
 	<service name="Plugin_eco_em_portlet_WorkingLocationService" provider="java:RPC" style="rpc" use="encoded">

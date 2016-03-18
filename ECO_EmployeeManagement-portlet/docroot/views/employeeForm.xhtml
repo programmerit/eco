@@ -68,13 +68,6 @@
 									display="icon" />
 							</h:panelGroup>
 
-							<h:outputText rendered="#{not empView.showUserTab}"
-								value="Username" />
-							<h:outputText rendered="#{not empView.showUserTab}"
-								style="margin-left: 10px;"
-								value="#{empView.modifyEmployeeInfoItem.user.screenName}" />
-							<h:outputText rendered="#{not empView.showUserTab}" />
-
 							<h:outputText value="Personal Email" />
 							<p:inputText id="personalEmailAddress" type="email"
 								placeholder="#{i18n['empForm.personal_information_personalEmail']}"
@@ -92,6 +85,13 @@
 								label="Internal Number" />
 							<p:message for="internalNumber" id="internalNumberMsg"
 								display="icon" />
+
+							<h:outputText rendered="#{not empView.showUserTab}"
+								value="Username" />
+							<h:outputText rendered="#{not empView.showUserTab}"
+								style="margin-left: 10px;"
+								value="#{empView.modifyEmployeeInfoItem.user.screenName}" />
+							<h:outputText rendered="#{not empView.showUserTab}" />
 						</p:panelGrid>
 
 						<h:panelGrid id="addressesPanelGrid">
@@ -184,7 +184,7 @@
 					<p:panelGrid columns="2" layout="grid">
 						<h:panelGroup>
 							<h:outputText />
-							<eco:organizationPanel levelIncluded="true">
+							<eco:organizationPanel levelIncluded="true" showConcurrent="true">
 								<h:outputText value="Working Place" />
 								<p:selectOneMenu id="regionSelect"
 									value="#{empView.modifyEmployeeInfoItem.workingPlace}"
@@ -273,7 +273,12 @@
 							<p:message for="laborContractType" display="icon" />
 							<p:tooltip for="laborContractType" value="Labor Contract Type"
 								showEffect="clip" hideEffect="explode" />
-
+						</h:panelGrid>
+					</p:panelGrid>
+				</p:tab>
+				<p:tab id="education_information" title="Education Information">
+					<h:panelGrid columns="4">
+						
 							<h:outputText value="Education" />
 							<p:selectOneMenu id="educationSelect"
 								value="#{empView.modifyEmployeeInfoItem.emp.education}">
@@ -284,14 +289,6 @@
 							</p:selectOneMenu>
 							<p:message for="educationSelect" display="icon" />
 							<p:tooltip for="educationSelect" value="Education"
-								showEffect="clip" hideEffect="explode" />
-
-							<h:outputText value="Education Specialize" />
-							<p:inputText id="educationSpecialize"
-								value="#{empView.modifyEmployeeInfoItem.emp.educationSpecialize}"
-								placeholder="Education Specialize" />
-							<p:message for="educationSpecialize" display="icon" />
-							<p:tooltip for="educationSpecialize" value="Education Specialize"
 								showEffect="clip" hideEffect="explode" />
 
 							<h:outputText value="Specialized" />
@@ -327,8 +324,7 @@
 							<p:message for="universitySelect" display="icon" />
 							<p:tooltip for="universitySelect" value="University"
 								showEffect="clip" hideEffect="explode" />
-						</h:panelGrid>
-					</p:panelGrid>
+					</h:panelGrid>
 				</p:tab>
 				<p:tab id="other_information" title="Other Information">
 					<p:panelGrid columns="2" layout="grid">

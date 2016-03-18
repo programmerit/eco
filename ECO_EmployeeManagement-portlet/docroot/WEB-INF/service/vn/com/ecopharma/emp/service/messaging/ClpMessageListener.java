@@ -32,8 +32,12 @@ import vn.com.ecopharma.emp.service.EmpAnnualLeaveLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpAnnualLeaveServiceUtil;
 import vn.com.ecopharma.emp.service.EmpBankInfoLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpBankInfoServiceUtil;
+import vn.com.ecopharma.emp.service.EmpConcurrentTitlesLocalServiceUtil;
+import vn.com.ecopharma.emp.service.EmpConcurrentTitlesServiceUtil;
 import vn.com.ecopharma.emp.service.EmpDisciplineLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpDisciplineServiceUtil;
+import vn.com.ecopharma.emp.service.EmpLaborContractLocalServiceUtil;
+import vn.com.ecopharma.emp.service.EmpLaborContractServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpNotifyEmailLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpNotifyEmailServiceUtil;
@@ -108,9 +112,15 @@ public class ClpMessageListener extends BaseMessageListener {
 			EmpBankInfoLocalServiceUtil.clearService();
 
 			EmpBankInfoServiceUtil.clearService();
+			EmpConcurrentTitlesLocalServiceUtil.clearService();
+
+			EmpConcurrentTitlesServiceUtil.clearService();
 			EmpDisciplineLocalServiceUtil.clearService();
 
 			EmpDisciplineServiceUtil.clearService();
+			EmpLaborContractLocalServiceUtil.clearService();
+
+			EmpLaborContractServiceUtil.clearService();
 			EmployeeTitlesHistoryLocalServiceUtil.clearService();
 
 			EmployeeTitlesHistoryServiceUtil.clearService();

@@ -181,6 +181,21 @@ create table eco_em_portlet_EmpBankInfo (
 	modifiedDate DATE null
 );
 
+create table eco_em_portlet_EmpConcurrentTitles (
+	empConcurrentTitlesId LONG not null primary key,
+	empId LONG,
+	titlesId LONG,
+	unitGroupId LONG,
+	unitId LONG,
+	departmentId LONG,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null
+);
+
 create table eco_em_portlet_EmpDiscipline (
 	empDisciplineId LONG not null primary key,
 	empId LONG,
@@ -197,6 +212,22 @@ create table eco_em_portlet_EmpDiscipline (
 	createDate DATE null,
 	modifiedDate DATE null,
 	deleted BOOLEAN
+);
+
+create table eco_em_portlet_EmpLaborContract (
+	empLaborContractId LONG not null primary key,
+	empId LONG,
+	laborContractSignedDate DATE null,
+	laborContractExpiredDate DATE null,
+	laborContractSignedType VARCHAR(75) null,
+	signedTimes INTEGER,
+	latest BOOLEAN,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null
 );
 
 create table eco_em_portlet_EmpNotifyEmail (

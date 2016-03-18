@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -34,6 +35,7 @@ import vn.com.ecopharma.emp.dto.EmpInfoItem;
 import vn.com.ecopharma.emp.dto.RegionItem;
 import vn.com.ecopharma.emp.enumeration.DocumentType;
 import vn.com.ecopharma.emp.enumeration.EducationType;
+import vn.com.ecopharma.emp.enumeration.EmpDialog;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.enumeration.LaborContractType;
 import vn.com.ecopharma.emp.enumeration.ResignationType;
@@ -48,6 +50,7 @@ import vn.com.ecopharma.emp.permission.EmpPermission;
 import vn.com.ecopharma.emp.service.DistrictLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpAnnualLeaveLocalServiceUtil;
+import vn.com.ecopharma.emp.service.EmpConcurrentTitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpOrgRelationshipLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
@@ -126,6 +129,12 @@ public class EmployeeBean implements Serializable {
 	 */
 	private int currentPage = 1;
 
+	@ManagedProperty(value = "#{employeeIndexedBean}")
+	private EmployeeIndexedBean indexedBean;
+
+	@ManagedProperty(value = "#{organizationPanelBean}")
+	private OrganizationPanelBean organizationPanelBean;
+
 	@PostConstruct
 	public void init() {
 		try {
@@ -141,12 +150,13 @@ public class EmployeeBean implements Serializable {
 	 * @param employeeInfoItem
 	 */
 	public void editEmployee(String employeeId) {
-		OrganizationPanelBean organizationPanelBean = BeanUtils
-				.getOrganizationPanelBean();
 		try {
 			modifyEmployeeInfoItem = new EmpInfoItem(Long.valueOf(employeeId));
 			organizationPanelBean
 					.setSelectedValuesFromEmp(modifyEmployeeInfoItem.getEmp());
+			organizationPanelBean
+					.setConcurrentTitles(EmpConcurrentTitlesLocalServiceUtil
+							.findByEmp(Long.valueOf(employeeId)));
 			showUserTab = false;
 			updateString = StringUtils.EMPTY;
 
@@ -224,8 +234,8 @@ public class EmployeeBean implements Serializable {
 			modifyEmployeeInfoItem.getEmp().setWorkingPlaceId(workingPlaceId);
 
 			long oldTitlesId = employee.getTitlesId();
-			BeanUtils.getOrganizationPanelBean().setSelectedValuesToEmp(
-					modifyEmployeeInfoItem.getEmp());
+			organizationPanelBean.setSelectedValuesToEmp(modifyEmployeeInfoItem
+					.getEmp());
 
 			if (showUserTab) {
 				final boolean sendEmail = true;
@@ -265,7 +275,7 @@ public class EmployeeBean implements Serializable {
 				FacesContext.getCurrentInstance().addMessage(null, msg);
 				isSuccessfulModified = true;
 			}
-			BeanUtils.getOrganizationPanelBean().afterSetOrganizationToEntity();
+			organizationPanelBean.afterSetOrganizationToEntity();
 		} catch (Exception e) {
 			isSuccessfulModified = false;
 			LOGGER.info(e);
@@ -289,7 +299,7 @@ public class EmployeeBean implements Serializable {
 	 */
 	public void cancelModification() {
 		modifyEmployeeInfoItem = null;
-		BeanUtils.getOrganizationPanelBean().afterSetOrganizationToEntity();
+		organizationPanelBean.afterSetOrganizationToEntity();
 		switchPage(1);
 	}
 
@@ -566,9 +576,8 @@ public class EmployeeBean implements Serializable {
 		PromotionBean promotionBean = (PromotionBean) BeanUtils
 				.getBackingBeanByName("promotionBean");
 		promotionBean.setEmployeeId(id);
-		BeanUtils.getOrganizationPanelBean().afterSetOrganizationToEntity();
-		this.includedDialog = "/views/dialogs/promotionDialog.xhtml";
-		this.includedDialogOutputPanel = ":promotionForm:promotionOutputPanel";
+		organizationPanelBean.afterSetOrganizationToEntity();
+		setDialog(EmpDialog.PROMOTION);
 	}
 
 	public void onResignedEmployee() {
@@ -582,8 +591,7 @@ public class EmployeeBean implements Serializable {
 		resignationHistory.setResignedType(ResignationType.NONE.toString());
 		resignationBean.setEmployeeId(id);
 		resignationBean.setResignationHistory(resignationHistory);
-		this.includedDialog = "/views/dialogs/resignedDialog.xhtml";
-		this.includedDialogOutputPanel = ":resignationForm:resignationOutputPanel";
+		setDialog(EmpDialog.RESIGNATION);
 	}
 
 	public void onAddingDiscipline() {
@@ -594,19 +602,34 @@ public class EmployeeBean implements Serializable {
 		if (disciplineBean.getEmpDisciplineItem() == null)
 			disciplineBean.setEmpDisciplineItem(new EmpDisciplineItem());
 		disciplineBean.getEmps().addAll(empIndexedItems);
-		this.includedDialog = "/views/dialogs/empDisciplineDialog.xhtml";
-		this.includedDialogOutputPanel = ":disciplineForm:disciplineOutputPanel";
+		setDialog(EmpDialog.DISCIPLINE);
 	}
 
 	public void onSetMaternityLeave() {
 		VacationLeaveBean vacationLeaveBean = (VacationLeaveBean) BeanUtils
 				.getBackingBeanByName("leaveBean");
-		List<EmpIndexedItem> empIndexedItems = BeanUtils
-				.getEmployeeIndexedBean().getSelectedEmployeeIndexItems();
+		List<EmpIndexedItem> empIndexedItems = indexedBean
+				.getSelectedEmployeeIndexItems();
 		vacationLeaveBean.setLeave(new VacationItem(empIndexedItems.get(0)));
 
 		this.includedDialog = "/views/dialogs/vacationLeaveDialog.xhtml";
 		this.includedDialogOutputPanel = ":leaveForm:leaveOutputPanel";
+	}
+
+	public void onSetConcurrentTitles() {
+		List<EmpIndexedItem> empIndexedItems = indexedBean
+				.getSelectedEmployeeIndexItems();
+		if (!empIndexedItems.isEmpty() || empIndexedItems.size() > 1) {
+			EmpIndexedItem item = empIndexedItems.get(0);
+			BeanUtils.getConcurrentTitlesBean().setEmpIndexedItem(item);
+			setDialog(EmpDialog.CONCURRENT_TITLES);
+		}
+
+	}
+
+	public void setDialog(EmpDialog empDialog) {
+		this.includedDialog = empDialog.getPath();
+		this.includedDialogOutputPanel = empDialog.getDialogOutputPanel();
 	}
 
 	public List<String> getAvailableStatuses(String status) {
@@ -740,6 +763,23 @@ public class EmployeeBean implements Serializable {
 
 	public void setCountries(List<Country> countries) {
 		this.countries = countries;
+	}
+
+	public EmployeeIndexedBean getIndexedBean() {
+		return indexedBean;
+	}
+
+	public void setIndexedBean(EmployeeIndexedBean indexedBean) {
+		this.indexedBean = indexedBean;
+	}
+
+	public OrganizationPanelBean getOrganizationPanelBean() {
+		return organizationPanelBean;
+	}
+
+	public void setOrganizationPanelBean(
+			OrganizationPanelBean organizationPanelBean) {
+		this.organizationPanelBean = organizationPanelBean;
 	}
 
 	public boolean isTestEnabled() {

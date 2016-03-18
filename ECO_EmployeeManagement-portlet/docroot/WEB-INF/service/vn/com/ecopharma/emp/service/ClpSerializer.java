@@ -33,7 +33,9 @@ import vn.com.ecopharma.emp.model.DocumentClp;
 import vn.com.ecopharma.emp.model.EmpAnnualLeaveClp;
 import vn.com.ecopharma.emp.model.EmpBankInfoClp;
 import vn.com.ecopharma.emp.model.EmpClp;
+import vn.com.ecopharma.emp.model.EmpConcurrentTitlesClp;
 import vn.com.ecopharma.emp.model.EmpDisciplineClp;
+import vn.com.ecopharma.emp.model.EmpLaborContractClp;
 import vn.com.ecopharma.emp.model.EmpNotifyEmailClp;
 import vn.com.ecopharma.emp.model.EmpOrgRelationshipClp;
 import vn.com.ecopharma.emp.model.EmployeeTitlesHistoryClp;
@@ -158,8 +160,16 @@ public class ClpSerializer {
 			return translateInputEmpBankInfo(oldModel);
 		}
 
+		if (oldModelClassName.equals(EmpConcurrentTitlesClp.class.getName())) {
+			return translateInputEmpConcurrentTitles(oldModel);
+		}
+
 		if (oldModelClassName.equals(EmpDisciplineClp.class.getName())) {
 			return translateInputEmpDiscipline(oldModel);
+		}
+
+		if (oldModelClassName.equals(EmpLaborContractClp.class.getName())) {
+			return translateInputEmpLaborContract(oldModel);
 		}
 
 		if (oldModelClassName.equals(EmployeeTitlesHistoryClp.class.getName())) {
@@ -322,10 +332,31 @@ public class ClpSerializer {
 		return newModel;
 	}
 
+	public static Object translateInputEmpConcurrentTitles(
+		BaseModel<?> oldModel) {
+		EmpConcurrentTitlesClp oldClpModel = (EmpConcurrentTitlesClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getEmpConcurrentTitlesRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
 	public static Object translateInputEmpDiscipline(BaseModel<?> oldModel) {
 		EmpDisciplineClp oldClpModel = (EmpDisciplineClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getEmpDisciplineRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputEmpLaborContract(BaseModel<?> oldModel) {
+		EmpLaborContractClp oldClpModel = (EmpLaborContractClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getEmpLaborContractRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -807,8 +838,82 @@ public class ClpSerializer {
 		}
 
 		if (oldModelClassName.equals(
+					"vn.com.ecopharma.emp.model.impl.EmpConcurrentTitlesImpl")) {
+			return translateOutputEmpConcurrentTitles(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
 					"vn.com.ecopharma.emp.model.impl.EmpDisciplineImpl")) {
 			return translateOutputEmpDiscipline(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"vn.com.ecopharma.emp.model.impl.EmpLaborContractImpl")) {
+			return translateOutputEmpLaborContract(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -1548,8 +1653,18 @@ public class ClpSerializer {
 		}
 
 		if (className.equals(
+					"vn.com.ecopharma.emp.NoSuchEmpConcurrentTitlesException")) {
+			return new vn.com.ecopharma.emp.NoSuchEmpConcurrentTitlesException();
+		}
+
+		if (className.equals(
 					"vn.com.ecopharma.emp.NoSuchEmpDisciplineException")) {
 			return new vn.com.ecopharma.emp.NoSuchEmpDisciplineException();
+		}
+
+		if (className.equals(
+					"vn.com.ecopharma.emp.NoSuchEmpLaborContractException")) {
+			return new vn.com.ecopharma.emp.NoSuchEmpLaborContractException();
 		}
 
 		if (className.equals(
@@ -1708,12 +1823,33 @@ public class ClpSerializer {
 		return newModel;
 	}
 
+	public static Object translateOutputEmpConcurrentTitles(
+		BaseModel<?> oldModel) {
+		EmpConcurrentTitlesClp newModel = new EmpConcurrentTitlesClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setEmpConcurrentTitlesRemoteModel(oldModel);
+
+		return newModel;
+	}
+
 	public static Object translateOutputEmpDiscipline(BaseModel<?> oldModel) {
 		EmpDisciplineClp newModel = new EmpDisciplineClp();
 
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setEmpDisciplineRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputEmpLaborContract(BaseModel<?> oldModel) {
+		EmpLaborContractClp newModel = new EmpLaborContractClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setEmpLaborContractRemoteModel(oldModel);
 
 		return newModel;
 	}

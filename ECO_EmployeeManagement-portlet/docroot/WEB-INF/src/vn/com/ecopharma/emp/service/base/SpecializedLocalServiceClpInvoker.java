@@ -106,73 +106,73 @@ public class SpecializedLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.Specialized"
 			};
 
-		_methodName180 = "getBeanIdentifier";
+		_methodName192 = "getBeanIdentifier";
 
-		_methodParameterTypes180 = new String[] {  };
+		_methodParameterTypes192 = new String[] {  };
 
-		_methodName181 = "setBeanIdentifier";
+		_methodName193 = "setBeanIdentifier";
 
-		_methodParameterTypes181 = new String[] { "java.lang.String" };
+		_methodParameterTypes193 = new String[] { "java.lang.String" };
 
-		_methodName186 = "findAll";
+		_methodName198 = "findAll";
 
-		_methodParameterTypes186 = new String[] {
+		_methodParameterTypes198 = new String[] {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName187 = "findAll";
+		_methodName199 = "findAll";
 
-		_methodParameterTypes187 = new String[] { "int", "int" };
+		_methodParameterTypes199 = new String[] { "int", "int" };
 
-		_methodName188 = "findAll";
+		_methodName200 = "findAll";
 
-		_methodParameterTypes188 = new String[] {  };
+		_methodParameterTypes200 = new String[] {  };
 
-		_methodName189 = "findByName";
+		_methodName201 = "findByName";
 
-		_methodParameterTypes189 = new String[] { "java.lang.String" };
+		_methodParameterTypes201 = new String[] { "java.lang.String" };
 
-		_methodName190 = "createPreperistedEntity";
+		_methodName202 = "createPreperistedEntity";
 
-		_methodParameterTypes190 = new String[] {
+		_methodParameterTypes202 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName191 = "createSpecialized";
+		_methodName203 = "createSpecialized";
 
-		_methodParameterTypes191 = new String[] {
+		_methodParameterTypes203 = new String[] {
 				"vn.com.ecopharma.emp.model.Specialized", "java.lang.String",
 				"java.lang.String", "int", "long", "boolean", "boolean",
 				"boolean", "boolean"
 			};
 
-		_methodName192 = "createSpecialized";
+		_methodName204 = "createSpecialized";
 
-		_methodParameterTypes192 = new String[] {
+		_methodParameterTypes204 = new String[] {
 				"java.lang.String", "java.lang.String", "int", "long", "boolean",
 				"boolean", "boolean", "boolean",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName193 = "findByLevel";
+		_methodName205 = "findByLevel";
 
-		_methodParameterTypes193 = new String[] { "int" };
+		_methodParameterTypes205 = new String[] { "int" };
 
-		_methodName194 = "findFirstLevelList";
+		_methodName206 = "findFirstLevelList";
 
-		_methodParameterTypes194 = new String[] {  };
+		_methodParameterTypes206 = new String[] {  };
 
-		_methodName195 = "findByLevelAndParent";
+		_methodName207 = "findByLevelAndParent";
 
-		_methodParameterTypes195 = new String[] { "int", "long" };
+		_methodParameterTypes207 = new String[] { "int", "long" };
 
-		_methodName196 = "findSecondLevelList";
+		_methodName208 = "findSecondLevelList";
 
-		_methodParameterTypes196 = new String[] { "long" };
+		_methodParameterTypes208 = new String[] { "long" };
 
-		_methodName197 = "findThirdLevelList";
+		_methodName209 = "findThirdLevelList";
 
-		_methodParameterTypes197 = new String[] { "long" };
+		_methodParameterTypes209 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -264,48 +264,48 @@ public class SpecializedLocalServiceClpInvoker {
 			return SpecializedLocalServiceUtil.updateSpecialized((vn.com.ecopharma.emp.model.Specialized)arguments[0]);
 		}
 
-		if (_methodName180.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes180, parameterTypes)) {
+		if (_methodName192.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes192, parameterTypes)) {
 			return SpecializedLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName181.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes181, parameterTypes)) {
+		if (_methodName193.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes193, parameterTypes)) {
 			SpecializedLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName186.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes186, parameterTypes)) {
+		if (_methodName198.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes198, parameterTypes)) {
 			return SpecializedLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[2]);
 		}
 
-		if (_methodName187.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes187, parameterTypes)) {
+		if (_methodName199.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes199, parameterTypes)) {
 			return SpecializedLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName188.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes188, parameterTypes)) {
+		if (_methodName200.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes200, parameterTypes)) {
 			return SpecializedLocalServiceUtil.findAll();
 		}
 
-		if (_methodName189.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes189, parameterTypes)) {
+		if (_methodName201.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes201, parameterTypes)) {
 			return SpecializedLocalServiceUtil.findByName((java.lang.String)arguments[0]);
 		}
 
-		if (_methodName190.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes190, parameterTypes)) {
+		if (_methodName202.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes202, parameterTypes)) {
 			return SpecializedLocalServiceUtil.createPreperistedEntity((com.liferay.portal.service.ServiceContext)arguments[0]);
 		}
 
-		if (_methodName191.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes191, parameterTypes)) {
+		if (_methodName203.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes203, parameterTypes)) {
 			return SpecializedLocalServiceUtil.createSpecialized((vn.com.ecopharma.emp.model.Specialized)arguments[0],
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				((Integer)arguments[3]).intValue(),
@@ -316,8 +316,8 @@ public class SpecializedLocalServiceClpInvoker {
 				((Boolean)arguments[8]).booleanValue());
 		}
 
-		if (_methodName192.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes192, parameterTypes)) {
+		if (_methodName204.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes204, parameterTypes)) {
 			return SpecializedLocalServiceUtil.createSpecialized((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1],
 				((Integer)arguments[2]).intValue(),
@@ -329,29 +329,29 @@ public class SpecializedLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[8]);
 		}
 
-		if (_methodName193.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes193, parameterTypes)) {
+		if (_methodName205.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes205, parameterTypes)) {
 			return SpecializedLocalServiceUtil.findByLevel(((Integer)arguments[0]).intValue());
 		}
 
-		if (_methodName194.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes194, parameterTypes)) {
+		if (_methodName206.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes206, parameterTypes)) {
 			return SpecializedLocalServiceUtil.findFirstLevelList();
 		}
 
-		if (_methodName195.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes195, parameterTypes)) {
+		if (_methodName207.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes207, parameterTypes)) {
 			return SpecializedLocalServiceUtil.findByLevelAndParent(((Integer)arguments[0]).intValue(),
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName196.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes196, parameterTypes)) {
+		if (_methodName208.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes208, parameterTypes)) {
 			return SpecializedLocalServiceUtil.findSecondLevelList(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName197.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes197, parameterTypes)) {
+		if (_methodName209.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes209, parameterTypes)) {
 			return SpecializedLocalServiceUtil.findThirdLevelList(((Long)arguments[0]).longValue());
 		}
 
@@ -390,32 +390,32 @@ public class SpecializedLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName180;
-	private String[] _methodParameterTypes180;
-	private String _methodName181;
-	private String[] _methodParameterTypes181;
-	private String _methodName186;
-	private String[] _methodParameterTypes186;
-	private String _methodName187;
-	private String[] _methodParameterTypes187;
-	private String _methodName188;
-	private String[] _methodParameterTypes188;
-	private String _methodName189;
-	private String[] _methodParameterTypes189;
-	private String _methodName190;
-	private String[] _methodParameterTypes190;
-	private String _methodName191;
-	private String[] _methodParameterTypes191;
 	private String _methodName192;
 	private String[] _methodParameterTypes192;
 	private String _methodName193;
 	private String[] _methodParameterTypes193;
-	private String _methodName194;
-	private String[] _methodParameterTypes194;
-	private String _methodName195;
-	private String[] _methodParameterTypes195;
-	private String _methodName196;
-	private String[] _methodParameterTypes196;
-	private String _methodName197;
-	private String[] _methodParameterTypes197;
+	private String _methodName198;
+	private String[] _methodParameterTypes198;
+	private String _methodName199;
+	private String[] _methodParameterTypes199;
+	private String _methodName200;
+	private String[] _methodParameterTypes200;
+	private String _methodName201;
+	private String[] _methodParameterTypes201;
+	private String _methodName202;
+	private String[] _methodParameterTypes202;
+	private String _methodName203;
+	private String[] _methodParameterTypes203;
+	private String _methodName204;
+	private String[] _methodParameterTypes204;
+	private String _methodName205;
+	private String[] _methodParameterTypes205;
+	private String _methodName206;
+	private String[] _methodParameterTypes206;
+	private String _methodName207;
+	private String[] _methodParameterTypes207;
+	private String _methodName208;
+	private String[] _methodParameterTypes208;
+	private String _methodName209;
+	private String[] _methodParameterTypes209;
 }

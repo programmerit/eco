@@ -8,8 +8,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
@@ -77,15 +75,6 @@ public class CandidateViewBean extends EntityViewBean {
 			break;
 		}
 		super.switchMode(mode);
-	}
-
-	public void onValueChangeListener(ValueChangeEvent event) {
-
-		if (selectedCandidate != null) {
-			System.out.println(selectedCandidate.getFullName());
-		}
-		System.out.println(event.getOldValue().toString() + " vs "
-				+ event.getNewValue().toString());
 	}
 
 	public void onStatusChange(CandidateIndexItem item) {

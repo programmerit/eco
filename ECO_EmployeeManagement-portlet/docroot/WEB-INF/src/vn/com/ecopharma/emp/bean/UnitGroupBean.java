@@ -1,16 +1,11 @@
 package vn.com.ecopharma.emp.bean;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
-import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
-import vn.com.ecopharma.emp.util.BeanUtils;
-import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;

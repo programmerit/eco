@@ -3,6 +3,7 @@ package vn.com.ecopharma.emp.util;
 import javax.el.ELContext;
 import javax.faces.context.FacesContext;
 
+import vn.com.ecopharma.emp.bean.ConcurrentTitlesBean;
 import vn.com.ecopharma.emp.bean.EmpGlobalFilterHolderBean;
 import vn.com.ecopharma.emp.bean.EmployeeBean;
 import vn.com.ecopharma.emp.bean.EmployeeIndexedBean;
@@ -50,6 +51,8 @@ public class BeanUtils {
 	private static final String EMP_ANNUAL_LEAVE_FILTER_BEAN = "annualLeaveFilterBean";
 
 	private static final String EMP_FILTER_HOLDER_BEAN = "empGlobalFilterHolderBean";
+
+	private static final String CONCURRENT_TITLES_BEAN = "concurrentBean";
 
 	private BeanUtils() {
 	}
@@ -122,5 +125,9 @@ public class BeanUtils {
 
 	public static EmpGlobalFilterHolderBean getEmpFilterHolderBean() {
 		return (EmpGlobalFilterHolderBean) getBackingBeanByName(EMP_FILTER_HOLDER_BEAN);
+	}
+
+	public static ConcurrentTitlesBean getConcurrentTitlesBean() {
+		return (ConcurrentTitlesBean) getBackingBeanByName(CONCURRENT_TITLES_BEAN);
 	}
 }

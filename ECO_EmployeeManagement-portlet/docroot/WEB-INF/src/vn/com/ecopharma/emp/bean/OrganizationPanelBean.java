@@ -4,13 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+
+import org.apache.commons.lang3.StringUtils;
 
 import vn.com.ecopharma.emp.dto.EmpInfoItem;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Emp;
+import vn.com.ecopharma.emp.model.EmpConcurrentTitles;
 import vn.com.ecopharma.emp.model.Level;
 import vn.com.ecopharma.emp.model.Titles;
 import vn.com.ecopharma.emp.model.Unit;
@@ -39,6 +43,13 @@ public class OrganizationPanelBean implements Serializable {
 	private UnitGroup selectedUnitGroup;
 	private Titles selectedTitles;
 	private Level selectedLevel;
+
+	private List<EmpConcurrentTitles> concurrentTitles;
+
+	@PostConstruct
+	public void init() {
+		this.concurrentTitles = new ArrayList<>();
+	}
 
 	public void afterSetOrganizationToEntity() {
 		this.selectedDevision = null;
@@ -139,6 +150,15 @@ public class OrganizationPanelBean implements Serializable {
 		}
 	}
 
+	public void setSelectedValuesToConcurrentTitles(EmpConcurrentTitles ec) {
+		ec.setDepartmentId(EmployeeUtils
+				.getBaseModelPrimaryKey(selectedDepartment));
+		ec.setUnitId(EmployeeUtils.getBaseModelPrimaryKey(selectedUnit));
+		ec.setUnitGroupId(EmployeeUtils
+				.getBaseModelPrimaryKey(selectedUnitGroup));
+		ec.setTitlesId(EmployeeUtils.getBaseModelPrimaryKey(selectedTitles));
+	}
+
 	public Devision getSelectedDevision() {
 		return selectedDevision;
 	}
@@ -187,4 +207,36 @@ public class OrganizationPanelBean implements Serializable {
 		this.selectedLevel = selectedLevel;
 	}
 
+	public long getSelectedTitlesId() {
+		return EmployeeUtils.getBaseModelPrimaryKey(selectedTitles);
+	}
+
+	public long getSelectedDepartmentId() {
+		return EmployeeUtils.getBaseModelPrimaryKey(selectedDepartment);
+	}
+
+	public long getSelectedUnitGroupId() {
+		return EmployeeUtils.getBaseModelPrimaryKey(selectedUnitGroup);
+	}
+
+	public long getSelectedUnitId() {
+		return EmployeeUtils.getBaseModelPrimaryKey(selectedUnit);
+	}
+
+	public List<EmpConcurrentTitles> getConcurrentTitles() {
+		return concurrentTitles;
+	}
+
+	public void setConcurrentTitles(List<EmpConcurrentTitles> concurrentTitles) {
+		this.concurrentTitles = concurrentTitles;
+	}
+
+	public String getTitlesName(long titlesId) {
+		try {
+			return TitlesLocalServiceUtil.fetchTitles(titlesId).getName();
+		} catch (SystemException e) {
+			e.printStackTrace();
+		}
+		return StringUtils.EMPTY;
+	}
 }

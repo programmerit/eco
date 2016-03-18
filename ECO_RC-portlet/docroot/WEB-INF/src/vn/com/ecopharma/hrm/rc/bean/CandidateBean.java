@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -110,8 +111,15 @@ public class CandidateBean implements Serializable {
 	private String selectedDocumentType;
 
 	private int deletedDocumentIndex = -1;
-	
+
 	private String onCompleteUpdate = StringUtils.EMPTY;
+
+	private String selectedStatus = StringUtils.EMPTY;
+
+	private String includedDialog = StringUtils.EMPTY;
+
+	@ManagedProperty(value = "#{candidateViewBean}")
+	private CandidateViewBean candidateViewBean;
 
 	@PostConstruct
 	public void init() {
@@ -187,29 +195,99 @@ public class CandidateBean implements Serializable {
 								QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 	}
 
+	public void onStatusChange(ActionEvent event) {
+		final CandidateIndexItem item = lazyDataModel.getRowData();
+		final CandidateStatus status = CandidateStatus.valueOf(selectedStatus);
+
+		final ServiceContext serviceContext = LiferayFacesContext.getInstance()
+				.getServiceContext();
+
+		switch (status) {
+		case INTERVIEW_SCHEDULED:
+			ScheduleInterviewForCandidatesBean bean = (ScheduleInterviewForCandidatesBean) BeanUtils
+					.getBackingBeanByName("scheduleInterviewForCandidatesBean");
+			bean.setInterviewScheduleItems(Arrays
+					.asList(new InterviewScheduleItem(item)));
+			bean.setInterviewScheduleForAllItem(new InterviewScheduleForAllItem());
+			candidateViewBean
+					.switchMode(CandidateNavigation.SCHEDULE_INTERVIEW);
+			onCompleteUpdate = "updateCandidatePanelGroup();";
+			break;
+
+		case EVALUATE_CANDIDATE:
+			onEvaluateCandidates(Arrays.asList(item));
+			break;
+		case HIRE:
+			EmployeeBean employeeBean = (EmployeeBean) BeanUtils
+					.getBackingBeanByName("employeeBean");
+			if (employeeBean.transferCandidateInfo(item) != null) {
+				candidateViewBean.switchMode(4);
+			}
+			onCompleteUpdate = "updateCandidatePanelGroup();";
+			break;
+		case MARK_INTERVIEW_PASS:
+		case MARK_INTERVIEW_FAIL:
+			InterviewSchedule interviewSchedule = InterviewScheduleLocalServiceUtil
+					.findByVacancyCandidateAndStatus(
+							item.getVacancyCandidateId(),
+							InterviewScheduleStatus.PROCESSING.toString());
+			InterviewScheduleLocalServiceUtil
+					.setInterviewStatusByCandidateStatus(status.toString(),
+							item.getId(), interviewSchedule, serviceContext);
+			onCompleteUpdate = "updateCandidatesAndGrowl();";
+			break;
+		case REJECT:
+			setSelectedItems(Arrays.asList(item));
+			onCompleteUpdate = "PF('wRejectConfirmDialog').show();";
+			break;
+		default:
+			CandidateLocalServiceUtil.changeCandidateStatus(item.getId(),
+					selectedStatus, serviceContext);
+			onCompleteUpdate = "updateCandidatesAndGrowl();";
+			break;
+		}
+		selectedStatus = StringUtils.EMPTY;
+		// RequestContext.getCurrentInstance().update("refreshStatusGroup();");
+	}
+
+	public void onEvaluateCandidates(List<CandidateIndexItem> candidates) {
+		EvaluationBean evaluationBean = (EvaluationBean) BeanUtils
+				.getBackingBeanByName("evaluationBean");
+		evaluationBean.setCandidateIndexItems(candidates);
+		evaluationBean.setEvaluationItems(initEvaluationItems());
+		this.includedDialog = "/views/dialogs/evaluation.xhtml";
+		RequestContext.getCurrentInstance().update(
+				":CandidatePanelGroup:includedDialog");
+		RequestContext.getCurrentInstance().execute(
+				"PF('wEvaluationDialog').show();");
+	}
+
 	public void onValueChangeListener(ValueChangeEvent event) {
 		System.out.println(lazyDataModel.getRowData().getId());
 		if (event.getNewValue() != null) {
 			String statusString = (String) event.getNewValue();
 			CandidateStatus status = CandidateStatus.valueOf(statusString);
+			selectedStatus = statusString;
 			switch (status) {
 			case REJECT:
 				setSelectedItems(Arrays.asList(lazyDataModel.getRowData()));
-				RequestContext.getCurrentInstance().execute("PF('wRejectConfirmDialog').show();");
+				RequestContext.getCurrentInstance().execute(
+						"PF('wRejectConfirmDialog').show();");
 				this.onCompleteUpdate = "updateCandidatePanelGroupAndCallRejectDialog()";
 				break;
 			case MARK_INTERVIEW_PASS:
 			case MARK_INTERVIEW_FAIL:
 				InterviewSchedule interviewSchedule = InterviewScheduleLocalServiceUtil
-						.findByVacancyCandidateAndStatus(
-								lazyDataModel.getRowData().getVacancyCandidateId(),
+						.findByVacancyCandidateAndStatus(lazyDataModel
+								.getRowData().getVacancyCandidateId(),
 								InterviewScheduleStatus.PROCESSING.toString());
 				InterviewScheduleLocalServiceUtil
 						.setInterviewStatusByCandidateStatus(status.toString(),
-								lazyDataModel.getRowData().getId(), interviewSchedule, RCUtils.getServiceContext());
+								lazyDataModel.getRowData().getId(),
+								interviewSchedule, RCUtils.getServiceContext());
 				onCompleteUpdate = "updateCandidatesAndGrowl();";
 				break;
-			default: 
+			default:
 				break;
 			}
 		}
@@ -769,6 +847,29 @@ public class CandidateBean implements Serializable {
 	public void setOnCompleteUpdate(String onCompleteUpdate) {
 		this.onCompleteUpdate = onCompleteUpdate;
 	}
-	
-	
+
+	public String getSelectedStatus() {
+		return selectedStatus;
+	}
+
+	public void setSelectedStatus(String selectedStatus) {
+		this.selectedStatus = selectedStatus;
+	}
+
+	public CandidateViewBean getCandidateViewBean() {
+		return candidateViewBean;
+	}
+
+	public void setCandidateViewBean(CandidateViewBean candidateViewBean) {
+		this.candidateViewBean = candidateViewBean;
+	}
+
+	public String getIncludedDialog() {
+		return includedDialog;
+	}
+
+	public void setIncludedDialog(String includedDialog) {
+		this.includedDialog = includedDialog;
+	}
+
 }

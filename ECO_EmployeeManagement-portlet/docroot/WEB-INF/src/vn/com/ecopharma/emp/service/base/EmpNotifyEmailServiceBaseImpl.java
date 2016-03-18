@@ -31,7 +31,9 @@ import vn.com.ecopharma.emp.service.persistence.DistrictPersistence;
 import vn.com.ecopharma.emp.service.persistence.DocumentPersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpAnnualLeavePersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpBankInfoPersistence;
+import vn.com.ecopharma.emp.service.persistence.EmpConcurrentTitlesPersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpDisciplinePersistence;
+import vn.com.ecopharma.emp.service.persistence.EmpLaborContractPersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpNotifyEmailPersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpOrgRelationshipPersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpPersistence;
@@ -526,6 +528,63 @@ public abstract class EmpNotifyEmailServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the emp concurrent titles local service.
+	 *
+	 * @return the emp concurrent titles local service
+	 */
+	public vn.com.ecopharma.emp.service.EmpConcurrentTitlesLocalService getEmpConcurrentTitlesLocalService() {
+		return empConcurrentTitlesLocalService;
+	}
+
+	/**
+	 * Sets the emp concurrent titles local service.
+	 *
+	 * @param empConcurrentTitlesLocalService the emp concurrent titles local service
+	 */
+	public void setEmpConcurrentTitlesLocalService(
+		vn.com.ecopharma.emp.service.EmpConcurrentTitlesLocalService empConcurrentTitlesLocalService) {
+		this.empConcurrentTitlesLocalService = empConcurrentTitlesLocalService;
+	}
+
+	/**
+	 * Returns the emp concurrent titles remote service.
+	 *
+	 * @return the emp concurrent titles remote service
+	 */
+	public vn.com.ecopharma.emp.service.EmpConcurrentTitlesService getEmpConcurrentTitlesService() {
+		return empConcurrentTitlesService;
+	}
+
+	/**
+	 * Sets the emp concurrent titles remote service.
+	 *
+	 * @param empConcurrentTitlesService the emp concurrent titles remote service
+	 */
+	public void setEmpConcurrentTitlesService(
+		vn.com.ecopharma.emp.service.EmpConcurrentTitlesService empConcurrentTitlesService) {
+		this.empConcurrentTitlesService = empConcurrentTitlesService;
+	}
+
+	/**
+	 * Returns the emp concurrent titles persistence.
+	 *
+	 * @return the emp concurrent titles persistence
+	 */
+	public EmpConcurrentTitlesPersistence getEmpConcurrentTitlesPersistence() {
+		return empConcurrentTitlesPersistence;
+	}
+
+	/**
+	 * Sets the emp concurrent titles persistence.
+	 *
+	 * @param empConcurrentTitlesPersistence the emp concurrent titles persistence
+	 */
+	public void setEmpConcurrentTitlesPersistence(
+		EmpConcurrentTitlesPersistence empConcurrentTitlesPersistence) {
+		this.empConcurrentTitlesPersistence = empConcurrentTitlesPersistence;
+	}
+
+	/**
 	 * Returns the emp discipline local service.
 	 *
 	 * @return the emp discipline local service
@@ -580,6 +639,63 @@ public abstract class EmpNotifyEmailServiceBaseImpl extends BaseServiceImpl
 	public void setEmpDisciplinePersistence(
 		EmpDisciplinePersistence empDisciplinePersistence) {
 		this.empDisciplinePersistence = empDisciplinePersistence;
+	}
+
+	/**
+	 * Returns the emp labor contract local service.
+	 *
+	 * @return the emp labor contract local service
+	 */
+	public vn.com.ecopharma.emp.service.EmpLaborContractLocalService getEmpLaborContractLocalService() {
+		return empLaborContractLocalService;
+	}
+
+	/**
+	 * Sets the emp labor contract local service.
+	 *
+	 * @param empLaborContractLocalService the emp labor contract local service
+	 */
+	public void setEmpLaborContractLocalService(
+		vn.com.ecopharma.emp.service.EmpLaborContractLocalService empLaborContractLocalService) {
+		this.empLaborContractLocalService = empLaborContractLocalService;
+	}
+
+	/**
+	 * Returns the emp labor contract remote service.
+	 *
+	 * @return the emp labor contract remote service
+	 */
+	public vn.com.ecopharma.emp.service.EmpLaborContractService getEmpLaborContractService() {
+		return empLaborContractService;
+	}
+
+	/**
+	 * Sets the emp labor contract remote service.
+	 *
+	 * @param empLaborContractService the emp labor contract remote service
+	 */
+	public void setEmpLaborContractService(
+		vn.com.ecopharma.emp.service.EmpLaborContractService empLaborContractService) {
+		this.empLaborContractService = empLaborContractService;
+	}
+
+	/**
+	 * Returns the emp labor contract persistence.
+	 *
+	 * @return the emp labor contract persistence
+	 */
+	public EmpLaborContractPersistence getEmpLaborContractPersistence() {
+		return empLaborContractPersistence;
+	}
+
+	/**
+	 * Sets the emp labor contract persistence.
+	 *
+	 * @param empLaborContractPersistence the emp labor contract persistence
+	 */
+	public void setEmpLaborContractPersistence(
+		EmpLaborContractPersistence empLaborContractPersistence) {
+		this.empLaborContractPersistence = empLaborContractPersistence;
 	}
 
 	/**
@@ -1727,12 +1843,24 @@ public abstract class EmpNotifyEmailServiceBaseImpl extends BaseServiceImpl
 	protected vn.com.ecopharma.emp.service.EmpBankInfoService empBankInfoService;
 	@BeanReference(type = EmpBankInfoPersistence.class)
 	protected EmpBankInfoPersistence empBankInfoPersistence;
+	@BeanReference(type = vn.com.ecopharma.emp.service.EmpConcurrentTitlesLocalService.class)
+	protected vn.com.ecopharma.emp.service.EmpConcurrentTitlesLocalService empConcurrentTitlesLocalService;
+	@BeanReference(type = vn.com.ecopharma.emp.service.EmpConcurrentTitlesService.class)
+	protected vn.com.ecopharma.emp.service.EmpConcurrentTitlesService empConcurrentTitlesService;
+	@BeanReference(type = EmpConcurrentTitlesPersistence.class)
+	protected EmpConcurrentTitlesPersistence empConcurrentTitlesPersistence;
 	@BeanReference(type = vn.com.ecopharma.emp.service.EmpDisciplineLocalService.class)
 	protected vn.com.ecopharma.emp.service.EmpDisciplineLocalService empDisciplineLocalService;
 	@BeanReference(type = vn.com.ecopharma.emp.service.EmpDisciplineService.class)
 	protected vn.com.ecopharma.emp.service.EmpDisciplineService empDisciplineService;
 	@BeanReference(type = EmpDisciplinePersistence.class)
 	protected EmpDisciplinePersistence empDisciplinePersistence;
+	@BeanReference(type = vn.com.ecopharma.emp.service.EmpLaborContractLocalService.class)
+	protected vn.com.ecopharma.emp.service.EmpLaborContractLocalService empLaborContractLocalService;
+	@BeanReference(type = vn.com.ecopharma.emp.service.EmpLaborContractService.class)
+	protected vn.com.ecopharma.emp.service.EmpLaborContractService empLaborContractService;
+	@BeanReference(type = EmpLaborContractPersistence.class)
+	protected EmpLaborContractPersistence empLaborContractPersistence;
 	@BeanReference(type = vn.com.ecopharma.emp.service.EmployeeTitlesHistoryLocalService.class)
 	protected vn.com.ecopharma.emp.service.EmployeeTitlesHistoryLocalService employeeTitlesHistoryLocalService;
 	@BeanReference(type = vn.com.ecopharma.emp.service.EmployeeTitlesHistoryService.class)

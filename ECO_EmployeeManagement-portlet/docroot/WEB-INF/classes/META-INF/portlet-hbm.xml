@@ -10,7 +10,9 @@
 	<import class="vn.com.ecopharma.emp.model.Emp" />
 	<import class="vn.com.ecopharma.emp.model.EmpAnnualLeave" />
 	<import class="vn.com.ecopharma.emp.model.EmpBankInfo" />
+	<import class="vn.com.ecopharma.emp.model.EmpConcurrentTitles" />
 	<import class="vn.com.ecopharma.emp.model.EmpDiscipline" />
+	<import class="vn.com.ecopharma.emp.model.EmpLaborContract" />
 	<import class="vn.com.ecopharma.emp.model.EmployeeTitlesHistory" />
 	<import class="vn.com.ecopharma.emp.model.EmpNotifyEmail" />
 	<import class="vn.com.ecopharma.emp.model.EmpOrgRelationship" />
@@ -202,6 +204,23 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 	</class>
+	<class name="vn.com.ecopharma.emp.model.impl.EmpConcurrentTitlesImpl" table="eco_em_portlet_EmpConcurrentTitles">
+		<cache usage="read-write" />
+		<id name="empConcurrentTitlesId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="empId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="titlesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="unitGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="unitId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="departmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+	</class>
 	<class name="vn.com.ecopharma.emp.model.impl.EmpDisciplineImpl" table="eco_em_portlet_EmpDiscipline">
 		<cache usage="read-write" />
 		<id name="empDisciplineId" type="long">
@@ -221,6 +240,24 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="deleted" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="vn.com.ecopharma.emp.model.impl.EmpLaborContractImpl" table="eco_em_portlet_EmpLaborContract">
+		<cache usage="read-write" />
+		<id name="empLaborContractId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="empId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="laborContractSignedDate" type="org.hibernate.type.TimestampType" />
+		<property name="laborContractExpiredDate" type="org.hibernate.type.TimestampType" />
+		<property name="laborContractSignedType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="signedTimes" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="latest" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="vn.com.ecopharma.emp.model.impl.EmployeeTitlesHistoryImpl" table="eco_em_portlet_EmployeeTitlesHistory">
 		<cache usage="read-write" />
