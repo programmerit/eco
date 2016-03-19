@@ -228,6 +228,9 @@
 				
 				<p:link value="Leaves Manage" outcome="annualLeaveView" />
 
+				<p:commandLink value="Transfer labor contract" rendered="true"
+					actionListener="#{empView.onTransferEmpContract}" />
+
 				<p:commandLink value="Test send mail"
 					actionListener="#{empView.onTestSendMail}"
 					update=":includedDialogPanelGroup"

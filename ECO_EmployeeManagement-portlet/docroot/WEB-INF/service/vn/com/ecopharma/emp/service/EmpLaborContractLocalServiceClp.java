@@ -132,6 +132,12 @@ public class EmpLaborContractLocalServiceClp
 				"vn.com.ecopharma.emp.model.EmpLaborContract",
 				"com.liferay.portal.service.ServiceContext"
 			};
+
+		_methodName22 = "transferContractFromEmps";
+
+		_methodParameterTypes22 = new String[] {
+				"com.liferay.portal.service.ServiceContext"
+			};
 	}
 
 	@Override
@@ -766,6 +772,27 @@ public class EmpLaborContractLocalServiceClp
 		return (vn.com.ecopharma.emp.model.EmpLaborContract)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public void transferContractFromEmps(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		try {
+			_invokableLocalService.invokeMethod(_methodName22,
+				_methodParameterTypes22,
+				new Object[] { ClpSerializer.translateInput(serviceContext) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -809,4 +836,6 @@ public class EmpLaborContractLocalServiceClp
 	private String[] _methodParameterTypes20;
 	private String _methodName21;
 	private String[] _methodParameterTypes21;
+	private String _methodName22;
+	private String[] _methodParameterTypes22;
 }

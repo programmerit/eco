@@ -130,6 +130,12 @@ public class EmpLaborContractLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.EmpLaborContract",
 				"com.liferay.portal.service.ServiceContext"
 			};
+
+		_methodName201 = "transferContractFromEmps";
+
+		_methodParameterTypes201 = new String[] {
+				"com.liferay.portal.service.ServiceContext"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -249,6 +255,13 @@ public class EmpLaborContractLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
 
+		if (_methodName201.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes201, parameterTypes)) {
+			EmpLaborContractLocalServiceUtil.transferContractFromEmps((com.liferay.portal.service.ServiceContext)arguments[0]);
+
+			return null;
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -294,4 +307,6 @@ public class EmpLaborContractLocalServiceClpInvoker {
 	private String[] _methodParameterTypes199;
 	private String _methodName200;
 	private String[] _methodParameterTypes200;
+	private String _methodName201;
+	private String[] _methodParameterTypes201;
 }

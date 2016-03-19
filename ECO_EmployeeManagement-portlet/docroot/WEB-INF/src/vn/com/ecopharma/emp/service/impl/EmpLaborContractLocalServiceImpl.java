@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpLaborContract;
 import vn.com.ecopharma.emp.service.base.EmpLaborContractLocalServiceBaseImpl;
 
@@ -84,10 +85,32 @@ public class EmpLaborContractLocalServiceImpl extends
 	public EmpLaborContract addEmpLaborContract(
 			EmpLaborContract empLaborContract, ServiceContext serviceContext) {
 		try {
+			if (empLaborContract.getLaborContractSignedDate() == null
+					|| empLaborContract.getLaborContractSignedType() == null
+					|| empLaborContract.getLaborContractSignedType().isEmpty())
+				return null;
 			return super.addEmpLaborContract(empLaborContract);
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}
 		return null;
 	}
+
+	/************** transfer info from emp **************/
+	public void transferContractFromEmps(ServiceContext serviceContext) {
+		for (Emp emp : empLocalService.findAll()) {
+			if (emp.getLaborContractSignedDate() != null) {
+				EmpLaborContract contract = createPrePersistedEntity(serviceContext);
+				contract.setLaborContractSignedDate(emp
+						.getLaborContractSignedDate());
+				contract.setLaborContractExpiredDate(emp
+						.getLaborContractExpiredDate());
+				contract.setLaborContractSignedType(emp.getLaborContractType());
+				contract.setSignedTimes(emp.getLaborContractSignedTime());
+				contract.setLatest(true);
+				addEmpLaborContract(contract, serviceContext);
+			}
+		}
+	}
+
 }

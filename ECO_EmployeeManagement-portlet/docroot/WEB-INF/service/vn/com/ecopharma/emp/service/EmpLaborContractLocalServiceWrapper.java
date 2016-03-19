@@ -310,6 +310,15 @@ public class EmpLaborContractLocalServiceWrapper
 	}
 
 	/**
+	* transfer info from emp
+	*/
+	@Override
+	public void transferContractFromEmps(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		_empLaborContractLocalService.transferContractFromEmps(serviceContext);
+	}
+
+	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
 	public EmpLaborContractLocalService getWrappedEmpLaborContractLocalService() {

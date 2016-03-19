@@ -18,6 +18,9 @@
 			<p:remoteCommand name="refreshBankInfos"
 				update=":bankInfoForm:bankInfosOutputPanel" />
 
+			<p:remoteCommand name="refreshContractInfos"
+				update=":contractInfoForm:contractInfosOutputPanel" />
+
 			<p:remoteCommand name="refreshUsername"
 				update=":modifyForm:accordion:username" />
 
@@ -241,7 +244,7 @@
 
 							<h:outputText value="Contract Signed Date" />
 							<p:calendar id="laborContractSignedDate" mask="true"
-								value="#{empView.modifyEmployeeInfoItem.emp.laborContractSignedDate}"
+								value="#{empView.modifyEmployeeInfoItem.latestContractItem.object.laborContractSignedDate}"
 								pattern="dd/MM/yyyy" placeholder="Labor Contract Signed Date">
 							</p:calendar>
 							<p:message for="laborContractSignedDate" display="icon" />
@@ -251,7 +254,7 @@
 
 							<h:outputText value="Contract Expired Date" />
 							<p:calendar id="laborContractExpiredDate" mask="true"
-								value="#{empView.modifyEmployeeInfoItem.emp.laborContractExpiredDate}"
+								value="#{empView.modifyEmployeeInfoItem.latestContractItem.object.laborContractExpiredDate}"
 								pattern="dd/MM/yyyy" placeholder="Labor Contract Expired Date" />
 							<p:message for="laborContractExpiredDate" display="icon" />
 							<p:tooltip for="laborContractExpiredDate"
@@ -260,7 +263,7 @@
 
 							<h:outputText value="Contract Type" />
 							<p:selectOneMenu id="laborContractType"
-								value="#{empView.modifyEmployeeInfoItem.emp.laborContractType}"
+								value="#{empView.modifyEmployeeInfoItem.latestContractItem.object.laborContractSignedType}"
 								converter="laborContractTypeConverter" effect="fade">
 								<f:selectItem itemLabel="Contract Type" itemValue="" />
 								<f:selectItems value="#{empView.laborContractTypes}" var="l"
@@ -273,57 +276,62 @@
 							<p:message for="laborContractType" display="icon" />
 							<p:tooltip for="laborContractType" value="Labor Contract Type"
 								showEffect="clip" hideEffect="explode" />
+
+							<h:outputText />
+							<p:commandLink value="View all contracts info..."
+								onclick="PF('wContractInfoDialog').show();" />
+
 						</h:panelGrid>
 					</p:panelGrid>
 				</p:tab>
 				<p:tab id="education_information" title="Education Information">
 					<h:panelGrid columns="4">
-						
-							<h:outputText value="Education" />
-							<p:selectOneMenu id="educationSelect"
-								value="#{empView.modifyEmployeeInfoItem.emp.education}">
-								<f:selectItem itemLabel="Education" itemValue="" />
-								<f:selectItems value="#{empView.educationTypes}" var="e"
-									itemLabel="#{e}" itemValue="#{e}" />
-								<p:column>#{e}</p:column>
-							</p:selectOneMenu>
-							<p:message for="educationSelect" display="icon" />
-							<p:tooltip for="educationSelect" value="Education"
-								showEffect="clip" hideEffect="explode" />
 
-							<h:outputText value="Specialized" />
-							<p:selectOneMenu id="specializedSelect"
-								value="#{empView.modifyEmployeeInfoItem.specialized}"
-								converter="specializedConverter" effect="fade" filter="true"
-								filterMatchMode="contains" var="s">
+						<h:outputText value="Education" />
+						<p:selectOneMenu id="educationSelect"
+							value="#{empView.modifyEmployeeInfoItem.emp.education}">
+							<f:selectItem itemLabel="Education" itemValue="" />
+							<f:selectItems value="#{empView.educationTypes}" var="e"
+								itemLabel="#{e}" itemValue="#{e}" />
+							<p:column>#{e}</p:column>
+						</p:selectOneMenu>
+						<p:message for="educationSelect" display="icon" />
+						<p:tooltip for="educationSelect" value="Education"
+							showEffect="clip" hideEffect="explode" />
 
-								<f:selectItem itemLabel="Specialized" itemValue="" />
-								<f:selectItems value="#{empView.specializeds}" var="s"
-									itemLabel="#{s.name}" itemValue="#{s}" />
-								<p:column>
+						<h:outputText value="Specialized" />
+						<p:selectOneMenu id="specializedSelect"
+							value="#{empView.modifyEmployeeInfoItem.specialized}"
+							converter="specializedConverter" effect="fade" filter="true"
+							filterMatchMode="contains" var="s">
+
+							<f:selectItem itemLabel="Specialized" itemValue="" />
+							<f:selectItems value="#{empView.specializeds}" var="s"
+								itemLabel="#{s.name}" itemValue="#{s}" />
+							<p:column>
 					                #{s.name}
 					            </p:column>
-							</p:selectOneMenu>
-							<p:message for="specializedSelect" display="icon" />
-							<p:tooltip for="specializedSelect" value="Specialized"
-								showEffect="clip" hideEffect="explode" />
+						</p:selectOneMenu>
+						<p:message for="specializedSelect" display="icon" />
+						<p:tooltip for="specializedSelect" value="Specialized"
+							showEffect="clip" hideEffect="explode" />
 
-							<h:outputText value="University" />
-							<p:selectOneMenu id="universitySelect"
-								value="#{empView.modifyEmployeeInfoItem.university}"
-								converter="universityConverter" effect="fade" filter="true"
-								filterMatchMode="contains" var="u">
+						<h:outputText value="University" />
+						<p:selectOneMenu id="universitySelect"
+							value="#{empView.modifyEmployeeInfoItem.university}"
+							converter="universityConverter" effect="fade" filter="true"
+							filterMatchMode="contains" var="u">
 
-								<f:selectItem itemLabel="University" itemValue="" />
-								<f:selectItems value="#{empView.universities}" var="u"
-									itemLabel="#{u.name}" itemValue="#{u}" />
-								<p:column>
+							<f:selectItem itemLabel="University" itemValue="" />
+							<f:selectItems value="#{empView.universities}" var="u"
+								itemLabel="#{u.name}" itemValue="#{u}" />
+							<p:column>
 					                #{u.name}
 					            </p:column>
-							</p:selectOneMenu>
-							<p:message for="universitySelect" display="icon" />
-							<p:tooltip for="universitySelect" value="University"
-								showEffect="clip" hideEffect="explode" />
+						</p:selectOneMenu>
+						<p:message for="universitySelect" display="icon" />
+						<p:tooltip for="universitySelect" value="University"
+							showEffect="clip" hideEffect="explode" />
 					</h:panelGrid>
 				</p:tab>
 				<p:tab id="other_information" title="Other Information">
@@ -580,6 +588,56 @@
 					
 				<p:commandLink value="Cancel" onclick="PF('wBankInfoDialog').hide()"
 					style="margin-left: 3px" />
+			</p:dialog>
+		</h:form>
+
+		<h:form id="contractInfoForm">
+			<p:dialog widgetVar="wContractInfoDialog"
+				header="Labor Contract Information" showHeader="false" modal="true"
+				height="500" draggable="true">
+				<p:outputPanel autoUpdate="true" id="contractInfosOutputPanel">
+					<h:panelGrid id="contractInfosPanelGrid">
+						<ui:repeat var="l" id="contractInfos"
+							value="#{empView.modifyEmployeeInfoItem.laborContracts}"
+							varStatus="status">
+							<h:panelGroup id="contractItem">
+								<p:panelGrid columns="2">
+									<h:outputText value="Contract Signed Date" />
+									<p:calendar value="#{l.object.laborContractSignedDate}"
+										pattern="dd/MM/yyyy" />
+
+									<h:outputText value="Contract Expired Date" />
+									<p:calendar value="#{l.object.laborContractExpiredDate}"
+										pattern="dd/MM/yyyy" />
+
+									<h:outputText value="Contract Type" />
+									<p:selectOneMenu id="laborContractType"
+										value="#{empView.modifyEmployeeInfoItem.latestContractItem.object.laborContractSignedType}"
+										converter="laborContractTypeConverter" effect="fade">
+										<f:selectItem itemLabel="Contract Type" itemValue="" />
+										<f:selectItems value="#{empView.laborContractTypes}" var="l"
+											itemLabel="#{i18n[empView.modifyEmployeeInfoItem.getLocalizedLaborContractType(l)]}"
+											itemValue="#{l}" />
+										<p:column>#{l}</p:column>
+									</p:selectOneMenu>
+
+								</p:panelGrid>
+							</h:panelGroup>
+						</ui:repeat>
+
+					</h:panelGrid>
+				</p:outputPanel>
+				<p:commandButton value="Save"
+					actionListener="#{empView.onTempSaveContractInfo}"
+					styleClass="GreenButton RaisedButton" update=":modifyForm"
+					oncomplete="PF('wContractInfoDialog').hide()" /> |
+					
+				<p:commandLink actionListener="#{empView.addOneContractInfo}"
+					value="Add Bank Info" immediate="true" ajax="true"
+					oncomplete="refreshContractInfos();" /> |
+					
+				<p:commandLink value="Cancel"
+					onclick="PF('wContractInfoDialog').hide()" style="margin-left: 3px" />
 			</p:dialog>
 		</h:form>
 	</h:body>

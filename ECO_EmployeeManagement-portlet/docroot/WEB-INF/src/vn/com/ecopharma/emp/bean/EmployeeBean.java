@@ -32,6 +32,7 @@ import vn.com.ecopharma.emp.dto.DependentName;
 import vn.com.ecopharma.emp.dto.DocumentItem;
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
 import vn.com.ecopharma.emp.dto.EmpInfoItem;
+import vn.com.ecopharma.emp.dto.LaborContractItem;
 import vn.com.ecopharma.emp.dto.RegionItem;
 import vn.com.ecopharma.emp.enumeration.DocumentType;
 import vn.com.ecopharma.emp.enumeration.EducationType;
@@ -51,6 +52,7 @@ import vn.com.ecopharma.emp.service.DistrictLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpAnnualLeaveLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpConcurrentTitlesLocalServiceUtil;
+import vn.com.ecopharma.emp.service.EmpLaborContractLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpOrgRelationshipLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
@@ -318,6 +320,16 @@ public class EmployeeBean implements Serializable {
 
 	public void removeOneBankInfo(int index) {
 		modifyEmployeeInfoItem.getBankInfos().get(index).setUIDeleted(true);
+	}
+
+	public void addOneContractInfo() {
+		modifyEmployeeInfoItem.getLaborContracts().add(new LaborContractItem());
+	}
+
+	public void onTempSaveContractInfo() {
+		Collections.sort(modifyEmployeeInfoItem.getLaborContracts());
+		modifyEmployeeInfoItem.getLaborContracts().get(0).getObject()
+				.setLatest(true);
 	}
 
 	/**
@@ -625,6 +637,11 @@ public class EmployeeBean implements Serializable {
 			setDialog(EmpDialog.CONCURRENT_TITLES);
 		}
 
+	}
+
+	public void onTransferEmpContract() {
+		EmpLaborContractLocalServiceUtil.transferContractFromEmps(EmployeeUtils
+				.getServiceContext());
 	}
 
 	public void setDialog(EmpDialog empDialog) {

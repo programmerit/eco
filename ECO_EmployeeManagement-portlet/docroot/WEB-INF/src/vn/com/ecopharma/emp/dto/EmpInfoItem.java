@@ -67,6 +67,8 @@ public class EmpInfoItem implements Serializable {
 
 	private List<DocumentItem> documents;
 
+	private List<LaborContractItem> laborContracts;
+
 	private Specialized specialized;
 
 	private RegionItem workingPlace;
@@ -101,6 +103,8 @@ public class EmpInfoItem implements Serializable {
 
 		documents = EmployeeUtils.getDocumentItemsFromEmp(empId);
 
+		laborContracts = EmployeeUtils.getLaborContractItemsFromEmp(empId);
+
 		try {
 			user = UserLocalServiceUtil.fetchUser(employee.getEmpUserId());
 			fullName = EmployeeUtils.getViFullnameFromUser(user);
@@ -133,6 +137,7 @@ public class EmpInfoItem implements Serializable {
 		this.user = createNewUser();
 		this.employee = createNewEmp();
 		this.isEdit = false;
+		this.laborContracts = new ArrayList<>();
 	}
 
 	private Emp createNewEmp() {
@@ -343,6 +348,14 @@ public class EmpInfoItem implements Serializable {
 		this.documents = documents;
 	}
 
+	public List<LaborContractItem> getLaborContracts() {
+		return laborContracts;
+	}
+
+	public void setLaborContracts(List<LaborContractItem> laborContracts) {
+		this.laborContracts = laborContracts;
+	}
+
 	public boolean isUpdatingAuthorized() {
 
 		if (isEdit) {
@@ -360,5 +373,22 @@ public class EmpInfoItem implements Serializable {
 			return permissionBean.checkPermission("ADD");
 		}
 
+	}
+
+	public LaborContractItem getLatestContractItem() {
+		if (laborContracts.isEmpty()) {
+			laborContracts.add(new LaborContractItem());
+		}
+
+		if (laborContracts.size() == 1) {
+			return laborContracts.get(0);
+		}
+
+		for (LaborContractItem item : laborContracts) {
+			if (item.getObject().isLatest()) {
+				return item;
+			}
+		}
+		return laborContracts.get(0);
 	}
 }

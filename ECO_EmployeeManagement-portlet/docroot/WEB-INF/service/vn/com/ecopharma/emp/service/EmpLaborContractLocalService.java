@@ -263,4 +263,10 @@ public interface EmpLaborContractLocalService extends BaseLocalService,
 	public vn.com.ecopharma.emp.model.EmpLaborContract addEmpLaborContract(
 		vn.com.ecopharma.emp.model.EmpLaborContract empLaborContract,
 		com.liferay.portal.service.ServiceContext serviceContext);
+
+	/**
+	* transfer info from emp
+	*/
+	public void transferContractFromEmps(
+		com.liferay.portal.service.ServiceContext serviceContext);
 }

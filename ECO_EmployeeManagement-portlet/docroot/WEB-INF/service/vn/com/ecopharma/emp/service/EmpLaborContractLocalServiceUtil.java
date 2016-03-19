@@ -291,6 +291,14 @@ public class EmpLaborContractLocalServiceUtil {
 		return getService().addEmpLaborContract(empLaborContract, serviceContext);
 	}
 
+	/**
+	* transfer info from emp
+	*/
+	public static void transferContractFromEmps(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		getService().transferContractFromEmps(serviceContext);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}
