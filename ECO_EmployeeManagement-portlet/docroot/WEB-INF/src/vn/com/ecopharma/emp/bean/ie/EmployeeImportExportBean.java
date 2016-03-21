@@ -33,6 +33,7 @@ import vn.com.ecopharma.emp.dto.FilterDTO;
 import vn.com.ecopharma.emp.dto.ImportExportEmployeeDTO;
 import vn.com.ecopharma.emp.enumeration.EmployeeExportType;
 import vn.com.ecopharma.emp.model.Emp;
+import vn.com.ecopharma.emp.model.EmpLaborContract;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
@@ -268,6 +269,8 @@ public class EmployeeImportExportBean implements Serializable {
 					.transferDependentNameObjectListToDependentNameMap(EmployeeUtils
 							.getDependentNamesFromString(dto
 									.getDependentNames()));
+			// final Map<EmpLaborContract, Boolean> contractInfoMap =
+			// EmployeeUtils.transferEmpLaborContractInfoListToEmpLaborContractMap(dto.get)
 
 			Emp checkExistEmp = EmpLocalServiceUtil.findByEmpCode(dto
 					.getEmployeeCode());
@@ -338,10 +341,13 @@ public class EmployeeImportExportBean implements Serializable {
 						employee.setUnitId(dto.getUnitId());
 						employee.setLevelId(dto.getLevelId());
 						employee.setBirthday(dto.getDob());
+
+						// TODO: labor contract!!!!
 						EmpLocalServiceUtil.addOrUpdateWithExistUser(employee,
 								originGeneratedUserScreenName,
 								employee.getTitlesId(), addressMap,
-								dependentNameMap, dto.getBankInfoMap(), true,
+								dependentNameMap, dto.getBankInfoMap(),
+								new HashMap<EmpLaborContract, Boolean>(), true,
 								serviceContext);
 					}
 
@@ -358,9 +364,11 @@ public class EmployeeImportExportBean implements Serializable {
 				user.setFirstName(dto.getFirstName());
 				user.setMiddleName(dto.getMiddleName());
 				user.setLastName(dto.getLastName());
+				// TODO: labor contract!!!
 				EmpLocalServiceUtil.update(checkExistEmp, user,
 						checkExistEmp.getTitlesId(), addressMap,
-						dependentNameMap, dto.getBankInfoMap(), true,
+						dependentNameMap, dto.getBankInfoMap(),
+						new HashMap<EmpLaborContract, Boolean>(), true,
 						serviceContext);
 			}
 		}

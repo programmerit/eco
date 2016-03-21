@@ -2,6 +2,7 @@ package vn.com.ecopharma.emp.dto;
 
 import java.util.Date;
 
+import vn.com.ecopharma.emp.enumeration.LaborContractType;
 import vn.com.ecopharma.emp.model.EmpLaborContract;
 import vn.com.ecopharma.emp.service.EmpLaborContractLocalServiceUtil;
 import vn.com.ecopharma.emp.util.EmployeeUtils;
@@ -17,6 +18,8 @@ public class LaborContractItem extends
 
 	public LaborContractItem() {
 		super();
+		this.getObject().setLaborContractSignedType(
+				LaborContractType.DEFINITE_TERMS_12_MONTHS.toString());// default
 	}
 
 	public LaborContractItem(EmpLaborContract obj) {
@@ -40,7 +43,7 @@ public class LaborContractItem extends
 		if (thatSignedDate == null)
 			if (thisSignedDate != null)
 				return 1;
-		
+
 		if (thisSignedDate == null)
 			if (thatSignedDate != null)
 				return -1;

@@ -42,6 +42,7 @@ import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.District;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
+import vn.com.ecopharma.emp.model.EmpLaborContract;
 import vn.com.ecopharma.emp.model.EmpNotifyEmail;
 import vn.com.ecopharma.emp.model.EmpOrgRelationship;
 import vn.com.ecopharma.emp.model.PromotedHistory;
@@ -533,16 +534,18 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	 * @throws PortalException
 	 */
 	public Emp addEmp(Emp employee, User generatedUser, boolean autoPassword,
-			String password1, String password2,
+			String password1,
+			String password2,
 			boolean autoScreenName,
 			String screenName,
 			boolean male,
 			boolean sendEmail, // End user part
 			Map<Address, Boolean> addresses,
 			Map<String, Boolean> dependentNameMap,
-			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isImportAction,
-			ServiceContext serviceContext) throws SystemException,
-			PortalException {
+			Map<EmpBankInfo, Boolean> bankInfoMap,
+			Map<EmpLaborContract, Boolean> contractInfoMap,
+			boolean isImportAction, ServiceContext serviceContext)
+			throws SystemException, PortalException {
 		// bind fields
 		final Calendar cal = Calendar.getInstance();
 		cal.setTime(employee.getBirthday());
@@ -639,6 +642,18 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 					&& StringUtils.trimToNull(empBankInfo.getBankName()) != null) {
 				empBankInfo.setEmpId(employee.getEmpId());
 				empBankInfoLocalService.addEmpBankInfo(empBankInfo,
+						serviceContext);
+			}
+		}
+
+		// Add employee's labor contract info
+		for (Map.Entry<EmpLaborContract, Boolean> entry : contractInfoMap
+				.entrySet()) {
+			EmpLaborContract obj = entry.getKey();
+
+			if (!entry.getValue() && obj.getLaborContractSignedDate() != null) {
+				obj.setEmpId(employee.getEmpId());
+				empLaborContractLocalService.addEmpLaborContract(obj,
 						serviceContext);
 			}
 		}
@@ -864,13 +879,14 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	public Emp update(Emp employee, long userId, long oldTitlesId,
 			Map<Address, Boolean> addressesMap,
 			Map<String, Boolean> dependentNameMap,
-			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isImportAction,
-			ServiceContext serviceContext) {
+			Map<EmpBankInfo, Boolean> bankInfoMap,
+			Map<EmpLaborContract, Boolean> contractInfoMap,
+			boolean isImportAction, ServiceContext serviceContext) {
 		try {
 			User user = userLocalService.fetchUser(userId);
 			return update(employee, user, oldTitlesId, addressesMap,
-					dependentNameMap, bankInfoMap, isImportAction,
-					serviceContext);
+					dependentNameMap, bankInfoMap, contractInfoMap,
+					isImportAction, serviceContext);
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}
@@ -880,8 +896,9 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	public Emp update(Emp employee, User user, long oldTitlesId,
 			Map<Address, Boolean> addressesMap,
 			Map<String, Boolean> dependentNameMap,
-			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isImportAction,
-			ServiceContext serviceContext) {
+			Map<EmpBankInfo, Boolean> bankInfoMap,
+			Map<EmpLaborContract, Boolean> contractInfoMap,
+			boolean isImportAction, ServiceContext serviceContext) {
 		try {
 			final long empId = employee.getEmpId();
 			boolean isPositionChanged = false;
@@ -1032,6 +1049,40 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 
 			}
 
+			// Add employee's contract info
+			for (Map.Entry<EmpLaborContract, Boolean> entry : contractInfoMap
+					.entrySet()) {
+				final EmpLaborContract obj = entry.getKey();
+				if (!entry.getValue()) {
+					if (empLaborContractLocalService.fetchEmpLaborContract(obj
+							.getEmpLaborContractId()) == null) {
+						if (obj.getLaborContractSignedDate() != null
+								&& obj.getLaborContractSignedType() != null) {
+							obj.setEmpId(employee.getEmpId());
+							empLaborContractLocalService.addEmpLaborContract(
+									obj, serviceContext);
+						}
+					} else {
+						if (obj.getLaborContractSignedDate() == null
+								|| obj.getLaborContractSignedType() == null) {
+							empLaborContractLocalService
+									.deleteEmpLaborContract(obj
+											.getEmpLaborContractId());
+						} else {
+							empLaborContractLocalService
+									.updateEmpLaborContract(obj);
+						}
+					}
+				} else {
+					if (empBankInfoLocalService.fetchEmpBankInfo(obj
+							.getEmpLaborContractId()) != null) {
+						empLaborContractLocalService.deleteEmpLaborContract(obj
+								.getEmpLaborContractId());
+					}
+				}
+
+			}
+
 			// set back to employee
 			employee.setNumberOfDependents(dependentNamesCount); // NOSONAR
 			employee.setDependentNames(namesBuilder.toString());
@@ -1084,13 +1135,14 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	public Emp addOrUpdateWithExistUser(Emp employee, User user,
 			long oldTitlesId, Map<Address, Boolean> addressesMap,
 			Map<String, Boolean> dependentNameMap,
-			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isImportAction,
-			ServiceContext serviceContext) {
+			Map<EmpBankInfo, Boolean> bankInfoMap,
+			Map<EmpLaborContract, Boolean> contractInfoMap,
+			boolean isImportAction, ServiceContext serviceContext) {
 		try {
 			if (super.fetchEmp(employee.getEmpId()) != null) { // call update
 				return update(employee, user, oldTitlesId, addressesMap,
-						dependentNameMap, bankInfoMap, isImportAction,
-						serviceContext);
+						dependentNameMap, bankInfoMap, contractInfoMap,
+						isImportAction, serviceContext);
 			} else {
 				return addEmp(employee, user, addressesMap, dependentNameMap,
 						bankInfoMap, serviceContext);
@@ -1106,16 +1158,17 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	public Emp addOrUpdateWithExistUser(Emp employee, String userScreenName,
 			long oldTitlesId, Map<Address, Boolean> addressesMap,
 			Map<String, Boolean> dependentNameMap,
-			Map<EmpBankInfo, Boolean> bankInfoMap, boolean isImportAction,
-			ServiceContext serviceContext) {
+			Map<EmpBankInfo, Boolean> bankInfoMap,
+			Map<EmpLaborContract, Boolean> contractInfoMap,
+			boolean isImportAction, ServiceContext serviceContext) {
 		try {
 			User user = userLocalService.getUserByScreenName(
 					serviceContext.getCompanyId(), userScreenName);
 
 			if (super.fetchEmp(employee.getEmpId()) != null) { // call update
 				return update(employee, user, oldTitlesId, addressesMap,
-						dependentNameMap, bankInfoMap, isImportAction,
-						serviceContext);
+						dependentNameMap, bankInfoMap, contractInfoMap,
+						isImportAction, serviceContext);
 			} else {
 				return addEmp(employee, user, addressesMap, dependentNameMap,
 						bankInfoMap, serviceContext);

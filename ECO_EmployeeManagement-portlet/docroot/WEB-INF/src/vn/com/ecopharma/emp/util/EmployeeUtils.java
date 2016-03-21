@@ -4,7 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PipedOutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,8 +58,6 @@ import com.liferay.portal.util.PortalUtil;
 public class EmployeeUtils {
 
 	private static final String ZIP_CODE = "70000";
-
-	private static final String EMAIL_SUFFIX = "@ecopharma.com.vn";
 
 	private static final Log LOGGER = LogFactoryUtil
 			.getLog(EmployeeUtils.class);
@@ -203,6 +200,15 @@ public class EmployeeUtils {
 		return resultMap;
 	}
 
+	public static Map<EmpLaborContract, Boolean> transferEmpLaborContractInfoListToEmpLaborContractMap(
+			List<LaborContractItem> items) {
+		final Map<EmpLaborContract, Boolean> resultMap = new HashMap<>();
+		for (LaborContractItem obj : items) {
+			resultMap.put(obj.getObject(), obj.isUIDeleted());
+		}
+		return resultMap;
+	}
+
 	public static int numberOfValidDependentName(List<DependentName> items) {
 		int count = 0;
 		for (DependentName item : items) {
@@ -319,14 +325,6 @@ public class EmployeeUtils {
 				LogFactoryUtil.getLog(EmployeeUtils.class).info(e);
 			}
 		}
-	}
-
-	public static String exceptionStacktraceToString(Exception e) {
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		PrintStream ps = new PrintStream(baos);
-		e.printStackTrace(ps); // NOSONAR
-		ps.close();
-		return baos.toString();
 	}
 
 	public static List<String> getResignationTypes() {

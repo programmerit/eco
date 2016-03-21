@@ -459,6 +459,7 @@ public class EmpLocalServiceUtil {
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addresses,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpLaborContract, java.lang.Boolean> contractInfoMap,
 		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -466,7 +467,8 @@ public class EmpLocalServiceUtil {
 		return getService()
 				   .addEmp(employee, generatedUser, autoPassword, password1,
 			password2, autoScreenName, screenName, male, sendEmail, addresses,
-			dependentNameMap, bankInfoMap, isImportAction, serviceContext);
+			dependentNameMap, bankInfoMap, contractInfoMap, isImportAction,
+			serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp addEmp(
@@ -515,11 +517,13 @@ public class EmpLocalServiceUtil {
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpLaborContract, java.lang.Boolean> contractInfoMap,
 		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
 				   .update(employee, userId, oldTitlesId, addressesMap,
-			dependentNameMap, bankInfoMap, isImportAction, serviceContext);
+			dependentNameMap, bankInfoMap, contractInfoMap, isImportAction,
+			serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp update(
@@ -528,11 +532,13 @@ public class EmpLocalServiceUtil {
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpLaborContract, java.lang.Boolean> contractInfoMap,
 		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
 				   .update(employee, user, oldTitlesId, addressesMap,
-			dependentNameMap, bankInfoMap, isImportAction, serviceContext);
+			dependentNameMap, bankInfoMap, contractInfoMap, isImportAction,
+			serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp updateExistedEmployee(
@@ -569,12 +575,13 @@ public class EmpLocalServiceUtil {
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpLaborContract, java.lang.Boolean> contractInfoMap,
 		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
 				   .addOrUpdateWithExistUser(employee, user, oldTitlesId,
-			addressesMap, dependentNameMap, bankInfoMap, isImportAction,
-			serviceContext);
+			addressesMap, dependentNameMap, bankInfoMap, contractInfoMap,
+			isImportAction, serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp addOrUpdateWithExistUser(
@@ -583,12 +590,13 @@ public class EmpLocalServiceUtil {
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpLaborContract, java.lang.Boolean> contractInfoMap,
 		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
 				   .addOrUpdateWithExistUser(employee, userScreenName,
 			oldTitlesId, addressesMap, dependentNameMap, bankInfoMap,
-			isImportAction, serviceContext);
+			contractInfoMap, isImportAction, serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.Emp createEmployee(

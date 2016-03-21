@@ -482,14 +482,15 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addresses,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpLaborContract, java.lang.Boolean> contractInfoMap,
 		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _empLocalService.addEmp(employee, generatedUser, autoPassword,
 			password1, password2, autoScreenName, screenName, male, sendEmail,
-			addresses, dependentNameMap, bankInfoMap, isImportAction,
-			serviceContext);
+			addresses, dependentNameMap, bankInfoMap, contractInfoMap,
+			isImportAction, serviceContext);
 	}
 
 	@Override
@@ -539,11 +540,12 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpLaborContract, java.lang.Boolean> contractInfoMap,
 		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return _empLocalService.update(employee, userId, oldTitlesId,
-			addressesMap, dependentNameMap, bankInfoMap, isImportAction,
-			serviceContext);
+			addressesMap, dependentNameMap, bankInfoMap, contractInfoMap,
+			isImportAction, serviceContext);
 	}
 
 	@Override
@@ -553,11 +555,12 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpLaborContract, java.lang.Boolean> contractInfoMap,
 		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return _empLocalService.update(employee, user, oldTitlesId,
-			addressesMap, dependentNameMap, bankInfoMap, isImportAction,
-			serviceContext);
+			addressesMap, dependentNameMap, bankInfoMap, contractInfoMap,
+			isImportAction, serviceContext);
 	}
 
 	@Override
@@ -595,11 +598,12 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpLaborContract, java.lang.Boolean> contractInfoMap,
 		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return _empLocalService.addOrUpdateWithExistUser(employee, user,
 			oldTitlesId, addressesMap, dependentNameMap, bankInfoMap,
-			isImportAction, serviceContext);
+			contractInfoMap, isImportAction, serviceContext);
 	}
 
 	@Override
@@ -609,11 +613,12 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 		java.util.Map<com.liferay.portal.model.Address, java.lang.Boolean> addressesMap,
 		java.util.Map<java.lang.String, java.lang.Boolean> dependentNameMap,
 		java.util.Map<vn.com.ecopharma.emp.model.EmpBankInfo, java.lang.Boolean> bankInfoMap,
+		java.util.Map<vn.com.ecopharma.emp.model.EmpLaborContract, java.lang.Boolean> contractInfoMap,
 		boolean isImportAction,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return _empLocalService.addOrUpdateWithExistUser(employee,
 			userScreenName, oldTitlesId, addressesMap, dependentNameMap,
-			bankInfoMap, isImportAction, serviceContext);
+			bankInfoMap, contractInfoMap, isImportAction, serviceContext);
 	}
 
 	@Override

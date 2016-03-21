@@ -17,6 +17,7 @@ import vn.com.ecopharma.emp.model.Unit;
 import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
+import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
@@ -53,27 +54,31 @@ public class SearchEngineUtils {
 		final Devision devision = department != null ? DevisionLocalServiceUtil
 				.getDevision(department.getDevisionId()) : null;
 
-		document.addText(EmpField.TITLES,
-				titles != null ? EmployeeUtils.removeDashChar(titles.getName())
-						: StringUtils.EMPTY);
+		document.addText(
+				EmpField.TITLES,
+				titles != null ? EmpLocalServiceUtil.removeDashChar(titles
+						.getName()) : StringUtils.EMPTY);
 
 		document.addText(
 				EmpField.UNIT_GROUP,
-				unitGroup != null ? EmployeeUtils.removeDashChar(unitGroup
-						.getName()) : StringUtils.EMPTY);
-
-		document.addText(EmpField.UNIT,
-				unit != null ? EmployeeUtils.removeDashChar(unit.getName())
+				unitGroup != null ? EmpLocalServiceUtil
+						.removeDashChar(unitGroup.getName())
 						: StringUtils.EMPTY);
 
 		document.addText(
-				EmpField.DEPARTMENT,
-				department != null ? EmployeeUtils.removeDashChar(department
+				EmpField.UNIT,
+				unit != null ? EmpLocalServiceUtil.removeDashChar(unit
 						.getName()) : StringUtils.EMPTY);
 
 		document.addText(
+				EmpField.DEPARTMENT,
+				department != null ? EmpLocalServiceUtil
+						.removeDashChar(department.getName())
+						: StringUtils.EMPTY);
+
+		document.addText(
 				EmpField.DEVISION,
-				devision != null ? EmployeeUtils.removeDashChar(devision
+				devision != null ? EmpLocalServiceUtil.removeDashChar(devision
 						.getName()) : StringUtils.EMPTY);
 
 		document.addNumber(EmpField.DEVISION_ID,

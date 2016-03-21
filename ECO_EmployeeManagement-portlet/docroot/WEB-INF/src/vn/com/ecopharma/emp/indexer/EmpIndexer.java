@@ -18,7 +18,6 @@ import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
 import vn.com.ecopharma.emp.service.SpecializedLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
 import vn.com.ecopharma.emp.service.persistence.EmpActionableDynamicQuery;
-import vn.com.ecopharma.emp.util.EmployeeUtils;
 import vn.com.ecopharma.emp.util.ImportExportUtils;
 import vn.com.ecopharma.emp.util.SearchEngineUtils;
 
@@ -140,11 +139,11 @@ public class EmpIndexer extends BaseIndexer {
 		Address address = EmpLocalServiceUtil.getPresentAddress(
 				emp.getCompanyId(), emp.getEmpId());
 		document.addText(EmpField.ADDRESS,
-				EmployeeUtils.removeDashChar(ImportExportUtils
+				EmpLocalServiceUtil.removeDashChar(ImportExportUtils
 						.getFullAddressString(address)));
 		document.addText(
 				EmpField.CITY,
-				address != null ? EmployeeUtils.removeDashChar(address
+				address != null ? EmpLocalServiceUtil.removeDashChar(address
 						.getRegion().getName()) : StringUtils.EMPTY);
 		document.addText(EmpField.EMAIL,
 				UserLocalServiceUtil.getUser(emp.getEmpUserId())
@@ -169,7 +168,7 @@ public class EmpIndexer extends BaseIndexer {
 		document.addDate(EmpField.RESIGNED_DATE, emp.getResignedDate());
 
 		document.addText(EmpField.STATUS,
-				EmployeeUtils.removeDashChar(emp.getStatus()));
+				EmpLocalServiceUtil.removeDashChar(emp.getStatus()));
 
 		document.addText(EmpField.IS_DELETED, emp.isDeleted() ? "true"
 				: "false");

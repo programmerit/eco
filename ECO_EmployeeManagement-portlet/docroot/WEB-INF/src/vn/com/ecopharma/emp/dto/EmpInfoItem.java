@@ -15,7 +15,6 @@ import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.Specialized;
 import vn.com.ecopharma.emp.model.University;
 import vn.com.ecopharma.emp.permission.EmpPermission;
-import vn.com.ecopharma.emp.permission.EmployeeModelPermission;
 import vn.com.ecopharma.emp.service.CertificateLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.SpecializedLocalServiceUtil;
@@ -199,7 +198,7 @@ public class EmpInfoItem implements Serializable {
 				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 
 	public void setEmp(Emp employee) {
@@ -290,6 +289,10 @@ public class EmpInfoItem implements Serializable {
 		this.bankInfos = bankInfos;
 	}
 
+	public BankInfoObject getFirstBankInfoObj() {
+		return bankInfos.get(0);
+	}
+
 	public Specialized getSpecialized() {
 		return specialized;
 	}
@@ -356,25 +359,6 @@ public class EmpInfoItem implements Serializable {
 		this.laborContracts = laborContracts;
 	}
 
-	public boolean isUpdatingAuthorized() {
-
-		if (isEdit) {
-			final EmpPermission permissionBean = BeanUtils
-					.getEmpPermissionBean();
-			return permissionBean
-					.checkPermission(employee.getEmpId(), "UPDATE")
-					|| (employee.getLaborContractType().equals(
-							LaborContractType.PROBATION_CONTRACT.toString()) && permissionBean
-							.checkPermission(employee.getEmpId(),
-									"PROBATION_UPDATE"));
-		} else {
-			final EmployeeModelPermission permissionBean = BeanUtils
-					.getEmpModelPermission();
-			return permissionBean.checkPermission("ADD");
-		}
-
-	}
-
 	public LaborContractItem getLatestContractItem() {
 		if (laborContracts.isEmpty()) {
 			laborContracts.add(new LaborContractItem());
@@ -384,11 +368,37 @@ public class EmpInfoItem implements Serializable {
 			return laborContracts.get(0);
 		}
 
+		return laborContracts.get(laborContracts.size() - 1);
+	}
+
+	public boolean isValidForDeletingContract() {
+		if (laborContracts.isEmpty())
+			return false;
+
+		if (laborContracts.size() == 1)
+			return false;
+
+		int deletedCount = 0;
 		for (LaborContractItem item : laborContracts) {
-			if (item.getObject().isLatest()) {
-				return item;
-			}
+			if (item.isUIDeleted())
+				deletedCount++;
 		}
-		return laborContracts.get(0);
+
+		if (deletedCount < laborContracts.size() - 1)
+			return true;
+		return false;
+	}
+
+	public boolean isUpdatingAuthorized() {
+
+		if (!isEdit)
+			return BeanUtils.getEmpModelPermission().checkPermission("ADD");
+
+		final EmpPermission permissionBean = BeanUtils.getEmpPermissionBean();
+		return permissionBean.checkPermission(employee.getEmpId(), "UPDATE")
+				|| (employee.getLaborContractType().equals(
+						LaborContractType.PROBATION_CONTRACT.toString()) && permissionBean
+						.checkPermission(employee.getEmpId(),
+								"PROBATION_UPDATE"));
 	}
 }

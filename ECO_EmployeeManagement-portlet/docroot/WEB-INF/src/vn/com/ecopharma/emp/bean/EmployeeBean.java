@@ -43,6 +43,7 @@ import vn.com.ecopharma.emp.enumeration.ResignationType;
 import vn.com.ecopharma.emp.model.Document;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
+import vn.com.ecopharma.emp.model.EmpLaborContract;
 import vn.com.ecopharma.emp.model.Level;
 import vn.com.ecopharma.emp.model.ResignationHistory;
 import vn.com.ecopharma.emp.model.Specialized;
@@ -220,6 +221,10 @@ public class EmployeeBean implements Serializable {
 					.transferBankInfoObjectListToBankInfoMap(modifyEmployeeInfoItem
 							.getBankInfos());
 
+			final Map<EmpLaborContract, Boolean> contractInfoMap = EmployeeUtils
+					.transferEmpLaborContractInfoListToEmpLaborContractMap(modifyEmployeeInfoItem
+							.getLaborContracts());
+
 			generatedUser.setFirstName(EmpLocalServiceUtil
 					.getFirstName(modifyEmployeeInfoItem.getFullName()));
 			generatedUser.setMiddleName(EmpLocalServiceUtil
@@ -248,7 +253,7 @@ public class EmployeeBean implements Serializable {
 						modifyEmployeeInfoItem.getUserName(), employee
 								.getGender().equalsIgnoreCase(MALE) ? true
 								: false, sendEmail, addressMap, dependentMap,
-						bankInfoMap, false, serviceContext);
+						bankInfoMap, contractInfoMap, false, serviceContext);
 
 				if (result != null) {
 					msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -267,8 +272,8 @@ public class EmployeeBean implements Serializable {
 			} else {
 				EmpLocalServiceUtil.update(employee,
 						modifyEmployeeInfoItem.getUser(), oldTitlesId,
-						addressMap, dependentMap, bankInfoMap, Boolean.FALSE,
-						serviceContext);
+						addressMap, dependentMap, bankInfoMap, contractInfoMap,
+						Boolean.FALSE, serviceContext);
 
 				msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 						"Update employee successfully", "Employee "
@@ -318,18 +323,31 @@ public class EmployeeBean implements Serializable {
 			modifyEmployeeInfoItem.getBankInfos().add(new BankInfoObject());
 	}
 
-	public void removeOneBankInfo(int index) {
-		modifyEmployeeInfoItem.getBankInfos().get(index).setUIDeleted(true);
+	public void removeBank(BankInfoObject bank) {
+		bank.setUIDeleted(true);
+	}
+
+	public boolean isDeletedBank(BankInfoObject bank) {
+		return bank.isUIDeleted();
+	}
+
+	public void onTempSaveBankInfo(ActionEvent event) {
+
 	}
 
 	public void addOneContractInfo() {
 		modifyEmployeeInfoItem.getLaborContracts().add(new LaborContractItem());
 	}
 
+	public void removeContract(LaborContractItem item) {
+		item.setUIDeleted(true);
+	}
+
 	public void onTempSaveContractInfo() {
 		Collections.sort(modifyEmployeeInfoItem.getLaborContracts());
-		modifyEmployeeInfoItem.getLaborContracts().get(0).getObject()
-				.setLatest(true);
+		modifyEmployeeInfoItem.getLaborContracts()
+				.get(modifyEmployeeInfoItem.getLaborContracts().size() - 1)
+				.getObject().setLatest(true);
 	}
 
 	/**

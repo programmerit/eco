@@ -101,6 +101,7 @@ public class EmpLaborContractLocalServiceImpl extends
 		for (Emp emp : empLocalService.findAll()) {
 			if (emp.getLaborContractSignedDate() != null) {
 				EmpLaborContract contract = createPrePersistedEntity(serviceContext);
+				contract.setEmpId(emp.getEmpId());
 				contract.setLaborContractSignedDate(emp
 						.getLaborContractSignedDate());
 				contract.setLaborContractExpiredDate(emp
@@ -108,7 +109,7 @@ public class EmpLaborContractLocalServiceImpl extends
 				contract.setLaborContractSignedType(emp.getLaborContractType());
 				contract.setSignedTimes(emp.getLaborContractSignedTime());
 				contract.setLatest(true);
-				addEmpLaborContract(contract, serviceContext);
+				this.addEmpLaborContract(contract, serviceContext);
 			}
 		}
 	}

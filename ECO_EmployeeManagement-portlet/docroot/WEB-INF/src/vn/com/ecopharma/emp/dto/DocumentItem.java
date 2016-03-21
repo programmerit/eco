@@ -57,4 +57,11 @@ public class DocumentItem extends AbstractUIBaseModelItem<Document> {
 				.getExternalContext().getRequest();
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
+
+	
+	
 }

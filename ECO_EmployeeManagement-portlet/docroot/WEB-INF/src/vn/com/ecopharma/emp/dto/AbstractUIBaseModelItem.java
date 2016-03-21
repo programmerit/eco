@@ -73,11 +73,10 @@ public abstract class AbstractUIBaseModelItem<T extends BaseModel<T>>
 		return result;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof AbstractUIBaseModelItem)
-			return this.getObjectPrimaryKey() == ((AbstractUIBaseModelItem) obj)
+		if (obj instanceof AbstractUIBaseModelItem<?>)
+			return this.getObjectPrimaryKey() == ((AbstractUIBaseModelItem<?>) obj)
 					.getObjectPrimaryKey();
 		return false;
 	}
