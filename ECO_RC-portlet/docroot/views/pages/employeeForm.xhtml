@@ -16,7 +16,10 @@
 				update=":modifyForm:accordion:addressesPanelGrid" />
 
 			<p:remoteCommand name="refreshBankInfos"
-				update=":bankInfoForm:bankInfosOutputPanel" />
+				update=":modifyForm:accordion:bankInfoGrid" />
+
+			<p:remoteCommand name="refreshContractInfos"
+				update=":contractInfoForm:contractInfosPanelGrid" />
 
 			<p:remoteCommand name="refreshUsername"
 				update=":modifyForm:accordion:username" />
@@ -24,6 +27,14 @@
 			<p:remoteCommand name="refreshPasswordFields"
 				update=":modifyForm:accordion:userPassword1 :modifyForm:accordion:userPassword2" />
 
+			<p:remoteCommand name="refreshDependentComponent"
+				update=":modifyForm:accordion:dependentOutputPanel :modifyForm:accordion:noItemsPanelGroup" />
+
+			<p:commandLink value="Back"
+				action="#{employeeBean.cancelModification}" immediate="true"
+				update=":empPanelGroup">
+				<p:resetInput target=":modifyForm" />
+			</p:commandLink>
 			<p:accordionPanel id="accordion" multiple="true"
 				style="margin-bottom:20px;" activeIndex="0">
 				<p:tab id="personal_info"
@@ -166,9 +177,6 @@
 						</h:panelGrid>
 					</p:panelGrid>
 				</p:tab>
-				<p:tab id="educationTab" title="Education" rendered="false">
-
-				</p:tab>
 
 				<p:tab id="workingDetail" title="Work Information">
 					<p:panelGrid columns="2" layout="grid">
@@ -195,7 +203,8 @@
 										rendered="#{employeeBean.modifyEmployeeInfoItem.documents.size() eq 0}">
 										<h:outputText styleClass="no-item-label" value="No Documents" />
 										<br />
-										<p:commandLink value="Upload"
+										<p:commandLink value="+" styleClass="linkBtn"
+											style="margin-left:60px;"
 											onclick="PF('wUploadDocumentDialog').show();" />
 									</h:panelGroup>
 									<h:panelGroup
@@ -204,14 +213,21 @@
 											value="#{employeeBean.modifyEmployeeInfoItem.documents}"
 											varStatus="status">
 											<h:panelGroup rendered="#{not doc.UIDeleted}">
+												<p:panelGrid columns="3" styleClass="add-remove-panel">
+													<p:commandLink value="#{doc.fileEntry.title}"
+														onclick="window.location = '#{doc.fileURL}'" />
 
-												<p:commandLink value="#{doc.fileEntry.title}"
-													onclick="window.location = '#{doc.fileURL}'" />
-												<p:commandLink value="[X]" style="margin-left: 5px;"
-													onclick="PF('wDeleteDocumentConfirmDialog').show()">
-													<f:setPropertyActionListener value="#{status.index}"
-														target="#{employeeBean.deletedDocumentIndex}" />
-												</p:commandLink>
+													<p:commandLink value="+"
+														styleClass="smallLinkBtn addLinkBtn"
+														onclick="PF('wUploadDocumentDialog').show();" />
+
+													<p:commandLink value="-"
+														styleClass="smallLinkBtn deleteLinkBtn"
+														onclick="PF('wDeleteDocumentConfirmDialog').show()">
+														<f:setPropertyActionListener value="#{status.index}"
+															target="#{employeeBean.deletedDocumentIndex}" />
+													</p:commandLink>
+												</p:panelGrid>
 											</h:panelGroup>
 										</ui:repeat>
 									</h:panelGroup>
@@ -231,7 +247,8 @@
 
 							<h:outputText value="Contract Signed Date" />
 							<p:calendar id="laborContractSignedDate" mask="true"
-								value="#{employeeBean.modifyEmployeeInfoItem.emp.laborContractSignedDate}"
+								style="color: black;" disabled="true"
+								value="#{employeeBean.modifyEmployeeInfoItem.latestContractItem.object.laborContractSignedDate}"
 								pattern="dd/MM/yyyy" placeholder="Labor Contract Signed Date">
 							</p:calendar>
 							<p:message for="laborContractSignedDate" display="icon" />
@@ -241,7 +258,8 @@
 
 							<h:outputText value="Contract Expired Date" />
 							<p:calendar id="laborContractExpiredDate" mask="true"
-								value="#{employeeBean.modifyEmployeeInfoItem.emp.laborContractExpiredDate}"
+								style="color: black;" disabled="true"
+								value="#{employeeBean.modifyEmployeeInfoItem.latestContractItem.object.laborContractExpiredDate}"
 								pattern="dd/MM/yyyy" placeholder="Labor Contract Expired Date" />
 							<p:message for="laborContractExpiredDate" display="icon" />
 							<p:tooltip for="laborContractExpiredDate"
@@ -249,9 +267,10 @@
 								hideEffect="explode" />
 
 							<h:outputText value="Contract Type" />
-							<p:selectOneMenu id="laborContractType"
-								value="#{employeeBean.modifyEmployeeInfoItem.emp.laborContractType}"
-								converter="laborContractTypeConverter" effect="fade">
+							<p:selectOneMenu id="laborContractType" disabled="true"
+								value="#{employeeBean.modifyEmployeeInfoItem.latestContractItem.object.laborContractSignedType}"
+								style="color: black;" converter="laborContractTypeConverter"
+								effect="fade">
 								<f:selectItem itemLabel="Contract Type" itemValue="" />
 								<f:selectItems value="#{employeeBean.laborContractTypes}"
 									var="l"
@@ -265,61 +284,62 @@
 							<p:tooltip for="laborContractType" value="Labor Contract Type"
 								showEffect="clip" hideEffect="explode" />
 
-							<h:outputText value="Education" />
-							<p:selectOneMenu id="educationSelect"
-								value="#{employeeBean.modifyEmployeeInfoItem.emp.education}">
-								<f:selectItem itemLabel="Education" itemValue="" />
-								<f:selectItems value="#{employeeBean.educationTypes}" var="e"
-									itemLabel="#{e}" itemValue="#{e}" />
-								<p:column>#{e}</p:column>
-							</p:selectOneMenu>
-							<p:message for="educationSelect" display="icon" />
-							<p:tooltip for="educationSelect" value="Education"
-								showEffect="clip" hideEffect="explode" />
+							<h:outputText />
+							<p:commandLink value="View all contracts info..."
+								onclick="PF('wContractInfoDialog').show();" />
 
-							<h:outputText value="Education Specialize" />
-							<p:inputText id="educationSpecialize"
-								value="#{employeeBean.modifyEmployeeInfoItem.emp.educationSpecialize}"
-								placeholder="Education Specialize" />
-							<p:message for="educationSpecialize" display="icon" />
-							<p:tooltip for="educationSpecialize" value="Education Specialize"
-								showEffect="clip" hideEffect="explode" />
-
-							<h:outputText value="Specialized" />
-							<p:selectOneMenu id="specializedSelect"
-								value="#{employeeBean.modifyEmployeeInfoItem.specialized}"
-								converter="specializedConverter" effect="fade" filter="true"
-								filterMatchMode="contains" var="s">
-
-								<f:selectItem itemLabel="Specialized" itemValue="" />
-								<f:selectItems value="#{employeeBean.specializeds}" var="s"
-									itemLabel="#{s.name}" itemValue="#{s}" />
-								<p:column>
-					                #{s.name}
-					            </p:column>
-							</p:selectOneMenu>
-							<p:message for="specializedSelect" display="icon" />
-							<p:tooltip for="specializedSelect" value="Specialized"
-								showEffect="clip" hideEffect="explode" />
-
-							<h:outputText value="University" />
-							<p:selectOneMenu id="universitySelect"
-								value="#{employeeBean.modifyEmployeeInfoItem.university}"
-								converter="universityConverter" effect="fade" filter="true"
-								filterMatchMode="contains" var="u">
-
-								<f:selectItem itemLabel="University" itemValue="" />
-								<f:selectItems value="#{employeeBean.universities}" var="u"
-									itemLabel="#{u.name}" itemValue="#{u}" />
-								<p:column>
-					                #{u.name}
-					            </p:column>
-							</p:selectOneMenu>
-							<p:message for="universitySelect" display="icon" />
-							<p:tooltip for="universitySelect" value="University"
-								showEffect="clip" hideEffect="explode" />
 						</h:panelGrid>
 					</p:panelGrid>
+				</p:tab>
+				<p:tab id="education_information" title="Education Information">
+					<h:panelGrid columns="4">
+
+						<h:outputText value="Education" />
+						<p:selectOneMenu id="educationSelect"
+							value="#{employeeBean.modifyEmployeeInfoItem.emp.education}">
+							<f:selectItem itemLabel="Education" itemValue="" />
+							<f:selectItems value="#{employeeBean.educationTypes}" var="e"
+								itemLabel="#{e}" itemValue="#{e}" />
+							<p:column>#{e}</p:column>
+						</p:selectOneMenu>
+						<p:message for="educationSelect" display="icon" />
+						<p:tooltip for="educationSelect" value="Education"
+							showEffect="clip" hideEffect="explode" />
+
+						<h:outputText value="Specialized" />
+						<p:selectOneMenu id="specializedSelect"
+							value="#{employeeBean.modifyEmployeeInfoItem.specialized}"
+							converter="specializedConverter" effect="fade" filter="true"
+							filterMatchMode="contains" var="s">
+
+							<f:selectItem itemLabel="Specialized" itemValue="" />
+							<f:selectItems value="#{employeeBean.specializeds}" var="s"
+								itemLabel="#{s.name}" itemValue="#{s}" />
+							<p:column>
+					                #{s.name}
+					            </p:column>
+						</p:selectOneMenu>
+						<p:message for="specializedSelect" display="icon" />
+						<p:tooltip for="specializedSelect" value="Specialized"
+							showEffect="clip" hideEffect="explode" />
+
+						<h:outputText value="University" />
+						<p:selectOneMenu id="universitySelect"
+							value="#{employeeBean.modifyEmployeeInfoItem.university}"
+							converter="universityConverter" effect="fade" filter="true"
+							filterMatchMode="contains" var="u">
+
+							<f:selectItem itemLabel="University" itemValue="" />
+							<f:selectItems value="#{employeeBean.universities}" var="u"
+								itemLabel="#{u.name}" itemValue="#{u}" />
+							<p:column>
+					                #{u.name}
+					            </p:column>
+						</p:selectOneMenu>
+						<p:message for="universitySelect" display="icon" />
+						<p:tooltip for="universitySelect" value="University"
+							showEffect="clip" hideEffect="explode" />
+					</h:panelGrid>
 				</p:tab>
 				<p:tab id="other_information" title="Other Information">
 					<p:panelGrid columns="2" layout="grid">
@@ -358,70 +378,79 @@
 								hideEffect="explode" />
 
 							<h:outputText value="Dependent Names" />
-							<p:outputPanel autoUpdate="true" id="dependentOutputPanel">
+							<h:panelGroup id="dependentOutputPanel">
 								<h:panelGroup id="noItemsPanelGroup" styleClass="panel-message"
 									rendered="#{employeeBean.modifyEmployeeInfoItem.emptyOrAllDeletedDependentNames}">
 									<h:outputText styleClass="no-item-label" value="No Dependents" />
 									<br />
-									<p:commandLink value="Add"
+									<p:commandLink value="+" styleClass="linkBtn"
 										actionListener="#{employeeBean.onAddDependence}"
-										immediate="true" />
+										immediate="true" update="dependentOutputPanel" />
 								</h:panelGroup>
-
-								<h:panelGroup
+								<h:panelGroup id="dependentsPanelGroup"
 									rendered="#{not employeeBean.modifyEmployeeInfoItem.emptyOrAllDeletedDependentNames}">
 									<ui:repeat var="d"
 										value="#{employeeBean.modifyEmployeeInfoItem.dependentNames}"
 										varStatus="status">
 										<h:panelGroup rendered="#{not d.UIDeleted}"
 											style="display: block;">
-											<p:inputText value="#{d.name}" />
+											<p:panelGrid columns="3" styleClass="add-remove-panel">
+												<p:inputText value="#{d.name}" placeholder="input name"
+													style="width: 120px;" />
 
-											<p:commandLink value="+"
-												actionListener="#{employeeBean.onAddDependence}"
-												immediate="true" />
+												<p:commandLink value="+"
+													styleClass="smallLinkBtn addLinkBtn"
+													actionListener="#{employeeBean.onAddDependence}"
+													immediate="true"
+													update=":modifyForm:accordion:dependentOutputPanel" />
 
-											<p:commandLink value="-"
-												actionListener="#{employeeBean.onRemoveDependence(status.index)}"
-												immediate="true" />
+												<p:commandLink value="-"
+													styleClass="smallLinkBtn deleteLinkBtn"
+													actionListener="#{employeeBean.onRemoveDependence(status.index)}"
+													immediate="true" oncomplete="refreshDependentComponent();" />
+											</p:panelGrid>
 										</h:panelGroup>
 
 									</ui:repeat>
 								</h:panelGroup>
-							</p:outputPanel>
+							</h:panelGroup>
 							<h:outputText />
 							<h:outputText />
 
 						</h:panelGrid>
-						<h:panelGrid columns="4">
-							<h:outputText value="Bank No" />
-							<p:inputText id="bankNo" placeholder="Bank No"
-								value="#{employeeBean.modifyEmployeeInfoItem.bankInfos[0].object.bankAccountNo}" />
-							<p:message for="bankNo" display="icon" />
-							<p:tooltip for="bankNo" value="Bank No" showEffect="clip"
-								hideEffect="explode" />
+						<p:outputPanel autoUpdate="true">
+							<h:panelGrid columns="4" id="bankInfoGrid">
+								<h:outputText value="Bank No" />
+								<p:inputText id="bankNo" placeholder="Bank No" disabled="true"
+									style="color: black;"
+									value="#{employeeBean.modifyEmployeeInfoItem.firstBankInfoObj.object.bankAccountNo}" />
+								<p:message for="bankNo" display="icon" />
+								<p:tooltip for="bankNo" value="Bank No" showEffect="clip"
+									hideEffect="explode" />
 
-							<h:outputText value="Bank Name" />
-							<p:inputText id="bankName" placeholder="Bank Name"
-								value="#{employeeBean.modifyEmployeeInfoItem.bankInfos[0].object.bankName}" />
-							<p:message for="bankName" display="icon" />
-							<p:tooltip for="bankName" value="Bank Name" showEffect="clip"
-								hideEffect="explode" />
+								<h:outputText value="Bank Name" />
+								<p:inputText id="bankName" placeholder="Bank Name"
+									disabled="true" style="color: black;"
+									value="#{employeeBean.modifyEmployeeInfoItem.firstBankInfoObj.object.bankName}" />
+								<p:message for="bankName" display="icon" />
+								<p:tooltip for="bankName" value="Bank Name" showEffect="clip"
+									hideEffect="explode" />
 
-							<h:outputText value="Branch" />
-							<p:inputText id="bankBranch" placeholder="Bank Branch"
-								value="#{employeeBean.modifyEmployeeInfoItem.bankInfos[0].object.branchName}" />
-							<p:message for="bankBranch" display="icon" />
-							<p:tooltip for="bankBranch" value="Bank Branch" showEffect="clip"
-								hideEffect="explode" />
+								<h:outputText value="Branch" />
+								<p:inputText id="bankBranch" placeholder="Bank Branch"
+									disabled="true" style="color: black;"
+									value="#{employeeBean.modifyEmployeeInfoItem.firstBankInfoObj.object.branchName}" />
+								<p:message for="bankBranch" display="icon" />
+								<p:tooltip for="bankBranch" value="Bank Branch"
+									showEffect="clip" hideEffect="explode" />
 
-							<h:outputText />
-							<p:commandLink value="View all bank info..."
-								onclick="PF('wBankInfoDialog').show()" />
-							<h:outputText />
-							<h:outputText />
-
-						</h:panelGrid>
+								<h:outputText />
+								<p:commandLink value="View all bank info..."
+									onclick="PF('wBankInfoDialog').show()" />
+								<h:outputText />
+								<h:outputText />
+							</h:panelGrid>
+						</p:outputPanel>
 					</p:panelGrid>
 				</p:tab>
 
@@ -497,8 +526,8 @@
 			</p:accordionPanel>
 
 			<p:commandButton value="Save" actionListener="#{employeeBean.save}"
-				update=":CandidatePanelGroup :growl" styleClass="GreenButton RaisedButton"
-				ajax="true" />
+				update=":CandidatePanelGroup :growl"
+				styleClass="GreenButton RaisedButton" ajax="true" />
 
 			<p:commandLink value="Cancel" id="cancelBtn" widgetVar="wCancelBtn"
 				action="#{employeeBean.cancelModification}" immediate="true"
@@ -542,12 +571,15 @@
 							value="#{employeeBean.modifyEmployeeInfoItem.bankInfos}"
 							varStatus="status">
 							<h:panelGroup id="bankInfoItem">
-								<p:selectBooleanCheckbox value="#{b.UIDeleted}" />
-								<h:outputText value="Delete" />
-
-								<p:selectBooleanCheckbox style="margin-left: 10px" />
-								<h:outputText value="Main" />
-
+								<h:panelGroup layout="block">
+									<h:panelGroup style="float:left;">
+										<p:selectBooleanCheckbox style="margin-left: 10px" />
+										<h:outputText value="Main" />
+									</h:panelGroup>
+									<p:commandLink value="x" style="float: right;"
+										actionListener="#{employeeBean.removeBank(bi)}"
+										oncomplete="refreshBankInfos();" />
+								</h:panelGroup>
 								<p:panelGrid columns="2">
 									<h:outputText value="Bank No" />
 									<p:inputText id="bankNo" value="#{b.object.bankAccountNo}" />
@@ -565,14 +597,78 @@
 					</h:panelGrid>
 				</p:outputPanel>
 				<p:commandButton value="Save" styleClass="GreenButton RaisedButton"
-					update=":modifyForm" oncomplete="PF('wBankInfoDialog').hide()" /> |
+					actionListener="#{employeeBean.onTempSaveBankInfo}"
+					update=":modifyForm:accordion:bankInfoGrid"
+					oncomplete="PF('wBankInfoDialog').hide(); refreshBankInfos();" /> |
 					
 				<p:commandLink actionListener="#{employeeBean.addOneBankInfo}"
-					value="Add Bank Info" immediate="true" ajax="true"
-					oncomplete="refreshBankInfos();" /> |
+					value="Add Bank Info" /> |
 					
 				<p:commandLink value="Cancel" onclick="PF('wBankInfoDialog').hide()"
 					style="margin-left: 3px" />
+			</p:dialog>
+		</h:form>
+
+		<h:form id="contractInfoForm">
+			<p:dialog widgetVar="wContractInfoDialog"
+				header="Labor Contract Information" showHeader="false" modal="true"
+				height="500" draggable="true">
+				<h:panelGrid id="contractInfosPanelGrid">
+					<ui:repeat var="l" id="contractInfos"
+						value="#{employeeBean.modifyEmployeeInfoItem.laborContracts}"
+						varStatus="status">
+
+						<h:panelGroup id="contractItem" style="margin-bottom: 10px"
+							rendered="#{not l.UIDeleted}">
+							<p:commandLink value="x" style="float:right"
+								disabled="#{not employeeBean.modifyEmployeeInfoItem.validForDeletingContract}"
+								oncomplete="refreshContractInfos();"
+								actionListener="#{employeeBean.removeContract(l)}" />
+							<p:panelGrid columns="2">
+								<h:outputText value="Contract Signed Date" />
+								<h:panelGroup style="display: inline-block;">
+									<p:calendar value="#{l.object.laborContractSignedDate}"
+										pattern="dd/MM/yyyy">
+										<p:ajax event="dateSelect"
+											update="laborContractExpiredDateCalendar" />
+									</p:calendar>
+								</h:panelGroup>
+
+								<h:outputText value="Contract Expired Date" />
+								<p:calendar id="laborContractExpiredDateCalendar"
+									value="#{l.object.laborContractExpiredDate}"
+									mindate="#{l.object.laborContractSignedDate}"
+									pattern="dd/MM/yyyy" />
+
+								<h:outputText value="Contract Type" />
+								<p:selectOneMenu id="laborContractType"
+									value="#{employeeBean.modifyEmployeeInfoItem.latestContractItem.object.laborContractSignedType}"
+									converter="laborContractTypeConverter" effect="fade">
+									<f:selectItem itemLabel="Contract Type" itemValue="" />
+									<f:selectItems value="#{employeeBean.laborContractTypes}"
+										var="l"
+										itemLabel="#{i18n[employeeBean.modifyEmployeeInfoItem.getLocalizedLaborContractType(l)]}"
+										itemValue="#{l}" />
+									<p:column>#{l}</p:column>
+								</p:selectOneMenu>
+
+							</p:panelGrid>
+						</h:panelGroup>
+						<br />
+					</ui:repeat>
+				</h:panelGrid>
+				<p:commandButton value="Save"
+					actionListener="#{employeeBean.onTempSaveContractInfo}"
+					styleClass="GreenButton RaisedButton" update=":modifyForm"
+					oncomplete="PF('wContractInfoDialog').hide()" /> |
+					
+				<p:commandLink actionListener="#{employeeBean.addOneContractInfo}"
+					process="@this,contractInfosPanelGrid" value="Add Bank Info"
+					update="contractInfosPanelGrid"
+					oncomplete="refreshContractInfos();" ajax="true" /> |
+					
+				<p:commandLink value="Cancel"
+					onclick="PF('wContractInfoDialog').hide()" style="margin-left: 3px" />
 			</p:dialog>
 		</h:form>
 	</h:body>
@@ -595,6 +691,37 @@
 	font-size: inherit;
 	line-height: inherit;
 	margin: 0 0 9px;
+}
+
+a.linkBtn {
+	color: #FDFDEA !important;
+	display: block;
+	width: 25px;
+	height: 25px;
+	border-radius: 25px;
+	background-color: #26A69A;
+	margin: 5px 0px 0px 90px;
+}
+
+a.smallLinkBtn {
+	color: #FDFDEA !important;
+	display: block;
+	width: 15px;
+	height: 15px;
+	border-radius: 15px;
+	text-align: center;
+}
+
+.deleteLinkBtn {
+	background-color: red;
+}
+
+.addLinkBtn {
+	background-color: green;
+}
+
+.ui-panelgrid .add-remove-panel tbody tr td {
+	border: none !important;
 }
 </style>
 </f:view>

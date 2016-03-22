@@ -14,14 +14,17 @@ import org.apache.commons.lang3.StringUtils;
 import vn.com.ecopharma.emp.model.District;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
+import vn.com.ecopharma.emp.model.EmpLaborContract;
 import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpBankInfoLocalServiceUtil;
+import vn.com.ecopharma.emp.service.EmpLaborContractLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.dto.AddressObjectItem;
 import vn.com.ecopharma.hrm.rc.dto.BankInfoObject;
 import vn.com.ecopharma.hrm.rc.dto.DependentName;
 import vn.com.ecopharma.hrm.rc.dto.DocumentItem;
 import vn.com.ecopharma.hrm.rc.dto.EmpIndexedItem;
+import vn.com.ecopharma.hrm.rc.dto.LaborContractItem;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -117,6 +120,16 @@ public class EmployeeUtils {
 		return result;
 	}
 
+	public static List<LaborContractItem> getLaborContractItemsFromEmp(
+			long empId) {
+		final List<LaborContractItem> result = new ArrayList<>();
+		final List<EmpLaborContract> empLaborContracts = EmpLaborContractLocalServiceUtil
+				.findByEmp(empId);
+		for (EmpLaborContract item : empLaborContracts)
+			result.add(new LaborContractItem(item));
+		return result;
+	}
+
 	public static Map<EmpBankInfo, Boolean> transferBankInfoObjectListToBankInfoMap(
 			List<BankInfoObject> items) {
 		final Map<EmpBankInfo, Boolean> resultMap = new HashMap<>();
@@ -134,6 +147,15 @@ public class EmployeeUtils {
 			resultMap.put(obj, false);
 		}
 
+		return resultMap;
+	}
+
+	public static Map<EmpLaborContract, Boolean> transferEmpLaborContractInfoListToEmpLaborContractMap(
+			List<LaborContractItem> items) {
+		final Map<EmpLaborContract, Boolean> resultMap = new HashMap<>();
+		for (LaborContractItem obj : items) {
+			resultMap.put(obj.getObject(), obj.isUIDeleted());
+		}
 		return resultMap;
 	}
 

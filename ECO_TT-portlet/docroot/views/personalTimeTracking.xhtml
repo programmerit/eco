@@ -6,9 +6,59 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
 	<h:head />
 	<h:body>
-		
+		<eco:ajaxIndicator />
+		<h:form>
+			<p:growl id="messages" showDetail="true" />
+
+			<h:panelGrid columnClasses="value" width="50%">
+				<h3 style="margin-top: 0">Editable Schedule</h3>
+				<p:schedule id="schedule" value="#{personalReportBean.eventModel}"
+					showWeekends="false" timeFormat="HH:mm" widgetVar="myschedule"
+					displayEventEnd="true" timeZone="GMT+7" resizable="true">
+
+					<p:ajax event="dateSelect"
+						listener="#{personalReportBean.onDateSelect}"
+						update="eventDetails" oncomplete="PF('eventDialog').show();" />
+					<p:ajax event="eventSelect"
+						listener="#{personalReportBean.onEventSelect}"
+						update="eventDetails" oncomplete="PF('eventDialog').show();" />
+					<p:ajax event="eventMove"
+						listener="#{personalReportBean.onEventMove}" update="messages" />
+					<p:ajax event="eventResize"
+						listener="#{personalReportBean.onEventResize}" update="messages" />
+
+				</p:schedule>
+			</h:panelGrid>
+
+			<p:dialog widgetVar="eventDialog" header="Event Details"
+				showEffect="clip" hideEffect="clip">
+				<h:panelGrid id="eventDetails" columns="2">
+					<p:outputLabel for="title" value="Titles:" />
+					<p:inputText id="title" value="#{personalReportBean.event.title}"
+						required="true" />
+
+					<p:outputLabel for="from" value="From:" />
+					<p:calendar id="from" value="#{personalReportBean.event.startDate}"
+						timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm" />
+
+					<p:outputLabel for="to" value="To:" />
+					<p:calendar id="to" value="#{personalReportBean.event.endDate}"
+						timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm" />
+
+					<p:outputLabel for="allDay" value="All Day:" />
+					<h:selectBooleanCheckbox id="allDay"
+						value="#{personalReportBean.event.allDay}" />
+
+					<p:commandButton type="reset" value="Reset" />
+					<p:commandButton id="addButton" value="Save"
+						actionListener="#{personalReportBean.addEvent}"
+						oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+				</h:panelGrid>
+			</p:dialog>
+		</h:form>
 	</h:body>
 </f:view>

@@ -18,6 +18,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.portlet.PortletRequest;
 
@@ -195,7 +196,7 @@ public class CandidateBean implements Serializable {
 								QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 	}
 
-	public void onStatusChange(ActionEvent event) {
+	public void onStatusChange(AjaxBehaviorEvent event) {
 		final CandidateIndexItem item = lazyDataModel.getRowData();
 		final CandidateStatus status = CandidateStatus.valueOf(selectedStatus);
 

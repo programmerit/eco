@@ -57,6 +57,8 @@ public class EmpInfoItem implements Serializable {
 
 	private List<DocumentItem> documents;
 
+	private List<LaborContractItem> laborContracts;
+
 	private Specialized specialized;
 
 	private RegionItem workingPlace;
@@ -84,7 +86,7 @@ public class EmpInfoItem implements Serializable {
 		this.vocationalCertificates = new ArrayList<>();
 		this.bankInfos = new ArrayList<>(Arrays.asList(new BankInfoObject()));
 		this.documents = new ArrayList<DocumentItem>();
-
+		this.laborContracts = new ArrayList<>();
 		return employee;
 	}
 
@@ -221,6 +223,10 @@ public class EmpInfoItem implements Serializable {
 		this.bankInfos = bankInfos;
 	}
 
+	public BankInfoObject getFirstBankInfoObj() {
+		return bankInfos.get(0);
+	}
+
 	public Specialized getSpecialized() {
 		return specialized;
 	}
@@ -273,4 +279,43 @@ public class EmpInfoItem implements Serializable {
 	public void setDocuments(List<DocumentItem> documents) {
 		this.documents = documents;
 	}
+
+	public List<LaborContractItem> getLaborContracts() {
+		return laborContracts;
+	}
+
+	public void setLaborContracts(List<LaborContractItem> laborContracts) {
+		this.laborContracts = laborContracts;
+	}
+
+	public LaborContractItem getLatestContractItem() {
+		if (laborContracts.isEmpty()) {
+			laborContracts.add(new LaborContractItem());
+		}
+
+		if (laborContracts.size() == 1) {
+			return laborContracts.get(0);
+		}
+
+		return laborContracts.get(laborContracts.size() - 1);
+	}
+
+	public boolean isValidForDeletingContract() {
+		if (laborContracts.isEmpty())
+			return false;
+
+		if (laborContracts.size() == 1)
+			return false;
+
+		int deletedCount = 0;
+		for (LaborContractItem item : laborContracts) {
+			if (item.isUIDeleted())
+				deletedCount++;
+		}
+
+		if (deletedCount < laborContracts.size() - 1)
+			return true;
+		return false;
+	}
+
 }

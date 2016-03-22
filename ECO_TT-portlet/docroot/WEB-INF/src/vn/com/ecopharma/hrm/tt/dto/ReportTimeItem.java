@@ -63,8 +63,18 @@ public class ReportTimeItem implements Serializable {
 		this.leaveIndexedItem = leaveIndexedItem;
 	}
 
-	public boolean isLeaveRefAvailable() {
-		return getLeaveIndexedItem() != null;
+	public boolean isHalfDayLeave() {
+		return leaveIndexedItem != null
+				&& leaveIndexedItem.getSign().contains("1/2");
+	}
+
+	public boolean isWholeDayLeave() {
+		return leaveIndexedItem != null
+				&& !leaveIndexedItem.getSign().contains("1/2");
+	}
+
+	public boolean isNotLeave() {
+		return leaveIndexedItem == null;
 	}
 
 	public String getLeaveStatusCss() {

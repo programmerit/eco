@@ -327,10 +327,6 @@ public class EmployeeBean implements Serializable {
 		bank.setUIDeleted(true);
 	}
 
-	public boolean isDeletedBank(BankInfoObject bank) {
-		return bank.isUIDeleted();
-	}
-
 	public void onTempSaveBankInfo(ActionEvent event) {
 
 	}

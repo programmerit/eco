@@ -164,9 +164,8 @@
 
 				<p:columns value="#{timeTrackingReportBean.datesOfMonthStrings}"
 					var="d">
-					<h:panelGroup
-						rendered="#{t.getReportTimeItem(d).leaveRefAvailable}">
-						<h:outputText id="leaveSign"
+					<h:panelGroup rendered="#{t.getReportTimeItem(d).wholeDayLeave}">
+						<h:outputText
 							styleClass="currentStatus #{t.getReportTimeItem(d).leaveStatusCss}"
 							value="#{t.getReportTimeItem(d).leaveIndexedItem.sign}" />
 						<h:outputText id="leaveOutput" value="LEAVE" />
@@ -174,8 +173,22 @@
 							value="#{t.getReportTimeItem(d).leaveIndexedItem.type}" />
 					</h:panelGroup>
 
-					<h:panelGroup
-						rendered="#{not t.getReportTimeItem(d).leaveRefAvailable}">
+					<h:panelGroup rendered="#{t.getReportTimeItem(d).halfDayLeave}">
+						<h:outputText id="leaveSign"
+							styleClass="currentStatus #{t.getReportTimeItem(d).leaveStatusCss}"
+							value="#{t.getReportTimeItem(d).leaveIndexedItem.sign}"
+							style="margin-top: -10px !important;" />
+						<p:tooltip for="leaveSign"
+							value="#{t.getReportTimeItem(d).leaveIndexedItem.type}" />
+						<h:outputText value="#{t.getReportTimeItem(d).formattedMinIn}"
+							style="color: blue;" />
+						<p:separator style="width: 100px; margin-left: -10px;" />
+						<h:outputText value="#{t.getReportTimeItem(d).formattedMaxOut}"
+							style="color: black;" />
+
+					</h:panelGroup>
+
+					<h:panelGroup rendered="#{t.getReportTimeItem(d).notLeave}">
 						<h:outputText value="#{t.getReportTimeItem(d).formattedMinIn}"
 							style="color: blue;" />
 						<p:separator style="width: 100px; margin-left: -10px;" />

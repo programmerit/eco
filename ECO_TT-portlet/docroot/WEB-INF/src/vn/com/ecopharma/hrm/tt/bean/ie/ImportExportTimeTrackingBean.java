@@ -1,4 +1,4 @@
-package vn.com.ecopharma.hrm.tt.bean;
+package vn.com.ecopharma.hrm.tt.bean.ie;
 
 import java.io.IOException;
 import java.io.InputStream;

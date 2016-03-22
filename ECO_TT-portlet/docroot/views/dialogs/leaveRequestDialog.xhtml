@@ -13,7 +13,8 @@
 		<h:form>
 			<p:dialog id="leaveRequestDialog" widgetVar="wLeaveRequestDialog"
 				modal="true" header="Add Leave Request">
-				<p:outputPanel autoUpdate="true" id="leaveRequestOutputPanel">
+				<p:outputPanel autoUpdate="true" id="leaveRequestOutputPanel"
+					layout="block">
 					<h:panelGrid columns="2">
 						<h:outputText value="NV yêu cầu: " />
 						<h:outputText
@@ -43,7 +44,7 @@
 								<f:selectItem itemLabel="Nhấn chọn" itemValue="" />
 								<f:selectItems value="#{leaveRequestBean.allTypes}" var="t"
 									itemLabel="#{leaveRequestBean.getHardCodeVneseTypeString(t)}"
-									itemValue="#{t}" itemDisabled="#{t eq 'IN' or t eq 'OUT'}"/>
+									itemValue="#{t}" itemDisabled="#{t eq 'IN' or t eq 'OUT'}" />
 								<p:column>#{leaveRequestBean.getHardCodeVneseTypeString(t)}</p:column>
 							</p:selectOneMenu>
 
@@ -125,11 +126,13 @@
 							value="#{leaveRequestBean.requestItem.leave.reason}" />
 					</h:panelGrid>
 
-					<p:commandButton value="Gởi yêu cầu"
-						actionListener="#{leaveRequestBean.onAddRequest}"
-						oncomplete="PF('wLeaveRequestDialog').hide();" />
-					<p:commandLink value="Hủy" style="margin-left: 3px;"
-						onclick="PF('wLeaveRequestDialog').hide();" />
+					<h:panelGroup style="float: right;">
+						<p:commandButton value="Gởi yêu cầu"
+							actionListener="#{leaveRequestBean.onAddRequest}"
+							oncomplete="PF('wLeaveRequestDialog').hide();" />
+						<p:commandLink value="Hủy" style="margin-left: 3px;"
+							onclick="PF('wLeaveRequestDialog').hide();" />
+					</h:panelGroup>
 				</p:outputPanel>
 			</p:dialog>
 		</h:form>

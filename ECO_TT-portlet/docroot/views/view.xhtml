@@ -25,7 +25,10 @@
 
 			<h:outputText value="|" />
 
+			<p:link outcome="personalTimeTracking"
+				value="Your TimeTracking Report" />
 
+			<h:outputText value="|" />
 			<p:commandLink value="Request Leave"
 				actionListener="#{mainBean.onRequestLeave}"
 				update=":includedDialogPanelGroup"

@@ -12,23 +12,33 @@
 	<h:body>
 		<eco:ajaxIndicator />
 		<h:form id="importExportForm">
-			<p:commandLink value="Remove All TimeTrackings"
-				actionListener="#{importExportTimeTrackingBean.completelyRemoveAllTimeTrackings}" />
+			<p:tabView>
+				<p:tab id="importTimeTracking" title="Import Time Tracking">
+					<p:commandLink value="Remove All TimeTrackings" render="false"
+						actionListener="#{importExportTimeTrackingBean.completelyRemoveAllTimeTrackings}" />
 
-			<h:panelGroup>
-				<h:outputLabel value="Sheet Name/Index" />
-				<p:inputText
-					value="#{importExportTimeTrackingBean.sheetNameOrIndex}"
-					placeholder="1 or 'SheetName'" />
-			</h:panelGroup>
+					<h:panelGroup>
+						<h:outputLabel value="Sheet Name/Index" />
+						<p:inputText
+							value="#{importExportTimeTrackingBean.sheetNameOrIndex}"
+							placeholder="1 or 'SheetName'" />
+					</h:panelGroup>
 
-			<p:fileUpload
-				fileUploadListener="#{importExportTimeTrackingBean.handleFileImport}"
-				mode="advanced" dragDropSupport="true" update="messages"
-				sizeLimit="10000000" allowTypes="/(\.|\/)(xls|xlsx)$/" />
+					<p:fileUpload
+						fileUploadListener="#{importExportTimeTrackingBean.handleFileImport}"
+						mode="advanced" dragDropSupport="true" update="messages"
+						sizeLimit="10000000" allowTypes="/(\.|\/)(xls|xlsx)$/" />
 
-			<p:growl id="messages" showDetail="true" />
+					<p:growl id="messages" showDetail="true" />
+				</p:tab>
+				<p:tab id="importAnnualLeave" title="Import Annual Leave">
+					<p:fileUpload
+						fileUploadListener="#{importExportTimeTrackingBean.handleFileImport}"
+						mode="advanced" dragDropSupport="true" update="messages"
+						sizeLimit="10000000" allowTypes="/(\.|\/)(xls|xlsx)$/" />
 
+				</p:tab>
+			</p:tabView>
 		</h:form>
 
 	</h:body>

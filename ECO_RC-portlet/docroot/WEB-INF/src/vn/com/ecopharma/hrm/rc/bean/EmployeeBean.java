@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +24,7 @@ import org.primefaces.event.FileUploadEvent;
 import vn.com.ecopharma.emp.model.Document;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
+import vn.com.ecopharma.emp.model.EmpLaborContract;
 import vn.com.ecopharma.emp.model.Level;
 import vn.com.ecopharma.emp.model.Specialized;
 import vn.com.ecopharma.emp.model.University;
@@ -42,6 +42,7 @@ import vn.com.ecopharma.hrm.rc.dto.CandidateItem;
 import vn.com.ecopharma.hrm.rc.dto.DependentName;
 import vn.com.ecopharma.hrm.rc.dto.DocumentItem;
 import vn.com.ecopharma.hrm.rc.dto.EmpInfoItem;
+import vn.com.ecopharma.hrm.rc.dto.LaborContractItem;
 import vn.com.ecopharma.hrm.rc.dto.RegionItem;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
 import vn.com.ecopharma.hrm.rc.enumeration.DocumentType;
@@ -120,6 +121,10 @@ public class EmployeeBean implements Serializable {
 				.transferBankInfoObjectListToBankInfoMap(modifyEmployeeInfoItem
 						.getBankInfos());
 
+		final Map<EmpLaborContract, Boolean> contractInfoMap = EmployeeUtils
+				.transferEmpLaborContractInfoListToEmpLaborContractMap(modifyEmployeeInfoItem
+						.getLaborContracts());
+
 		generatedUser.setFirstName(EmpLocalServiceUtil
 				.getFirstName(modifyEmployeeInfoItem.getFullName()));
 		generatedUser.setMiddleName(EmpLocalServiceUtil
@@ -143,8 +148,8 @@ public class EmployeeBean implements Serializable {
 					modifyEmployeeInfoItem.getUserPassword2(), false,
 					modifyEmployeeInfoItem.getUserName(), employee.getGender()
 							.equalsIgnoreCase(MALE) ? true : false, true,
-					addressMap, dependentMap,
-					new HashMap<EmpBankInfo, Boolean>(), false, serviceContext);
+					addressMap, dependentMap, bankInfoMap, contractInfoMap,
+					false, serviceContext);
 
 			if (result != null) {
 				CandidateLocalServiceUtil.changeCandidateStatus(
@@ -183,8 +188,27 @@ public class EmployeeBean implements Serializable {
 			modifyEmployeeInfoItem.getBankInfos().add(new BankInfoObject());
 	}
 
-	public void removeOneBankInfo(int index) {
-		modifyEmployeeInfoItem.getBankInfos().get(index).setUIDeleted(true);
+	public void removeBank(BankInfoObject bank) {
+		bank.setUIDeleted(true);
+	}
+
+	public void onTempSaveBankInfo(ActionEvent event) {
+
+	}
+
+	public void addOneContractInfo() {
+		modifyEmployeeInfoItem.getLaborContracts().add(new LaborContractItem());
+	}
+
+	public void removeContract(LaborContractItem item) {
+		item.setUIDeleted(true);
+	}
+
+	public void onTempSaveContractInfo() {
+		Collections.sort(modifyEmployeeInfoItem.getLaborContracts());
+		modifyEmployeeInfoItem.getLaborContracts()
+				.get(modifyEmployeeInfoItem.getLaborContracts().size() - 1)
+				.getObject().setLatest(true);
 	}
 
 	public void cancelModification() {

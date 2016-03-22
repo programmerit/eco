@@ -20,8 +20,10 @@ import java.util.Date;
 import java.util.List;
 
 import vn.com.ecopharma.emp.model.VacationLeave;
+import vn.com.ecopharma.emp.service.VacationLeaveLocalServiceUtil;
 import vn.com.ecopharma.hrm.tt.constant.ECO_TT_Info;
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
+import vn.com.ecopharma.hrm.tt.enumeration.VacationLeaveType;
 import vn.com.ecopharma.hrm.tt.model.TimeTracking;
 import vn.com.ecopharma.hrm.tt.service.base.TimeTrackingLocalServiceBaseImpl;
 import vn.com.ecopharma.hrm.tt.utils.TTUtils;
