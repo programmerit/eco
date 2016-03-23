@@ -69,7 +69,7 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 			{ "empAnnualLeaveId", Types.BIGINT },
 			{ "empId", Types.BIGINT },
 			{ "totalAnualLeaveLeft", Types.DOUBLE },
-			{ "totalAnnualLeave", Types.INTEGER },
+			{ "totalAnnualLeave", Types.DOUBLE },
 			{ "totalPreviousYearLeavesLeft", Types.DOUBLE },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -78,7 +78,7 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_EmpAnnualLeave (empAnnualLeaveId LONG not null primary key,empId LONG,totalAnualLeaveLeft DOUBLE,totalAnnualLeave INTEGER,totalPreviousYearLeavesLeft DOUBLE,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table eco_em_portlet_EmpAnnualLeave (empAnnualLeaveId LONG not null primary key,empId LONG,totalAnualLeaveLeft DOUBLE,totalAnnualLeave DOUBLE,totalPreviousYearLeavesLeft DOUBLE,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table eco_em_portlet_EmpAnnualLeave";
 	public static final String ORDER_BY_JPQL = " ORDER BY empAnnualLeave.empAnnualLeaveId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_em_portlet_EmpAnnualLeave.empAnnualLeaveId ASC";
@@ -222,7 +222,7 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 			setTotalAnualLeaveLeft(totalAnualLeaveLeft);
 		}
 
-		Integer totalAnnualLeave = (Integer)attributes.get("totalAnnualLeave");
+		Double totalAnnualLeave = (Double)attributes.get("totalAnnualLeave");
 
 		if (totalAnnualLeave != null) {
 			setTotalAnnualLeave(totalAnnualLeave);
@@ -319,12 +319,12 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 
 	@JSON
 	@Override
-	public int getTotalAnnualLeave() {
+	public double getTotalAnnualLeave() {
 		return _totalAnnualLeave;
 	}
 
 	@Override
-	public void setTotalAnnualLeave(int totalAnnualLeave) {
+	public void setTotalAnnualLeave(double totalAnnualLeave) {
 		_totalAnnualLeave = totalAnnualLeave;
 	}
 
@@ -669,7 +669,7 @@ public class EmpAnnualLeaveModelImpl extends BaseModelImpl<EmpAnnualLeave>
 	private long _originalEmpId;
 	private boolean _setOriginalEmpId;
 	private double _totalAnualLeaveLeft;
-	private int _totalAnnualLeave;
+	private double _totalAnnualLeave;
 	private double _totalPreviousYearLeavesLeft;
 	private long _groupId;
 	private long _companyId;

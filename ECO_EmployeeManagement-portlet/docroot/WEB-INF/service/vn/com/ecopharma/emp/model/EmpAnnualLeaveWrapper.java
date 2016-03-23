@@ -87,7 +87,7 @@ public class EmpAnnualLeaveWrapper implements EmpAnnualLeave,
 			setTotalAnualLeaveLeft(totalAnualLeaveLeft);
 		}
 
-		Integer totalAnnualLeave = (Integer)attributes.get("totalAnnualLeave");
+		Double totalAnnualLeave = (Double)attributes.get("totalAnnualLeave");
 
 		if (totalAnnualLeave != null) {
 			setTotalAnnualLeave(totalAnnualLeave);
@@ -223,7 +223,7 @@ public class EmpAnnualLeaveWrapper implements EmpAnnualLeave,
 	* @return the total annual leave of this emp annual leave
 	*/
 	@Override
-	public int getTotalAnnualLeave() {
+	public double getTotalAnnualLeave() {
 		return _empAnnualLeave.getTotalAnnualLeave();
 	}
 
@@ -233,7 +233,7 @@ public class EmpAnnualLeaveWrapper implements EmpAnnualLeave,
 	* @param totalAnnualLeave the total annual leave of this emp annual leave
 	*/
 	@Override
-	public void setTotalAnnualLeave(int totalAnnualLeave) {
+	public void setTotalAnnualLeave(double totalAnnualLeave) {
 		_empAnnualLeave.setTotalAnnualLeave(totalAnnualLeave);
 	}
 

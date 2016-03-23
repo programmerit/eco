@@ -297,7 +297,7 @@ public class EmpAnnualLeaveLocalServiceUtil {
 
 	public static vn.com.ecopharma.emp.model.EmpAnnualLeave addEmpAnnualLeave(
 		vn.com.ecopharma.emp.model.EmpAnnualLeave prePersistedEntity,
-		long empId, int totalLeave, double totalLeaveLeft,
+		long empId, double totalLeave, double totalLeaveLeft,
 		double totalOldLeavesLeft) {
 		return getService()
 				   .addEmpAnnualLeave(prePersistedEntity, empId, totalLeave,
@@ -305,12 +305,24 @@ public class EmpAnnualLeaveLocalServiceUtil {
 	}
 
 	public static vn.com.ecopharma.emp.model.EmpAnnualLeave addEmpAnnualLeave(
-		long empId, int totalLeave, double totalLeaveLeft,
+		long empId, double totalLeave, double totalLeaveLeft,
 		double totalOldLeavesLeft,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
 				   .addEmpAnnualLeave(empId, totalLeave, totalLeaveLeft,
 			totalOldLeavesLeft, serviceContext);
+	}
+
+	public static vn.com.ecopharma.emp.model.EmpAnnualLeave updateEmpAnnualLeave(
+		vn.com.ecopharma.emp.model.EmpAnnualLeave empAnnualLeave,
+		double totalLeave, double totalLeaveLeft, double totalOldLeavesLeft) {
+		return getService()
+				   .updateEmpAnnualLeave(empAnnualLeave, totalLeave,
+			totalLeaveLeft, totalOldLeavesLeft);
+	}
+
+	public static void executeFirstAprilQuartzTask() {
+		getService().executeFirstAprilQuartzTask();
 	}
 
 	public static vn.com.ecopharma.emp.model.EmpAnnualLeave fetchByEmp(

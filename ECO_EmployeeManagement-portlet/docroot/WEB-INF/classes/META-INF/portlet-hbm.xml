@@ -179,7 +179,7 @@
 		</id>
 		<property name="empId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="totalAnualLeaveLeft" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-		<property name="totalAnnualLeave" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="totalAnnualLeave" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="totalPreviousYearLeavesLeft" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

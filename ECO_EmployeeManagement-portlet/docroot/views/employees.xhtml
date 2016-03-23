@@ -226,7 +226,10 @@
 				
 				<p:link value="Specialized Tree" outcome="specializedView" /> | 
 				
-				<p:link value="Leaves Manage" outcome="annualLeaveView" />
+				<p:link value="Leaves Manage" outcome="annualLeaveView" /> |
+				
+				<p:commandLink value="1st April Re-calculate"
+					actionListener="#{empView.onExecuteFirstAprilQuartzTask}" />
 
 				<p:commandLink value="Transfer labor contract" rendered="true"
 					actionListener="#{empView.onTransferEmpContract}" />

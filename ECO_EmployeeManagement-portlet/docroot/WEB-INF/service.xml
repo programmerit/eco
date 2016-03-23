@@ -750,7 +750,7 @@
 		<!-- Group instance -->
         <column name="empId" type="long"></column>
         <column name="totalAnualLeaveLeft" type="double"></column>
-        <column name="totalAnnualLeave" type="int"></column>
+        <column name="totalAnnualLeave" type="double"></column>
         <column name="totalPreviousYearLeavesLeft" type="double"></column>
 
 		<column name="groupId" type="long"></column>

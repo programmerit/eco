@@ -137,14 +137,14 @@ public class EmpAnnualLeaveLocalServiceClpInvoker {
 		_methodName202 = "addEmpAnnualLeave";
 
 		_methodParameterTypes202 = new String[] {
-				"vn.com.ecopharma.emp.model.EmpAnnualLeave", "long", "int",
+				"vn.com.ecopharma.emp.model.EmpAnnualLeave", "long", "double",
 				"double", "double"
 			};
 
 		_methodName203 = "addEmpAnnualLeave";
 
 		_methodParameterTypes203 = new String[] {
-				"long", "int", "double", "double",
+				"long", "double", "double", "double",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
@@ -154,95 +154,106 @@ public class EmpAnnualLeaveLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.EmpAnnualLeave"
 			};
 
-		_methodName205 = "fetchByEmp";
+		_methodName205 = "updateEmpAnnualLeave";
 
-		_methodParameterTypes205 = new String[] { "long" };
+		_methodParameterTypes205 = new String[] {
+				"vn.com.ecopharma.emp.model.EmpAnnualLeave", "double", "double",
+				"double"
+			};
 
-		_methodName206 = "getDatesBetweenTwoDates";
+		_methodName206 = "executeFirstAprilQuartzTask";
 
-		_methodParameterTypes206 = new String[] {
+		_methodParameterTypes206 = new String[] {  };
+
+		_methodName207 = "fetchByEmp";
+
+		_methodParameterTypes207 = new String[] { "long" };
+
+		_methodName208 = "getDatesBetweenTwoDates";
+
+		_methodParameterTypes208 = new String[] {
 				"java.util.Date", "java.util.Date", "boolean", "boolean"
 			};
 
-		_methodName207 = "countAllDocuments";
+		_methodName209 = "countAllDocuments";
 
-		_methodParameterTypes207 = new String[] {
+		_methodParameterTypes209 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort"
 			};
 
-		_methodName208 = "searchAllDocuments";
+		_methodName210 = "searchAllDocuments";
 
-		_methodParameterTypes208 = new String[] {
+		_methodParameterTypes210 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName209 = "filterByFields";
+		_methodName211 = "filterByFields";
 
-		_methodParameterTypes209 = new String[] {
+		_methodParameterTypes211 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long",
 				"int", "int"
 			};
 
-		_methodName210 = "countFilterByFields";
+		_methodName212 = "countFilterByFields";
 
-		_methodParameterTypes210 = new String[] {
+		_methodParameterTypes212 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long"
 			};
 
-		_methodName211 = "getIndexedDocument";
+		_methodName213 = "getIndexedDocument";
 
-		_methodParameterTypes211 = new String[] {
+		_methodParameterTypes213 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName212 = "getIndexedDocument";
+		_methodName214 = "getIndexedDocument";
 
-		_methodParameterTypes212 = new String[] {
+		_methodParameterTypes214 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName213 = "indexAll";
+		_methodName215 = "indexAll";
 
-		_methodParameterTypes213 = new String[] {  };
+		_methodParameterTypes215 = new String[] {  };
 
-		_methodName214 = "removeAllIndexes";
+		_methodName216 = "removeAllIndexes";
 
-		_methodParameterTypes214 = new String[] {
+		_methodParameterTypes216 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 
-		_methodName215 = "applyLeaveForEmp";
+		_methodName217 = "applyLeaveForEmp";
 
-		_methodParameterTypes215 = new String[] {
+		_methodParameterTypes217 = new String[] {
 				"long", "double", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName216 = "scanAndAutoAddVacationLeave";
+		_methodName218 = "scanAndAutoAddVacationLeave";
 
-		_methodParameterTypes216 = new String[] {
+		_methodParameterTypes218 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName217 = "calculateTotalAnnualLeaveByJoinedDate";
+		_methodName219 = "calculateTotalAnnualLeaveByJoinedDate";
 
-		_methodParameterTypes217 = new String[] { "java.util.Date" };
+		_methodParameterTypes219 = new String[] { "java.util.Date" };
 
-		_methodName218 = "getMonthsBetweenTwoDate";
+		_methodName220 = "getMonthsBetweenTwoDate";
 
-		_methodParameterTypes218 = new String[] {
+		_methodParameterTypes220 = new String[] {
 				"java.util.Date", "java.util.Date"
 			};
 
-		_methodName219 = "addOneDayForEachEmp";
+		_methodName221 = "addOneDayForEachEmp";
 
-		_methodParameterTypes219 = new String[] {  };
+		_methodParameterTypes221 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -373,7 +384,7 @@ public class EmpAnnualLeaveLocalServiceClpInvoker {
 				Arrays.deepEquals(_methodParameterTypes202, parameterTypes)) {
 			return EmpAnnualLeaveLocalServiceUtil.addEmpAnnualLeave((vn.com.ecopharma.emp.model.EmpAnnualLeave)arguments[0],
 				((Long)arguments[1]).longValue(),
-				((Integer)arguments[2]).intValue(),
+				((Double)arguments[2]).doubleValue(),
 				((Double)arguments[3]).doubleValue(),
 				((Double)arguments[4]).doubleValue());
 		}
@@ -381,7 +392,7 @@ public class EmpAnnualLeaveLocalServiceClpInvoker {
 		if (_methodName203.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes203, parameterTypes)) {
 			return EmpAnnualLeaveLocalServiceUtil.addEmpAnnualLeave(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue(),
+				((Double)arguments[1]).doubleValue(),
 				((Double)arguments[2]).doubleValue(),
 				((Double)arguments[3]).doubleValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[4]);
@@ -394,27 +405,42 @@ public class EmpAnnualLeaveLocalServiceClpInvoker {
 
 		if (_methodName205.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes205, parameterTypes)) {
-			return EmpAnnualLeaveLocalServiceUtil.fetchByEmp(((Long)arguments[0]).longValue());
+			return EmpAnnualLeaveLocalServiceUtil.updateEmpAnnualLeave((vn.com.ecopharma.emp.model.EmpAnnualLeave)arguments[0],
+				((Double)arguments[1]).doubleValue(),
+				((Double)arguments[2]).doubleValue(),
+				((Double)arguments[3]).doubleValue());
 		}
 
 		if (_methodName206.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes206, parameterTypes)) {
+			EmpAnnualLeaveLocalServiceUtil.executeFirstAprilQuartzTask();
+
+			return null;
+		}
+
+		if (_methodName207.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes207, parameterTypes)) {
+			return EmpAnnualLeaveLocalServiceUtil.fetchByEmp(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName208.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes208, parameterTypes)) {
 			return EmpAnnualLeaveLocalServiceUtil.getDatesBetweenTwoDates((java.util.Date)arguments[0],
 				(java.util.Date)arguments[1],
 				((Boolean)arguments[2]).booleanValue(),
 				((Boolean)arguments[3]).booleanValue());
 		}
 
-		if (_methodName207.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes207, parameterTypes)) {
+		if (_methodName209.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes209, parameterTypes)) {
 			return EmpAnnualLeaveLocalServiceUtil.countAllDocuments((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
 				((Long)arguments[2]).longValue(),
 				(com.liferay.portal.kernel.search.Sort)arguments[3]);
 		}
 
-		if (_methodName208.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes208, parameterTypes)) {
+		if (_methodName210.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes210, parameterTypes)) {
 			return EmpAnnualLeaveLocalServiceUtil.searchAllDocuments((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.List<com.liferay.portal.kernel.search.Query>)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -423,8 +449,8 @@ public class EmpAnnualLeaveLocalServiceClpInvoker {
 				((Integer)arguments[5]).intValue());
 		}
 
-		if (_methodName209.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes209, parameterTypes)) {
+		if (_methodName211.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes211, parameterTypes)) {
 			return EmpAnnualLeaveLocalServiceUtil.filterByFields((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.Map<java.lang.String, java.lang.Object>)arguments[1],
 				(com.liferay.portal.kernel.search.Sort)arguments[2],
@@ -433,68 +459,68 @@ public class EmpAnnualLeaveLocalServiceClpInvoker {
 				((Integer)arguments[5]).intValue());
 		}
 
-		if (_methodName210.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes210, parameterTypes)) {
+		if (_methodName212.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes212, parameterTypes)) {
 			return EmpAnnualLeaveLocalServiceUtil.countFilterByFields((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				(java.util.Map<java.lang.String, java.lang.Object>)arguments[1],
 				(com.liferay.portal.kernel.search.Sort)arguments[2],
 				((Long)arguments[3]).longValue());
 		}
 
-		if (_methodName211.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes211, parameterTypes)) {
+		if (_methodName213.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes213, parameterTypes)) {
 			return EmpAnnualLeaveLocalServiceUtil.getIndexedDocument((java.lang.String)arguments[0],
 				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
 		}
 
-		if (_methodName212.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes212, parameterTypes)) {
+		if (_methodName214.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes214, parameterTypes)) {
 			return EmpAnnualLeaveLocalServiceUtil.getIndexedDocument(((Long)arguments[0]).longValue(),
 				(com.liferay.portal.kernel.search.SearchContext)arguments[1]);
 		}
 
-		if (_methodName213.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes213, parameterTypes)) {
+		if (_methodName215.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes215, parameterTypes)) {
 			EmpAnnualLeaveLocalServiceUtil.indexAll();
 
 			return null;
 		}
 
-		if (_methodName214.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes214, parameterTypes)) {
+		if (_methodName216.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes216, parameterTypes)) {
 			EmpAnnualLeaveLocalServiceUtil.removeAllIndexes((com.liferay.portal.kernel.search.SearchContext)arguments[0],
 				((Long)arguments[1]).longValue());
 
 			return null;
 		}
 
-		if (_methodName215.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes215, parameterTypes)) {
+		if (_methodName217.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes217, parameterTypes)) {
 			return EmpAnnualLeaveLocalServiceUtil.applyLeaveForEmp(((Long)arguments[0]).longValue(),
 				((Double)arguments[1]).doubleValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
 		}
 
-		if (_methodName216.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes216, parameterTypes)) {
+		if (_methodName218.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes218, parameterTypes)) {
 			EmpAnnualLeaveLocalServiceUtil.scanAndAutoAddVacationLeave((com.liferay.portal.service.ServiceContext)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName217.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes217, parameterTypes)) {
+		if (_methodName219.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes219, parameterTypes)) {
 			return EmpAnnualLeaveLocalServiceUtil.calculateTotalAnnualLeaveByJoinedDate((java.util.Date)arguments[0]);
 		}
 
-		if (_methodName218.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes218, parameterTypes)) {
+		if (_methodName220.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes220, parameterTypes)) {
 			return EmpAnnualLeaveLocalServiceUtil.getMonthsBetweenTwoDate((java.util.Date)arguments[0],
 				(java.util.Date)arguments[1]);
 		}
 
-		if (_methodName219.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes219, parameterTypes)) {
+		if (_methodName221.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes221, parameterTypes)) {
 			EmpAnnualLeaveLocalServiceUtil.addOneDayForEachEmp();
 
 			return null;
@@ -583,4 +609,8 @@ public class EmpAnnualLeaveLocalServiceClpInvoker {
 	private String[] _methodParameterTypes218;
 	private String _methodName219;
 	private String[] _methodParameterTypes219;
+	private String _methodName220;
+	private String[] _methodParameterTypes220;
+	private String _methodName221;
+	private String[] _methodParameterTypes221;
 }

@@ -112,7 +112,7 @@ public class EmpAnnualLeaveClp extends BaseModelImpl<EmpAnnualLeave>
 			setTotalAnualLeaveLeft(totalAnualLeaveLeft);
 		}
 
-		Integer totalAnnualLeave = (Integer)attributes.get("totalAnnualLeave");
+		Double totalAnnualLeave = (Double)attributes.get("totalAnnualLeave");
 
 		if (totalAnnualLeave != null) {
 			setTotalAnnualLeave(totalAnnualLeave);
@@ -234,19 +234,20 @@ public class EmpAnnualLeaveClp extends BaseModelImpl<EmpAnnualLeave>
 	}
 
 	@Override
-	public int getTotalAnnualLeave() {
+	public double getTotalAnnualLeave() {
 		return _totalAnnualLeave;
 	}
 
 	@Override
-	public void setTotalAnnualLeave(int totalAnnualLeave) {
+	public void setTotalAnnualLeave(double totalAnnualLeave) {
 		_totalAnnualLeave = totalAnnualLeave;
 
 		if (_empAnnualLeaveRemoteModel != null) {
 			try {
 				Class<?> clazz = _empAnnualLeaveRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setTotalAnnualLeave", int.class);
+				Method method = clazz.getMethod("setTotalAnnualLeave",
+						double.class);
 
 				method.invoke(_empAnnualLeaveRemoteModel, totalAnnualLeave);
 			}
@@ -654,7 +655,7 @@ public class EmpAnnualLeaveClp extends BaseModelImpl<EmpAnnualLeave>
 	private long _empAnnualLeaveId;
 	private long _empId;
 	private double _totalAnualLeaveLeft;
-	private int _totalAnnualLeave;
+	private double _totalAnnualLeave;
 	private double _totalPreviousYearLeavesLeft;
 	private long _groupId;
 	private long _companyId;

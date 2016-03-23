@@ -33,7 +33,7 @@
 				</p:tab>
 				<p:tab id="importAnnualLeave" title="Import Annual Leave">
 					<p:fileUpload
-						fileUploadListener="#{importExportTimeTrackingBean.handleFileImport}"
+						fileUploadListener="#{importExportAnnualLeave.handleFileImport}"
 						mode="advanced" dragDropSupport="true" update="messages"
 						sizeLimit="10000000" allowTypes="/(\.|\/)(xls|xlsx)$/" />
 

@@ -817,4 +817,8 @@ public class EmployeeBean implements Serializable {
 		return IS_TEST_ENV;
 	}
 
+	public void onExecuteFirstAprilQuartzTask() {
+		EmpAnnualLeaveLocalServiceUtil.executeFirstAprilQuartzTask();
+	}
+
 }

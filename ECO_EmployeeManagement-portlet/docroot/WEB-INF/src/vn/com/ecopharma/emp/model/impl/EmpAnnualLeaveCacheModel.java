@@ -111,7 +111,7 @@ public class EmpAnnualLeaveCacheModel implements CacheModel<EmpAnnualLeave>,
 		empAnnualLeaveId = objectInput.readLong();
 		empId = objectInput.readLong();
 		totalAnualLeaveLeft = objectInput.readDouble();
-		totalAnnualLeave = objectInput.readInt();
+		totalAnnualLeave = objectInput.readDouble();
 		totalPreviousYearLeavesLeft = objectInput.readDouble();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
@@ -127,7 +127,7 @@ public class EmpAnnualLeaveCacheModel implements CacheModel<EmpAnnualLeave>,
 		objectOutput.writeLong(empAnnualLeaveId);
 		objectOutput.writeLong(empId);
 		objectOutput.writeDouble(totalAnualLeaveLeft);
-		objectOutput.writeInt(totalAnnualLeave);
+		objectOutput.writeDouble(totalAnnualLeave);
 		objectOutput.writeDouble(totalPreviousYearLeavesLeft);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
@@ -147,7 +147,7 @@ public class EmpAnnualLeaveCacheModel implements CacheModel<EmpAnnualLeave>,
 	public long empAnnualLeaveId;
 	public long empId;
 	public double totalAnualLeaveLeft;
-	public int totalAnnualLeave;
+	public double totalAnnualLeave;
 	public double totalPreviousYearLeavesLeft;
 	public long groupId;
 	public long companyId;

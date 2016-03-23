@@ -118,11 +118,11 @@ public class EmpAnnualLeaveSoap implements Serializable {
 		_totalAnualLeaveLeft = totalAnualLeaveLeft;
 	}
 
-	public int getTotalAnnualLeave() {
+	public double getTotalAnnualLeave() {
 		return _totalAnnualLeave;
 	}
 
-	public void setTotalAnnualLeave(int totalAnnualLeave) {
+	public void setTotalAnnualLeave(double totalAnnualLeave) {
 		_totalAnnualLeave = totalAnnualLeave;
 	}
 
@@ -186,7 +186,7 @@ public class EmpAnnualLeaveSoap implements Serializable {
 	private long _empAnnualLeaveId;
 	private long _empId;
 	private double _totalAnualLeaveLeft;
-	private int _totalAnnualLeave;
+	private double _totalAnnualLeave;
 	private double _totalPreviousYearLeavesLeft;
 	private long _groupId;
 	private long _companyId;

@@ -138,106 +138,117 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 		_methodName23 = "addEmpAnnualLeave";
 
 		_methodParameterTypes23 = new String[] {
-				"vn.com.ecopharma.emp.model.EmpAnnualLeave", "long", "int",
+				"vn.com.ecopharma.emp.model.EmpAnnualLeave", "long", "double",
 				"double", "double"
 			};
 
 		_methodName24 = "addEmpAnnualLeave";
 
 		_methodParameterTypes24 = new String[] {
-				"long", "int", "double", "double",
+				"long", "double", "double", "double",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName25 = "fetchByEmp";
+		_methodName25 = "updateEmpAnnualLeave";
 
-		_methodParameterTypes25 = new String[] { "long" };
+		_methodParameterTypes25 = new String[] {
+				"vn.com.ecopharma.emp.model.EmpAnnualLeave", "double", "double",
+				"double"
+			};
 
-		_methodName26 = "getDatesBetweenTwoDates";
+		_methodName26 = "executeFirstAprilQuartzTask";
 
-		_methodParameterTypes26 = new String[] {
+		_methodParameterTypes26 = new String[] {  };
+
+		_methodName27 = "fetchByEmp";
+
+		_methodParameterTypes27 = new String[] { "long" };
+
+		_methodName28 = "getDatesBetweenTwoDates";
+
+		_methodParameterTypes28 = new String[] {
 				"java.util.Date", "java.util.Date", "boolean", "boolean"
 			};
 
-		_methodName27 = "countAllDocuments";
+		_methodName29 = "countAllDocuments";
 
-		_methodParameterTypes27 = new String[] {
+		_methodParameterTypes29 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort"
 			};
 
-		_methodName28 = "searchAllDocuments";
+		_methodName30 = "searchAllDocuments";
 
-		_methodParameterTypes28 = new String[] {
+		_methodParameterTypes30 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName29 = "filterByFields";
+		_methodName31 = "filterByFields";
 
-		_methodParameterTypes29 = new String[] {
+		_methodParameterTypes31 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long",
 				"int", "int"
 			};
 
-		_methodName30 = "countFilterByFields";
+		_methodName32 = "countFilterByFields";
 
-		_methodParameterTypes30 = new String[] {
+		_methodParameterTypes32 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long"
 			};
 
-		_methodName31 = "getIndexedDocument";
+		_methodName33 = "getIndexedDocument";
 
-		_methodParameterTypes31 = new String[] {
+		_methodParameterTypes33 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName32 = "getIndexedDocument";
+		_methodName34 = "getIndexedDocument";
 
-		_methodParameterTypes32 = new String[] {
+		_methodParameterTypes34 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName33 = "indexAll";
+		_methodName35 = "indexAll";
 
-		_methodParameterTypes33 = new String[] {  };
+		_methodParameterTypes35 = new String[] {  };
 
-		_methodName34 = "removeAllIndexes";
+		_methodName36 = "removeAllIndexes";
 
-		_methodParameterTypes34 = new String[] {
+		_methodParameterTypes36 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 
-		_methodName35 = "applyLeaveForEmp";
+		_methodName37 = "applyLeaveForEmp";
 
-		_methodParameterTypes35 = new String[] {
+		_methodParameterTypes37 = new String[] {
 				"long", "double", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName36 = "scanAndAutoAddVacationLeave";
+		_methodName38 = "scanAndAutoAddVacationLeave";
 
-		_methodParameterTypes36 = new String[] {
+		_methodParameterTypes38 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName37 = "calculateTotalAnnualLeaveByJoinedDate";
+		_methodName39 = "calculateTotalAnnualLeaveByJoinedDate";
 
-		_methodParameterTypes37 = new String[] { "java.util.Date" };
+		_methodParameterTypes39 = new String[] { "java.util.Date" };
 
-		_methodName38 = "getMonthsBetweenTwoDate";
+		_methodName40 = "getMonthsBetweenTwoDate";
 
-		_methodParameterTypes38 = new String[] {
+		_methodParameterTypes40 = new String[] {
 				"java.util.Date", "java.util.Date"
 			};
 
-		_methodName39 = "addOneDayForEachEmp";
+		_methodName41 = "addOneDayForEachEmp";
 
-		_methodParameterTypes39 = new String[] {  };
+		_methodParameterTypes41 = new String[] {  };
 	}
 
 	@Override
@@ -897,7 +908,7 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 	@Override
 	public vn.com.ecopharma.emp.model.EmpAnnualLeave addEmpAnnualLeave(
 		vn.com.ecopharma.emp.model.EmpAnnualLeave prePersistedEntity,
-		long empId, int totalLeave, double totalLeaveLeft,
+		long empId, double totalLeave, double totalLeaveLeft,
 		double totalOldLeavesLeft) {
 		Object returnObj = null;
 
@@ -933,7 +944,7 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 
 	@Override
 	public vn.com.ecopharma.emp.model.EmpAnnualLeave addEmpAnnualLeave(
-		long empId, int totalLeave, double totalLeaveLeft,
+		long empId, double totalLeave, double totalLeaveLeft,
 		double totalOldLeavesLeft,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
@@ -969,12 +980,65 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 	}
 
 	@Override
-	public vn.com.ecopharma.emp.model.EmpAnnualLeave fetchByEmp(long empId) {
+	public vn.com.ecopharma.emp.model.EmpAnnualLeave updateEmpAnnualLeave(
+		vn.com.ecopharma.emp.model.EmpAnnualLeave empAnnualLeave,
+		double totalLeave, double totalLeaveLeft, double totalOldLeavesLeft) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25, new Object[] { empId });
+					_methodParameterTypes25,
+					new Object[] {
+						ClpSerializer.translateInput(empAnnualLeave),
+						
+					totalLeave,
+						
+					totalLeaveLeft,
+						
+					totalOldLeavesLeft
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.EmpAnnualLeave)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public void executeFirstAprilQuartzTask() {
+		try {
+			_invokableLocalService.invokeMethod(_methodName26,
+				_methodParameterTypes26, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.EmpAnnualLeave fetchByEmp(long empId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27, new Object[] { empId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -998,8 +1062,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] {
 						ClpSerializer.translateInput(date1),
 						
@@ -1033,8 +1097,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1069,8 +1133,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28,
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1109,8 +1173,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1153,8 +1217,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1191,8 +1255,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
 					new Object[] {
 						ClpSerializer.translateInput(id),
 						
@@ -1220,8 +1284,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32,
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
 					new Object[] { id, ClpSerializer.translateInput(
 							searchContext) });
 		}
@@ -1243,8 +1307,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 	@Override
 	public void indexAll() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName33,
-				_methodParameterTypes33, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName35,
+				_methodParameterTypes35, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1264,8 +1328,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		long companyId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName34,
-				_methodParameterTypes34,
+			_invokableLocalService.invokeMethod(_methodName36,
+				_methodParameterTypes36,
 				new Object[] {
 					ClpSerializer.translateInput(searchContext),
 					
@@ -1292,8 +1356,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName35,
-					_methodParameterTypes35,
+			returnObj = _invokableLocalService.invokeMethod(_methodName37,
+					_methodParameterTypes37,
 					new Object[] {
 						empId,
 						
@@ -1321,8 +1385,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 	public void scanAndAutoAddVacationLeave(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName36,
-				_methodParameterTypes36,
+			_invokableLocalService.invokeMethod(_methodName38,
+				_methodParameterTypes38,
 				new Object[] { ClpSerializer.translateInput(serviceContext) });
 		}
 		catch (Throwable t) {
@@ -1344,8 +1408,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName37,
-					_methodParameterTypes37,
+			returnObj = _invokableLocalService.invokeMethod(_methodName39,
+					_methodParameterTypes39,
 					new Object[] { ClpSerializer.translateInput(joinedDate) });
 		}
 		catch (Throwable t) {
@@ -1373,8 +1437,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName38,
-					_methodParameterTypes38,
+			returnObj = _invokableLocalService.invokeMethod(_methodName40,
+					_methodParameterTypes40,
 					new Object[] {
 						ClpSerializer.translateInput(startDate),
 						
@@ -1399,8 +1463,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 	@Override
 	public void addOneDayForEachEmp() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName39,
-				_methodParameterTypes39, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName41,
+				_methodParameterTypes41, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1494,4 +1558,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 	private String[] _methodParameterTypes38;
 	private String _methodName39;
 	private String[] _methodParameterTypes39;
+	private String _methodName40;
+	private String[] _methodParameterTypes40;
+	private String _methodName41;
+	private String[] _methodParameterTypes41;
 }

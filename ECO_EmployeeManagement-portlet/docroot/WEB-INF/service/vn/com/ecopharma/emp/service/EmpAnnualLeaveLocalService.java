@@ -268,13 +268,19 @@ public interface EmpAnnualLeaveLocalService extends BaseLocalService,
 
 	public vn.com.ecopharma.emp.model.EmpAnnualLeave addEmpAnnualLeave(
 		vn.com.ecopharma.emp.model.EmpAnnualLeave prePersistedEntity,
-		long empId, int totalLeave, double totalLeaveLeft,
+		long empId, double totalLeave, double totalLeaveLeft,
 		double totalOldLeavesLeft);
 
 	public vn.com.ecopharma.emp.model.EmpAnnualLeave addEmpAnnualLeave(
-		long empId, int totalLeave, double totalLeaveLeft,
+		long empId, double totalLeave, double totalLeaveLeft,
 		double totalOldLeavesLeft,
 		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public vn.com.ecopharma.emp.model.EmpAnnualLeave updateEmpAnnualLeave(
+		vn.com.ecopharma.emp.model.EmpAnnualLeave empAnnualLeave,
+		double totalLeave, double totalLeaveLeft, double totalOldLeavesLeft);
+
+	public void executeFirstAprilQuartzTask();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public vn.com.ecopharma.emp.model.EmpAnnualLeave fetchByEmp(long empId);

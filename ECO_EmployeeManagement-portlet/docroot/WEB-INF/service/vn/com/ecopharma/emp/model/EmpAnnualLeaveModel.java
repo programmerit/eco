@@ -109,14 +109,14 @@ public interface EmpAnnualLeaveModel extends BaseModel<EmpAnnualLeave>,
 	 *
 	 * @return the total annual leave of this emp annual leave
 	 */
-	public int getTotalAnnualLeave();
+	public double getTotalAnnualLeave();
 
 	/**
 	 * Sets the total annual leave of this emp annual leave.
 	 *
 	 * @param totalAnnualLeave the total annual leave of this emp annual leave
 	 */
-	public void setTotalAnnualLeave(int totalAnnualLeave);
+	public void setTotalAnnualLeave(double totalAnnualLeave);
 
 	/**
 	 * Returns the total previous year leaves left of this emp annual leave.

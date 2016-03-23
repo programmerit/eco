@@ -315,7 +315,7 @@ public class EmpAnnualLeaveLocalServiceWrapper
 	@Override
 	public vn.com.ecopharma.emp.model.EmpAnnualLeave addEmpAnnualLeave(
 		vn.com.ecopharma.emp.model.EmpAnnualLeave prePersistedEntity,
-		long empId, int totalLeave, double totalLeaveLeft,
+		long empId, double totalLeave, double totalLeaveLeft,
 		double totalOldLeavesLeft) {
 		return _empAnnualLeaveLocalService.addEmpAnnualLeave(prePersistedEntity,
 			empId, totalLeave, totalLeaveLeft, totalOldLeavesLeft);
@@ -323,11 +323,24 @@ public class EmpAnnualLeaveLocalServiceWrapper
 
 	@Override
 	public vn.com.ecopharma.emp.model.EmpAnnualLeave addEmpAnnualLeave(
-		long empId, int totalLeave, double totalLeaveLeft,
+		long empId, double totalLeave, double totalLeaveLeft,
 		double totalOldLeavesLeft,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return _empAnnualLeaveLocalService.addEmpAnnualLeave(empId, totalLeave,
 			totalLeaveLeft, totalOldLeavesLeft, serviceContext);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.EmpAnnualLeave updateEmpAnnualLeave(
+		vn.com.ecopharma.emp.model.EmpAnnualLeave empAnnualLeave,
+		double totalLeave, double totalLeaveLeft, double totalOldLeavesLeft) {
+		return _empAnnualLeaveLocalService.updateEmpAnnualLeave(empAnnualLeave,
+			totalLeave, totalLeaveLeft, totalOldLeavesLeft);
+	}
+
+	@Override
+	public void executeFirstAprilQuartzTask() {
+		_empAnnualLeaveLocalService.executeFirstAprilQuartzTask();
 	}
 
 	@Override

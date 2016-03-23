@@ -116,7 +116,7 @@ public class EmpAnnualLeaveLocalServiceImpl extends
 	}
 
 	public EmpAnnualLeave addEmpAnnualLeave(EmpAnnualLeave prePersistedEntity,
-			long empId, int totalLeave, double totalLeaveLeft,
+			long empId, double totalLeave, double totalLeaveLeft,
 			double totalOldLeavesLeft) {
 
 		prePersistedEntity.setEmpId(empId);
@@ -131,7 +131,7 @@ public class EmpAnnualLeaveLocalServiceImpl extends
 		return null;
 	}
 
-	public EmpAnnualLeave addEmpAnnualLeave(long empId, int totalLeave,
+	public EmpAnnualLeave addEmpAnnualLeave(long empId, double totalLeave,
 			double totalLeaveLeft, double totalOldLeavesLeft,
 			ServiceContext serviceContext) {
 		return addEmpAnnualLeave(createPrePersistedEntity(serviceContext),
@@ -152,6 +152,43 @@ public class EmpAnnualLeaveLocalServiceImpl extends
 			LOGGER.info(e);
 		}
 		return null;
+	}
+
+	public EmpAnnualLeave updateEmpAnnualLeave(EmpAnnualLeave empAnnualLeave,
+			double totalLeave, double totalLeaveLeft, double totalOldLeavesLeft) {
+		empAnnualLeave.setTotalAnnualLeave(totalLeave);
+		empAnnualLeave.setTotalAnualLeaveLeft(totalLeaveLeft);
+		empAnnualLeave.setTotalPreviousYearLeavesLeft(totalOldLeavesLeft);
+		return this.updateEmpAnnualLeave(empAnnualLeave);
+	}
+
+	public void executeFirstAprilQuartzTask() {
+		for (EmpAnnualLeave empAnnualLeave : findAll()) {
+			if (empAnnualLeave.getEmpId() == 188697)
+				System.out.println("TEST");
+			double prevLeaveLeft = empAnnualLeave
+					.getTotalPreviousYearLeavesLeft();
+			if (prevLeaveLeft == 0)
+				continue;
+
+			double calculateLeaveLeft = 0;
+			double calculateTotalLeaveAfterApril1st = 0;
+
+			double totalLeave = empAnnualLeave.getTotalAnnualLeave();
+			double totalLeaveLeft = empAnnualLeave.getTotalAnualLeaveLeft();
+
+			if (totalLeaveLeft >= prevLeaveLeft) {
+				calculateLeaveLeft = totalLeave - prevLeaveLeft;
+			} else { // totalLeaveLeft < prevLeaveLeft
+				calculateLeaveLeft = totalLeave
+						- (prevLeaveLeft + (prevLeaveLeft - totalLeaveLeft));
+			}
+			calculateTotalLeaveAfterApril1st = calculateLeaveLeft;
+
+			this.updateEmpAnnualLeave(empAnnualLeave,
+					calculateTotalLeaveAfterApril1st, calculateLeaveLeft,
+					prevLeaveLeft);
+		}
 	}
 
 	public EmpAnnualLeave fetchByEmp(long empId) {
@@ -454,10 +491,10 @@ public class EmpAnnualLeaveLocalServiceImpl extends
 				- startCalendar.get(Calendar.MONTH);
 		return diffMonth;
 	}
-	
+
 	public void addOneDayForEachEmp() {
-		for (EmpAnnualLeave annualLeave: findAll()) {
-			
+		for (EmpAnnualLeave annualLeave : findAll()) {
+
 		}
 	}
 
