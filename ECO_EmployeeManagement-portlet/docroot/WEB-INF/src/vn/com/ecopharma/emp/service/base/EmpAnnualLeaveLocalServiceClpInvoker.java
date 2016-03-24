@@ -235,25 +235,31 @@ public class EmpAnnualLeaveLocalServiceClpInvoker {
 				"long", "double", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName218 = "scanAndAutoAddVacationLeave";
+		_methodName218 = "applyLeaveForEmp1";
 
 		_methodParameterTypes218 = new String[] {
+				"long", "double", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName219 = "scanAndAutoAddVacationLeave";
+
+		_methodParameterTypes219 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName219 = "calculateTotalAnnualLeaveByJoinedDate";
+		_methodName220 = "calculateTotalAnnualLeaveByJoinedDate";
 
-		_methodParameterTypes219 = new String[] { "java.util.Date" };
+		_methodParameterTypes220 = new String[] { "java.util.Date" };
 
-		_methodName220 = "getMonthsBetweenTwoDate";
+		_methodName221 = "getMonthsBetweenTwoDate";
 
-		_methodParameterTypes220 = new String[] {
+		_methodParameterTypes221 = new String[] {
 				"java.util.Date", "java.util.Date"
 			};
 
-		_methodName221 = "addOneDayForEachEmp";
+		_methodName222 = "addOneDayForEachEmp";
 
-		_methodParameterTypes221 = new String[] {  };
+		_methodParameterTypes222 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -503,24 +509,31 @@ public class EmpAnnualLeaveLocalServiceClpInvoker {
 
 		if (_methodName218.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes218, parameterTypes)) {
+			return EmpAnnualLeaveLocalServiceUtil.applyLeaveForEmp1(((Long)arguments[0]).longValue(),
+				((Double)arguments[1]).doubleValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[2]);
+		}
+
+		if (_methodName219.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes219, parameterTypes)) {
 			EmpAnnualLeaveLocalServiceUtil.scanAndAutoAddVacationLeave((com.liferay.portal.service.ServiceContext)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName219.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes219, parameterTypes)) {
-			return EmpAnnualLeaveLocalServiceUtil.calculateTotalAnnualLeaveByJoinedDate((java.util.Date)arguments[0]);
-		}
-
 		if (_methodName220.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes220, parameterTypes)) {
-			return EmpAnnualLeaveLocalServiceUtil.getMonthsBetweenTwoDate((java.util.Date)arguments[0],
-				(java.util.Date)arguments[1]);
+			return EmpAnnualLeaveLocalServiceUtil.calculateTotalAnnualLeaveByJoinedDate((java.util.Date)arguments[0]);
 		}
 
 		if (_methodName221.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes221, parameterTypes)) {
+			return EmpAnnualLeaveLocalServiceUtil.getMonthsBetweenTwoDate((java.util.Date)arguments[0],
+				(java.util.Date)arguments[1]);
+		}
+
+		if (_methodName222.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes222, parameterTypes)) {
 			EmpAnnualLeaveLocalServiceUtil.addOneDayForEachEmp();
 
 			return null;
@@ -613,4 +626,6 @@ public class EmpAnnualLeaveLocalServiceClpInvoker {
 	private String[] _methodParameterTypes220;
 	private String _methodName221;
 	private String[] _methodParameterTypes221;
+	private String _methodName222;
+	private String[] _methodParameterTypes222;
 }

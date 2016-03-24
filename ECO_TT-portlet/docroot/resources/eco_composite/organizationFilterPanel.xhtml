@@ -30,8 +30,7 @@
 							update="departmentSelect unitSelect unitGroupSelect titlesSelect"
 							oncomplete="#{cc.attrs.onCompleteUpdate}" />
 						<f:selectItems value="#{cc.attrs.orgBean.devisions}" var="d"
-							itemLabel="#{d.name}" itemValue="#{d}"
-							itemDisabled="#{not devisionPermission.checkPermission(d.devisionId, 'VIEW')}" />
+							itemLabel="#{d.name}" itemValue="#{d}" />
 						<p:column>
 					                #{d.name}
 					            </p:column>

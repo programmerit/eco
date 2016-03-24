@@ -5,6 +5,7 @@ import org.primefaces.model.LazyDataModel;
 import vn.com.ecopharma.hrm.tt.dto.AbstractIndexedItem;
 import vn.com.ecopharma.hrm.tt.utils.TTUtils;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 
 public class AbstractIndexedLazyDataModel<T extends AbstractIndexedItem>
@@ -17,6 +18,12 @@ public class AbstractIndexedLazyDataModel<T extends AbstractIndexedItem>
 
 	protected static final SearchContext searchContext = TTUtils
 			.getCurrentSearchContext();
+
+	protected static final long companyId = searchContext.getCompanyId();
+
+	protected static final int defaultStart = QueryUtil.ALL_POS;
+
+	protected static final int defaultEnd = QueryUtil.ALL_POS;
 
 	@Override
 	public Object getRowKey(T object) {

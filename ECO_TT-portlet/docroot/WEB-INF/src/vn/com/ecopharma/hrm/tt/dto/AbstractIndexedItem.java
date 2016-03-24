@@ -29,6 +29,9 @@ public abstract class AbstractIndexedItem implements Serializable {
 
 	private Document document;
 
+	/**
+	 * prevent user from instantiate none argument constructor
+	 */
 	public AbstractIndexedItem() {
 		throw new IllegalStateException();
 	}

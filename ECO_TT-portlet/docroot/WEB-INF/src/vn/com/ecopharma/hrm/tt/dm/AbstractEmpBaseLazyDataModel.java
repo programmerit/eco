@@ -26,7 +26,7 @@ public abstract class AbstractEmpBaseLazyDataModel<T extends AbstractIndexedItem
 	public abstract T getRowData(String rowKey);
 
 	@Override
-	protected void bindOrganizationFilterFields(Map<String, Object> filters,
+	protected void bindEmpFilterFields(Map<String, Object> filters,
 			S bean) {
 		if (!StringUtils.EMPTY.equals(bean.getFullName())) {
 			filters.put(EmpField.VN_FULL_NAME, bean.getFullName());
@@ -35,6 +35,6 @@ public abstract class AbstractEmpBaseLazyDataModel<T extends AbstractIndexedItem
 		if (!StringUtils.EMPTY.equals(bean.getEmpCode())) {
 			filters.put(EmpField.EMP_CODE, bean.getEmpCode());
 		}
-		super.bindOrganizationFilterFields(filters, bean);
+		super.bindEmpFilterFields(filters, bean);
 	}
 }

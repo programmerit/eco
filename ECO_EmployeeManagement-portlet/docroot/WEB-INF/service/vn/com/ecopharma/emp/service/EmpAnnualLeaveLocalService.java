@@ -333,6 +333,11 @@ public interface EmpAnnualLeaveLocalService extends BaseLocalService,
 		long empId, double numberOfLeaves,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
+	@java.lang.Deprecated
+	public vn.com.ecopharma.emp.model.EmpAnnualLeave applyLeaveForEmp1(
+		long empId, double numberOfLeaves,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
 	public void scanAndAutoAddVacationLeave(
 		com.liferay.portal.service.ServiceContext serviceContext);
 

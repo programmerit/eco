@@ -231,7 +231,8 @@
 				<p:commandLink value="1st April Re-calculate"
 					actionListener="#{empView.onExecuteFirstAprilQuartzTask}" />
 
-				<p:commandLink value="Transfer labor contract" rendered="true"
+				<p:commandLink value="Transfer labor contract"
+					rendered="#{employeeModelPermission.checkPermission('PERMISSION')}"
 					actionListener="#{empView.onTransferEmpContract}" />
 
 				<p:commandLink value="Test send mail"

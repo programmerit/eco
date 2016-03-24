@@ -230,25 +230,31 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 				"long", "double", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName38 = "scanAndAutoAddVacationLeave";
+		_methodName38 = "applyLeaveForEmp1";
 
 		_methodParameterTypes38 = new String[] {
+				"long", "double", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName39 = "scanAndAutoAddVacationLeave";
+
+		_methodParameterTypes39 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName39 = "calculateTotalAnnualLeaveByJoinedDate";
+		_methodName40 = "calculateTotalAnnualLeaveByJoinedDate";
 
-		_methodParameterTypes39 = new String[] { "java.util.Date" };
+		_methodParameterTypes40 = new String[] { "java.util.Date" };
 
-		_methodName40 = "getMonthsBetweenTwoDate";
+		_methodName41 = "getMonthsBetweenTwoDate";
 
-		_methodParameterTypes40 = new String[] {
+		_methodParameterTypes41 = new String[] {
 				"java.util.Date", "java.util.Date"
 			};
 
-		_methodName41 = "addOneDayForEachEmp";
+		_methodName42 = "addOneDayForEachEmp";
 
-		_methodParameterTypes41 = new String[] {  };
+		_methodParameterTypes42 = new String[] {  };
 	}
 
 	@Override
@@ -1382,11 +1388,43 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.EmpAnnualLeave applyLeaveForEmp1(
+		long empId, double numberOfLeaves,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName38,
+					_methodParameterTypes38,
+					new Object[] {
+						empId,
+						
+					numberOfLeaves,
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.EmpAnnualLeave)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public void scanAndAutoAddVacationLeave(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName38,
-				_methodParameterTypes38,
+			_invokableLocalService.invokeMethod(_methodName39,
+				_methodParameterTypes39,
 				new Object[] { ClpSerializer.translateInput(serviceContext) });
 		}
 		catch (Throwable t) {
@@ -1408,8 +1446,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName39,
-					_methodParameterTypes39,
+			returnObj = _invokableLocalService.invokeMethod(_methodName40,
+					_methodParameterTypes40,
 					new Object[] { ClpSerializer.translateInput(joinedDate) });
 		}
 		catch (Throwable t) {
@@ -1437,8 +1475,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName40,
-					_methodParameterTypes40,
+			returnObj = _invokableLocalService.invokeMethod(_methodName41,
+					_methodParameterTypes41,
 					new Object[] {
 						ClpSerializer.translateInput(startDate),
 						
@@ -1463,8 +1501,8 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 	@Override
 	public void addOneDayForEachEmp() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName41,
-				_methodParameterTypes41, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName42,
+				_methodParameterTypes42, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1562,4 +1600,6 @@ public class EmpAnnualLeaveLocalServiceClp implements EmpAnnualLeaveLocalService
 	private String[] _methodParameterTypes40;
 	private String _methodName41;
 	private String[] _methodParameterTypes41;
+	private String _methodName42;
+	private String[] _methodParameterTypes42;
 }

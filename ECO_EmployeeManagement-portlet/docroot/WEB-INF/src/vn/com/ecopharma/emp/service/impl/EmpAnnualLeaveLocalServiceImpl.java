@@ -388,6 +388,20 @@ public class EmpAnnualLeaveLocalServiceImpl extends
 			return null;
 
 		double totalLeavesLeft = currentAnnualLeave.getTotalAnualLeaveLeft();
+		totalLeavesLeft -= numberOfLeaves;
+		currentAnnualLeave.setTotalAnualLeaveLeft(totalLeavesLeft);
+		return updateEmpAnnualLeave(currentAnnualLeave);
+
+	}
+
+	@Deprecated
+	public EmpAnnualLeave applyLeaveForEmp1(long empId, double numberOfLeaves,
+			ServiceContext serviceContext) {
+		final EmpAnnualLeave currentAnnualLeave = fetchByEmp(empId);
+		if (currentAnnualLeave == null)
+			return null;
+
+		double totalLeavesLeft = currentAnnualLeave.getTotalAnualLeaveLeft();
 		double totalPreviousYearLeaveLeft = currentAnnualLeave
 				.getTotalPreviousYearLeavesLeft();
 

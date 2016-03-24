@@ -477,7 +477,7 @@ public class VacationLeaveLocalServiceImpl extends
 		} catch (ParseException e) {
 			LOGGER.info(e);
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	@SuppressWarnings("unchecked")

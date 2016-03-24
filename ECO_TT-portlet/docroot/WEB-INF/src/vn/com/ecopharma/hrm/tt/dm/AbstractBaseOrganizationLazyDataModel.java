@@ -24,7 +24,7 @@ public abstract class AbstractBaseOrganizationLazyDataModel<T extends AbstractIn
 	@Override
 	public abstract T getRowData(String rowKey);
 
-	protected void bindOrganizationFilterFields(Map<String, Object> filters,
+	protected void bindEmpFilterFields(Map<String, Object> filters,
 			S bean) {
 		FilterUtils.bindOrgFilters(bean, filters);
 	}

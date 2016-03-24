@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import vn.com.ecopharma.hrm.tt.constant.EmpField;
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
+import vn.com.ecopharma.hrm.tt.dto.AnnualLeaveIndexedItem;
 import vn.com.ecopharma.hrm.tt.dto.EmpTimeTrackingIndexedItem;
 import vn.com.ecopharma.hrm.tt.dto.TimeTrackingIndexItem;
 import vn.com.ecopharma.hrm.tt.dto.TimeTrackingReport;
@@ -85,6 +86,15 @@ public class TTUtils {
 		for (Document document : documents) {
 			result.add(new TimeTrackingReport(document));
 		}
+		return result;
+	}
+
+	public static List<AnnualLeaveIndexedItem> getAnnualLeaveItems(
+			List<Document> documents) {
+		final List<AnnualLeaveIndexedItem> result = new ArrayList<>();
+
+		for (Document document : documents)
+			result.add(new AnnualLeaveIndexedItem(document));
 		return result;
 	}
 

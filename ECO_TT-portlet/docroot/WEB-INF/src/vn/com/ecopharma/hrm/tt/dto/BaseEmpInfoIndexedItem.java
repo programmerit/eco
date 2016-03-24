@@ -10,7 +10,7 @@ public abstract class BaseEmpInfoIndexedItem extends AbstractIndexedItem {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
 	public BaseEmpInfoIndexedItem(Document document) {
 		super(document);
 	}

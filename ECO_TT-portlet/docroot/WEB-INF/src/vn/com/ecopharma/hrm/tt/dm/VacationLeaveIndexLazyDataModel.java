@@ -33,21 +33,20 @@ public class VacationLeaveIndexLazyDataModel
 	@Override
 	public List<VacationLeaveIndexedItem> load(int first, int pageSize,
 			String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-		super.bindOrganizationFilterFields(filters,
+		super.bindEmpFilterFields(filters,
 				BeanUtils.getLeaveFilterBean());
 		final List<VacationLeaveIndexedItem> results = new ArrayList<>();
 		try {
 			final Sort sort = new Sort(VacationLeaveField.ID, false);
 			final List<Document> documents = VacationLeaveLocalServiceUtil
-					.filterByFields(searchContext, filters, sort,
-							searchContext.getCompanyId(), first, first
-									+ pageSize);
+					.filterByFields(searchContext, filters, sort, companyId,
+							first, first + pageSize);
 			for (Document document : documents) {
 				results.add(new VacationLeaveIndexedItem(document));
 			}
 			setPageSize(pageSize);
 			setRowCount(VacationLeaveLocalServiceUtil.countFilterByFields(
-					searchContext, filters, sort, searchContext.getCompanyId()));
+					searchContext, filters, sort, companyId));
 
 			return results;
 		} catch (PortalException e) {

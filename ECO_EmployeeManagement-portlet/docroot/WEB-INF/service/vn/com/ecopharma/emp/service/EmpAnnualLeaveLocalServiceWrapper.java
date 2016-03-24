@@ -429,6 +429,14 @@ public class EmpAnnualLeaveLocalServiceWrapper
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.EmpAnnualLeave applyLeaveForEmp1(
+		long empId, double numberOfLeaves,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _empAnnualLeaveLocalService.applyLeaveForEmp1(empId,
+			numberOfLeaves, serviceContext);
+	}
+
+	@Override
 	public void scanAndAutoAddVacationLeave(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		_empAnnualLeaveLocalService.scanAndAutoAddVacationLeave(serviceContext);

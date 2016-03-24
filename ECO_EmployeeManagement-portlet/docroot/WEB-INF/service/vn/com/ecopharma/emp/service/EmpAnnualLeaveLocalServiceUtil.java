@@ -404,6 +404,13 @@ public class EmpAnnualLeaveLocalServiceUtil {
 				   .applyLeaveForEmp(empId, numberOfLeaves, serviceContext);
 	}
 
+	public static vn.com.ecopharma.emp.model.EmpAnnualLeave applyLeaveForEmp1(
+		long empId, double numberOfLeaves,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService()
+				   .applyLeaveForEmp1(empId, numberOfLeaves, serviceContext);
+	}
+
 	public static void scanAndAutoAddVacationLeave(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		getService().scanAndAutoAddVacationLeave(serviceContext);

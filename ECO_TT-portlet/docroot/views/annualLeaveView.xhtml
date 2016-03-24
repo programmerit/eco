@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
+	<h:head />
+
+	<h:body>
+		<eco:ajaxIndicator />
+		<p:growl id="growl" showDetail="true" sticky="false" life="4000" />
+		<h:panelGroup id="disciplinePanelGroup">
+			<h:form id="searchForm">
+				<h:link value="Show/Hide filter" styleClass="label"
+					onmouseover="toggle('#{requestScope.filterGrid.clientId}'); return false;"
+					onclick="toggle('#{requestScope.filterGrid.clientId}'); return false;" />
+
+				<h:panelGroup binding="#{requestScope.filterGrid}" id="filterGroup"
+					style="display: none;">
+					<p:panelGrid id="filterGrid" columns="1" styleClass="filter-grid"
+						style="margin-bottom: 7px!important; color: black!important;">
+						<h:panelGroup>
+							<eco:baseEmpFilterPanel empBean="#{annualLeaveFilterBean}"
+								onCompleteUpdate="PF('annualLeaveTable').filter();" />
+						</h:panelGroup>
+					</p:panelGrid>
+
+				</h:panelGroup>
+			</h:form>
+
+			<h:form id="annualLeaveViewForm">
+
+				<p:link ajax="true" value="Back" outcome="view"
+					rendered="#{employeeModelPermission.checkPermission('VIEW')}" />
+
+				<p:commandLink value="Index All"
+					actionListener="#{annualLeaveViewBean.onIndexAll}" /> | 
+				<p:commandLink value="Remove All Index"
+					actionListener="#{annualLeaveViewBean.onRemoveAllIndex}" />
+
+				<p:dataTable id="annualLeaves" var="l" widgetVar="annualLeaveTable"
+					value="#{annualLeaveViewBean.lazyDataModel}"
+					paginatorAlwaysVisible="true" paginator="true" rows="25"
+					paginatorPosition="bottom"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,25,50" lazy="true" selectionMode="single"
+					selection="#{annualLeaveViewBean.selectedItem}" rowKey="#{l.id}"
+					emptyMessage="No records found" editable="true">
+					<p:ajax event="rowEdit" listener="#{annualLeaveViewBean.onRowEdit}"
+						update=":growl" />
+					<p:ajax event="rowEditCancel"
+						listener="#{annualLeaveViewBean.onRowEditCancel}" update=":growl" />
+
+					<p:column headerText="Code">
+						<h:outputText value="#{l.employeeCode}" />
+					</p:column>
+
+					<p:column headerText="Name">
+						<h:outputText value="#{l.fullNameVi}" />
+					</p:column>
+
+					<p:column headerText="Titles">
+						<h:outputText value="#{l.titles}" />
+					</p:column>
+
+					<p:column headerText="Dept">
+						<h:outputText value="#{l.department}" />
+					</p:column>
+
+					<p:column headerText="Total leaves">
+						<h:outputText value="#{l.totalLeave}" />
+					</p:column>
+
+					<p:column headerText="Leaves left">
+						<h:outputText value="#{l.totalLeaveLeft}" />
+					</p:column>
+
+					<p:column headerText="Last year leave left">
+						<h:outputText value="#{l.totalPreviousYearLeavesLeft}" />
+					</p:column>
+
+					<p:column style="width:32px">
+						<p:rowEditor />
+					</p:column>
+					<f:facet name="footer">
+		        		In total there are of <h:outputText id="totalFilteredCount"
+							value="#{annualLeaveViewBean.lazyDataModel.rowCount}" /> employees.
+		   			 </f:facet>
+				</p:dataTable>
+			</h:form>
+		</h:panelGroup>
+
+	</h:body>
+	<script type="text/javascript">
+		function toggle(id) {
+			var element = document.getElementById(id);
+			if (element.style.display == 'block') {
+				element.style.display = 'none';
+			} else {
+				element.style.display = 'block'
+			}
+		}
+	</script>
+	<style type="text/css">
+.ui-panelgrid tbody tr td {
+	border: none !important;
+}
+</style>
+</f:view>
+
+

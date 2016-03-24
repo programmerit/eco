@@ -23,8 +23,6 @@ import vn.com.ecopharma.hrm.tt.dm.TimeTrackingReportLazyDataModel;
 import vn.com.ecopharma.hrm.tt.dto.EmpLeaveRequestItem;
 import vn.com.ecopharma.hrm.tt.dto.EmpTimeTrackingIndexedItem;
 import vn.com.ecopharma.hrm.tt.utils.BeanUtils;
-import vn.com.ecopharma.hrm.tt.utils.FilterUtils;
-import vn.com.ecopharma.hrm.tt.utils.TTUtils;
 
 @ManagedBean
 @ViewScoped
@@ -60,29 +58,6 @@ public class TimeTrackingReportBean implements Serializable {
 					Map<String, Object> filters) {
 				final TimeTrackingFilterBean filterBean = BeanUtils
 						.getTimeTrackingFilterBean();
-
-				TTUtils.checkAndAddFilterValue(TimeTrackingField.GLOBAL,
-						filterBean.getGlobalString(), filters);
-
-				TTUtils.checkAndAddFilterValue(TimeTrackingField.VN_FULLNAME,
-						filterBean.getFullName(), filters);
-
-				TTUtils.checkAndAddFilterValue(TimeTrackingField.EMP_CODE,
-						filterBean.getEmpCode(), filters);
-
-				FilterUtils.bindOrgFilters(filterBean, filters);
-
-				// TTUtils.checkAndAddFilterValue(
-				// TimeTrackingField.IS_EMPTY_IN,
-				// filterBean.getValueFilter().equalsIgnoreCase(
-				// ValueFilterType.EMPTY_MIN_IN.toString()) ? true
-				// : false, filters);
-				//
-				// TTUtils.checkAndAddFilterValue(
-				// TimeTrackingField.IS_EMPTY_OUT,
-				// filterBean.getValueFilter().equalsIgnoreCase(
-				// ValueFilterType.EMPTY_MAX_OUT.toString()) ? true
-				// : false, filters);
 
 				// month
 				filters.put(TimeTrackingField.MONTH, filterBean.getMonth());

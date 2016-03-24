@@ -40,7 +40,7 @@ public class TimeTrackingReportLazyDataModel
 	@Override
 	public List<EmpTimeTrackingIndexedItem> load(int first, int pageSize,
 			String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-		super.bindOrganizationFilterFields(filters,
+		super.bindEmpFilterFields(filters,
 				BeanUtils.getTimeTrackingFilterBean());
 
 		final SearchContext searchContext = getSearchContext();
