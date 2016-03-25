@@ -1,4 +1,4 @@
-package vn.com.ecopharma.hrm.rc.enumeration;
+package vn.com.ecopharma.hrm.rc.enumeration.navigation;
 
 public enum GuestNavigation {
 

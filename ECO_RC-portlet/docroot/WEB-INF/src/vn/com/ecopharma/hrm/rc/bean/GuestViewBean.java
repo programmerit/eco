@@ -6,7 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import vn.com.ecopharma.hrm.rc.enumeration.GuestNavigation;
+import vn.com.ecopharma.hrm.rc.enumeration.navigation.GuestNavigation;
 
 @ManagedBean
 @ViewScoped
@@ -26,7 +26,7 @@ public class GuestViewBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		navigationOutcome = GuestNavigation.SUCCESS_ADD.getOutCome();
+		navigationOutcome = GuestNavigation.GUEST_ADD.getOutCome();
 	}
 
 	public void switchOutcome(GuestNavigation navigation) {

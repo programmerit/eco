@@ -8,8 +8,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	<h:head />
 	<h:body>
-		<h:form id="vacancySearchForm"
-			rendered="#{vacancyViewBean.currentMode==1}">
+		<h:form id="vacancySearchForm">
 
 			<h:link value="Show/Hide filter" styleClass="label"
 				onclick="toggle('#{requestScope.filterGrid.clientId}'); return false;"
@@ -70,22 +69,14 @@
 			</p:panelGrid>
 		</h:form>
 
-		<h:form id="vacancyMainForm"
-			rendered="#{vacancyViewBean.currentMode==1}">
+		<h:form id="vacancyMainForm">
 
 			<p:remoteCommand name="refreshVacancyTable"
 				update=":vacancyMainForm:vacancies" />
 
-			<p:commandLink id="vBackButton" value="Back"
-				rendered="#{vacancyViewBean.currentMode != 1}"
-				actionListener="#{vacancyViewBean.switchMode(1)}"
-				update=":VacancyPanelGroup" immediate="true" />
-			<h:outputText value="|"
-				rendered="#{vacancyViewBean.currentMode != 1}" />
-
 			<p:commandLink id="addVacancy" value="Add New Vacancy"
-				actionListener="#{vacancyViewBean.switchMode(2)}"
-				action="#{vacancyBean.addVacancy}" update=":VacancyPanelGroup" /> |
+				actionListener="#{vacancyBean.addVacancy}"
+				update=":VacancyPanelGroup" /> |
 
 				<p:commandLink value="Remove Indexes"
 				actionListener="#{vacancyBean.removeIndexes}" ajax="true" /> |

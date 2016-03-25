@@ -12,8 +12,7 @@
 		<!-- tricky load primefaces extension -->
 		<pe:blockPanel />
 
-		<h:form id="candidateSearchForm"
-			rendered="#{candidateViewBean.currentMode==1}">
+		<h:form id="candidateSearchForm">
 			<h:link value="Show/Hide filter" styleClass="label"
 				onclick="toggle('#{requestScope.filterGrid.clientId}'); return false;"
 				onmouseover="toggle('#{requestScope.filterGrid.clientId}'); return false;" />
@@ -124,8 +123,7 @@
 				</p:panelGrid>
 			</h:panelGroup>
 		</h:form>
-		<h:form id="candidateMainForm"
-			rendered="#{candidateViewBean.currentMode==1}">
+		<h:form id="candidateMainForm">
 			<p:remoteCommand name="updatePanelGroupCandidatesAndGrowl"
 				update=":CandidatePanelGroup :candidateMainForm:candidates :growl" />
 
@@ -181,7 +179,7 @@
 						value="#{i18n[candidateViewBean.getLocalizedStatus('MARK_INTERVIEW_PASS')]}"
 						rendered="#{candidateBean.isExistedInSameAvailableStatuses('MARK_INTERVIEW_PASS')}"
 						action="#{candidateBean.onChangeMultipleItemStatus('MARK_INTERVIEW_PASS')}"
-						oncomplete="updateCandidatesAndGrowl();" />
+						update="@form" />
 
 					<p:menuitem
 						value="#{i18n[candidateViewBean.getLocalizedStatus('INTERVIEW_SCHEDULED')]}"
@@ -192,13 +190,14 @@
 					<p:menuitem
 						value="#{i18n[candidateViewBean.getLocalizedStatus('JOB_OFFERED')]}"
 						rendered="#{candidateBean.isExistedInSameAvailableStatuses('JOB_OFFERED')}"
-						action="#{candidateBean.onChangeMultipleItemStatus('JOB_OFFERED')}" />
+						action="#{candidateBean.onChangeMultipleItemStatus('JOB_OFFERED')}"
+						update="@form" />
 
 					<p:menuitem
 						value="#{i18n[candidateViewBean.getLocalizedStatus('DECLINE_OFFERED')]}"
 						rendered="#{candidateBean.isExistedInSameAvailableStatuses('DECLINE_OFFERED')}"
-						action="#{candidateBean.onChangeMultipleItemStatus('DECLINE_OFFERED')}"
-						oncomplete="updateCandidatesAndGrowl();" />
+						actionListener="#{candidateBean.onChangeMultipleItemStatus('DECLINE_OFFERED')}"
+						update="@form" oncomplete="PF('wCandidates').filter();" />
 
 					<p:menuitem
 						value="#{i18n[candidateViewBean.getLocalizedStatus('EVALUATE_CANDIDATE')]}"
@@ -212,11 +211,6 @@
 			</p:contextMenu>
 
 			<h:panelGroup rendered="#{modelPermission.checkPermission('ADD')}">
-				<p:commandLink id="backButton" value="Back"
-					rendered="#{candidateViewBean.currentMode != 1}"
-					actionListener="#{candidateViewBean.switchMode(1)}"
-					update=":CandidatePanelGroup" immediate="true" />
-
 				<p:commandLink id="addCandidate" value="Add New Candidate"
 					action="#{candidateBean.addCandidate}"
 					update=":CandidatePanelGroup"
@@ -233,9 +227,9 @@
 
 			</h:panelGroup>
 			<p:dataTable id="candidates" var="candidate" widgetVar="wCandidates"
-				reflow="true" value="#{candidateBean.lazyDataModel}"
-				paginatorAlwaysVisible="true" paginator="true" rows="25"
-				paginatorPosition="bottom"
+				resizableColumns="true" reflow="true" editable="true"
+				value="#{candidateBean.lazyDataModel}" paginatorAlwaysVisible="true"
+				paginator="true" rows="25" paginatorPosition="bottom"
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="10,25,50" lazy="true" selectionMode="multiple"
 				selection="#{candidateBean.selectedItems}" rowKey="#{candidate.id}"
@@ -248,8 +242,7 @@
 				<p:ajax event="contextMenu"
 					listener="#{candidateBean.onContextShow}" />
 
-				<p:ajax event="rowSelect" oncomplete="refreshContextMenu();"
-					async="true" onsuccess="PF('statusDialog').hide()" />
+				<p:ajax event="rowSelect" oncomplete="refreshContextMenu();" />
 
 				<p:ajax event="rowToggle" listener="#{candidateBean.onRowToggle}" />
 
@@ -291,19 +284,6 @@
 						<h:outputText id="candidateStatus"
 							styleClass="currentStatus #{candidateViewBean.currentStatusCSS(candidate.status)}"
 							value="#{i18n[candidate.localizedStatus]}" />
-						<p:selectOneMenu id="candidateStatusSelect"
-							style="margin-top:20px;" value="#{candidateBean.selectedStatus}">
-							<!-- eliminate oncomplete update if current status is JOB_OFFERED, 
-						b/c changing to HIRE status will make AJAX cannot complete on updating candidates table -->
-							<p:ajax listener="#{candidateBean.onStatusChange}"
-								oncomplete="#{candidateViewBean.selectedStatus eq 'REJECT' ? 'openRejectDialog();' : ''}" />
-
-							<f:selectItem itemLabel="---" itemValue="" />
-							<f:selectItems
-								value="#{candidateViewBean.getAvailableStatuses(candidate.status)}"
-								var="status" itemValue="#{status}"
-								itemLabel="#{i18n[candidateViewBean.getLocalizedStatus(status)]}" />
-						</p:selectOneMenu>
 					</h:panelGroup>
 				</p:column>
 

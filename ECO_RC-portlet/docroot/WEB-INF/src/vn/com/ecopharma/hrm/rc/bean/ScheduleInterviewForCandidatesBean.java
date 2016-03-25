@@ -16,10 +16,10 @@ import javax.faces.event.ActionEvent;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
-import vn.com.ecopharma.hrm.rc.constant.CandidateNavigation;
 import vn.com.ecopharma.hrm.rc.dto.EmpIndexedItem;
 import vn.com.ecopharma.hrm.rc.dto.InterviewScheduleForAllItem;
 import vn.com.ecopharma.hrm.rc.dto.InterviewScheduleItem;
+import vn.com.ecopharma.hrm.rc.enumeration.navigation.CandidateNavigation;
 import vn.com.ecopharma.hrm.rc.model.Interview;
 import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.InterviewLocalServiceUtil;
@@ -93,7 +93,7 @@ public class ScheduleInterviewForCandidatesBean implements Serializable {
 				FacesContext.getCurrentInstance().addMessage(null, msg);
 
 			}
-			BeanUtils.getCandidateViewBean().switchMode(
+			BeanUtils.getCandidateViewBean().switchOutCome(
 					CandidateNavigation.VIEW);
 			;
 		}
@@ -132,7 +132,7 @@ public class ScheduleInterviewForCandidatesBean implements Serializable {
 				"You selected to cancel scheduling interview");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		CandidateViewBean candidateViewBean = BeanUtils.getCandidateViewBean();
-		candidateViewBean.switchMode(CandidateNavigation.VIEW);
+		candidateViewBean.switchOutCome(CandidateNavigation.VIEW);
 	}
 
 	public void onSetInterviewDateForAll() {
@@ -150,6 +150,13 @@ public class ScheduleInterviewForCandidatesBean implements Serializable {
 	public void onDeleteInterviewSchedule(ActionEvent event) {
 		LOGGER.info("#### Delete key was pressed ####");
 		interviewScheduleItems.removeAll(selectedInterviewScheduleItems);
+	}
+
+	public void onResetAll() {
+		this.isSetInterviewDateForAll = false;
+		this.isSetInterviewersForAll = false;
+		this.isSetInterviewForAll = false;
+		this.isSetInterviewTimeForAll = false;
 	}
 
 	private void setSameInterviewScheduleForItems(

@@ -34,7 +34,6 @@ import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
 import vn.com.ecopharma.emp.service.SpecializedLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
-import vn.com.ecopharma.hrm.rc.constant.CandidateNavigation;
 import vn.com.ecopharma.hrm.rc.dto.AddressObjectItem;
 import vn.com.ecopharma.hrm.rc.dto.BankInfoObject;
 import vn.com.ecopharma.hrm.rc.dto.CandidateIndexItem;
@@ -49,6 +48,7 @@ import vn.com.ecopharma.hrm.rc.enumeration.DocumentType;
 import vn.com.ecopharma.hrm.rc.enumeration.EducationType;
 import vn.com.ecopharma.hrm.rc.enumeration.LaborContractType;
 import vn.com.ecopharma.hrm.rc.enumeration.VacancyCandidateType;
+import vn.com.ecopharma.hrm.rc.enumeration.navigation.CandidateNavigation;
 import vn.com.ecopharma.hrm.rc.model.Candidate;
 import vn.com.ecopharma.hrm.rc.model.Vacancy;
 import vn.com.ecopharma.hrm.rc.model.VacancyCandidate;
@@ -160,7 +160,7 @@ public class EmployeeBean implements Serializable {
 						"Candidate has successfully set as Employee!");
 				FacesContext.getCurrentInstance().addMessage(null, message);
 
-				BeanUtils.getCandidateViewBean().switchMode(
+				BeanUtils.getCandidateViewBean().switchOutCome(
 						CandidateNavigation.VIEW);
 
 			}
@@ -214,7 +214,7 @@ public class EmployeeBean implements Serializable {
 	public void cancelModification() {
 		final CandidateViewBean candidateViewBean = BeanUtils
 				.getCandidateViewBean();
-		candidateViewBean.switchMode(1);
+		candidateViewBean.switchOutCome(CandidateNavigation.VIEW);
 	}
 
 	public void transferCandidateInfo(CandidateItem candidateItem) {

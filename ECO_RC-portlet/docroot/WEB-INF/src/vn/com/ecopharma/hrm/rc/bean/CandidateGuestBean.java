@@ -12,7 +12,7 @@ import javax.faces.context.FacesContext;
 import vn.com.ecopharma.hrm.rc.dto.CandidateItem;
 import vn.com.ecopharma.hrm.rc.dto.CertificateObjectItem;
 import vn.com.ecopharma.hrm.rc.dto.ExperienceObjectItem;
-import vn.com.ecopharma.hrm.rc.enumeration.GuestNavigation;
+import vn.com.ecopharma.hrm.rc.enumeration.navigation.GuestNavigation;
 import vn.com.ecopharma.hrm.rc.model.Candidate;
 import vn.com.ecopharma.hrm.rc.model.Certificate;
 import vn.com.ecopharma.hrm.rc.model.Experience;

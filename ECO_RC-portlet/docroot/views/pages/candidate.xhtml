@@ -13,8 +13,8 @@
 		<eco:ajaxIndicator />
 		<eco:navigationPanel current="Candidate" />
 		<p:growl id="growl" />
-		<h:panelGroup id="CandidatePanelGroup">
+		<p:outputPanel id="CandidatePanelGroup">
 			<ui:include src="#{candidateViewBean.currentNav}" />
-		</h:panelGroup>
+		</p:outputPanel>
 	</h:body>
 </f:view>

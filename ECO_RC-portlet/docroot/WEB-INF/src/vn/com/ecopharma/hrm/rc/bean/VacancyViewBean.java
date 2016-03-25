@@ -1,5 +1,6 @@
 package vn.com.ecopharma.hrm.rc.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -9,9 +10,9 @@ import javax.faces.bean.ViewScoped;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
 
-import vn.com.ecopharma.hrm.rc.constant.VacancyNavigation;
 import vn.com.ecopharma.hrm.rc.dto.VacancyIndexItem;
 import vn.com.ecopharma.hrm.rc.enumeration.VacancyStatus;
+import vn.com.ecopharma.hrm.rc.enumeration.navigation.VacancyNavigation;
 import vn.com.ecopharma.hrm.rc.model.Vacancy;
 import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
 
@@ -19,11 +20,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 
 @ManagedBean(name = "vacancyViewBean")
 @ViewScoped
-public class VacancyViewBean extends EntityViewBean {
+public class VacancyViewBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	private static final String VIEW = "/views/pages/vacancyView.xhtml";
 
 	private String currentNav = StringUtils.EMPTY;
 
@@ -31,23 +30,17 @@ public class VacancyViewBean extends EntityViewBean {
 
 	@PostConstruct
 	public void init() {
-		currentNav = VIEW;
+		currentNav = VacancyNavigation.VIEW.getOutCome();
 	}
 
-	@Override
-	public void switchMode(int mode) {
-		switch (mode) {
-		case VacancyNavigation.VIEW:
-			currentNav = VIEW;
-			break;
-		case VacancyNavigation.CREATE:
-		case VacancyNavigation.EDIT:
-			currentNav = "/views/pages/modifyVacancy.xhtml";
-			break;
-		default:
-			break;
-		}
-		super.switchMode(mode);
+	public void switchOutCome(VacancyNavigation navigation) {
+		currentNav = navigation.getOutCome();
+	}
+
+	public void switchOutCome(String navigation) {
+		VacancyNavigation navigationEnum = VacancyNavigation
+				.valueOf(navigation);
+		switchOutCome(navigationEnum);
 	}
 
 	public String currentStatusCSS(String status) {

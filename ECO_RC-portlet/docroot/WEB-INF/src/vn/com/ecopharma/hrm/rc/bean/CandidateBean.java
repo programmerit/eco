@@ -36,9 +36,9 @@ import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.bean.filter.CandidateFilterBean;
 import vn.com.ecopharma.hrm.rc.constant.CandidateField;
-import vn.com.ecopharma.hrm.rc.constant.CandidateNavigation;
 import vn.com.ecopharma.hrm.rc.constant.ECO_RCUtils;
 import vn.com.ecopharma.hrm.rc.constant.VacancyField;
+import vn.com.ecopharma.hrm.rc.dm.AbstractIndexedLazyDataModel;
 import vn.com.ecopharma.hrm.rc.dm.CandidateLazyDataModel;
 import vn.com.ecopharma.hrm.rc.dto.CandidateIndexItem;
 import vn.com.ecopharma.hrm.rc.dto.CandidateItem;
@@ -54,6 +54,7 @@ import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
 import vn.com.ecopharma.hrm.rc.enumeration.DocumentType;
 import vn.com.ecopharma.hrm.rc.enumeration.EvaluationCriteriaType;
 import vn.com.ecopharma.hrm.rc.enumeration.InterviewScheduleStatus;
+import vn.com.ecopharma.hrm.rc.enumeration.navigation.CandidateNavigation;
 import vn.com.ecopharma.hrm.rc.model.Candidate;
 import vn.com.ecopharma.hrm.rc.model.Certificate;
 import vn.com.ecopharma.hrm.rc.model.Experience;
@@ -185,6 +186,7 @@ public class CandidateBean implements Serializable {
 
 			}
 		};
+		
 		fileEntryIds = new ArrayList<>();
 		vacancyIndexItems = ECO_RCUtils
 				.getVacancyIndexItems(VacancyLocalServiceUtil
@@ -210,9 +212,11 @@ public class CandidateBean implements Serializable {
 			bean.setInterviewScheduleItems(Arrays
 					.asList(new InterviewScheduleItem(item)));
 			bean.setInterviewScheduleForAllItem(new InterviewScheduleForAllItem());
+			bean.onResetAll();
 			candidateViewBean
-					.switchMode(CandidateNavigation.SCHEDULE_INTERVIEW);
+					.switchOutCome(CandidateNavigation.SCHEDULE_INTERVIEW);
 			onCompleteUpdate = "updateCandidatePanelGroup();";
+			// RequestContext.getCurrentInstance().execute(onCompleteUpdate);
 			break;
 
 		case EVALUATE_CANDIDATE:
@@ -222,7 +226,8 @@ public class CandidateBean implements Serializable {
 			EmployeeBean employeeBean = (EmployeeBean) BeanUtils
 					.getBackingBeanByName("employeeBean");
 			if (employeeBean.transferCandidateInfo(item) != null) {
-				candidateViewBean.switchMode(4);
+				candidateViewBean
+						.switchOutCome(CandidateNavigation.TRANSFER_TO_EMP);
 			}
 			onCompleteUpdate = "updateCandidatePanelGroup();";
 			break;
@@ -236,10 +241,15 @@ public class CandidateBean implements Serializable {
 					.setInterviewStatusByCandidateStatus(status.toString(),
 							item.getId(), interviewSchedule, serviceContext);
 			onCompleteUpdate = "updateCandidatesAndGrowl();";
+			includedDialog = status == CandidateStatus.MARK_INTERVIEW_PASS ? "/views/dialogs/evaluation.xhtml"
+					: StringUtils.EMPTY;
 			break;
 		case REJECT:
 			setSelectedItems(Arrays.asList(item));
 			onCompleteUpdate = "PF('wRejectConfirmDialog').show();";
+			// RequestContext.getCurrentInstance().execute(
+			// "PF('wRejectConfirmDialog').show();");
+			RequestContext.getCurrentInstance().execute(onCompleteUpdate);
 			break;
 		default:
 			CandidateLocalServiceUtil.changeCandidateStatus(item.getId(),
@@ -256,11 +266,11 @@ public class CandidateBean implements Serializable {
 				.getBackingBeanByName("evaluationBean");
 		evaluationBean.setCandidateIndexItems(candidates);
 		evaluationBean.setEvaluationItems(initEvaluationItems());
-		this.includedDialog = "/views/dialogs/evaluation.xhtml";
+		includedDialog = "/views/dialogs/evaluation.xhtml";
 		RequestContext.getCurrentInstance().update(
 				":CandidatePanelGroup:includedDialog");
-		RequestContext.getCurrentInstance().execute(
-				"PF('wEvaluationDialog').show();");
+		onCompleteUpdate = "PF('wEvaluationDialog').show();";
+		RequestContext.getCurrentInstance().execute(onCompleteUpdate);
 	}
 
 	public void onValueChangeListener(ValueChangeEvent event) {
@@ -274,19 +284,6 @@ public class CandidateBean implements Serializable {
 				setSelectedItems(Arrays.asList(lazyDataModel.getRowData()));
 				RequestContext.getCurrentInstance().execute(
 						"PF('wRejectConfirmDialog').show();");
-				this.onCompleteUpdate = "updateCandidatePanelGroupAndCallRejectDialog()";
-				break;
-			case MARK_INTERVIEW_PASS:
-			case MARK_INTERVIEW_FAIL:
-				InterviewSchedule interviewSchedule = InterviewScheduleLocalServiceUtil
-						.findByVacancyCandidateAndStatus(lazyDataModel
-								.getRowData().getVacancyCandidateId(),
-								InterviewScheduleStatus.PROCESSING.toString());
-				InterviewScheduleLocalServiceUtil
-						.setInterviewStatusByCandidateStatus(status.toString(),
-								lazyDataModel.getRowData().getId(),
-								interviewSchedule, RCUtils.getServiceContext());
-				onCompleteUpdate = "updateCandidatesAndGrowl();";
 				break;
 			default:
 				break;
@@ -337,7 +334,7 @@ public class CandidateBean implements Serializable {
 						fileEntryIds, experienceMap, certificateMap,
 						serviceContext);
 			}
-			BeanUtils.getCandidateViewBean().switchMode(
+			BeanUtils.getCandidateViewBean().switchOutCome(
 					CandidateNavigation.VIEW);
 
 		} catch (SystemException e) {
@@ -377,7 +374,7 @@ public class CandidateBean implements Serializable {
 			bean.setInterviewScheduleItems(interviewScheduleItems);
 			bean.setInterviewScheduleForAllItem(new InterviewScheduleForAllItem());
 			candidateViewBean
-					.switchMode(CandidateNavigation.SCHEDULE_INTERVIEW);
+					.switchOutCome(CandidateNavigation.SCHEDULE_INTERVIEW);
 			break;
 		case EVALUATE_CANDIDATE:
 			EvaluationBean evaluationBean = (EvaluationBean) BeanUtils
@@ -407,11 +404,17 @@ public class CandidateBean implements Serializable {
 
 			break;
 		case JOB_OFFERED:
-
-			// call Offered
+			for (CandidateIndexItem item : selectedItems) {
+				CandidateLocalServiceUtil.changeCandidateStatus(item.getId(),
+						status, serviceContext);
+			}
 
 			break;
 		case DECLINE_OFFERED:
+			for (CandidateIndexItem item : selectedItems) {
+				CandidateLocalServiceUtil.changeCandidateStatus(item.getId(),
+						status, serviceContext);
+			}
 
 			break;
 		case HIRE:
@@ -419,7 +422,8 @@ public class CandidateBean implements Serializable {
 					.getBackingBeanByName("employeeBean");
 
 			if (employeeBean.transferCandidateInfo(selectedItems.get(0)) != null) {
-				candidateViewBean.switchMode(4);
+				candidateViewBean
+						.switchOutCome(CandidateNavigation.TRANSFER_TO_EMP);
 			}
 			break;
 		case REJECT:
@@ -468,13 +472,14 @@ public class CandidateBean implements Serializable {
 
 	public void addCandidate() {
 		this.candidateItem = new CandidateItem();
-		BeanUtils.getCandidateViewBean().switchMode(CandidateNavigation.CREATE);
+		BeanUtils.getCandidateViewBean().switchOutCome(
+				CandidateNavigation.CREATE);
 	}
 
 	public void editCandidate(CandidateIndexItem candidateIndexItem) {
 		try {
 			this.candidateItem = new CandidateItem(candidateIndexItem.getId());
-			BeanUtils.getCandidateViewBean().switchMode(
+			BeanUtils.getCandidateViewBean().switchOutCome(
 					CandidateNavigation.EDIT);
 		} catch (SystemException e) {
 			LOGGER.info(e);
@@ -484,7 +489,7 @@ public class CandidateBean implements Serializable {
 	public void editCandidate(long candidateId) {
 		try {
 			this.candidateItem = new CandidateItem(candidateId);
-			BeanUtils.getCandidateViewBean().switchMode(
+			BeanUtils.getCandidateViewBean().switchOutCome(
 					CandidateNavigation.EDIT);
 		} catch (SystemException e) {
 			LOGGER.info(e);
@@ -497,7 +502,7 @@ public class CandidateBean implements Serializable {
 		// candidateIndexItem.getEvaluationItems();
 		try {
 			this.candidateItem = new CandidateItem(candidateIndexItem.getId());
-			BeanUtils.getCandidateViewBean().switchMode(
+			BeanUtils.getCandidateViewBean().switchOutCome(
 					CandidateNavigation.EDIT);
 		} catch (SystemException e) {
 			LOGGER.info(e);
@@ -552,7 +557,7 @@ public class CandidateBean implements Serializable {
 		// }
 		// }
 		CandidateViewBean candidateViewBean = BeanUtils.getCandidateViewBean();
-		candidateViewBean.switchMode(CandidateNavigation.VIEW);
+		candidateViewBean.switchOutCome(CandidateNavigation.VIEW);
 	}
 
 	// private void onEditCandidate(CandidateIndexItem candidateIndexItem) {

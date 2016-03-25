@@ -1,5 +1,6 @@
 package vn.com.ecopharma.hrm.rc.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -12,7 +13,6 @@ import javax.faces.bean.ViewScoped;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
 
-import vn.com.ecopharma.hrm.rc.constant.CandidateNavigation;
 import vn.com.ecopharma.hrm.rc.dto.CandidateIndexItem;
 import vn.com.ecopharma.hrm.rc.dto.InterviewScheduleForAllItem;
 import vn.com.ecopharma.hrm.rc.dto.InterviewScheduleItem;
@@ -20,6 +20,7 @@ import vn.com.ecopharma.hrm.rc.dto.evaluate.EvaluationItem;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateStatus;
 import vn.com.ecopharma.hrm.rc.enumeration.EvaluationCriteriaType;
 import vn.com.ecopharma.hrm.rc.enumeration.InterviewScheduleStatus;
+import vn.com.ecopharma.hrm.rc.enumeration.navigation.CandidateNavigation;
 import vn.com.ecopharma.hrm.rc.model.InterviewSchedule;
 import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.InterviewScheduleLocalServiceUtil;
@@ -34,11 +35,9 @@ import com.liferay.portal.service.ServiceContext;
  */
 @ManagedBean(name = "candidateViewBean")
 @ViewScoped
-public class CandidateViewBean extends EntityViewBean {
+public class CandidateViewBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	private static final String VIEW = "/views/pages/candidateView.xhtml";
 
 	private String currentNav = StringUtils.EMPTY;
 
@@ -52,29 +51,17 @@ public class CandidateViewBean extends EntityViewBean {
 
 	@PostConstruct
 	public void init() {
-		currentNav = VIEW;
+		currentNav = CandidateNavigation.VIEW.getOutCome();
 	}
 
-	@Override
-	public void switchMode(int mode) {
-		switch (mode) {
-		case CandidateNavigation.VIEW:
-			currentNav = VIEW;
-			break;
-		case CandidateNavigation.CREATE:
-		case CandidateNavigation.EDIT:
-			currentNav = "/views/pages/modifyCandidate.xhtml";
-			break;
-		case CandidateNavigation.TRANSFER_TO_EMPLOYEE:
-			currentNav = "/views/pages/employeeForm.xhtml";
-			break;
-		case CandidateNavigation.SCHEDULE_INTERVIEW:
-			currentNav = "/views/pages/scheduleInterviewForCandidates.xhtml";
-			break;
-		default:
-			break;
-		}
-		super.switchMode(mode);
+	public void switchOutCome(CandidateNavigation navigation) {
+		currentNav = navigation.getOutCome();
+	}
+
+	public void switchOutCome(String navigation) {
+		CandidateNavigation navigationEnum = CandidateNavigation
+				.valueOf(navigation);
+		switchOutCome(navigationEnum);
 	}
 
 	public void onStatusChange(CandidateIndexItem item) {
@@ -93,7 +80,7 @@ public class CandidateViewBean extends EntityViewBean {
 			bean.setInterviewScheduleItems(Arrays
 					.asList(new InterviewScheduleItem(item)));
 			bean.setInterviewScheduleForAllItem(new InterviewScheduleForAllItem());
-			switchMode(CandidateNavigation.SCHEDULE_INTERVIEW);
+			switchOutCome(CandidateNavigation.SCHEDULE_INTERVIEW);
 			onCompleteUpdate = "updateCandidatePanelGroup();";
 			break;
 
@@ -104,7 +91,8 @@ public class CandidateViewBean extends EntityViewBean {
 			EmployeeBean employeeBean = (EmployeeBean) BeanUtils
 					.getBackingBeanByName("employeeBean");
 			if (employeeBean.transferCandidateInfo(item) != null) {
-				switchMode(4);
+				switchOutCome(CandidateNavigation.TRANSFER_TO_EMP);
+				;
 			}
 			onCompleteUpdate = "updateCandidatePanelGroup();";
 			break;
@@ -137,7 +125,7 @@ public class CandidateViewBean extends EntityViewBean {
 		return CandidateStatus.getCssClass(CandidateStatus.valueOf(status));
 	}
 
-	public List<String> getAvailableStatuses(String status) {
+	public List<String> retreiveAvailableStatuses(String status) {
 		return CandidateStatus.getAvailableStatus_(status);
 	}
 
@@ -148,7 +136,7 @@ public class CandidateViewBean extends EntityViewBean {
 		evaluationBean.setEvaluationItems(initEvaluationItems());
 		this.includedDialog = "/views/dialogs/evaluation.xhtml";
 		RequestContext.getCurrentInstance().update(
-				":CandidatePanelGroup:includedDialog");
+				":CandidatePanelGroup");
 		RequestContext.getCurrentInstance().execute(
 				"PF('wEvaluationDialog').show();");
 	}

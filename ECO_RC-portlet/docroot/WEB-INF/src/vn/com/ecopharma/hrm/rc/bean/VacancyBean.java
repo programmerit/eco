@@ -24,7 +24,6 @@ import vn.com.ecopharma.emp.model.Titles;
 import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.bean.filter.VacancyFilterBean;
 import vn.com.ecopharma.hrm.rc.constant.VacancyField;
-import vn.com.ecopharma.hrm.rc.constant.VacancyNavigation;
 import vn.com.ecopharma.hrm.rc.dm.VacancyLazyDM;
 import vn.com.ecopharma.hrm.rc.dto.DocumentItem;
 import vn.com.ecopharma.hrm.rc.dto.RegionItem;
@@ -33,6 +32,7 @@ import vn.com.ecopharma.hrm.rc.dto.VacancyItem;
 import vn.com.ecopharma.hrm.rc.enumeration.CandidateCertificateType;
 import vn.com.ecopharma.hrm.rc.enumeration.DocumentType;
 import vn.com.ecopharma.hrm.rc.enumeration.VacancyStatus;
+import vn.com.ecopharma.hrm.rc.enumeration.navigation.VacancyNavigation;
 import vn.com.ecopharma.hrm.rc.model.Vacancy;
 import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.util.BeanUtils;
@@ -134,7 +134,7 @@ public class VacancyBean extends PersistableBean {
 			if (result != null) {
 				BeanUtils.getOrganizationPanelBean()
 						.afterSetOrganizationToEntity();
-				BeanUtils.getVacancyViewBean().switchMode(
+				BeanUtils.getVacancyViewBean().switchOutCome(
 						VacancyNavigation.VIEW);
 			}
 		} catch (SystemException e) {
@@ -167,6 +167,7 @@ public class VacancyBean extends PersistableBean {
 
 	public void addVacancy() {
 		this.vacancyItem = new VacancyItem();
+		BeanUtils.getVacancyViewBean().switchOutCome(VacancyNavigation.CREATE);
 	}
 
 	public void editVacancy(VacancyIndexItem vacancyIndexItem) {
@@ -176,7 +177,8 @@ public class VacancyBean extends PersistableBean {
 							.getId()));
 			BeanUtils.getOrganizationPanelBean()
 					.setSelectedValuesFromVacancyIndexedItem(vacancyIndexItem);
-			BeanUtils.getVacancyViewBean().switchMode(VacancyNavigation.EDIT);
+			BeanUtils.getVacancyViewBean()
+					.switchOutCome(VacancyNavigation.EDIT);
 			;
 		} catch (SystemException e) {
 			LOGGER.info(e);
@@ -201,7 +203,7 @@ public class VacancyBean extends PersistableBean {
 			// }
 		}
 		VacancyViewBean vacancyViewBean = BeanUtils.getVacancyViewBean();
-		vacancyViewBean.switchMode(VacancyNavigation.VIEW);
+		vacancyViewBean.switchOutCome(VacancyNavigation.VIEW);
 	}
 
 	public void onPreviewFile(long fileEntryId) {
