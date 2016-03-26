@@ -272,16 +272,14 @@
 				</h:panelGroup>
 			</p:outputPanel>
 
-
-
 			<!-- EMPLOYEE TABLE-->
 			<p:dataTable id="employees" var="employeeInfo" reflow="true"
 				widgetVar="employeeTable"
 				value="#{employeeIndexedBean.lazyDataModel}"
-				paginatorAlwaysVisible="true" paginator="true" rows="50"
+				paginatorAlwaysVisible="true" paginator="true" rows="100"
 				paginatorPosition="bottom"
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="10,25,50" lazy="true" selectionMode="multiple"
+				rowsPerPageTemplate="25,50,100" lazy="true" selectionMode="multiple"
 				selection="#{employeeIndexedBean.selectedEmployeeIndexItems}"
 				rowKey="#{employeeInfo.id}" emptyMessage="No employees found"
 				scrollable="true" scrollRows="7">

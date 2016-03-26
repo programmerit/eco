@@ -207,7 +207,7 @@
 			</p:outputPanel>
 			<p:commandButton id="saveAll" value="Save All"
 				actionListener="#{scheduleInterviewForCandidatesBean.onSavingAll}"
-				update=":CandidatePanelGroup :growl" />
+				oncomplete="updateCandidates();" />
 
 			<p:commandButton id="cancel" value="Cancel"
 				actionListener="#{scheduleInterviewForCandidatesBean.onCancel}"

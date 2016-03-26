@@ -149,6 +149,10 @@
 			<p:remoteCommand name="openRejectDialog"
 				oncomplete="alert('zzz'); PF('wRejectConfirmDialog').show();" />
 
+			<p:remoteCommand name="updateCandidates"
+				action="#{candidateBean.updateCandidates(candidateTable)}"
+				update=":candidateMainForm:candidates" />
+
 			<p:contextMenu id="candidateContextMenu" for="candidates">
 				<p:submenu label="Status">
 					<p:menuitem
@@ -178,8 +182,8 @@
 					<p:menuitem
 						value="#{i18n[candidateViewBean.getLocalizedStatus('MARK_INTERVIEW_PASS')]}"
 						rendered="#{candidateBean.isExistedInSameAvailableStatuses('MARK_INTERVIEW_PASS')}"
-						action="#{candidateBean.onChangeMultipleItemStatus('MARK_INTERVIEW_PASS')}"
-						update="@form" />
+						actionListener="#{candidateBean.onChangeMultipleItemStatus('MARK_INTERVIEW_PASS')}"
+						oncomplete="updateCandidates();" />
 
 					<p:menuitem
 						value="#{i18n[candidateViewBean.getLocalizedStatus('INTERVIEW_SCHEDULED')]}"
@@ -227,11 +231,12 @@
 
 			</h:panelGroup>
 			<p:dataTable id="candidates" var="candidate" widgetVar="wCandidates"
-				resizableColumns="true" reflow="true" editable="true"
-				value="#{candidateBean.lazyDataModel}" paginatorAlwaysVisible="true"
-				paginator="true" rows="25" paginatorPosition="bottom"
+				binding="#{candidateTable}" resizableColumns="true" reflow="true"
+				editable="true" value="#{candidateBean.lazyDataModel}"
+				paginatorAlwaysVisible="true" paginator="true" rows="100"
+				paginatorPosition="bottom"
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="10,25,50" lazy="true" selectionMode="multiple"
+				rowsPerPageTemplate="25,50,100" lazy="true" selectionMode="multiple"
 				selection="#{candidateBean.selectedItems}" rowKey="#{candidate.id}"
 				emptyMessage="No candidates found">
 				<!-- Notice [async] -->

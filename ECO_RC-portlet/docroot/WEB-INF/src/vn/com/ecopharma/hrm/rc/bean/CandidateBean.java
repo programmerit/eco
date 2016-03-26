@@ -23,6 +23,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.portlet.PortletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
@@ -38,7 +39,6 @@ import vn.com.ecopharma.hrm.rc.bean.filter.CandidateFilterBean;
 import vn.com.ecopharma.hrm.rc.constant.CandidateField;
 import vn.com.ecopharma.hrm.rc.constant.ECO_RCUtils;
 import vn.com.ecopharma.hrm.rc.constant.VacancyField;
-import vn.com.ecopharma.hrm.rc.dm.AbstractIndexedLazyDataModel;
 import vn.com.ecopharma.hrm.rc.dm.CandidateLazyDataModel;
 import vn.com.ecopharma.hrm.rc.dto.CandidateIndexItem;
 import vn.com.ecopharma.hrm.rc.dto.CandidateItem;
@@ -186,7 +186,7 @@ public class CandidateBean implements Serializable {
 
 			}
 		};
-		
+
 		fileEntryIds = new ArrayList<>();
 		vacancyIndexItems = ECO_RCUtils
 				.getVacancyIndexItems(VacancyLocalServiceUtil
@@ -196,6 +196,15 @@ public class CandidateBean implements Serializable {
 										.getCurrentSearchContext()
 										.getCompanyId(), null,
 								QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+	}
+
+	public void updateCandidates(DataTable dataTable) {
+		dataTable.loadLazyData();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void onStatusChange(AjaxBehaviorEvent event) {
