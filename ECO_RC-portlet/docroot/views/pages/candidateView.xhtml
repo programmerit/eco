@@ -149,7 +149,7 @@
 			<p:remoteCommand name="openRejectDialog"
 				oncomplete="alert('zzz'); PF('wRejectConfirmDialog').show();" />
 
-			<p:remoteCommand name="updateCandidates"
+			<p:remoteCommand name="updateCandidates" delay="1000"
 				action="#{candidateBean.updateCandidates(candidateTable)}"
 				update=":candidateMainForm:candidates" />
 
@@ -159,7 +159,7 @@
 						value="#{i18n[candidateViewBean.getLocalizedStatus('SHORTLIST')]}"
 						rendered="#{candidateBean.isExistedInSameAvailableStatuses('SHORTLIST')}"
 						actionListener="#{candidateBean.onChangeMultipleItemStatus('SHORTLIST')}"
-						oncomplete="updateCandidatesAndGrowl();" />
+						oncomplete="updateCandidates();" />
 
 					<p:menuitem
 						value="#{i18n[candidateViewBean.getLocalizedStatus('HIRE')]}"
@@ -176,8 +176,8 @@
 					<p:menuitem
 						value="#{i18n[candidateViewBean.getLocalizedStatus('MARK_INTERVIEW_FAIL')]}"
 						rendered="#{candidateBean.isExistedInSameAvailableStatuses('MARK_INTERVIEW_FAIL')}"
-						action="#{candidateBean.onChangeMultipleItemStatus('MARK_INTERVIEW_FAIL')}"
-						oncomplete="updateCandidatesAndGrowl();" />
+						actionListener="#{candidateBean.onChangeMultipleItemStatus('MARK_INTERVIEW_FAIL')}"
+						oncomplete="updateCandidates();" />
 
 					<p:menuitem
 						value="#{i18n[candidateViewBean.getLocalizedStatus('MARK_INTERVIEW_PASS')]}"
@@ -195,13 +195,13 @@
 						value="#{i18n[candidateViewBean.getLocalizedStatus('JOB_OFFERED')]}"
 						rendered="#{candidateBean.isExistedInSameAvailableStatuses('JOB_OFFERED')}"
 						action="#{candidateBean.onChangeMultipleItemStatus('JOB_OFFERED')}"
-						update="@form" />
+						oncomplete="updateCandidates();" />
 
 					<p:menuitem
 						value="#{i18n[candidateViewBean.getLocalizedStatus('DECLINE_OFFERED')]}"
 						rendered="#{candidateBean.isExistedInSameAvailableStatuses('DECLINE_OFFERED')}"
 						actionListener="#{candidateBean.onChangeMultipleItemStatus('DECLINE_OFFERED')}"
-						update="@form" oncomplete="PF('wCandidates').filter();" />
+						oncomplete="updateCandidates();" />
 
 					<p:menuitem
 						value="#{i18n[candidateViewBean.getLocalizedStatus('EVALUATE_CANDIDATE')]}"

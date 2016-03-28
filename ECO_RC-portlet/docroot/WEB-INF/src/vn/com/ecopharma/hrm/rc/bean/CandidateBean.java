@@ -200,11 +200,11 @@ public class CandidateBean implements Serializable {
 
 	public void updateCandidates(DataTable dataTable) {
 		dataTable.loadLazyData();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		// try {
+		// Thread.sleep(1000);
+		// } catch (InterruptedException e) {
+		// e.printStackTrace();
+		// }
 	}
 
 	public void onStatusChange(AjaxBehaviorEvent event) {

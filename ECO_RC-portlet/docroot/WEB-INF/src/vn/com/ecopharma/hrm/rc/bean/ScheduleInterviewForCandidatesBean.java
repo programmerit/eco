@@ -95,7 +95,6 @@ public class ScheduleInterviewForCandidatesBean implements Serializable {
 			}
 			BeanUtils.getCandidateViewBean().switchOutCome(
 					CandidateNavigation.VIEW);
-			;
 		}
 
 	}

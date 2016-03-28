@@ -25,6 +25,7 @@ import vn.com.ecopharma.hrm.rc.model.InterviewSchedule;
 import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.InterviewScheduleLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.util.BeanUtils;
+import vn.com.ecopharma.hrm.rc.util.RCUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.service.ServiceContext;
@@ -56,6 +57,11 @@ public class CandidateViewBean implements Serializable {
 
 	public void switchOutCome(CandidateNavigation navigation) {
 		currentNav = navigation.getOutCome();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void switchOutCome(String navigation) {
@@ -70,8 +76,7 @@ public class CandidateViewBean implements Serializable {
 		candidateBean.setSelectedItem(item);
 		final CandidateStatus status = CandidateStatus.valueOf(selectedStatus);
 
-		final ServiceContext serviceContext = LiferayFacesContext.getInstance()
-				.getServiceContext();
+		final ServiceContext serviceContext = RCUtils.getServiceContext();
 
 		switch (status) {
 		case INTERVIEW_SCHEDULED:
@@ -81,7 +86,6 @@ public class CandidateViewBean implements Serializable {
 					.asList(new InterviewScheduleItem(item)));
 			bean.setInterviewScheduleForAllItem(new InterviewScheduleForAllItem());
 			switchOutCome(CandidateNavigation.SCHEDULE_INTERVIEW);
-			onCompleteUpdate = "updateCandidatePanelGroup();";
 			break;
 
 		case EVALUATE_CANDIDATE:
@@ -92,9 +96,7 @@ public class CandidateViewBean implements Serializable {
 					.getBackingBeanByName("employeeBean");
 			if (employeeBean.transferCandidateInfo(item) != null) {
 				switchOutCome(CandidateNavigation.TRANSFER_TO_EMP);
-				;
 			}
-			onCompleteUpdate = "updateCandidatePanelGroup();";
 			break;
 		case MARK_INTERVIEW_PASS:
 		case MARK_INTERVIEW_FAIL:
@@ -105,16 +107,13 @@ public class CandidateViewBean implements Serializable {
 			InterviewScheduleLocalServiceUtil
 					.setInterviewStatusByCandidateStatus(status.toString(),
 							item.getId(), interviewSchedule, serviceContext);
-			onCompleteUpdate = "updateCandidatesAndGrowl();";
 			break;
 		case REJECT:
 			candidateBean.setSelectedItems(Arrays.asList(item));
-			onCompleteUpdate = "PF('wRejectConfirmDialog').show();";
 			break;
 		default:
 			CandidateLocalServiceUtil.changeCandidateStatus(item.getId(),
 					selectedStatus, serviceContext);
-			onCompleteUpdate = "updateCandidatesAndGrowl();";
 			break;
 		}
 		selectedStatus = StringUtils.EMPTY;
@@ -135,8 +134,7 @@ public class CandidateViewBean implements Serializable {
 		evaluationBean.setCandidateIndexItems(candidates);
 		evaluationBean.setEvaluationItems(initEvaluationItems());
 		this.includedDialog = "/views/dialogs/evaluation.xhtml";
-		RequestContext.getCurrentInstance().update(
-				":CandidatePanelGroup");
+		RequestContext.getCurrentInstance().update(":CandidatePanelGroup");
 		RequestContext.getCurrentInstance().execute(
 				"PF('wEvaluationDialog').show();");
 	}

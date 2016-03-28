@@ -6,10 +6,12 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
 
 	<h:head />
 	<h:body>
+		<eco:ajaxIndicator />
 		<h:form id="interviewScheduleForCandidatesForm">
 			<p:remoteCommand name="updateForAllComponents"
 				update=":interviewScheduleForCandidatesForm:forAllOutputPanel" />
@@ -207,7 +209,7 @@
 			</p:outputPanel>
 			<p:commandButton id="saveAll" value="Save All"
 				actionListener="#{scheduleInterviewForCandidatesBean.onSavingAll}"
-				oncomplete="updateCandidates();" />
+				oncomplete=":CandidatePanelGroup" />
 
 			<p:commandButton id="cancel" value="Cancel"
 				actionListener="#{scheduleInterviewForCandidatesBean.onCancel}"
