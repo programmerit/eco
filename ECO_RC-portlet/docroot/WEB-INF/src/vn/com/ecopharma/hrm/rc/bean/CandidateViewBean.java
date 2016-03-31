@@ -27,7 +27,6 @@ import vn.com.ecopharma.hrm.rc.service.InterviewScheduleLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.util.BeanUtils;
 import vn.com.ecopharma.hrm.rc.util.RCUtils;
 
-import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.service.ServiceContext;
 
 /**
@@ -117,7 +116,6 @@ public class CandidateViewBean implements Serializable {
 			break;
 		}
 		selectedStatus = StringUtils.EMPTY;
-		// RequestContext.getCurrentInstance().update("refreshStatusGroup();");
 	}
 
 	public String currentStatusCSS(String status) {

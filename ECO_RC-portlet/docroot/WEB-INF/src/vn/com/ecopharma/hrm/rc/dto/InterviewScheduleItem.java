@@ -23,10 +23,15 @@ import vn.com.ecopharma.hrm.rc.util.RCUtils;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 public class InterviewScheduleItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(InterviewScheduleItem.class);
 
 	private List<Interview> interviews;
 
@@ -61,7 +66,7 @@ public class InterviewScheduleItem implements Serializable {
 				.createPrePersitedEntity();
 		this.interviewSchedule.setVacancyCandidateId(candidateIndexItem
 				.getVacancyCandidateId());
-		this.interviewers = new ArrayList<EmpIndexedItem>();
+		this.interviewers = new ArrayList<>();
 		this.interviews = InterviewLocalServiceUtil.findAll();
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.AM_PM, Calendar.AM);
@@ -92,9 +97,9 @@ public class InterviewScheduleItem implements Serializable {
 					CandidateLocalServiceUtil.getIndexCandidateDocument(
 							candidateId, RCUtils.getCurrentSearchContext()));
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (PortalException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -108,9 +113,9 @@ public class InterviewScheduleItem implements Serializable {
 					VacancyLocalServiceUtil.getIndexVacancyDocument(vacancyId,
 							RCUtils.getCurrentSearchContext()));
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (PortalException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -134,9 +139,9 @@ public class InterviewScheduleItem implements Serializable {
 			return InterviewLocalServiceUtil.getInterview(interviewSchedule
 					.getInterviewId());
 		} catch (PortalException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (SystemException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 		return null;
 	}
@@ -215,7 +220,7 @@ public class InterviewScheduleItem implements Serializable {
 	// try {
 	// results.add(InterviewLocalServiceUtil.fetchInterview(id));
 	// } catch (SystemException e) {
-	// e.printStackTrace();
+	// LOGGER.info(e);
 	// }
 	// }
 	// return results;
@@ -225,12 +230,12 @@ public class InterviewScheduleItem implements Serializable {
 		final List<Long> ids = InterviewScheduleLocalServiceUtil
 				.findInterviewIdsByVacancyCandidate(interviewSchedule
 						.getVacancyCandidateId());
-		final List<Interview> results = new ArrayList<Interview>(ids.size());
+		final List<Interview> results = new ArrayList<>(ids.size());
 		for (long id : ids) {
 			try {
 				results.add(InterviewLocalServiceUtil.fetchInterview(id));
 			} catch (SystemException e) {
-				e.printStackTrace();
+				LOGGER.info(e);
 			}
 		}
 		return results;

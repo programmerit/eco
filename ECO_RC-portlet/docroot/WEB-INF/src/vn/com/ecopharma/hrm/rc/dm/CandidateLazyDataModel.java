@@ -45,11 +45,6 @@ public class CandidateLazyDataModel extends
 			final List<CandidateIndexItem> candidates = ECO_RCUtils
 					.getCandidateIndexItems(docs);
 
-			for (CandidateIndexItem item : candidates) {
-				if (item.getFullName().equalsIgnoreCase("Tran Van Tran Tran"))
-					System.out.println(item.getStatus());
-			}
-
 			final int totalRowCount = CandidateLocalServiceUtil
 					.countFilterByFields(searchContext, filters, sort,
 							companyId);

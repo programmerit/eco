@@ -10,8 +10,7 @@
 	<h:head />
 	<h:body>
 		<!-- tricky load primefaces extension -->
-		<pe:blockPanel />
-
+		<pe:inputNumber style="display:none" />
 		<h:form id="candidateSearchForm">
 			<h:link value="Show/Hide filter" styleClass="label"
 				onclick="toggle('#{requestScope.filterGrid.clientId}'); return false;"

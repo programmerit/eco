@@ -6,12 +6,10 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:pe="http://primefaces.org/ui/extensions"
-	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
+	xmlns:pe="http://primefaces.org/ui/extensions">
 
 	<h:head />
 	<h:body>
-		<eco:ajaxIndicator />
 		<h:form id="interviewScheduleForCandidatesForm">
 			<p:remoteCommand name="updateForAllComponents"
 				update=":interviewScheduleForCandidatesForm:forAllOutputPanel" />

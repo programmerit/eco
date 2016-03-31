@@ -3,7 +3,6 @@ package vn.com.ecopharma.hrm.tt.bean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -38,42 +37,35 @@ public class LeaveRequestBean implements Serializable {
 				.addOrUpdateTimeTrackingByLeaveRequest(vacationLeave);
 	}
 
+	public void onLeaveTypeSelectChanged() {
+		requestItem.getLeave().setSign(StringUtils.EMPTY);
+	}
+
 	public void onLeaveFromSelect(SelectEvent event) {
 		VacationLeave leave = requestItem.getLeave();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(leave.getLeaveFrom());
 		if (leave.getLeaveType().equalsIgnoreCase(
 				VacationLeaveType.POLICY_LEAVE.toString())
 				&& leave.getSign().equalsIgnoreCase("TS")) {
-			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(leave.getLeaveFrom());
 			calendar.add(Calendar.DAY_OF_MONTH, 180);
 			requestItem.getLeave().setLeaveTo(calendar.getTime());
 		}
+
+		if (leave.getSign().contains("1/2")) {
+			// set default 8:00AM - 12:00PM for half day leave
+			calendar.set(Calendar.HOUR, 8);
+			leave.setLeaveFrom(calendar.getTime());
+
+			calendar.set(Calendar.HOUR, 12);
+			leave.setLeaveTo(calendar.getTime());
+		}
 	}
 
 	public void onInOutDateChange() {
-		final Date timeFrom = requestItem.getLeave().getLeaveFrom();
-		final Date timeTo = requestItem.getLeave().getLeaveTo();
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(requestItem.getInOutDate());
-		int year = calendar.get(Calendar.YEAR);
-		int month = calendar.get(Calendar.MONTH);
-		int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-		if (timeFrom != null) {
-			calendar.setTime(timeFrom);
-			calendar.set(Calendar.YEAR, year);
-			calendar.set(Calendar.MONTH, month);
-			calendar.set(Calendar.DAY_OF_MONTH, day);
-		}
-		requestItem.getLeave().setLeaveFrom(calendar.getTime());
-
-		if (timeTo != null) {
-			calendar.setTime(timeTo);
-			calendar.set(Calendar.YEAR, year);
-			calendar.set(Calendar.MONTH, month);
-			calendar.set(Calendar.DAY_OF_MONTH, day);
-		}
-		requestItem.getLeave().setLeaveTo(calendar.getTime());
+		requestItem.getLeave()
+				.setLeaveTo(requestItem.getLeave().getLeaveFrom());
 	}
 
 	public List<String> getAllTypes() {
@@ -173,6 +165,10 @@ public class LeaveRequestBean implements Serializable {
 	public boolean isOutRequest() {
 		return requestItem.getLeave().getLeaveType()
 				.equalsIgnoreCase(VacationLeaveType.IN.toString());
+	}
+
+	public boolean isHalfDayLeaveRequest() {
+		return requestItem.getLeave().getSign().contains("1/2");
 	}
 
 }

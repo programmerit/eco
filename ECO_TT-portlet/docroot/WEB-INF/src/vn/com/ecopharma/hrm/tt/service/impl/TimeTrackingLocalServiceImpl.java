@@ -20,7 +20,6 @@ import java.util.Date;
 import java.util.List;
 
 import vn.com.ecopharma.emp.model.VacationLeave;
-import vn.com.ecopharma.emp.service.VacationLeaveLocalServiceUtil;
 import vn.com.ecopharma.hrm.tt.constant.ECO_TT_Info;
 import vn.com.ecopharma.hrm.tt.constant.TimeTrackingField;
 import vn.com.ecopharma.hrm.tt.enumeration.VacationLeaveType;
@@ -347,6 +346,18 @@ public class TimeTrackingLocalServiceImpl extends
 						leaveRequest.getVacationLeaveId());
 			}
 		}
+	}
+
+	public void addOrUpdateTimeTrackingByInOutRequest(VacationLeave inOutRequest) {
+		if (inOutRequest == null
+				|| !(inOutRequest.getLeaveType().equalsIgnoreCase(
+						VacationLeaveType.IN.toString()) || inOutRequest
+						.getLeaveType().equalsIgnoreCase(
+								VacationLeaveType.OUT.toString()))) {
+			return;
+		}
+		
+		
 	}
 
 	public void scanAndAddMissingDataByLeaveRequests(List<VacationLeave> list) {
