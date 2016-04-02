@@ -12,4 +12,9 @@ public class PromotionFilterBean extends BaseEmpFilterBean {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	
+	@Override
+	public void init() {
+		super.init();
+	}
 }

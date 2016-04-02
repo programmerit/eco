@@ -12,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
+import vn.com.ecopharma.emp.bean.OrganizationRoleSetBean.Level;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Titles;
@@ -165,8 +166,57 @@ public class OrganizationTreeViewBean implements Serializable {
 			selectedDepartment = isSelectOnlyOneItem() ? DepartmentLocalServiceUtil
 					.fetchDepartment(((OrgNodeItem) selectedNodes[0].getData())
 							.getId()) : null;
-			((SetManagerBean) BeanUtils.getBackingBeanByName("setManagerBean"))
-					.setDepartment(selectedDepartment);
+			BeanUtils.getOrganizationRoleSetBean().setOrganization(
+					selectedDepartment);
+			BeanUtils.getOrganizationRoleSetBean().setLevel(Level.DEPT_MANAGER);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+
+	}
+
+	public void onSetDeptDeputy() {
+		dialog = SET_MANAGER_DIALOG;
+		Department selectedDepartment;
+		try {
+			selectedDepartment = isSelectOnlyOneItem() ? DepartmentLocalServiceUtil
+					.fetchDepartment(((OrgNodeItem) selectedNodes[0].getData())
+							.getId()) : null;
+			BeanUtils.getOrganizationRoleSetBean().setOrganization(
+					selectedDepartment);
+			BeanUtils.getOrganizationRoleSetBean().setLevel(Level.DEPT_DEPUTY);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+
+	}
+
+	public void onSetUnitManager() {
+		dialog = SET_MANAGER_DIALOG;
+		Unit selectedUnit;
+		try {
+			selectedUnit = isSelectOnlyOneItem() ? UnitLocalServiceUtil
+					.fetchUnit(((OrgNodeItem) selectedNodes[0].getData())
+							.getId()) : null;
+			BeanUtils.getOrganizationRoleSetBean()
+					.setOrganization(selectedUnit);
+			BeanUtils.getOrganizationRoleSetBean().setLevel(Level.UNIT_MANAGER);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+
+	}
+
+	public void onSetUnitDeputy() {
+		dialog = SET_MANAGER_DIALOG;
+		Unit selectedUnit;
+		try {
+			selectedUnit = isSelectOnlyOneItem() ? UnitLocalServiceUtil
+					.fetchUnit(((OrgNodeItem) selectedNodes[0].getData())
+							.getId()) : null;
+			BeanUtils.getOrganizationRoleSetBean()
+					.setOrganization(selectedUnit);
+			BeanUtils.getOrganizationRoleSetBean().setLevel(Level.UNIT_DEPUTY);
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}

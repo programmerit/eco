@@ -304,8 +304,16 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 	* @return
 	* @throws ParseException
 	*/
+	@java.lang.Deprecated
 	public java.util.List<com.liferay.portal.kernel.search.Document> filterEmployeeByAutocompleteQuery(
 		java.lang.String query,
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		int start, int end)
+		throws com.liferay.portal.kernel.search.ParseException;
+
+	public java.util.List<com.liferay.portal.kernel.search.Document> filterEmployeeByAutocompleteQuery(
+		java.lang.String query,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		int start, int end)
 		throws com.liferay.portal.kernel.search.ParseException;
@@ -330,6 +338,9 @@ public interface EmpLocalService extends BaseLocalService, InvokableLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[] getGlobalSearchFields();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String[] getAutocompleteSearchFields();
 
 	public java.lang.String removeDashChar(java.lang.String s);
 

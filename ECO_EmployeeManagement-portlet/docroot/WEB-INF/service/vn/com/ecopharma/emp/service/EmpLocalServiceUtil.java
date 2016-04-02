@@ -367,6 +367,17 @@ public class EmpLocalServiceUtil {
 			start, end);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.search.Document> filterEmployeeByAutocompleteQuery(
+		java.lang.String query,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		int start, int end)
+		throws com.liferay.portal.kernel.search.ParseException {
+		return getService()
+				   .filterEmployeeByAutocompleteQuery(query, filters,
+			searchContext, start, end);
+	}
+
 	public static boolean isOrganizationFilter(java.lang.String filterProperty) {
 		return getService().isOrganizationFilter(filterProperty);
 	}
@@ -399,6 +410,10 @@ public class EmpLocalServiceUtil {
 
 	public static java.lang.String[] getGlobalSearchFields() {
 		return getService().getGlobalSearchFields();
+	}
+
+	public static java.lang.String[] getAutocompleteSearchFields() {
+		return getService().getAutocompleteSearchFields();
 	}
 
 	public static java.lang.String removeDashChar(java.lang.String s) {

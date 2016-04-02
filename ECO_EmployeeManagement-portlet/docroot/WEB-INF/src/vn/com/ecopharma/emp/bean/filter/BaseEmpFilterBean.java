@@ -14,6 +14,11 @@ public class BaseEmpFilterBean extends OrganizationFilterBean implements
 	private String empCode = StringUtils.EMPTY;
 
 	@Override
+	public void init() {
+		super.init();
+	}
+
+	@Override
 	public String getFullName() {
 		return fullName;
 	}

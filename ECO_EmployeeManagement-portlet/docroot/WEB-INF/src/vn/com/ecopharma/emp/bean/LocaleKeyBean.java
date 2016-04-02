@@ -1,5 +1,7 @@
 package vn.com.ecopharma.emp.bean;
 
+import java.io.Serializable;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -14,7 +16,12 @@ import vn.com.ecopharma.emp.enumeration.VacationLeaveType;
  */
 @ManagedBean
 @RequestScoped
-public class LocaleKeyBean {
+public class LocaleKeyBean implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public String getDisciplineTypeKey(String type) {
 		if (StringUtils.EMPTY.equals(type))

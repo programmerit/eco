@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -31,6 +32,11 @@ public class EmployeeFilterView extends BaseEmpFilterBean {
 
 	private List<String> selectedGenders;
 	private List<String> selectedStatuses;
+
+	@PostConstruct
+	public void init() {
+		super.init();
+	}
 
 	public void onGlobalFiltering() {
 		// only execute search for more than 2 words

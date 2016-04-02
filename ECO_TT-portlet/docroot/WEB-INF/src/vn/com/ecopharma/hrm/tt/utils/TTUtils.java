@@ -129,7 +129,7 @@ public class TTUtils {
 		final List<Query> queries = new ArrayList<>();
 		final SimpleDateFormat sdf = new SimpleDateFormat(RANGE_DATE_FORMAT);
 		final Calendar calendar = Calendar.getInstance();
-		calendar.set(year, month, 0, 0, 0, 0);
+		calendar.set(year, month, 1, 0, 0, 0);
 		final int maxDayOfMonth = calendar
 				.getActualMaximum(Calendar.DAY_OF_MONTH);
 		final Date dateFrom = calendar.getTime();

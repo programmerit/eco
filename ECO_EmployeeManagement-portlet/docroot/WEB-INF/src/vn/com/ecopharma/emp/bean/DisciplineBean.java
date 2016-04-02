@@ -81,7 +81,8 @@ public class DisciplineBean implements Serializable {
 	}
 
 	public List<EmpIndexedItem> completeEmps(String query) {
-		return EmployeeUtils.searchEmpByName(query);
+		//return EmployeeUtils.searchEmpByName(query);
+		return null; // TODO
 	}
 
 	public String getShortenEmpName(String fullName) {

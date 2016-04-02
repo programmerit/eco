@@ -10,38 +10,42 @@
 	<h:body>
 		<h:form id="setManagerForm">
 			<p:dialog id="setManagerDialog" widgetVar="wSetManagerDialog"
-				header="Add/Modify Manager" closeOnEscape="true" closable="true"
-				modal="true">
+				header="#{organizationRoleSetBean.titles}" closeOnEscape="true"
+				closable="true" modal="true">
 				<p:outputPanel id="setManagerOutputPanel" autoUpdate="false">
-					<h:outputText value="You are currently on setting Manager for [" />
-					<h:outputText value="#{setManagerBean.department.name}"
-						style="font-weight: bold;" />
-					<h:outputText value="]" />
-					<br />
-					<br />
+
+
+
 					<h:panelGrid columns="3">
 						<h:outputText value="Current Manager:" />
 						<h:outputText style="font-weight: bold;"
-							value="#{setManagerBean.currentManagerFormattedString}" />
+							value="#{organizationRoleSetBean.currentResponsibleEmpFormattedString}" />
 						<h:outputText />
 
 						<h:outputText value="Change Manager:" />
 						<p:autoComplete id="manager" multiple="false"
 							styleClass="interview-schedule" scrollHeight="300"
 							minQueryLength="2"
-							value="#{setManagerBean.currentSelectedManager}"
-							completeMethod="#{setManagerBean.onCompleteEmps}" var="e"
-							itemLabel="#{setManagerBean.getFormattedEmpString(e)}"
+							value="#{organizationRoleSetBean.currentSelectedEmpRole}"
+							completeMethod="#{organizationRoleSetBean.onCompleteEmps}"
+							var="e"
+							itemLabel="#{organizationRoleSetBean.getFormattedEmpString(e)}"
 							itemValue="#{e}" required="true" converter="empIndexedConverter"
 							autoHighlight="true" forceSelection="true"
 							placeholder="Type 2 words..." alt="#{e.employeeCode}">
 							<p:ajax event="itemSelect" update="setManagerButton" />
 						</p:autoComplete>
-						<h:outputText />
+						<p:selectBooleanCheckbox style="margin-left: 3px;"
+							value="#{organizationRoleSetBean.allEmpSearchable}"
+							id="allEmpCheckbox" label="All?" itemLabel="All?">
+							<p:ajax />
+						</p:selectBooleanCheckbox>
+						<p:tooltip for="allEmpCheckbox"
+							value="Uncheck to search only employees in selected Department/Unit" />
 					</h:panelGrid>
-					<p:commandButton id="setManagerButton" value="SET Manager"
-						disabled="#{setManagerBean.currentSelectedManager == null}"
-						actionListener="#{setManagerBean.onSaveSetManager}"
+					<p:commandButton id="setManagerButton" value="SET"
+						disabled="#{organizationRoleSetBean.currentSelectedEmpRole == null}"
+						actionListener="#{organizationRoleSetBean.onSaveSetManager}"
 						oncomplete="PF('wSetManagerDialog').hide();" />
 					<p:commandLink value="Cancel" style="margin-left: 3px"
 						onclick="PF('wSetManagerDialog').hide();" />

@@ -26,6 +26,7 @@ import vn.com.ecopharma.emp.model.District;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.model.EmpLaborContract;
+import vn.com.ecopharma.emp.permission.DevisionPermission;
 import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpBankInfoLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLaborContractLocalServiceUtil;
@@ -73,8 +74,13 @@ public class EmployeeUtils {
 			List<Document> documents) {
 
 		final List<EmpIndexedItem> results = new ArrayList<>(documents.size());
+		DevisionPermission devisionPermission = (DevisionPermission) BeanUtils
+				.getBackingBeanByName("devisionPermission");
 		for (final Document document : documents) {
-			results.add(new EmpIndexedItem(document));
+			EmpIndexedItem empIndexedItem = new EmpIndexedItem(document);
+			if (devisionPermission.checkPermission(
+					empIndexedItem.getDevisionId(), "VIEW"))
+				results.add(empIndexedItem);
 		}
 		return results;
 	}
@@ -377,12 +383,13 @@ public class EmployeeUtils {
 	 * @param query
 	 * @return
 	 */
-	public static List<EmpIndexedItem> searchEmpByName(String query) {
+	public static List<EmpIndexedItem> searchEmpByName(String query,
+			Map<String, Object> additionFilterMap) {
 		try {
 			return getEmployeeIndexedItemsFromIndexedDocuments(EmpLocalServiceUtil
 					.filterEmployeeByAutocompleteQuery(query,
-							getCurrentSearchContext(), QueryUtil.ALL_POS,
-							QueryUtil.ALL_POS));
+							additionFilterMap, getCurrentSearchContext(),
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 		} catch (ParseException e) {
 			LogFactoryUtil.getLog(EmployeeUtils.class).info(e);
 		}

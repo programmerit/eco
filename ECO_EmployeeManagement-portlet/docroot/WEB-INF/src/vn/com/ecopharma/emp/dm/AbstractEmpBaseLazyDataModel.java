@@ -1,10 +1,8 @@
 package vn.com.ecopharma.emp.dm;
 
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.primefaces.model.SortOrder;
 
 import vn.com.ecopharma.emp.bean.filter.BaseEmpFilterBean;
 import vn.com.ecopharma.emp.constant.EmpField;
@@ -17,13 +15,6 @@ public abstract class AbstractEmpBaseLazyDataModel<T extends AbstractIndexedItem
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	@Override
-	public abstract List<T> load(int first, int pageSize, String sortField,
-			SortOrder sortOrder, Map<String, Object> filters);
-
-	@Override
-	public abstract T getRowData(String rowKey);
 
 	@Override
 	protected void bindOrganizationFilterFields(Map<String, Object> filters,

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import vn.com.ecopharma.emp.bean.global.AuthorityBean;
 import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
@@ -19,6 +20,7 @@ import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
 import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
+import vn.com.ecopharma.emp.util.BeanUtils;
 
 public class OrganizationFilterBean implements OrganizationFilter {
 	/**
@@ -31,6 +33,10 @@ public class OrganizationFilterBean implements OrganizationFilter {
 	private List<Unit> selectedUnits = new ArrayList<>();
 	private List<UnitGroup> selectedUnitGroups = new ArrayList<>();
 	private List<Titles> selectedTitlesList = new ArrayList<>();
+
+	public void init() {
+		
+	}
 
 	public void onDevisionChanged() {
 		this.selectedDepartments = new ArrayList<>();

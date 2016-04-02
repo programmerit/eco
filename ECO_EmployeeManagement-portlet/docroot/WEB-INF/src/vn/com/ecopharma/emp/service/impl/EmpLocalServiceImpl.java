@@ -15,6 +15,7 @@
 package vn.com.ecopharma.emp.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -125,6 +126,8 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 
 	private static final String COMMON_DATE_FORMAT = "dd/MM/yyyy";
 	private static final String FILTER_DATE_FORMAT = "yyyyMMddhhmmss";
+
+	private static final String DEFAULT_DATE_FROM = "19700101000000";
 
 	private static final String GLOBAL_FILTER = "globalString";
 
@@ -317,13 +320,23 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 								searchContext));
 					}
 				} else if (filterValue instanceof Date) {
-					// createDateTermRangeQuery(EmpField.JOINED_DATE, queries,
-					// joinedDateFrom, joinedDateTo, searchContext);
 					Query dateRangeQuery = createDateTermRangeQuery(
 							EmpField.JOINED_DATE, joinedDateFrom, joinedDateTo,
 							true, true, searchContext);
 					if (dateRangeQuery != null)
 						queries.add(dateRangeQuery);
+				} else if (filterValue instanceof Map.Entry<?, ?>) { // for
+					// autoComplete
+					// filter
+					final Map.Entry<String[], String> autoCompleteFilterEntry = (Map.Entry<String[], String>) filterValue;
+
+					final BooleanQuery autoCompleteFilterBooleanQuery = BooleanQueryFactoryUtil
+							.create(searchContext);
+					autoCompleteFilterBooleanQuery.addTerms(
+							autoCompleteFilterEntry.getKey(),
+							autoCompleteFilterEntry.getValue(), true);
+					queries.add(autoCompleteFilterBooleanQuery);
+
 				}
 			}
 		}
@@ -343,11 +356,23 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	 * @return
 	 * @throws ParseException
 	 */
+	@Deprecated
 	public List<Document> filterEmployeeByAutocompleteQuery(String query,
 			SearchContext searchContext, int start, int end)
 			throws ParseException {
 		final Map<String, Object> filters = new HashMap<>();
 		filters.put(GLOBAL_FILTER, query);
+		return filterEmployeeByFields(searchContext, filters, null,
+				searchContext.getCompanyId(), start, end);
+	}
+
+	public List<Document> filterEmployeeByAutocompleteQuery(String query,
+			Map<String, Object> filters, SearchContext searchContext,
+			int start, int end) throws ParseException {
+		filters.put("AUTO_COMPLETE",
+				new AbstractMap.SimpleEntry<String[], String>(
+						getAutocompleteSearchFields(), query));
+
 		return filterEmployeeByFields(searchContext, filters, null,
 				searchContext.getCompanyId(), start, end);
 	}
@@ -363,18 +388,17 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 	public void createDateTermRangeQuery(String field, List<Query> queries,
 			Date dateFrom, Date dateTo, SearchContext searchContext) {
 		final SimpleDateFormat sdf = new SimpleDateFormat(FILTER_DATE_FORMAT);
-		final String defaultDateFromString = "19700101000000";
 
 		final String defaultDateToString = sdf.format(getCurrentDateNextYear());
 
 		final String filterDateFrom = dateFrom != null ? sdf.format(dateFrom)
-				: defaultDateFromString;
+				: DEFAULT_DATE_FROM;
 
 		final String filterDateTo = dateTo != null ? sdf.format(dateTo)
 				: defaultDateToString;
 
 		final boolean isDefaultJDSearch = filterDateFrom
-				.equals(defaultDateFromString)
+				.equals(DEFAULT_DATE_FROM)
 				&& filterDateTo.equals(defaultDateToString);
 
 		final TermRangeQuery dateTermRangeQuery = TermRangeQueryFactoryUtil
@@ -394,14 +418,14 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		if (dateFrom == null && dateTo == null)
 			return null;
 		final SimpleDateFormat sdf = new SimpleDateFormat(FILTER_DATE_FORMAT);
-		final String defaultDateFromString = "19700101000000";
 
 		final String defaultDateToString = sdf.format(getCurrentDateNextYear());
 
-		// TODO: check the reason why filter by date 30/11/2000 does not include
+		// TODO: check the reason why filter by date, for instance 30/11/2000
+		// does not include
 		// this day.
 		final String filterDateFrom = dateFrom != null ? sdf
-				.format(subtract1Date(dateFrom)) : defaultDateFromString;
+				.format(subtract1Day(dateFrom)) : DEFAULT_DATE_FROM;
 
 		final String filterDateTo = dateTo != null ? sdf.format(dateTo)
 				: defaultDateToString;
@@ -410,7 +434,7 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 				filterDateFrom, filterDateTo, includesLower, includesUpper);
 	}
 
-	private Date subtract1Date(Date date) {
+	private Date subtract1Day(Date date) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
@@ -445,9 +469,12 @@ public class EmpLocalServiceImpl extends EmpLocalServiceBaseImpl {
 		allEmpFields.remove(EmpField.BASE_WAGE_RATES);
 		allEmpFields.remove(EmpField.JOINED_DATE_FROM);
 		allEmpFields.remove(EmpField.JOINED_DATE_TO);
-
 		return allEmpFields.toArray(new String[allEmpFields.size()]);
+	}
 
+	public String[] getAutocompleteSearchFields() {
+		return new String[] { EmpField.FULL_NAME, EmpField.VN_FULL_NAME,
+				EmpField.EMP_CODE, EmpField.EMAIL };
 	}
 
 	public String removeDashChar(String s) {

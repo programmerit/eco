@@ -8,6 +8,7 @@ import vn.com.ecopharma.emp.bean.EmpGlobalFilterHolderBean;
 import vn.com.ecopharma.emp.bean.EmployeeBean;
 import vn.com.ecopharma.emp.bean.EmployeeIndexedBean;
 import vn.com.ecopharma.emp.bean.OrganizationPanelBean;
+import vn.com.ecopharma.emp.bean.OrganizationRoleSetBean;
 import vn.com.ecopharma.emp.bean.OrganizationTreeViewBean;
 import vn.com.ecopharma.emp.bean.TitlesBean;
 import vn.com.ecopharma.emp.bean.filter.EmpAnnualLeaveFilterBean;
@@ -53,6 +54,8 @@ public class BeanUtils {
 	private static final String EMP_FILTER_HOLDER_BEAN = "empGlobalFilterHolderBean";
 
 	private static final String CONCURRENT_TITLES_BEAN = "concurrentBean";
+
+	private static final String ORGANIZTION_ROLE_SET_BEAN = "organizationRoleSetBean";
 
 	private BeanUtils() {
 	}
@@ -129,5 +132,9 @@ public class BeanUtils {
 
 	public static ConcurrentTitlesBean getConcurrentTitlesBean() {
 		return (ConcurrentTitlesBean) getBackingBeanByName(CONCURRENT_TITLES_BEAN);
+	}
+
+	public static OrganizationRoleSetBean getOrganizationRoleSetBean() {
+		return (OrganizationRoleSetBean) getBackingBeanByName(ORGANIZTION_ROLE_SET_BEAN);
 	}
 }

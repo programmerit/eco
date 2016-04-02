@@ -43,11 +43,30 @@
 					onclick="PF('wDeleteConfirmDialog').show()"
 					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Titles'}" />
 
-				<p:menuitem value="Set Manager"
-					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Department' and organizationTreeViewBean.selectOnlyOneItem}"
+				<p:menuitem value="Set Dept Manager"
+					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Department'}"
 					actionListener="#{organizationTreeViewBean.onSetDeptManager}"
 					update=":dialogGroupPanel #{organizationTreeViewBean.dialogOutputPanel}"
 					oncomplete="PF('wSetManagerDialog').show();" />
+
+				<p:menuitem value="Set Dept Deputy"
+					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Department'}"
+					actionListener="#{organizationTreeViewBean.onSetDeptDeputy}"
+					update=":dialogGroupPanel #{organizationTreeViewBean.dialogOutputPanel}"
+					oncomplete="PF('wSetManagerDialog').show();" />
+
+				<p:menuitem value="Set Unit Manager"
+					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Unit'}"
+					actionListener="#{organizationTreeViewBean.onSetUnitManager}"
+					update=":dialogGroupPanel #{organizationTreeViewBean.dialogOutputPanel}"
+					oncomplete="PF('wSetManagerDialog').show();" />
+
+				<p:menuitem value="Set Unit Deputy"
+					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Unit'}"
+					actionListener="#{organizationTreeViewBean.onSetUnitDeputy}"
+					update=":dialogGroupPanel #{organizationTreeViewBean.dialogOutputPanel}"
+					oncomplete="PF('wSetManagerDialog').show();" />
+
 			</p:contextMenu>
 
 			<p:tree value="#{organizationTreeViewBean.root}" var="org"

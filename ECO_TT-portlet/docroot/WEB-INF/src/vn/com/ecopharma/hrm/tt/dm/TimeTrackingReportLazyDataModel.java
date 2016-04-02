@@ -76,6 +76,9 @@ public class TimeTrackingReportLazyDataModel
 				// empTimeTrackingIndexedItem.setMinInMap(minInMap);
 				// empTimeTrackingIndexedItem.setMaxOutMap(maxOutMap);
 
+				if (empTimeTrackingIndexedItem.getEmployeeCode().equalsIgnoreCase("92505")) {
+					System.out.println("TEST");
+				}
 				final Map<String, ReportTimeItem> timeMap = getTimeMap(timeTrackingIndexItems);
 
 				empTimeTrackingIndexedItem.setReportTimeMap(timeMap);
@@ -222,7 +225,7 @@ public class TimeTrackingReportLazyDataModel
 	}
 
 	/**
-	 * Compare ONLY TIME(HH:mm) from 2 dates
+	 * Compare ONLY TIME(HH:mm) btw 2 dates
 	 * 
 	 * @param d1
 	 *            first date

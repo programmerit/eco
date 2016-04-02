@@ -384,6 +384,17 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.kernel.search.Document> filterEmployeeByAutocompleteQuery(
+		java.lang.String query,
+		java.util.Map<java.lang.String, java.lang.Object> filters,
+		com.liferay.portal.kernel.search.SearchContext searchContext,
+		int start, int end)
+		throws com.liferay.portal.kernel.search.ParseException {
+		return _empLocalService.filterEmployeeByAutocompleteQuery(query,
+			filters, searchContext, start, end);
+	}
+
+	@Override
 	public boolean isOrganizationFilter(java.lang.String filterProperty) {
 		return _empLocalService.isOrganizationFilter(filterProperty);
 	}
@@ -418,6 +429,11 @@ public class EmpLocalServiceWrapper implements EmpLocalService,
 	@Override
 	public java.lang.String[] getGlobalSearchFields() {
 		return _empLocalService.getGlobalSearchFields();
+	}
+
+	@Override
+	public java.lang.String[] getAutocompleteSearchFields() {
+		return _empLocalService.getAutocompleteSearchFields();
 	}
 
 	@Override

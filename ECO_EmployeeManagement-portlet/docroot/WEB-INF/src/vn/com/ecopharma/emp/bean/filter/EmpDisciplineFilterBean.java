@@ -14,6 +14,11 @@ public class EmpDisciplineFilterBean extends BaseEmpFilterBean {
 	private Date effectiveDateFrom;
 
 	private Date effectiveDateTo;
+	
+	@Override
+	public void init() {
+		super.init();
+	}
 
 	public void resetEffectiveDateFrom() {
 		effectiveDateFrom = null;

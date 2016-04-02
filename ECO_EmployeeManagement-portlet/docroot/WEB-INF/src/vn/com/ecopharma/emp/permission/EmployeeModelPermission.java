@@ -49,4 +49,8 @@ public class EmployeeModelPermission implements Serializable {
 		return contains(permissionChecker, themeDisplay.getScopeGroupId(),
 				actionKey);
 	}
+
+	public boolean isHrPermission() {
+		return checkPermission("HR");
+	}
 }
