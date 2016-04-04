@@ -56,7 +56,7 @@ public class BeanUtils {
 	private static final String CONCURRENT_TITLES_BEAN = "concurrentBean";
 
 	private static final String ORGANIZTION_ROLE_SET_BEAN = "organizationRoleSetBean";
-
+	
 	private BeanUtils() {
 	}
 
@@ -137,4 +137,5 @@ public class BeanUtils {
 	public static OrganizationRoleSetBean getOrganizationRoleSetBean() {
 		return (OrganizationRoleSetBean) getBackingBeanByName(ORGANIZTION_ROLE_SET_BEAN);
 	}
+	
 }

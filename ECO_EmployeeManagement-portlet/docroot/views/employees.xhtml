@@ -28,6 +28,9 @@
 			<p:remoteCommand name="updateFilterRelatedComponents"
 				oncomplete="PF('employeeTable').filter(); refreshFooter(); refreshFilterBadges();" />
 
+			<p:remoteCommand name="updateFilterBadges"
+				update=":employeesForm:filterBadgesOutputPanel" />
+
 			<h:link value="Show/Hide filter" styleClass="label"
 				onmouseover="toggle('#{requestScope.filterGrid.clientId}'); return false;"
 				onclick="toggle('#{requestScope.filterGrid.clientId}'); return false;" />
@@ -117,7 +120,7 @@
 
 					<h:panelGroup>
 						<eco:organizationFilterPanel orgBean="#{empFilterBean}"
-							onCompleteUpdate="PF('employeeTable').filter(); refreshFooter();" />
+							onCompleteUpdate="PF('employeeTable').filter(); refreshFooter(); updateFilterBadges();" />
 					</h:panelGroup>
 
 					<h:panelGroup>
@@ -254,7 +257,7 @@
 			</h:panelGroup>
 
 			<br />
-			<p:outputPanel autoUpdate="true">
+			<p:outputPanel id="filterBadgesOutputPanel" autoUpdate="false">
 				<h:panelGroup id="filterBadges" styleClass="filter-panel"
 					rendered="#{empFilterBean.filterBadges.size() gt 0}">
 					<h6>ACTIVE FILTER:</h6>

@@ -15,8 +15,14 @@ import javax.faces.bean.ViewScoped;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
 
+import vn.com.ecopharma.emp.bean.global.AuthorityBean;
 import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
+import vn.com.ecopharma.emp.model.Department;
+import vn.com.ecopharma.emp.model.Devision;
+import vn.com.ecopharma.emp.service.DepartmentLocalServiceUtil;
+import vn.com.ecopharma.emp.service.DevisionLocalServiceUtil;
+import vn.com.ecopharma.emp.util.BeanUtils;
 
 @ManagedBean(name = "empFilterBean")
 @ViewScoped
@@ -37,7 +43,7 @@ public class EmployeeFilterView extends BaseEmpFilterBean {
 	public void init() {
 		super.init();
 	}
-
+	
 	public void onGlobalFiltering() {
 		// only execute search for more than 2 words
 		if (this.globalString.length() >= 2) {
@@ -78,6 +84,7 @@ public class EmployeeFilterView extends BaseEmpFilterBean {
 		joinedDateTo = null;
 	}
 
+	@Override
 	public List<String> getFilterBadges() {
 		final Set<String> badges = new HashSet<String>(super.getFilterBadges());
 		checkAndAddFilterBadge(globalString, badges);
@@ -93,7 +100,7 @@ public class EmployeeFilterView extends BaseEmpFilterBean {
 		if (selectedGenders != null && !selectedGenders.isEmpty()) {
 			badges.addAll(selectedGenders);
 		}
-
+		System.out.println(badges);
 		return new ArrayList<>(badges);
 	}
 
@@ -134,6 +141,27 @@ public class EmployeeFilterView extends BaseEmpFilterBean {
 		resultBuilder.append("-");
 		resultBuilder.append(sdf.format(joinedDateTo));
 		badges.add(resultBuilder.toString());
+	}
+
+	@Override
+	public void onDevisionChanged() {
+		super.onDevisionChanged();
+	}
+
+	@Override
+	public void onDepartmentChanged() {
+		super.onDepartmentChanged();
+	}
+
+	@Override
+	public void onUnitChanged() {
+		super.onUnitChanged();
+		//bindFieldsByAuthorities();
+	}
+
+	@Override
+	public void onUnitGroupChanged() {
+		super.onUnitGroupChanged();
 	}
 
 	public String getGlobalString() {

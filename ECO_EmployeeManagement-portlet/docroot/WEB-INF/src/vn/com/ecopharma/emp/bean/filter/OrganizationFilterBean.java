@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.faces.bean.ManagedProperty;
+
 import vn.com.ecopharma.emp.bean.global.AuthorityBean;
 import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.model.Department;
@@ -28,14 +30,48 @@ public class OrganizationFilterBean implements OrganizationFilter {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private List<Devision> selectedDevisions = new ArrayList<>();
-	private List<Department> selectedDepartments = new ArrayList<>();
-	private List<Unit> selectedUnits = new ArrayList<>();
-	private List<UnitGroup> selectedUnitGroups = new ArrayList<>();
-	private List<Titles> selectedTitlesList = new ArrayList<>();
+	private List<Devision> selectedDevisions;
+	private List<Department> selectedDepartments;
+	private List<Unit> selectedUnits;
+	private List<UnitGroup> selectedUnitGroups;
+	private List<Titles> selectedTitlesList;
+
+	@ManagedProperty(value = "#{authorityBean}")
+	private AuthorityBean authorityBean;
 
 	public void init() {
-		
+		selectedDevisions = new ArrayList<>();
+		selectedDepartments = new ArrayList<>();
+		selectedUnits = new ArrayList<>();
+		selectedUnitGroups = new ArrayList<>();
+		selectedTitlesList = new ArrayList<>();
+		bindFieldsByAuthorities();
+	}
+
+	public void bindFieldsByAuthorities() {
+		final AuthorityBean authorityBean = (AuthorityBean) BeanUtils
+				.getBackingBeanByName("authorityBean");
+
+		for (Devision devision : DevisionLocalServiceUtil.findAll()) {
+			if (authorityBean.getSearchableDevisionIds().contains(
+					devision.getDevisionId())
+					&& !selectedDevisions.contains(devision))
+				selectedDevisions.add(devision);
+		}
+
+		for (Department department : DepartmentLocalServiceUtil
+				.findByDevisions(selectedDevisions)) {
+			if (authorityBean.getSearchableDepartmentIds().contains(
+					department.getDepartmentId())
+					&& !selectedDepartments.contains(department))
+				selectedDepartments.add(department);
+		}
+
+		for (Unit unit : UnitLocalServiceUtil
+				.findByDepartments(selectedDepartments)) {
+			selectedUnits.add(unit);
+		}
+
 	}
 
 	public void onDevisionChanged() {
@@ -61,7 +97,15 @@ public class OrganizationFilterBean implements OrganizationFilter {
 	}
 
 	public List<Unit> getUnits() {
-		return UnitLocalServiceUtil.findByDepartments(selectedDepartments);
+		final List<Unit> unitsByDepartments = UnitLocalServiceUtil
+				.findByDepartments(selectedDepartments);
+		if (BeanUtils.getEmpModelPermission().isHrPermission())
+			return unitsByDepartments;
+		final List<Unit> result = new ArrayList<>();
+		for (Unit unit : unitsByDepartments)
+			if (authorityBean.getSearchableUnitIds().contains(unit.getUnitId()))
+				result.add(unit);
+		return result;
 	}
 
 	public List<UnitGroup> getUnitGroups() {
@@ -69,11 +113,31 @@ public class OrganizationFilterBean implements OrganizationFilter {
 	}
 
 	public List<Department> getDepartments() {
-		return DepartmentLocalServiceUtil.findByDevisions(selectedDevisions);
+		final List<Department> departmentsByDevisions = DepartmentLocalServiceUtil
+				.findByDevisions(selectedDevisions);
+		if (BeanUtils.getEmpModelPermission().isHrPermission())
+			return departmentsByDevisions;
+		final List<Department> result = new ArrayList<>();
+		for (Department department : departmentsByDevisions) {
+			if (authorityBean.getSearchableDepartmentIds().contains(
+					department.getDepartmentId()))
+				result.add(department);
+		}
+		return result;
 	}
 
 	public List<Devision> getDevisions() {
-		return DevisionLocalServiceUtil.findAll();
+		final List<Devision> allDevisions = DevisionLocalServiceUtil.findAll();
+		if (BeanUtils.getEmpModelPermission().isHrPermission())
+			return allDevisions;
+
+		final List<Devision> result = new ArrayList<>();
+
+		for (Devision dev : allDevisions)
+			if (authorityBean.getSearchableDevisionIds().contains(
+					dev.getDevisionId()))
+				result.add(dev);
+		return result;
 	}
 
 	public List<Titles> getTitlesList() {
@@ -220,4 +284,13 @@ public class OrganizationFilterBean implements OrganizationFilter {
 
 		// getFilterBadges().remove(index);
 	}
+
+	public AuthorityBean getAuthorityBean() {
+		return authorityBean;
+	}
+
+	public void setAuthorityBean(AuthorityBean authorityBean) {
+		this.authorityBean = authorityBean;
+	}
+
 }

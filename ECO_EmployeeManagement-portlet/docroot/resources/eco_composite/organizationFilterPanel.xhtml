@@ -22,7 +22,8 @@
 				<h:panelGroup>
 					<p:selectCheckboxMenu id="devisionSelect" label="Devision"
 						converter="devisionConverter"
-						value="#{cc.attrs.orgBean.selectedDevisions}">
+						value="#{cc.attrs.orgBean.selectedDevisions}"
+						disabled="#{not authorityBean.devisionSelectable}">
 						<p:ajax listener="#{cc.attrs.orgBean.onDevisionChanged}"
 							update="departmentSelect unitSelect unitGroupSelect titlesSelect"
 							oncomplete="#{cc.attrs.onCompleteUpdate}" />
@@ -30,8 +31,7 @@
 							update="departmentSelect unitSelect unitGroupSelect titlesSelect"
 							oncomplete="#{cc.attrs.onCompleteUpdate}" />
 						<f:selectItems value="#{cc.attrs.orgBean.devisions}" var="d"
-							itemLabel="#{d.name}" itemValue="#{d}"
-							itemDisabled="#{not devisionPermission.checkPermission(d.devisionId, 'VIEW')}" />
+							itemLabel="#{d.name}" itemValue="#{d}" itemDisabled="false" />
 						<p:column>
 					                #{d.name}
 					            </p:column>
@@ -39,6 +39,7 @@
 					<br />
 
 					<p:selectCheckboxMenu id="departmentSelect" label="Department"
+						disabled="#{not authorityBean.devisionSelectable and authorityBean.unitManager}"
 						converter="departmentConverter"
 						value="#{cc.attrs.orgBean.selectedDepartments}">
 						<p:ajax listener="#{cc.attrs.orgBean.onDepartmentChanged}"
@@ -48,7 +49,7 @@
 							update="unitSelect unitGroupSelect titlesSelect"
 							oncomplete="#{cc.attrs.onCompleteUpdate}" />
 						<f:selectItems value="#{cc.attrs.orgBean.departments}" var="d"
-							itemLabel="#{d.name}" itemValue="#{d}" />
+							itemLabel="#{d.name}" itemValue="#{d}" itemDisabled="false" />
 						<p:column>
 					                #{d.name}
 					            </p:column>

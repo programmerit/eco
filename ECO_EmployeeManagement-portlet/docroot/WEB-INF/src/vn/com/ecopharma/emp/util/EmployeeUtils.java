@@ -78,9 +78,8 @@ public class EmployeeUtils {
 				.getBackingBeanByName("devisionPermission");
 		for (final Document document : documents) {
 			EmpIndexedItem empIndexedItem = new EmpIndexedItem(document);
-			if (devisionPermission.checkPermission(
-					empIndexedItem.getDevisionId(), "VIEW"))
-				results.add(empIndexedItem);
+
+			results.add(empIndexedItem);
 		}
 		return results;
 	}
