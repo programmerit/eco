@@ -232,6 +232,16 @@ public class EmployeeIndexedBean implements Serializable {
 
 	}
 
+	public boolean isResignedValid() {
+		if (selectedEmployeeIndexItems.isEmpty())
+			return false;
+		for (EmpIndexedItem item : selectedEmployeeIndexItems)
+			if (item.getStatus().equalsIgnoreCase(
+					EmployeeStatus.RESIGNED.toString()))
+				return false;
+		return true;
+	}
+
 	public boolean isDisciplineValid() {
 		if (selectedEmployeeIndexItems.isEmpty())
 			return false;

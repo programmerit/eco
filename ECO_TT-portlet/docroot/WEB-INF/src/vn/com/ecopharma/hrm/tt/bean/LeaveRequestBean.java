@@ -64,8 +64,8 @@ public class LeaveRequestBean implements Serializable {
 	}
 
 	public void onInOutDateChange() {
-		requestItem.getLeave()
-				.setLeaveTo(requestItem.getLeave().getLeaveFrom());
+		requestItem.getLeave().setLeaveFrom(requestItem.getInOutDate());
+		requestItem.getLeave().setLeaveTo(requestItem.getInOutDate());
 	}
 
 	public List<String> getAllTypes() {

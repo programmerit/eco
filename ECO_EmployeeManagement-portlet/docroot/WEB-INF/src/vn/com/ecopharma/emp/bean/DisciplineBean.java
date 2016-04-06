@@ -3,6 +3,7 @@ package vn.com.ecopharma.emp.bean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -81,8 +82,8 @@ public class DisciplineBean implements Serializable {
 	}
 
 	public List<EmpIndexedItem> completeEmps(String query) {
-		//return EmployeeUtils.searchEmpByName(query);
-		return null; // TODO
+		return EmployeeUtils.searchEmpByName(query,
+				new HashMap<String, Object>());
 	}
 
 	public String getShortenEmpName(String fullName) {

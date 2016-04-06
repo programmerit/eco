@@ -18,10 +18,13 @@ import vn.com.ecopharma.emp.bean.filter.OrganizationFilterBean;
 import vn.com.ecopharma.emp.bean.filter.PromotionFilterBean;
 import vn.com.ecopharma.emp.bean.filter.ResignationFilterBean;
 import vn.com.ecopharma.emp.bean.filter.VacationLeaveFilterBean;
+import vn.com.ecopharma.emp.bean.global.AuthorityBean;
 import vn.com.ecopharma.emp.permission.EmpPermission;
 import vn.com.ecopharma.emp.permission.EmployeeModelPermission;
 
 public class BeanUtils {
+
+	private static final String AUTHORITY_BEAN = "authorityBean";
 
 	private static final String EMPLOYEE_BEAN = "empView";
 
@@ -56,7 +59,7 @@ public class BeanUtils {
 	private static final String CONCURRENT_TITLES_BEAN = "concurrentBean";
 
 	private static final String ORGANIZTION_ROLE_SET_BEAN = "organizationRoleSetBean";
-	
+
 	private BeanUtils() {
 	}
 
@@ -68,6 +71,10 @@ public class BeanUtils {
 		ELContext elContext = FacesContext.getCurrentInstance().getELContext();
 		return FacesContext.getCurrentInstance().getApplication()
 				.getELResolver().getValue(elContext, null, name);
+	}
+
+	public static AuthorityBean getAuthorityBean() {
+		return (AuthorityBean) getBackingBeanByName(AUTHORITY_BEAN);
 	}
 
 	public static EmployeeBean getEmployeeViewBean() {
@@ -137,5 +144,5 @@ public class BeanUtils {
 	public static OrganizationRoleSetBean getOrganizationRoleSetBean() {
 		return (OrganizationRoleSetBean) getBackingBeanByName(ORGANIZTION_ROLE_SET_BEAN);
 	}
-	
+
 }

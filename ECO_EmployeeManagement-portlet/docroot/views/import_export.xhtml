@@ -122,23 +122,32 @@
 						sizeLimit="10000000" allowTypes="/(\.|\/)(xls|xlsx)$/" />
 				</p:tab>
 
-				<p:tab id="locationTab" title="Import Location">
+				<p:tab id="locationTab" title="Import Location" rendered="false">
 					<p:fileUpload
 						fileUploadListener="#{locationIEBean.handleFileImport}"
 						mode="advanced" dragDropSupport="true" update="messages2"
 						sizeLimit="10000000" allowTypes="/(\.|\/)(xls|xlsx)$/" />
 				</p:tab>
 
-				<p:tab id="updateAddressTab" title="Update Employee Address">
+				<p:tab id="updateAddressTab" title="Update Employee Address"
+					rendered="false">
 					<p:fileUpload
 						fileUploadListener="#{updateEmpAddressBean.handleFileImport}"
 						mode="advanced" dragDropSupport="true" update="messages2"
 						sizeLimit="10000000" allowTypes="/(\.|\/)(xls|xlsx)$/" />
 				</p:tab>
 
-				<p:tab id="updateBankInfoTab" title="Update Employee Bank Info">
+				<p:tab id="updateBankInfoTab" title="Update Employee Bank Info"
+					rendered="false">
 					<p:fileUpload
 						fileUploadListener="#{updateBankInfoIEBean.handleFileImport}"
+						mode="advanced" dragDropSupport="true" update="messages2"
+						sizeLimit="10000000" allowTypes="/(\.|\/)(xls|xlsx)$/" />
+				</p:tab>
+
+				<p:tab id="importEmpDiscipline" title="Import Employee Discipline">
+					<p:fileUpload
+						fileUploadListener="#{disciplineIEBean.handleFileImport}"
 						mode="advanced" dragDropSupport="true" update="messages2"
 						sizeLimit="10000000" allowTypes="/(\.|\/)(xls|xlsx)$/" />
 				</p:tab>

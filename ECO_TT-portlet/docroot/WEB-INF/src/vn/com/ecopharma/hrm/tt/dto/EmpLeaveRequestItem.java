@@ -24,6 +24,8 @@ public class EmpLeaveRequestItem implements Serializable {
 
 	private EmpAnnualLeave annualLeave;
 
+	private Date inOutDate;
+
 	public EmpLeaveRequestItem(EmpIndexedItem emp, VacationLeave leave) {
 		this.emp = emp;
 		this.leave = leave;
@@ -66,6 +68,14 @@ public class EmpLeaveRequestItem implements Serializable {
 
 	public void setAnnualLeave(EmpAnnualLeave annualLeave) {
 		this.annualLeave = annualLeave;
+	}
+
+	public Date getInOutDate() {
+		return inOutDate;
+	}
+
+	public void setInOutDate(Date inOutDate) {
+		this.inOutDate = inOutDate;
 	}
 
 }

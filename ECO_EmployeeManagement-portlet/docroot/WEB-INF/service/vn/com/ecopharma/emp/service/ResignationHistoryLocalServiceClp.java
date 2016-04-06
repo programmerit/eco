@@ -138,82 +138,102 @@ public class ResignationHistoryLocalServiceClp
 
 		_methodParameterTypes23 = new String[] {  };
 
-		_methodName24 = "addResignationHistory";
+		_methodName24 = "createPrePersisted";
 
 		_methodParameterTypes24 = new String[] {
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName25 = "addResignationHistory";
+
+		_methodParameterTypes25 = new String[] {
 				"vn.com.ecopharma.emp.model.ResignationHistory",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName25 = "updateResignationHistory";
+		_methodName26 = "addResignationHistory";
 
-		_methodParameterTypes25 = new String[] {
+		_methodParameterTypes26 = new String[] {
+				"long", "java.util.Date", "java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName27 = "addEmpsResignationHistory";
+
+		_methodParameterTypes27 = new String[] {
+				"java.util.List", "java.util.Date", "java.lang.String",
+				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName28 = "updateResignationHistory";
+
+		_methodParameterTypes28 = new String[] {
 				"long", "java.util.Date", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName26 = "markDeleted";
+		_methodName29 = "markDeleted";
 
-		_methodParameterTypes26 = new String[] {
+		_methodParameterTypes29 = new String[] {
 				"vn.com.ecopharma.emp.model.ResignationHistory"
 			};
 
-		_methodName27 = "countSearchAllDocuments";
+		_methodName30 = "countSearchAllDocuments";
 
-		_methodParameterTypes27 = new String[] {
+		_methodParameterTypes30 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort"
 			};
 
-		_methodName28 = "searchAllDocuments";
+		_methodName31 = "searchAllDocuments";
 
-		_methodParameterTypes28 = new String[] {
+		_methodParameterTypes31 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName29 = "filterByFields";
+		_methodName32 = "filterByFields";
 
-		_methodParameterTypes29 = new String[] {
+		_methodParameterTypes32 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long",
 				"int", "int"
 			};
 
-		_methodName30 = "countFilterByFields";
+		_methodName33 = "countFilterByFields";
 
-		_methodParameterTypes30 = new String[] {
+		_methodParameterTypes33 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.Map", "com.liferay.portal.kernel.search.Sort", "long"
 			};
 
-		_methodName31 = "getIndexedDocument";
+		_methodName34 = "getIndexedDocument";
 
-		_methodParameterTypes31 = new String[] {
+		_methodParameterTypes34 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName32 = "getIndexedDocument";
+		_methodName35 = "getIndexedDocument";
 
-		_methodParameterTypes32 = new String[] {
+		_methodParameterTypes35 = new String[] {
 				"long", "com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName33 = "indexAll";
+		_methodName36 = "indexAll";
 
-		_methodParameterTypes33 = new String[] {  };
+		_methodParameterTypes36 = new String[] {  };
 
-		_methodName34 = "removeAllIndexes";
+		_methodName37 = "removeAllIndexes";
 
-		_methodParameterTypes34 = new String[] {
+		_methodParameterTypes37 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 
-		_methodName35 = "addMissingResignedEmployee";
+		_methodName38 = "addMissingResignedEmployee";
 
-		_methodParameterTypes35 = new String[] {
+		_methodParameterTypes38 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -915,14 +935,39 @@ public class ResignationHistoryLocalServiceClp
 	}
 
 	@Override
-	public vn.com.ecopharma.emp.model.ResignationHistory addResignationHistory(
-		vn.com.ecopharma.emp.model.ResignationHistory resignationHistory,
+	public vn.com.ecopharma.emp.model.ResignationHistory createPrePersisted(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName24,
 					_methodParameterTypes24,
+					new Object[] { ClpSerializer.translateInput(serviceContext) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.ResignationHistory)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.ResignationHistory addResignationHistory(
+		vn.com.ecopharma.emp.model.ResignationHistory resignationHistory,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
 						ClpSerializer.translateInput(resignationHistory),
 						
@@ -945,14 +990,84 @@ public class ResignationHistoryLocalServiceClp
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.ResignationHistory addResignationHistory(
+		long empId, java.util.Date resignedDate, java.lang.String reason,
+		java.lang.String comment,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
+					new Object[] {
+						empId,
+						
+					ClpSerializer.translateInput(resignedDate),
+						
+					ClpSerializer.translateInput(reason),
+						
+					ClpSerializer.translateInput(comment),
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.ResignationHistory)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public void addEmpsResignationHistory(java.util.List<java.lang.Long> emps,
+		java.util.Date resignedDate, java.lang.String reason,
+		java.lang.String comment,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		try {
+			_invokableLocalService.invokeMethod(_methodName27,
+				_methodParameterTypes27,
+				new Object[] {
+					ClpSerializer.translateInput(emps),
+					
+				ClpSerializer.translateInput(resignedDate),
+					
+				ClpSerializer.translateInput(reason),
+					
+				ClpSerializer.translateInput(comment),
+					
+				ClpSerializer.translateInput(serviceContext)
+				});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.ResignationHistory updateResignationHistory(
 		long resignationHistoryId, java.util.Date resignedDate,
 		java.lang.String resignedType, java.lang.String comment) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] {
 						resignationHistoryId,
 						
@@ -984,8 +1099,8 @@ public class ResignationHistoryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
 					new Object[] {
 						ClpSerializer.translateInput(resignationHistory)
 					});
@@ -1013,8 +1128,8 @@ public class ResignationHistoryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1049,8 +1164,8 @@ public class ResignationHistoryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1089,8 +1204,8 @@ public class ResignationHistoryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1133,8 +1248,8 @@ public class ResignationHistoryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30,
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -1171,8 +1286,8 @@ public class ResignationHistoryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
 					new Object[] {
 						ClpSerializer.translateInput(id),
 						
@@ -1200,8 +1315,8 @@ public class ResignationHistoryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32,
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35,
 					new Object[] { id, ClpSerializer.translateInput(
 							searchContext) });
 		}
@@ -1223,8 +1338,8 @@ public class ResignationHistoryLocalServiceClp
 	@Override
 	public void indexAll() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName33,
-				_methodParameterTypes33, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName36,
+				_methodParameterTypes36, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1244,8 +1359,8 @@ public class ResignationHistoryLocalServiceClp
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		long companyId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName34,
-				_methodParameterTypes34,
+			_invokableLocalService.invokeMethod(_methodName37,
+				_methodParameterTypes37,
 				new Object[] {
 					ClpSerializer.translateInput(searchContext),
 					
@@ -1269,8 +1384,8 @@ public class ResignationHistoryLocalServiceClp
 	public void addMissingResignedEmployee(
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName35,
-				_methodParameterTypes35,
+			_invokableLocalService.invokeMethod(_methodName38,
+				_methodParameterTypes38,
 				new Object[] { ClpSerializer.translateInput(serviceContext) });
 		}
 		catch (Throwable t) {
@@ -1357,4 +1472,10 @@ public class ResignationHistoryLocalServiceClp
 	private String[] _methodParameterTypes34;
 	private String _methodName35;
 	private String[] _methodParameterTypes35;
+	private String _methodName36;
+	private String[] _methodParameterTypes36;
+	private String _methodName37;
+	private String[] _methodParameterTypes37;
+	private String _methodName38;
+	private String[] _methodParameterTypes38;
 }

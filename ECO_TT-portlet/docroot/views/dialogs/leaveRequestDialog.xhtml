@@ -13,7 +13,7 @@
 		<h:form>
 			<p:dialog id="leaveRequestDialog" widgetVar="wLeaveRequestDialog"
 				modal="true" header="Yêu cầu trễ/sớm/nghỉ phép">
-				<p:outputPanel autoUpdate="true" id="leaveRequestOutputPanel"
+				<p:outputPanel autoUpdate="false" id="leaveRequestOutputPanel"
 					layout="block">
 					<h:panelGrid columns="2">
 						<h:outputText value="NV yêu cầu: " />
@@ -41,7 +41,7 @@
 								value="#{leaveRequestBean.requestItem.leave.leaveType}"
 								label="Nhấn chọn" var="t">
 								<p:ajax listener="#{leaveRequestBean.onLeaveTypeSelectChanged}"
-									update="signSelect qaSign qaSignTooltip" />
+									update="leaveRequestOutputPanel" />
 								<f:selectItems value="#{leaveRequestBean.allTypes}" var="t"
 									itemLabel="#{leaveRequestBean.getHardCodeVneseTypeString(t)}"
 									itemValue="#{t}" />
@@ -99,9 +99,9 @@
 						<h:outputText value="Thời gian:"
 							rendered="#{leaveRequestBean.inOutRequest}" />
 						<p:outputPanel rendered="#{leaveRequestBean.inOutRequest}">
-							<p:calendar styleClass="calendarClass" pattern="dd/mm/yyyy"
-								value="#{leaveRequestBean.requestItem.leave.leaveFrom}">
-								<p:ajax event="dateSelect"
+							<p:calendar styleClass="calendarClass" pattern="dd/MM/yyyy"
+								value="#{leaveRequestBean.requestItem.inOutDate}">
+								<p:ajax event="dateSelect" update="inOutTimeFrom inOutTimeTo"
 									listener="#{leaveRequestBean.onInOutDateChange}" />
 							</p:calendar>
 
@@ -120,6 +120,7 @@
 							<p:selectOneMenu id="reasonSelect"
 								value="#{leaveRequestBean.requestItem.leave.reason}"
 								label="Nhấn chọn" var="r">
+								<p:ajax />
 								<f:selectItem itemLabel="Nhấn chọn" itemValue="" />
 								<f:selectItems value="#{leaveRequestBean.reasons}" var="r"
 									itemLabel="#{r}" itemValue="#{r}" />
@@ -133,8 +134,10 @@
 							disabled="#{not leaveRequestBean.timeAvailable}"
 							value="#{leaveRequestBean.requestItem.leave.numberOfHours}" />
 
-						<h:outputText value="Lí do" />
+						<h:outputText value="Lí do"
+							rendered="#{not leaveRequestBean.inOutRequest}" />
 						<p:inputTextarea id="reasonTextarea"
+							rendered="#{not leaveRequestBean.inOutRequest}"
 							value="#{leaveRequestBean.requestItem.leave.reason}" />
 					</h:panelGrid>
 

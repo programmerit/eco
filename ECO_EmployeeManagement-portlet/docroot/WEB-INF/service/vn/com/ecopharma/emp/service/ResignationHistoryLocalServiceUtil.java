@@ -301,11 +301,34 @@ public class ResignationHistoryLocalServiceUtil {
 		return getService().createPrePersisted();
 	}
 
+	public static vn.com.ecopharma.emp.model.ResignationHistory createPrePersisted(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService().createPrePersisted(serviceContext);
+	}
+
 	public static vn.com.ecopharma.emp.model.ResignationHistory addResignationHistory(
 		vn.com.ecopharma.emp.model.ResignationHistory resignationHistory,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService()
 				   .addResignationHistory(resignationHistory, serviceContext);
+	}
+
+	public static vn.com.ecopharma.emp.model.ResignationHistory addResignationHistory(
+		long empId, java.util.Date resignedDate, java.lang.String reason,
+		java.lang.String comment,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService()
+				   .addResignationHistory(empId, resignedDate, reason, comment,
+			serviceContext);
+	}
+
+	public static void addEmpsResignationHistory(
+		java.util.List<java.lang.Long> emps, java.util.Date resignedDate,
+		java.lang.String reason, java.lang.String comment,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		getService()
+			.addEmpsResignationHistory(emps, resignedDate, reason, comment,
+			serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.ResignationHistory updateResignationHistory(

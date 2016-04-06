@@ -43,10 +43,11 @@
 						converter="departmentConverter"
 						value="#{cc.attrs.orgBean.selectedDepartments}">
 						<p:ajax listener="#{cc.attrs.orgBean.onDepartmentChanged}"
-							update="unitSelect unitGroupSelect titlesSelect"
+							update="departmentSelect unitSelect unitGroupSelect titlesSelect"
 							oncomplete="#{cc.attrs.onCompleteUpdate}" />
 						<p:ajax event="toggleSelect"
-							update="unitSelect unitGroupSelect titlesSelect"
+							listener="#{cc.attrs.orgBean.onToggleDepartment}"
+							update="departmentSelect unitSelect unitGroupSelect titlesSelect"
 							oncomplete="#{cc.attrs.onCompleteUpdate}" />
 						<f:selectItems value="#{cc.attrs.orgBean.departments}" var="d"
 							itemLabel="#{d.name}" itemValue="#{d}" itemDisabled="false" />
@@ -62,13 +63,14 @@
 							converter="unitConverter"
 							value="#{cc.attrs.orgBean.selectedUnits}">
 							<p:ajax listener="#{cc.attrs.orgBean.onUnitChanged}"
-								update="unitGroupSelect titlesSelect"
+								update="unitSelect unitGroupSelect titlesSelect"
 								oncomplete="#{cc.attrs.onCompleteUpdate}" />
 							<p:ajax event="toggleSelect"
-								update="unitGroupSelect titlesSelect"
+								listener="#{cc.attrs.orgBean.onToggleUnit}"
+								update="unitSelect unitGroupSelect titlesSelect"
 								oncomplete="#{cc.attrs.onCompleteUpdate}" />
 							<f:selectItems value="#{cc.attrs.orgBean.units}" var="u"
-								itemLabel="#{u.name}" itemValue="#{u}" />
+								itemLabel="#{u.name}" itemValue="#{u}" itemDisabled="false" />
 							<p:column>
 					                #{u.name}
 					            </p:column>

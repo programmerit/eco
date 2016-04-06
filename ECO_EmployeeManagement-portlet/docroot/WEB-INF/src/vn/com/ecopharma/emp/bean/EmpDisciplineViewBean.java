@@ -74,7 +74,6 @@ public class EmpDisciplineViewBean implements Serializable {
 					filters.put(EmpField.EMP_CODE, filterBean.getEmpCode());
 				}
 
-				FilterUtils.bindOrgFilters(filterBean, filters);
 				return super.load(first, pageSize, sortField, sortOrder,
 						filters);
 			}

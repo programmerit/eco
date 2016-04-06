@@ -270,8 +270,21 @@ public interface ResignationHistoryLocalService extends BaseLocalService,
 
 	public vn.com.ecopharma.emp.model.ResignationHistory createPrePersisted();
 
+	public vn.com.ecopharma.emp.model.ResignationHistory createPrePersisted(
+		com.liferay.portal.service.ServiceContext serviceContext);
+
 	public vn.com.ecopharma.emp.model.ResignationHistory addResignationHistory(
 		vn.com.ecopharma.emp.model.ResignationHistory resignationHistory,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public vn.com.ecopharma.emp.model.ResignationHistory addResignationHistory(
+		long empId, java.util.Date resignedDate, java.lang.String reason,
+		java.lang.String comment,
+		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public void addEmpsResignationHistory(java.util.List<java.lang.Long> emps,
+		java.util.Date resignedDate, java.lang.String reason,
+		java.lang.String comment,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
 	public vn.com.ecopharma.emp.model.ResignationHistory updateResignationHistory(

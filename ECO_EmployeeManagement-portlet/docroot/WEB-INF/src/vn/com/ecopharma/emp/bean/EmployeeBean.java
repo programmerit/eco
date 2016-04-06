@@ -39,13 +39,11 @@ import vn.com.ecopharma.emp.enumeration.EducationType;
 import vn.com.ecopharma.emp.enumeration.EmpDialog;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.enumeration.LaborContractType;
-import vn.com.ecopharma.emp.enumeration.ResignationType;
 import vn.com.ecopharma.emp.model.Document;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.model.EmpLaborContract;
 import vn.com.ecopharma.emp.model.Level;
-import vn.com.ecopharma.emp.model.ResignationHistory;
 import vn.com.ecopharma.emp.model.Specialized;
 import vn.com.ecopharma.emp.model.University;
 import vn.com.ecopharma.emp.permission.EmpPermission;
@@ -586,11 +584,11 @@ public class EmployeeBean implements Serializable {
 		final EmployeeStatus status = EmployeeStatus.valueOf(selectedStatus);
 
 		if (status.equals(EmployeeStatus.RESIGNED)) {
-			ResignationBean resignationBean = (ResignationBean) BeanUtils
-					.getBackingBeanByName("resignationBean");
-			resignationBean.setEmployeeId(employeeId);
-			RequestContext.getCurrentInstance().execute(
-					"PF('wResignationDialog').show()");
+			// ResignationBean resignationBean = (ResignationBean) BeanUtils
+			// .getBackingBeanByName("resignationBean");
+			// resignationBean.setEmployeeId(employeeId);
+			// RequestContext.getCurrentInstance().execute(
+			// "PF('wResignationDialog').show()");
 		}
 		selectedStatus = null;
 	}
@@ -607,16 +605,14 @@ public class EmployeeBean implements Serializable {
 	}
 
 	public void onResignedEmployee() {
-		long id = ((EmployeeIndexedBean) BeanUtils
-				.getBackingBeanByName("employeeIndexedBean"))
-				.getSelectedEmployeeIndexItems().get(0).getId();
 		ResignationBean resignationBean = (ResignationBean) BeanUtils
 				.getBackingBeanByName("resignationBean");
-		ResignationHistory resignationHistory = ResignationHistoryLocalServiceUtil
-				.createPrePersisted();
-		resignationHistory.setResignedType(ResignationType.NONE.toString());
-		resignationBean.setEmployeeId(id);
-		resignationBean.setResignationHistory(resignationHistory);
+		List<EmpIndexedItem> empIndexedItems = BeanUtils
+				.getEmployeeIndexedBean().getSelectedEmployeeIndexItems();
+		if (resignationBean.getResignedItem() == null)
+			resignationBean
+					.setResignedItem(new ResignationBean.EmpResignedItem());
+		resignationBean.getEmps().addAll(empIndexedItems);
 		setDialog(EmpDialog.RESIGNATION);
 	}
 

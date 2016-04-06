@@ -81,6 +81,10 @@ public class OrganizationPanelBean implements Serializable {
 
 	}
 
+	public void onTitlesChanged() {
+
+	}
+
 	public List<Titles> getTitlesList() {
 		if (selectedDepartment != null) {
 			return TitlesLocalServiceUtil

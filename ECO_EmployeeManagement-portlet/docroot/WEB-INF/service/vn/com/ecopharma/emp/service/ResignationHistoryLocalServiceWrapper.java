@@ -323,11 +323,35 @@ public class ResignationHistoryLocalServiceWrapper
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.ResignationHistory createPrePersisted(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _resignationHistoryLocalService.createPrePersisted(serviceContext);
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.ResignationHistory addResignationHistory(
 		vn.com.ecopharma.emp.model.ResignationHistory resignationHistory,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return _resignationHistoryLocalService.addResignationHistory(resignationHistory,
 			serviceContext);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.ResignationHistory addResignationHistory(
+		long empId, java.util.Date resignedDate, java.lang.String reason,
+		java.lang.String comment,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _resignationHistoryLocalService.addResignationHistory(empId,
+			resignedDate, reason, comment, serviceContext);
+	}
+
+	@Override
+	public void addEmpsResignationHistory(java.util.List<java.lang.Long> emps,
+		java.util.Date resignedDate, java.lang.String reason,
+		java.lang.String comment,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		_resignationHistoryLocalService.addEmpsResignationHistory(emps,
+			resignedDate, reason, comment, serviceContext);
 	}
 
 	@Override

@@ -30,21 +30,16 @@ public class OrganizationFilterBean implements OrganizationFilter {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private List<Devision> selectedDevisions;
-	private List<Department> selectedDepartments;
-	private List<Unit> selectedUnits;
-	private List<UnitGroup> selectedUnitGroups;
-	private List<Titles> selectedTitlesList;
+	private List<Devision> selectedDevisions = new ArrayList<>();
+	private List<Department> selectedDepartments = new ArrayList<>();
+	private List<Unit> selectedUnits = new ArrayList<>();
+	private List<UnitGroup> selectedUnitGroups = new ArrayList<>();
+	private List<Titles> selectedTitlesList = new ArrayList<>();
 
 	@ManagedProperty(value = "#{authorityBean}")
 	private AuthorityBean authorityBean;
 
 	public void init() {
-		selectedDevisions = new ArrayList<>();
-		selectedDepartments = new ArrayList<>();
-		selectedUnits = new ArrayList<>();
-		selectedUnitGroups = new ArrayList<>();
-		selectedTitlesList = new ArrayList<>();
 		bindFieldsByAuthorities();
 	}
 
@@ -69,7 +64,9 @@ public class OrganizationFilterBean implements OrganizationFilter {
 
 		for (Unit unit : UnitLocalServiceUtil
 				.findByDepartments(selectedDepartments)) {
-			selectedUnits.add(unit);
+			if (authorityBean.getSearchableUnitIds().contains(unit.getUnitId())
+					&& !selectedUnits.contains(unit))
+				selectedUnits.add(unit);
 		}
 
 	}
@@ -82,18 +79,37 @@ public class OrganizationFilterBean implements OrganizationFilter {
 	}
 
 	public void onDepartmentChanged() {
-		this.selectedUnits = new ArrayList<>();
-		this.selectedUnitGroups = new ArrayList<>();
-		this.selectedTitlesList = new ArrayList<>();
+		if (authorityBean.isDepartmentManager()
+				&& this.selectedDepartments.isEmpty()) {
+			bindFieldsByAuthorities();
+		} else {
+			this.selectedUnits = new ArrayList<>();
+			this.selectedUnitGroups = new ArrayList<>();
+			this.selectedTitlesList = new ArrayList<>();
+		}
 	}
 
 	public void onUnitChanged() {
-		this.selectedUnitGroups = new ArrayList<>();
-		this.selectedTitlesList = new ArrayList<>();
+		if (authorityBean.isUnitManager() && this.selectedUnits.isEmpty()) {
+			bindFieldsByAuthorities();
+		} else {
+			this.selectedUnitGroups = new ArrayList<>();
+		}
 	}
 
 	public void onUnitGroupChanged() {
-		this.selectedTitlesList = new ArrayList<>();
+
+	}
+
+	public void onToggleDepartment() {
+		if (authorityBean.isDepartmentManager()
+				&& this.selectedDepartments.isEmpty())
+			bindFieldsByAuthorities();
+	}
+
+	public void onToggleUnit() {
+		if (authorityBean.isUnitManager() && this.selectedUnits.isEmpty())
+			bindFieldsByAuthorities();
 	}
 
 	public List<Unit> getUnits() {
@@ -103,7 +119,9 @@ public class OrganizationFilterBean implements OrganizationFilter {
 			return unitsByDepartments;
 		final List<Unit> result = new ArrayList<>();
 		for (Unit unit : unitsByDepartments)
-			if (authorityBean.getSearchableUnitIds().contains(unit.getUnitId()))
+			if (authorityBean.isDepartmentManager()
+					|| authorityBean.getSearchableUnitIds().contains(
+							unit.getUnitId()))
 				result.add(unit);
 		return result;
 	}
@@ -283,6 +301,21 @@ public class OrganizationFilterBean implements OrganizationFilter {
 		}
 
 		// getFilterBadges().remove(index);
+	}
+
+	public boolean deletedLinkAvailable(String badgeName) {
+		if (authorityBean.isDevisionSelectable())
+			return true;
+		if ("Department".equals(badgeName) || "Devision".equals(badgeName)) {
+			if (authorityBean.isDepartmentManager()
+					|| authorityBean.isUnitManager())
+				return false;
+
+		} else if ("Unit".equals(badgeName)) {
+			return authorityBean.isDepartmentManager();
+		}
+
+		return true;
 	}
 
 	public AuthorityBean getAuthorityBean() {

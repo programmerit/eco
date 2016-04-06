@@ -122,13 +122,18 @@ public class ResignationHistoryLocalServiceImpl extends
 		return null;
 	}
 
+	public ResignationHistory createPrePersisted(ServiceContext serviceContext) {
+		final ResignationHistory resignationHistory = createPrePersisted();
+		resignationHistory.setCreateDate(new Date());
+		resignationHistory.setCompanyId(serviceContext.getCompanyId());
+		resignationHistory.setGroupId(serviceContext.getScopeGroupId());
+		resignationHistory.setUserId(serviceContext.getUserId());
+		return resignationHistory;
+	}
+
 	public ResignationHistory addResignationHistory(
 			ResignationHistory resignationHistory, ServiceContext serviceContext) {
 		try {
-			resignationHistory.setCompanyId(serviceContext.getCompanyId());
-			resignationHistory.setGroupId(serviceContext.getScopeGroupId());
-			resignationHistory.setCreateDate(new Date());
-			resignationHistory.setModifiedDate(new Date());
 			resignationHistory = super
 					.addResignationHistory(resignationHistory);
 			if (resignationHistory != null) {
@@ -162,6 +167,26 @@ public class ResignationHistoryLocalServiceImpl extends
 			LOGGER.info(e);
 		}
 		return null;
+	}
+
+	public ResignationHistory addResignationHistory(long empId,
+			Date resignedDate, String reason, String comment,
+			ServiceContext serviceContext) {
+		ResignationHistory resignationHistory = createPrePersisted(serviceContext);
+
+		resignationHistory.setEmployeeId(empId);
+		resignationHistory.setResignedDate(resignedDate);
+		resignationHistory.setResignedType(reason);
+		resignationHistory.setComment(comment);
+		return this.addResignationHistory(resignationHistory, serviceContext);
+	}
+
+	public void addEmpsResignationHistory(List<Long> emps, Date resignedDate,
+			String reason, String comment, ServiceContext serviceContext) {
+		for (long id : emps) {
+			this.addResignationHistory(id, resignedDate, reason, comment,
+					serviceContext);
+		}
 	}
 
 	public ResignationHistory updateResignationHistory(

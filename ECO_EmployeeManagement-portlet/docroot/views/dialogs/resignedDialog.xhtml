@@ -14,24 +14,32 @@
 		<h:form id="resignationForm">
 			<p:dialog widgetVar="wResignationDialog" header="Resignation Form"
 				modal="true">
-				<p:outputPanel id="resignationOutputPanel" autoUpdate="true">
+				<p:outputPanel id="resignationOutputPanel" autoUpdate="false">
 					<p:panelGrid columns="2">
-						<h:outputText value="Fullname" />
-						<h:outputText id="rFullName"
-							value="#{resignationBean.employeeIndexedItem.fullNameVi}" />
+						<h:outputText value="Employee" />
+						<p:autoComplete id="disciplineEmployees" multiple="true"
+							styleClass="interview-schedule" scrollHeight="300"
+							minQueryLength="2" value="#{resignationBean.emps}"
+							completeMethod="#{resignationBean.completeEmps}" var="e"
+							itemLabel="#{resignationBean.getShortenEmpName(e.fullNameVi)}(#{e.employeeCode})"
+							itemValue="#{e}" required="true" converter="empIndexedConverter"
+							autoHighlight="true" forceSelection="true"
+							placeholder="Type 2 words..." alt="#{e.employeeCode}">
+							<f:facet name="itemTip">
+								#{e.titles} 
+							</f:facet>
+						</p:autoComplete>
 
 						<h:outputText value="Resigned Date" />
 						<p:calendar pattern="dd/MM/yyyy"
-							value="#{resignationBean.resignationHistory.resignedDate}" />
+							value="#{resignationBean.resignedItem.resignedDate}" />
 
 						<h:outputText value="Resigned Reason" />
-						<p:selectOneMenu
-							value="#{resignationBean.resignationHistory.resignedType}"
+						<p:selectOneMenu value="#{resignationBean.resignedItem.reason}"
 							converter="resignationTypeConverter" effect="fade">
 							<f:selectItem itemLabel="Resigned Type" itemValue="" />
 							<f:selectItems value="#{resignationBean.resignationTypes}"
-								var="r"
-								itemLabel="#{i18n[resignationBean.getLocalizedResignationType(r)]}"
+								var="r" itemLabel="#{i18n[localeKeyBean.getResignedTypeKey(r)]}"
 								itemValue="#{r}" />
 							<p:column>
 					                #{r}
@@ -39,19 +47,22 @@
 						</p:selectOneMenu>
 
 						<h:outputText value="Comments" />
-						<p:inputTextarea
-							value="#{resignationBean.resignationHistory.comment}"
+						<p:inputTextarea value="#{resignationBean.resignedItem.comment}"
 							placeholder="Input Comments Here" />
 
 					</p:panelGrid>
+					<h:panelGroup layout="block" style="float: right;">
+						<p:commandButton value="Resigned" styleClass="RedButton"
+							actionListener="#{resignationBean.onSave}"
+							update=":employeesForm:employees :growl"
+							oncomplete="refreshEmployees(); refreshFooter();" />
+						<p:commandButton value="Cancel"
+							onclick="PF('wResignationDialog').hide()">
+							<p:resetInput target="resignationForm" />
+						</p:commandButton>
+					</h:panelGroup>
 				</p:outputPanel>
-				<p:commandButton value="Resigned" styleClass="RedButton"
-					actionListener="#{resignationBean.save}"
-					oncomplete="refreshEmployees(); PF('wResignationDialog').hide();" />
-				<p:commandButton value="Cancel"
-					onclick="PF('wResignationDialog').hide()">
-					<p:resetInput target="resignationForm" />
-				</p:commandButton>
+
 			</p:dialog>
 		</h:form>
 	</h:body>
