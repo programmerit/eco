@@ -14,6 +14,21 @@ public class ImportExportItem implements Serializable {
 
 	private static final int STRING_CELL_TYPE = 1;
 
+	protected String getFormattedPercentageCellValue(Cell cell) {
+		double doubleValue = getDoubleCellValue(cell);
+		if (doubleValue == 0)
+			return StringUtils.EMPTY;
+
+		// example 0.10 => 10%;
+		return new Double(doubleValue * 100).intValue() + "%";
+	}
+
+	protected double getDoubleCellValue(Cell cell) {
+		if (cell == null)
+			return 0;
+		return cell.getNumericCellValue();
+	}
+
 	protected String getCellValueAsString(Cell cell) {
 		if (cell == null)
 			return StringUtils.EMPTY;

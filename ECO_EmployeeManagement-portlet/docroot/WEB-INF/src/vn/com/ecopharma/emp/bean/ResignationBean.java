@@ -68,6 +68,11 @@ public class ResignationBean implements Serializable {
 
 	}
 
+	public void onCancelAndReset() {
+		this.resignedItem = null;
+		this.emps.clear();
+	}
+
 	public List<EmpIndexedItem> completeEmps(String query) {
 		return EmployeeUtils.searchEmpByName(query,
 				new HashMap<String, Object>());

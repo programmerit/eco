@@ -279,16 +279,24 @@ public class EmpDisciplineLocalServiceImpl extends
 			String additionalType, String description,
 			ServiceContext serviceContext) {
 		for (long empId : empIds) {
-			EmpDiscipline obj = createPrePersistedEntity(serviceContext);
-			obj.setEmpId(empId);
-			obj.setDecisionNo(decisionNo);
-			obj.setContent(content);
-			obj.setDisciplineType(type);
-			obj.setEffectiveDate(effectiveDate);
-			obj.setAdditionalDisciplineType(additionalType);
-			obj.setDescription(description);
-			this.addEmpDiscipline(obj, serviceContext);
+			this.addEmpDiscipline(empId, decisionNo, content, type,
+					effectiveDate, additionalType, description, serviceContext);
 		}
+	}
+
+	public EmpDiscipline addEmpDiscipline(long empId, String decisionNo,
+			String content, String type, Date effectiveDate,
+			String additionalType, String description,
+			ServiceContext serviceContext) {
+		EmpDiscipline obj = createPrePersistedEntity(serviceContext);
+		obj.setEmpId(empId);
+		obj.setDecisionNo(decisionNo);
+		obj.setContent(content);
+		obj.setDisciplineType(type);
+		obj.setEffectiveDate(effectiveDate);
+		obj.setAdditionalDisciplineType(additionalType);
+		obj.setDescription(description);
+		return this.addEmpDiscipline(obj, serviceContext);
 	}
 
 	public EmpDiscipline updateEmpDiscipline(EmpDiscipline empDiscipline)

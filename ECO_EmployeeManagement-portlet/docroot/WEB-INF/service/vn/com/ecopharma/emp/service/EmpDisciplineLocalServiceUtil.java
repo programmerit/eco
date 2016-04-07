@@ -361,6 +361,16 @@ public class EmpDisciplineLocalServiceUtil {
 			effectiveDate, additionalType, description, serviceContext);
 	}
 
+	public static vn.com.ecopharma.emp.model.EmpDiscipline addEmpDiscipline(
+		long empId, java.lang.String decisionNo, java.lang.String content,
+		java.lang.String type, java.util.Date effectiveDate,
+		java.lang.String additionalType, java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService()
+				   .addEmpDiscipline(empId, decisionNo, content, type,
+			effectiveDate, additionalType, description, serviceContext);
+	}
+
 	public static vn.com.ecopharma.emp.model.EmpDiscipline updateEmpDiscipline(
 		long id, java.lang.String decisionNo, java.lang.String type,
 		java.lang.String content, java.util.Date effectiveDate,

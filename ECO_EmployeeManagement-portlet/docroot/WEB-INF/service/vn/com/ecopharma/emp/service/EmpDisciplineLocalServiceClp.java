@@ -194,17 +194,25 @@ public class EmpDisciplineLocalServiceClp implements EmpDisciplineLocalService {
 				"java.lang.String", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName31 = "updateEmpDiscipline";
+		_methodName31 = "addEmpDiscipline";
 
 		_methodParameterTypes31 = new String[] {
+				"long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.util.Date", "java.lang.String",
+				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName32 = "updateEmpDiscipline";
+
+		_methodParameterTypes32 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.util.Date", "java.lang.String",
 				"java.lang.String"
 			};
 
-		_methodName32 = "indexAll";
+		_methodName33 = "indexAll";
 
-		_methodParameterTypes32 = new String[] {  };
+		_methodParameterTypes33 = new String[] {  };
 	}
 
 	@Override
@@ -1147,6 +1155,50 @@ public class EmpDisciplineLocalServiceClp implements EmpDisciplineLocalService {
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.EmpDiscipline addEmpDiscipline(
+		long empId, java.lang.String decisionNo, java.lang.String content,
+		java.lang.String type, java.util.Date effectiveDate,
+		java.lang.String additionalType, java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
+					new Object[] {
+						empId,
+						
+					ClpSerializer.translateInput(decisionNo),
+						
+					ClpSerializer.translateInput(content),
+						
+					ClpSerializer.translateInput(type),
+						
+					ClpSerializer.translateInput(effectiveDate),
+						
+					ClpSerializer.translateInput(additionalType),
+						
+					ClpSerializer.translateInput(description),
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.EmpDiscipline)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public vn.com.ecopharma.emp.model.EmpDiscipline updateEmpDiscipline(
 		long id, java.lang.String decisionNo, java.lang.String type,
 		java.lang.String content, java.util.Date effectiveDate,
@@ -1154,8 +1206,8 @@ public class EmpDisciplineLocalServiceClp implements EmpDisciplineLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] {
 						id,
 						
@@ -1190,8 +1242,8 @@ public class EmpDisciplineLocalServiceClp implements EmpDisciplineLocalService {
 	@Override
 	public void indexAll() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName32,
-				_methodParameterTypes32, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName33,
+				_methodParameterTypes33, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1271,4 +1323,6 @@ public class EmpDisciplineLocalServiceClp implements EmpDisciplineLocalService {
 	private String[] _methodParameterTypes31;
 	private String _methodName32;
 	private String[] _methodParameterTypes32;
+	private String _methodName33;
+	private String[] _methodParameterTypes33;
 }

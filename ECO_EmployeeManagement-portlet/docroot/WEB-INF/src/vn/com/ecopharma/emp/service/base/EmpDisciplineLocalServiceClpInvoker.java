@@ -193,23 +193,31 @@ public class EmpDisciplineLocalServiceClpInvoker {
 				"java.lang.String", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName210 = "updateEmpDiscipline";
+		_methodName210 = "addEmpDiscipline";
 
 		_methodParameterTypes210 = new String[] {
-				"vn.com.ecopharma.emp.model.EmpDiscipline"
+				"long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.util.Date", "java.lang.String",
+				"java.lang.String", "com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName211 = "updateEmpDiscipline";
 
 		_methodParameterTypes211 = new String[] {
+				"vn.com.ecopharma.emp.model.EmpDiscipline"
+			};
+
+		_methodName212 = "updateEmpDiscipline";
+
+		_methodParameterTypes212 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.util.Date", "java.lang.String",
 				"java.lang.String"
 			};
 
-		_methodName212 = "indexAll";
+		_methodName213 = "indexAll";
 
-		_methodParameterTypes212 = new String[] {  };
+		_methodParameterTypes213 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -403,19 +411,28 @@ public class EmpDisciplineLocalServiceClpInvoker {
 
 		if (_methodName210.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes210, parameterTypes)) {
-			return EmpDisciplineLocalServiceUtil.updateEmpDiscipline((vn.com.ecopharma.emp.model.EmpDiscipline)arguments[0]);
+			return EmpDisciplineLocalServiceUtil.addEmpDiscipline(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				(java.lang.String)arguments[3], (java.util.Date)arguments[4],
+				(java.lang.String)arguments[5], (java.lang.String)arguments[6],
+				(com.liferay.portal.service.ServiceContext)arguments[7]);
 		}
 
 		if (_methodName211.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes211, parameterTypes)) {
+			return EmpDisciplineLocalServiceUtil.updateEmpDiscipline((vn.com.ecopharma.emp.model.EmpDiscipline)arguments[0]);
+		}
+
+		if (_methodName212.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes212, parameterTypes)) {
 			return EmpDisciplineLocalServiceUtil.updateEmpDiscipline(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3], (java.util.Date)arguments[4],
 				(java.lang.String)arguments[5], (java.lang.String)arguments[6]);
 		}
 
-		if (_methodName212.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes212, parameterTypes)) {
+		if (_methodName213.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes213, parameterTypes)) {
 			EmpDisciplineLocalServiceUtil.indexAll();
 
 			return null;
@@ -490,4 +507,6 @@ public class EmpDisciplineLocalServiceClpInvoker {
 	private String[] _methodParameterTypes211;
 	private String _methodName212;
 	private String[] _methodParameterTypes212;
+	private String _methodName213;
+	private String[] _methodParameterTypes213;
 }

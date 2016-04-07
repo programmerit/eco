@@ -3,6 +3,7 @@ package vn.com.ecopharma.emp.bean.ie;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -20,11 +21,11 @@ import org.primefaces.model.UploadedFile;
 
 import vn.com.ecopharma.emp.dto.ImportExportItem;
 import vn.com.ecopharma.emp.enumeration.DisciplineType;
-import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
-import vn.com.ecopharma.emp.util.EmployeeUtils;
+import vn.com.ecopharma.emp.model.Emp;
+import vn.com.ecopharma.emp.service.EmpDisciplineLocalServiceUtil;
+import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -39,9 +40,16 @@ public class EmpDisciplineImportExportBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final Log LOGGER = LogFactoryUtil
-			.getLog(UniversityImportExportBean.class);
+			.getLog(EmpDisciplineImportExportBean.class);
 
 	private String sheetNameOrIndex = "1";
+
+	private static final int MN_SHEET = 0;
+	private static final int MB_SHEET = 1;
+
+	private static final int DECISION_NO_ROW = 3;
+	private static final int ACTUAL_DATA_ROW_FROM = 7;
+	private static final int EMP_CODE_CELL = 1;
 
 	public void handleFileImport(FileUploadEvent fileUploadEvent) {
 		final ServiceContext serviceContext = LiferayFacesContext.getInstance()
@@ -50,32 +58,50 @@ public class EmpDisciplineImportExportBean implements Serializable {
 		try {
 			final XSSFWorkbook wb = new XSSFWorkbook(
 					uploadedFile.getInputstream());
-			final XSSFSheet sheet = wb.getSheetAt(1);
-			final String decisionNo = 
+			XSSFSheet sheet = null;
+			sheet = wb.getSheetAt(MN_SHEET);
+			String decision = StringUtils.EMPTY;
+
+			decision = getFormattedDecisionNo(sheet.getRow(DECISION_NO_ROW));
 			List<EmpDisciplineItem> disciplineItems = new ArrayList<>();
-			for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-				final XSSFRow r = sheet.getRow(i);
-				if (r.getCell(1) != null) {
-					String code = r.getCell(1) != null ? r.getCell(2)
-							.getStringCellValue() : StringUtils.EMPTY;
-					String telFax = r.getCell(3) != null ? r.getCell(3)
-							.getStringCellValue() : StringUtils.EMPTY;
-					disciplineItems.add(new EmpDisciplineItem(name, code,
-							telFax));
+			for (int i = ACTUAL_DATA_ROW_FROM; i <= sheet.getLastRowNum(); i++) {
+				final XSSFRow row = sheet.getRow(i);
+				if (row != null && row.getCell(EMP_CODE_CELL) != null) {
+					EmpDisciplineItem item = new EmpDisciplineItem(row,
+							decision);
+					disciplineItems.add(item);
 				}
 			}
-			for (EmpDisciplineItem item : disciplineItems) {
-				System.out.println("Name: " + item.getName() + " Code: "
-						+ item.getCode() + " Tel/Fax: " + item.getTelFax());
-				if (UniversityLocalServiceUtil.findByName(item.getName()) == null) {
-					UniversityLocalServiceUtil.addUniversity(item.getName(),
-							item.getCode(), item.getTelFax(), serviceContext);
-				} else {
-					System.out.println("EXISTED");
+
+			sheet = wb.getSheetAt(MB_SHEET);
+			if (sheet != null) {
+				decision = getFormattedDecisionNo(sheet.getRow(DECISION_NO_ROW));
+				for (int i = ACTUAL_DATA_ROW_FROM; i <= sheet.getLastRowNum(); i++) {
+					final XSSFRow row = sheet.getRow(i);
+					if (row != null && row.getCell(EMP_CODE_CELL) != null) {
+						EmpDisciplineItem item = new EmpDisciplineItem(row,
+								decision);
+						disciplineItems.add(item);
+					}
 				}
+			}
+
+			for (EmpDisciplineItem item : disciplineItems) {
+				final long empId = item.getEmpId();
+				if (empId != 0L) {
+					EmpDisciplineLocalServiceUtil.addEmpDiscipline(empId,
+							item.getDecisionNo(), StringUtils.EMPTY,
+							item.getDisciplineType(), new Date(),
+							item.getAdditionDisciplineType(),
+							item.getDescription(), serviceContext);
+					System.out.println(item.getDecisionNo() + "  "
+							+ item.toString());
+
+				}
+
 			}
 			FacesMessage message = new FacesMessage("Notice",
-					"Sucessfully Imported");
+					"Successfully Imported");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		} catch (IOException e) {
 			LOGGER.info(e);
@@ -85,7 +111,7 @@ public class EmpDisciplineImportExportBean implements Serializable {
 	}
 
 	private String getFormattedDecisionNo(Row row) {
-		String unformattedRowString = row.getCell(1).getStringCellValue();
+		String unformattedRowString = row.getCell(0).getStringCellValue();
 		if (StringUtils.trimToNull(unformattedRowString) == null)
 			return StringUtils.EMPTY;
 		final String[] strArr = unformattedRowString.split(" ");
@@ -107,6 +133,11 @@ public class EmpDisciplineImportExportBean implements Serializable {
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
+
+		private static final int SOP_SUBTRACT_CELL = 5;
+		private static final int SALES_SUBTRACT_CELL = 6;
+
+		private String decisionNo;
 		private String empCode;
 		private String disciplineType = DisciplineType.REPRIMAND.toString();
 		private String additionDisciplineType;
@@ -122,74 +153,74 @@ public class EmpDisciplineImportExportBean implements Serializable {
 
 		public EmpDisciplineItem(String empCode, String additionDisciplineType,
 				String description) {
-			this.empCode = getActualEmpCode(empCode);
-			this.additionDisciplineType = additionDisciplineType;
-			this.description = description;
+			this(empCode, DisciplineType.REPRIMAND.toString(),
+					additionDisciplineType, description);
 		}
 
-		public EmpDisciplineItem(Row row) {
+		public EmpDisciplineItem(Row row, String decisionNo) {
+			this.decisionNo = decisionNo;
 			this.empCode = getActualEmpCode(getCellValueAsString(row.getCell(1)));
 			this.additionDisciplineType = getFormattedAdditionDiscipline(row);
 			this.description = getCellValueAsString(row.getCell(8));
+			System.out.println(empCode + "________" + additionDisciplineType);
+
+		}
+
+		private long getEmpId() {
+			if (empCode.isEmpty())
+				return 0L;
+			final Emp empByEmpCode = EmpLocalServiceUtil.findByEmpCode(empCode);
+			return empByEmpCode != null ? empByEmpCode.getEmpId() : 0L;
 		}
 
 		private String getFormattedAdditionDiscipline(Row row) {
 			final StringBuilder result = new StringBuilder();
-			String SOPsSubtract = getCellValueAsString(row.getCell(5));
-			String salesSubtract = getCellValueAsString(row.getCell(6));
+			String SOPsSubtract = row.getCell(SOP_SUBTRACT_CELL) != null ? getFormattedPercentageCellValue(row
+					.getCell(SOP_SUBTRACT_CELL)) : StringUtils.EMPTY;
+			String salesSubtract = row.getCell(SALES_SUBTRACT_CELL) != null ? getFormattedPercentageCellValue(row
+					.getCell(SALES_SUBTRACT_CELL)) : StringUtils.EMPTY;
 
 			if (SOPsSubtract.isEmpty() && salesSubtract.isEmpty()) {
 				return StringUtils.EMPTY;
 			}
 
-			if (!SOPsSubtract.isEmpty() && salesSubtract.isEmpty()) {
-				result.append(SOPsSubtract);
+			if (!SOPsSubtract.isEmpty() && !salesSubtract.isEmpty()) {
+				result.append("Trừ SOPs " + SOPsSubtract);
 				result.append("; ");
-				result.append(salesSubtract);
+				result.append("Trừ Doanh số " + salesSubtract);
 				return result.toString();
 			}
 
 			if (SOPsSubtract.isEmpty())
-				return salesSubtract;
+				return "Trừ Doanh số " + salesSubtract;
 
 			if (salesSubtract.isEmpty())
-				return SOPsSubtract;
+				return "Trừ SOPs " + SOPsSubtract;
 
 			return StringUtils.EMPTY;
-		}
-
-		public String getEmpCode() {
-			return empCode;
-		}
-
-		public void setEmpCode(String empCode) {
-			this.empCode = empCode;
 		}
 
 		public String getDisciplineType() {
 			return disciplineType;
 		}
 
-		public void setDisciplineType(String disciplineType) {
-			this.disciplineType = disciplineType;
-		}
-
 		public String getAdditionDisciplineType() {
 			return additionDisciplineType;
-		}
-
-		public void setAdditionDisciplineType(String additionDisciplineType) {
-			this.additionDisciplineType = additionDisciplineType;
 		}
 
 		public String getDescription() {
 			return description;
 		}
 
-		public void setDescription(String description) {
-			this.description = description;
+		public String getDecisionNo() {
+			return decisionNo;
 		}
 
+		@Override
+		public String toString() {
+			return this.empCode + "  " + this.disciplineType + "  "
+					+ this.additionDisciplineType + "  " + this.description;
+		}
 	}
 
 }
