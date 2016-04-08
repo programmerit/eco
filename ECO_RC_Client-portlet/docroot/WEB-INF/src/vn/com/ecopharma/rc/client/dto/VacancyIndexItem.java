@@ -1,6 +1,5 @@
 package vn.com.ecopharma.rc.client.dto;
 
-
 import vn.com.ecopharma.rc.client.constant.VacancyField;
 
 import com.liferay.portal.kernel.search.Document;
@@ -53,7 +52,11 @@ public class VacancyIndexItem extends AbstractIndexedItem {
 	}
 
 	public String getDescription() {
-		return getDocument().getField(VacancyField.DESCRIPTION).getValue();
+		return checkNullFieldAndReturnEmptyString(VacancyField.DESCRIPTION);
+	}
+
+	public String getWorkingPlace() {
+		return checkNullFieldAndReturnEmptyString(VacancyField.WORKING_PLACE);
 	}
 
 	public String getStatus() {

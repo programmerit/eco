@@ -13,6 +13,16 @@
 	</context-param>
 
 	<context-param>
+		<param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+		<param-value>6LcD5RwTAAAAAH3MYwkXeTvDfuwqZoL8ELQm4xAj</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+		<param-value>6LcD5RwTAAAAALcfAI1BoR1dkmUYbeM_-oSA30AJ</param-value>
+	</context-param>
+
+	<context-param>
 		<param-name>primefaces.THEME</param-name>
 		<param-value>rio</param-value>
 	</context-param>

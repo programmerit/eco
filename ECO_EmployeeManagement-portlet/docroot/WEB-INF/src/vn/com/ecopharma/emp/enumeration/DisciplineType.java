@@ -8,7 +8,8 @@ public enum DisciplineType {
 	REPRIMAND, // khiển trách
 	DEPRIVATION, // cách chức
 	LAYOFFS, // sa thải
-	PROLONGATION_OF_WAGE_INCREASE; // kéo dài thời hạn tăng lương
+	PROLONGATION_OF_WAGE_INCREASE, // kéo dài thời hạn tăng lương
+	NONE;
 
 	@Override
 	public String toString() {

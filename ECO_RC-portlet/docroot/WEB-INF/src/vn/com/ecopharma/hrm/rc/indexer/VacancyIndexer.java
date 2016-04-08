@@ -6,6 +6,8 @@ import java.util.Locale;
 
 import javax.portlet.PortletURL;
 
+import org.apache.commons.lang3.StringUtils;
+
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.constant.ECO_RCUtils;
 import vn.com.ecopharma.hrm.rc.constant.VacancyField;
@@ -25,7 +27,9 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.model.Region;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.RegionServiceUtil;
 
 public class VacancyIndexer extends BaseIndexer {
 	@Override
@@ -51,6 +55,9 @@ public class VacancyIndexer extends BaseIndexer {
 		final Document doc = getBaseModelDocument(ECO_RCUtils.PORTLET_ID,
 				vacancy);
 		SearchEngineUtils.indexOrganizationFields(doc, vacancy);
+		final String workingPlace = vacancy.getWorkPlaceId() != 0 ? RegionServiceUtil
+				.getRegion(vacancy.getWorkPlaceId()).getName()
+				: StringUtils.EMPTY;
 		doc.addNumber(VacancyField.VACANCY_ID, vacancy.getVacancyId());
 		// doc.addText(VacancyField.NAME, vacancy.getName());
 		doc.addNumber(VacancyField.NUMBER_OF_POSITION,
@@ -60,6 +67,7 @@ public class VacancyIndexer extends BaseIndexer {
 		doc.addNumber(VacancyField.TITLES_ID, vacancy.getTitlesId());
 		doc.addText(VacancyField.IS_DELETED, vacancy.isDeleted() ? "true"
 				: "false");
+		doc.addText(VacancyField.WORKING_PLACE, workingPlace);
 		doc.addText(VacancyField.STATUS,
 				EmpLocalServiceUtil.removeDashChar(vacancy.getStatus()));
 		doc.addText(VacancyField.CERTIFICATE_TYPE, vacancy.getCertificateType());

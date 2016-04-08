@@ -75,10 +75,6 @@
 								<h:outputText value="Required Experiences: " />
 								<p:inputText id="experiences"
 									value="#{vacancyBean.vacancyItem.object.experiences}" />
-
-								<h:outputText value="Description: " />
-								<p:inputTextarea id="vDescription" placeholder="Description..."
-									value="#{vacancyBean.vacancyItem.object.description}" />
 							</p:panelGrid>
 						</h:panelGroup>
 
@@ -135,6 +131,11 @@
 										var="status" itemValue="#{status}" itemLabel="#{status}" />
 								</p:selectOneMenu>
 							</p:panelGrid>
+
+							<p:editor id="shortJobDescEditor" widgetVar="wJobDescEditor"
+								value="#{vacancyBean.vacancyItem.object.description}"
+								width="500" />
+
 						</h:panelGroup>
 					</p:panelGrid>
 				</p:tab>

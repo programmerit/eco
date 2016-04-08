@@ -12,6 +12,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -47,9 +48,10 @@ public class EmpDisciplineImportExportBean implements Serializable {
 	private static final int MN_SHEET = 0;
 	private static final int MB_SHEET = 1;
 
+	private static final int EMP_CODE_CELL = 1;
 	private static final int DECISION_NO_ROW = 3;
 	private static final int ACTUAL_DATA_ROW_FROM = 7;
-	private static final int EMP_CODE_CELL = 1;
+	private static final int DESCRIPTION_CELL = 8;
 
 	public void handleFileImport(FileUploadEvent fileUploadEvent) {
 		final ServiceContext serviceContext = LiferayFacesContext.getInstance()
@@ -136,6 +138,7 @@ public class EmpDisciplineImportExportBean implements Serializable {
 
 		private static final int SOP_SUBTRACT_CELL = 5;
 		private static final int SALES_SUBTRACT_CELL = 6;
+		private static final int REPRIMAND_DECISION_CELL = 7;
 
 		private String decisionNo;
 		private String empCode;
@@ -159,10 +162,13 @@ public class EmpDisciplineImportExportBean implements Serializable {
 
 		public EmpDisciplineItem(Row row, String decisionNo) {
 			this.decisionNo = decisionNo;
-			this.empCode = getActualEmpCode(getCellValueAsString(row.getCell(1)));
+			this.empCode = getActualEmpCode(getCellValueAsString(row
+					.getCell(EMP_CODE_CELL)));
+			this.disciplineType = getDisciplineType(
+					row.getCell(REPRIMAND_DECISION_CELL)).toString();
 			this.additionDisciplineType = getFormattedAdditionDiscipline(row);
-			this.description = getCellValueAsString(row.getCell(8));
-			System.out.println(empCode + "________" + additionDisciplineType);
+			this.description = getCellValueAsString(row
+					.getCell(DESCRIPTION_CELL));
 
 		}
 
@@ -171,6 +177,14 @@ public class EmpDisciplineImportExportBean implements Serializable {
 				return 0L;
 			final Emp empByEmpCode = EmpLocalServiceUtil.findByEmpCode(empCode);
 			return empByEmpCode != null ? empByEmpCode.getEmpId() : 0L;
+		}
+
+		private DisciplineType getDisciplineType(Cell cell) {
+			if (cell == null)
+				return DisciplineType.NONE;
+			boolean isReprimand = getCellValueAsString(cell).equalsIgnoreCase(
+					"x");
+			return isReprimand ? DisciplineType.REPRIMAND : DisciplineType.NONE;
 		}
 
 		private String getFormattedAdditionDiscipline(Row row) {

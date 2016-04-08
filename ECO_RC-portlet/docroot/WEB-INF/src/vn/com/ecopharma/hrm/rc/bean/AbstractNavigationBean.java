@@ -6,5 +6,4 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public abstract class AbstractNavigationBean {
-
 }

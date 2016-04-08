@@ -41,7 +41,6 @@ public class PromotionBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		promotedHistory = PromotedHistoryLocalServiceUtil.createPrePersisted();
 	}
 
 	public void onSave() {

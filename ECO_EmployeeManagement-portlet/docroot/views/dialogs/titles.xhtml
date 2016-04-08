@@ -19,7 +19,7 @@
 						<h:outputText value="Name" />
 						<p:inputText id="titlesName" value="#{titlesBean.titles.name}"
 							validatorMessage="invalid name">
-							<f:validateLength minimum="4" maximum="30" />
+							<f:validateLength minimum="4" maximum="50" />
 							<p:ajax update="titlesMessage saveButton"
 								listener="#{titlesBean.onCheckDuplicateTitles}" event="blur" />
 						</p:inputText>

@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import org.apache.commons.lang3.StringUtils;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -68,6 +69,10 @@ public class VacancyBean implements Serializable {
 						filters);
 			}
 		};
+	}
+
+	public void onRowDblSelect(SelectEvent event) {
+
 	}
 
 	public LazyDataModel<VacancyIndexItem> getLazyDataModel() {

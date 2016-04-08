@@ -36,6 +36,8 @@ public class VacancyField {
 
 	public static final String YEARS_EXPERIENCES = "experiences";
 
+	public static final String WORKING_PLACE = "workingPlace";
+
 	/*  */
 	public static final String GLOBAL = "globalString";
 

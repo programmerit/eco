@@ -55,6 +55,7 @@ import vn.com.ecopharma.emp.service.EmpLaborContractLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpOrgRelationshipLocalServiceUtil;
 import vn.com.ecopharma.emp.service.LevelLocalServiceUtil;
+import vn.com.ecopharma.emp.service.PromotedHistoryLocalServiceUtil;
 import vn.com.ecopharma.emp.service.ResignationHistoryLocalServiceUtil;
 import vn.com.ecopharma.emp.service.SpecializedLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UniversityLocalServiceUtil;
@@ -138,6 +139,7 @@ public class EmployeeBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
+
 		try {
 			currentNav = "/views/employees.xhtml";
 			countries = CountryServiceUtil.getCountries(true);
@@ -599,6 +601,8 @@ public class EmployeeBean implements Serializable {
 				.getSelectedEmployeeIndexItems().get(0).getId();
 		PromotionBean promotionBean = (PromotionBean) BeanUtils
 				.getBackingBeanByName("promotionBean");
+		promotionBean.setPromotedHistory(PromotedHistoryLocalServiceUtil
+				.createPrePersisted());
 		promotionBean.setEmployeeId(id);
 		organizationPanelBean.afterSetOrganizationToEntity();
 		setDialog(EmpDialog.PROMOTION);
