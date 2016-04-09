@@ -5,9 +5,12 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
 	<h:head />
 	<h:body>
+
+		<eco:ajaxIndicator />
 		<h:form id="vacancySearchForm">
 
 			<h:link value="Ẩn/Hiện bộ lọc" styleClass="label"
@@ -72,7 +75,7 @@
 				</p:column>
 
 				<p:column headerText="" width="70">
-					<p:link value="Ứng tuyển!" outcome="candidateGuest">
+					<p:link value="Ứng tuyển!" outcome="guest">
 						<f:param name="vacancyId" value="#{vacancy.id}" />
 					</p:link>
 				</p:column>

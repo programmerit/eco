@@ -10,6 +10,8 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
+import vn.com.ecopharma.hrm.rc.service.CandidateLocalServiceUtil;
+
 @FacesValidator("emailValidator")
 public class EmailValidator implements Validator {
 
@@ -30,6 +32,12 @@ public class EmailValidator implements Validator {
 		if (!matcher.matches()) {
 			msg = new FacesMessage("Email validation failed",
 					"Invalid Email format.");
+			msg.setSeverity(FacesMessage.SEVERITY_WARN);
+			throw new ValidatorException(msg);
+		}
+
+		if (CandidateLocalServiceUtil.isEmailExisted(value.toString())) {
+			msg = new FacesMessage("Email này đã được sử dụng.");
 			msg.setSeverity(FacesMessage.SEVERITY_WARN);
 			throw new ValidatorException(msg);
 		}

@@ -323,6 +323,16 @@ public class CandidateLocalServiceUtil {
 		vn.com.ecopharma.hrm.rc.model.Candidate candidate, long vacancyId,
 		java.util.List<java.lang.Long> desireVacancies,
 		java.util.List<java.lang.Long> fileEntryIds,
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService()
+				   .addCandidate(candidate, vacancyId, desireVacancies,
+			fileEntryIds, serviceContext);
+	}
+
+	public static vn.com.ecopharma.hrm.rc.model.Candidate addCandidate(
+		vn.com.ecopharma.hrm.rc.model.Candidate candidate, long vacancyId,
+		java.util.List<java.lang.Long> desireVacancies,
+		java.util.List<java.lang.Long> fileEntryIds,
 		java.util.Map<vn.com.ecopharma.hrm.rc.model.Experience, java.lang.Boolean> experienceMap,
 		java.util.Map<vn.com.ecopharma.hrm.rc.model.Certificate, java.lang.Boolean> certificateMap,
 		com.liferay.portal.service.ServiceContext serviceContext) {

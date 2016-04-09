@@ -2,9 +2,9 @@ package vn.com.ecopharma.rc.client.enumeration.navigation;
 
 public enum GuestNavigation {
 
-	GUEST_ADD("/views/pages/candidateGuest.xhtml"), //
-	SUCCESS_ADD("/views/pages/candidateGuestSavedSuccess.xhtml"), //
-	FAIL_ADD("/views/pages/candidateGuest.xhtml");
+	GUEST_ADD("/views/candidateGuest.xhtml"), //
+	SUCCESS_ADD("/views/candidateGuestSavedSuccess.xhtml"), //
+	FAIL_ADD("/views/vacancyView.xhtml");
 
 	private String outCome;
 

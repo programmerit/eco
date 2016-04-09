@@ -7,18 +7,19 @@
 	xmlns:eco="http://java.sun.com/jsf/composite/eco_composite">
 	<h:head />
 	<h:body>
+		<eco:ajaxIndicator />
 		<h:form id="candidateGuestForm" enctype="multipart/form-data">
 			<p:outputPanel id="candidateOutputPanel">
 				<p:messages id="msgs" />
 
-				<!-- <p:remoteCommand name="refreshGuestPanelGroup"
-					update=":GuestPanelGroup" /> -->
+				<p:remoteCommand name="refreshGuestPanelGroup"
+					update=":GuestPanelGroup" />
 				<p:remoteCommand name="refreshExperiences"
 					update=":candidateGuestForm:accordion:candidateExperiencesGroup" />
 				<p:remoteCommand name="refreshCertificates"
 					update=":candidateGuestForm:accordion:candidateCertificatesGroup" />
 				<p:accordionPanel id="accordion" multiple="true"
-					style="margin-bottom:20px;" activeIndex="0">
+					style="margin-bottom:20px;" activeIndex="0,1">
 					<p:tab id="candidateBasicInfoTab" title="Thông tin ứng tuyển">
 						<p:panelGrid layout="grid" columns="2">
 							<h:panelGrid columns="2">
@@ -50,7 +51,9 @@
 								<h:outputText value="CMND/Visa" />
 								<p:inputText id="cIdentityCardNo" placeholder="Identity Card No"
 									required="true" requiredMessage="Identity Card No is required!"
-									value="#{candidateGuestBean.candidateItem.object.identityCardNo}" />
+									value="#{candidateGuestBean.candidateItem.object.identityCardNo}">
+									<f:validateLength minimum="9" maximum="12" />
+								</p:inputText>
 
 								<h:outputText value="Vị trí ứng tuyển" />
 								<p:selectOneMenu id="cVacancySelect"
@@ -108,7 +111,8 @@
 								</p:outputPanel>
 
 								<h:outputText value="Xác nhận" />
-								<p:captcha label="Captcha" />
+								<p:captcha label="Captcha" 
+									requiredMessage="Bạn cần thực hiện xác nhận" />
 
 							</h:panelGrid>
 
@@ -212,6 +216,11 @@
 					actionListener="#{candidateGuestBean.onSave}"
 					update=":candidateGuestForm:msgs"
 					oncomplete="refreshGuestPanelGroup();" />
+
+				<h:outputText value="|" style="margin-left: 4px;" />
+
+				<p:link outcome="vacancyView" value="Cancel"
+					style="margin-left: 4px;" />
 			</p:outputPanel>
 			<!-- DIALOGS -->
 			<eco:confirmDialog wDialogVar="wDeleteDocumentConfirmDialog"

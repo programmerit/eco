@@ -31,7 +31,9 @@ import vn.com.ecopharma.hrm.rc.model.Candidate;
 import vn.com.ecopharma.hrm.rc.model.CandidateActionHistory;
 import vn.com.ecopharma.hrm.rc.model.Certificate;
 import vn.com.ecopharma.hrm.rc.model.Experience;
+import vn.com.ecopharma.hrm.rc.model.ExperienceClp;
 import vn.com.ecopharma.hrm.rc.model.VacancyCandidate;
+import vn.com.ecopharma.hrm.rc.model.impl.ExperienceImpl;
 import vn.com.ecopharma.hrm.rc.service.VacancyCandidateLocalServiceUtil;
 import vn.com.ecopharma.hrm.rc.service.base.CandidateLocalServiceBaseImpl;
 import vn.com.ecopharma.hrm.rc.util.RCUtils;
@@ -169,6 +171,95 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 
 	public Candidate addCandidate(Candidate candidate, long vacancyId,
 			List<Long> desireVacancies, List<Long> fileEntryIds,
+			ServiceContext serviceContext) {
+		try {
+			candidate.setUserId(serviceContext.getUserId());
+			candidate.setGroupId(serviceContext.getScopeGroupId());
+			candidate.setCompanyId(serviceContext.getCompanyId());
+			candidate.setCreateDate(new Date(System.currentTimeMillis()));
+			candidate.setModifiedDate(new Date(System.currentTimeMillis()));
+
+			Candidate result = super.addCandidate(candidate);
+			if (result != null) {
+				vacancyCandidateLocalService.addVacancyCandidate(vacancyId,
+						result.getCandidateId(),
+						VacancyCandidateType.MAIN.toString());
+				// add documents for candidate
+				// for (long fileEntryId : fileEntryIds) {
+				// DocumentLocalServiceUtil.addDocument(
+				// Candidate.class.getName(),
+				// candidate.getCandidateId(), fileEntryId,
+				// serviceContext);
+				// }
+
+				// add candidate experiences
+				// for (Map.Entry<?, Boolean> entry : experienceMap.entrySet())
+				// {
+				// final Experience experience = entry.getKey();
+				// ExperienceClp exp;
+				// ExperienceImpl expImpl;
+				// if (!entry.getValue()) {
+				// experienceLocalService.addExperience(Candidate.class
+				// .getName(), result.getCandidateId(), entry
+				// .getKey().getWorkingPlace(), entry.getKey()
+				// .getYearsExperience(), entry.getKey()
+				// .getDescription(), serviceContext);
+				// }
+				// }
+
+				// add candidate certificates
+				// for (Map.Entry<?, Boolean> entry : certificateMap.entrySet())
+				// {
+				// final Certificate certificate = entry.getKey();
+				// if (!entry.getValue()) {
+				// certificate.setClassPK(result.getCandidateId());
+				// certificateLocalService.addCertificate(certificate,
+				// serviceContext);
+				// certificateLocalService.addCertificate(Candidate.class
+				// .getName(), result.getCandidateId(), entry
+				// .getKey().getName(), entry.getKey()
+				// .getCertificateType(), entry.getKey()
+				// .getUniversityId(), serviceContext);
+				// }
+				// }
+
+				// add desired positions
+				if (desireVacancies.contains(vacancyId)) {
+					desireVacancies.remove(vacancyId);
+				}
+				for (long id : desireVacancies) {
+					vacancyCandidateLocalService.addVacancyCandidate(id,
+							result.getCandidateId(),
+							VacancyCandidateType.OPTIONAL.toString());
+				}
+
+				// add permission
+				resourceLocalService.addResources(result.getCompanyId(),
+						result.getGroupId(), result.getUserId(),
+						Candidate.class.getName(), result.getCandidateId(),
+						false, true, true);
+
+				// index new employee
+				Indexer indexer = IndexerRegistryUtil
+						.nullSafeGetIndexer(Candidate.class);
+				indexer.reindex(Candidate.class.getName(),
+						result.getCandidateId());
+
+				return result;
+			}
+			return null;
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		} catch (SearchException e) {
+			LOGGER.info(e);
+		} catch (PortalException e) {
+			LOGGER.info(e);
+		}
+		return null;
+	}
+
+	public Candidate addCandidate(Candidate candidate, long vacancyId,
+			List<Long> desireVacancies, List<Long> fileEntryIds,
 			Map<Experience, Boolean> experienceMap,
 			Map<Certificate, Boolean> certificateMap,
 			ServiceContext serviceContext) {
@@ -179,7 +270,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 			candidate.setCreateDate(new Date(System.currentTimeMillis()));
 			candidate.setModifiedDate(new Date(System.currentTimeMillis()));
 
-			Candidate result = candidatePersistence.update(candidate);
+			Candidate result = super.addCandidate(candidate);
 			if (result != null) {
 				vacancyCandidateLocalService.addVacancyCandidate(vacancyId,
 						result.getCandidateId(),
@@ -197,6 +288,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 						.entrySet()) {
 					final Experience experience = entry.getKey();
 					if (!entry.getValue()) {
+						experience.setClassName(Candidate.class.getName());
 						experience.setClassPK(result.getCandidateId());
 						experienceLocalService.addExperience(experience,
 								serviceContext);
@@ -208,6 +300,7 @@ public class CandidateLocalServiceImpl extends CandidateLocalServiceBaseImpl {
 						.entrySet()) {
 					final Certificate certificate = entry.getKey();
 					if (!entry.getValue()) {
+						certificate.setClassName(Certificate.class.getName());
 						certificate.setClassPK(result.getCandidateId());
 						certificateLocalService.addCertificate(certificate,
 								serviceContext);

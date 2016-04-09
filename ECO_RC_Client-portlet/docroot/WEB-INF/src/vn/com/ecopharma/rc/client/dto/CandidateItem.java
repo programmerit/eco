@@ -47,6 +47,10 @@ public class CandidateItem extends AbstractDocumentableBaseModelItem<Candidate> 
 		this.getObject().setGender("Male");
 	}
 
+	public CandidateItem(long vacancyId) {
+		this();
+		this.vacancyIndexItem = new VacancyIndexItem(vacancyId);
+	}
 
 	private VacancyIndexItem getIndexVacancy(long candidateId) {
 		VacancyCandidate vacancyCandidate = VacancyCandidateLocalServiceUtil

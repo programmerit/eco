@@ -1,6 +1,8 @@
 package vn.com.ecopharma.rc.client.dto;
 
+import vn.com.ecopharma.hrm.rc.service.VacancyLocalServiceUtil;
 import vn.com.ecopharma.rc.client.constant.VacancyField;
+import vn.com.ecopharma.rc.client.util.RCClientUtils;
 
 import com.liferay.portal.kernel.search.Document;
 
@@ -13,6 +15,11 @@ public class VacancyIndexItem extends AbstractIndexedItem {
 
 	public VacancyIndexItem(Document document) {
 		super(document);
+	}
+
+	public VacancyIndexItem(long vacancyId) {
+		super(VacancyLocalServiceUtil.getIndexVacancyDocument(vacancyId,
+				RCClientUtils.getCurrentSearchContext()));
 	}
 
 	public long getTitlesId() {
