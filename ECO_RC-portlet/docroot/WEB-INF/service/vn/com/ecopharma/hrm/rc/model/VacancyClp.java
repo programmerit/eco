@@ -87,6 +87,7 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 		attributes.put("expectedSalary", getExpectedSalary());
 		attributes.put("expectedJoinedDate", getExpectedJoinedDate());
 		attributes.put("workPlaceId", getWorkPlaceId());
+		attributes.put("generalRequirements", getGeneralRequirements());
 		attributes.put("description", getDescription());
 		attributes.put("requiredGender", getRequiredGender());
 		attributes.put("certificateType", getCertificateType());
@@ -189,6 +190,13 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 
 		if (workPlaceId != null) {
 			setWorkPlaceId(workPlaceId);
+		}
+
+		String generalRequirements = (String)attributes.get(
+				"generalRequirements");
+
+		if (generalRequirements != null) {
+			setGeneralRequirements(generalRequirements);
 		}
 
 		String description = (String)attributes.get("description");
@@ -599,6 +607,30 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 				Method method = clazz.getMethod("setWorkPlaceId", long.class);
 
 				method.invoke(_vacancyRemoteModel, workPlaceId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getGeneralRequirements() {
+		return _generalRequirements;
+	}
+
+	@Override
+	public void setGeneralRequirements(String generalRequirements) {
+		_generalRequirements = generalRequirements;
+
+		if (_vacancyRemoteModel != null) {
+			try {
+				Class<?> clazz = _vacancyRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setGeneralRequirements",
+						String.class);
+
+				method.invoke(_vacancyRemoteModel, generalRequirements);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -1213,6 +1245,7 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 		clone.setExpectedSalary(getExpectedSalary());
 		clone.setExpectedJoinedDate(getExpectedJoinedDate());
 		clone.setWorkPlaceId(getWorkPlaceId());
+		clone.setGeneralRequirements(getGeneralRequirements());
 		clone.setDescription(getDescription());
 		clone.setRequiredGender(getRequiredGender());
 		clone.setCertificateType(getCertificateType());
@@ -1287,7 +1320,7 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(69);
+		StringBundler sb = new StringBundler(71);
 
 		sb.append("{vacancyId=");
 		sb.append(getVacancyId());
@@ -1313,6 +1346,8 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 		sb.append(getExpectedJoinedDate());
 		sb.append(", workPlaceId=");
 		sb.append(getWorkPlaceId());
+		sb.append(", generalRequirements=");
+		sb.append(getGeneralRequirements());
 		sb.append(", description=");
 		sb.append(getDescription());
 		sb.append(", requiredGender=");
@@ -1364,7 +1399,7 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(106);
+		StringBundler sb = new StringBundler(109);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.hrm.rc.model.Vacancy");
@@ -1417,6 +1452,10 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 		sb.append(
 			"<column><column-name>workPlaceId</column-name><column-value><![CDATA[");
 		sb.append(getWorkPlaceId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>generalRequirements</column-name><column-value><![CDATA[");
+		sb.append(getGeneralRequirements());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>description</column-name><column-value><![CDATA[");
@@ -1524,6 +1563,7 @@ public class VacancyClp extends BaseModelImpl<Vacancy> implements Vacancy {
 	private double _expectedSalary;
 	private Date _expectedJoinedDate;
 	private long _workPlaceId;
+	private String _generalRequirements;
 	private String _description;
 	private String _requiredGender;
 	private String _certificateType;

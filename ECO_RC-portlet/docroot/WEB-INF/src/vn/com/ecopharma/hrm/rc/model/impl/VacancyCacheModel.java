@@ -37,7 +37,7 @@ import java.util.Date;
 public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(69);
+		StringBundler sb = new StringBundler(71);
 
 		sb.append("{vacancyId=");
 		sb.append(vacancyId);
@@ -63,6 +63,8 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 		sb.append(expectedJoinedDate);
 		sb.append(", workPlaceId=");
 		sb.append(workPlaceId);
+		sb.append(", generalRequirements=");
+		sb.append(generalRequirements);
 		sb.append(", description=");
 		sb.append(description);
 		sb.append(", requiredGender=");
@@ -135,6 +137,13 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 		}
 
 		vacancyImpl.setWorkPlaceId(workPlaceId);
+
+		if (generalRequirements == null) {
+			vacancyImpl.setGeneralRequirements(StringPool.BLANK);
+		}
+		else {
+			vacancyImpl.setGeneralRequirements(generalRequirements);
+		}
 
 		if (description == null) {
 			vacancyImpl.setDescription(StringPool.BLANK);
@@ -282,6 +291,7 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 		expectedSalary = objectInput.readDouble();
 		expectedJoinedDate = objectInput.readLong();
 		workPlaceId = objectInput.readLong();
+		generalRequirements = objectInput.readUTF();
 		description = objectInput.readUTF();
 		requiredGender = objectInput.readUTF();
 		certificateType = objectInput.readUTF();
@@ -321,6 +331,13 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 		objectOutput.writeDouble(expectedSalary);
 		objectOutput.writeLong(expectedJoinedDate);
 		objectOutput.writeLong(workPlaceId);
+
+		if (generalRequirements == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(generalRequirements);
+		}
 
 		if (description == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -438,6 +455,7 @@ public class VacancyCacheModel implements CacheModel<Vacancy>, Externalizable {
 	public double expectedSalary;
 	public long expectedJoinedDate;
 	public long workPlaceId;
+	public String generalRequirements;
 	public String description;
 	public String requiredGender;
 	public String certificateType;

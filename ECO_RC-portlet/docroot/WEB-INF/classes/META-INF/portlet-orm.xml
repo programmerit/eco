@@ -332,6 +332,7 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="workPlaceId" />
+			<basic name="generalRequirements" />
 			<basic name="description" />
 			<basic name="requiredGender" />
 			<basic name="certificateType" />

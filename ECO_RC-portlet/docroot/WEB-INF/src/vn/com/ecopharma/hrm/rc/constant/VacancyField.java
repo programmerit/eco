@@ -28,6 +28,8 @@ public class VacancyField {
 
 	public static final String DESCRIPTION = "description";
 
+	public static final String GENERAL_REQUIREMENTS = "generalRequirements";
+
 	public static final String IS_DELETED = "deleted";
 
 	public static final String STATUS = "status";

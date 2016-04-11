@@ -13,6 +13,9 @@
 		<eco:ajaxIndicator />
 		<h:form id="vacancySearchForm">
 
+			<p:remoteCommand id="updateRcGuestPanelGroup"
+				update=":RcGuestPanelGroup" />
+
 			<h:link value="Ẩn/Hiện bộ lọc" styleClass="label"
 				onclick="toggle('#{requestScope.filterGrid.clientId}'); return false;"
 				onmouseover="toggle('#{requestScope.filterGrid.clientId}'); return false;" />
@@ -39,6 +42,17 @@
 					<p:tooltip for="filter_vTitles" value="Filter [Titles]"
 						showEffect="clip" hideEffect="explode" />
 				</h:panelGroup>
+
+				<h:panelGroup>
+					<p:selectCheckboxMenu label="Địa điểm"
+						converter="regionItemConverter"
+						value="#{vacancyFilterBean.selectedPlaces}">
+						<p:ajax oncomplete="PF('wVacancies').filter();" />
+						<f:selectItems value="#{vacancyFilterBean.allPlaces}" var="p"
+							itemLabel="#{p.object.name}" itemValue="#{p}" />
+						<p:column>#{p.object.name}</p:column>
+					</p:selectCheckboxMenu>
+				</h:panelGroup>
 			</p:panelGrid>
 		</h:form>
 
@@ -56,7 +70,8 @@
 				selection="#{vacancyBean.selectedItem}" rowKey="#{vacancy.id}"
 				emptyMessage="No vacancies found">
 				<p:ajax event="rowDblselect"
-					listener="#{vacancyBean.onRowDblSelect}" />
+					listener="#{vacancyBean.onRowDblSelect}"
+					update=":RcGuestPanelGroup" />
 
 				<p:column style="width:16px" exportable="false" toggleable="false">
 					<p:rowToggler />

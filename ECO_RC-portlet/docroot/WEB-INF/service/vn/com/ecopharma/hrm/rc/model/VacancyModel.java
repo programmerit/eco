@@ -230,6 +230,21 @@ public interface VacancyModel extends BaseModel<Vacancy>, GroupedModel {
 	public void setWorkPlaceId(long workPlaceId);
 
 	/**
+	 * Returns the general requirements of this vacancy.
+	 *
+	 * @return the general requirements of this vacancy
+	 */
+	@AutoEscape
+	public String getGeneralRequirements();
+
+	/**
+	 * Sets the general requirements of this vacancy.
+	 *
+	 * @param generalRequirements the general requirements of this vacancy
+	 */
+	public void setGeneralRequirements(String generalRequirements);
+
+	/**
 	 * Returns the description of this vacancy.
 	 *
 	 * @return the description of this vacancy

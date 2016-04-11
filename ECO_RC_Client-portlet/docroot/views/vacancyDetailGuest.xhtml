@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head />
+	<h:body>
+		<h:outputText value="Vị trí: " styleClass="eco-label" />
+		<h:outputText value="#{vacancyDetailBean.vacancy.titles}" />
+		<br />
+
+		<h:outputText value="Số vị trí: " styleClass="eco-label" />
+		<h:outputText value="#{vacancyDetailBean.vacancy.numberOfPosition}" />
+		<br />
+
+		<h:outputText value="Mô tả công việc: " styleClass="eco-label" />
+		<br />
+		<h:outputText value="#{vacancyDetailBean.vacancy.description}"
+			escape="false" />
+		<br />
+
+		<h:outputText value="Yêu cầu chuyên môn: " styleClass="eco-label" />
+		<br />
+		<h:outputText value="#{vacancyDetailBean.vacancy.requirements}"
+			escape="false" />
+
+		<div>
+			<p:button value="Ứng tuyển" outcome="guest" styleClass="RedButton">
+				<f:param name="vacancyId" value="#{vacancyDetailBean.vacancy.id}" />
+			</p:button>
+		</div>
+	</h:body>
+
+	<style type="text/css">
+.eco-label {
+	font-weight: bold;
+}
+</style>
+</f:view>

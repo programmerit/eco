@@ -211,6 +211,7 @@ create table eco_rcp_Vacancy (
 	expectedSalary DOUBLE,
 	expectedJoinedDate DATE null,
 	workPlaceId LONG,
+	generalRequirements TEXT null,
 	description TEXT null,
 	requiredGender VARCHAR(75) null,
 	certificateType VARCHAR(75) null,

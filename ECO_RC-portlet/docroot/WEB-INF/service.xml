@@ -69,6 +69,7 @@
         <column name="expectedSalary" type="double"></column>
         <column name="expectedJoinedDate" type="Date"></column>
         <column name="workPlaceId" type="long"></column>
+        <column name="generalRequirements" type="String"></column>
         <column name="description" type="String"></column>
         <column name="requiredGender" type="String"></column>
         <column name="certificateType" type="String"></column>

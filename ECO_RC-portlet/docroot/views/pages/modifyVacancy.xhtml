@@ -76,6 +76,12 @@
 								<p:inputText id="experiences"
 									value="#{vacancyBean.vacancyItem.object.experiences}" />
 							</p:panelGrid>
+							<br />
+							<h:outputText value="General requirements: " />
+							<p:editor id="generalRequirementsEditor"
+								widgetVar="wGeneralRequirementsEditor"
+								value="#{vacancyBean.vacancyItem.object.generalRequirements}"
+								width="500" />
 						</h:panelGroup>
 
 						<h:panelGroup>
@@ -131,10 +137,12 @@
 										var="status" itemValue="#{status}" itemLabel="#{status}" />
 								</p:selectOneMenu>
 							</p:panelGrid>
-
+							<br />
+							<h:outputText value="Job Description: " />
 							<p:editor id="shortJobDescEditor" widgetVar="wJobDescEditor"
 								value="#{vacancyBean.vacancyItem.object.description}"
 								width="500" />
+
 
 						</h:panelGroup>
 					</p:panelGrid>

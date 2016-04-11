@@ -844,6 +844,7 @@ public class VacancyPersistenceImpl extends BasePersistenceImpl<Vacancy>
 		vacancyImpl.setExpectedSalary(vacancy.getExpectedSalary());
 		vacancyImpl.setExpectedJoinedDate(vacancy.getExpectedJoinedDate());
 		vacancyImpl.setWorkPlaceId(vacancy.getWorkPlaceId());
+		vacancyImpl.setGeneralRequirements(vacancy.getGeneralRequirements());
 		vacancyImpl.setDescription(vacancy.getDescription());
 		vacancyImpl.setRequiredGender(vacancy.getRequiredGender());
 		vacancyImpl.setCertificateType(vacancy.getCertificateType());

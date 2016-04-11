@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.model.Region;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RegionServiceUtil;
 
@@ -63,6 +62,9 @@ public class VacancyIndexer extends BaseIndexer {
 		doc.addNumber(VacancyField.NUMBER_OF_POSITION,
 				vacancy.getApprovedNumberOfPosition());
 		doc.addText(VacancyField.DESCRIPTION, vacancy.getDescription());
+
+		doc.addText(VacancyField.GENERAL_REQUIREMENTS,
+				vacancy.getGeneralRequirements());
 
 		doc.addNumber(VacancyField.TITLES_ID, vacancy.getTitlesId());
 		doc.addText(VacancyField.IS_DELETED, vacancy.isDeleted() ? "true"

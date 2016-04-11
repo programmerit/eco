@@ -22,6 +22,10 @@ public class VacancyIndexItem extends AbstractIndexedItem {
 				RCClientUtils.getCurrentSearchContext()));
 	}
 
+	public VacancyIndexItem(String vacancyId) {
+		this(Long.valueOf(vacancyId));
+	}
+
 	public long getTitlesId() {
 		return checkNullFieldAndReturnLongValue(VacancyField.TITLES_ID);
 	}
@@ -60,6 +64,10 @@ public class VacancyIndexItem extends AbstractIndexedItem {
 
 	public String getDescription() {
 		return checkNullFieldAndReturnEmptyString(VacancyField.DESCRIPTION);
+	}
+
+	public String getRequirements() {
+		return checkNullFieldAndReturnEmptyString(VacancyField.GENERAL_REQUIREMENTS);
 	}
 
 	public String getWorkingPlace() {

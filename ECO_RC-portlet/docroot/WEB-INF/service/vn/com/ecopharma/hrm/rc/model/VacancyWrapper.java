@@ -62,6 +62,7 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 		attributes.put("expectedSalary", getExpectedSalary());
 		attributes.put("expectedJoinedDate", getExpectedJoinedDate());
 		attributes.put("workPlaceId", getWorkPlaceId());
+		attributes.put("generalRequirements", getGeneralRequirements());
 		attributes.put("description", getDescription());
 		attributes.put("requiredGender", getRequiredGender());
 		attributes.put("certificateType", getCertificateType());
@@ -164,6 +165,13 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 
 		if (workPlaceId != null) {
 			setWorkPlaceId(workPlaceId);
+		}
+
+		String generalRequirements = (String)attributes.get(
+				"generalRequirements");
+
+		if (generalRequirements != null) {
+			setGeneralRequirements(generalRequirements);
 		}
 
 		String description = (String)attributes.get("description");
@@ -557,6 +565,26 @@ public class VacancyWrapper implements Vacancy, ModelWrapper<Vacancy> {
 	@Override
 	public void setWorkPlaceId(long workPlaceId) {
 		_vacancy.setWorkPlaceId(workPlaceId);
+	}
+
+	/**
+	* Returns the general requirements of this vacancy.
+	*
+	* @return the general requirements of this vacancy
+	*/
+	@Override
+	public java.lang.String getGeneralRequirements() {
+		return _vacancy.getGeneralRequirements();
+	}
+
+	/**
+	* Sets the general requirements of this vacancy.
+	*
+	* @param generalRequirements the general requirements of this vacancy
+	*/
+	@Override
+	public void setGeneralRequirements(java.lang.String generalRequirements) {
+		_vacancy.setGeneralRequirements(generalRequirements);
 	}
 
 	/**

@@ -248,7 +248,8 @@ public class VacancyLocalServiceImpl extends VacancyLocalServiceBaseImpl {
 
 	private String[] getGlobalSearchableFields() {
 		return new String[] { VacancyField.TITLES,
-				VacancyField.NUMBER_OF_POSITION, VacancyField.STATUS };
+				VacancyField.NUMBER_OF_POSITION, VacancyField.STATUS,
+				VacancyField.WORKING_PLACE };
 	}
 
 	public Vacancy createPrePersistedVacancy() {

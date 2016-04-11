@@ -43,6 +43,7 @@ public class VacancySoap implements Serializable {
 		soapModel.setExpectedSalary(model.getExpectedSalary());
 		soapModel.setExpectedJoinedDate(model.getExpectedJoinedDate());
 		soapModel.setWorkPlaceId(model.getWorkPlaceId());
+		soapModel.setGeneralRequirements(model.getGeneralRequirements());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setRequiredGender(model.getRequiredGender());
 		soapModel.setCertificateType(model.getCertificateType());
@@ -211,6 +212,14 @@ public class VacancySoap implements Serializable {
 
 	public void setWorkPlaceId(long workPlaceId) {
 		_workPlaceId = workPlaceId;
+	}
+
+	public String getGeneralRequirements() {
+		return _generalRequirements;
+	}
+
+	public void setGeneralRequirements(String generalRequirements) {
+		_generalRequirements = generalRequirements;
 	}
 
 	public String getDescription() {
@@ -405,6 +414,7 @@ public class VacancySoap implements Serializable {
 	private double _expectedSalary;
 	private Date _expectedJoinedDate;
 	private long _workPlaceId;
+	private String _generalRequirements;
 	private String _description;
 	private String _requiredGender;
 	private String _certificateType;

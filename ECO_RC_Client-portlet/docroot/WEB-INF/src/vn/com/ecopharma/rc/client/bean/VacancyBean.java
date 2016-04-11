@@ -15,8 +15,9 @@ import org.primefaces.model.SortOrder;
 
 import vn.com.ecopharma.rc.client.bean.filter.VacancyFilterBean;
 import vn.com.ecopharma.rc.client.constant.VacancyField;
-import vn.com.ecopharma.rc.client.dm.VacancyLazyDM;
+import vn.com.ecopharma.rc.client.dm.VacancyLazyDataModel;
 import vn.com.ecopharma.rc.client.dto.VacancyIndexItem;
+import vn.com.ecopharma.rc.client.enumeration.navigation.GuestNavigation;
 import vn.com.ecopharma.rc.client.util.BeanUtils;
 
 @ManagedBean
@@ -34,7 +35,7 @@ public class VacancyBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		lazyDataModel = new VacancyLazyDM() {
+		lazyDataModel = new VacancyLazyDataModel() {
 
 			private static final long serialVersionUID = 1L;
 
@@ -55,15 +56,9 @@ public class VacancyBean implements Serializable {
 					filters.put(VacancyField.TITLES, filterBean.getTitles());
 				}
 
-				// if (filterBean.getNumberOfPositionFrom() != -1) {
-				filters.put(VacancyField.NUMBER_POSITION_FROM,
-						filterBean.getNumberOfPositionFrom());
-				// }
-
-				// if (filterBean.getNumberOfPositionTo() != -1) {
-				filters.put(VacancyField.NUMBER_POSITION_TO,
-						filterBean.getNumberOfPositionTo());
-				// }
+				if (!filterBean.getSelectedPlaceStrings().isEmpty())
+					filters.put(VacancyField.WORKING_PLACE,
+							filterBean.getSelectedPlaceStrings());
 
 				return super.load(first, pageSize, sortField, sortOrder,
 						filters);
@@ -72,7 +67,10 @@ public class VacancyBean implements Serializable {
 	}
 
 	public void onRowDblSelect(SelectEvent event) {
-
+		BeanUtils.getVacancyDetailBean().setVacancy(
+				(VacancyIndexItem) event.getObject());
+		BeanUtils.getVacancyGuestBean().switchOutcome(
+				GuestNavigation.VACANCY_DETAIL);
 	}
 
 	public LazyDataModel<VacancyIndexItem> getLazyDataModel() {

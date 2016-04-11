@@ -78,6 +78,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 			{ "expectedSalary", Types.DOUBLE },
 			{ "expectedJoinedDate", Types.TIMESTAMP },
 			{ "workPlaceId", Types.BIGINT },
+			{ "generalRequirements", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "requiredGender", Types.VARCHAR },
 			{ "certificateType", Types.VARCHAR },
@@ -101,7 +102,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "deleted", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table eco_rcp_Vacancy (vacancyId LONG not null primary key,approvedNumberOfPosition INTEGER,currentNumberOfEmployee INTEGER,titlesId LONG,unitGroupId LONG,unitId LONG,departmentId LONG,numberOfNewRecruitment INTEGER,numberOfReplacedRecruitment INTEGER,expectedSalary DOUBLE,expectedJoinedDate DATE null,workPlaceId LONG,description TEXT null,requiredGender VARCHAR(75) null,certificateType VARCHAR(75) null,specialized VARCHAR(75) null,experiences DOUBLE,foreignLanguages VARCHAR(75) null,skills VARCHAR(75) null,officeSkills VARCHAR(75) null,awayToBusinessType VARCHAR(75) null,workingTimeType VARCHAR(75) null,jobType VARCHAR(75) null,code_ VARCHAR(75) null,status VARCHAR(75) null,postedDate DATE null,expiredDate DATE null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,deleted BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table eco_rcp_Vacancy (vacancyId LONG not null primary key,approvedNumberOfPosition INTEGER,currentNumberOfEmployee INTEGER,titlesId LONG,unitGroupId LONG,unitId LONG,departmentId LONG,numberOfNewRecruitment INTEGER,numberOfReplacedRecruitment INTEGER,expectedSalary DOUBLE,expectedJoinedDate DATE null,workPlaceId LONG,generalRequirements TEXT null,description TEXT null,requiredGender VARCHAR(75) null,certificateType VARCHAR(75) null,specialized VARCHAR(75) null,experiences DOUBLE,foreignLanguages VARCHAR(75) null,skills VARCHAR(75) null,officeSkills VARCHAR(75) null,awayToBusinessType VARCHAR(75) null,workingTimeType VARCHAR(75) null,jobType VARCHAR(75) null,code_ VARCHAR(75) null,status VARCHAR(75) null,postedDate DATE null,expiredDate DATE null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,deleted BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table eco_rcp_Vacancy";
 	public static final String ORDER_BY_JPQL = " ORDER BY vacancy.vacancyId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY eco_rcp_Vacancy.vacancyId ASC";
@@ -145,6 +146,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		model.setExpectedSalary(soapModel.getExpectedSalary());
 		model.setExpectedJoinedDate(soapModel.getExpectedJoinedDate());
 		model.setWorkPlaceId(soapModel.getWorkPlaceId());
+		model.setGeneralRequirements(soapModel.getGeneralRequirements());
 		model.setDescription(soapModel.getDescription());
 		model.setRequiredGender(soapModel.getRequiredGender());
 		model.setCertificateType(soapModel.getCertificateType());
@@ -244,6 +246,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		attributes.put("expectedSalary", getExpectedSalary());
 		attributes.put("expectedJoinedDate", getExpectedJoinedDate());
 		attributes.put("workPlaceId", getWorkPlaceId());
+		attributes.put("generalRequirements", getGeneralRequirements());
 		attributes.put("description", getDescription());
 		attributes.put("requiredGender", getRequiredGender());
 		attributes.put("certificateType", getCertificateType());
@@ -346,6 +349,13 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
 		if (workPlaceId != null) {
 			setWorkPlaceId(workPlaceId);
+		}
+
+		String generalRequirements = (String)attributes.get(
+				"generalRequirements");
+
+		if (generalRequirements != null) {
+			setGeneralRequirements(generalRequirements);
 		}
 
 		String description = (String)attributes.get("description");
@@ -611,6 +621,22 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 	@Override
 	public void setWorkPlaceId(long workPlaceId) {
 		_workPlaceId = workPlaceId;
+	}
+
+	@JSON
+	@Override
+	public String getGeneralRequirements() {
+		if (_generalRequirements == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _generalRequirements;
+		}
+	}
+
+	@Override
+	public void setGeneralRequirements(String generalRequirements) {
+		_generalRequirements = generalRequirements;
 	}
 
 	@JSON
@@ -990,6 +1016,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		vacancyImpl.setExpectedSalary(getExpectedSalary());
 		vacancyImpl.setExpectedJoinedDate(getExpectedJoinedDate());
 		vacancyImpl.setWorkPlaceId(getWorkPlaceId());
+		vacancyImpl.setGeneralRequirements(getGeneralRequirements());
 		vacancyImpl.setDescription(getDescription());
 		vacancyImpl.setRequiredGender(getRequiredGender());
 		vacancyImpl.setCertificateType(getCertificateType());
@@ -1105,6 +1132,15 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		}
 
 		vacancyCacheModel.workPlaceId = getWorkPlaceId();
+
+		vacancyCacheModel.generalRequirements = getGeneralRequirements();
+
+		String generalRequirements = vacancyCacheModel.generalRequirements;
+
+		if ((generalRequirements != null) &&
+				(generalRequirements.length() == 0)) {
+			vacancyCacheModel.generalRequirements = null;
+		}
 
 		vacancyCacheModel.description = getDescription();
 
@@ -1261,7 +1297,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(69);
+		StringBundler sb = new StringBundler(71);
 
 		sb.append("{vacancyId=");
 		sb.append(getVacancyId());
@@ -1287,6 +1323,8 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		sb.append(getExpectedJoinedDate());
 		sb.append(", workPlaceId=");
 		sb.append(getWorkPlaceId());
+		sb.append(", generalRequirements=");
+		sb.append(getGeneralRequirements());
 		sb.append(", description=");
 		sb.append(getDescription());
 		sb.append(", requiredGender=");
@@ -1338,7 +1376,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(106);
+		StringBundler sb = new StringBundler(109);
 
 		sb.append("<model><model-name>");
 		sb.append("vn.com.ecopharma.hrm.rc.model.Vacancy");
@@ -1391,6 +1429,10 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 		sb.append(
 			"<column><column-name>workPlaceId</column-name><column-value><![CDATA[");
 		sb.append(getWorkPlaceId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>generalRequirements</column-name><column-value><![CDATA[");
+		sb.append(getGeneralRequirements());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>description</column-name><column-value><![CDATA[");
@@ -1502,6 +1544,7 @@ public class VacancyModelImpl extends BaseModelImpl<Vacancy>
 	private double _expectedSalary;
 	private Date _expectedJoinedDate;
 	private long _workPlaceId;
+	private String _generalRequirements;
 	private String _description;
 	private String _requiredGender;
 	private String _certificateType;

@@ -188,6 +188,9 @@
 		<field name="expectedSalary" type="double" />
 		<field name="expectedJoinedDate" type="Date" />
 		<field name="workPlaceId" type="long" />
+		<field name="generalRequirements" type="String">
+			<hint name="max-length">20000</hint>
+		</field>
 		<field name="description" type="String">
 			<hint name="max-length">20000</hint>
 		</field>
