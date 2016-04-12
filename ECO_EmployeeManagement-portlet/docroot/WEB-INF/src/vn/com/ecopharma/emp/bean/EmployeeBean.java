@@ -26,6 +26,7 @@ import org.primefaces.event.SelectEvent;
 
 import vn.com.ecopharma.emp.bean.DisciplineBean.EmpDisciplineItem;
 import vn.com.ecopharma.emp.bean.VacationLeaveBean.VacationItem;
+import vn.com.ecopharma.emp.bean.organization.OrganizationPanelBean;
 import vn.com.ecopharma.emp.dto.AddressObjectItem;
 import vn.com.ecopharma.emp.dto.BankInfoObject;
 import vn.com.ecopharma.emp.dto.DependentName;
@@ -103,7 +104,7 @@ public class EmployeeBean implements Serializable {
 
 	private List<Country> countries;
 
-	private boolean showUserTab = false;
+	private boolean isEdit = false;
 
 	private boolean autoPassword = true;
 
@@ -160,7 +161,7 @@ public class EmployeeBean implements Serializable {
 			organizationPanelBean
 					.setConcurrentTitles(EmpConcurrentTitlesLocalServiceUtil
 							.findByEmp(Long.valueOf(employeeId)));
-			showUserTab = false;
+			isEdit = false;
 			updateString = StringUtils.EMPTY;
 
 			ThemeDisplay themeDisplay = (ThemeDisplay) FacesContext
@@ -169,8 +170,6 @@ public class EmployeeBean implements Serializable {
 
 			String url = modifyEmployeeInfoItem.getUser().getPortraitURL(
 					themeDisplay);
-			System.out.println("Portrait URL: " + url);
-
 			modifyEmployeeInfoItem.setUserImgURL(url);
 		} catch (SystemException e) {
 			LOGGER.info(e);
@@ -184,7 +183,7 @@ public class EmployeeBean implements Serializable {
 	 * on Adding New Employee
 	 */
 	public void addNewEmployee() {
-		showUserTab = true;
+		isEdit = true;
 		modifyEmployeeInfoItem = new EmpInfoItem();
 		BeanUtils.getOrganizationPanelBean().afterSetOrganizationToEntity();
 		updateString = StringUtils.EMPTY;
@@ -244,7 +243,7 @@ public class EmployeeBean implements Serializable {
 			organizationPanelBean.setSelectedValuesToEmp(modifyEmployeeInfoItem
 					.getEmp());
 
-			if (showUserTab) {
+			if (isEdit) {
 				final boolean sendEmail = true;
 				Emp result = EmpLocalServiceUtil.addEmp(employee,
 						generatedUser, autoPassword, modifyEmployeeInfoItem
@@ -291,10 +290,10 @@ public class EmployeeBean implements Serializable {
 		if (isSuccessfulModified) {// NOSONAR
 			modifyEmployeeInfoItem = null;
 			updateString = "refreshEmployees();";
-			this.includedDialog = showUserTab ? "/views/dialogs/notifyDialog.xhtml"
+			this.includedDialog = isEdit ? "/views/dialogs/notifyDialog.xhtml"
 					: StringUtils.EMPTY;
 			switchPage(1);
-			if (showUserTab)
+			if (isEdit)
 				RequestContext.getCurrentInstance().execute(
 						"PF('wNotifyDialog').show();");
 		}
@@ -488,7 +487,7 @@ public class EmployeeBean implements Serializable {
 	}
 
 	public void onLastNameBlur() {
-		if (showUserTab) {
+		if (isEdit) {
 			String username = generateUsername();
 			String emailAddress = EmpLocalServiceUtil.generateEmailByUsername(
 					username, EMAIL_SUFFIX);
@@ -498,7 +497,7 @@ public class EmployeeBean implements Serializable {
 	}
 
 	public void onFullNameBlur() {
-		if (showUserTab) {
+		if (isEdit) {
 			String username = generateUsername();
 			String emailAddress = EmpLocalServiceUtil.generateEmailByUsername(
 					username, EMAIL_SUFFIX);
@@ -675,12 +674,12 @@ public class EmployeeBean implements Serializable {
 		this.modifyEmployeeInfoItem = modifyEmployeeInfoItem;
 	}
 
-	public boolean isShowUserTab() {
-		return showUserTab;
+	public boolean isEdit() {
+		return isEdit;
 	}
 
-	public void setShowUserTab(boolean showUserTab) {
-		this.showUserTab = showUserTab;
+	public void setEdit(boolean isEdit) {
+		this.isEdit = isEdit;
 	}
 
 	public EmpInfoItem getSelectedEmployeeInfoItem() {

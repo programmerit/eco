@@ -136,7 +136,9 @@ public class UnitLocalServiceClpInvoker {
 
 		_methodName204 = "createPrePersistedUnit";
 
-		_methodParameterTypes204 = new String[] {  };
+		_methodParameterTypes204 = new String[] {
+				"com.liferay.portal.service.ServiceContext"
+			};
 
 		_methodName205 = "addUnit";
 
@@ -158,9 +160,17 @@ public class UnitLocalServiceClpInvoker {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName208 = "completelyRemoveAll";
+		_methodName208 = "updateUnit";
 
-		_methodParameterTypes208 = new String[] {  };
+		_methodParameterTypes208 = new String[] {
+				"vn.com.ecopharma.emp.model.Unit",
+				"com.liferay.portal.service.ServiceContext",
+				"com.liferay.portal.kernel.search.SearchContext"
+			};
+
+		_methodName209 = "completelyRemoveAll";
+
+		_methodParameterTypes209 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -300,7 +310,7 @@ public class UnitLocalServiceClpInvoker {
 
 		if (_methodName204.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes204, parameterTypes)) {
-			return UnitLocalServiceUtil.createPrePersistedUnit();
+			return UnitLocalServiceUtil.createPrePersistedUnit((com.liferay.portal.service.ServiceContext)arguments[0]);
 		}
 
 		if (_methodName205.equals(name) &&
@@ -324,6 +334,13 @@ public class UnitLocalServiceClpInvoker {
 
 		if (_methodName208.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes208, parameterTypes)) {
+			return UnitLocalServiceUtil.updateUnit((vn.com.ecopharma.emp.model.Unit)arguments[0],
+				(com.liferay.portal.service.ServiceContext)arguments[1],
+				(com.liferay.portal.kernel.search.SearchContext)arguments[2]);
+		}
+
+		if (_methodName209.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes209, parameterTypes)) {
 			UnitLocalServiceUtil.completelyRemoveAll();
 
 			return null;
@@ -390,4 +407,6 @@ public class UnitLocalServiceClpInvoker {
 	private String[] _methodParameterTypes207;
 	private String _methodName208;
 	private String[] _methodParameterTypes208;
+	private String _methodName209;
+	private String[] _methodParameterTypes209;
 }

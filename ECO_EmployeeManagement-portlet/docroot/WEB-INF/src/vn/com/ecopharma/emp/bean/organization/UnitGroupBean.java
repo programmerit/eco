@@ -1,9 +1,10 @@
-package vn.com.ecopharma.emp.bean;
+package vn.com.ecopharma.emp.bean.organization;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
 
+import vn.com.ecopharma.emp.bean.AbstractOrganizationBean;
 import vn.com.ecopharma.emp.model.UnitGroup;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 

@@ -316,8 +316,9 @@ public class UnitLocalServiceWrapper implements UnitLocalService,
 	}
 
 	@Override
-	public vn.com.ecopharma.emp.model.Unit createPrePersistedUnit() {
-		return _unitLocalService.createPrePersistedUnit();
+	public vn.com.ecopharma.emp.model.Unit createPrePersistedUnit(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return _unitLocalService.createPrePersistedUnit(serviceContext);
 	}
 
 	@Override
@@ -338,6 +339,14 @@ public class UnitLocalServiceWrapper implements UnitLocalService,
 		vn.com.ecopharma.emp.model.Unit unit,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return _unitLocalService.addUnit(unit, serviceContext);
+	}
+
+	@Override
+	public vn.com.ecopharma.emp.model.Unit updateUnit(
+		vn.com.ecopharma.emp.model.Unit unit,
+		com.liferay.portal.service.ServiceContext serviceContext,
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return _unitLocalService.updateUnit(unit, serviceContext, searchContext);
 	}
 
 	@Override

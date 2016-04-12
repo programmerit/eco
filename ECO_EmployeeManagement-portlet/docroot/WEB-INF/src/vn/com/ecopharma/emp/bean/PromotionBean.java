@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import vn.com.ecopharma.emp.bean.organization.OrganizationPanelBean;
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
 import vn.com.ecopharma.emp.model.PromotedHistory;
 import vn.com.ecopharma.emp.model.Titles;

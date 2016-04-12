@@ -1,4 +1,4 @@
-package vn.com.ecopharma.emp.bean;
+package vn.com.ecopharma.emp.bean.organization;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -9,6 +9,7 @@ import javax.faces.event.ActionEvent;
 
 import org.apache.commons.lang.StringUtils;
 
+import vn.com.ecopharma.emp.bean.AbstractOrganizationBean;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Titles;
 import vn.com.ecopharma.emp.model.TitlesDepartmentUnitUnitGroup;

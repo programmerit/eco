@@ -9,6 +9,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import vn.com.ecopharma.emp.bean.organization.OrganizationPanelBean;
 import vn.com.ecopharma.emp.dto.EmpIndexedItem;
 import vn.com.ecopharma.emp.model.EmpConcurrentTitles;
 import vn.com.ecopharma.emp.service.EmpConcurrentTitlesLocalServiceUtil;

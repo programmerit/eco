@@ -1,4 +1,4 @@
-package vn.com.ecopharma.emp.bean;
+package vn.com.ecopharma.emp.bean.organization;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
-import vn.com.ecopharma.emp.bean.OrganizationRoleSetBean.Level;
+import vn.com.ecopharma.emp.bean.organization.OrganizationRoleSetBean.Level;
 import vn.com.ecopharma.emp.model.Department;
 import vn.com.ecopharma.emp.model.Devision;
 import vn.com.ecopharma.emp.model.Titles;
@@ -25,6 +25,7 @@ import vn.com.ecopharma.emp.service.TitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitGroupLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
+import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -44,6 +45,8 @@ public class OrganizationTreeViewBean implements Serializable {
 			.getLog(OrganizationTreeViewBean.class);
 
 	private static final String TITLES_DIALOG = "/views/dialogs/titles.xhtml";
+	private static final String UNITGROUP_DIALOG = "/views/dialogs/unitGroup.xhtml";
+	private static final String UNIT_DIALOG = "/views/dialogs/unit.xhtml";
 	private static final String SET_MANAGER_DIALOG = "/views/dialogs/setManager.xhtml";
 
 	private TreeNode root;
@@ -285,6 +288,37 @@ public class OrganizationTreeViewBean implements Serializable {
 		} catch (SystemException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void addUnit() {
+		dialog = UNIT_DIALOG;
+		TreeNode firstParentNode = selectedNodes[0];
+		OrgNodeItem firstParentItem = (OrgNodeItem) firstParentNode.getData();
+		UnitBean unitBean = BeanUtils.getUnitBean();
+
+		Department department = null;
+		if (firstParentItem.getType().equalsIgnoreCase(
+				OrgNodeItem.DEPARTMENT_TYPE)) {
+			department = (Department) firstParentItem.getModelObject();
+		}
+		unitBean.setUnit(UnitLocalServiceUtil
+				.createPrePersistedUnit(EmployeeUtils.getServiceContext()));
+		unitBean.setDepartment(department);
+		unitBean.setEdit(false);
+		unitBean.setUpdateComponents(":orgTreeForm:orgTree");
+	}
+
+	public void editUnit() {
+		dialog = UNIT_DIALOG;
+		OrgNodeItem item = (OrgNodeItem) selectedNodes[0].getData();
+		UnitBean unitBean = BeanUtils.getUnitBean();
+
+		if (item.getType().equalsIgnoreCase(OrgNodeItem.UNIT_TYPE)) {
+			unitBean.setUnit((Unit) item.getModelObject());
+			unitBean.setEdit(true);
+			unitBean.setUpdateComponents(":orgTreeForm:orgTree");
+		}
+
 	}
 
 	public TreeNode getRoot() {

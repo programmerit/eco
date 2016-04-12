@@ -7,10 +7,6 @@ import vn.com.ecopharma.emp.bean.ConcurrentTitlesBean;
 import vn.com.ecopharma.emp.bean.EmpGlobalFilterHolderBean;
 import vn.com.ecopharma.emp.bean.EmployeeBean;
 import vn.com.ecopharma.emp.bean.EmployeeIndexedBean;
-import vn.com.ecopharma.emp.bean.OrganizationPanelBean;
-import vn.com.ecopharma.emp.bean.OrganizationRoleSetBean;
-import vn.com.ecopharma.emp.bean.OrganizationTreeViewBean;
-import vn.com.ecopharma.emp.bean.TitlesBean;
 import vn.com.ecopharma.emp.bean.filter.EmpAnnualLeaveFilterBean;
 import vn.com.ecopharma.emp.bean.filter.EmpDisciplineFilterBean;
 import vn.com.ecopharma.emp.bean.filter.EmployeeFilterView;
@@ -19,6 +15,11 @@ import vn.com.ecopharma.emp.bean.filter.PromotionFilterBean;
 import vn.com.ecopharma.emp.bean.filter.ResignationFilterBean;
 import vn.com.ecopharma.emp.bean.filter.VacationLeaveFilterBean;
 import vn.com.ecopharma.emp.bean.global.AuthorityBean;
+import vn.com.ecopharma.emp.bean.organization.OrganizationPanelBean;
+import vn.com.ecopharma.emp.bean.organization.OrganizationRoleSetBean;
+import vn.com.ecopharma.emp.bean.organization.OrganizationTreeViewBean;
+import vn.com.ecopharma.emp.bean.organization.TitlesBean;
+import vn.com.ecopharma.emp.bean.organization.UnitBean;
 import vn.com.ecopharma.emp.permission.EmpPermission;
 import vn.com.ecopharma.emp.permission.EmployeeModelPermission;
 
@@ -33,6 +34,8 @@ public class BeanUtils {
 	private static final String EMPLOYEE_FILTER_BEAN = "empFilterBean";
 
 	private static final String TITLES_BEAN = "titlesBean";
+
+	private static final String UNIT_BEAN = "unitBean";
 
 	private static final String ORGANIZATION_TREE_VIEW_BEAN = "organizationTreeViewBean";
 
@@ -91,6 +94,10 @@ public class BeanUtils {
 
 	public static TitlesBean getTitlesBean() {
 		return (TitlesBean) getBackingBeanByName(TITLES_BEAN);
+	}
+
+	public static UnitBean getUnitBean() {
+		return (UnitBean) getBackingBeanByName(UNIT_BEAN);
 	}
 
 	public static OrganizationTreeViewBean getOrganizationTreeViewBean() {

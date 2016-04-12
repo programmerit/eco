@@ -267,7 +267,8 @@ public interface UnitLocalService extends BaseLocalService, InvokableLocalServic
 	public java.util.List<vn.com.ecopharma.emp.model.Unit> findByDepartments(
 		java.util.List<vn.com.ecopharma.emp.model.Department> departments);
 
-	public vn.com.ecopharma.emp.model.Unit createPrePersistedUnit();
+	public vn.com.ecopharma.emp.model.Unit createPrePersistedUnit(
+		com.liferay.portal.service.ServiceContext serviceContext);
 
 	@java.lang.Deprecated
 	public vn.com.ecopharma.emp.model.Unit addUnit(java.lang.String name,
@@ -280,6 +281,11 @@ public interface UnitLocalService extends BaseLocalService, InvokableLocalServic
 	public vn.com.ecopharma.emp.model.Unit addUnit(
 		vn.com.ecopharma.emp.model.Unit unit,
 		com.liferay.portal.service.ServiceContext serviceContext);
+
+	public vn.com.ecopharma.emp.model.Unit updateUnit(
+		vn.com.ecopharma.emp.model.Unit unit,
+		com.liferay.portal.service.ServiceContext serviceContext,
+		com.liferay.portal.kernel.search.SearchContext searchContext);
 
 	public void completelyRemoveAll();
 }

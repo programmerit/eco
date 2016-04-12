@@ -19,21 +19,31 @@
 			<p:contextMenu id="orgTreeContextMenu" for="orgTree">
 				<p:menuitem value="Add Department"
 					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Devision'}" />
+
 				<p:menuitem value="Add Unit"
+					actionListener="#{organizationTreeViewBean.addUnit}"
+					update=":dialogGroupPanel" oncomplete="PF('wUnitDialog').show();"
 					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Department'}" />
+
 				<p:menuitem value="Add UnitGroup"
 					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Unit'}" />
+
 				<p:menuitem value="Add Titles"
 					actionListener="#{organizationTreeViewBean.addTitles}"
-					update=":dialogGroupPanel" oncomplete="PF('wTitlesDialog').show()"
+					update=":dialogGroupPanel" oncomplete="PF('wTitlesDialog').show();"
 					rendered="#{organizationTreeViewBean.addTitlesContextAvailable}" />
 
 				<p:menuitem value="Edit Department"
 					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Department'}" />
+
 				<p:menuitem value="Edit Unit"
+					actionListener="#{organizationTreeViewBean.editUnit}"
+					update=":dialogGroupPanel" oncomplete="PF('wUnitDialog').show();"
 					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Unit'}" />
+
 				<p:menuitem value="Edit UnitGroup"
 					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'UnitGroup'}" />
+
 				<p:menuitem value="Edit Titles"
 					actionListener="#{organizationTreeViewBean.editTitles}"
 					update=":dialogGroupPanel" oncomplete="PF('wTitlesDialog').show()"

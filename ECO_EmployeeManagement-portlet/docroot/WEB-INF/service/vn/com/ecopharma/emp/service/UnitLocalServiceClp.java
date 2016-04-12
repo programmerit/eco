@@ -136,7 +136,9 @@ public class UnitLocalServiceClp implements UnitLocalService {
 
 		_methodName25 = "createPrePersistedUnit";
 
-		_methodParameterTypes25 = new String[] {  };
+		_methodParameterTypes25 = new String[] {
+				"com.liferay.portal.service.ServiceContext"
+			};
 
 		_methodName26 = "addUnit";
 
@@ -158,9 +160,17 @@ public class UnitLocalServiceClp implements UnitLocalService {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName29 = "completelyRemoveAll";
+		_methodName29 = "updateUnit";
 
-		_methodParameterTypes29 = new String[] {  };
+		_methodParameterTypes29 = new String[] {
+				"vn.com.ecopharma.emp.model.Unit",
+				"com.liferay.portal.service.ServiceContext",
+				"com.liferay.portal.kernel.search.SearchContext"
+			};
+
+		_methodName30 = "completelyRemoveAll";
+
+		_methodParameterTypes30 = new String[] {  };
 	}
 
 	@Override
@@ -866,12 +876,14 @@ public class UnitLocalServiceClp implements UnitLocalService {
 	}
 
 	@Override
-	public vn.com.ecopharma.emp.model.Unit createPrePersistedUnit() {
+	public vn.com.ecopharma.emp.model.Unit createPrePersistedUnit(
+		com.liferay.portal.service.ServiceContext serviceContext) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25, new Object[] {  });
+					_methodParameterTypes25,
+					new Object[] { ClpSerializer.translateInput(serviceContext) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -980,10 +992,43 @@ public class UnitLocalServiceClp implements UnitLocalService {
 	}
 
 	@Override
+	public vn.com.ecopharma.emp.model.Unit updateUnit(
+		vn.com.ecopharma.emp.model.Unit unit,
+		com.liferay.portal.service.ServiceContext serviceContext,
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
+					new Object[] {
+						ClpSerializer.translateInput(unit),
+						
+					ClpSerializer.translateInput(serviceContext),
+						
+					ClpSerializer.translateInput(searchContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (vn.com.ecopharma.emp.model.Unit)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public void completelyRemoveAll() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName29,
-				_methodParameterTypes29, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName30,
+				_methodParameterTypes30, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1057,4 +1102,6 @@ public class UnitLocalServiceClp implements UnitLocalService {
 	private String[] _methodParameterTypes28;
 	private String _methodName29;
 	private String[] _methodParameterTypes29;
+	private String _methodName30;
+	private String[] _methodParameterTypes30;
 }

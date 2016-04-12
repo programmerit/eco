@@ -21,9 +21,6 @@
 			<p:remoteCommand name="refreshContractInfos"
 				update=":contractInfoForm:contractInfosPanelGrid" />
 
-			<p:remoteCommand name="refreshUsername"
-				update=":modifyForm:accordion:username" />
-
 			<p:remoteCommand name="refreshPasswordFields"
 				update=":modifyForm:accordion:userPassword1 :modifyForm:accordion:userPassword2" />
 
@@ -66,8 +63,8 @@
 							</p:inputText>
 							<h:panelGroup>
 								<p:commandLink actionListener="#{empView.onGenerateEmail}"
-									rendered="#{empView.showUserTab}" value="Generate"
-									immediate="true" update=":modifyForm:accordion:emailAddress">
+									rendered="#{empView.edit}" value="Generate" immediate="true"
+									update=":modifyForm:accordion:emailAddress">
 									<p:resetInput target=":modifyForm:accordion:emailAddress" />
 								</p:commandLink>
 								<p:message for="emailAddress" id="emailAddressMsg"
@@ -92,12 +89,11 @@
 							<p:message for="internalNumber" id="internalNumberMsg"
 								display="icon" />
 
-							<h:outputText rendered="#{not empView.showUserTab}"
-								value="Username" />
-							<h:outputText rendered="#{not empView.showUserTab}"
+							<h:outputText rendered="#{not empView.edit}" value="Username" />
+							<h:outputText rendered="#{not empView.edit}"
 								style="margin-left: 10px;"
 								value="#{empView.modifyEmployeeInfoItem.user.screenName}" />
-							<h:outputText rendered="#{not empView.showUserTab}" />
+							<h:outputText rendered="#{not empView.edit}" />
 						</p:panelGrid>
 
 						<h:panelGrid id="addressesPanelGrid">
@@ -482,7 +478,7 @@
 				</p:tab>
 
 				<p:tab id="emp_user" title="User Information"
-					rendered="#{empView.showUserTab}">
+					rendered="#{empView.edit}">
 					<h:panelGrid columns="3">
 						<h:outputText value="Username" />
 						<p:inputText id="username"

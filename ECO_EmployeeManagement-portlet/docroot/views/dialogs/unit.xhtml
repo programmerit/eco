@@ -8,6 +8,35 @@
 	<h:head />
 
 	<h:body>
+		<h:form id="modifyUnitForm">
+			<p:remoteCommand id="updateOnUnitNameChanged"
+				update=":modifyUnitForm:unitMessage :modifyUnitForm:saveButton" />
+			<p:dialog id="unitDialog" widgetVar="wUnitDialog"
+				header="Add/Modify Unit" closeOnEscape="true" closable="true"
+				modal="true">
+				<p:outputPanel autoUpdate="true">
+					<h:panelGrid columns="3">
+						<h:outputText value="Name" />
+						<p:inputText id="unitName" value="#{unitBean.unit.name}"
+							validatorMessage="invalid name">
+							<f:validateLength minimum="4" maximum="50" />
+							<f:attribute name="departmentId"
+								value="#{unitBean.department.departmentId}" />
+							<f:attribute name="isEdit" value="#{unitBean.edit}" />
+							<f:validator validatorId="unitValidator" />
+							<p:ajax update="unitMessage" event="blur" />
+						</p:inputText>
+						<p:message id="unitMessage" for="unitName" />
 
+						<p:commandButton value="Save" id="saveButton"
+							actionListener="#{unitBean.onSave}"
+							update="#{unitBean.updateComponents}"
+							oncomplete="PF('wUnitDialog').hide();" />
+						<p:commandLink value="Cancel" style="margin-left: 3px"
+							onclick="PF('wUnitDialog').hide();" />
+					</h:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
 	</h:body>
 </f:view>

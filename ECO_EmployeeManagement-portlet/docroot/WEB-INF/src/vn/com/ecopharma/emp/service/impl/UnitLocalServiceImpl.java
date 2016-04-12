@@ -16,11 +16,16 @@ package vn.com.ecopharma.emp.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import vn.com.ecopharma.emp.NoSuchUnitException;
+import vn.com.ecopharma.emp.constant.EmpField;
 import vn.com.ecopharma.emp.model.Department;
+import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.Unit;
+import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.base.UnitLocalServiceBaseImpl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -28,6 +33,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.ParseException;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
@@ -113,9 +121,13 @@ public class UnitLocalServiceImpl extends UnitLocalServiceBaseImpl {
 		return result;
 	}
 
-	public Unit createPrePersistedUnit() {
+	public Unit createPrePersistedUnit(ServiceContext serviceContext) {
 		try {
-			return super.createUnit(counterLocalService.increment());
+			Unit unit = super.createUnit(counterLocalService.increment());
+			unit.setUserId(serviceContext.getUserId());
+			unit.setCompanyId(serviceContext.getCompanyId());
+			unit.setGroupId(serviceContext.getScopeGroupId());
+			return unit;
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}
@@ -160,7 +172,6 @@ public class UnitLocalServiceImpl extends UnitLocalServiceBaseImpl {
 			unit.setCompanyId(serviceContext.getCompanyId());
 			unit.setUserId(serviceContext.getUserId());
 			unit.setCreateDate(new Date());
-			unit.setModifiedDate(new Date());
 
 			unit = super.addUnit(unit);
 			// add permission
@@ -183,7 +194,6 @@ public class UnitLocalServiceImpl extends UnitLocalServiceBaseImpl {
 			unit.setCompanyId(serviceContext.getCompanyId());
 			unit.setUserId(serviceContext.getUserId());
 			unit.setCreateDate(new Date());
-			unit.setModifiedDate(new Date());
 
 			unit = super.addUnit(unit);
 			// add permission
@@ -197,6 +207,40 @@ public class UnitLocalServiceImpl extends UnitLocalServiceBaseImpl {
 			LOGGER.info(e);
 		}
 		return null;
+	}
+
+	public Unit updateUnit(Unit unit, ServiceContext serviceContext,
+			SearchContext searchContext) {
+
+		unit.setModifiedDate(new Date());
+		unit.setUserId(serviceContext.getUserId());
+		try {
+			Unit result = super.updateUnit(unit);
+			if (result != null) {
+				final Map<String, Object> unitFilters = new HashMap<>();
+				unitFilters.put(EmpField.UNIT_ID, result.getUnitId());
+				final List<Document> empsByUnit = EmpLocalServiceUtil
+						.filterEmployeeByFields(searchContext, unitFilters,
+								null, serviceContext.getCompanyId(),
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				for (Document empDoc : empsByUnit) {
+					long empId = Long.valueOf(empDoc.getField(EmpField.EMP_ID)
+							.getValue());
+					Emp emp = empLocalService.fetchEmp(empId);
+					if (emp != null) {
+						empLocalService.updateEmp(emp);
+					}
+				}
+			}
+
+			return result;
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		} catch (ParseException e) {
+			LOGGER.info(e);
+		}
+		return null;
+
 	}
 
 	public void completelyRemoveAll() {

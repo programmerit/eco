@@ -301,8 +301,9 @@ public class UnitLocalServiceUtil {
 		return getService().findByDepartments(departments);
 	}
 
-	public static vn.com.ecopharma.emp.model.Unit createPrePersistedUnit() {
-		return getService().createPrePersistedUnit();
+	public static vn.com.ecopharma.emp.model.Unit createPrePersistedUnit(
+		com.liferay.portal.service.ServiceContext serviceContext) {
+		return getService().createPrePersistedUnit(serviceContext);
 	}
 
 	public static vn.com.ecopharma.emp.model.Unit addUnit(
@@ -321,6 +322,13 @@ public class UnitLocalServiceUtil {
 		vn.com.ecopharma.emp.model.Unit unit,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService().addUnit(unit, serviceContext);
+	}
+
+	public static vn.com.ecopharma.emp.model.Unit updateUnit(
+		vn.com.ecopharma.emp.model.Unit unit,
+		com.liferay.portal.service.ServiceContext serviceContext,
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().updateUnit(unit, serviceContext, searchContext);
 	}
 
 	public static void completelyRemoveAll() {

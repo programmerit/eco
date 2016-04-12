@@ -1,4 +1,4 @@
-package vn.com.ecopharma.emp.bean;
+package vn.com.ecopharma.emp.bean.organization;
 
 import java.io.Serializable;
 import java.util.Arrays;
