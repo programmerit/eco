@@ -88,12 +88,6 @@ public class EmployeeBean implements Serializable {
 
 	private static final boolean IS_TEST_ENV = false;
 
-	private static final String EMPLOYEE_VIEW_PAGE = "/views/employees.xhtml";
-
-	private static final String EMPLOYEE_MODIFY_PAGE = "/views/employeeForm.xhtml";
-
-	private static final String IMPORT_EXPORT_PAGE = "/views/import_export.xhtml";
-
 	private static final String MALE = "male";
 
 	private static final String EMAIL_SUFFIX = "@ecopharma.com.vn";
@@ -101,10 +95,6 @@ public class EmployeeBean implements Serializable {
 	private EmpInfoItem modifyEmployeeInfoItem;
 
 	private EmpInfoItem selectedEmployeeInfoItem;
-
-	private List<Country> countries;
-
-	private boolean isEdit = false;
 
 	private boolean autoPassword = true;
 
@@ -116,21 +106,18 @@ public class EmployeeBean implements Serializable {
 
 	private String updateString = StringUtils.EMPTY;
 
-	private String currentNav = StringUtils.EMPTY;
-
 	private String includedDialog = StringUtils.EMPTY;
 
 	private String includedDialogOutputPanel = StringUtils.EMPTY;
 
-	// DOCUMENT PART
+	// document part
 	private int deletedDocumentIndex = -1;
 	private String selectedDocumentType = DocumentType.LABOR_CONTRACT
 			.toString(); // default
 
-	/**
-	 * 1: Employees View; 2: Create new; 3: Edit
-	 */
-	private int currentPage = 1;
+	// wiring bean
+	@ManagedProperty(value = "#{employeeModuleNavigationBean}")
+	private EmployeeModuleNavigationBean navigationBean;
 
 	@ManagedProperty(value = "#{employeeIndexedBean}")
 	private EmployeeIndexedBean indexedBean;
@@ -140,14 +127,6 @@ public class EmployeeBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-
-		try {
-			currentNav = "/views/employees.xhtml";
-			countries = CountryServiceUtil.getCountries(true);
-
-		} catch (SystemException e) {
-			LOGGER.info(e);
-		}
 	}
 
 	/**
@@ -161,7 +140,6 @@ public class EmployeeBean implements Serializable {
 			organizationPanelBean
 					.setConcurrentTitles(EmpConcurrentTitlesLocalServiceUtil
 							.findByEmp(Long.valueOf(employeeId)));
-			isEdit = false;
 			updateString = StringUtils.EMPTY;
 
 			ThemeDisplay themeDisplay = (ThemeDisplay) FacesContext
@@ -176,25 +154,24 @@ public class EmployeeBean implements Serializable {
 		} catch (PortalException e) {
 			LOGGER.info(e);
 		}
-		switchPage(3);
+		navigationBean.switchEditEmp();
 	}
 
 	/**
 	 * on Adding New Employee
 	 */
 	public void addNewEmployee() {
-		isEdit = true;
 		modifyEmployeeInfoItem = new EmpInfoItem();
 		BeanUtils.getOrganizationPanelBean().afterSetOrganizationToEntity();
 		updateString = StringUtils.EMPTY;
-		switchPage(2);
+		navigationBean.switchCreateEmp();
 	}
 
 	/**
 	 * @param employeeId
 	 */
 	public void importExportEmployee() {
-		switchPage(4);
+		navigationBean.switchImportExport();
 	}
 
 	public void save() {
@@ -204,6 +181,7 @@ public class EmployeeBean implements Serializable {
 				.getServiceContext();
 		FacesMessage msg = null;
 		boolean isSuccessfulModified = false;
+		boolean isEdit = this.modifyEmployeeInfoItem.isEdit();
 		try {
 			final Emp employee = modifyEmployeeInfoItem.getEmp();
 
@@ -243,7 +221,7 @@ public class EmployeeBean implements Serializable {
 			organizationPanelBean.setSelectedValuesToEmp(modifyEmployeeInfoItem
 					.getEmp());
 
-			if (isEdit) {
+			if (!isEdit) {
 				final boolean sendEmail = true;
 				Emp result = EmpLocalServiceUtil.addEmp(employee,
 						generatedUser, autoPassword, modifyEmployeeInfoItem
@@ -282,20 +260,20 @@ public class EmployeeBean implements Serializable {
 				isSuccessfulModified = true;
 			}
 			organizationPanelBean.afterSetOrganizationToEntity();
-		} catch (Exception e) {
+		} catch (Exception e) { // catch any exception while create/edit emp
 			isSuccessfulModified = false;
 			LOGGER.info(e);
 		}
 
 		if (isSuccessfulModified) {// NOSONAR
-			modifyEmployeeInfoItem = null;
-			updateString = "refreshEmployees();";
-			this.includedDialog = isEdit ? "/views/dialogs/notifyDialog.xhtml"
+			this.includedDialog = !isEdit ? "/views/dialogs/notifyDialog.xhtml"
 					: StringUtils.EMPTY;
-			switchPage(1);
-			if (isEdit)
+			updateString = "refreshEmployees();";
+			navigationBean.switchViewEmps();
+			if (!isEdit)
 				RequestContext.getCurrentInstance().execute(
 						"PF('wNotifyDialog').show();");
+			modifyEmployeeInfoItem = null;
 		}
 
 	}
@@ -306,7 +284,7 @@ public class EmployeeBean implements Serializable {
 	public void cancelModification() {
 		modifyEmployeeInfoItem = null;
 		organizationPanelBean.afterSetOrganizationToEntity();
-		switchPage(1);
+		navigationBean.switchViewEmps();
 	}
 
 	public void addOneAddress() {
@@ -343,29 +321,6 @@ public class EmployeeBean implements Serializable {
 		modifyEmployeeInfoItem.getLaborContracts()
 				.get(modifyEmployeeInfoItem.getLaborContracts().size() - 1)
 				.getObject().setLatest(true);
-	}
-
-	/**
-	 * @param pageNo
-	 */
-	public void switchPage(int pageNo) {
-		this.currentPage = pageNo;
-		switch (currentPage) {
-		case 1:
-			currentNav = EMPLOYEE_VIEW_PAGE;
-			break;
-		case 2:
-			currentNav = EMPLOYEE_MODIFY_PAGE;
-			break;
-		case 3:
-			currentNav = EMPLOYEE_MODIFY_PAGE;
-			break;
-		case 4:
-			currentNav = IMPORT_EXPORT_PAGE;
-			break;
-		default:
-			break;
-		}
 	}
 
 	public void onTestAddAnnualLeaveDays() {
@@ -486,18 +441,8 @@ public class EmployeeBean implements Serializable {
 		modifyEmployeeInfoItem.getUser().setEmailAddress(emailAddress);
 	}
 
-	public void onLastNameBlur() {
-		if (isEdit) {
-			String username = generateUsername();
-			String emailAddress = EmpLocalServiceUtil.generateEmailByUsername(
-					username, EMAIL_SUFFIX);
-			modifyEmployeeInfoItem.setUserName(username);
-			modifyEmployeeInfoItem.getUser().setEmailAddress(emailAddress);
-		}
-	}
-
 	public void onFullNameBlur() {
-		if (isEdit) {
+		if (!this.modifyEmployeeInfoItem.isEdit()) {
 			String username = generateUsername();
 			String emailAddress = EmpLocalServiceUtil.generateEmailByUsername(
 					username, EMAIL_SUFFIX);
@@ -581,19 +526,6 @@ public class EmployeeBean implements Serializable {
 		return new ArrayList<>();
 	}
 
-	public void onStatusChange(long employeeId) {
-		final EmployeeStatus status = EmployeeStatus.valueOf(selectedStatus);
-
-		if (status.equals(EmployeeStatus.RESIGNED)) {
-			// ResignationBean resignationBean = (ResignationBean) BeanUtils
-			// .getBackingBeanByName("resignationBean");
-			// resignationBean.setEmployeeId(employeeId);
-			// RequestContext.getCurrentInstance().execute(
-			// "PF('wResignationDialog').show()");
-		}
-		selectedStatus = null;
-	}
-
 	public void onPromotionNewPosition() {
 		long id = ((EmployeeIndexedBean) BeanUtils
 				.getBackingBeanByName("employeeIndexedBean"))
@@ -674,14 +606,6 @@ public class EmployeeBean implements Serializable {
 		this.modifyEmployeeInfoItem = modifyEmployeeInfoItem;
 	}
 
-	public boolean isEdit() {
-		return isEdit;
-	}
-
-	public void setEdit(boolean isEdit) {
-		this.isEdit = isEdit;
-	}
-
 	public EmpInfoItem getSelectedEmployeeInfoItem() {
 		return selectedEmployeeInfoItem;
 	}
@@ -739,22 +663,6 @@ public class EmployeeBean implements Serializable {
 		this.updateString = updateString;
 	}
 
-	public String getCurrentNav() {
-		return currentNav;
-	}
-
-	public void setCurrentNav(String currentNav) {
-		this.currentNav = currentNav;
-	}
-
-	public int getCurrentPage() {
-		return currentPage;
-	}
-
-	public void setCurrentPage(int currentPage) {
-		this.currentPage = currentPage;
-	}
-
 	public String getIncludedDialog() {
 		return includedDialog;
 	}
@@ -788,11 +696,12 @@ public class EmployeeBean implements Serializable {
 	}
 
 	public List<Country> getCountries() {
-		return countries;
-	}
-
-	public void setCountries(List<Country> countries) {
-		this.countries = countries;
+		try {
+			return CountryServiceUtil.getCountries();
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return new ArrayList<>();
 	}
 
 	public EmployeeIndexedBean getIndexedBean() {
@@ -818,6 +727,14 @@ public class EmployeeBean implements Serializable {
 
 	public void onExecuteFirstAprilQuartzTask() {
 		EmpAnnualLeaveLocalServiceUtil.executeFirstAprilQuartzTask();
+	}
+
+	public EmployeeModuleNavigationBean getNavigationBean() {
+		return navigationBean;
+	}
+
+	public void setNavigationBean(EmployeeModuleNavigationBean navigationBean) {
+		this.navigationBean = navigationBean;
 	}
 
 }

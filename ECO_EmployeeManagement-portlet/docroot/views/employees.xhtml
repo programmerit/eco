@@ -200,57 +200,72 @@
 				<p:commandLink value="Add Employee"
 					action="#{empView.addNewEmployee}" update=":empPanelGroup"
 					ajax="true"
-					rendered="#{employeeModelPermission.checkPermission('ADD')}" /> |
+					rendered="#{employeeModelPermission.checkPermission('ADD')}" />
+				<h:outputText value="|" rendered="#{authorityBean.hr}" />
 
 				<p:link value="Resignation List" outcome="resignationHistory">
 					<f:param name="param1" value="test" />
-				</p:link> |
+				</p:link>
+				<h:outputText value="|" rendered="true" />
 
-				<p:link value="Promotion List" outcome="promotionHistory" /> |
-				
-				<p:link value="Discipline List" outcome="empDiscipline" /> |	
-				
-				<p:link value="Vacation Leave" outcome="vacationLeaveView" /> |
+				<p:link value="Promotion List" outcome="promotionHistory" />
+				<h:outputText value="|" rendered="true" />
 
-				<p:commandLink value="Import/Export"
+				<p:link value="Discipline List" outcome="empDiscipline" />
+				<h:outputText value="|" rendered="true" />
+
+				<p:link value="Vacation Leave" outcome="vacationLeaveView"
+					rendered="#{authorityBean.admin}" />
+				<h:outputText value="|" rendered="#{authorityBean.admin}" />
+
+				<p:commandLink value="Import/Export" rendered="#{authorityBean.hr}"
 					actionListener="#{empView.importExportEmployee}"
-					update=":empPanelGroup" /> |
+					update=":empPanelGroup" />
+				<h:outputText value="|" rendered="#{authorityBean.hr}" />
 
 				<p:commandLink value="Remove All Indexes"
+					rendered="#{authorityBean.admin}"
 					actionListener="#{employeeIndexedBean.removeIndexes}" ajax="true"
-					update="employees" /> |
+					update="employees" />
+				<h:outputText value="|" rendered="#{authorityBean.admin}" />
+
 				<p:commandLink value="Index All Employees"
+					rendered="#{authorityBean.admin}"
 					actionListener="#{employeeIndexedBean.indexAllEmployees}"
-					ajax="true" update="employees" /> |
-					
-				<p:link value="Organization Tree" outcome="organizationView" /> | 
-				
-				<p:link value="Location Tree" outcome="locationView" /> | 
-				
-				<p:link value="Specialized Tree" outcome="specializedView" /> | 
-				
-				<p:link value="Leaves Manage" outcome="annualLeaveView" /> |
-				
+					ajax="true" update="employees" />
+				<h:outputText value="|" rendered="#{authorityBean.admin}" />
+
+				<p:link value="Organization Tree" outcome="organizationView"
+					rendered="#{authorityBean.hr}" />
+				<h:outputText value="|" rendered="#{authorityBean.hr}" />
+
+				<p:link value="Location Tree" outcome="locationView" />
+				<h:outputText value="|" />
+
+				<p:link value="Specialized Tree" outcome="specializedView" />
+				<h:outputText value="|" />
+
 				<p:commandLink value="1st April Re-calculate"
-					actionListener="#{empView.onExecuteFirstAprilQuartzTask}" />
+					actionListener="#{empView.onExecuteFirstAprilQuartzTask}"
+					rendered="#{authorityBean.admin}" />
 
 				<p:commandLink value="Transfer labor contract"
-					actionListener="#{empView.onTransferEmpContract}" rendered="#{empView.testEnabled}"/>
+					actionListener="#{empView.onTransferEmpContract}"
+					rendered="#{authorityBean.admin}" />
 
 				<p:commandLink value="Test send mail"
 					actionListener="#{empView.onTestSendMail}"
 					update=":includedDialogPanelGroup"
 					oncomplete="PF('wNotifyDialog').show();"
-					rendered="#{empView.testEnabled}" style="margin-left: 3px;" />
+					rendered="#{authorityBean.admin}" style="margin-left: 3px;" />
 
 				<p:commandLink value="Fix labor contract signed date"
 					actionListener="#{empView.onTestUpdateLaborContractSignedDate}"
-					rendered="#{empView.testEnabled}" style="margin-left: 3px;" />
+					rendered="#{authorityBean.admin}" style="margin-left: 3px;" />
 
 				<p:commandLink value="Add Annual Leave Days"
 					actionListener="#{empView.onTestAddAnnualLeaveDays}"
-					rendered="#{empView.testEnabled}" style="margin-left: 3px;" />
-
+					rendered="#{authorityBean.admin}" style="margin-left: 3px;" />
 			</h:panelGroup>
 
 			<br />
@@ -311,12 +326,16 @@
 				</p:column>
 
 				<p:column headerText="Actions" toggleable="false" width="100"
-					exportable="false">
+					exportable="false"
+					rendered="#{empPermission.checkPermission(employeeInfo.id, 'UPDATE') or empPermission.checkPermission(employeeInfo.id, 'DELETE')}">
 					<p:commandLink id="editBtn" value="Edit"
 						action="#{empView.editEmployee(employeeInfo.id)}"
 						update=":empPanelGroup"
-						rendered="#{empPermission.checkPermission(employeeInfo.id, 'UPDATE')}" /> 
-					| 
+						rendered="#{empPermission.checkPermission(employeeInfo.id, 'UPDATE')}" />
+
+					<h:outputText value="|"
+						rendered="#{empPermission.checkPermission(employeeInfo.id, 'UPDATE')}" />
+
 					<p:commandLink id="deleteBtn" value="Remove"
 						onclick="PF('wDeleteConfirmDialog').show()"
 						icon="fa fa-remove Fs16 White"

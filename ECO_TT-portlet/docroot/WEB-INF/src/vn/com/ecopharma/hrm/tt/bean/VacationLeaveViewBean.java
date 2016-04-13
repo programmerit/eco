@@ -11,6 +11,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.LazyDataModel;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import vn.com.ecopharma.emp.model.VacationLeave;
 import vn.com.ecopharma.emp.service.VacationLeaveLocalServiceUtil;
 import vn.com.ecopharma.hrm.tt.dm.VacationLeaveIndexLazyDataModel;
 import vn.com.ecopharma.hrm.tt.dto.VacationLeaveIndexedItem;
@@ -30,6 +35,9 @@ public class VacationLeaveViewBean
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private static final Log LOGGER = LogFactoryUtil
+			.getLog(VacationLeaveViewBean.class);
+
 	@PostConstruct
 	public void init() {
 		super.init();
@@ -43,16 +51,24 @@ public class VacationLeaveViewBean
 	public void onRowEdit(RowEditEvent event) {
 		final VacationLeaveIndexedItem obj = (VacationLeaveIndexedItem) event
 				.getObject();
-		// VacationLeave oldVacationLeave = VacationLeaveLocalServiceUtil
-		// .fetchVacationLeave(obj.getId());
-		// String oldStatus = oldVacationLeave.getStatus();
-		// String currentStatus = obj.getStatus();
+		try {
+			VacationLeave oldVacationLeave = VacationLeaveLocalServiceUtil
+					.fetchVacationLeave(obj.getId());
 
-		VacationLeaveLocalServiceUtil.updateVacationLeave(obj.getId(),
-				obj.getType(), obj.getSign(), obj.getLeaveFrom(),
-				obj.getLeaveTo(), obj.getActualTo(), obj.getReason(),
-				obj.getDescription(), obj.getStatus());
+			VacationLeave updatedVacationLeave = VacationLeaveLocalServiceUtil
+					.updateVacationLeave(obj.getId(), obj.getType(),
+							obj.getSign(), obj.getLeaveFrom(),
+							obj.getLeaveTo(), obj.getActualTo(),
+							obj.getReason(), obj.getDescription(),
+							obj.getStatus());
 
+			TimeTrackingLocalServiceUtil
+					.updateTimeTrackingsByUpdatedVacationLeave(
+							oldVacationLeave, updatedVacationLeave);
+
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
 	}
 
 	public void onRowEditCancel(RowEditEvent event) {

@@ -304,7 +304,7 @@ public class OrganizationFilterBean implements OrganizationFilter {
 	}
 
 	public boolean deletedLinkAvailable(String badgeName) {
-		if (authorityBean.isDevisionSelectable())
+		if (authorityBean.isHr())
 			return true;
 		if ("Department".equals(badgeName) || "Devision".equals(badgeName)) {
 			if (authorityBean.isDepartmentManager()

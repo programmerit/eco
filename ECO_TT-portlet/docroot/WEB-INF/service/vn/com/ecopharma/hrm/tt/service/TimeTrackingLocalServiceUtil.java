@@ -290,9 +290,14 @@ public class TimeTrackingLocalServiceUtil {
 		return getService().findAll(start, end, orderByComparator);
 	}
 
-	public static vn.com.ecopharma.hrm.tt.model.TimeTracking findByEmpAndDate(
+	public static vn.com.ecopharma.hrm.tt.model.TimeTracking fetchByEmpAndDate(
 		long empId, java.util.Date date) {
-		return getService().findByEmpAndDate(empId, date);
+		return getService().fetchByEmpAndDate(empId, date);
+	}
+
+	public static java.util.List<vn.com.ecopharma.hrm.tt.model.TimeTracking> findByVacationLeave(
+		long vacationLeaveId) {
+		return getService().findByVacationLeave(vacationLeaveId);
 	}
 
 	public static int countSearch(
@@ -355,6 +360,14 @@ public class TimeTrackingLocalServiceUtil {
 			out2, out3);
 	}
 
+	public static void updateTimeTrackingsByUpdatedVacationLeave(
+		vn.com.ecopharma.emp.model.VacationLeave oldVacationLeave,
+		vn.com.ecopharma.emp.model.VacationLeave updatedVacationLeave) {
+		getService()
+			.updateTimeTrackingsByUpdatedVacationLeave(oldVacationLeave,
+			updatedVacationLeave);
+	}
+
 	public static vn.com.ecopharma.hrm.tt.model.TimeTracking setLeaveForTimeTracking(
 		vn.com.ecopharma.hrm.tt.model.TimeTracking timeTracking, long leaveRefId) {
 		return getService().setLeaveForTimeTracking(timeTracking, leaveRefId);
@@ -363,6 +376,11 @@ public class TimeTrackingLocalServiceUtil {
 	public static void addOrUpdateTimeTrackingByLeaveRequest(
 		vn.com.ecopharma.emp.model.VacationLeave leaveRequest) {
 		getService().addOrUpdateTimeTrackingByLeaveRequest(leaveRequest);
+	}
+
+	public static void addOrUpdateTimeTrackingByInOutRequest(
+		vn.com.ecopharma.emp.model.VacationLeave inOutRequest) {
+		getService().addOrUpdateTimeTrackingByInOutRequest(inOutRequest);
 	}
 
 	public static void scanAndAddMissingDataByLeaveRequests(

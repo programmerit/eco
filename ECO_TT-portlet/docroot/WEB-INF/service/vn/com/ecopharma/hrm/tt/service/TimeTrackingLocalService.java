@@ -263,8 +263,12 @@ public interface TimeTrackingLocalService extends BaseLocalService,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
-	public vn.com.ecopharma.hrm.tt.model.TimeTracking findByEmpAndDate(
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public vn.com.ecopharma.hrm.tt.model.TimeTracking fetchByEmpAndDate(
 		long empId, java.util.Date date);
+
+	public java.util.List<vn.com.ecopharma.hrm.tt.model.TimeTracking> findByVacationLeave(
+		long vacationLeaveId);
 
 	public int countSearch(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
@@ -309,11 +313,18 @@ public interface TimeTrackingLocalService extends BaseLocalService,
 		java.util.Date in3, java.util.Date out1, java.util.Date out2,
 		java.util.Date out3);
 
+	public void updateTimeTrackingsByUpdatedVacationLeave(
+		vn.com.ecopharma.emp.model.VacationLeave oldVacationLeave,
+		vn.com.ecopharma.emp.model.VacationLeave updatedVacationLeave);
+
 	public vn.com.ecopharma.hrm.tt.model.TimeTracking setLeaveForTimeTracking(
 		vn.com.ecopharma.hrm.tt.model.TimeTracking timeTracking, long leaveRefId);
 
 	public void addOrUpdateTimeTrackingByLeaveRequest(
 		vn.com.ecopharma.emp.model.VacationLeave leaveRequest);
+
+	public void addOrUpdateTimeTrackingByInOutRequest(
+		vn.com.ecopharma.emp.model.VacationLeave inOutRequest);
 
 	public void scanAndAddMissingDataByLeaveRequests(
 		java.util.List<vn.com.ecopharma.emp.model.VacationLeave> list);

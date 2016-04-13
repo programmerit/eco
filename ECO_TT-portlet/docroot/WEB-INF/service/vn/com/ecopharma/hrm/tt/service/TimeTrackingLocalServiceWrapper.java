@@ -306,9 +306,15 @@ public class TimeTrackingLocalServiceWrapper implements TimeTrackingLocalService
 	}
 
 	@Override
-	public vn.com.ecopharma.hrm.tt.model.TimeTracking findByEmpAndDate(
+	public vn.com.ecopharma.hrm.tt.model.TimeTracking fetchByEmpAndDate(
 		long empId, java.util.Date date) {
-		return _timeTrackingLocalService.findByEmpAndDate(empId, date);
+		return _timeTrackingLocalService.fetchByEmpAndDate(empId, date);
+	}
+
+	@Override
+	public java.util.List<vn.com.ecopharma.hrm.tt.model.TimeTracking> findByVacationLeave(
+		long vacationLeaveId) {
+		return _timeTrackingLocalService.findByVacationLeave(vacationLeaveId);
 	}
 
 	@Override
@@ -381,6 +387,14 @@ public class TimeTrackingLocalServiceWrapper implements TimeTrackingLocalService
 	}
 
 	@Override
+	public void updateTimeTrackingsByUpdatedVacationLeave(
+		vn.com.ecopharma.emp.model.VacationLeave oldVacationLeave,
+		vn.com.ecopharma.emp.model.VacationLeave updatedVacationLeave) {
+		_timeTrackingLocalService.updateTimeTrackingsByUpdatedVacationLeave(oldVacationLeave,
+			updatedVacationLeave);
+	}
+
+	@Override
 	public vn.com.ecopharma.hrm.tt.model.TimeTracking setLeaveForTimeTracking(
 		vn.com.ecopharma.hrm.tt.model.TimeTracking timeTracking, long leaveRefId) {
 		return _timeTrackingLocalService.setLeaveForTimeTracking(timeTracking,
@@ -391,6 +405,12 @@ public class TimeTrackingLocalServiceWrapper implements TimeTrackingLocalService
 	public void addOrUpdateTimeTrackingByLeaveRequest(
 		vn.com.ecopharma.emp.model.VacationLeave leaveRequest) {
 		_timeTrackingLocalService.addOrUpdateTimeTrackingByLeaveRequest(leaveRequest);
+	}
+
+	@Override
+	public void addOrUpdateTimeTrackingByInOutRequest(
+		vn.com.ecopharma.emp.model.VacationLeave inOutRequest) {
+		_timeTrackingLocalService.addOrUpdateTimeTrackingByInOutRequest(inOutRequest);
 	}
 
 	@Override

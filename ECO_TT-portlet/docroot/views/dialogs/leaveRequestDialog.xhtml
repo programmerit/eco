@@ -82,6 +82,7 @@
 							<p:calendar id="leaveTo"
 								rendered="#{not leaveRequestBean.halfDayLeaveRequest}"
 								value="#{leaveRequestBean.requestItem.leave.leaveTo}"
+								mindate="#{leaveRequestBean.requestItem.leave.leaveFrom}"
 								pattern="dd/MM/yyyy" styleClass="calendarClass" required="true" />
 
 							<pe:timePicker mode="popup" id="halfDayLeaveTimeFrom"

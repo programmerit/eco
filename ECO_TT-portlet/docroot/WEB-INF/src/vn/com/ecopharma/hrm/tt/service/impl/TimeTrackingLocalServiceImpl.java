@@ -102,13 +102,22 @@ public class TimeTrackingLocalServiceImpl extends
 		return new ArrayList<>();
 	}
 
-	public TimeTracking findByEmpAndDate(long empId, Date date) {
+	public TimeTracking fetchByEmpAndDate(long empId, Date date) {
 		try {
 			return timeTrackingPersistence.fetchByEmpAndDate(empId, date);
 		} catch (SystemException e) {
 			LOGGER.info(e);
 		}
 		return null;
+	}
+
+	public List<TimeTracking> findByVacationLeave(long vacationLeaveId) {
+		try {
+			return timeTrackingPersistence.findByVacationLeave(vacationLeaveId);
+		} catch (SystemException e) {
+			LOGGER.info(e);
+		}
+		return new ArrayList<>();
 	}
 
 	@Override
@@ -316,6 +325,67 @@ public class TimeTrackingLocalServiceImpl extends
 		return null;
 	}
 
+	public void updateTimeTrackingsByUpdatedVacationLeave(
+			VacationLeave oldVacationLeave, VacationLeave updatedVacationLeave) {
+		if (updatedVacationLeave == null)
+			return;
+
+		// terminate incase there's no changing at time fields
+		if (oldVacationLeave.getLeaveFrom().equals(
+				updatedVacationLeave.getLeaveFrom())
+				&& oldVacationLeave.getLeaveTo().equals(
+						updatedVacationLeave.getLeaveTo())
+				&& oldVacationLeave.getActualTo().equals(
+						updatedVacationLeave.getActualTo()))
+			return;
+
+		long vacationLeaveId = updatedVacationLeave.getVacationLeaveId();
+
+		final List<TimeTracking> oldTimeTrackingsByVacationLeave = findByVacationLeave(vacationLeaveId);
+
+		final List<TimeTracking> checkingUpdatedTimeTrackingsByVacationLeave = new ArrayList<>();
+
+		Date dateFrom = updatedVacationLeave.getLeaveFrom();
+		Date dateTo = updatedVacationLeave.getActualTo() != null ? updatedVacationLeave
+				.getActualTo() : updatedVacationLeave.getLeaveTo();
+
+		// get dates range of updated vacationLeave
+		final List<Date> checkingUpdatedDatesByVacationLeave = getDatesBetweenTwoDates(
+				dateFrom, dateTo, false, true);
+
+		for (Date date : checkingUpdatedDatesByVacationLeave) {
+			checkingUpdatedTimeTrackingsByVacationLeave.add(fetchByEmpAndDate(
+					updatedVacationLeave.getEmpId(), date));
+		}
+
+		final List<TimeTracking> keepList = new ArrayList<>(
+				checkingUpdatedTimeTrackingsByVacationLeave);
+		keepList.retainAll(oldTimeTrackingsByVacationLeave);
+
+		final List<TimeTracking> newList = new ArrayList<>(
+				checkingUpdatedTimeTrackingsByVacationLeave);
+		newList.removeAll(oldTimeTrackingsByVacationLeave);
+
+		final List<TimeTracking> removeRefList = new ArrayList<>(
+				oldTimeTrackingsByVacationLeave);
+		removeRefList.removeAll(keepList);
+
+		// first remove leave ref from removeRefList
+		for (TimeTracking timeTracking : removeRefList) {
+			timeTracking.setLeaveRefId(0L);
+			this.updateTimeTracking(timeTracking);
+		}
+
+		// add leave ref for newList
+		for (TimeTracking timeTracking : newList) {
+			timeTracking.setLeaveRefId(vacationLeaveId);
+			this.updateTimeTracking(timeTracking);
+		}
+		
+		// TODO: update annual leave according
+
+	}
+
 	public TimeTracking setLeaveForTimeTracking(TimeTracking timeTracking,
 			long leaveRefId) {
 		timeTracking.setLeaveRefId(leaveRefId);
@@ -331,7 +401,7 @@ public class TimeTrackingLocalServiceImpl extends
 				true);
 		for (Date date : vacationRange) {
 
-			final TimeTracking checkedTimeTracking = findByEmpAndDate(
+			final TimeTracking checkedTimeTracking = fetchByEmpAndDate(
 					leaveRequest.getEmpId(), date);
 
 			if (checkedTimeTracking == null) {
@@ -356,8 +426,7 @@ public class TimeTrackingLocalServiceImpl extends
 								VacationLeaveType.OUT.toString()))) {
 			return;
 		}
-		
-		
+
 	}
 
 	public void scanAndAddMissingDataByLeaveRequests(List<VacationLeave> list) {

@@ -2,6 +2,7 @@ package vn.com.ecopharma.emp.bean.filter;
 
 import java.util.Date;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -14,7 +15,8 @@ public class EmpDisciplineFilterBean extends BaseEmpFilterBean {
 	private Date effectiveDateFrom;
 
 	private Date effectiveDateTo;
-	
+
+	@PostConstruct
 	@Override
 	public void init() {
 		super.init();

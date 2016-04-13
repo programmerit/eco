@@ -18,6 +18,7 @@ import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpOrgRelationshipLocalServiceUtil;
 import vn.com.ecopharma.emp.service.UnitLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
+import vn.com.ecopharma.emp.util.EmployeeUtils;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -40,6 +41,8 @@ public class AuthorityBean implements Serializable {
 	private static final Log LOGGER = LogFactoryUtil
 			.getLog(AuthorityBean.class);
 
+	private static final String ADMINISTRATOR_ROLE = "Administrator";
+
 	private Set<Long> searchableDevisionIds;
 	private Set<Long> searchableDepartmentIds;
 	private Set<Long> searchableUnitIds;
@@ -50,6 +53,7 @@ public class AuthorityBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
+		LOGGER.info("Calling authority session bean");
 		searchableDevisionIds = new HashSet<>();
 		searchableDepartmentIds = new HashSet<>();
 		searchableUnitIds = new HashSet<>();
@@ -112,10 +116,6 @@ public class AuthorityBean implements Serializable {
 		return empOrgRelationship.getHeadOfOrg();
 	}
 
-	public boolean isDevisionSelectable() {
-		return BeanUtils.getEmpModelPermission().isHrPermission();
-	}
-
 	private long getDevisionIdFromDepartment(long departmentId) {
 		try {
 			return DepartmentLocalServiceUtil.fetchDepartment(departmentId)
@@ -147,11 +147,19 @@ public class AuthorityBean implements Serializable {
 		return searchableUnitIds;
 	}
 
+	public boolean isHr() {
+		return BeanUtils.getEmpModelPermission().isHrPermission();
+	}
+
 	public boolean isDepartmentManager() {
 		return isDepartmentManager;
 	}
 
 	public boolean isUnitManager() {
 		return isUnitManager;
+	}
+
+	public boolean isAdmin() {
+		return EmployeeUtils.getPermissionChecker().isOmniadmin();
 	}
 }

@@ -82,7 +82,7 @@ public class ImportExportTimeTrackingBean implements Serializable {
 						LogFactoryUtil.getLog(
 								ImportExportTimeTrackingBean.class).info(item);
 						final TimeTracking checkedTimeTracking = TimeTrackingLocalServiceUtil
-								.findByEmpAndDate(timeTrackingSource.getEmp()
+								.fetchByEmpAndDate(timeTrackingSource.getEmp()
 										.getEmpId(), item.getDate());
 						if (checkedTimeTracking == null) {
 							TimeTrackingLocalServiceUtil.addTimeTracking(

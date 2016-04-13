@@ -835,6 +835,499 @@ public class TimeTrackingPersistenceImpl extends BasePersistenceImpl<TimeTrackin
 	private static final String _FINDER_COLUMN_EMPANDDATE_EMPID_2 = "timeTracking.empId = ? AND ";
 	private static final String _FINDER_COLUMN_EMPANDDATE_DATE_1 = "timeTracking.date IS NULL";
 	private static final String _FINDER_COLUMN_EMPANDDATE_DATE_2 = "timeTracking.date = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_VACATIONLEAVE =
+		new FinderPath(TimeTrackingModelImpl.ENTITY_CACHE_ENABLED,
+			TimeTrackingModelImpl.FINDER_CACHE_ENABLED, TimeTrackingImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByVacationLeave",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VACATIONLEAVE =
+		new FinderPath(TimeTrackingModelImpl.ENTITY_CACHE_ENABLED,
+			TimeTrackingModelImpl.FINDER_CACHE_ENABLED, TimeTrackingImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByVacationLeave",
+			new String[] { Long.class.getName() },
+			TimeTrackingModelImpl.LEAVEREFID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_VACATIONLEAVE = new FinderPath(TimeTrackingModelImpl.ENTITY_CACHE_ENABLED,
+			TimeTrackingModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByVacationLeave",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the time trackings where leaveRefId = &#63;.
+	 *
+	 * @param leaveRefId the leave ref ID
+	 * @return the matching time trackings
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<TimeTracking> findByVacationLeave(long leaveRefId)
+		throws SystemException {
+		return findByVacationLeave(leaveRefId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the time trackings where leaveRefId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.tt.model.impl.TimeTrackingModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param leaveRefId the leave ref ID
+	 * @param start the lower bound of the range of time trackings
+	 * @param end the upper bound of the range of time trackings (not inclusive)
+	 * @return the range of matching time trackings
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<TimeTracking> findByVacationLeave(long leaveRefId, int start,
+		int end) throws SystemException {
+		return findByVacationLeave(leaveRefId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the time trackings where leaveRefId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link vn.com.ecopharma.hrm.tt.model.impl.TimeTrackingModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param leaveRefId the leave ref ID
+	 * @param start the lower bound of the range of time trackings
+	 * @param end the upper bound of the range of time trackings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching time trackings
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<TimeTracking> findByVacationLeave(long leaveRefId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VACATIONLEAVE;
+			finderArgs = new Object[] { leaveRefId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_VACATIONLEAVE;
+			finderArgs = new Object[] { leaveRefId, start, end, orderByComparator };
+		}
+
+		List<TimeTracking> list = (List<TimeTracking>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (TimeTracking timeTracking : list) {
+				if ((leaveRefId != timeTracking.getLeaveRefId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_TIMETRACKING_WHERE);
+
+			query.append(_FINDER_COLUMN_VACATIONLEAVE_LEAVEREFID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(TimeTrackingModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(leaveRefId);
+
+				if (!pagination) {
+					list = (List<TimeTracking>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<TimeTracking>(list);
+				}
+				else {
+					list = (List<TimeTracking>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first time tracking in the ordered set where leaveRefId = &#63;.
+	 *
+	 * @param leaveRefId the leave ref ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching time tracking
+	 * @throws vn.com.ecopharma.hrm.tt.NoSuchTimeTrackingException if a matching time tracking could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public TimeTracking findByVacationLeave_First(long leaveRefId,
+		OrderByComparator orderByComparator)
+		throws NoSuchTimeTrackingException, SystemException {
+		TimeTracking timeTracking = fetchByVacationLeave_First(leaveRefId,
+				orderByComparator);
+
+		if (timeTracking != null) {
+			return timeTracking;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("leaveRefId=");
+		msg.append(leaveRefId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTimeTrackingException(msg.toString());
+	}
+
+	/**
+	 * Returns the first time tracking in the ordered set where leaveRefId = &#63;.
+	 *
+	 * @param leaveRefId the leave ref ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching time tracking, or <code>null</code> if a matching time tracking could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public TimeTracking fetchByVacationLeave_First(long leaveRefId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<TimeTracking> list = findByVacationLeave(leaveRefId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last time tracking in the ordered set where leaveRefId = &#63;.
+	 *
+	 * @param leaveRefId the leave ref ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching time tracking
+	 * @throws vn.com.ecopharma.hrm.tt.NoSuchTimeTrackingException if a matching time tracking could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public TimeTracking findByVacationLeave_Last(long leaveRefId,
+		OrderByComparator orderByComparator)
+		throws NoSuchTimeTrackingException, SystemException {
+		TimeTracking timeTracking = fetchByVacationLeave_Last(leaveRefId,
+				orderByComparator);
+
+		if (timeTracking != null) {
+			return timeTracking;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("leaveRefId=");
+		msg.append(leaveRefId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTimeTrackingException(msg.toString());
+	}
+
+	/**
+	 * Returns the last time tracking in the ordered set where leaveRefId = &#63;.
+	 *
+	 * @param leaveRefId the leave ref ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching time tracking, or <code>null</code> if a matching time tracking could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public TimeTracking fetchByVacationLeave_Last(long leaveRefId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByVacationLeave(leaveRefId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<TimeTracking> list = findByVacationLeave(leaveRefId, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the time trackings before and after the current time tracking in the ordered set where leaveRefId = &#63;.
+	 *
+	 * @param timeTrackingId the primary key of the current time tracking
+	 * @param leaveRefId the leave ref ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next time tracking
+	 * @throws vn.com.ecopharma.hrm.tt.NoSuchTimeTrackingException if a time tracking with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public TimeTracking[] findByVacationLeave_PrevAndNext(long timeTrackingId,
+		long leaveRefId, OrderByComparator orderByComparator)
+		throws NoSuchTimeTrackingException, SystemException {
+		TimeTracking timeTracking = findByPrimaryKey(timeTrackingId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			TimeTracking[] array = new TimeTrackingImpl[3];
+
+			array[0] = getByVacationLeave_PrevAndNext(session, timeTracking,
+					leaveRefId, orderByComparator, true);
+
+			array[1] = timeTracking;
+
+			array[2] = getByVacationLeave_PrevAndNext(session, timeTracking,
+					leaveRefId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected TimeTracking getByVacationLeave_PrevAndNext(Session session,
+		TimeTracking timeTracking, long leaveRefId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_TIMETRACKING_WHERE);
+
+		query.append(_FINDER_COLUMN_VACATIONLEAVE_LEAVEREFID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(TimeTrackingModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(leaveRefId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(timeTracking);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<TimeTracking> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the time trackings where leaveRefId = &#63; from the database.
+	 *
+	 * @param leaveRefId the leave ref ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByVacationLeave(long leaveRefId)
+		throws SystemException {
+		for (TimeTracking timeTracking : findByVacationLeave(leaveRefId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(timeTracking);
+		}
+	}
+
+	/**
+	 * Returns the number of time trackings where leaveRefId = &#63;.
+	 *
+	 * @param leaveRefId the leave ref ID
+	 * @return the number of matching time trackings
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByVacationLeave(long leaveRefId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_VACATIONLEAVE;
+
+		Object[] finderArgs = new Object[] { leaveRefId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_TIMETRACKING_WHERE);
+
+			query.append(_FINDER_COLUMN_VACATIONLEAVE_LEAVEREFID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(leaveRefId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_VACATIONLEAVE_LEAVEREFID_2 = "timeTracking.leaveRefId = ?";
 
 	public TimeTrackingPersistenceImpl() {
 		setModelClass(TimeTracking.class);
@@ -1133,6 +1626,25 @@ public class TimeTrackingPersistenceImpl extends BasePersistenceImpl<TimeTrackin
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_EMP, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EMP,
+					args);
+			}
+
+			if ((timeTrackingModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VACATIONLEAVE.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						timeTrackingModelImpl.getOriginalLeaveRefId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VACATIONLEAVE,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VACATIONLEAVE,
+					args);
+
+				args = new Object[] { timeTrackingModelImpl.getLeaveRefId() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VACATIONLEAVE,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VACATIONLEAVE,
 					args);
 			}
 		}

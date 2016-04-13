@@ -3,6 +3,7 @@ package vn.com.ecopharma.emp.bean.ie;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -48,9 +49,14 @@ public class EmpDisciplineImportExportBean implements Serializable {
 	private static final int MN_SHEET = 0;
 	private static final int MB_SHEET = 1;
 
-	private static final int EMP_CODE_CELL = 1;
 	private static final int DECISION_NO_ROW = 3;
-	private static final int ACTUAL_DATA_ROW_FROM = 7;
+	private static final int APPLIED_DATE_ROW = 4;
+	private static final int ACTUAL_DATA_ROW_FROM = 8;
+
+	private static final int EMP_CODE_CELL = 1;
+	private static final int SOP_SUBTRACT_CELL = 5;
+	private static final int SALES_SUBTRACT_CELL = 6;
+	private static final int REPRIMAND_DECISION_CELL = 7;
 	private static final int DESCRIPTION_CELL = 8;
 
 	public void handleFileImport(FileUploadEvent fileUploadEvent) {
@@ -60,44 +66,23 @@ public class EmpDisciplineImportExportBean implements Serializable {
 		try {
 			final XSSFWorkbook wb = new XSSFWorkbook(
 					uploadedFile.getInputstream());
-			XSSFSheet sheet = null;
-			sheet = wb.getSheetAt(MN_SHEET);
-			String decision = StringUtils.EMPTY;
-
-			decision = getFormattedDecisionNo(sheet.getRow(DECISION_NO_ROW));
 			List<EmpDisciplineItem> disciplineItems = new ArrayList<>();
-			for (int i = ACTUAL_DATA_ROW_FROM; i <= sheet.getLastRowNum(); i++) {
-				final XSSFRow row = sheet.getRow(i);
-				if (row != null && row.getCell(EMP_CODE_CELL) != null) {
-					EmpDisciplineItem item = new EmpDisciplineItem(row,
-							decision);
-					disciplineItems.add(item);
-				}
-			}
 
-			sheet = wb.getSheetAt(MB_SHEET);
-			if (sheet != null) {
-				decision = getFormattedDecisionNo(sheet.getRow(DECISION_NO_ROW));
-				for (int i = ACTUAL_DATA_ROW_FROM; i <= sheet.getLastRowNum(); i++) {
-					final XSSFRow row = sheet.getRow(i);
-					if (row != null && row.getCell(EMP_CODE_CELL) != null) {
-						EmpDisciplineItem item = new EmpDisciplineItem(row,
-								decision);
-						disciplineItems.add(item);
-					}
-				}
-			}
+			disciplineItems.addAll(bindItemsFromWorkSheet(wb
+					.getSheetAt(MN_SHEET)));
+			disciplineItems.addAll(bindItemsFromWorkSheet(wb
+					.getSheetAt(MB_SHEET)));
 
 			for (EmpDisciplineItem item : disciplineItems) {
 				final long empId = item.getEmpId();
 				if (empId != 0L) {
 					EmpDisciplineLocalServiceUtil.addEmpDiscipline(empId,
 							item.getDecisionNo(), StringUtils.EMPTY,
-							item.getDisciplineType(), new Date(),
+							item.getDisciplineType(), item.getAppliedDate(),
 							item.getAdditionDisciplineType(),
 							item.getDescription(), serviceContext);
 					System.out.println(item.getDecisionNo() + "  "
-							+ item.toString());
+							+ item.getAppliedDate() + "  " + item.toString());
 
 				}
 
@@ -112,6 +97,25 @@ public class EmpDisciplineImportExportBean implements Serializable {
 		}
 	}
 
+	private List<EmpDisciplineItem> bindItemsFromWorkSheet(XSSFSheet sheet) {
+		final List<EmpDisciplineItem> result = new ArrayList<>();
+		if (sheet == null)
+			return result;
+		final String decision = getFormattedDecisionNo(sheet
+				.getRow(DECISION_NO_ROW));
+		final Date appliedDate = getAppliedDate(sheet.getRow(APPLIED_DATE_ROW));
+		for (int i = ACTUAL_DATA_ROW_FROM; i <= sheet.getLastRowNum(); i++) {
+			final XSSFRow row = sheet.getRow(i);
+			if (row != null && row.getCell(EMP_CODE_CELL) != null) {
+				EmpDisciplineItem item = new EmpDisciplineItem(row,
+						appliedDate, decision);
+				result.add(item);
+			}
+		}
+		return result;
+
+	}
+
 	private String getFormattedDecisionNo(Row row) {
 		String unformattedRowString = row.getCell(0).getStringCellValue();
 		if (StringUtils.trimToNull(unformattedRowString) == null)
@@ -119,6 +123,27 @@ public class EmpDisciplineImportExportBean implements Serializable {
 		final String[] strArr = unformattedRowString.split(" ");
 		String decisionNo = strArr[strArr.length - 1];
 		return decisionNo;
+	}
+
+	private Date getAppliedDate(Row row) {
+		String unforrmattedRowString = row.getCell(0).getStringCellValue();
+		if (StringUtils.trimToNull(unforrmattedRowString) == null)
+			return null;
+		final String[] strArr = unforrmattedRowString.split(" ");
+		String unformattedDate = strArr[strArr.length - 1];
+
+		String[] dateTimeStrArr = unformattedDate.split("/");
+
+		if (dateTimeStrArr.length != 3)
+			return null;
+
+		int date = Integer.valueOf(dateTimeStrArr[0]);
+		int actualMonth = Integer.valueOf(dateTimeStrArr[1]);
+		int month = actualMonth - 1;
+		int year = Integer.valueOf(dateTimeStrArr[2]);
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(year, month, date);
+		return calendar.getTime();
 	}
 
 	public String getSheetNameOrIndex() {
@@ -136,32 +161,16 @@ public class EmpDisciplineImportExportBean implements Serializable {
 		 */
 		private static final long serialVersionUID = 1L;
 
-		private static final int SOP_SUBTRACT_CELL = 5;
-		private static final int SALES_SUBTRACT_CELL = 6;
-		private static final int REPRIMAND_DECISION_CELL = 7;
-
 		private String decisionNo;
+		private Date appliedDate;
 		private String empCode;
 		private String disciplineType = DisciplineType.REPRIMAND.toString();
 		private String additionDisciplineType;
 		private String description;
 
-		public EmpDisciplineItem(String empCode, String disciplineType,
-				String additionDisciplineType, String description) {
-			this.empCode = getActualEmpCode(empCode);
-			this.disciplineType = disciplineType;
-			this.additionDisciplineType = additionDisciplineType;
-			this.description = description;
-		}
-
-		public EmpDisciplineItem(String empCode, String additionDisciplineType,
-				String description) {
-			this(empCode, DisciplineType.REPRIMAND.toString(),
-					additionDisciplineType, description);
-		}
-
-		public EmpDisciplineItem(Row row, String decisionNo) {
+		public EmpDisciplineItem(Row row, Date appliedDate, String decisionNo) {
 			this.decisionNo = decisionNo;
+			this.appliedDate = appliedDate;
 			this.empCode = getActualEmpCode(getCellValueAsString(row
 					.getCell(EMP_CODE_CELL)));
 			this.disciplineType = getDisciplineType(
@@ -228,6 +237,10 @@ public class EmpDisciplineImportExportBean implements Serializable {
 
 		public String getDecisionNo() {
 			return decisionNo;
+		}
+
+		public Date getAppliedDate() {
+			return appliedDate;
 		}
 
 		@Override

@@ -26,7 +26,6 @@ import vn.com.ecopharma.emp.model.EmpDiscipline;
 import vn.com.ecopharma.emp.service.EmpDisciplineLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.util.BeanUtils;
-import vn.com.ecopharma.emp.util.FilterUtils;
 
 import com.liferay.portal.kernel.exception.SystemException;
 

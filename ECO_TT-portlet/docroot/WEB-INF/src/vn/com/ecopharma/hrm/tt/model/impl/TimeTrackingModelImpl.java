@@ -101,7 +101,8 @@ public class TimeTrackingModelImpl extends BaseModelImpl<TimeTracking>
 			true);
 	public static long DATE_COLUMN_BITMASK = 1L;
 	public static long EMPID_COLUMN_BITMASK = 2L;
-	public static long TIMETRACKINGID_COLUMN_BITMASK = 4L;
+	public static long LEAVEREFID_COLUMN_BITMASK = 4L;
+	public static long TIMETRACKINGID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -525,7 +526,19 @@ public class TimeTrackingModelImpl extends BaseModelImpl<TimeTracking>
 
 	@Override
 	public void setLeaveRefId(long leaveRefId) {
+		_columnBitmask |= LEAVEREFID_COLUMN_BITMASK;
+
+		if (!_setOriginalLeaveRefId) {
+			_setOriginalLeaveRefId = true;
+
+			_originalLeaveRefId = _leaveRefId;
+		}
+
 		_leaveRefId = leaveRefId;
+	}
+
+	public long getOriginalLeaveRefId() {
+		return _originalLeaveRefId;
 	}
 
 	public long getColumnBitmask() {
@@ -632,6 +645,10 @@ public class TimeTrackingModelImpl extends BaseModelImpl<TimeTracking>
 		timeTrackingModelImpl._setOriginalEmpId = false;
 
 		timeTrackingModelImpl._originalDate = timeTrackingModelImpl._date;
+
+		timeTrackingModelImpl._originalLeaveRefId = timeTrackingModelImpl._leaveRefId;
+
+		timeTrackingModelImpl._setOriginalLeaveRefId = false;
 
 		timeTrackingModelImpl._columnBitmask = 0;
 	}
@@ -887,6 +904,8 @@ public class TimeTrackingModelImpl extends BaseModelImpl<TimeTracking>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _leaveRefId;
+	private long _originalLeaveRefId;
+	private boolean _setOriginalLeaveRefId;
 	private long _columnBitmask;
 	private TimeTracking _escapedModel;
 }

@@ -129,87 +129,104 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName22 = "findByEmpAndDate";
+		_methodName22 = "fetchByEmpAndDate";
 
 		_methodParameterTypes22 = new String[] { "long", "java.util.Date" };
 
-		_methodName23 = "countSearch";
+		_methodName23 = "findByVacationLeave";
 
-		_methodParameterTypes23 = new String[] {
+		_methodParameterTypes23 = new String[] { "long" };
+
+		_methodName24 = "countSearch";
+
+		_methodParameterTypes24 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long"
 			};
 
-		_methodName24 = "search";
+		_methodName25 = "search";
 
-		_methodParameterTypes24 = new String[] {
+		_methodParameterTypes25 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext",
 				"java.util.List", "long",
 				"com.liferay.portal.kernel.search.Sort", "int", "int"
 			};
 
-		_methodName25 = "getIndexedTimeTracking";
-
-		_methodParameterTypes25 = new String[] {
-				"long", "com.liferay.portal.kernel.search.SearchContext"
-			};
-
 		_methodName26 = "getIndexedTimeTracking";
 
 		_methodParameterTypes26 = new String[] {
+				"long", "com.liferay.portal.kernel.search.SearchContext"
+			};
+
+		_methodName27 = "getIndexedTimeTracking";
+
+		_methodParameterTypes27 = new String[] {
 				"java.lang.String",
 				"com.liferay.portal.kernel.search.SearchContext"
 			};
 
-		_methodName27 = "reindexAllTimeTrackings";
+		_methodName28 = "reindexAllTimeTrackings";
 
-		_methodParameterTypes27 = new String[] {  };
+		_methodParameterTypes28 = new String[] {  };
 
-		_methodName28 = "removeAllIndexes";
+		_methodName29 = "removeAllIndexes";
 
-		_methodParameterTypes28 = new String[] {
+		_methodParameterTypes29 = new String[] {
 				"com.liferay.portal.kernel.search.SearchContext", "long"
 			};
 
-		_methodName29 = "addTimeTracking";
+		_methodName30 = "addTimeTracking";
 
-		_methodParameterTypes29 = new String[] {
+		_methodParameterTypes30 = new String[] {
 				"long", "java.util.Date", "java.util.Date", "java.util.Date",
 				"java.util.Date", "java.util.Date", "java.util.Date",
 				"java.util.Date", "long",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName30 = "updateTimeTracking";
+		_methodName31 = "updateTimeTracking";
 
-		_methodParameterTypes30 = new String[] {
+		_methodParameterTypes31 = new String[] {
 				"long", "java.util.Date", "java.util.Date", "java.util.Date",
 				"java.util.Date", "java.util.Date", "java.util.Date"
 			};
 
-		_methodName31 = "setLeaveForTimeTracking";
-
-		_methodParameterTypes31 = new String[] {
-				"vn.com.ecopharma.hrm.tt.model.TimeTracking", "long"
-			};
-
-		_methodName32 = "addOrUpdateTimeTrackingByLeaveRequest";
+		_methodName32 = "updateTimeTrackingsByUpdatedVacationLeave";
 
 		_methodParameterTypes32 = new String[] {
+				"vn.com.ecopharma.emp.model.VacationLeave",
 				"vn.com.ecopharma.emp.model.VacationLeave"
 			};
 
-		_methodName33 = "scanAndAddMissingDataByLeaveRequests";
+		_methodName33 = "setLeaveForTimeTracking";
 
-		_methodParameterTypes33 = new String[] { "java.util.List" };
+		_methodParameterTypes33 = new String[] {
+				"vn.com.ecopharma.hrm.tt.model.TimeTracking", "long"
+			};
 
-		_methodName34 = "completelyRemoveAllTimeTrackings";
+		_methodName34 = "addOrUpdateTimeTrackingByLeaveRequest";
 
-		_methodParameterTypes34 = new String[] {  };
+		_methodParameterTypes34 = new String[] {
+				"vn.com.ecopharma.emp.model.VacationLeave"
+			};
 
-		_methodName35 = "getDatesBetweenTwoDates";
+		_methodName35 = "addOrUpdateTimeTrackingByInOutRequest";
 
 		_methodParameterTypes35 = new String[] {
+				"vn.com.ecopharma.emp.model.VacationLeave"
+			};
+
+		_methodName36 = "scanAndAddMissingDataByLeaveRequests";
+
+		_methodParameterTypes36 = new String[] { "java.util.List" };
+
+		_methodName37 = "completelyRemoveAllTimeTrackings";
+
+		_methodParameterTypes37 = new String[] {  };
+
+		_methodName38 = "getDatesBetweenTwoDates";
+
+		_methodParameterTypes38 = new String[] {
 				"java.util.Date", "java.util.Date", "boolean", "boolean"
 			};
 	}
@@ -844,7 +861,7 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 	}
 
 	@Override
-	public vn.com.ecopharma.hrm.tt.model.TimeTracking findByEmpAndDate(
+	public vn.com.ecopharma.hrm.tt.model.TimeTracking fetchByEmpAndDate(
 		long empId, java.util.Date date) {
 		Object returnObj = null;
 
@@ -869,6 +886,30 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 	}
 
 	@Override
+	public java.util.List<vn.com.ecopharma.hrm.tt.model.TimeTracking> findByVacationLeave(
+		long vacationLeaveId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23, new Object[] { vacationLeaveId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<vn.com.ecopharma.hrm.tt.model.TimeTracking>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public int countSearch(
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		java.util.List<com.liferay.portal.kernel.search.Query> queries,
@@ -878,8 +919,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23,
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -922,8 +963,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
 						ClpSerializer.translateInput(searchContext),
 						
@@ -967,8 +1008,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] { id, ClpSerializer.translateInput(
 							searchContext) });
 		}
@@ -994,8 +1035,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] {
 						ClpSerializer.translateInput(id),
 						
@@ -1020,8 +1061,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 	@Override
 	public void reindexAllTimeTrackings() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName27,
-				_methodParameterTypes27, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName28,
+				_methodParameterTypes28, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1041,8 +1082,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		long companyId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName28,
-				_methodParameterTypes28,
+			_invokableLocalService.invokeMethod(_methodName29,
+				_methodParameterTypes29,
 				new Object[] {
 					ClpSerializer.translateInput(searchContext),
 					
@@ -1071,8 +1112,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
 					new Object[] {
 						empId,
 						
@@ -1118,8 +1159,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] {
 						timeTrackingId,
 						
@@ -1152,13 +1193,39 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 	}
 
 	@Override
+	public void updateTimeTrackingsByUpdatedVacationLeave(
+		vn.com.ecopharma.emp.model.VacationLeave oldVacationLeave,
+		vn.com.ecopharma.emp.model.VacationLeave updatedVacationLeave) {
+		try {
+			_invokableLocalService.invokeMethod(_methodName32,
+				_methodParameterTypes32,
+				new Object[] {
+					ClpSerializer.translateInput(oldVacationLeave),
+					
+				ClpSerializer.translateInput(updatedVacationLeave)
+				});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
 	public vn.com.ecopharma.hrm.tt.model.TimeTracking setLeaveForTimeTracking(
 		vn.com.ecopharma.hrm.tt.model.TimeTracking timeTracking, long leaveRefId) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
 					new Object[] {
 						ClpSerializer.translateInput(timeTracking),
 						
@@ -1184,9 +1251,30 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 	public void addOrUpdateTimeTrackingByLeaveRequest(
 		vn.com.ecopharma.emp.model.VacationLeave leaveRequest) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName32,
-				_methodParameterTypes32,
+			_invokableLocalService.invokeMethod(_methodName34,
+				_methodParameterTypes34,
 				new Object[] { ClpSerializer.translateInput(leaveRequest) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public void addOrUpdateTimeTrackingByInOutRequest(
+		vn.com.ecopharma.emp.model.VacationLeave inOutRequest) {
+		try {
+			_invokableLocalService.invokeMethod(_methodName35,
+				_methodParameterTypes35,
+				new Object[] { ClpSerializer.translateInput(inOutRequest) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1205,8 +1293,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 	public void scanAndAddMissingDataByLeaveRequests(
 		java.util.List<vn.com.ecopharma.emp.model.VacationLeave> list) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName33,
-				_methodParameterTypes33,
+			_invokableLocalService.invokeMethod(_methodName36,
+				_methodParameterTypes36,
 				new Object[] { ClpSerializer.translateInput(list) });
 		}
 		catch (Throwable t) {
@@ -1225,8 +1313,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 	@Override
 	public void completelyRemoveAllTimeTrackings() {
 		try {
-			_invokableLocalService.invokeMethod(_methodName34,
-				_methodParameterTypes34, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName37,
+				_methodParameterTypes37, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1248,8 +1336,8 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName35,
-					_methodParameterTypes35,
+			returnObj = _invokableLocalService.invokeMethod(_methodName38,
+					_methodParameterTypes38,
 					new Object[] {
 						ClpSerializer.translateInput(date1),
 						
@@ -1346,4 +1434,10 @@ public class TimeTrackingLocalServiceClp implements TimeTrackingLocalService {
 	private String[] _methodParameterTypes34;
 	private String _methodName35;
 	private String[] _methodParameterTypes35;
+	private String _methodName36;
+	private String[] _methodParameterTypes36;
+	private String _methodName37;
+	private String[] _methodParameterTypes37;
+	private String _methodName38;
+	private String[] _methodParameterTypes38;
 }

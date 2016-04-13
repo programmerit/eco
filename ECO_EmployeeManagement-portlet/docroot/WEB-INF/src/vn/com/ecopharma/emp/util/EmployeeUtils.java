@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.context.FacesContext;
 import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,7 +27,6 @@ import vn.com.ecopharma.emp.model.District;
 import vn.com.ecopharma.emp.model.Emp;
 import vn.com.ecopharma.emp.model.EmpBankInfo;
 import vn.com.ecopharma.emp.model.EmpLaborContract;
-import vn.com.ecopharma.emp.permission.DevisionPermission;
 import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpBankInfoLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLaborContractLocalServiceUtil;
@@ -34,6 +34,7 @@ import vn.com.ecopharma.emp.service.EmpLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmployeeLocalServiceUtil;
 
 import com.liferay.faces.portal.context.LiferayFacesContext;
+import com.liferay.faces.util.portal.WebKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -46,10 +47,12 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.AddressServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 /**
@@ -74,8 +77,6 @@ public class EmployeeUtils {
 			List<Document> documents) {
 
 		final List<EmpIndexedItem> results = new ArrayList<>(documents.size());
-		DevisionPermission devisionPermission = (DevisionPermission) BeanUtils
-				.getBackingBeanByName("devisionPermission");
 		for (final Document document : documents) {
 			EmpIndexedItem empIndexedItem = new EmpIndexedItem(document);
 
@@ -407,4 +408,19 @@ public class EmployeeUtils {
 		result.append(namePart);
 		return result.toString();
 	}
+
+	public static Emp getCurrentLoggedInEmp() {
+		long userId = getServiceContext().getUserId();
+		return EmpLocalServiceUtil.findByUser(userId);
+	}
+
+	public static PermissionChecker getPermissionChecker() {
+		final PortletRequest request = ((PortletRequest) (FacesContext
+				.getCurrentInstance().getExternalContext().getRequest()));
+
+		final ThemeDisplay themeDisplay = (ThemeDisplay) request
+				.getAttribute(WebKeys.THEME_DISPLAY);
+		return themeDisplay.getPermissionChecker();
+	}
+
 }

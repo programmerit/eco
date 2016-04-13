@@ -77,7 +77,7 @@ public class HrPendingRequestActionBean extends AbstractPendingRequestBean {
 	public TimeTracking addOrUpdateLeave(long empId, Date date, long leaveId) {
 		TimeTracking result = null;
 		TimeTracking checkedTimeTracking = TimeTrackingLocalServiceUtil
-				.findByEmpAndDate(empId, date);
+				.fetchByEmpAndDate(empId, date);
 
 		// late-request -> just update leave ref...
 		if (checkedTimeTracking != null) {

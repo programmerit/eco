@@ -36,6 +36,9 @@
             <finder-column name="empId"></finder-column>
             <finder-column name="date"></finder-column>
         </finder>
+        <finder name="VacationLeave" return-type="Collection">
+            <finder-column name="leaveRefId"></finder-column>
+        </finder>
 	</entity>
 
 </service-builder>

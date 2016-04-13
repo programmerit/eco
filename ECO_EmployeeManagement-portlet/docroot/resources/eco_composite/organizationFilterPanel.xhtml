@@ -23,7 +23,7 @@
 					<p:selectCheckboxMenu id="devisionSelect" label="Devision"
 						converter="devisionConverter"
 						value="#{cc.attrs.orgBean.selectedDevisions}"
-						disabled="#{not authorityBean.devisionSelectable}">
+						disabled="#{not authorityBean.hr}">
 						<p:ajax listener="#{cc.attrs.orgBean.onDevisionChanged}"
 							update="departmentSelect unitSelect unitGroupSelect titlesSelect"
 							oncomplete="#{cc.attrs.onCompleteUpdate}" />
@@ -39,7 +39,7 @@
 					<br />
 
 					<p:selectCheckboxMenu id="departmentSelect" label="Department"
-						disabled="#{not authorityBean.devisionSelectable and authorityBean.unitManager}"
+						disabled="#{not authorityBean.hr and authorityBean.unitManager}"
 						converter="departmentConverter"
 						value="#{cc.attrs.orgBean.selectedDepartments}">
 						<p:ajax listener="#{cc.attrs.orgBean.onDepartmentChanged}"
