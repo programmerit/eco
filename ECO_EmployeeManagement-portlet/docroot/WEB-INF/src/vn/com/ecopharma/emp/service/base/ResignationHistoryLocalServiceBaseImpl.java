@@ -38,6 +38,7 @@ import vn.com.ecopharma.emp.service.persistence.DepartmentPersistence;
 import vn.com.ecopharma.emp.service.persistence.DevisionPersistence;
 import vn.com.ecopharma.emp.service.persistence.DistrictPersistence;
 import vn.com.ecopharma.emp.service.persistence.DocumentPersistence;
+import vn.com.ecopharma.emp.service.persistence.EmpActionHistoryPersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpAnnualLeavePersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpBankInfoPersistence;
 import vn.com.ecopharma.emp.service.persistence.EmpConcurrentTitlesPersistence;
@@ -644,6 +645,63 @@ public abstract class ResignationHistoryLocalServiceBaseImpl
 	 */
 	public void setEmpPersistence(EmpPersistence empPersistence) {
 		this.empPersistence = empPersistence;
+	}
+
+	/**
+	 * Returns the emp action history local service.
+	 *
+	 * @return the emp action history local service
+	 */
+	public vn.com.ecopharma.emp.service.EmpActionHistoryLocalService getEmpActionHistoryLocalService() {
+		return empActionHistoryLocalService;
+	}
+
+	/**
+	 * Sets the emp action history local service.
+	 *
+	 * @param empActionHistoryLocalService the emp action history local service
+	 */
+	public void setEmpActionHistoryLocalService(
+		vn.com.ecopharma.emp.service.EmpActionHistoryLocalService empActionHistoryLocalService) {
+		this.empActionHistoryLocalService = empActionHistoryLocalService;
+	}
+
+	/**
+	 * Returns the emp action history remote service.
+	 *
+	 * @return the emp action history remote service
+	 */
+	public vn.com.ecopharma.emp.service.EmpActionHistoryService getEmpActionHistoryService() {
+		return empActionHistoryService;
+	}
+
+	/**
+	 * Sets the emp action history remote service.
+	 *
+	 * @param empActionHistoryService the emp action history remote service
+	 */
+	public void setEmpActionHistoryService(
+		vn.com.ecopharma.emp.service.EmpActionHistoryService empActionHistoryService) {
+		this.empActionHistoryService = empActionHistoryService;
+	}
+
+	/**
+	 * Returns the emp action history persistence.
+	 *
+	 * @return the emp action history persistence
+	 */
+	public EmpActionHistoryPersistence getEmpActionHistoryPersistence() {
+		return empActionHistoryPersistence;
+	}
+
+	/**
+	 * Sets the emp action history persistence.
+	 *
+	 * @param empActionHistoryPersistence the emp action history persistence
+	 */
+	public void setEmpActionHistoryPersistence(
+		EmpActionHistoryPersistence empActionHistoryPersistence) {
+		this.empActionHistoryPersistence = empActionHistoryPersistence;
 	}
 
 	/**
@@ -2069,6 +2127,12 @@ public abstract class ResignationHistoryLocalServiceBaseImpl
 	protected vn.com.ecopharma.emp.service.EmpService empService;
 	@BeanReference(type = EmpPersistence.class)
 	protected EmpPersistence empPersistence;
+	@BeanReference(type = vn.com.ecopharma.emp.service.EmpActionHistoryLocalService.class)
+	protected vn.com.ecopharma.emp.service.EmpActionHistoryLocalService empActionHistoryLocalService;
+	@BeanReference(type = vn.com.ecopharma.emp.service.EmpActionHistoryService.class)
+	protected vn.com.ecopharma.emp.service.EmpActionHistoryService empActionHistoryService;
+	@BeanReference(type = EmpActionHistoryPersistence.class)
+	protected EmpActionHistoryPersistence empActionHistoryPersistence;
 	@BeanReference(type = vn.com.ecopharma.emp.service.EmpAnnualLeaveLocalService.class)
 	protected vn.com.ecopharma.emp.service.EmpAnnualLeaveLocalService empAnnualLeaveLocalService;
 	@BeanReference(type = vn.com.ecopharma.emp.service.EmpAnnualLeaveService.class)

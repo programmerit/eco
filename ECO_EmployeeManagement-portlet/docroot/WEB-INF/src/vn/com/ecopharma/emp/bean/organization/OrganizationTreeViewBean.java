@@ -45,7 +45,6 @@ public class OrganizationTreeViewBean implements Serializable {
 			.getLog(OrganizationTreeViewBean.class);
 
 	private static final String TITLES_DIALOG = "/views/dialogs/titles.xhtml";
-	private static final String UNITGROUP_DIALOG = "/views/dialogs/unitGroup.xhtml";
 	private static final String UNIT_DIALOG = "/views/dialogs/unit.xhtml";
 	private static final String SET_MANAGER_DIALOG = "/views/dialogs/setManager.xhtml";
 
@@ -366,11 +365,27 @@ public class OrganizationTreeViewBean implements Serializable {
 		return selectedNodes != null && selectedNodes.length == 1;
 	}
 
-	public boolean isAddTitlesContextAvailable() {
-		String currentSelectedLevel = getCurrentSelectedLevel();
-		return currentSelectedLevel.equalsIgnoreCase("Department")
-				|| currentSelectedLevel.equalsIgnoreCase("Unit")
-				|| currentSelectedLevel.equalsIgnoreCase("UnitGroup");
+	public boolean isAddTitlesAvailable() {
+		if (selectedNodes == null)
+			return false;
+
+		return isSameAndAppropriatedNodeTypesSelected(selectedNodes);
+	}
+
+	private boolean isSameAndAppropriatedNodeTypesSelected(TreeNode[] nodes) {
+		String type = ((OrgNodeItem) nodes[0].getData()).getType();
+		long parentId = ((OrgNodeItem) nodes[0].getParent().getData()).getId();
+		if (type.equalsIgnoreCase(OrgNodeItem.DEVISION_TYPE)
+				|| type.equalsIgnoreCase(OrgNodeItem.TITLES_TYPE))
+			return false;
+		for (TreeNode node : nodes) {
+			if (!((OrgNodeItem) node.getData()).getType()
+					.equalsIgnoreCase(type)
+					|| parentId != ((OrgNodeItem) node.getParent().getData())
+							.getId())
+				return false;
+		}
+		return true;
 	}
 
 	public String getDialog() {

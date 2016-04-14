@@ -31,7 +31,7 @@
 				<p:menuitem value="Add Titles"
 					actionListener="#{organizationTreeViewBean.addTitles}"
 					update=":dialogGroupPanel" oncomplete="PF('wTitlesDialog').show();"
-					rendered="#{organizationTreeViewBean.addTitlesContextAvailable}" />
+					rendered="#{organizationTreeViewBean.addTitlesAvailable}" />
 
 				<p:menuitem value="Edit Department"
 					rendered="#{organizationTreeViewBean.currentSelectedLevel eq 'Department'}" />

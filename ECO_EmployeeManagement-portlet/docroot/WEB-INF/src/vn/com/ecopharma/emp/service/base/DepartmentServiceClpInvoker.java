@@ -24,24 +24,24 @@ import java.util.Arrays;
  */
 public class DepartmentServiceClpInvoker {
 	public DepartmentServiceClpInvoker() {
-		_methodName176 = "getBeanIdentifier";
+		_methodName182 = "getBeanIdentifier";
 
-		_methodParameterTypes176 = new String[] {  };
+		_methodParameterTypes182 = new String[] {  };
 
-		_methodName177 = "setBeanIdentifier";
+		_methodName183 = "setBeanIdentifier";
 
-		_methodParameterTypes177 = new String[] { "java.lang.String" };
+		_methodParameterTypes183 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName176.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
+		if (_methodName182.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes182, parameterTypes)) {
 			return DepartmentServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName177.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes177, parameterTypes)) {
+		if (_methodName183.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes183, parameterTypes)) {
 			DepartmentServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
@@ -50,8 +50,8 @@ public class DepartmentServiceClpInvoker {
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName176;
-	private String[] _methodParameterTypes176;
-	private String _methodName177;
-	private String[] _methodParameterTypes177;
+	private String _methodName182;
+	private String[] _methodParameterTypes182;
+	private String _methodName183;
+	private String[] _methodParameterTypes183;
 }

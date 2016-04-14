@@ -114,6 +114,13 @@ public class SearchEngineUtils {
 		document.addText(EmpField.EMP_CODE, emp.getEmpCode());
 	}
 
+	public static void indexEmpInfo(Document document, long empId)
+			throws SystemException, PortalException {
+		Emp emp = EmpLocalServiceUtil.fetchEmp(empId);
+		indexEmpInfo(document, emp);
+
+	}
+
 	public static List<Long> getIdsFromEmpIndexedItems(
 			List<EmpIndexedItem> items) {
 		final List<Long> result = new ArrayList<>();

@@ -211,6 +211,31 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="vn.com.ecopharma.emp.model.impl.EmpActionHistoryModelImpl">
+		<attributes>
+			<id name="empActionHistoryId" />
+			<basic name="empId" />
+			<basic name="action" />
+			<basic name="performedBy" />
+			<basic name="description" />
+			<basic name="status" />
+			<basic name="refId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="vn.com.ecopharma.emp.model.impl.EmpAnnualLeaveModelImpl">
 		<attributes>
 			<id name="empAnnualLeaveId" />
@@ -742,6 +767,10 @@
 	</entity>
 	<entity class="vn.com.ecopharma.emp.model.impl.EmpImpl" name="Emp">
 		<table name="eco_em_portlet_Emp" />
+		<attributes />
+	</entity>
+	<entity class="vn.com.ecopharma.emp.model.impl.EmpActionHistoryImpl" name="EmpActionHistory">
+		<table name="eco_em_portlet_EmpActionHistory" />
 		<attributes />
 	</entity>
 	<entity class="vn.com.ecopharma.emp.model.impl.EmpAnnualLeaveImpl" name="EmpAnnualLeave">

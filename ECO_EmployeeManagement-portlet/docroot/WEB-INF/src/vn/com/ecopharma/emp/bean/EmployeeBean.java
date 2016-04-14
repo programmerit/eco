@@ -37,6 +37,7 @@ import vn.com.ecopharma.emp.dto.LaborContractItem;
 import vn.com.ecopharma.emp.dto.RegionItem;
 import vn.com.ecopharma.emp.enumeration.DocumentType;
 import vn.com.ecopharma.emp.enumeration.EducationType;
+import vn.com.ecopharma.emp.enumeration.EmpActionHistoryStatus;
 import vn.com.ecopharma.emp.enumeration.EmpDialog;
 import vn.com.ecopharma.emp.enumeration.EmployeeStatus;
 import vn.com.ecopharma.emp.enumeration.LaborContractType;
@@ -50,6 +51,7 @@ import vn.com.ecopharma.emp.model.University;
 import vn.com.ecopharma.emp.permission.EmpPermission;
 import vn.com.ecopharma.emp.service.DistrictLocalServiceUtil;
 import vn.com.ecopharma.emp.service.DocumentLocalServiceUtil;
+import vn.com.ecopharma.emp.service.EmpActionHistoryLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpAnnualLeaveLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpConcurrentTitlesLocalServiceUtil;
 import vn.com.ecopharma.emp.service.EmpLaborContractLocalServiceUtil;
@@ -91,6 +93,8 @@ public class EmployeeBean implements Serializable {
 	private static final String MALE = "male";
 
 	private static final String EMAIL_SUFFIX = "@ecopharma.com.vn";
+
+	private static final String NEW_EMP_NOTIFY_DIALOG = "/views/dialogs/notifyDialog.xhtml";
 
 	private EmpInfoItem modifyEmployeeInfoItem;
 
@@ -223,6 +227,11 @@ public class EmployeeBean implements Serializable {
 
 			if (!isEdit) {
 				final boolean sendEmail = true;
+				EmpActionHistoryLocalServiceUtil.addEmpActionHistory(
+						employee.getEmpId(), "Pre-created new employee",
+						serviceContext.getUserId(), employee.toString(),
+						EmpActionHistoryStatus.PREPERSISTED.toString(), 0L,
+						serviceContext);
 				Emp result = EmpLocalServiceUtil.addEmp(employee,
 						generatedUser, autoPassword, modifyEmployeeInfoItem
 								.getUserPassword1(), modifyEmployeeInfoItem
@@ -233,6 +242,11 @@ public class EmployeeBean implements Serializable {
 						bankInfoMap, contractInfoMap, false, serviceContext);
 
 				if (result != null) {
+					EmpActionHistoryLocalServiceUtil.addEmpActionHistory(
+							result.getEmpId(), "Saved new employee",
+							serviceContext.getUserId(), result.toString(),
+							EmpActionHistoryStatus.SAVED.toString(), 0L,
+							serviceContext);
 					msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"Create employee successfully", "Employee "
 									+ modifyEmployeeInfoItem.getUser()
@@ -247,17 +261,34 @@ public class EmployeeBean implements Serializable {
 
 				isSuccessfulModified = true;
 			} else {
-				EmpLocalServiceUtil.update(employee,
+				EmpActionHistoryLocalServiceUtil.addEmpActionHistory(
+						employee.getEmpId(), "Pre-update employee",
+						serviceContext.getUserId(), employee.toString(),
+						EmpActionHistoryStatus.PRE_UPDATE.toString(), 0L,
+						serviceContext);
+
+				Emp updateResult = EmpLocalServiceUtil.update(employee,
 						modifyEmployeeInfoItem.getUser(), oldTitlesId,
 						addressMap, dependentMap, bankInfoMap, contractInfoMap,
 						Boolean.FALSE, serviceContext);
 
-				msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Update employee successfully", "Employee "
-								+ modifyEmployeeInfoItem.getUser()
-										.getFullName() + " has been updated");
-				FacesContext.getCurrentInstance().addMessage(null, msg);
-				isSuccessfulModified = true;
+				if (updateResult != null) {
+					EmpActionHistoryLocalServiceUtil.addEmpActionHistory(
+							updateResult.getEmpId(),
+							"Saved update new employee",
+							serviceContext.getUserId(),
+							updateResult.toString(),
+							EmpActionHistoryStatus.SAVED_UPDATE.toString(), 0L,
+							serviceContext);
+					msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Update employee successfully", "Employee "
+									+ modifyEmployeeInfoItem.getUser()
+											.getFullName()
+									+ " has been updated");
+					FacesContext.getCurrentInstance().addMessage(null, msg);
+					isSuccessfulModified = true;
+				}
+
 			}
 			organizationPanelBean.afterSetOrganizationToEntity();
 		} catch (Exception e) { // catch any exception while create/edit emp
@@ -266,7 +297,7 @@ public class EmployeeBean implements Serializable {
 		}
 
 		if (isSuccessfulModified) {// NOSONAR
-			this.includedDialog = !isEdit ? "/views/dialogs/notifyDialog.xhtml"
+			this.includedDialog = !isEdit ? NEW_EMP_NOTIFY_DIALOG
 					: StringUtils.EMPTY;
 			updateString = "refreshEmployees();";
 			navigationBean.switchViewEmps();
@@ -581,6 +612,9 @@ public class EmployeeBean implements Serializable {
 			BeanUtils.getConcurrentTitlesBean().setEmpIndexedItem(item);
 			setDialog(EmpDialog.CONCURRENT_TITLES);
 		}
+	}
+
+	public void onSetBackToWork() {
 
 	}
 

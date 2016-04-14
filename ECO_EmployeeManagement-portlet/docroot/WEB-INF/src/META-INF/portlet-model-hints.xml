@@ -126,6 +126,23 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 	</model>
+	<model name="vn.com.ecopharma.emp.model.EmpActionHistory">
+		<field name="empActionHistoryId" type="long" />
+		<field name="empId" type="long" />
+		<field name="action" type="String" />
+		<field name="performedBy" type="long" />
+		<field name="description" type="String">
+			<hint name="max-length">20000</hint>
+		</field>
+		<field name="status" type="String" />
+		<field name="refId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
 	<model name="vn.com.ecopharma.emp.model.EmpAnnualLeave">
 		<field name="empAnnualLeaveId" type="long" />
 		<field name="empId" type="long" />

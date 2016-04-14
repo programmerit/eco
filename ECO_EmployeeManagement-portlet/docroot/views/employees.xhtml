@@ -155,13 +155,13 @@
 				<p:menuitem value="Resign"
 					actionListener="#{empView.onResignedEmployee}"
 					update=":includedDialogPanelGroup #{empView.includedDialogOutputPanel}"
-					oncomplete="PF('wResignationDialog').show()"
+					oncomplete="PF('wResignationDialog').show();"
 					disabled="#{not employeeIndexedBean.resignedValid}" />
 
 				<p:menuitem value="Add Discipline"
 					actionListener="#{empView.onAddingDiscipline}"
 					update=":includedDialogPanelGroup #{empView.includedDialogOutputPanel}"
-					oncomplete="PF('wDisciplineDialog').show()"
+					oncomplete="PF('wDisciplineDialog').show();"
 					disabled="#{not employeeIndexedBean.disciplineValid}" />
 
 				<p:menuitem value="Maternity Leave" rendered="false"
@@ -175,6 +175,10 @@
 					update=":includedDialogPanelGroup #{empView.includedDialogOutputPanel}"
 					oncomplete="PF('wConcurrentTitlesDialog').show()"
 					disabled="#{not employeeIndexedBean.concurrentTitlesValid}" />
+
+				<p:menuitem value="Set Back To Work"
+					oncomplete="PF('wSetBackToWorkDialog').show();"
+					disabled="#{not employeeIndexedBean.backToWorkValid}" />
 			</p:contextMenu>
 
 			<h:outputText value="Columns to show:" styleClass="label" />
@@ -365,6 +369,11 @@
 				onAction="#{empView.setDeleteEmployee}"
 				oncompleteActions="PF('wDeleteConfirmDialog').hide(); PF('employeeTable').filter();"
 				update=":employeesForm:employees" />
+
+			<eco:confirmDialog wDialogVar="wBackToWorkConfirmDialog"
+				message="Do you want to set these Employees to 'Back to work' state?"
+				header="Back To Work Confirm" onAction="#{empView.onSetBackToWork}"
+				oncompleteActions="refreshEmployees();" />
 		</h:form>
 
 		<!-- Dialog -->

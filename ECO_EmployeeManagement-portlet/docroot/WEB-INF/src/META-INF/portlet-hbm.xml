@@ -8,6 +8,7 @@
 	<import class="vn.com.ecopharma.emp.model.District" />
 	<import class="vn.com.ecopharma.emp.model.Document" />
 	<import class="vn.com.ecopharma.emp.model.Emp" />
+	<import class="vn.com.ecopharma.emp.model.EmpActionHistory" />
 	<import class="vn.com.ecopharma.emp.model.EmpAnnualLeave" />
 	<import class="vn.com.ecopharma.emp.model.EmpBankInfo" />
 	<import class="vn.com.ecopharma.emp.model.EmpConcurrentTitles" />
@@ -166,6 +167,24 @@
 		<property name="companyEmailAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="workingPlaceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="vn.com.ecopharma.emp.model.impl.EmpActionHistoryImpl" table="eco_em_portlet_EmpActionHistory">
+		<cache usage="read-write" />
+		<id name="empActionHistoryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="empId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="action" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="performedBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="refId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />

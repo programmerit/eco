@@ -141,6 +141,22 @@ create table eco_em_portlet_Emp (
 	modifiedDate DATE null
 );
 
+create table eco_em_portlet_EmpActionHistory (
+	empActionHistoryId LONG not null primary key,
+	empId LONG,
+	action VARCHAR(75) null,
+	performedBy LONG,
+	description TEXT null,
+	status VARCHAR(75) null,
+	refId LONG,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null
+);
+
 create table eco_em_portlet_EmpAnnualLeave (
 	empAnnualLeaveId LONG not null primary key,
 	empId LONG,

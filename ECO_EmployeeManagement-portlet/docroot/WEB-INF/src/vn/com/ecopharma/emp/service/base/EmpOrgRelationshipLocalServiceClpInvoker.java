@@ -106,90 +106,90 @@ public class EmpOrgRelationshipLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.EmpOrgRelationship"
 			};
 
-		_methodName192 = "getBeanIdentifier";
-
-		_methodParameterTypes192 = new String[] {  };
-
-		_methodName193 = "setBeanIdentifier";
-
-		_methodParameterTypes193 = new String[] { "java.lang.String" };
-
-		_methodName198 = "findAll";
+		_methodName198 = "getBeanIdentifier";
 
 		_methodParameterTypes198 = new String[] {  };
 
-		_methodName199 = "findAll";
+		_methodName199 = "setBeanIdentifier";
 
-		_methodParameterTypes199 = new String[] { "int", "int" };
+		_methodParameterTypes199 = new String[] { "java.lang.String" };
 
-		_methodName200 = "findAll";
+		_methodName204 = "findAll";
 
-		_methodParameterTypes200 = new String[] {
+		_methodParameterTypes204 = new String[] {  };
+
+		_methodName205 = "findAll";
+
+		_methodParameterTypes205 = new String[] { "int", "int" };
+
+		_methodName206 = "findAll";
+
+		_methodParameterTypes206 = new String[] {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName201 = "findByEmp";
-
-		_methodParameterTypes201 = new String[] { "long" };
-
-		_methodName202 = "findByClassNameClassPK";
-
-		_methodParameterTypes202 = new String[] { "java.lang.String", "long" };
-
-		_methodName203 = "findByEmpClassNameAndHeadOfOrg";
-
-		_methodParameterTypes203 = new String[] {
-				"long", "java.lang.String", "boolean"
-			};
-
-		_methodName204 = "fetchByClassNameClassPKHeadOfOrg";
-
-		_methodParameterTypes204 = new String[] {
-				"java.lang.String", "long", "boolean"
-			};
-
-		_methodName205 = "fetchByEmpClassNameClassPKHeadOfOrg";
-
-		_methodParameterTypes205 = new String[] {
-				"long", "java.lang.String", "long", "boolean"
-			};
-
-		_methodName206 = "fetchByClassNameClassPKDeputyOfOrg";
-
-		_methodParameterTypes206 = new String[] {
-				"java.lang.String", "long", "boolean"
-			};
-
-		_methodName207 = "isHeadOfAtLeastOneDepartment";
+		_methodName207 = "findByEmp";
 
 		_methodParameterTypes207 = new String[] { "long" };
 
-		_methodName208 = "isHeadOfDepartment";
+		_methodName208 = "findByClassNameClassPK";
 
-		_methodParameterTypes208 = new String[] { "long", "long" };
+		_methodParameterTypes208 = new String[] { "java.lang.String", "long" };
 
-		_methodName209 = "createPrepersistedEntity";
+		_methodName209 = "findByEmpClassNameAndHeadOfOrg";
 
 		_methodParameterTypes209 = new String[] {
+				"long", "java.lang.String", "boolean"
+			};
+
+		_methodName210 = "fetchByClassNameClassPKHeadOfOrg";
+
+		_methodParameterTypes210 = new String[] {
+				"java.lang.String", "long", "boolean"
+			};
+
+		_methodName211 = "fetchByEmpClassNameClassPKHeadOfOrg";
+
+		_methodParameterTypes211 = new String[] {
+				"long", "java.lang.String", "long", "boolean"
+			};
+
+		_methodName212 = "fetchByClassNameClassPKDeputyOfOrg";
+
+		_methodParameterTypes212 = new String[] {
+				"java.lang.String", "long", "boolean"
+			};
+
+		_methodName213 = "isHeadOfAtLeastOneDepartment";
+
+		_methodParameterTypes213 = new String[] { "long" };
+
+		_methodName214 = "isHeadOfDepartment";
+
+		_methodParameterTypes214 = new String[] { "long", "long" };
+
+		_methodName215 = "createPrepersistedEntity";
+
+		_methodParameterTypes215 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName210 = "addEmpOrgRelationship";
+		_methodName216 = "addEmpOrgRelationship";
 
-		_methodParameterTypes210 = new String[] {
+		_methodParameterTypes216 = new String[] {
 				"long", "java.lang.String", "long", "boolean", "boolean",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName211 = "updateEmpOrgRelationship";
+		_methodName217 = "updateEmpOrgRelationship";
 
-		_methodParameterTypes211 = new String[] {
+		_methodParameterTypes217 = new String[] {
 				"long", "long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName212 = "updateEmpOrgRelationship";
+		_methodName218 = "updateEmpOrgRelationship";
 
-		_methodParameterTypes212 = new String[] {
+		_methodParameterTypes218 = new String[] {
 				"vn.com.ecopharma.emp.model.EmpOrgRelationship", "long",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -284,94 +284,94 @@ public class EmpOrgRelationshipLocalServiceClpInvoker {
 			return EmpOrgRelationshipLocalServiceUtil.updateEmpOrgRelationship((vn.com.ecopharma.emp.model.EmpOrgRelationship)arguments[0]);
 		}
 
-		if (_methodName192.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes192, parameterTypes)) {
+		if (_methodName198.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes198, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName193.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes193, parameterTypes)) {
+		if (_methodName199.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes199, parameterTypes)) {
 			EmpOrgRelationshipLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName198.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes198, parameterTypes)) {
+		if (_methodName204.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes204, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.findAll();
 		}
 
-		if (_methodName199.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes199, parameterTypes)) {
+		if (_methodName205.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes205, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName200.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes200, parameterTypes)) {
+		if (_methodName206.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes206, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[2]);
 		}
 
-		if (_methodName201.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes201, parameterTypes)) {
+		if (_methodName207.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes207, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.findByEmp(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName202.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes202, parameterTypes)) {
+		if (_methodName208.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes208, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.findByClassNameClassPK((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName203.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes203, parameterTypes)) {
+		if (_methodName209.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes209, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.findByEmpClassNameAndHeadOfOrg(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Boolean)arguments[2]).booleanValue());
 		}
 
-		if (_methodName204.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes204, parameterTypes)) {
+		if (_methodName210.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes210, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.fetchByClassNameClassPKHeadOfOrg((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Boolean)arguments[2]).booleanValue());
 		}
 
-		if (_methodName205.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes205, parameterTypes)) {
+		if (_methodName211.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes211, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.fetchByEmpClassNameClassPKHeadOfOrg(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Long)arguments[2]).longValue(),
 				((Boolean)arguments[3]).booleanValue());
 		}
 
-		if (_methodName206.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes206, parameterTypes)) {
+		if (_methodName212.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes212, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.fetchByClassNameClassPKDeputyOfOrg((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Boolean)arguments[2]).booleanValue());
 		}
 
-		if (_methodName207.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes207, parameterTypes)) {
+		if (_methodName213.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes213, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.isHeadOfAtLeastOneDepartment(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName208.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes208, parameterTypes)) {
+		if (_methodName214.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes214, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.isHeadOfDepartment(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName209.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes209, parameterTypes)) {
+		if (_methodName215.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes215, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.createPrepersistedEntity((com.liferay.portal.service.ServiceContext)arguments[0]);
 		}
 
-		if (_methodName210.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes210, parameterTypes)) {
+		if (_methodName216.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes216, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.addEmpOrgRelationship(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -380,15 +380,15 @@ public class EmpOrgRelationshipLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[5]);
 		}
 
-		if (_methodName211.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes211, parameterTypes)) {
+		if (_methodName217.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes217, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.updateEmpOrgRelationship(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
 		}
 
-		if (_methodName212.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes212, parameterTypes)) {
+		if (_methodName218.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes218, parameterTypes)) {
 			return EmpOrgRelationshipLocalServiceUtil.updateEmpOrgRelationship((vn.com.ecopharma.emp.model.EmpOrgRelationship)arguments[0],
 				((Long)arguments[1]).longValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
@@ -429,22 +429,10 @@ public class EmpOrgRelationshipLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName192;
-	private String[] _methodParameterTypes192;
-	private String _methodName193;
-	private String[] _methodParameterTypes193;
 	private String _methodName198;
 	private String[] _methodParameterTypes198;
 	private String _methodName199;
 	private String[] _methodParameterTypes199;
-	private String _methodName200;
-	private String[] _methodParameterTypes200;
-	private String _methodName201;
-	private String[] _methodParameterTypes201;
-	private String _methodName202;
-	private String[] _methodParameterTypes202;
-	private String _methodName203;
-	private String[] _methodParameterTypes203;
 	private String _methodName204;
 	private String[] _methodParameterTypes204;
 	private String _methodName205;
@@ -463,4 +451,16 @@ public class EmpOrgRelationshipLocalServiceClpInvoker {
 	private String[] _methodParameterTypes211;
 	private String _methodName212;
 	private String[] _methodParameterTypes212;
+	private String _methodName213;
+	private String[] _methodParameterTypes213;
+	private String _methodName214;
+	private String[] _methodParameterTypes214;
+	private String _methodName215;
+	private String[] _methodParameterTypes215;
+	private String _methodName216;
+	private String[] _methodParameterTypes216;
+	private String _methodName217;
+	private String[] _methodParameterTypes217;
+	private String _methodName218;
+	private String[] _methodParameterTypes218;
 }

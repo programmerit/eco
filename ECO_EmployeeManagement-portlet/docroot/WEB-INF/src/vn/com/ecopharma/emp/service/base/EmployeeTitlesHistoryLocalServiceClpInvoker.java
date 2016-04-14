@@ -106,31 +106,31 @@ public class EmployeeTitlesHistoryLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.EmployeeTitlesHistory"
 			};
 
-		_methodName192 = "getBeanIdentifier";
-
-		_methodParameterTypes192 = new String[] {  };
-
-		_methodName193 = "setBeanIdentifier";
-
-		_methodParameterTypes193 = new String[] { "java.lang.String" };
-
-		_methodName198 = "findAll";
+		_methodName198 = "getBeanIdentifier";
 
 		_methodParameterTypes198 = new String[] {  };
 
-		_methodName199 = "findAll";
+		_methodName199 = "setBeanIdentifier";
 
-		_methodParameterTypes199 = new String[] { "int", "int" };
+		_methodParameterTypes199 = new String[] { "java.lang.String" };
 
-		_methodName200 = "findAll";
+		_methodName204 = "findAll";
 
-		_methodParameterTypes200 = new String[] {
+		_methodParameterTypes204 = new String[] {  };
+
+		_methodName205 = "findAll";
+
+		_methodParameterTypes205 = new String[] { "int", "int" };
+
+		_methodName206 = "findAll";
+
+		_methodParameterTypes206 = new String[] {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName201 = "addEmployeeTitlesHistory";
+		_methodName207 = "addEmployeeTitlesHistory";
 
-		_methodParameterTypes201 = new String[] {
+		_methodParameterTypes207 = new String[] {
 				"long", "long", "java.lang.String", "java.util.Date",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -225,38 +225,38 @@ public class EmployeeTitlesHistoryLocalServiceClpInvoker {
 			return EmployeeTitlesHistoryLocalServiceUtil.updateEmployeeTitlesHistory((vn.com.ecopharma.emp.model.EmployeeTitlesHistory)arguments[0]);
 		}
 
-		if (_methodName192.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes192, parameterTypes)) {
+		if (_methodName198.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes198, parameterTypes)) {
 			return EmployeeTitlesHistoryLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName193.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes193, parameterTypes)) {
+		if (_methodName199.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes199, parameterTypes)) {
 			EmployeeTitlesHistoryLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName198.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes198, parameterTypes)) {
+		if (_methodName204.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes204, parameterTypes)) {
 			return EmployeeTitlesHistoryLocalServiceUtil.findAll();
 		}
 
-		if (_methodName199.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes199, parameterTypes)) {
+		if (_methodName205.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes205, parameterTypes)) {
 			return EmployeeTitlesHistoryLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName200.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes200, parameterTypes)) {
+		if (_methodName206.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes206, parameterTypes)) {
 			return EmployeeTitlesHistoryLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[2]);
 		}
 
-		if (_methodName201.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes201, parameterTypes)) {
+		if (_methodName207.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes207, parameterTypes)) {
 			return EmployeeTitlesHistoryLocalServiceUtil.addEmployeeTitlesHistory(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.util.Date)arguments[3],
@@ -298,16 +298,16 @@ public class EmployeeTitlesHistoryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName192;
-	private String[] _methodParameterTypes192;
-	private String _methodName193;
-	private String[] _methodParameterTypes193;
 	private String _methodName198;
 	private String[] _methodParameterTypes198;
 	private String _methodName199;
 	private String[] _methodParameterTypes199;
-	private String _methodName200;
-	private String[] _methodParameterTypes200;
-	private String _methodName201;
-	private String[] _methodParameterTypes201;
+	private String _methodName204;
+	private String[] _methodParameterTypes204;
+	private String _methodName205;
+	private String[] _methodParameterTypes205;
+	private String _methodName206;
+	private String[] _methodParameterTypes206;
+	private String _methodName207;
+	private String[] _methodParameterTypes207;
 }

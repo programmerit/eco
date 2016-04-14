@@ -106,34 +106,34 @@ public class EmpLaborContractLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.EmpLaborContract"
 			};
 
-		_methodName192 = "getBeanIdentifier";
+		_methodName198 = "getBeanIdentifier";
 
-		_methodParameterTypes192 = new String[] {  };
+		_methodParameterTypes198 = new String[] {  };
 
-		_methodName193 = "setBeanIdentifier";
+		_methodName199 = "setBeanIdentifier";
 
-		_methodParameterTypes193 = new String[] { "java.lang.String" };
+		_methodParameterTypes199 = new String[] { "java.lang.String" };
 
-		_methodName198 = "findByEmp";
+		_methodName204 = "findByEmp";
 
-		_methodParameterTypes198 = new String[] { "long" };
+		_methodParameterTypes204 = new String[] { "long" };
 
-		_methodName199 = "createPrePersistedEntity";
+		_methodName205 = "createPrePersistedEntity";
 
-		_methodParameterTypes199 = new String[] {
+		_methodParameterTypes205 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName200 = "addEmpLaborContract";
+		_methodName206 = "addEmpLaborContract";
 
-		_methodParameterTypes200 = new String[] {
+		_methodParameterTypes206 = new String[] {
 				"vn.com.ecopharma.emp.model.EmpLaborContract",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName201 = "transferContractFromEmps";
+		_methodName207 = "transferContractFromEmps";
 
-		_methodParameterTypes201 = new String[] {
+		_methodParameterTypes207 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -227,36 +227,36 @@ public class EmpLaborContractLocalServiceClpInvoker {
 			return EmpLaborContractLocalServiceUtil.updateEmpLaborContract((vn.com.ecopharma.emp.model.EmpLaborContract)arguments[0]);
 		}
 
-		if (_methodName192.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes192, parameterTypes)) {
+		if (_methodName198.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes198, parameterTypes)) {
 			return EmpLaborContractLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName193.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes193, parameterTypes)) {
+		if (_methodName199.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes199, parameterTypes)) {
 			EmpLaborContractLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName198.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes198, parameterTypes)) {
+		if (_methodName204.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes204, parameterTypes)) {
 			return EmpLaborContractLocalServiceUtil.findByEmp(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName199.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes199, parameterTypes)) {
+		if (_methodName205.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes205, parameterTypes)) {
 			return EmpLaborContractLocalServiceUtil.createPrePersistedEntity((com.liferay.portal.service.ServiceContext)arguments[0]);
 		}
 
-		if (_methodName200.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes200, parameterTypes)) {
+		if (_methodName206.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes206, parameterTypes)) {
 			return EmpLaborContractLocalServiceUtil.addEmpLaborContract((vn.com.ecopharma.emp.model.EmpLaborContract)arguments[0],
 				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
 
-		if (_methodName201.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes201, parameterTypes)) {
+		if (_methodName207.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes207, parameterTypes)) {
 			EmpLaborContractLocalServiceUtil.transferContractFromEmps((com.liferay.portal.service.ServiceContext)arguments[0]);
 
 			return null;
@@ -297,16 +297,16 @@ public class EmpLaborContractLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName192;
-	private String[] _methodParameterTypes192;
-	private String _methodName193;
-	private String[] _methodParameterTypes193;
 	private String _methodName198;
 	private String[] _methodParameterTypes198;
 	private String _methodName199;
 	private String[] _methodParameterTypes199;
-	private String _methodName200;
-	private String[] _methodParameterTypes200;
-	private String _methodName201;
-	private String[] _methodParameterTypes201;
+	private String _methodName204;
+	private String[] _methodParameterTypes204;
+	private String _methodName205;
+	private String[] _methodParameterTypes205;
+	private String _methodName206;
+	private String[] _methodParameterTypes206;
+	private String _methodName207;
+	private String[] _methodParameterTypes207;
 }

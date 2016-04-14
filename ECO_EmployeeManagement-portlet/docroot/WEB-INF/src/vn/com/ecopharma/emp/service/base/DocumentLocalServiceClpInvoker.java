@@ -106,125 +106,125 @@ public class DocumentLocalServiceClpInvoker {
 				"vn.com.ecopharma.emp.model.Document"
 			};
 
-		_methodName192 = "getBeanIdentifier";
-
-		_methodParameterTypes192 = new String[] {  };
-
-		_methodName193 = "setBeanIdentifier";
-
-		_methodParameterTypes193 = new String[] { "java.lang.String" };
-
-		_methodName198 = "findAll";
+		_methodName198 = "getBeanIdentifier";
 
 		_methodParameterTypes198 = new String[] {  };
 
-		_methodName199 = "findAll";
+		_methodName199 = "setBeanIdentifier";
 
-		_methodParameterTypes199 = new String[] { "int", "int" };
+		_methodParameterTypes199 = new String[] { "java.lang.String" };
 
-		_methodName200 = "findAll";
+		_methodName204 = "findAll";
 
-		_methodParameterTypes200 = new String[] {
+		_methodParameterTypes204 = new String[] {  };
+
+		_methodName205 = "findAll";
+
+		_methodParameterTypes205 = new String[] { "int", "int" };
+
+		_methodName206 = "findAll";
+
+		_methodParameterTypes206 = new String[] {
 				"int", "int", "com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName201 = "findByClassNameAndClassPK";
+		_methodName207 = "findByClassNameAndClassPK";
 
-		_methodParameterTypes201 = new String[] { "java.lang.String", "long" };
+		_methodParameterTypes207 = new String[] { "java.lang.String", "long" };
 
-		_methodName202 = "findByClassNameClassPKAndType";
+		_methodName208 = "findByClassNameClassPKAndType";
 
-		_methodParameterTypes202 = new String[] {
+		_methodParameterTypes208 = new String[] {
 				"java.lang.String", "long", "java.lang.String"
 			};
 
-		_methodName203 = "findByFileEntry";
+		_methodName209 = "findByFileEntry";
 
-		_methodParameterTypes203 = new String[] { "long" };
+		_methodParameterTypes209 = new String[] { "long" };
 
-		_methodName204 = "fetchByClassNameClassPKAndFileEntry";
+		_methodName210 = "fetchByClassNameClassPKAndFileEntry";
 
-		_methodParameterTypes204 = new String[] {
+		_methodParameterTypes210 = new String[] {
 				"java.lang.String", "long", "long"
 			};
 
-		_methodName205 = "createPrePersistedEntity";
+		_methodName211 = "createPrePersistedEntity";
 
-		_methodParameterTypes205 = new String[] {
+		_methodParameterTypes211 = new String[] {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName206 = "addDocument";
+		_methodName212 = "addDocument";
 
-		_methodParameterTypes206 = new String[] {
+		_methodParameterTypes212 = new String[] {
 				"vn.com.ecopharma.emp.model.Document", "java.lang.String",
 				"long", "long", "java.lang.String"
 			};
 
-		_methodName207 = "addDocument";
+		_methodName213 = "addDocument";
 
-		_methodParameterTypes207 = new String[] {
+		_methodParameterTypes213 = new String[] {
 				"java.lang.String", "long", "long", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName208 = "completelyDeleteDocuments";
+		_methodName214 = "completelyDeleteDocuments";
 
-		_methodParameterTypes208 = new String[] { "long" };
+		_methodParameterTypes214 = new String[] { "long" };
 
-		_methodName209 = "uploadAndLinkEntity";
+		_methodName215 = "uploadAndLinkEntity";
 
-		_methodParameterTypes209 = new String[] {
+		_methodParameterTypes215 = new String[] {
 				"com.liferay.portal.model.BaseModel",
 				"javax.portlet.PortletRequest", "java.io.InputStream",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"boolean", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName210 = "getDLFileEntry";
+		_methodName216 = "getDLFileEntry";
 
-		_methodParameterTypes210 = new String[] {
+		_methodParameterTypes216 = new String[] {
 				"vn.com.ecopharma.emp.model.Document"
 			};
 
-		_methodName211 = "getUploadFileEntry";
+		_methodName217 = "getUploadFileEntry";
 
-		_methodParameterTypes211 = new String[] {
+		_methodParameterTypes217 = new String[] {
 				"com.liferay.portlet.documentlibrary.model.DLFileEntry"
 			};
 
-		_methodName212 = "getFileEntry";
+		_methodName218 = "getFileEntry";
 
-		_methodParameterTypes212 = new String[] {
+		_methodParameterTypes218 = new String[] {
 				"vn.com.ecopharma.emp.model.Document"
 			};
 
-		_methodName213 = "getFilePath";
+		_methodName219 = "getFilePath";
 
-		_methodParameterTypes213 = new String[] {
+		_methodParameterTypes219 = new String[] {
 				"javax.portlet.PortletRequest",
 				"com.liferay.portal.kernel.repository.model.FileEntry"
 			};
 
-		_methodName214 = "uploadFile";
+		_methodName220 = "uploadFile";
 
-		_methodParameterTypes214 = new String[] {
+		_methodParameterTypes220 = new String[] {
 				"javax.portlet.PortletRequest", "java.io.InputStream",
 				"java.lang.String", "java.lang.String", "boolean",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName215 = "uploadFile";
+		_methodName221 = "uploadFile";
 
-		_methodParameterTypes215 = new String[] {
+		_methodParameterTypes221 = new String[] {
 				"javax.portlet.PortletRequest", "java.io.File",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName216 = "createFolder";
+		_methodName222 = "createFolder";
 
-		_methodParameterTypes216 = new String[] {
+		_methodParameterTypes222 = new String[] {
 				"java.lang.String", "java.lang.String", "long",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -319,75 +319,75 @@ public class DocumentLocalServiceClpInvoker {
 			return DocumentLocalServiceUtil.updateDocument((vn.com.ecopharma.emp.model.Document)arguments[0]);
 		}
 
-		if (_methodName192.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes192, parameterTypes)) {
+		if (_methodName198.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes198, parameterTypes)) {
 			return DocumentLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName193.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes193, parameterTypes)) {
+		if (_methodName199.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes199, parameterTypes)) {
 			DocumentLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName198.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes198, parameterTypes)) {
+		if (_methodName204.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes204, parameterTypes)) {
 			return DocumentLocalServiceUtil.findAll();
 		}
 
-		if (_methodName199.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes199, parameterTypes)) {
+		if (_methodName205.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes205, parameterTypes)) {
 			return DocumentLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName200.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes200, parameterTypes)) {
+		if (_methodName206.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes206, parameterTypes)) {
 			return DocumentLocalServiceUtil.findAll(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[2]);
 		}
 
-		if (_methodName201.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes201, parameterTypes)) {
+		if (_methodName207.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes207, parameterTypes)) {
 			return DocumentLocalServiceUtil.findByClassNameAndClassPK((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName202.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes202, parameterTypes)) {
+		if (_methodName208.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes208, parameterTypes)) {
 			return DocumentLocalServiceUtil.findByClassNameClassPKAndType((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(), (java.lang.String)arguments[2]);
 		}
 
-		if (_methodName203.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes203, parameterTypes)) {
+		if (_methodName209.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes209, parameterTypes)) {
 			return DocumentLocalServiceUtil.findByFileEntry(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName204.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes204, parameterTypes)) {
+		if (_methodName210.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes210, parameterTypes)) {
 			return DocumentLocalServiceUtil.fetchByClassNameClassPKAndFileEntry((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName205.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes205, parameterTypes)) {
+		if (_methodName211.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes211, parameterTypes)) {
 			return DocumentLocalServiceUtil.createPrePersistedEntity((com.liferay.portal.service.ServiceContext)arguments[0]);
 		}
 
-		if (_methodName206.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes206, parameterTypes)) {
+		if (_methodName212.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes212, parameterTypes)) {
 			return DocumentLocalServiceUtil.addDocument((vn.com.ecopharma.emp.model.Document)arguments[0],
 				(java.lang.String)arguments[1],
 				((Long)arguments[2]).longValue(),
 				((Long)arguments[3]).longValue(), (java.lang.String)arguments[4]);
 		}
 
-		if (_methodName207.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes207, parameterTypes)) {
+		if (_methodName213.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes213, parameterTypes)) {
 			return DocumentLocalServiceUtil.addDocument((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
@@ -395,15 +395,15 @@ public class DocumentLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[4]);
 		}
 
-		if (_methodName208.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes208, parameterTypes)) {
+		if (_methodName214.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes214, parameterTypes)) {
 			DocumentLocalServiceUtil.completelyDeleteDocuments(((Long)arguments[0]).longValue());
 
 			return null;
 		}
 
-		if (_methodName209.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes209, parameterTypes)) {
+		if (_methodName215.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes215, parameterTypes)) {
 			return DocumentLocalServiceUtil.uploadAndLinkEntity((com.liferay.portal.model.BaseModel<?>)arguments[0],
 				(javax.portlet.PortletRequest)arguments[1],
 				(java.io.InputStream)arguments[2],
@@ -413,29 +413,29 @@ public class DocumentLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[7]);
 		}
 
-		if (_methodName210.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes210, parameterTypes)) {
+		if (_methodName216.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes216, parameterTypes)) {
 			return DocumentLocalServiceUtil.getDLFileEntry((vn.com.ecopharma.emp.model.Document)arguments[0]);
 		}
 
-		if (_methodName211.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes211, parameterTypes)) {
+		if (_methodName217.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes217, parameterTypes)) {
 			return DocumentLocalServiceUtil.getUploadFileEntry((com.liferay.portlet.documentlibrary.model.DLFileEntry)arguments[0]);
 		}
 
-		if (_methodName212.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes212, parameterTypes)) {
+		if (_methodName218.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes218, parameterTypes)) {
 			return DocumentLocalServiceUtil.getFileEntry((vn.com.ecopharma.emp.model.Document)arguments[0]);
 		}
 
-		if (_methodName213.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes213, parameterTypes)) {
+		if (_methodName219.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes219, parameterTypes)) {
 			return DocumentLocalServiceUtil.getFilePath((javax.portlet.PortletRequest)arguments[0],
 				(com.liferay.portal.kernel.repository.model.FileEntry)arguments[1]);
 		}
 
-		if (_methodName214.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes214, parameterTypes)) {
+		if (_methodName220.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes220, parameterTypes)) {
 			return DocumentLocalServiceUtil.uploadFile((javax.portlet.PortletRequest)arguments[0],
 				(java.io.InputStream)arguments[1],
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -443,8 +443,8 @@ public class DocumentLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[5]);
 		}
 
-		if (_methodName215.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes215, parameterTypes)) {
+		if (_methodName221.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes221, parameterTypes)) {
 			return DocumentLocalServiceUtil.uploadFile((javax.portlet.PortletRequest)arguments[0],
 				(java.io.File)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
@@ -452,8 +452,8 @@ public class DocumentLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[6]);
 		}
 
-		if (_methodName216.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes216, parameterTypes)) {
+		if (_methodName222.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes222, parameterTypes)) {
 			return DocumentLocalServiceUtil.createFolder((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -495,22 +495,10 @@ public class DocumentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName192;
-	private String[] _methodParameterTypes192;
-	private String _methodName193;
-	private String[] _methodParameterTypes193;
 	private String _methodName198;
 	private String[] _methodParameterTypes198;
 	private String _methodName199;
 	private String[] _methodParameterTypes199;
-	private String _methodName200;
-	private String[] _methodParameterTypes200;
-	private String _methodName201;
-	private String[] _methodParameterTypes201;
-	private String _methodName202;
-	private String[] _methodParameterTypes202;
-	private String _methodName203;
-	private String[] _methodParameterTypes203;
 	private String _methodName204;
 	private String[] _methodParameterTypes204;
 	private String _methodName205;
@@ -537,4 +525,16 @@ public class DocumentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes215;
 	private String _methodName216;
 	private String[] _methodParameterTypes216;
+	private String _methodName217;
+	private String[] _methodParameterTypes217;
+	private String _methodName218;
+	private String[] _methodParameterTypes218;
+	private String _methodName219;
+	private String[] _methodParameterTypes219;
+	private String _methodName220;
+	private String[] _methodParameterTypes220;
+	private String _methodName221;
+	private String[] _methodParameterTypes221;
+	private String _methodName222;
+	private String[] _methodParameterTypes222;
 }

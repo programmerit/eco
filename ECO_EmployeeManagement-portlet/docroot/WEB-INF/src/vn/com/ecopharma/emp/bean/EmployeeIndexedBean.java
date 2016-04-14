@@ -277,6 +277,17 @@ public class EmployeeIndexedBean implements Serializable {
 				EmployeeStatus.RESIGNED.toString());
 	}
 
+	public boolean isBackToWorkValid() {
+		if (selectedEmployeeIndexItems.isEmpty())
+			return false;
+
+		for (EmpIndexedItem item : selectedEmployeeIndexItems)
+			if (!item.getStatus().equalsIgnoreCase(
+					EmployeeStatus.RESIGNED.toString()))
+				return false;
+		return true;
+	}
+
 	public String getHeaderi18nKey(String header) {
 		return "employee.info." + header;
 	}
